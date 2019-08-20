@@ -18,8 +18,19 @@ import com.badlogic.gdx.utils.ObjectMap;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
+ * When run with JVM:
+ * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
+ * This gets these results (higher is better):
+ * <br>
  * ObjectMap_String_String_Bench score: 1628225.375000 (1.628M 1430.3%)
  *                           uncertainty:  40.0%
+ * <br>
+ * When run with JVM:
+ * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
+ * This gets different results:
+ * <br>
+ * ObjectMap_String_String_Bench score: 1676581.125000 (1.677M 1433.2%)
+ *                           uncertainty:  27.1%
  */
 public final class ObjectMap_String_String_Bench extends MicroBench {
 
