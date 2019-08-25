@@ -39,6 +39,12 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>com.squidpony</groupId>
+            <artifactId>squidlib-util</artifactId>
+            <version>3.0.0-b10</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
             <version>3.2</version>
