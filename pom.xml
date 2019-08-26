@@ -32,7 +32,13 @@
     </licenses>
     <repositories>
         <repository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+        <repository>
             <id>jitpack.io</id>
+            <name>JitPack.io</name>
             <url>https://jitpack.io</url>
         </repository>
     </repositories>
@@ -55,12 +61,26 @@
             <version>3.2</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.github.javolution</groupId>
-            <artifactId>javolution</artifactId>
-            <version>ed97f1d983</version>
+        <dependency>             
+            <groupId>com.github.tommyettinger</groupId>
+            <artifactId>jaunt</artifactId>
+            <version>ee175d6fd8</version>
             <scope>compile</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.javolution</groupId>-->
+<!--            <artifactId>javolution-core-java</artifactId>-->
+<!--            <version>6.0.0</version>-->
+<!--&lt;!&ndash;            <type>bundle</type>&ndash;&gt;-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+        
+<!--        <dependency>-->
+<!--            <groupId>com.github.javolution</groupId>-->
+<!--            <artifactId>javolution</artifactId>-->
+<!--            <version>ed97f1d983</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
     </dependencies>
     
     <build>
