@@ -22,20 +22,20 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * OrderedMapGDX_String_String_Bench score: 2876206.250000 (2.876M 1487.2%)
- *                               uncertainty:  18.7%
+ * OrderedMapGDX_String_String_Bench score: 4732563.500000 (4.733M 1537.0%)
+ *                               uncertainty:   2.2%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * OrderedMapGDX_String_String_Bench score: 2202704.250000 (2.203M 1460.5%)
+ * OrderedMapGDX_String_String_Bench score: 4060555.250000 (4.061M 1521.7%)
  *                               uncertainty:  40.0%
  */
 public final class OrderedMapGDX_String_String_Bench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		final OrderedMap<String, String> coll = new OrderedMap<String, String>();
+		final OrderedMap<String, String> coll = new OrderedMap<String, String>(16, 0.25f);
 		for (long i = 0; i < numIterations; i++) {
 			final String s = String.valueOf(i);
 			coll.put(s, s);

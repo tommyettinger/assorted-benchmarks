@@ -14,28 +14,29 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.utils.OrderedMap;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
+
+import java.util.LinkedHashMap;
 
 /**
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * LinkedHashMap_String_String_Bench score: 3014441.500000 (3.014M 1491.9%)
- *                               uncertainty:   2.2%
+ * LinkedHashMap_String_String_Bench score: 11614581.000000 (11.61M 1626.8%)
+ *                               uncertainty:  14.4%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * LinkedHashMap_String_String_Bench score: 2142387.250000 (2.142M 1457.7%)
- *                               uncertainty:  40.0%
+ * LinkedHashMap_String_String_Bench score: 9044734.000000 (9.045M 1601.8%)
+ *                               uncertainty:  14.4%
  */
 public final class LinkedHashMap_String_String_Bench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		final OrderedMap<String, String> coll = new OrderedMap<String, String>();
+		final LinkedHashMap<String, String> coll = new LinkedHashMap<String, String>(16, 0.25f);
 		for (long i = 0; i < numIterations; i++) {
 			final String s = String.valueOf(i);
 			coll.put(s, s);

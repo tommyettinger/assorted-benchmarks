@@ -23,20 +23,20 @@ import java.util.HashMap;
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * HashMap_String_String_Bench score: 6796219.500000 (6.796M 1573.2%)
- *                         uncertainty:  40.0%
+ * HashMap_String_String_Bench score: 12257449.000000 (12.26M 1632.2%)
+ *                         uncertainty:   5.2%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * HashMap_String_String_Bench score: 6840125.500000 (6.840M 1573.8%)
- *                         uncertainty:  14.4%
+ * HashMap_String_String_Bench score: 9618135.000000 (9.618M 1607.9%)
+ *                         uncertainty:  24.0%
  */
 public final class HashMap_String_String_Bench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		HashMap<String, String> coll = new HashMap<String, String>();
+		HashMap<String, String> coll = new HashMap<String, String>(16, 0.25f);
 		for (long i = 0; i < numIterations; i++) {
 			String s = String.valueOf(i);
 			coll.put(s, s);

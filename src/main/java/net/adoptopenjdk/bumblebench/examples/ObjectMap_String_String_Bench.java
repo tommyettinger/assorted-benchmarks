@@ -22,20 +22,20 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * ObjectMap_String_String_Bench score: 1628225.375000 (1.628M 1430.3%)
- *                           uncertainty:  40.0%
+ * ObjectMap_String_String_Bench score: 4905158.000000 (4.905M 1540.6%)
+ *                           uncertainty:   0.7%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * ObjectMap_String_String_Bench score: 1676581.125000 (1.677M 1433.2%)
- *                           uncertainty:  27.1%
+ * ObjectMap_String_String_Bench score: 4409928.000000 (4.410M 1529.9%)
+ *                           uncertainty:  40.0%
  */
 public final class ObjectMap_String_String_Bench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		ObjectMap<String, String> coll = new ObjectMap<String, String>();
+		ObjectMap<String, String> coll = new ObjectMap<String, String>(16, 0.25f);
 		for (long i = 0; i < numIterations; i++) {
 			String s = String.valueOf(i);
 			coll.put(s, s);

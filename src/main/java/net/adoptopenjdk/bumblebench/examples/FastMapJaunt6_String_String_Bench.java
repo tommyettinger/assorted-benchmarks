@@ -25,17 +25,16 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * Javolution 6.0.0 gets these results (higher is better):
  * <br>
- * FastMapJaunt6_String_String_Bench score: 12660406.000000 (12.66M 1635.4%)
+ * FastMapJaunt6_String_String_Bench score: 12859529.000000 (12.86M 1637.0%)
  *                               uncertainty:  40.0%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
  * Javolution 6.0.0 gets different results:
  * <br>
- * FastMapJaunt6_String_String_Bench score: 9913282.000000 (9.913M 1610.9%)
+ * FastMapJaunt6_String_String_Bench score: 9344983.000000 (9.345M 1605.0%)
  *                               uncertainty:  40.0%
  * <br>
- * Yeah, that's about twice as fast as HashMap, to say nothing of LinkedHashMap.
  */
 public final class FastMapJaunt6_String_String_Bench extends MicroBench {
 

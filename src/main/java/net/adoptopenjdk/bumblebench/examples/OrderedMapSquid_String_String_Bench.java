@@ -23,20 +23,20 @@ import squidpony.squidmath.OrderedMap;
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * OrderedMapSquid_String_String_Bench score: 1346364.000000 (1.346M 1411.3%)
- *                                 uncertainty:   2.8%
+ * OrderedMapSquid_String_String_Bench score: 9775756.000000 (9.776M 1609.5%)
+ *                                 uncertainty:   8.7%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * OrderedMapSquid_String_String_Bench score: 1235325.500000 (1.235M 1402.7%)
+ * OrderedMapSquid_String_String_Bench score: 9220581.000000 (9.221M 1603.7%)
  *                                 uncertainty:  14.4%
  */
 public final class OrderedMapSquid_String_String_Bench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		final OrderedMap<String, String> coll = new OrderedMap<String, String>(CrossHash.mildHasher);
+		final OrderedMap<String, String> coll = new OrderedMap<String, String>(16, 0.25f, CrossHash.mildHasher);
 		for (long i = 0; i < numIterations; i++) {
 			final String s = String.valueOf(i);
 			coll.put(s, s);
