@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.OrderedMap;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
+ * At load factor 0.25f:
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
@@ -31,11 +32,16 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * OrderedMapGDX_String_String_Bench score: 4060555.250000 (4.061M 1521.7%)
  *                               uncertainty:  40.0%
+ * <br>
+ * At load factor 0.5f on HotSpot:
+ * <br>
+ * OrderedMapGDX_String_String_Bench score: 3865669.250000 (3.866M 1516.8%)
+ *                               uncertainty:   6.2%
  */
 public final class OrderedMapGDX_String_String_Bench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		final OrderedMap<String, String> coll = new OrderedMap<String, String>(16, 0.25f);
+		final OrderedMap<String, String> coll = new OrderedMap<String, String>(16, 0.5f);
 		for (long i = 0; i < numIterations; i++) {
 			final String s = String.valueOf(i);
 			coll.put(s, s);

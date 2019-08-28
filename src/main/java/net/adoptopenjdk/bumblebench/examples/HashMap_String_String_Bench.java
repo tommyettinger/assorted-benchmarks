@@ -19,6 +19,7 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
 import java.util.HashMap;
 
 /**
+ * At load factor 0.25f:
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
@@ -32,11 +33,16 @@ import java.util.HashMap;
  * <br>
  * HashMap_String_String_Bench score: 9618135.000000 (9.618M 1607.9%)
  *                         uncertainty:  24.0%
+ * <br>
+ * At load factor 0.5f on HotSpot:
+ * <br>
+ * HashMap_String_String_Bench score: 11737113.000000 (11.74M 1627.8%)
+ *                         uncertainty:   4.4%
  */
 public final class HashMap_String_String_Bench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		HashMap<String, String> coll = new HashMap<String, String>(16, 0.25f);
+		HashMap<String, String> coll = new HashMap<String, String>(16, 0.5f);
 		for (long i = 0; i < numIterations; i++) {
 			String s = String.valueOf(i);
 			coll.put(s, s);

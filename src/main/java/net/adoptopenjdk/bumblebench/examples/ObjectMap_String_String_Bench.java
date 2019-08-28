@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
+ * At load factor 0.25f:
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
@@ -31,11 +32,16 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * ObjectMap_String_String_Bench score: 4409928.000000 (4.410M 1529.9%)
  *                           uncertainty:  40.0%
+ * <br>
+ * At load factor 0.5f on HotSpot:
+ * <br>
+ * ObjectMap_String_String_Bench score: 4207841.000000 (4.208M 1525.2%)
+ *                           uncertainty:   1.8%
  */
 public final class ObjectMap_String_String_Bench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		ObjectMap<String, String> coll = new ObjectMap<String, String>(16, 0.25f);
+		ObjectMap<String, String> coll = new ObjectMap<String, String>(16, 0.5f);
 		for (long i = 0; i < numIterations; i++) {
 			String s = String.valueOf(i);
 			coll.put(s, s);

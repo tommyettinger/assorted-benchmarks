@@ -19,6 +19,7 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
 import java.util.LinkedHashMap;
 
 /**
+ * At load factor 0.25f:
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
@@ -32,11 +33,16 @@ import java.util.LinkedHashMap;
  * <br>
  * LinkedHashMap_String_String_Bench score: 9044734.000000 (9.045M 1601.8%)
  *                               uncertainty:  14.4%
+ * <br>
+ * At load factor 0.5f on HotSpot:
+ * <br>
+ * LinkedHashMap_String_String_Bench score: 10201033.000000 (10.20M 1613.8%)
+ *                               uncertainty:  40.0%
  */
 public final class LinkedHashMap_String_String_Bench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		final LinkedHashMap<String, String> coll = new LinkedHashMap<String, String>(16, 0.25f);
+		final LinkedHashMap<String, String> coll = new LinkedHashMap<String, String>(16, 0.5f);
 		for (long i = 0; i < numIterations; i++) {
 			final String s = String.valueOf(i);
 			coll.put(s, s);

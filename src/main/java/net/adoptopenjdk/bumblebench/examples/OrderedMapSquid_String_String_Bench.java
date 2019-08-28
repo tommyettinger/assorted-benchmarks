@@ -18,6 +18,7 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
 import squidpony.squidmath.OrderedMap;
 
 /**
+ * At load factor 0.25f:
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
@@ -31,11 +32,18 @@ import squidpony.squidmath.OrderedMap;
  * <br>
  * OrderedMapSquid_String_String_Bench score: 9152753.000000 (9.153M 1603.0%)
  *                                 uncertainty:  40.0%
+ * <br>
+ * At load factor 0.5f on HotSpot:
+ * <br>
+ * OrderedMapSquid_String_String_Bench score: 3998924.750000 (3.999M 1520.2%)
+ *                                 uncertainty:   4.6%
+ * <br>
+ * Clearly, the SquidLib collections benefit a lot from a low load factor.
  */
 public final class OrderedMapSquid_String_String_Bench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		final OrderedMap<String, String> coll = new OrderedMap<String, String>(16, 0.25f);
+		final OrderedMap<String, String> coll = new OrderedMap<String, String>(16, 0.5f);
 		for (long i = 0; i < numIterations; i++) {
 			final String s = String.valueOf(i);
 			coll.put(s, s);
