@@ -50,9 +50,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.squidpony</groupId>
+            <groupId>com.github.SquidPony.SquidLib</groupId>
             <artifactId>squidlib-util</artifactId>
-            <version>3.0.0-b10</version>
+            <version>3fdd596d7f</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -64,7 +64,7 @@
         <dependency>             
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>jaunt</artifactId>
-            <version>ee175d6fd8</version>
+            <version>abe1c29244</version>
             <scope>compile</scope>
         </dependency>
 <!--        <dependency>-->
@@ -85,6 +85,15 @@
     
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
