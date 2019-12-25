@@ -50,6 +50,19 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-backend-lwjgl3</artifactId>
+            <version>${gdx.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-platform</artifactId>
+            <version>${gdx.version}</version>
+            <classifier>natives-desktop</classifier>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.github.SquidPony.SquidLib</groupId>
             <artifactId>squidlib-util</artifactId>
             <version>3fdd596d7f</version>
