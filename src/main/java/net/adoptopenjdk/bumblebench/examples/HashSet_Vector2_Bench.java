@@ -14,8 +14,9 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import net.adoptopenjdk.bumblebench.core.MicroBench;
+import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 import java.util.HashSet;
 
@@ -25,24 +26,41 @@ import java.util.HashSet;
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * HashSet_Vector2_Bench score: 1911172.500000 (1.911M 1446.3%)
- *                   uncertainty:  11.7%
+ * HashSet_Vector2_Bench score: 1413834.500000 (1.414M 1416.2%)
+ *                   uncertainty:  14.4%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * HashSet_Vector2_Bench score: 2544355.250000 (2.544M 1474.9%)
- *                   uncertainty:   1.1%
+ * HashSet_Vector2_Bench score: 2783896.500000 (2.784M 1483.9%)
+ *                   uncertainty:   5.5%
  */
-public final class HashSet_Vector2_Bench extends MicroBench {
+public final class HashSet_Vector2_Bench extends MiniBench {
 
-	protected long doBatch(long numIterations) throws InterruptedException {
+	@Override
+	protected int maxIterationsPerLoop() {
+		return 1000007;
+	}
+
+	@Override
+	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
 		final HashSet<Vector2> coll = new HashSet<>(16, 0.5f);
-		for (long i = 0; i < numIterations; i++) {
-			coll.add(new Vector2(i & 0xAAAAAAAAAAAAAAAAL, i & 0x5555555555555555L));
+		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
+		for (long i = 0; i < numLoops; i++) {
+			int x = -halfIterations, y = -halfIterations;
+			for (int j = 0; j < numIterationsPerLoop; j++) {
+				startTimer();
+				coll.add(new Vector2(x, y));
+				pauseTimer();
+				if(++x > halfIterations)
+				{
+					x = -halfIterations;
+					y++;
+				}
+			}
 		}
-		return numIterations;
+		return numLoops * numIterationsPerLoop;
 	}
 }
 
