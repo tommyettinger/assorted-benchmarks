@@ -14,8 +14,9 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ObjectSet;
-import net.adoptopenjdk.bumblebench.core.MicroBench;
+import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 /**
  * At load factor 0.5f:
@@ -23,24 +24,40 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * ObjectSet_Victor2_Bench score: 1993875.500000 (1.994M 1450.6%)
- *                     uncertainty:  40.0%
+ * ObjectSet_Victor2_Bench score: 7632206.500000 (7.632M 1584.8%)
+ *                     uncertainty:   5.9%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * ObjectSet_Victor2_Bench score: 3851034.500000 (3.851M 1516.4%)
- *                     uncertainty:  17.7%
+ * ObjectSet_Victor2_Bench score: 7907930.500000 (7.908M 1588.3%)
+ *                     uncertainty:   5.9%
  */
-public final class ObjectSet_Victor2_Bench extends MicroBench {
+public final class ObjectSet_Victor2_Bench extends MiniBench {
+	@Override
+	protected int maxIterationsPerLoop() {
+		return 1000007;
+	}
 
-	protected long doBatch(long numIterations) throws InterruptedException {
+	@Override
+	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
 		final ObjectSet<Victor2> coll = new ObjectSet<>(16, 0.5f);
-		for (long i = 0; i < numIterations; i++) {
-			coll.add(new Victor2(i & 0xAAAAAAAAAAAAAAAAL, i & 0x5555555555555555L));
+		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
+		for (long i = 0; i < numLoops; i++) {
+			int x = -halfIterations, y = -halfIterations;
+			for (int j = 0; j < numIterationsPerLoop; j++) {
+				startTimer();
+				coll.add(new Victor2(x, y));
+				pauseTimer();
+				if(++x > halfIterations)
+				{
+					x = -halfIterations;
+					y++;
+				}
+			}
 		}
-		return numIterations;
+		return numLoops * numIterationsPerLoop;
 	}
 }
 

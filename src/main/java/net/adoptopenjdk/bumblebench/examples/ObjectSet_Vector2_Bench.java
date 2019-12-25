@@ -14,9 +14,10 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectSet;
-import net.adoptopenjdk.bumblebench.core.MicroBench;
+import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 /**
  * At load factor 0.5f:
@@ -34,14 +35,30 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * ObjectSet_Vector2_Bench score: EPIC FAIL, dumped the heap after:
  * java.lang.OutOfMemoryError: Java heap space
  */
-public final class ObjectSet_Vector2_Bench extends MicroBench {
+public final class ObjectSet_Vector2_Bench extends MiniBench {
+	@Override
+	protected int maxIterationsPerLoop() {
+		return 1000007;
+	}
 
-	protected long doBatch(long numIterations) throws InterruptedException {
+	@Override
+	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
 		final ObjectSet<Vector2> coll = new ObjectSet<>(16, 0.5f);
-		for (long i = 0; i < numIterations; i++) {
-			coll.add(new Vector2(i & 0xAAAAAAAAAAAAAAAAL, i & 0x5555555555555555L));
+		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
+		for (long i = 0; i < numLoops; i++) {
+			int x = -halfIterations, y = -halfIterations;
+			for (int j = 0; j < numIterationsPerLoop; j++) {
+				startTimer();
+				coll.add(new Vector2(x, y));
+				pauseTimer();
+				if(++x > halfIterations)
+				{
+					x = -halfIterations;
+					y++;
+				}
+			}
 		}
-		return numIterations;
+		return numLoops * numIterationsPerLoop;
 	}
 }
 
