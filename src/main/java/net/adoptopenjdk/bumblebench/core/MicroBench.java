@@ -23,7 +23,7 @@ public abstract class MicroBench extends BumbleBench {
 
 		static boolean TARGET_INCLUDES_PAUSES = true;
 		static float   MIN_UNPAUSED_FACTOR    = 0.2F;
-		static float   MAX_TIME_DILATION      = 100F;
+		static float   MAX_TIME_DILATION      = 5000F;
 		static boolean UNSPECIFIED_ESTIMATE   = false;
 	}
 

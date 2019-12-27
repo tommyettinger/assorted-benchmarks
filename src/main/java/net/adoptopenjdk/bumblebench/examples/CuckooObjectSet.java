@@ -77,7 +77,8 @@ public class CuckooObjectSet<T> implements Iterable<T> {
 
 		threshold = (int)(capacity * loadFactor);
 		mask = capacity - 1;
-		hashShift = 31 - Integer.numberOfTrailingZeros(capacity);
+		hashShift = Long.numberOfLeadingZeros(mask);
+//		hashShift = 31 - Integer.numberOfTrailingZeros(capacity);
 		stashCapacity = Math.max(3, (int) Math.ceil(Math.log(capacity)) * 2);
 		pushIterations = Math.max(Math.min(capacity, 8), (int) Math.sqrt(capacity) / 8);
 
@@ -100,7 +101,7 @@ public class CuckooObjectSet<T> implements Iterable<T> {
 
 		// Check for existing keys.
 		int hashCode = key.hashCode();
-		int index1 = hashCode & mask;
+		int index1 = hash1(hashCode);
 		T key1 = keyTable[index1];
 		if (key.equals(key1)) return false;
 
@@ -169,7 +170,7 @@ public class CuckooObjectSet<T> implements Iterable<T> {
 	private void addResize (T key) {
 		// Check for empty buckets.
 		int hashCode = key.hashCode();
-		int index1 = hashCode & mask;
+		int index1 = hash1(hashCode);
 		T key1 = keyTable[index1];
 		if (key1 == null) {
 			keyTable[index1] = key;
@@ -222,7 +223,7 @@ public class CuckooObjectSet<T> implements Iterable<T> {
 
 			// If the evicted key hashes to an empty bucket, put it there and stop.
 			int hashCode = evictedKey.hashCode();
-			index1 = hashCode & mask;
+			index1 = hash1(hashCode);
 			key1 = keyTable[index1];
 			if (key1 == null) {
 				keyTable[index1] = evictedKey;
@@ -260,7 +261,7 @@ public class CuckooObjectSet<T> implements Iterable<T> {
 			// this uses the least significant bit of stash capacity (whether it is even or odd) to determine if
 			// this should increase capacity and stashCapacity, or just stashCapacity. It should increase capacity
 			// on every other occasion when stashCapacity has been exhausted.
-			resize(size < (threshold >> 1) ? capacity : (capacity << 1), (stashCapacity + (stashCapacity >> 1)));
+			resize(size < (threshold * 3 >> 2) ? capacity : (capacity << 1), (stashCapacity + (stashCapacity >> 1)));
 //			resize(capacity << (stashCapacity & 1), (stashCapacity + (stashCapacity >> 1) & -2) ^ (1 - (stashCapacity & 1)));
 			//resize(capacity + (capacity >> 1 + (stashCapacity & 1)), (stashCapacity + (stashCapacity >> 1) & -2) ^ (1 - (stashCapacity & 1)));
 			addResize(key);
@@ -276,7 +277,7 @@ public class CuckooObjectSet<T> implements Iterable<T> {
 	/** Returns true if the key was removed. */
 	public boolean remove (T key) {
 		int hashCode = key.hashCode();
-		int index = hashCode & mask;
+		int index = hash1(hashCode);
 		if (key.equals(keyTable[index])) {
 			keyTable[index] = null;
 			size--;
@@ -366,7 +367,7 @@ public class CuckooObjectSet<T> implements Iterable<T> {
 
 	public boolean contains (T key) {
 		int hashCode = key.hashCode();
-		int index = hashCode & mask;
+		int index = hash1(hashCode);
 		if (!key.equals(keyTable[index])) {
 			index = hash2(hashCode);
 			if (!key.equals(keyTable[index])) {
@@ -380,7 +381,7 @@ public class CuckooObjectSet<T> implements Iterable<T> {
 	/** @return May be null. */
 	public T get (T key) {
 		int hashCode = key.hashCode();
-		int index = hashCode & mask;
+		int index = hash1(hashCode);
 		T found = keyTable[index];
 		if (!key.equals(found)) {
 			index = hash2(hashCode);
@@ -425,7 +426,8 @@ public class CuckooObjectSet<T> implements Iterable<T> {
 		capacity = newSize;
 		threshold = (int)(newSize * loadFactor);
 		mask = newSize - 1;
-		hashShift = 31 - Integer.numberOfTrailingZeros(newSize);
+		hashShift = Long.numberOfLeadingZeros(mask);
+//		hashShift = 31 - Integer.numberOfTrailingZeros(newSize);
 		pushIterations = Math.max(Math.min(newSize, 8), (int) Math.sqrt(newSize) / 8);
 
 		T[] oldKeyTable = keyTable;
@@ -442,14 +444,20 @@ public class CuckooObjectSet<T> implements Iterable<T> {
 			}
 		}
 	}
-
+	
+	private int hash1 (int h) {
+		return (int) (h * 0x9E3779B97F4A7C15L >>> hashShift);
+	}
+	
 	private int hash2 (int h) {
-		h = (h ^ 0x9E3779B9) * 0x174DF9;
-		return (h ^ h >>> hashShift) & mask;
+		return (int) (h * 0xC13FA9A902A6328FL >>> hashShift);
+//		h = (h ^ 0x9E3779B9) * 0x174DF9;
+//		return (h ^ h >>> hashShift) & mask;
 	}
 	private int hash3 (int h) {
-		h = (h ^ 0xBBE05633) * 0x19E151;
-		return (h ^ h >>> (hashShift + 1 | 1)) & mask;
+		return (int) (h * 0xD1B54A32D192ED03L >>> hashShift);
+//		h = (h ^ 0xBBE05633) * 0x19E151;
+//		return (h ^ h >>> (hashShift + 1 | 1)) & mask;
 	}
 
 //	private int hash2 (int h) {

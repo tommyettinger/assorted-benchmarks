@@ -14,6 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
@@ -23,16 +24,18 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * CuckooObjectSet_Grid2_Bench score: 9553637.000000 (9.554M 1607.2%)
- *                         uncertainty:  13.1%
+ * RHPart_GridPoint2_Bench score: 9335086.000000 (9.335M 1604.9%)
+ *                     uncertainty:   3.1%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * 
+ * RHPart_GridPoint2_Bench score: 6352246.500000 (6.352M 1566.4%)
+ *                     uncertainty:   7.1%
  */
-public final class CuckooObjectSet_Grid2_Bench extends MiniBench {
+public final class RHPart_GridPoint2_Bench extends MiniBench {
+
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -40,13 +43,22 @@ public final class CuckooObjectSet_Grid2_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final CuckooObjectSet<Grid2> coll = new CuckooObjectSet<>(16, 0.5f);
+		final RobinHoodPart<GridPoint2> coll = new RobinHoodPart<>(16, 0.5f);
+//		final int halfIterations = numIterationsPerLoop >> 1;
+//		for (long i = 0; i < numLoops; i++) {
+//			for (int j = 0; j < numIterationsPerLoop; j++) {
+//				final int d = GreasedRegion.disperseBits(j);
+//				startTimer();
+//				coll.add(new GridPoint2((d & 0xFFFF) - halfIterations, (j >>> 16) - halfIterations));
+//				pauseTimer();
+//			}
+//		}
 		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
 		for (long i = 0; i < numLoops; i++) {
 			int x = -halfIterations, y = -halfIterations;
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.add(new Grid2(x, y));
+				coll.add(new GridPoint2(x, y));
 				pauseTimer();
 				if(++x > halfIterations)
 				{
