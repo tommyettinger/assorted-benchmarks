@@ -21,7 +21,7 @@ public class RHHashSet<K> extends AbstractSet<K> {
     private static final int INITIAL_CAPACITY = 16;
 
     // Resize after hash table 50% filled in.
-    private static final double RESIZE_LOAD_FACTOR = 0.5;
+    private final float f;
 
     private int size;
 
@@ -34,12 +34,17 @@ public class RHHashSet<K> extends AbstractSet<K> {
     public RHHashSet() {
         this.data = (K[])(new Object[INITIAL_CAPACITY]);
         this.ib = new int[INITIAL_CAPACITY];
+        f = 0.5f;
     }
 
     public RHHashSet(int capacity) {
+        this(capacity, 0.5f);
+    }
+    public RHHashSet(int capacity, float loadFactor) {
         capacity = MathUtils.nextPowerOfTwo(capacity);
         this.data = (K[])(new Object[capacity]);
         this.ib = new int[capacity];
+        f = loadFactor;
     }
 
     @Override
@@ -131,7 +136,7 @@ public class RHHashSet<K> extends AbstractSet<K> {
         }
 
         ++size;
-        if (Double.compare(loadFactor(), RESIZE_LOAD_FACTOR) >= 0) {
+        if (Float.compare(loadFactor(), f) >= 0) {
             resize();
         }
 
@@ -209,7 +214,7 @@ public class RHHashSet<K> extends AbstractSet<K> {
         return (hashCode * SALT) & (data.length - 1);
     }
 
-    private double loadFactor() {
-        return ((double) size) / data.length;
+    private float loadFactor() {
+        return ((float) size) / data.length;
     }
 }

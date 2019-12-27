@@ -3,7 +3,6 @@ package net.adoptopenjdk.bumblebench.examples;
 import com.badlogic.gdx.math.MathUtils;
 
 import java.util.AbstractMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -162,7 +161,7 @@ public class RHHashMap<K, V> extends AbstractMap<K, V> {
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
 
-        Set<Map.Entry<K, V>> entries = new HashSet<>();
+        Set<Map.Entry<K, V>> entries = new RHHashSet<>(size);
 
         for (Entry<K, V> entry : data) {
             if (entry != null) {
@@ -188,7 +187,7 @@ public class RHHashMap<K, V> extends AbstractMap<K, V> {
     @SuppressWarnings("unchecked")
     private void resize() {
 
-        Entry[] tempData = data;
+        Entry<K, V>[] tempData = data;
 
         data = new Entry[data.length << 1];
 
@@ -240,7 +239,7 @@ public class RHHashMap<K, V> extends AbstractMap<K, V> {
 
         @Override
         public String toString() {
-            return String.valueOf(key) + "=" + String.valueOf(value) + "[" + initialBucket + "]";
+            return key + "=" + value + "[" + initialBucket + "]";
         }
     }
 

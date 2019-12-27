@@ -42,7 +42,7 @@ public final class RHHashSet_Grid2_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final RHHashSet<Grid2> coll = new RHHashSet<>(16);
+		final RHHashSet<Grid2> coll = new RHHashSet<>(16, 0.5f);
 //		final int halfIterations = numIterationsPerLoop >> 1;
 //		for (long i = 0; i < numLoops; i++) {
 //			for (int j = 0; j < numIterationsPerLoop; j++) {

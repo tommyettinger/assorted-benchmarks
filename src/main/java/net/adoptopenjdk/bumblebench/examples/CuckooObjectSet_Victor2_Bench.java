@@ -14,7 +14,6 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
@@ -24,18 +23,17 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * RHHashSet_GridPoint2_Bench score: 7426140.000000 (7.426M 1582.1%)
- *                        uncertainty:  12.9%
+ * HashSet_Vector2_Bench score: FAIL, throws:
+ * java.lang.OutOfMemoryError: Java heap space
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * RHHashSet_GridPoint2_Bench score: 5391062.500000 (5.391M 1550.0%)
- *                        uncertainty:   2.6%
+ * ObjectSet_Vector2_Bench score: EPIC FAIL, dumped the heap after:
+ * java.lang.OutOfMemoryError: Java heap space
  */
-public final class RHHashSet_GridPoint2_Bench extends MiniBench {
-
+public final class CuckooObjectSet_Victor2_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -43,22 +41,13 @@ public final class RHHashSet_GridPoint2_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final RHHashSet<GridPoint2> coll = new RHHashSet<>(16, 0.5f);
-//		final int halfIterations = numIterationsPerLoop >> 1;
-//		for (long i = 0; i < numLoops; i++) {
-//			for (int j = 0; j < numIterationsPerLoop; j++) {
-//				final int d = GreasedRegion.disperseBits(j);
-//				startTimer();
-//				coll.add(new GridPoint2((d & 0xFFFF) - halfIterations, (j >>> 16) - halfIterations));
-//				pauseTimer();
-//			}
-//		}
+		final CuckooObjectSet<Victor2> coll = new CuckooObjectSet<>(16, 0.5f);
 		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
 		for (long i = 0; i < numLoops; i++) {
 			int x = -halfIterations, y = -halfIterations;
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.add(new GridPoint2(x, y));
+				coll.add(new Victor2(x, y));
 				pauseTimer();
 				if(++x > halfIterations)
 				{
