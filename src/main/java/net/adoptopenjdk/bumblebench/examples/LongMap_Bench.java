@@ -19,20 +19,23 @@ import com.badlogic.gdx.utils.LongMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 /**
+ * NOTE: this uses the Rosenberg-Strong pairing function to combine x and y of a grid point into one long. I'm not
+ * totally sure that x and y can be extracted from a key with the way they are paired now, but it's likely they can be.
+ * <br>
  * At load factor 0.5f:
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * LongMap_Bench score: 15975918.000000 (15.98M 1658.7%)
- *           uncertainty:   3.6%
+ * LongMap_Bench score: 40684704.000000 (40.68M 1752.1%)
+ *           uncertainty:   2.9%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * LongMap_Bench score: 10953742.000000 (10.95M 1620.9%)
- *           uncertainty:   3.0%
+ * LongMap_Bench score: 18924496.000000 (18.92M 1675.6%)
+ *           uncertainty:   4.3%
  */
 public final class LongMap_Bench extends MiniBench {
 	@Override
@@ -48,7 +51,12 @@ public final class LongMap_Bench extends MiniBench {
 			int x = -halfIterations, y = -halfIterations;
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.put((long)x << 32 | (y & 0xFFFFFFFFL), null);
+				final long xx = (x << 1 ^ x >> 31) + 0x80000000L;
+				final long yy = (y << 1 ^ y >> 31) + 0x80000000L;
+				coll.put((xx + (xx > yy ? xx * xx + xx - yy : yy * yy)), null);
+				
+				//// this was bad, below; it had less than half the throughput.
+//				coll.put((long)x << 32 | (y & 0xFFFFFFFFL), null);
 				pauseTimer();
 				if(++x > halfIterations)
 				{
