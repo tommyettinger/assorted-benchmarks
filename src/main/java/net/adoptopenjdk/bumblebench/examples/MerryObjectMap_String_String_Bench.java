@@ -14,7 +14,6 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.utils.ObjectMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 import squidpony.StringKit;
 
@@ -28,8 +27,8 @@ import java.nio.file.Paths;
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * ObjectMap_String_String_Bench score: 16533109.000000 (16.53M 1662.1%)
- *  *                           uncertainty:   1.4%
+ * MerryObjectMap_String_String_Bench score: 16115883.000000 (16.12M 1659.5%)
+ *                                uncertainty:   1.3%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
@@ -37,7 +36,7 @@ import java.nio.file.Paths;
  * <br>
  * 
  */
-public final class ObjectMap_String_String_Bench extends MiniBench {
+public final class MerryObjectMap_String_String_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -45,7 +44,7 @@ public final class ObjectMap_String_String_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final ObjectMap<String, String> coll = new ObjectMap<>(16, 0.5f);
+		final MerryObjectMap<String, String> coll = new MerryObjectMap<>(16, 0.5f);
 		String book = "";
 		try {
 			book = new String(Files.readAllBytes(Paths.get("res/bible_only_words.txt")));

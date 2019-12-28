@@ -14,40 +14,54 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import net.adoptopenjdk.bumblebench.core.MicroBench;
+import net.adoptopenjdk.bumblebench.core.MiniBench;
+import squidpony.StringKit;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 /**
- * At load factor 0.25f:
+ * At load factor 0.5f:
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * HashMap_String_String_Bench score: 12257449.000000 (12.26M 1632.2%)
- *                         uncertainty:   5.2%
+ * HashMap_String_String_Bench score: 15285676.000000 (15.29M 1654.2%)
+ *                         uncertainty:  11.8%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * HashMap_String_String_Bench score: 9618135.000000 (9.618M 1607.9%)
- *                         uncertainty:  24.0%
- * <br>
- * At load factor 0.5f on HotSpot:
- * <br>
- * HashMap_String_String_Bench score: 11737113.000000 (11.74M 1627.8%)
- *                         uncertainty:   4.4%
+ * 
  */
-public final class HashMap_String_String_Bench extends MicroBench {
+public final class HashMap_String_String_Bench extends MiniBench {
+	@Override
+	protected int maxIterationsPerLoop() {
+		return 1000007;
+	}
 
-	protected long doBatch(long numIterations) throws InterruptedException {
-		HashMap<String, String> coll = new HashMap<String, String>(16, 0.5f);
-		for (long i = 0; i < numIterations; i++) {
-			String s = String.valueOf(i);
-			coll.put(s, s);
+	@Override
+	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
+		final HashMap<String, String> coll = new HashMap<>(16, 0.5f);
+		String book = "";
+		try {
+			book = new String(Files.readAllBytes(Paths.get("res/bible_only_words.txt")));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return numIterations;
+		final String[] words = StringKit.split(book, " ");
+		final int length = words.length;
+		for (long i = 0; i < numLoops; i++) {
+			for (int j = 0; j < numIterationsPerLoop; j++) {
+				startTimer();
+				coll.put(words[j % length], words[((j ^ 0x91E10DA5) * 0xD192ED03 >>> 1) % length]);
+				pauseTimer();
+			}
+		}
+		return numLoops * numIterationsPerLoop;
 	}
 }
 

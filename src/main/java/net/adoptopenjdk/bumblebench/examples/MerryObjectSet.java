@@ -53,7 +53,7 @@ import java.util.NoSuchElementException;
  * @author Tommy Ettinger
  * @author Nathan Sweet */
 public class MerryObjectSet<T> implements Iterable<T> {
-	private static final int PRIME1 = 0x15BA25;
+//	private static final int PRIME1 = 0x15BA25;
 //	private static final int PRIME2 = 0x13C6EF;
 
 	public int size;
@@ -107,9 +107,6 @@ public class MerryObjectSet<T> implements Iterable<T> {
 	}
 	
 	private int bucket(final int hashCode) {
-		// basic hashCode expansion (from multiplication) and
-		// truncation (by masking to fit in the tables).
-		//return (hashCode * PRIME1 & mask);
 		// fibonacci hashing; may improve resistance to bad hashCode()s
 		// shift is always greater than 32, less than 64
 		// 0x9E3779B97F4A7C15L is 2 to the 64 divided by the golden ratio
@@ -313,12 +310,13 @@ public class MerryObjectSet<T> implements Iterable<T> {
 	}
 
 	public boolean contains (T key) {
-		return keyTable[locateKey(key)] != null;
+		return locateKey(key) != -1;
 	}
 
 	/** @return May be null. */
 	public T get (T key) {
-		return keyTable[locateKey(key)];
+		final int loc = locateKey(key);
+		return loc == -1 ? null : keyTable[loc];
 	}
 
 	public T first () {
@@ -460,6 +458,7 @@ public class MerryObjectSet<T> implements Iterable<T> {
 			if (currentIndex < 0) throw new IllegalStateException("next must be called before remove.");
 			
 			set.keyTable[currentIndex] = null;
+			set.ib[currentIndex] = 0;
 			currentIndex = -1;
 			set.size--;
 		}
