@@ -84,18 +84,14 @@ public class RHHashSet<K> extends AbstractSet<K> {
         int bucket = bucket(keyHashCode);
 
         for (int i = bucket; ; i = (i + 1) & mask) {
-
             // empty bucket
             if (data[i] == null) {
                 return -1;
             }
-
             if (key.equals(data[i])) {
                 return i;
             }
-
             // cur node distance < distance for a search key
-            //TODO: check if we need here Math.abs(i - bucket) or just i - bucket
             if (calculateDistance(ib[i], i) < calculateDistance(bucket, i)) {
                 return -1;
             }
@@ -103,18 +99,14 @@ public class RHHashSet<K> extends AbstractSet<K> {
     }
 
     private int findNodeWithBucket(K key, int bucket) {
-
         for (int i = bucket; ; i = (i + 1) & mask) {
-
             // empty bucket
             if (data[i] == null) {
                 return -1;
             }
-
             if (key.equals(data[i])) {
                 return i;
             }
-
             // cur node distance < distance for a search key
             if (calculateDistance(ib[i], i) < calculateDistance(bucket, i)) {
                 return -1;
@@ -125,25 +117,20 @@ public class RHHashSet<K> extends AbstractSet<K> {
     @Override
     public boolean add(K key) {
         int b = bucket(key.hashCode());
-        int node = findNodeWithBucket(key, b);
-
-        // update existing entry
-        if (node != -1) {
+        // an identical key already exists
+        if (findNodeWithBucket(key, b) != -1) {
             return false;
         }
-        
         for (int i = b; ; i = (i + 1) & mask) {
-
-            // found empty slot, insert entry
+            // space is available so we insert and break (resize is later)
             if (data[i] == null) {
                 data[i] = key;
                 ib[i] = b;
                 break;
             }
-
-            // found entry with smaller distance, swap entries and proceed
+            // if there is a key with a lower probe distance, we swap with it
+            // and keep going until we find a place we can insert
             else if (calculateDistance(ib[i], i) < calculateDistance(b, i)) {
-                @SuppressWarnings("unchecked")
                 K temp = data[i];
                 int tb = ib[i];
                 data[i] = key;
@@ -152,12 +139,9 @@ public class RHHashSet<K> extends AbstractSet<K> {
                 b = tb;
             }
         }
-
-        ++size;
-        if (size > data.length * f) {
+        if (++size > data.length * f) {
             resize();
         }
-
         return true;
     }
 
@@ -180,13 +164,10 @@ public class RHHashSet<K> extends AbstractSet<K> {
         data[node] = null;
 
         for (int i = (node + 1) & mask; (data[i] != null && calculateDistance(ib[node], i) != 0); i = (i + 1) & mask) {
-//            if (i == 0) {
-//                data[data.length - 1] = data[0];
-//                data[0] = null;
-//            } else {
-                data[i - 1 & mask] = data[i];
-                data[i] = null;
-//            }
+            data[i - 1 & mask] = data[i];
+            ib[i - 1 & mask] = ib[i];
+            data[i] = null;
+            ib[i] = 0;
         }
 
         --size;
@@ -225,8 +206,12 @@ public class RHHashSet<K> extends AbstractSet<K> {
         }
     }
 
-    private int bucket(int hashCode) {
+    private int bucket(final int hashCode) {
+        // basic hashCode expansion (from multiplication) and
+        // truncation (by masking to fit in the tables).
         return (hashCode * SALT & mask);
+        // fibonacci hashing; may improve resistance to bad hashCode()s
+        // fibonacci uses 0x9E3779B97F4A7C15L as SALT
         //return (int) (hashCode * SALT >>> shift);
     }
 }
