@@ -34,7 +34,8 @@ import java.nio.file.Paths;
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * 
+ * RHPart_String_Bench score: 16972974.000000 (16.97M 1664.7%)
+ *                 uncertainty:   1.0%
  */
 public final class RHPart_String_Bench extends MiniBench {
 	@Override

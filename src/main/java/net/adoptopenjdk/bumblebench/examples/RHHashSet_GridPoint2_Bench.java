@@ -24,15 +24,15 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * RHHashSet_GridPoint2_Bench score: 7426140.000000 (7.426M 1582.1%)
- *                        uncertainty:  12.9%
+ * RHHashSet_GridPoint2_Bench score: 7966331.500000 (7.966M 1589.1%)
+ *                        uncertainty:  24.1%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * RHHashSet_GridPoint2_Bench score: 5391062.500000 (5.391M 1550.0%)
- *                        uncertainty:   2.6%
+ * RHHashSet_GridPoint2_Bench score: 4566917.000000 (4.567M 1533.4%)
+ *                        uncertainty:   5.8%
  */
 public final class RHHashSet_GridPoint2_Bench extends MiniBench {
 

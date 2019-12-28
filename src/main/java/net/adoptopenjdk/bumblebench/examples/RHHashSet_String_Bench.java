@@ -14,8 +14,12 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.math.MathUtils;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
+import squidpony.StringKit;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * At load factor 0.5f:
@@ -23,18 +27,17 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * RHHashSet_Grid2_Bench score: 13851827.000000 (13.85M 1644.4%)
- *                   uncertainty:  13.8%
+ * RHHashSet_String_Bench score: 23967692.000000 (23.97M 1699.2%)
+ *                    uncertainty:   3.2%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * RHHashSet_Grid2_Bench score: 11685487.000000 (11.69M 1627.4%)
- *                   uncertainty:   2.4%
+ * RHHashSet_String_Bench score: 16443820.000000 (16.44M 1661.5%)
+ *                    uncertainty:   0.6%
  */
-public final class RHHashSet_Grid2_Bench extends MiniBench {
-
+public final class RHHashSet_String_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -42,28 +45,20 @@ public final class RHHashSet_Grid2_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final RHHashSet<Grid2> coll = new RHHashSet<>(16, 0.5f);
-//		final int halfIterations = numIterationsPerLoop >> 1;
-//		for (long i = 0; i < numLoops; i++) {
-//			for (int j = 0; j < numIterationsPerLoop; j++) {
-//				final int d = GreasedRegion.disperseBits(j);
-//				startTimer();
-//				coll.add(new GridPoint2((d & 0xFFFF) - halfIterations, (j >>> 16) - halfIterations));
-//				pauseTimer();
-//			}
-//		}
-		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
+		final RHHashSet<String> coll = new RHHashSet<>(16, 0.5f);
+		String book = "";
+		try {
+			book = new String(Files.readAllBytes(Paths.get("res/bible_only_words.txt")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		final String[] words = StringKit.split(book, " ");
+		final int length = words.length;
 		for (long i = 0; i < numLoops; i++) {
-			int x = -halfIterations, y = -halfIterations;
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.add(new Grid2(x, y));
+				coll.add(words[j % length]);
 				pauseTimer();
-				if(++x > halfIterations)
-				{
-					x = -halfIterations;
-					y++;
-				}
 			}
 		}
 		return numLoops * numIterationsPerLoop;

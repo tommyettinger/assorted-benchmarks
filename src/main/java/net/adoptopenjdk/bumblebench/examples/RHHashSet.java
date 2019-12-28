@@ -15,12 +15,14 @@ import java.util.*;
  */
 public class RHHashSet<K> extends AbstractSet<K> {
 
-    // big prime number
+    // big prime number, not too big for GWT
     private static final int SALT = 0x15BA25;//7_368_787;
+    // 2 to the 64 divided by the golden ratio
+    //private static final long SALT = 0x9E3779B97F4A7C15L;
 
     private static final int INITIAL_CAPACITY = 16;
 
-    // Resize after hash table 50% filled in.
+    // Default: resize after hash table 50% filled in.
     private final float f;
 
     private int size;
@@ -30,11 +32,16 @@ public class RHHashSet<K> extends AbstractSet<K> {
      * Initial Bucket positions.
      */
     private int[] ib;
+    
+    private int mask;
+    //private int shift;
 
     public RHHashSet() {
         this.data = (K[])(new Object[INITIAL_CAPACITY]);
         this.ib = new int[INITIAL_CAPACITY];
         f = 0.5f;
+        mask = INITIAL_CAPACITY - 1;
+//        shift = 60;
     }
 
     public RHHashSet(int capacity) {
@@ -45,6 +52,8 @@ public class RHHashSet<K> extends AbstractSet<K> {
         this.data = (K[])(new Object[capacity]);
         this.ib = new int[capacity];
         f = loadFactor;
+        mask = capacity - 1;
+//        shift = Long.numberOfLeadingZeros(mask);
     }
 
     @Override
@@ -65,13 +74,8 @@ public class RHHashSet<K> extends AbstractSet<K> {
         };
     }
 
-    private static int calculateDistance(int initialBucket, int curBucketIndex, int dataCapacity) {
-        if (curBucketIndex >= initialBucket) {
-            return curBucketIndex - initialBucket;
-        }
-
-        // TODO:
-        return dataCapacity - initialBucket + curBucketIndex;
+    private int calculateDistance(final int initialBucket, final int curBucketIndex) {
+        return curBucketIndex - initialBucket & mask;
     }
 
     private int findNodeWithBucket(K key) {
@@ -79,23 +83,40 @@ public class RHHashSet<K> extends AbstractSet<K> {
         int keyHashCode = key.hashCode();
         int bucket = bucket(keyHashCode);
 
-        for (int i = bucket; ; i = (i + 1) & (data.length - 1)) {
+        for (int i = bucket; ; i = (i + 1) & mask) {
 
             // empty bucket
             if (data[i] == null) {
                 return -1;
             }
 
-            @SuppressWarnings("unchecked")
-            K k = data[i];
-
-            if (key.equals(k)) {
+            if (key.equals(data[i])) {
                 return i;
             }
 
             // cur node distance < distance for a search key
             //TODO: check if we need here Math.abs(i - bucket) or just i - bucket
-            if (calculateDistance(ib[i], i, data.length) < calculateDistance(bucket, i, data.length)) {
+            if (calculateDistance(ib[i], i) < calculateDistance(bucket, i)) {
+                return -1;
+            }
+        }
+    }
+
+    private int findNodeWithBucket(K key, int bucket) {
+
+        for (int i = bucket; ; i = (i + 1) & mask) {
+
+            // empty bucket
+            if (data[i] == null) {
+                return -1;
+            }
+
+            if (key.equals(data[i])) {
+                return i;
+            }
+
+            // cur node distance < distance for a search key
+            if (calculateDistance(ib[i], i) < calculateDistance(bucket, i)) {
                 return -1;
             }
         }
@@ -103,18 +124,15 @@ public class RHHashSet<K> extends AbstractSet<K> {
 
     @Override
     public boolean add(K key) {
-
-        int node = findNodeWithBucket(key);
+        int b = bucket(key.hashCode());
+        int node = findNodeWithBucket(key, b);
 
         // update existing entry
         if (node != -1) {
             return false;
         }
-
-        int b = bucket(key.hashCode());
         
-        
-        for (int i = b; ; i = (i + 1) & (data.length - 1)) {
+        for (int i = b; ; i = (i + 1) & mask) {
 
             // found empty slot, insert entry
             if (data[i] == null) {
@@ -124,7 +142,7 @@ public class RHHashSet<K> extends AbstractSet<K> {
             }
 
             // found entry with smaller distance, swap entries and proceed
-            else if (calculateDistance(ib[i], i, data.length) < calculateDistance(b, i, data.length)) {
+            else if (calculateDistance(ib[i], i) < calculateDistance(b, i)) {
                 @SuppressWarnings("unchecked")
                 K temp = data[i];
                 int tb = ib[i];
@@ -136,7 +154,7 @@ public class RHHashSet<K> extends AbstractSet<K> {
         }
 
         ++size;
-        if (Float.compare(loadFactor(), f) >= 0) {
+        if (size > data.length * f) {
             resize();
         }
 
@@ -161,18 +179,14 @@ public class RHHashSet<K> extends AbstractSet<K> {
 
         data[node] = null;
 
-        for (int i = (node + 1) & (data.length - 1);
-             (data[i] != null && calculateDistance(ib[node], i, data.length) != 0);
-             i = (i + 1) & (data.length - 1)) {
-
-            if (i == 0) {
-                data[data.length - 1] = data[0];
-                data[0] = null;
-            }
-            else {
-                data[i - 1] = data[i];
+        for (int i = (node + 1) & mask; (data[i] != null && calculateDistance(ib[node], i) != 0); i = (i + 1) & mask) {
+//            if (i == 0) {
+//                data[data.length - 1] = data[0];
+//                data[0] = null;
+//            } else {
+                data[i - 1 & mask] = data[i];
                 data[i] = null;
-            }
+//            }
         }
 
         --size;
@@ -182,7 +196,6 @@ public class RHHashSet<K> extends AbstractSet<K> {
     public boolean contains(Object key) {
         if(key == null)
             throw new NullPointerException("A RHHashMap doesn't allow null keys.");
-
         return data[findNodeWithBucket((K) key)] != null;
     }
 
@@ -201,6 +214,8 @@ public class RHHashSet<K> extends AbstractSet<K> {
 
         data = (K[])(new Object[tempData.length << 1]);
         ib = new int[data.length];
+        mask = data.length - 1;
+//        shift = Long.numberOfLeadingZeros(mask);
         size = 0;
 
         for (K prevKey : tempData) {
@@ -211,10 +226,7 @@ public class RHHashSet<K> extends AbstractSet<K> {
     }
 
     private int bucket(int hashCode) {
-        return (hashCode * SALT) & (data.length - 1);
-    }
-
-    private float loadFactor() {
-        return ((float) size) / data.length;
+        return (hashCode * SALT & mask);
+        //return (int) (hashCode * SALT >>> shift);
     }
 }
