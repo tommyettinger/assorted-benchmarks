@@ -20,7 +20,6 @@ import squidpony.StringKit;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.LinkedHashMap;
 
 /**
  * At load factor 0.5f:
@@ -28,8 +27,8 @@ import java.util.LinkedHashMap;
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * LinkedHashMap_String_String_Bench score: 14645847.000000 (14.65M 1650.0%)
- *                               uncertainty:   4.0%
+ * MerryOrderedMap_String_String_Bench score: 15951689.000000 (15.95M 1658.5%)
+ *                                 uncertainty:   4.1%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
@@ -37,7 +36,7 @@ import java.util.LinkedHashMap;
  * <br>
  * 
  */
-public final class LinkedHashMap_String_String_Bench extends MiniBench {
+public final class MerryOrderedMap_String_String_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -54,7 +53,7 @@ public final class LinkedHashMap_String_String_Bench extends MiniBench {
 		final String[] words = StringKit.split(book, " ");
 		final int length = words.length;
 		for (long i = 0; i < numLoops; i++) {
-			final LinkedHashMap<String, String> coll = new LinkedHashMap<>(16, 0.5f);
+			final MerryOrderedMap<String, String> coll = new MerryOrderedMap<>(16, 0.5f);
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
 				coll.put(words[j % length], words[((j ^ 0x91E10DA5) * 0xD192ED03 >>> 1) % length]);

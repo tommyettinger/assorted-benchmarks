@@ -19,6 +19,7 @@ package net.adoptopenjdk.bumblebench.examples;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.IdentityMap;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -34,7 +35,8 @@ public class CuckooObjectMap<K, V> implements Iterable<CuckooObjectMap.Entry<K, 
 	private static final int PRIME1 = 0x17C231;//0xbe1f14b1;
 	private static final int PRIME2 = 0x174DF9;//0xb4b82e39;
 	private static final int PRIME3 = 0x19E151;//0xced1c241;
-
+	static final Object dummy = new Object();
+	
 	public int size;
 
 	K[] keyTable;
@@ -587,11 +589,11 @@ public class CuckooObjectMap<K, V> implements Iterable<CuckooObjectMap.Entry<K, 
 		}
 		return h;
 	}
-
+	
 	public boolean equals (Object obj) {
 		if (obj == this) return true;
 		if (!(obj instanceof CuckooObjectMap)) return false;
-		CuckooObjectMap<K, V> other = (CuckooObjectMap)obj;
+		CuckooObjectMap other = (CuckooObjectMap)obj;
 		if (other.size != size) return false;
 		K[] keyTable = this.keyTable;
 		V[] valueTable = this.valueTable;
@@ -600,15 +602,26 @@ public class CuckooObjectMap<K, V> implements Iterable<CuckooObjectMap.Entry<K, 
 			if (key != null) {
 				V value = valueTable[i];
 				if (value == null) {
-					if (!other.containsKey(key) || other.get(key) != null) {
-						return false;
-					}
+					if (other.get(key, dummy) != null) return false;
 				} else {
-					if (!value.equals(other.get(key))) {
-						return false;
-					}
+					if (!value.equals(other.get(key))) return false;
 				}
 			}
+		}
+		return true;
+	}
+
+	/** Uses == for comparison of each value. */
+	public boolean equalsIdentity (Object obj) {
+		if (obj == this) return true;
+		if (!(obj instanceof IdentityMap)) return false;
+		IdentityMap other = (IdentityMap)obj;
+		if (other.size != size) return false;
+		K[] keyTable = this.keyTable;
+		V[] valueTable = this.valueTable;
+		for (int i = 0, n = capacity + stashSize; i < n; i++) {
+			K key = keyTable[i];
+			if (key != null && valueTable[i] != other.get(key, dummy)) return false;
 		}
 		return true;
 	}

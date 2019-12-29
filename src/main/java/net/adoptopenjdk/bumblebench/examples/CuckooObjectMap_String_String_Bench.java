@@ -27,8 +27,8 @@ import java.nio.file.Paths;
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * CuckooObjectMap_String_String_Bench score: 16747751.000000 (16.75M 1663.4%)
- *                                 uncertainty:   0.2%
+ * CuckooObjectMap_String_String_Bench score: 15539238.000000 (15.54M 1655.9%)
+ *                                 uncertainty:   1.1%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
@@ -44,7 +44,6 @@ public final class CuckooObjectMap_String_String_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final CuckooObjectMap<String, String> coll = new CuckooObjectMap<>(16, 0.5f);
 		String book = "";
 		try {
 			book = new String(Files.readAllBytes(Paths.get("res/bible_only_words.txt")));
@@ -54,6 +53,7 @@ public final class CuckooObjectMap_String_String_Bench extends MiniBench {
 		final String[] words = StringKit.split(book, " ");
 		final int length = words.length;
 		for (long i = 0; i < numLoops; i++) {
+			final CuckooObjectMap<String, String> coll = new CuckooObjectMap<>(16, 0.5f);
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
 				coll.put(words[j % length], words[((j ^ 0x91E10DA5) * 0xD192ED03 >>> 1) % length]);

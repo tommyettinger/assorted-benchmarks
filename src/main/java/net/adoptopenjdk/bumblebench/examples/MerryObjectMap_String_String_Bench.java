@@ -27,8 +27,8 @@ import java.nio.file.Paths;
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * MerryObjectMap_String_String_Bench score: 16115883.000000 (16.12M 1659.5%)
- *                                uncertainty:   1.3%
+ * MerryObjectMap_String_String_Bench score: 16303632.000000 (16.30M 1660.7%)
+ *                                uncertainty:   0.6%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
@@ -44,7 +44,6 @@ public final class MerryObjectMap_String_String_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final MerryObjectMap<String, String> coll = new MerryObjectMap<>(16, 0.5f);
 		String book = "";
 		try {
 			book = new String(Files.readAllBytes(Paths.get("res/bible_only_words.txt")));
@@ -54,6 +53,7 @@ public final class MerryObjectMap_String_String_Bench extends MiniBench {
 		final String[] words = StringKit.split(book, " ");
 		final int length = words.length;
 		for (long i = 0; i < numLoops; i++) {
+			final MerryObjectMap<String, String> coll = new MerryObjectMap<>(16, 0.5f);
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
 				coll.put(words[j % length], words[((j ^ 0x91E10DA5) * 0xD192ED03 >>> 1) % length]);

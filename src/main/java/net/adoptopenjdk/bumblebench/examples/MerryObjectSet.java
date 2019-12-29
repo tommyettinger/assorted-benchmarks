@@ -202,17 +202,19 @@ public class MerryObjectSet<T> implements Iterable<T> {
 			throw new IllegalArgumentException("offset + length must be <= size: " + offset + " + " + length + " <= " + array.size);
 		addAll((T[])array.items, offset, length);
 	}
-
-	public void addAll (T... array) {
-		addAll(array, 0, array.length);
+	
+	public boolean addAll (T... array) {
+		return addAll(array, 0, array.length);
 	}
 
-	public void addAll (T[] array, int offset, int length) {
+	public boolean addAll (T[] array, int offset, int length) {
 		ensureCapacity(length);
+		int oldSize = size;
 		for (int i = offset, n = i + length; i < n; i++)
 			add(array[i]);
+		return oldSize != size;
 	}
-
+	
 	public void addAll (MerryObjectSet<T> set) {
 		ensureCapacity(set.size);
 		for (T key : set)

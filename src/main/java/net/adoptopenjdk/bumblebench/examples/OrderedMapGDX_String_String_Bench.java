@@ -15,38 +15,53 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.utils.OrderedMap;
-import net.adoptopenjdk.bumblebench.core.MicroBench;
+import net.adoptopenjdk.bumblebench.core.MiniBench;
+import squidpony.StringKit;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
- * At load factor 0.25f:
+ * At load factor 0.5f:
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * OrderedMapGDX_String_String_Bench score: 4732563.500000 (4.733M 1537.0%)
- *                               uncertainty:   2.2%
+ * OrderedMapGDX_String_String_Bench score: 13576907.000000 (13.58M 1642.4%)
+ *                               uncertainty:   0.8%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * OrderedMapGDX_String_String_Bench score: 4060555.250000 (4.061M 1521.7%)
- *                               uncertainty:  40.0%
- * <br>
- * At load factor 0.5f on HotSpot:
- * <br>
- * OrderedMapGDX_String_String_Bench score: 3865669.250000 (3.866M 1516.8%)
- *                               uncertainty:   6.2%
+ * 
  */
-public final class OrderedMapGDX_String_String_Bench extends MicroBench {
+public final class OrderedMapGDX_String_String_Bench extends MiniBench {
+	@Override
+	protected int maxIterationsPerLoop() {
+		return 1000007;
+	}
 
-	protected long doBatch(long numIterations) throws InterruptedException {
-		final OrderedMap<String, String> coll = new OrderedMap<String, String>(16, 0.5f);
-		for (long i = 0; i < numIterations; i++) {
-			final String s = String.valueOf(i);
-			coll.put(s, s);
+	@Override
+	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
+		String book = "";
+		try {
+			book = new String(Files.readAllBytes(Paths.get("res/bible_only_words.txt")));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return numIterations;
+		final String[] words = StringKit.split(book, " ");
+		final int length = words.length;
+		for (long i = 0; i < numLoops; i++) {
+			final OrderedMap<String, String> coll = new OrderedMap<>(16, 0.5f);
+			for (int j = 0; j < numIterationsPerLoop; j++) {
+				startTimer();
+				coll.put(words[j % length], words[((j ^ 0x91E10DA5) * 0xD192ED03 >>> 1) % length]);
+				pauseTimer();
+			}
+		}
+		return numLoops * numIterationsPerLoop;
 	}
 }
 

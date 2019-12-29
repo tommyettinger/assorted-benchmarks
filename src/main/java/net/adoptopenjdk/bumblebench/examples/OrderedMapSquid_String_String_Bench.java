@@ -14,41 +14,54 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import net.adoptopenjdk.bumblebench.core.MicroBench;
+import net.adoptopenjdk.bumblebench.core.MiniBench;
+import squidpony.StringKit;
 import squidpony.squidmath.OrderedMap;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 /**
- * At load factor 0.25f:
+ * At load factor 0.5f:
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * OrderedMapSquid_String_String_Bench score: 9580815.000000 (9.581M 1607.5%)
- *                                 uncertainty:  17.4%
+ * OrderedMapSquid_String_String_Bench score: 16086223.000000 (16.09M 1659.3%)
+ *                                 uncertainty:   0.5%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * OrderedMapSquid_String_String_Bench score: 9152753.000000 (9.153M 1603.0%)
- *                                 uncertainty:  40.0%
- * <br>
- * At load factor 0.5f on HotSpot:
- * <br>
- * OrderedMapSquid_String_String_Bench score: 3998924.750000 (3.999M 1520.2%)
- *                                 uncertainty:   4.6%
- * <br>
- * Clearly, the SquidLib collections benefit a lot from a low load factor.
+ *
  */
-public final class OrderedMapSquid_String_String_Bench extends MicroBench {
+public final class OrderedMapSquid_String_String_Bench extends MiniBench {
+	@Override
+	protected int maxIterationsPerLoop() {
+		return 1000007;
+	}
 
-	protected long doBatch(long numIterations) throws InterruptedException {
-		final OrderedMap<String, String> coll = new OrderedMap<String, String>(16, 0.5f);
-		for (long i = 0; i < numIterations; i++) {
-			final String s = String.valueOf(i);
-			coll.put(s, s);
+	@Override
+	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
+		String book = "";
+		try {
+			book = new String(Files.readAllBytes(Paths.get("res/bible_only_words.txt")));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return numIterations;
+		final String[] words = StringKit.split(book, " ");
+		final int length = words.length;
+		for (long i = 0; i < numLoops; i++) {
+			final OrderedMap<String, String> coll = new OrderedMap<>(16, 0.5f);
+			for (int j = 0; j < numIterationsPerLoop; j++) {
+				startTimer();
+				coll.put(words[j % length], words[((j ^ 0x91E10DA5) * 0xD192ED03 >>> 1) % length]);
+				pauseTimer();
+			}
+		}
+		return numLoops * numIterationsPerLoop;
 	}
 }
 

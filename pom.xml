@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <groupId>com.github.tommyettinger</groupId>
-    <version>1.9.10-SNAPSHOT</version>
+    <version>1.9.11-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>assorted-benchmarks</artifactId>
@@ -18,7 +18,7 @@
         <maven.source.version>3.0.1</maven.source.version>
         <maven.gpg.version>1.6</maven.gpg.version>
         <jdk.version>1.8</jdk.version>
-        <gdx.version>1.9.10</gdx.version>
+        <gdx.version>1.9.11-SNAPSHOT</gdx.version>
     </properties>
     <licenses>
         <license>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.github.SquidPony.SquidLib</groupId>
             <artifactId>squidlib-util</artifactId>
-            <version>3fdd596d7f</version>
+            <version>74ee654395</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

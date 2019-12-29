@@ -19,6 +19,7 @@ package net.adoptopenjdk.bumblebench.examples;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.IdentityMap;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -35,6 +36,8 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 //	private static final int PRIME2 = 0x174DF9;//0xb4b82e39;
 //	private static final int PRIME3 = 0x19E151;//0xced1c241;
 
+	static final Object dummy = new Object();
+
 	public int size;
 
 	K[] keyTable;
@@ -42,14 +45,14 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 	/**
 	 * Initial Bucket positions.
 	 */
-	private int[] ib;
+	int[] ib;
 
-	private float loadFactor;
-	private int mask, threshold, shift;
+	final float loadFactor;
+	int mask, threshold, shift;
 
-	private Entries entries1, entries2;
-	private Values values1, values2;
-	private Keys keys1, keys2;
+	Entries entries1, entries2;
+	Values values1, values2;
+	Keys keys1, keys2;
 
 	/** Creates a new map with an initial capacity of 51 and a load factor of 0.8. */
 	public MerryObjectMap() {
@@ -92,7 +95,7 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 		size = map.size;
 	}
 
-	private int bucket(final int hashCode) {
+	final int bucket(final int hashCode) {
 		// fibonacci hashing; may improve resistance to bad hashCode()s
 		// shift is always greater than 32, less than 64
 		// 0x9E3779B97F4A7C15L is 2 to the 64 divided by the golden ratio
@@ -100,13 +103,13 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 		return (int) (hashCode * 0x9E3779B97F4A7C15L >>> shift);
 	}
 
-	private int bucketDistance(final int initialBucket, final int curBucketIndex) {
+	final int bucketDistance(final int initialBucket, final int curBucketIndex) {
 		return curBucketIndex - initialBucket & mask;
 	}
 
-	private int locateKey(K key) {
+	final int locateKey(K key) {
 
-		int bucket = bucket(key.hashCode());
+		final int bucket = bucket(key.hashCode());
 
 		for (int i = bucket; ; i = (i + 1) & mask) {
 			// empty space is available
@@ -125,7 +128,7 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 		}
 	}
 
-	private int locateKey(K key, int bucket) {
+	final int locateKey(K key, int bucket) {
 		for (int i = bucket; ; i = (i + 1) & mask) {
 			// empty space is available
 			if (keyTable[i] == null) {
@@ -147,10 +150,6 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 	/** Returns the old value associated with the specified key, or null. */
 	public V put (K key, V value) {
 		if (key == null) throw new IllegalArgumentException("key cannot be null.");
-		return put_internal(key, value);
-	}
-
-	private V put_internal (K key, V value) {
 		K[] keyTable = this.keyTable;
 		V[] valueTable = this.valueTable;
 		int[] ib = this.ib;
@@ -346,7 +345,7 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 		if (sizeNeeded >= threshold) resize(MathUtils.nextPowerOfTwo((int) Math.ceil(sizeNeeded / loadFactor)));
 	}
 
-	private void resize (int newSize) {
+	final void resize (int newSize) {
 		int oldCapacity = ib.length;
 		threshold = (int)(newSize * loadFactor);
 		mask = newSize - 1;
@@ -390,7 +389,7 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 	public boolean equals (Object obj) {
 		if (obj == this) return true;
 		if (!(obj instanceof MerryObjectMap)) return false;
-		MerryObjectMap<K, V> other = (MerryObjectMap)obj;
+		MerryObjectMap other = (MerryObjectMap)obj;
 		if (other.size != size) return false;
 		K[] keyTable = this.keyTable;
 		V[] valueTable = this.valueTable;
@@ -399,15 +398,26 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 			if (key != null) {
 				V value = valueTable[i];
 				if (value == null) {
-					if (!other.containsKey(key) || other.get(key) != null) {
-						return false;
-					}
+					if (other.get(key, dummy) != null) return false;
 				} else {
-					if (!value.equals(other.get(key))) {
-						return false;
-					}
+					if (!value.equals(other.get(key))) return false;
 				}
 			}
+		}
+		return true;
+	}
+
+	/** Uses == for comparison of each value. */
+	public boolean equalsIdentity (Object obj) {
+		if (obj == this) return true;
+		if (!(obj instanceof IdentityMap)) return false;
+		IdentityMap other = (IdentityMap)obj;
+		if (other.size != size) return false;
+		K[] keyTable = this.keyTable;
+		V[] valueTable = this.valueTable;
+		for (int i = 0, n = keyTable.length; i < n; i++) {
+			K key = keyTable[i];
+			if (key != null && valueTable[i] != other.get(key, dummy)) return false;
 		}
 		return true;
 	}
