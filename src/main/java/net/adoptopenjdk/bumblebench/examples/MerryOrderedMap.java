@@ -52,7 +52,7 @@ public class MerryOrderedMap<K, V> extends MerryObjectMap<K, V> {
 	public V put (K key, V value) {
 		if (key == null) throw new IllegalArgumentException("key cannot be null.");
 		V[] valueTable = this.valueTable;
-		int b = bucket(key.hashCode());
+		int b = place(key);
 		int loc = locateKey(key, b);
 		// an identical key already exists
 		if (loc != -1) {
@@ -73,7 +73,7 @@ public class MerryOrderedMap<K, V> extends MerryObjectMap<K, V> {
 			}
 			// if there is a key with a lower probe distance, we swap with it
 			// and keep going until we find a place we can insert
-			else if (bucketDistance(ib[i], i) < bucketDistance(b, i)) {
+			else if ((i - ib[i] & mask) < (i - b & mask)) {
 				K temp = keyTable[i];
 				V tv = valueTable[i];
 				int tb = ib[i];

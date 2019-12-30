@@ -46,9 +46,27 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 	 * Initial Bucket positions.
 	 */
 	int[] ib;
-
-	final float loadFactor;
-	int mask, threshold, shift;
+	
+	float loadFactor;
+	int threshold;
+	/**
+	 * Used by {@link #place(Object)} to bit-shift the upper bits of a {@code long} into a usable range (less than or
+	 * equal to {@link #mask}, greater than or equal to 0). If you're setting it in a subclass, this shift can be
+	 * negative, which is a convenient way to match the number of bits in mask; if mask is a 7-bit number, then a shift
+	 * of -7 will correctly shift the upper 7 bits into the lowest 7 positions. If using what this class sets, shift
+	 * will be greater than 32 and less than 64; if you use this shift with an int, it will still correctly move the
+	 * upper bits of an int to the lower bits, thanks to Java's implicit modulus on shifts.
+	 * <br>
+	 * You can also use {@link #mask} to mask the low bits of a number, which may be faster for some hashCode()s, if you
+	 * reimplement {@link #place(Object)}.
+	 */
+	protected int shift;
+	/**
+	 * The bitmask used to contain hashCode()s to the indices that can be fit into the key array this uses. This should
+	 * always be all-1-bits in its low positions; that is, it must be a power of two minus 1. If you subclass and change
+	 * {@link #place(Object)}, you may want to use this instead of {@link #shift} to isolate usable bits of a hash.
+	 */
+	protected int mask;
 
 	Entries entries1, entries2;
 	Values values1, values2;
@@ -95,23 +113,49 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 		size = map.size;
 	}
 
-	final int bucket(final int hashCode) {
+	/**
+	 * Finds an array index between 0 and {@link #mask}, both inclusive, corresponding to the hash code of {@code item}.
+	 * By default, this uses "Fibonacci Hashing" on the {@link Object#hashCode()} of {@code item}; this multiplies
+	 * {@code item.hashCode()} by a long constant (2 to the 64, divided by the golden ratio) and shifts the high-quality
+	 * uppermost bits into the lowest positions so they can be used as array indices. The multiplication by a long may
+	 * be somewhat slow on GWT, but it will be correct across all platforms and won't lose precision. Using Fibonacci
+	 * Hashing allows even very poor hashCode() implementations, such as those that only differ in their upper bits, to
+	 * work in a hash table without heavy collision rates. It has known problems when all or most hashCode()s are
+	 * multiples of larger Fibonacci numbers; see <a href="https://probablydance.com/2018/06/16/fibonacci-hashing-the-optimization-that-the-world-forgot-or-a-better-alternative-to-integer-modulo/">this blog post</a>
+	 * for more details. In the unlikely event that most of your hashCode()s are Fibonacci numbers, you can subclass
+	 * this to change this method, which is a one-liner in this form:
+	 * {@code return (int) (item.hashCode() * 0x9E3779B97F4A7C15L >>> shift);}
+	 * <br>
+	 * This can be overridden by subclasses, which you may want to do if your key type needs special consideration for
+	 * its hash (such as if you use arrays as keys, which still requires that the arrays are not modified). Subclasses
+	 * that don't need the collision decrease of Fibonacci Hashing (assuming the key class has a good hashCode()) may do
+	 * fine with a simple implementation:
+	 * {@code return (item.hashCode() & mask);}
+	 * @param item a key that this method will hash, by default by calling {@link Object#hashCode()} on it; non-null
+	 * @return an int between 0 and {@link #mask}, both inclusive
+	 */
+	protected int place(final K item) {
 		// fibonacci hashing; may improve resistance to bad hashCode()s
 		// shift is always greater than 32, less than 64
 		// 0x9E3779B97F4A7C15L is 2 to the 64 divided by the golden ratio
 		// the golden ratio has specific properties that make it work well here
-		return (int) (hashCode * 0x9E3779B97F4A7C15L >>> shift);
+		return (int) (item.hashCode() * 0x9E3779B97F4A7C15L >>> shift);
 	}
 
-	final int bucketDistance(final int initialBucket, final int curBucketIndex) {
-		return curBucketIndex - initialBucket & mask;
+	private int locateKey(final K key) {
+		return locateKey(key, place(key));
 	}
 
-	final int locateKey(K key) {
-
-		final int bucket = bucket(key.hashCode());
-
-		for (int i = bucket; ; i = (i + 1) & mask) {
+	/**
+	 * Given a key and its initial placement to try in an array, this finds the actual location of the key in the array
+	 * if it is present, or -1 if the key is not present. This can be overridden if a subclass needs to compare for
+	 * equality differently than just by calling {@link Object#equals(Object)}, but only within the same package.
+	 * @param key a K key that will be checked for equality if a similar-seeming key is found
+	 * @param placement as calculated by {@link #place(Object)}, almost always with {@code place(key)}
+	 * @return the location in the key array of key, if found, or -1 if it was not found.
+	 */
+	int locateKey(final K key, final int placement) {
+		for (int i = placement; ; i = i + 1 & mask) {
 			// empty space is available
 			if (keyTable[i] == null) {
 				return -1;
@@ -122,25 +166,7 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 			// ib holds the initial bucket position before probing offset the item
 			// if the distance required to probe to a position is greater than the
 			// stored distance for an item at that position, we can Robin Hood and swap them.
-			if (bucketDistance(ib[i], i) < bucketDistance(bucket, i)) {
-				return -1;
-			}
-		}
-	}
-
-	final int locateKey(K key, int bucket) {
-		for (int i = bucket; ; i = (i + 1) & mask) {
-			// empty space is available
-			if (keyTable[i] == null) {
-				return -1;
-			}
-			if (key.equals(keyTable[i])) {
-				return i;
-			}
-			// ib holds the initial bucket position before probing offset the item
-			// if the distance required to probe to a position is greater than the
-			// stored distance for an item at that position, we can Robin Hood and swap them.
-			if (bucketDistance(ib[i], i) < bucketDistance(bucket, i)) {
+			if ((i - ib[i] & mask) < (i - placement & mask)) {
 				return -1;
 			}
 		}
@@ -153,7 +179,7 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 		K[] keyTable = this.keyTable;
 		V[] valueTable = this.valueTable;
 		int[] ib = this.ib;
-		int b = bucket(key.hashCode());
+		int b = place(key);
 		int loc = locateKey(key, b);
 		// an identical key already exists
 		if (loc != -1) {
@@ -171,7 +197,7 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 			}
 			// if there is a key with a lower probe distance, we swap with it
 			// and keep going until we find a place we can insert
-			else if (bucketDistance(ib[i], i) < bucketDistance(b, i)) {
+			else if ((i - ib[i] & mask) < (i - b & mask)) {
 				K temp = keyTable[i];
 				V tv = valueTable[i];
 				int tb = ib[i];
@@ -200,7 +226,7 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 		K[] keyTable = this.keyTable;
 		V[] valueTable = this.valueTable;
 		int[] ib = this.ib;
-		int b = bucket(key.hashCode());
+		int b = place(key);
 		for (int i = b; ; i = (i + 1) & mask) {
 			// space is available so we insert and break (resize is later)
 			if (keyTable[i] == null) {
@@ -211,7 +237,7 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 			}
 			// if there is a key with a lower probe distance, we swap with it
 			// and keep going until we find a place we can insert
-			else if (bucketDistance(ib[i], i) < bucketDistance(b, i)) {
+			else if ((i - ib[i] & mask) < (i - b & mask)) {
 				K temp = keyTable[i];
 				V tv = valueTable[i];
 				int tb = ib[i];
@@ -250,7 +276,7 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 		keyTable[loc] = null;
 		V oldValue = valueTable[loc];
 		valueTable[loc] = null;
-		for (int i = (loc + 1) & mask; (keyTable[i] != null && bucketDistance(ib[loc], i) != 0); i = (i + 1) & mask) {
+		for (int i = (loc + 1) & mask; (keyTable[i] != null && (i - ib[loc] & mask) != 0); i = (i + 1) & mask) {
 			keyTable[i - 1 & mask] = keyTable[i];
 			valueTable[i - 1 & mask] = valueTable[i];
 			ib[i - 1 & mask] = ib[i];
