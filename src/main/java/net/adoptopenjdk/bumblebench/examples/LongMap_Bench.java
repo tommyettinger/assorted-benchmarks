@@ -45,9 +45,9 @@ public final class LongMap_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final LongMap<Object> coll = new LongMap<>(16, 0.5f);
 		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
 		for (long i = 0; i < numLoops; i++) {
+			final LongMap<Object> coll = new LongMap<>(16, 0.5f);
 			int x = -halfIterations, y = -halfIterations;
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();

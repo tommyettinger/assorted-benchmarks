@@ -42,10 +42,10 @@ public final class IntMap_IntMap_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final IntMap<IntMap<Object>> coll = new IntMap<>(16, 0.5f);
 		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
 		IntMap<Object> current = new IntMap<Object>(16, 0.5f);
 		for (long i = 0; i < numLoops; i++) {
+			final IntMap<IntMap<Object>> coll = new IntMap<>(16, 0.5f);
 			int x = -halfIterations, y = -halfIterations;
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
