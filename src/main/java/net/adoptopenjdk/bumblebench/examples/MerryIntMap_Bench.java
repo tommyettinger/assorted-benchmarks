@@ -15,32 +15,31 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.utils.IntMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 /**
- * NOTE: this uses the Rosenberg-Strong pairing function to combine x and y of a grid point into one long. I'm not
- * totally sure that x and y can be extracted from a key with the way they are paired now, but it's likely they can be.
+ * NOTE: this version does not use a pairing function on its keys; oddly, that makes it faster here.
  * <br>
  * At load factor 0.5f:
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
+ * With Rosenberg-Strong pairing function (not recommended here):
  * <br>
- * IntMap_Bench score: 32635902.000000 (32.64M 1730.1%)
- *          uncertainty:   2.9%
+ * MerryIntMap_Bench score: 29490994.000000 (29.49M 1720.0%)
+ *               uncertainty:   1.7%
  * <br>
- * Without using any pairing function (just inserting {@code ((x & 0xFFFF) | (y & 0xFFFF) << 16)}):
+ * Without using any pairing function (just inserting {@code ((x & 0xFFFF) | (y & 0xFFFF) << 16)}) (recommended):
  * <br>
- * IntMap_Bench score: 19132558.000000 (19.13M 1676.7%)
- *          uncertainty:   4.1%
+ * MerryIntMap_Bench score: 48819764.000000 (48.82M 1770.4%)
+ *               uncertainty:   2.0%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
  */
-public final class IntMap_Bench extends MiniBench {
+public final class MerryIntMap_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -50,16 +49,16 @@ public final class IntMap_Bench extends MiniBench {
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
 		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
 		for (long i = 0; i < numLoops; i++) {
-			final IntMap<Object> coll = new IntMap<>(numIterationsPerLoop, 0.5f);
+			final MerryIntMap<Object> coll = new MerryIntMap<>(numIterationsPerLoop, 0.5f);
 			int x = -halfIterations, y = -halfIterations;
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
+				//// Rosenberg-Strong pairing function, not recommended here:
 //				final int xx = (x << 1 ^ x >> 31);
 //				final int yy = (y << 1 ^ y >> 31);
 //				coll.put((xx + (xx > yy ? xx * xx + xx - yy : yy * yy)), null);
+				//// basic bitwise packing, recommended:
 				coll.put(((x & 0xFFFF) | (y & 0xFFFF) << 16), null);
-				//// this was bad, below; it had less than half the throughput.
-//				coll.put((long)x << 32 | (y & 0xFFFFFFFFL), null);
 				pauseTimer();
 				if(++x > halfIterations)
 				{
