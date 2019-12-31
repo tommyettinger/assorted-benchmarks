@@ -522,9 +522,17 @@ public class MerryObjectSet<T> implements Iterable<T> {
 
 		public void remove () {
 			if (currentIndex < 0) throw new IllegalStateException("next must be called before remove.");
-			
-			set.keyTable[currentIndex] = null;
-			set.ib[currentIndex] = 0;
+
+			K[] keyTable = set.keyTable;
+			int[] ib = set.ib;
+			int mask = set.mask;
+			keyTable[currentIndex] = null;
+			for (int i = (currentIndex + 1) & mask; (keyTable[i] != null && (i - ib[currentIndex] & mask) != 0); i = (i + 1) & mask) {
+				keyTable[i - 1 & mask] = keyTable[i];
+				ib[i - 1 & mask] = ib[i];
+				keyTable[i] = null;
+				ib[i] = 0;
+			}
 			currentIndex = -1;
 			set.size--;
 		}

@@ -227,8 +227,7 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 			}
 		}
 	}
-
-
+	
 	/** Returns the old value associated with the specified key, or null. */
 	public V put (K key, V value) {
 		if (key == null) throw new IllegalArgumentException("key cannot be null.");
@@ -639,12 +638,23 @@ public class MerryObjectMap<K, V> implements Iterable<MerryObjectMap.Entry<K, V>
 		}
 
 		public void remove () {
-			if (currentIndex < 0) throw new IllegalStateException("next must be called before remove.");				
-			map.keyTable[currentIndex] = null;
-			map.valueTable[currentIndex] = null;
-			map.ib[currentIndex] = 0;
+			if (currentIndex < 0) throw new IllegalStateException("next must be called before remove.");
+			K[] keyTable = map.keyTable;
+			V[] valueTable = map.valueTable;
+			int[] ib = map.ib;
+			int mask = map.mask;
+			keyTable[currentIndex] = null;
+			valueTable[currentIndex] = null;
+			for (int i = (currentIndex + 1) & mask; (keyTable[i] != null && (i - ib[currentIndex] & mask) != 0); i = (i + 1) & mask) {
+				keyTable[i - 1 & mask] = keyTable[i];
+				valueTable[i - 1 & mask] = valueTable[i];
+				ib[i - 1 & mask] = ib[i];
+				keyTable[i] = null;
+				valueTable[i] = null;
+				ib[i] = 0;
+			}
+			--map.size;
 			currentIndex = -1;
-			map.size--;
 		}
 	}
 
