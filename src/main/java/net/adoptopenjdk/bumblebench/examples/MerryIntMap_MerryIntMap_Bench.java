@@ -23,13 +23,15 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * MerryIntMap_MerryIntMap_Bench score: 70181352.000000 (70.18M 1806.7%)
- *                           uncertainty:   1.0%
+ * MerryIntMap_MerryIntMap_Bench score: 72146704.000000 (72.15M 1809.4%)
+ *                           uncertainty:   0.4%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
+ * MerryIntMap_MerryIntMap_Bench score: 26097868.000000 (26.10M 1707.7%)
+ *                           uncertainty:   0.8%
  */
 public final class MerryIntMap_MerryIntMap_Bench extends MiniBench {
 	@Override

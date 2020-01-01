@@ -24,15 +24,15 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * IntMap_IntMap_Bench score: 76478912.000000 (76.48M 1815.3%)
- *                 uncertainty:   1.4%
+ * IntMap_IntMap_Bench score: 77520496.000000 (77.52M 1816.6%)
+ *                 uncertainty:   0.3%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * IntMap_IntMap_Bench score: 24710508.000000 (24.71M 1702.3%)
- *                 uncertainty:   0.4%
+ * IntMap_IntMap_Bench score: 24961720.000000 (24.96M 1703.3%)
+ *                 uncertainty:   0.3%
  */
 public final class IntMap_IntMap_Bench extends MiniBench {
 	@Override
