@@ -51,12 +51,12 @@ public final class CuckooObjectMap_String_String_Bench extends MiniBench {
 			e.printStackTrace();
 		}
 		final String[] words = StringKit.split(book, " ");
-		final int length = words.length;
+		final int length = words.length, mask = Integer.highestOneBit(length) - 1;
 		for (long i = 0; i < numLoops; i++) {
 			final CuckooObjectMap<String, String> coll = new CuckooObjectMap<>(16, 0.5f);
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.put(words[j % length], words[((j ^ 0x91E10DA5) * 0xD192ED03 >>> 1) % length]);
+				coll.put(words[j & mask], words[(j ^ 0x91E10DA5) * 0xD192ED03 & mask]);
 				pauseTimer();
 			}
 		}

@@ -52,12 +52,12 @@ public final class ObjectIntMap_String_Bench extends MiniBench {
 			e.printStackTrace();
 		}
 		final String[] words = StringKit.split(book, " ");
-		final int length = words.length;
+		final int length = words.length, mask = Integer.highestOneBit(length) - 1;
 		for (long i = 0; i < numLoops; i++) {
 			final ObjectIntMap<String> coll = new ObjectIntMap<>(16, 0.5f);
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.put(words[j % length], ((j ^ 0x91E10DA5) * 0xD192ED03));
+				coll.put(words[j & mask], ((j ^ 0x91E10DA5) * 0xD192ED03));
 				pauseTimer();
 			}
 		}

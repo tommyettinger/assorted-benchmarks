@@ -14,6 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.github.tommyettinger.merry.MerryObjectFloatMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 import squidpony.StringKit;
 
@@ -51,12 +52,12 @@ public final class MerryObjectFloatMap_String_Bench extends MiniBench {
 			e.printStackTrace();
 		}
 		final String[] words = StringKit.split(book, " ");
-		final int length = words.length;
+		 final int length = words.length, mask = Integer.highestOneBit(length) - 1;
 		for (long i = 0; i < numLoops; i++) {
 			final MerryObjectFloatMap<String> coll = new MerryObjectFloatMap<>(16, 0.5f);
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.put(words[j % length], ((j ^ 0x91E10DA5) * 0xD192ED03 >>> 9));
+				coll.put(words[j & mask], ((j ^ 0x91E10DA5) * 0xD192ED03 >>> 9));
 				pauseTimer();
 			}
 		}

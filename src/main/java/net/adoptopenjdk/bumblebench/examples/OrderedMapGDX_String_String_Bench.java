@@ -28,8 +28,8 @@ import java.nio.file.Paths;
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * OrderedMapGDX_String_String_Bench score: 13576907.000000 (13.58M 1642.4%)
- *                               uncertainty:   0.8%
+ * OrderedMapGDX_String_String_Bench score: 18042248.000000 (18.04M 1670.8%)
+ *                               uncertainty:   0.9%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
@@ -52,12 +52,12 @@ public final class OrderedMapGDX_String_String_Bench extends MiniBench {
 			e.printStackTrace();
 		}
 		final String[] words = StringKit.split(book, " ");
-		final int length = words.length;
+		final int length = words.length, mask = Integer.highestOneBit(length) - 1;
 		for (long i = 0; i < numLoops; i++) {
 			final OrderedMap<String, String> coll = new OrderedMap<>(16, 0.5f);
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.put(words[j % length], words[((j ^ 0x91E10DA5) * 0xD192ED03 >>> 1) % length]);
+				coll.put(words[j & mask], words[(j ^ 0x91E10DA5) * 0xD192ED03 & mask]);
 				pauseTimer();
 			}
 		}

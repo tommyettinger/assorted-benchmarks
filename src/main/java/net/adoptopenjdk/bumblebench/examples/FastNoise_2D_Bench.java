@@ -1,12 +1,14 @@
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.github.tommyettinger.merry.MerryIntMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 import squidpony.squidmath.FastNoise;
 
 /**
  * On HotSpot 13:
- * FastNoise_2D_Bench score: 21644908.000000 (21.64M 1689.0%)
- *                uncertainty:   1.6%
+ * FastNoise_2D_Bench score: 21941390.000000 (21.94M 1690.4%)
+ *                uncertainty:   0.7%
  * On OpenJ9 for Java 13:
  * FastNoise_2D_Bench score: 15165916.000000 (15.17M 1653.5%)
  *                uncertainty:   0.6%
@@ -21,13 +23,21 @@ public class FastNoise_2D_Bench extends MiniBench {
     @Override
     protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
         FastNoise noise = FastNoise.instance;
+        final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
         for (long i = 0; i < numLoops; i++) {
+            final MerryIntMap<MerryIntMap<Object>> coll = new MerryIntMap<>(16, 0.5f);
+            int x = -halfIterations, y = -halfIterations;
             for (int j = 0; j < numIterationsPerLoop; j++) {
                 startTimer();
-                noise.getConfiguredNoise(j & 0xAAAAAAAAAAAAAAAAL, j & 0x5555555555555555L);
+                noise.getConfiguredNoise(x, y);
                 pauseTimer();
+                if (++x > halfIterations) {
+                    x = -halfIterations;
+                    y++;
+                }
             }
         }
+
         return numLoops * numIterationsPerLoop;
     }
 }

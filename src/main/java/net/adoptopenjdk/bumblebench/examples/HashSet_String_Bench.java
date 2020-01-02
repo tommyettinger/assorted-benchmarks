@@ -53,11 +53,11 @@ public final class HashSet_String_Bench extends MiniBench {
 			e.printStackTrace();
 		}
 		final String[] words = StringKit.split(book, " ");
-		final int length = words.length;
+		final int length = words.length, mask = Integer.highestOneBit(length) - 1;
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.add(words[j % length]);
+				coll.add(words[j & mask]);
 				pauseTimer();
 			}
 		}

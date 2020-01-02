@@ -80,6 +80,12 @@
             <version>abe1c29244</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.tommyettinger</groupId>
+            <artifactId>merry-ds</artifactId>
+            <version>60f87aa886</version>
+            <scope>compile</scope>
+        </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.javolution</groupId>-->
 <!--            <artifactId>javolution-core-java</artifactId>-->
