@@ -15,20 +15,19 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import net.adoptopenjdk.bumblebench.core.MicroBench;
+import squidpony.squidmath.NumberTools;
 
 /**
- * NOTE: this uses Java 13, Hotspot; expect very different results on Java 8
- * <br>
- * MathASinBench score: 26235490.000000 (26.24M 1708.3%)
- *           uncertainty:   0.5%
+ * SquidSinDoubleBench score: 47808384.000000 (47.81M 1768.3%)
+ *                 uncertainty:   1.5%
  */
-public final class MathASinBench extends MicroBench {
+public final class SquidSinDoubleBench extends MicroBench {
 
-	 protected long doBatch (long numIterations) throws InterruptedException {
-		  double sum = 0.1;
-		  final double shrink = 0.6180339887498949 / numIterations;
-		  for (long i = 0; i < numIterations; i++)
-				sum -= Math.asin((sum + i) * shrink);
-		  return numIterations;
-	 }
+	protected long doBatch(long numIterations) throws InterruptedException {
+		double sum = 0.1;
+		final double shrink = 0.6180339887498949 / numIterations;
+		for (long i = 0; i < numIterations; i++)
+			sum -= NumberTools.sin((sum + i) * shrink);
+		return numIterations;
+	}
 }

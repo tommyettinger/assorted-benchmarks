@@ -14,21 +14,23 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.badlogic.gdx.math.MathUtils;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * NOTE: this uses Java 13, Hotspot; expect very different results on Java 8
- * <br>
- * MathASinBench score: 26235490.000000 (26.24M 1708.3%)
- *           uncertainty:   0.5%
+ * GDXSinBench score: 97255424.000000 (97.26M 1839.3%)
+ *         uncertainty:   1.1%
  */
-public final class MathASinBench extends MicroBench {
+public final class GDXSinBench extends MicroBench {
 
-	 protected long doBatch (long numIterations) throws InterruptedException {
-		  double sum = 0.1;
-		  final double shrink = 0.6180339887498949 / numIterations;
-		  for (long i = 0; i < numIterations; i++)
-				sum -= Math.asin((sum + i) * shrink);
-		  return numIterations;
-	 }
+	protected long doBatch(long numIterations) throws InterruptedException {
+		float sum = 0.1f;
+//		final double shrink = 1.999 / numIterations;
+//		for (long i = 0; i < numIterations; i++)
+//			sum += Math.asin(i * shrink - 1.0);
+		final float shrink = 0.6180339887498949f / numIterations;
+		for (long i = 0; i < numIterations; i++)
+			sum -= MathUtils.sin((sum + i) * shrink);
+		return numIterations;
+	}
 }
