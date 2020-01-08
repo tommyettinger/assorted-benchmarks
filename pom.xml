@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.github.SquidPony.SquidLib</groupId>
             <artifactId>squidlib-util</artifactId>
-            <version>74ee654395</version>
+            <version>189d6a0811</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -83,7 +83,7 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>merry-ds</artifactId>
-            <version>7aa82763fb</version>
+            <version>9be0b0cec6</version>
             <scope>compile</scope>
         </dependency>
 <!--        <dependency>-->
