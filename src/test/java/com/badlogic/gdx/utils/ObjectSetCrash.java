@@ -1,4 +1,4 @@
-package com.github.tommyettinger.testing;
+package com.badlogic.gdx.utils;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -6,16 +6,15 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.TimeUtils;
 
-public class ObjectMapCrash extends ApplicationAdapter {
+public class ObjectSetCrash extends ApplicationAdapter {
     // sometimes, this test will narrowly pass with width=44; increase it a little and you will probably get a crash
     private static final int width = 44, height = 160;
-    private ObjectMap<GridPoint2, Integer> theMap;
+    private ObjectSet<GridPoint2> theMap;
     @Override
     public void create() {
-        theMap = new ObjectMap<>(width * height, 0.5f);
+        theMap = new ObjectSet<>(width * height);
+//        theMap = new ObjectSet<>(width * height, 0.5f);
         generate();
     }
     
@@ -23,9 +22,15 @@ public class ObjectMapCrash extends ApplicationAdapter {
     {
         final long startTime = TimeUtils.nanoTime();
         final int halfWidth = width / 2, halfHeight = height / 2;
+        int stashCache = theMap.stashSize;
         for (int x = -halfWidth; x < halfWidth; x++) {
             for (int y = -halfHeight; y < halfHeight; y++) {
-                theMap.put(new GridPoint2(x, y), x);
+                if(theMap.stashSize > stashCache)
+                {
+                    stashCache = theMap.stashSize;
+                    System.out.println("size: " + theMap.size + ", stash size: " + stashCache + ", capacity: " + theMap.capacity);
+                }
+                theMap.add(new GridPoint2(x, y));
             }
         }
         long taken = TimeUtils.timeSinceNanos(startTime);
@@ -48,9 +53,9 @@ public class ObjectMapCrash extends ApplicationAdapter {
 
     public static void main(String[] arg) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-        config.setTitle("LibGDX Test: ObjectMap<GridPoint2> crash with width="+width+", height="+height);
+        config.setTitle("LibGDX Test: ObjectSet<GridPoint2> crash with width="+width+", height="+height);
         config.setWindowedMode(500, 100);
         config.setIdleFPS(1);
-        new Lwjgl3Application(new ObjectMapCrash(), config);
+        new Lwjgl3Application(new ObjectSetCrash(), config);
     }
 }
