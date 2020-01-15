@@ -10,10 +10,10 @@ import com.badlogic.gdx.math.GridPoint2;
 public class ObjectSetCrash extends ApplicationAdapter {
     // sometimes, this test will narrowly pass with width=44; increase it a little and you will probably get a crash
     private static final int width = 44, height = 160;
-    private ObjectSet<GridPoint2> theMap;
+    private ObjectSet<GridPoint2> theSet;
     @Override
     public void create() {
-        theMap = new ObjectSet<>(width * height);
+        theSet = new ObjectSet<>(width * height);
 //        theMap = new ObjectSet<>(width * height, 0.5f);
         generate();
     }
@@ -22,15 +22,15 @@ public class ObjectSetCrash extends ApplicationAdapter {
     {
         final long startTime = TimeUtils.nanoTime();
         final int halfWidth = width / 2, halfHeight = height / 2;
-        int stashCache = theMap.stashSize;
+        int stashCache = theSet.stashSize;
         for (int x = -halfWidth; x < halfWidth; x++) {
             for (int y = -halfHeight; y < halfHeight; y++) {
-                if(theMap.stashSize > stashCache)
+                if(theSet.stashSize > stashCache)
                 {
-                    stashCache = theMap.stashSize;
-                    System.out.println("size: " + theMap.size + ", stash size: " + stashCache + ", capacity: " + theMap.capacity);
+                    stashCache = theSet.stashSize;
+                    System.out.println("size: " + theSet.size + ", stash size: " + stashCache + ", capacity: " + theSet.capacity);
                 }
-                theMap.add(new GridPoint2(x, y));
+                theSet.add(new GridPoint2(x, y));
             }
         }
         long taken = TimeUtils.timeSinceNanos(startTime);
