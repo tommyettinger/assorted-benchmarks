@@ -16,7 +16,7 @@ package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
-import com.github.tommyettinger.merry.MerryObjectSet;
+import com.github.tommyettinger.merry.ObjectSet;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 /**
@@ -25,7 +25,7 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * MerryObjectSet_GridPoint2_Bench score: 7512118.500000 (7.512M 1583.2%)
+ * Merry_ObjectSet_GridPoint2_Bench score: 7512118.500000 (7.512M 1583.2%)
  *                             uncertainty:  23.0%
  * <br>
  * When run with JVM:
@@ -34,7 +34,7 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * <br>
  * 
  */
-public final class MerryObjectSet_GridPoint2_Bench extends MiniBench {
+public final class Merry_ObjectSet_GridPoint2_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -42,7 +42,7 @@ public final class MerryObjectSet_GridPoint2_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final MerryObjectSet<GridPoint2> coll = new MerryObjectSet<>(16, 0.5f);
+		final ObjectSet<GridPoint2> coll = new ObjectSet<>(16, 0.5f);
 		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
 		for (long i = 0; i < numLoops; i++) {
 			int x = -halfIterations, y = -halfIterations;

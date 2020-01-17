@@ -14,26 +14,30 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.math.MathUtils;
-import com.github.tommyettinger.merry.MerryObjectSet;
+import com.github.tommyettinger.merry.IdentityMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
+import squidpony.StringKit;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * At load factor 0.5f:
  * When run with JVM:
- * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
+ * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * MerryObjectSet_Grid2_Bench score: 11720340.000000 (11.72M 1627.7%)
- *                        uncertainty:   6.2%
+ * Merry_IdentityMap_String_String_Bench score: 2672437.500000 (2.672M 1479.9%)
+ *                                  uncertainty:   5.1%
  * <br>
  * When run with JVM:
- * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
+ * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
  * 
  */
-public final class MerryObjectSet_Grid2_Bench extends MiniBench {
+public final class Merry_IdentityMap_String_String_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -41,19 +45,20 @@ public final class MerryObjectSet_Grid2_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final MerryObjectSet<Grid2> coll = new MerryObjectSet<>(16, 0.5f);
-		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
+		String book = "";
+		try {
+			book = new String(Files.readAllBytes(Paths.get("res/bible_only_words.txt")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		final String[] words = StringKit.split(book, " ");
+		 final int length = words.length, mask = Integer.highestOneBit(length) - 1;
 		for (long i = 0; i < numLoops; i++) {
-			int x = -halfIterations, y = -halfIterations;
+			final IdentityMap<String, String> coll = new IdentityMap<>(16, 0.5f);
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.add(new Grid2(x, y));
+				coll.put(words[j & mask], words[(j ^ 0x91E10DA5) * 0xD192ED03 & mask]);
 				pauseTimer();
-				if(++x > halfIterations)
-				{
-					x = -halfIterations;
-					y++;
-				}
 			}
 		}
 		return numLoops * numIterationsPerLoop;

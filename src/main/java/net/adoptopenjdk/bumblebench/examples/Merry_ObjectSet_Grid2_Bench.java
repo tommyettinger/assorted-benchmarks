@@ -15,7 +15,7 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.github.tommyettinger.merry.MerryIntMap;
+import com.github.tommyettinger.merry.ObjectSet;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 /**
@@ -24,17 +24,16 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * MerryIntMap_MerryIntMap_Bench score: 72146704.000000 (72.15M 1809.4%)
- *                           uncertainty:   0.4%
+ * Merry_ObjectSet_Grid2_Bench score: 11720340.000000 (11.72M 1627.7%)
+ *                        uncertainty:   6.2%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * MerryIntMap_MerryIntMap_Bench score: 26097868.000000 (26.10M 1707.7%)
- *                           uncertainty:   0.8%
+ * 
  */
-public final class MerryIntMap_MerryIntMap_Bench extends MiniBench {
+public final class Merry_ObjectSet_Grid2_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -42,21 +41,16 @@ public final class MerryIntMap_MerryIntMap_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
+		final ObjectSet<Grid2> coll = new ObjectSet<>(16, 0.5f);
 		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
-		MerryIntMap<Object> current = new MerryIntMap<>(16, 0.5f);
 		for (long i = 0; i < numLoops; i++) {
-			final MerryIntMap<MerryIntMap<Object>> coll = new MerryIntMap<>(16, 0.5f);
 			int x = -halfIterations, y = -halfIterations;
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				current.put(y, null);
+				coll.add(new Grid2(x, y));
 				pauseTimer();
 				if(++x > halfIterations)
 				{
-					startTimer();
-					coll.put(x, current);
-					current = new MerryIntMap<Object>(16, 0.5f);
-					pauseTimer();
 					x = -halfIterations;
 					y++;
 				}

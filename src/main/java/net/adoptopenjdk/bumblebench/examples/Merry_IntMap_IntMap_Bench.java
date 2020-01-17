@@ -15,7 +15,7 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.github.tommyettinger.merry.MerryObjectSet;
+import com.github.tommyettinger.merry.IntMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 /**
@@ -24,16 +24,17 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * MerryObjectSet_Victor2_Bench score: 7993805.000000 (7.994M 1589.4%)
- *                          uncertainty:   8.2%
+ * Merry_IntMap_IntMap_Bench score: 72146704.000000 (72.15M 1809.4%)
+ *                           uncertainty:   0.4%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
- * 
+ * Merry_IntMap_IntMap_Bench score: 26097868.000000 (26.10M 1707.7%)
+ *                           uncertainty:   0.8%
  */
-public final class MerryObjectSet_Victor2_Bench extends MiniBench {
+public final class Merry_IntMap_IntMap_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -41,16 +42,21 @@ public final class MerryObjectSet_Victor2_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final MerryObjectSet<Victor2> coll = new MerryObjectSet<>(16, 0.5f);
 		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
+		IntMap<Object> current = new IntMap<>(16, 0.5f);
 		for (long i = 0; i < numLoops; i++) {
+			final IntMap<IntMap<Object>> coll = new IntMap<>(16, 0.5f);
 			int x = -halfIterations, y = -halfIterations;
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.add(new Victor2(x, y));
+				current.put(y, null);
 				pauseTimer();
 				if(++x > halfIterations)
 				{
+					startTimer();
+					coll.put(x, current);
+					current = new IntMap<Object>(16, 0.5f);
+					pauseTimer();
 					x = -halfIterations;
 					y++;
 				}

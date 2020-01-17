@@ -16,7 +16,7 @@ package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.github.tommyettinger.merry.MerryObjectSet;
+import com.github.tommyettinger.merry.lp.ObjectSet;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 /**
@@ -25,8 +25,8 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * MerryObjectSet_Vector2_Bench score: 2658117.500000 (2.658M 1479.3%)
- *                          uncertainty:  12.3%
+ * Merry_LP_ObjectSet_Vector2_Bench score: 3511121.500000 (3.511M 1507.1%)
+ *                              uncertainty:   4.7%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
@@ -34,7 +34,7 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * <br>
  * 
  */
-public final class MerryObjectSet_Vector2_Bench extends MiniBench {
+public final class Merry_LP_ObjectSet_Vector2_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -42,7 +42,7 @@ public final class MerryObjectSet_Vector2_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final MerryObjectSet<Vector2> coll = new MerryObjectSet<>(16, 0.5f);
+		final ObjectSet<Vector2> coll = new ObjectSet<>(16, 0.5f);
 		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
 		for (long i = 0; i < numLoops; i++) {
 			int x = -halfIterations, y = -halfIterations;

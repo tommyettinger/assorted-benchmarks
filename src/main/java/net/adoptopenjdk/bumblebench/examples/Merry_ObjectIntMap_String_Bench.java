@@ -14,7 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.merry.MerryObjectIntMap;
+import com.github.tommyettinger.merry.ObjectIntMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 import squidpony.StringKit;
 
@@ -28,7 +28,7 @@ import java.nio.file.Paths;
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * MerryObjectIntMap_String_Bench score: 23395212.000000 (23.40M 1696.8%)
+ * Merry_ObjectIntMap_String_Bench score: 23395212.000000 (23.40M 1696.8%)
  *                            uncertainty:   1.1%
  * <br>
  * When run with JVM:
@@ -37,7 +37,7 @@ import java.nio.file.Paths;
  * <br>
  * 
  */
-public final class MerryObjectIntMap_String_Bench extends MiniBench {
+public final class Merry_ObjectIntMap_String_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -54,7 +54,7 @@ public final class MerryObjectIntMap_String_Bench extends MiniBench {
 		final String[] words = StringKit.split(book, " ");
 		 final int length = words.length, mask = Integer.highestOneBit(length) - 1;
 		for (long i = 0; i < numLoops; i++) {
-			final MerryObjectIntMap<String> coll = new MerryObjectIntMap<>(16, 0.5f);
+			final ObjectIntMap<String> coll = new ObjectIntMap<>(16, 0.5f);
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
 				coll.put(words[j & mask], ((j ^ 0x91E10DA5) * 0xD192ED03));

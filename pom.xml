@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.github.SquidPony.SquidLib</groupId>
             <artifactId>squidlib-util</artifactId>
-            <version>189d6a0811</version>
+            <version>e0e9aec84c</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -80,12 +80,27 @@
             <version>abe1c29244</version>
             <scope>compile</scope>
         </dependency>
+
+        <!--        Using JitPack-->
+
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>merry-ds</artifactId>
-            <version>9be0b0cec6</version>
+            <version>1be9e4cbd2</version>
             <scope>compile</scope>
         </dependency>
+
+        <!--        For local installations-->
+
+<!--        <dependency>-->
+<!--            <groupId>com.github.tommyettinger</groupId>-->
+<!--            <artifactId>merry</artifactId>-->
+<!--            <version>0.3.0-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+        
+        
+        
 <!--        <dependency>-->
 <!--            <groupId>org.javolution</groupId>-->
 <!--            <artifactId>javolution-core-java</artifactId>-->

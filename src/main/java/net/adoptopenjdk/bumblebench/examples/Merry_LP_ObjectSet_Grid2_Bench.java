@@ -15,19 +15,17 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
-import com.github.tommyettinger.merry.ObjectSet;
+import com.github.tommyettinger.merry.lp.ObjectSet;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
-/** Tests a custom subclass of Merry's ObjectSet that uses the "old, bad" way of placing hashes from before we settled on
- * Fibonacci hashing.
+/**
  * At load factor 0.5f:
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * HairyObjectSet_Vector2_Bench score: 11279.178711 (11.28K 933.1%)
- *                          uncertainty:  40.0%
+ * Merry_LP_ObjectSet_Grid2_Bench score: 13898320.000000 (13.90M 1644.7%)
+ *                            uncertainty:   3.6%
  * <br>
  * When run with JVM:
  * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
@@ -35,7 +33,7 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * <br>
  * 
  */
-public final class HairyObjectSet_Vector2_Bench extends MiniBench {
+public final class Merry_LP_ObjectSet_Grid2_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -43,19 +41,13 @@ public final class HairyObjectSet_Vector2_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		final ObjectSet<Vector2> coll = new ObjectSet<Vector2>(16, 0.5f)
-		{
-			@Override
-			protected int place(Vector2 item) {
-				return item.hashCode() & mask;
-			}
-		};
+		final ObjectSet<Grid2> coll = new ObjectSet<>(16, 0.5f);
 		final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
 		for (long i = 0; i < numLoops; i++) {
 			int x = -halfIterations, y = -halfIterations;
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.add(new Vector2(x, y));
+				coll.add(new Grid2(x, y));
 				pauseTimer();
 				if(++x > halfIterations)
 				{

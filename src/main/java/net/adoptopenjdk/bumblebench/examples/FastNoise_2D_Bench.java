@@ -1,7 +1,7 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.github.tommyettinger.merry.MerryIntMap;
+import com.github.tommyettinger.merry.IntMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 import squidpony.squidmath.FastNoise;
 
@@ -25,7 +25,7 @@ public class FastNoise_2D_Bench extends MiniBench {
         FastNoise noise = FastNoise.instance;
         final int halfIterations = MathUtils.nextPowerOfTwo((int)Math.sqrt(numIterationsPerLoop)) - 1;
         for (long i = 0; i < numLoops; i++) {
-            final MerryIntMap<MerryIntMap<Object>> coll = new MerryIntMap<>(16, 0.5f);
+            final IntMap<IntMap<Object>> coll = new IntMap<>(16, 0.5f);
             int x = -halfIterations, y = -halfIterations;
             for (int j = 0; j < numIterationsPerLoop; j++) {
                 startTimer();
