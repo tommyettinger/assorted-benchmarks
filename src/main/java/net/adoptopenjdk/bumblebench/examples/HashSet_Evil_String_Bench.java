@@ -20,25 +20,27 @@ import squidpony.StringKit;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.IdentityHashMap;
+import java.util.HashSet;
 
 /**
- * Note, even though HashMap has access to a non-public secondary hashCode for String keys, IdentityHashMap doesn't use it.
+ * This test employs "evil Strings", with most String items producing the same hashCode() as several other keys.
+ * Note that HashSet and other JDK collections have access to a second non-public hashCode for each String, and no other code
+ * has this advantage (but it only applies to String keys).
  * At load factor 0.5f:
  * When run with JVM:
- * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
+ * {@code OpenJDK 64-Bit Server VM AdoptOpenJDK (build 13+33, mixed mode, sharing)} (HotSpot)
  * This gets these results (higher is better):
  * <br>
- * IdentityHashMap_String_String_Bench score: 2605437.500000 (2.605M 1477.3%)
- *                                 uncertainty:  12.4%
+ * HashSet_Evil_String_Bench score: 20590282.000000 (20.59M 1684.0%)
+ *                       uncertainty:   6.7%
  * <br>
  * When run with JVM:
- * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
+ * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build master-99e396a57, JRE 13 Windows 7 amd64-64-Bit Compressed References 20191030_96 (JIT enabled, AOT enabled)}
  * This gets different results:
  * <br>
  * 
  */
-public final class IdentityHashMap_String_String_Bench extends MiniBench {
+public final class HashSet_Evil_String_Bench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -46,19 +48,19 @@ public final class IdentityHashMap_String_String_Bench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
+		final HashSet<String> coll = new HashSet<>(16, 0.5f);
 		String book = "";
 		try {
-			book = new String(Files.readAllBytes(Paths.get("res/bible_only_words.txt")));
+			book = new String(Files.readAllBytes(Paths.get("res/problem_words.txt")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		final String[] words = StringKit.split(book, " ");
 		final int length = words.length, mask = Integer.highestOneBit(length) - 1;
 		for (long i = 0; i < numLoops; i++) {
-			final IdentityHashMap<String, String> coll = new IdentityHashMap<>(16);
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				coll.put(words[j & mask], words[(j ^ 0x91E10DA5) * 0xD192ED03 & mask]);
+				coll.add(words[j & mask]);
 				pauseTimer();
 			}
 		}

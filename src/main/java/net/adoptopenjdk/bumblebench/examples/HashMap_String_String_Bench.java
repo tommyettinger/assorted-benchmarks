@@ -23,6 +23,8 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 
 /**
+ * Note that HashMap and other JDK collections have access to a second non-public hashCode for each String, and no other code
+ * has this advantage (but it only applies to String keys).
  * At load factor 0.5f:
  * When run with JVM:
  * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)

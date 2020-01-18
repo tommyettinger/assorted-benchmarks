@@ -9,6 +9,8 @@ import squidpony.squidmath.SilkRNG;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 
@@ -76,9 +78,9 @@ public class ProblemWordFinder {
 			int hc = s.hashCode();
 			String existing = ratings.get(hc, "");
 			if(existing.isEmpty())
-				ratings.put(hc, s);
+				ratings.put(hc, s + ' ');
 			else
-				ratings.put(hc, existing + ' ' + s);
+				ratings.put(hc, existing + s + ' ');
 			counts.getAndIncrement(hc, 0, 1);
 		}
 		
@@ -89,10 +91,21 @@ public class ProblemWordFinder {
 			sorting.put(k.next(), v.next());
 		}
 		sorting.sortByValue(Comparator.<Integer>naturalOrder().reversed());
-		for (int i = 0; i < 50; i++) {
-			if(sorting.getAt(i) < 2)
+		StringBuilder sb = new StringBuilder(0xC0000);
+		final int sz = sorting.size();
+		int count = 0;
+		for (int i = 0, current; i < sz; i++) {
+			if((current = sorting.getAt(i)) < 2 || (count += current) > 0x2000F)
 				break;
-			System.out.println(sorting.getAt(i) + ": " + ratings.get(sorting.keyAt(i)));
+			if(i < 100)
+				System.out.println(current + ": " + ratings.get(sorting.keyAt(i)));
+			sb.append(ratings.get(sorting.keyAt(i)));
+		}
+		System.out.println(count);
+		try {
+			Files.write(Paths.get("res/problem_words.txt"), Collections.singletonList(sb), StandardOpenOption.CREATE);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
