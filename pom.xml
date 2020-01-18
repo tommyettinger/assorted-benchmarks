@@ -86,7 +86,7 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>merry-ds</artifactId>
-            <version>1be9e4cbd2</version>
+            <version>dd7e5210bf</version>
             <scope>compile</scope>
         </dependency>
 
