@@ -1,0 +1,66 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
+        jcenter()
+    }
+    ext.jmh_version = '1.22' // JMH version to use
+}
+
+plugins {
+    id 'java'
+    id 'maven'
+    id 'eclipse'
+    id 'idea'
+    // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+    id 'com.github.ben-manes.versions' version '0.27.0' // for "gradlew dependencyUpdates -Drevision=release"
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
+    jcenter()
+}
+
+group = 'de.heidelberg.pvs.container-bench'
+version = '1.0'
+
+description = """Benchmarks for Java containers"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+shadowJar {
+    destinationDir = project.rootDir
+    archiveName = 'benchmarks.jar'
+    classifier = 'benchmarks'
+    manifest.attributes('Main-Class': 'org.openjdk.jmh.Main')
+}
+
+dependencies {
+    implementation group: 'org.openjdk.jmh', name: 'jmh-core', version: jmh_version
+    annotationProcessor group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: jmh_version
+    compile group: 'org.openjdk.jol', name: 'jol-core', version:'0.9'
+
+    compile group: 'com.google.api-client', name: 'google-api-client', version: '1.30.7'
+    compile group: 'com.google.guava', name: 'guava', version:'28.2-jre'
+    compile group: 'com.koloboke', name: 'koloboke-impl-jdk8', version:'1.0.0'
+    compile group: 'net.sf.trove4j', name: 'core', version:'3.1.0'
+    compile group: 'it.unimi.dsi', name: 'fastutil', version:'8.2.1'
+    compile group: 'com.carrotsearch', name: 'hppc', version:'0.8.1'
+    compile group: 'org.eclipse.collections', name: 'eclipse-collections', version: '10.1.0'
+    compile group: 'org.apache.mahout', name: 'mahout-math', version:'0.13.0'
+    compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version:'3.9.2'
+    compile group: 'org.agrona', name: 'agrona', version: '1.2.0'
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
+    compile group: 'org.javolution', name: 'javolution-core-java', version: '6.0.0'
+    compile group: 'org.scala-lang', name: 'scala-library', version: '2.13.1'
+
+    // compile group: 'in.jlibs', name: 'jlibs-core', version:'2.2.1'
+    // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
+
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+}
+
