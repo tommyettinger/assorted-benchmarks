@@ -1,8 +1,8 @@
 package de.heidelberg.pvs.container_bench.generators.dictionary;
 
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
+import de.heidelberg.pvs.container_bench.generators.TangleRNG;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
-import org.apache.commons.math3.random.Well44497b;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,7 +11,7 @@ public class StringDictionaryGenerator implements ElementGenerator<String> {
 	
 	protected List<String> words;
 	
-	protected Well44497b generator;
+	protected TangleRNG generator;
 	
 	protected int seed; 
 	protected int poolSize;
@@ -21,7 +21,7 @@ public class StringDictionaryGenerator implements ElementGenerator<String> {
 		this.seed = seed;
 		this.poolSize = size;
 		
-		generator = new Well44497b(seed);
+		generator = new TangleRNG(seed);
 		// Read all -> might be too expensive
 		words = Wordlist.loadWords(size, seed);
 	}

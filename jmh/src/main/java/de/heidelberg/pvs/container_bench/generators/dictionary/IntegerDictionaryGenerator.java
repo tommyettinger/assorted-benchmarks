@@ -1,23 +1,22 @@
 package de.heidelberg.pvs.container_bench.generators.dictionary;
 
+import de.heidelberg.pvs.container_bench.generators.IntElementGenerator;
+import de.heidelberg.pvs.container_bench.generators.TangleRNG;
+import de.heidelberg.pvs.container_bench.generators.Wordlist;
+
 import java.io.IOException;
 import java.util.Arrays;
-
-import org.apache.commons.math3.random.Well44497b;
-
-import de.heidelberg.pvs.container_bench.generators.IntElementGenerator;
-import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
 public class IntegerDictionaryGenerator implements IntElementGenerator{
 
 	int[] words;
 
-	protected Well44497b randomGenerator;
+	protected TangleRNG randomGenerator;
 	
 	public void init(int size, int seed) throws IOException {
 		
 		words = Wordlist.loadInts(size, seed, 1);
-		randomGenerator = new Well44497b(seed);
+		randomGenerator = new TangleRNG(seed);
 		
 	}
 

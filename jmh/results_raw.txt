@@ -1,0 +1,908 @@
+Benchmark                                   (impl)      (payloadType)  (percentageRangeKeys)  (seed)   (size)  (workload)    Mode     Cnt          Score         Error  Units
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample  442546       2893.895 ±      39.407  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               1974.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               2368.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               2764.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               2764.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample              18944.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample              26848.000                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample              82799.155                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample            2539520.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample  659114         82.458 ±       2.372  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                    ≈ 0                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                    ≈ 0                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                395.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                395.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                396.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               3160.000                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample              22112.000                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample              63168.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample  496294       1377.160 ±      33.650  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample                789.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               1184.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               1186.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               1580.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               4344.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample              22912.000                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample              55583.072                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample            2981888.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample  592155       1087.104 ±      18.309  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                789.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                790.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               1184.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               1186.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               1974.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample              20928.000                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample              35437.210                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample            1480704.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample  225853      44164.225 ±     149.995  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              33920.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              38656.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              58432.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              76928.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             111744.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             157440.000                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample            1076049.101                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample            1892352.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample  554613        102.103 ±       3.336  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                    ≈ 0                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                    ≈ 0                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                395.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                395.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                396.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample              13424.000                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample              23680.000                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample             235776.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample  416028      12055.598 ±      67.305  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               8688.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample              10256.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample              13424.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample              26464.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample              34368.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample              61556.864                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample             269908.531                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample            4177920.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample  597030       8432.328 ±      53.258  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               6320.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               7504.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               7896.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample              20928.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample              26848.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample              42624.000                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample             102572.058                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample            4374528.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample   31035     644299.497 ±    2750.620  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             506368.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             596992.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             812032.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             963584.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            1271808.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            1818402.816                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            2306306.867                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            2551808.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample  416274        121.492 ±       3.683  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                    ≈ 0                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                    ≈ 0                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                395.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                395.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                396.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample              14608.000                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample              24239.040                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample             112896.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample  159318     125496.606 ±     382.042  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample              96384.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             108928.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             170240.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             205593.600                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             294912.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             506902.016                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample            1411629.875                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample            2146304.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample  212489      94076.155 ±     248.879  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample              73856.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample              83328.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample             125568.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample             153088.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample             208128.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample             260608.000                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample            1469954.048                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample            1736704.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample    2018    9956186.577 ±   62660.664  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            8634368.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            9764864.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           10977280.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           11354931.200                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           12628951.040                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           17686626.304                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           18874368.000                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           18874368.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample  485583        189.408 ±       4.298  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                    ≈ 0                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                    ≈ 0                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                395.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                396.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                396.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample              16576.000                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample              26848.000                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample             191744.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample   25570     782128.717 ±    4409.764  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample             595968.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample             702464.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample            1033216.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample            1232896.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample            1630208.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample            2440634.368                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample            3872786.432                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample            4874240.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample   47003     425487.882 ±    1642.161  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             316416.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             387072.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             547840.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             638976.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             849920.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample            1543979.008                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample            2025057.485                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample            2588672.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample     165  127116803.103 ± 4156067.887  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          113770496.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          121634816.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          144021913.600                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          150575513.600                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          211183206.400                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          261357568.000                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          261357568.000                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          261357568.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample  517619        314.785 ±       4.485  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                    ≈ 0                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                395.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                396.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                396.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                790.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample              18560.000                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample              27648.000                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample              92032.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample    1889   10650068.362 ±  173417.266  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            8880128.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           10452992.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           11599872.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           12337152.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           13813350.400                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           25608847.360                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample          102367232.000                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample          102367232.000                ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample   11800    1695847.615 ±    8470.042  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            1435648.000                ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            1576960.000                ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            2062336.000                ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            2322432.000                ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            2781184.000                ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            3257929.728                ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            3980399.002                ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            4001792.000                ns/op
+
+
+Benchmark                              (impl)      (payloadType)  (percentageRangeKeys)  (seed)   (size)  (workload)    Mode     Cnt           Score          Error  Units
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample  491710        2580.342 ±       32.723  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample                1974.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample                2368.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample                2368.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample                2368.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               18560.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               26168.224                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               62784.000                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample             2363392.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample  711387          75.304 ±        2.284  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                     ≈ 0                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                     ≈ 0                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                 395.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                 395.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                 396.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                2368.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               21728.000                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample              103040.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample  601582        1082.716 ±       22.322  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample                 789.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample                 790.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample                1184.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample                1186.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample                2368.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               22112.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               42624.000                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample             1347584.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample  474976         821.208 ±        7.540  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                 394.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                 790.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                 791.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                 791.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                1580.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               20928.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               35328.883                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample              349184.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample  334827       29916.762 ±      113.545  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample               22112.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample               25664.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample               41024.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample               56832.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample               80896.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              129152.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             1143843.226                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             1601536.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample  579196          89.534 ±        2.529  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                     ≈ 0                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                     ≈ 0                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                 395.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                 395.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                 396.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                5528.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               21728.000                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               68736.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample  606910        8319.634 ±       57.227  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample                5920.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample                7104.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample                7896.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               20512.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               26848.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               50112.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample              930590.822                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample             1681408.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample  417659        6017.768 ±       19.550  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample                4736.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample                5136.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample                5528.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample                6320.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               24480.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               37888.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               78297.856                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample              499712.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample   38364      521289.429 ±     2112.415  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample              408576.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample              481792.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample              655360.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample              784384.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             1061580.800                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             1543966.720                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             2207666.176                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             2396160.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample  447459         123.061 ±        3.723  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                     ≈ 0                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                     ≈ 0                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                 395.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                 395.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                 396.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               15008.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               25377.536                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               92416.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample  206895       96626.921 ±      282.782  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample               72192.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample               84864.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample              128384.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample              157184.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample              222720.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample              310325.248                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             1446736.691                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             1746944.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample  289954       68919.625 ±      150.042  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               52480.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               59648.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               97920.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample              120064.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample              166912.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample              249111.040                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample              456740.864                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample              992256.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample    1833    10968565.106 ±   135944.638  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample             9027584.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            10518528.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            12887654.400                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            14078771.200                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            16001597.440                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            26374111.232                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            52035584.000                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            52035584.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample  471195         209.716 ±        4.196  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                     ≈ 0                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                     ≈ 0                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                 395.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                 396.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                 396.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample               16960.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample               27598.246                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample               85248.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample   33583      595428.466 ±     3204.963  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample              449536.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample              537600.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample              773120.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample              956416.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample             1304576.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample             2244608.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample             3068755.968                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample             3432448.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample   46352      431529.389 ±     2895.826  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample              330240.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample              397312.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample              558080.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample              665600.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample              907745.280                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             1367341.056                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             1938154.906                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample            32997376.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample     145   147639500.800 ± 10886308.676  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample           121241600.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample           132775936.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample           188638822.400                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample           262091571.200                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample           319123619.840                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample           341311488.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample           341311488.000                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample           341311488.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample  515010         338.549 ±       31.379  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                     ≈ 0                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                 395.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                 396.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                 396.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                 791.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample               19328.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample               32575.578                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample             4849664.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample    1549    14788564.369 ±  5304375.918  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample             4816896.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample             6807552.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            10059776.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            16973824.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           226623488.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample          1395077939.200                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample          1960837120.000                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample          1960837120.000                 ns/op
+JDKMapBench.bench                JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample    9749     2052701.220 ±    12198.773  ns/op
+JDKMapBench.bench:bench·p0.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             1740800.000                 ns/op
+JDKMapBench.bench:bench·p0.50    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             1890304.000                 ns/op
+JDKMapBench.bench:bench·p0.90    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             2547712.000                 ns/op
+JDKMapBench.bench:bench·p0.95    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             2846720.000                 ns/op
+JDKMapBench.bench:bench·p0.99    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             3442688.000                 ns/op
+JDKMapBench.bench:bench·p0.999   JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             4388864.000                 ns/op
+JDKMapBench.bench:bench·p0.9999  JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             6995968.000                 ns/op
+JDKMapBench.bench:bench·p1.00    JDK_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             6995968.000                 ns/op
+
+Benchmark                                   (impl)      (payloadType)  (percentageRangeKeys)  (seed)   (size)  (workload)    Mode     Cnt         Score        Error  Units
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample  724878       896.785 ±     15.439  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               394.000               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               790.000               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               791.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               791.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample              1184.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample             20128.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample             28228.646               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample           2400256.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample  529632        38.587 ±      2.275  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               790.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample             21312.000               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample             78592.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample  630599        99.010 ±      9.378  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample              5528.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample             21728.000               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample           1161216.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample  699503        61.157 ±      4.920  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample              1184.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample             21312.000               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample            954368.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample  547772      9134.244 ±     24.643  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              7104.000               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              7896.000               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              8688.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             22112.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             27232.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             34752.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             67072.000               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample           2543616.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample  541539        40.665 ±      2.864  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample             21312.000               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample            274944.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample  630034        93.003 ±     10.213  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample              5528.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample             23294.656               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample           1515520.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample  682339        63.865 ±      2.265  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample              1976.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample             22022.144               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample            101888.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample  203011     98448.123 ±    201.238  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             82944.000               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             87296.000               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            129536.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            158720.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            225536.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            265728.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            302129.357               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample           1435648.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample  482077        40.681 ±      2.273  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               790.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample             20928.000               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample             31584.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample  784121       123.983 ±      6.310  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             13424.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             21728.000               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample           1012736.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample  518298        72.315 ±      2.720  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample              3554.804               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample             21701.443               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample            127104.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample   19688   1016021.663 ±   4402.264  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            847872.000               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            944128.000               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1255424.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1454080.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1787904.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           2066294.784               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           2611170.509               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           2801664.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample  431808        44.948 ±      2.742  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample              1974.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample             21696.000               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample             53696.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample  466779       120.387 ±     11.703  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample             14608.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample             24096.000               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample            984064.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample  504406        75.897 ±      6.480  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample              5920.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             22774.211               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample            733184.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample    1090  18478491.479 ± 309857.571  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          14843904.000               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          17268736.000               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          24015667.200               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          25362432.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          27644067.840               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          34995699.712               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          35520512.000               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          35520512.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample  484126        60.045 ±      2.954  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample               394.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample             13024.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample             23680.000               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample             63168.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample   50394    396843.759 ±   1405.436  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            317952.000               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            363008.000               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            484608.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            590848.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            824320.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           1028121.600               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           1919325.184               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           2228224.000               ns/op
+HPPCMapBench.bench                   HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample  189356    105586.088 ±    221.800  ns/op
+HPPCMapBench.bench:bench·p0.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             84480.000               ns/op
+HPPCMapBench.bench:bench·p0.50       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             93952.000               ns/op
+HPPCMapBench.bench:bench·p0.90       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            139264.000               ns/op
+HPPCMapBench.bench:bench·p0.95       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            168192.000               ns/op
+HPPCMapBench.bench:bench·p0.99       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            240128.000               ns/op
+HPPCMapBench.bench:bench·p0.999      HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            280064.000               ns/op
+HPPCMapBench.bench:bench·p0.9999     HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            316002.765               ns/op
+HPPCMapBench.bench:bench·p1.00       HPPC_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample           1587200.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    POPULATE  sample  743892       823.939 ±      8.172  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               394.000               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               790.000               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               791.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               791.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    POPULATE  sample              1184.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    POPULATE  sample             19744.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    POPULATE  sample             27232.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    POPULATE  sample           1173504.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample  596170        38.418 ±      2.008  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample             21312.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample             36288.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100        COPY  sample  676587        90.023 ±     10.258  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100        COPY  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100        COPY  sample              3948.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100        COPY  sample             23296.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100        COPY  sample           1394688.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100     ITERATE  sample  712988        61.727 ±     19.694  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               394.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100     ITERATE  sample              1184.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100     ITERATE  sample             21312.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505      100     ITERATE  sample           4177920.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample  642303      7778.482 ±     19.678  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              5920.000               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              6712.000               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              7104.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             13024.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             26048.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             31200.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             55680.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample           2150400.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample  594653        37.037 ±      2.016  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample             20512.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample             86400.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000        COPY  sample  670331        82.368 ±      2.300  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000        COPY  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000        COPY  sample              3160.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000        COPY  sample             22112.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000        COPY  sample             66688.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample  710958        60.364 ±      2.055  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               791.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample             21312.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample            109312.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample  195141    102451.190 ±    210.556  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             83328.000               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             91648.000               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            132608.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            161536.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            236800.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            274432.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            303104.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            407552.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample  477823        56.200 ±      5.968  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample              1974.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample             21696.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample            777216.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000        COPY  sample  502979       104.255 ±      5.776  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000        COPY  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000        COPY  sample             13424.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000        COPY  sample             22788.032               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000        COPY  sample            750592.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample  494074        74.826 ±      2.730  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample              5528.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample             21728.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample             55680.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample   21184    944263.347 ±   3970.733  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            775168.000               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            885760.000               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1153024.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1345024.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1683456.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1939456.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           2435876.864               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           5685248.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample  427974        50.265 ±      3.055  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample              5920.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample             21728.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample             88064.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000        COPY  sample  422442       128.366 ±     14.922  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000        COPY  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000        COPY  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000        COPY  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000        COPY  sample             15392.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000        COPY  sample             24480.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000        COPY  sample           1257472.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample  496226        78.140 ±      7.787  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample              5439.016               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             21728.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample           1101824.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample    1256  16045988.688 ±  81724.168  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          14712832.000               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          15925248.000               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          17072128.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          17399808.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          18382848.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          28171468.800               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          28803072.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          28803072.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample  507496        53.195 ±      2.743  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                   ≈ 0               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample               395.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample               396.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample              8489.200               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample             22112.000               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample             39104.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000        COPY  sample   19582   1021615.966 ±   4496.992  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            856064.000               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            944128.000               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           1263616.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           1480704.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           1798144.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           2183516.160               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           2811734.835               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           2854912.000               ns/op
+HPPCMapBench.bench                HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample  193390    103386.615 ±    215.797  ns/op
+HPPCMapBench.bench:bench·p0.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             83328.000               ns/op
+HPPCMapBench.bench:bench·p0.50    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             92032.000               ns/op
+HPPCMapBench.bench:bench·p0.90    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            135424.000               ns/op
+HPPCMapBench.bench:bench·p0.95    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            164608.000               ns/op
+HPPCMapBench.bench:bench·p0.99    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            233472.000               ns/op
+HPPCMapBench.bench:bench·p0.999   HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            272384.000               ns/op
+HPPCMapBench.bench:bench·p0.9999  HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            299858.381               ns/op
+HPPCMapBench.bench:bench·p1.00    HPPC_O2O_SCATTER  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample           2183168.000               ns/op
+
+Benchmark                              (impl)      (payloadType)  (percentageRangeKeys)  (seed)   (size)  (workload)    Mode     Cnt         Score        Error  Units
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample  590332      1099.951 ±     22.818  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               789.000               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               791.000               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample              1184.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample              1186.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample              1580.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample             20928.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample             30400.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample           2670592.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample  549129        49.458 ±      2.479  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               791.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample             21312.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample            176896.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample  466803       220.009 ±     25.455  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample             16576.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample             26970.726               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample           1490944.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample  701100        77.080 ±      2.325  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample              3552.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample             23680.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample             88448.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample  547144      9137.484 ±     26.587  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              7104.000               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              8288.000               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              8688.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             22112.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             27232.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             34752.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             60525.632               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample           2605056.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample  578488        46.022 ±      2.068  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample             20928.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample             58432.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample  467258       221.843 ±     28.483  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample             16576.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample             27648.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample           1468416.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample  685438        75.913 ±      2.305  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample              3552.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample             22112.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample             77824.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample  223326     89492.640 ±    181.234  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             71808.000               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             79360.000               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            118784.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            145664.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            211200.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            240896.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            278700.288               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample           2187264.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample  560646        46.979 ±      2.149  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               789.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample             21312.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample             43392.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample  439814       217.453 ±     22.995  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             16960.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             26848.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample           1304576.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample  578298        94.029 ±     24.325  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample              6200.400               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample             21728.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample           4251648.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample   22150    903125.422 ±   3703.046  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            734208.000               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            841728.000               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1099776.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1303449.600               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1613824.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1806336.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           2191088.640               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           2711552.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample  484853        51.363 ±      2.474  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample              1184.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample             21312.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample             81664.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample  425683       246.666 ±     41.365  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample             17376.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample             27232.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample           4243456.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample  581492        87.354 ±      2.617  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample              6320.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             23680.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             58816.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample    1024  19665552.000 ± 454836.769  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          13320192.000               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          21315584.000               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          24510464.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          24928256.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          26075136.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          38436864.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          38535168.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          38535168.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample  520941        57.030 ±      2.721  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                   ≈ 0               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample               395.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample               396.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample              5550.736               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample             22112.000               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample            106624.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample   62263    321146.739 ±   1090.438  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            254720.000               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            290304.000               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            393216.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            490393.600               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            686080.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            846577.664               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           2204886.630               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           2990080.000               ns/op
+GDXMapBench.bench                GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample  199651    100144.719 ±    202.000  ns/op
+GDXMapBench.bench:bench·p0.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             80512.000               ns/op
+GDXMapBench.bench:bench·p0.50    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             89216.000               ns/op
+GDXMapBench.bench:bench·p0.90    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            131840.000               ns/op
+GDXMapBench.bench:bench·p0.95    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            161536.000               ns/op
+GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            225536.000               ns/op
+GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            265728.000               ns/op
+GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            286225.818               ns/op
+GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            509952.000               ns/op

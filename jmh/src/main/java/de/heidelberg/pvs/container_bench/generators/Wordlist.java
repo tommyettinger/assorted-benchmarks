@@ -86,14 +86,10 @@ public class Wordlist {
 
 			if (seed != DEFAULT_SEED) {
 				//Collections.shuffle(words, new Random(seed));
-				long stateA = seed;
-				long stateB = ~(seed * 0x6C8E9CF570932BD6L);
-
+				final TangleRNG rng = new TangleRNG(seed);
 				final int n = words.size();
 				for (int i = n; i > 1; i--) {
-					final long s = (stateA += 0xC6BC279692B5C323L);
-					final long z = (s ^ s >>> 31) * (stateB += 0x9E3779B97F4A7C16L);
-					Collections.swap(words, (int) ((i * ((z ^ z >>> 26) & 0xFFFFFFFFL)) >>> 32), i - 1);
+					Collections.swap(words, rng.nextInt(i), i - 1);
 				}
 			}
 			words.subList(size, words.size()).clear(); // Truncate
