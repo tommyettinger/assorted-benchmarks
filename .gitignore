@@ -47,6 +47,7 @@ local.properties
 [Rr]elease/
 x64/
 build/
+jmh/build/
 [Bb]in/
 [Oo]bj/
 
@@ -68,14 +69,12 @@ build/
 *.tlb
 *.tli
 *.tlh
-*.tmp
 *.tmp_proj
 *.log
 *.vspscc
 *.vssscc
 .builds
 *.pidb
-*.log
 *.scc
 
 # Visual C++ cache files
@@ -194,7 +193,6 @@ $RECYCLE.BIN/
 *.egg
 *.egg-info
 dist/
-build/
 eggs/
 parts/
 var/
@@ -217,13 +215,11 @@ pip-log.txt
 
 # Build and Release Folders
 
-build/
-
 target/
 *.class
 *.iml
 .idea/
-.settings/
+jmh/.idea/
 
 *.jar
 
@@ -238,4 +234,7 @@ target/
 *#*#
 *#*.*#
 /bin/
+
+.gradle/
+jmh/.gradle/
 
