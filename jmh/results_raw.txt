@@ -906,3 +906,185 @@ GDXMapBench.bench:bench·p0.99    GDX_O2O_HASH  STRING_DICTIONARY               
 GDXMapBench.bench:bench·p0.999   GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            265728.000               ns/op
 GDXMapBench.bench:bench·p0.9999  GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            286225.818               ns/op
 GDXMapBench.bench:bench·p1.00    GDX_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            509952.000               ns/op
+
+Benchmark                                  (impl)      (payloadType)  (percentageRangeKeys)  (seed)   (size)  (workload)    Mode     Cnt         Score       Error  Units
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample  607958      1069.187 ±    21.646  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               789.000              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample               790.000              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample              1184.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample              1186.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample              1580.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample             20928.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample             39644.749              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    POPULATE  sample           2387968.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample  546308        47.940 ±     2.231  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample             21312.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100    CONTAINS  sample             65536.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample  719693       146.828 ±    13.716  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample             13824.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample             23680.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100        COPY  sample           1658880.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample  726172        78.841 ±    20.663  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample              1974.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample             21696.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505      100     ITERATE  sample           4538368.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample  520743      9606.662 ±    33.562  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              7504.000              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              8688.000              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample              9072.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             22496.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             28032.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             35136.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample             59142.861              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    POPULATE  sample           2977792.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample  556954        47.069 ±     2.138  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample             20928.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000    CONTAINS  sample             66304.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample  623994       163.528 ±    17.115  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample             14608.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample             24096.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000        COPY  sample           1427456.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample  720944        74.563 ±     2.107  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample              1974.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample             21696.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505     1000     ITERATE  sample             76160.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample  205665     97168.509 ±   199.441  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             78592.000              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample             86784.000              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            125568.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            156672.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            223488.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            262144.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample            287607.603              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    POPULATE  sample           2633728.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample  536090        47.887 ±     2.239  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample             21312.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000    CONTAINS  sample             65920.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample  528788       184.211 ±    15.666  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             15392.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample             24526.502              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000        COPY  sample           1124352.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample  592661        88.441 ±     2.498  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample              4344.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample             21728.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505    10000     ITERATE  sample             50112.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample   21192    943861.659 ±  3729.746  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            794624.000              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample            890880.000              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1132544.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1325056.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1654784.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           1873524.736              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           2098804.736              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    POPULATE  sample           2154496.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample  452210        53.371 ±     2.739  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample              1580.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample             21312.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000    CONTAINS  sample             92800.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample  556593       179.499 ±    17.541  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample             15008.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample             24096.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000        COPY  sample           1540096.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample  589271        88.895 ±     2.563  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample              5136.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             21728.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505   100000     ITERATE  sample             93568.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample    1267  15900872.436 ± 62863.314  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          14336000.000              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          15859712.000              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          16777216.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          17104896.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          17606901.760              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          20007092.224              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          20217856.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    POPULATE  sample          20217856.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample  552068        49.312 ±     2.368  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample                   ≈ 0              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample               395.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample               396.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample              2764.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample             21312.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000    CONTAINS  sample             32384.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample  141112    141695.771 ±   406.164  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            112512.000              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            126720.000              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            181248.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            222720.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            317440.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample            387526.144              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           1848204.288              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000        COPY  sample           4677632.000              ns/op
+MerryMapBench.bench                MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample  186593    107148.093 ±   221.814  ns/op
+MerryMapBench.bench:bench·p0.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             85248.000              ns/op
+MerryMapBench.bench:bench·p0.50    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample             95872.000              ns/op
+MerryMapBench.bench:bench·p0.90    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            139776.000              ns/op
+MerryMapBench.bench:bench·p0.95    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            169728.000              ns/op
+MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            240896.000              ns/op
+MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            286720.000              ns/op
+MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            306176.000              ns/op
+MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            357376.000              ns/op
