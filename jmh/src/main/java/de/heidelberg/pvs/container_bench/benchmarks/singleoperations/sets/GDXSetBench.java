@@ -23,11 +23,11 @@ public class GDXSetBench extends AbstractSetBench<Object> {
 	public GDXSetWorkload workload;
 
 	protected ObjectSet<Object> getNewSet() {
-		return impl.maker.get();
+		return (ObjectSet<Object>) impl.maker.get();
 	}
 
 	protected ObjectSet<Object> copySet(ObjectSet<Object> original) {
-		return impl.copyMaker.apply(original);
+		return (ObjectSet<Object>)impl.copyMaker.apply(original);
 	}
 
 	public void testSetup() {
