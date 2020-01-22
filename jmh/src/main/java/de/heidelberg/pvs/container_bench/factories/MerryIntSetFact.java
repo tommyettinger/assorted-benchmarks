@@ -5,7 +5,7 @@ import com.github.tommyettinger.merry.lp.IntSet;
 import java.util.function.Supplier;
 
 public enum MerryIntSetFact {
-	GDX_I_HASH(IntSet::new), //
+	MERRY_I_HASH(IntSet::new), //
 	;
 
 	public final Supplier<IntSet> maker;

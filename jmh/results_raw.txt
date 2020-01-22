@@ -1088,3 +1088,549 @@ MerryMapBench.bench:bench·p0.99    MERRY_O2O_HASH  STRING_DICTIONARY           
 MerryMapBench.bench:bench·p0.999   MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            286720.000              ns/op
 MerryMapBench.bench:bench·p0.9999  MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            306176.000              ns/op
 MerryMapBench.bench:bench·p1.00    MERRY_O2O_HASH  STRING_DICTIONARY                    100  467505  1000000     ITERATE  sample            357376.000              ns/op
+
+
+
+Benchmark                          (impl)  (seed)   (size)       (workload)    Mode     Cnt         Score        Error  Units
+GDXIntSet.bench                GDX_I_HASH      -1      100              ADD  sample  617213       535.357 ±     10.174  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1      100              ADD  sample               394.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1      100              ADD  sample               395.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1      100              ADD  sample               790.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1      100              ADD  sample               790.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1      100              ADD  sample               791.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1      100              ADD  sample             19328.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1      100              ADD  sample             29322.982               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1      100              ADD  sample           1544192.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1      100           REMOVE  sample  620700       529.816 ±      5.091  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1      100           REMOVE  sample               394.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1      100           REMOVE  sample               395.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1      100           REMOVE  sample               790.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1      100           REMOVE  sample               790.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1      100           REMOVE  sample               791.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1      100           REMOVE  sample             19328.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1      100           REMOVE  sample             30373.082               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1      100           REMOVE  sample            191744.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1      100         CONTAINS  sample  546269       311.491 ±      4.553  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1      100         CONTAINS  sample                   ≈ 0               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1      100         CONTAINS  sample               395.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1      100         CONTAINS  sample               395.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1      100         CONTAINS  sample               396.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1      100         CONTAINS  sample               396.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1      100         CONTAINS  sample             18944.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1      100         CONTAINS  sample             27232.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1      100         CONTAINS  sample            195328.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1      100    ADD_OR_REMOVE  sample  429056       418.967 ±      6.113  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1      100    ADD_OR_REMOVE  sample                   ≈ 0               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1      100    ADD_OR_REMOVE  sample               395.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1      100    ADD_OR_REMOVE  sample               396.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1      100    ADD_OR_REMOVE  sample               396.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1      100    ADD_OR_REMOVE  sample               396.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1      100    ADD_OR_REMOVE  sample             19328.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1      100    ADD_OR_REMOVE  sample             35286.880               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1      100    ADD_OR_REMOVE  sample            157440.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1      100  ADD_THEN_REMOVE  sample  420220       808.822 ±      7.494  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1      100  ADD_THEN_REMOVE  sample               394.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1      100  ADD_THEN_REMOVE  sample               790.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1      100  ADD_THEN_REMOVE  sample               791.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1      100  ADD_THEN_REMOVE  sample               791.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1      100  ADD_THEN_REMOVE  sample              1184.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1      100  ADD_THEN_REMOVE  sample             20512.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1      100  ADD_THEN_REMOVE  sample             36271.027               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1      100  ADD_THEN_REMOVE  sample            201472.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1      100  REMOVE_THEN_ADD  sample  711306       900.145 ±      5.736  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1      100  REMOVE_THEN_ADD  sample               394.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1      100  REMOVE_THEN_ADD  sample               790.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1      100  REMOVE_THEN_ADD  sample               791.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1      100  REMOVE_THEN_ADD  sample               791.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1      100  REMOVE_THEN_ADD  sample              1186.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1      100  REMOVE_THEN_ADD  sample             20512.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1      100  REMOVE_THEN_ADD  sample             34309.446               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1      100  REMOVE_THEN_ADD  sample            112896.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1     1000              ADD  sample  490220      5102.754 ±     15.673  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1     1000              ADD  sample              3948.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1     1000              ADD  sample              4344.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1     1000              ADD  sample              4736.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1     1000              ADD  sample              5528.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1     1000              ADD  sample             23296.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1     1000              ADD  sample             29600.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1     1000              ADD  sample             64384.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1     1000              ADD  sample            229376.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1     1000           REMOVE  sample  508816      4928.411 ±     18.533  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1     1000           REMOVE  sample              3552.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1     1000           REMOVE  sample              4344.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1     1000           REMOVE  sample              4344.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1     1000           REMOVE  sample              6712.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1     1000           REMOVE  sample             23296.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1     1000           REMOVE  sample             30784.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1     1000           REMOVE  sample             76973.427               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1     1000           REMOVE  sample           1388544.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1     1000         CONTAINS  sample  457573      2746.729 ±     11.946  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1     1000         CONTAINS  sample              1974.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1     1000         CONTAINS  sample              2368.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1     1000         CONTAINS  sample              2764.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1     1000         CONTAINS  sample              2764.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1     1000         CONTAINS  sample             18944.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1     1000         CONTAINS  sample             24480.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1     1000         CONTAINS  sample             53021.158               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1     1000         CONTAINS  sample            130688.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1     1000    ADD_OR_REMOVE  sample  705264      3556.066 ±     10.697  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1     1000    ADD_OR_REMOVE  sample              2764.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1     1000    ADD_OR_REMOVE  sample              3160.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1     1000    ADD_OR_REMOVE  sample              3160.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1     1000    ADD_OR_REMOVE  sample              3556.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1     1000    ADD_OR_REMOVE  sample             20128.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1     1000    ADD_OR_REMOVE  sample             24864.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1     1000    ADD_OR_REMOVE  sample             51328.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1     1000    ADD_OR_REMOVE  sample            233728.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1     1000  ADD_THEN_REMOVE  sample  590292      8472.488 ±     17.349  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1     1000  ADD_THEN_REMOVE  sample              6712.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1     1000  ADD_THEN_REMOVE  sample              7504.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1     1000  ADD_THEN_REMOVE  sample              7896.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1     1000  ADD_THEN_REMOVE  sample             21312.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1     1000  ADD_THEN_REMOVE  sample             26848.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1     1000  ADD_THEN_REMOVE  sample             33920.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1     1000  ADD_THEN_REMOVE  sample             61172.749               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1     1000  ADD_THEN_REMOVE  sample            209664.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1     1000  REMOVE_THEN_ADD  sample  597968      8358.178 ±     17.280  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1     1000  REMOVE_THEN_ADD  sample              6712.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1     1000  REMOVE_THEN_ADD  sample              7504.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1     1000  REMOVE_THEN_ADD  sample              7896.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1     1000  REMOVE_THEN_ADD  sample             20928.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1     1000  REMOVE_THEN_ADD  sample             26848.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1     1000  REMOVE_THEN_ADD  sample             35520.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1     1000  REMOVE_THEN_ADD  sample             66459.981               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1     1000  REMOVE_THEN_ADD  sample            131328.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1    10000              ADD  sample  241663     49428.436 ±    107.167  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1    10000              ADD  sample             39488.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1    10000              ADD  sample             43840.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1    10000              ADD  sample             69504.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1    10000              ADD  sample             82944.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1    10000              ADD  sample            116096.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1    10000              ADD  sample            141568.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1    10000              ADD  sample            197760.205               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1    10000              ADD  sample           1978368.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1    10000           REMOVE  sample  339845     58831.789 ±     99.125  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1    10000           REMOVE  sample             47360.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1    10000           REMOVE  sample             52096.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1    10000           REMOVE  sample             82560.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1    10000           REMOVE  sample             99072.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1    10000           REMOVE  sample            137728.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1    10000           REMOVE  sample            161536.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1    10000           REMOVE  sample            193031.885               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1    10000           REMOVE  sample            419328.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1    10000         CONTAINS  sample  370716     26914.644 ±     56.033  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1    10000         CONTAINS  sample             21312.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1    10000         CONTAINS  sample             23680.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1    10000         CONTAINS  sample             38272.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1    10000         CONTAINS  sample             51328.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1    10000         CONTAINS  sample             72192.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1    10000         CONTAINS  sample             86784.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1    10000         CONTAINS  sample            121600.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1    10000         CONTAINS  sample           1906688.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1    10000    ADD_OR_REMOVE  sample  274872     36244.452 ±     78.338  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1    10000    ADD_OR_REMOVE  sample             28416.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1    10000    ADD_OR_REMOVE  sample             31968.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1    10000    ADD_OR_REMOVE  sample             48960.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1    10000    ADD_OR_REMOVE  sample             66688.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1    10000    ADD_OR_REMOVE  sample             88448.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1    10000    ADD_OR_REMOVE  sample            111744.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1    10000    ADD_OR_REMOVE  sample            166912.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1    10000    ADD_OR_REMOVE  sample           1189888.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1    10000  ADD_THEN_REMOVE  sample  221321     90349.799 ±    177.921  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1    10000  ADD_THEN_REMOVE  sample             71424.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1    10000  ADD_THEN_REMOVE  sample             79360.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1    10000  ADD_THEN_REMOVE  sample            120448.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1    10000  ADD_THEN_REMOVE  sample            148736.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1    10000  ADD_THEN_REMOVE  sample            202240.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1    10000  ADD_THEN_REMOVE  sample            240896.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1    10000  ADD_THEN_REMOVE  sample            271360.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1    10000  ADD_THEN_REMOVE  sample            470016.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1    10000  REMOVE_THEN_ADD  sample  223947     89222.167 ±    174.252  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1    10000  REMOVE_THEN_ADD  sample             71424.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1    10000  REMOVE_THEN_ADD  sample             78592.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1    10000  REMOVE_THEN_ADD  sample            118784.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1    10000  REMOVE_THEN_ADD  sample            147200.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1    10000  REMOVE_THEN_ADD  sample            199424.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1    10000  REMOVE_THEN_ADD  sample            238605.312               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1    10000  REMOVE_THEN_ADD  sample            279565.312               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1    10000  REMOVE_THEN_ADD  sample            618496.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1   100000              ADD  sample   34300    583526.504 ±   2156.285  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1   100000              ADD  sample            468480.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1   100000              ADD  sample            546816.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1   100000              ADD  sample            731136.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1   100000              ADD  sample            865280.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1   100000              ADD  sample           1097728.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1   100000              ADD  sample           1297199.104               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1   100000              ADD  sample           1479669.760               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1   100000              ADD  sample           1810432.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1   100000           REMOVE  sample   36425    549034.503 ±   2091.745  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1   100000           REMOVE  sample            402432.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1   100000           REMOVE  sample            521728.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1   100000           REMOVE  sample            683008.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1   100000           REMOVE  sample            811008.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1   100000           REMOVE  sample           1048576.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1   100000           REMOVE  sample           1255424.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1   100000           REMOVE  sample           1351827.866               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1   100000           REMOVE  sample           1374208.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1   100000         CONTAINS  sample   62486    320005.670 ±    935.449  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1   100000         CONTAINS  sample            258560.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1   100000         CONTAINS  sample            291840.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1   100000         CONTAINS  sample            397312.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1   100000         CONTAINS  sample            478720.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1   100000         CONTAINS  sample            627712.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1   100000         CONTAINS  sample            776192.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1   100000         CONTAINS  sample            838146.662               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1   100000         CONTAINS  sample            906240.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1   100000    ADD_OR_REMOVE  sample   39343    508398.002 ±   1863.739  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1   100000    ADD_OR_REMOVE  sample            307200.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1   100000    ADD_OR_REMOVE  sample            475648.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1   100000    ADD_OR_REMOVE  sample            633856.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1   100000    ADD_OR_REMOVE  sample            749568.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1   100000    ADD_OR_REMOVE  sample            969728.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1   100000    ADD_OR_REMOVE  sample           1157120.000               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1   100000    ADD_OR_REMOVE  sample           1295410.790               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1   100000    ADD_OR_REMOVE  sample           3850240.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1   100000  ADD_THEN_REMOVE  sample   22715    880466.396 ±   3466.580  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1   100000  ADD_THEN_REMOVE  sample            753664.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1   100000  ADD_THEN_REMOVE  sample            818176.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1   100000  ADD_THEN_REMOVE  sample           1081344.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1   100000  ADD_THEN_REMOVE  sample           1247232.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1   100000  ADD_THEN_REMOVE  sample           1558528.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1   100000  ADD_THEN_REMOVE  sample           1746894.848               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1   100000  ADD_THEN_REMOVE  sample           1902415.053               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1   100000  ADD_THEN_REMOVE  sample           2068480.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1   100000  REMOVE_THEN_ADD  sample   22743    879428.246 ±   3553.514  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1   100000  REMOVE_THEN_ADD  sample            677888.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1   100000  REMOVE_THEN_ADD  sample            832512.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1   100000  REMOVE_THEN_ADD  sample           1091584.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1   100000  REMOVE_THEN_ADD  sample           1255424.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1   100000  REMOVE_THEN_ADD  sample           1552384.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1   100000  REMOVE_THEN_ADD  sample           1766948.864               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1   100000  REMOVE_THEN_ADD  sample           1972224.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1   100000  REMOVE_THEN_ADD  sample           1986560.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1  1000000              ADD  sample    5066   3955445.590 ±  25251.437  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1  1000000              ADD  sample           3231744.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1  1000000              ADD  sample           3866624.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1  1000000              ADD  sample           4702208.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1  1000000              ADD  sample           4988928.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1  1000000              ADD  sample           5603328.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1  1000000              ADD  sample           7247724.544               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1  1000000              ADD  sample           9814016.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1  1000000              ADD  sample           9814016.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1  1000000           REMOVE  sample    3650   5491490.367 ±  29293.178  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1  1000000           REMOVE  sample           4808704.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1  1000000           REMOVE  sample           5349376.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1  1000000           REMOVE  sample           6193152.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1  1000000           REMOVE  sample           6414336.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1  1000000           REMOVE  sample           7249920.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1  1000000           REMOVE  sample           9552642.048               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1  1000000           REMOVE  sample          10534912.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1  1000000           REMOVE  sample          10534912.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1  1000000         CONTAINS  sample    7073   2830795.229 ±  21070.876  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1  1000000         CONTAINS  sample           2310144.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1  1000000         CONTAINS  sample           2564096.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1  1000000         CONTAINS  sample           3596288.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1  1000000         CONTAINS  sample           4001792.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1  1000000         CONTAINS  sample           4734976.000               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1  1000000         CONTAINS  sample           5617287.168               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1  1000000         CONTAINS  sample           6914048.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1  1000000         CONTAINS  sample           6914048.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1  1000000    ADD_OR_REMOVE  sample    2469   8133050.116 ±  51690.210  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1  1000000    ADD_OR_REMOVE  sample           6438912.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1  1000000    ADD_OR_REMOVE  sample           8077312.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1  1000000    ADD_OR_REMOVE  sample           9109504.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1  1000000    ADD_OR_REMOVE  sample           9461760.000               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1  1000000    ADD_OR_REMOVE  sample          10195763.200               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1  1000000    ADD_OR_REMOVE  sample          13074923.520               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1  1000000    ADD_OR_REMOVE  sample          14155776.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1  1000000    ADD_OR_REMOVE  sample          14155776.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample    1755  11452472.014 ± 105188.012  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample           8486912.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample          11550720.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample          12769689.600               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample          13192396.800               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample          15209594.880               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample          20009451.520               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample          21495808.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample          21495808.000               ns/op
+GDXIntSet.bench                GDX_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample    1736  11572710.046 ± 111704.746  ns/op
+GDXIntSet.bench:bench·p0.00    GDX_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample           8781824.000               ns/op
+GDXIntSet.bench:bench·p0.50    GDX_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample          11419648.000               ns/op
+GDXIntSet.bench:bench·p0.90    GDX_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample          13139968.000               ns/op
+GDXIntSet.bench:bench·p0.95    GDX_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample          13715865.600               ns/op
+GDXIntSet.bench:bench·p0.99    GDX_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample          15534489.600               ns/op
+GDXIntSet.bench:bench·p0.999   GDX_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample          26253590.528               ns/op
+GDXIntSet.bench:bench·p0.9999  GDX_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample          28475392.000               ns/op
+GDXIntSet.bench:bench·p1.00    GDX_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample          28475392.000               ns/op
+
+Benchmark                              (impl)  (seed)   (size)       (workload)    Mode     Cnt         Score       Error  Units
+MerryIntSet.bench                MERRY_I_HASH      -1      100              ADD  sample  464182       373.234 ±    17.801  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1      100              ADD  sample                   ≈ 0              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1      100              ADD  sample               395.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1      100              ADD  sample               396.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1      100              ADD  sample               396.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1      100              ADD  sample               396.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1      100              ADD  sample             19328.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1      100              ADD  sample             28255.373              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1      100              ADD  sample           2400256.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1      100           REMOVE  sample  506400       337.626 ±     4.593  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1      100           REMOVE  sample                   ≈ 0              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1      100           REMOVE  sample               395.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1      100           REMOVE  sample               395.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1      100           REMOVE  sample               396.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1      100           REMOVE  sample               396.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1      100           REMOVE  sample             18944.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1      100           REMOVE  sample             26848.000              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1      100           REMOVE  sample            110208.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1      100         CONTAINS  sample  497945       343.947 ±     4.846  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1      100         CONTAINS  sample                   ≈ 0              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1      100         CONTAINS  sample               395.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1      100         CONTAINS  sample               395.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1      100         CONTAINS  sample               396.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1      100         CONTAINS  sample               396.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1      100         CONTAINS  sample             18944.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1      100         CONTAINS  sample             27648.000              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1      100         CONTAINS  sample            101504.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1      100    ADD_OR_REMOVE  sample  510159       328.674 ±     4.676  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1      100    ADD_OR_REMOVE  sample                   ≈ 0              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1      100    ADD_OR_REMOVE  sample               395.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1      100    ADD_OR_REMOVE  sample               395.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1      100    ADD_OR_REMOVE  sample               396.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1      100    ADD_OR_REMOVE  sample               396.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1      100    ADD_OR_REMOVE  sample             18944.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1      100    ADD_OR_REMOVE  sample             27232.000              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1      100    ADD_OR_REMOVE  sample            209152.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1      100  ADD_THEN_REMOVE  sample  463603       699.770 ±     6.788  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1      100  ADD_THEN_REMOVE  sample               394.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1      100  ADD_THEN_REMOVE  sample               789.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1      100  ADD_THEN_REMOVE  sample               790.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1      100  ADD_THEN_REMOVE  sample               791.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1      100  ADD_THEN_REMOVE  sample              1184.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1      100  ADD_THEN_REMOVE  sample             19744.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1      100  ADD_THEN_REMOVE  sample             33397.606              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1      100  ADD_THEN_REMOVE  sample            216064.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1      100  REMOVE_THEN_ADD  sample  489770       668.854 ±    19.241  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1      100  REMOVE_THEN_ADD  sample               394.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1      100  REMOVE_THEN_ADD  sample               396.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1      100  REMOVE_THEN_ADD  sample               790.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1      100  REMOVE_THEN_ADD  sample               791.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1      100  REMOVE_THEN_ADD  sample               791.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1      100  REMOVE_THEN_ADD  sample             19744.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1      100  REMOVE_THEN_ADD  sample             30033.587              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1      100  REMOVE_THEN_ADD  sample           2723840.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1     1000              ADD  sample  423738      3260.659 ±    13.000  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1     1000              ADD  sample              2368.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1     1000              ADD  sample              2764.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1     1000              ADD  sample              3160.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1     1000              ADD  sample              3160.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1     1000              ADD  sample             19328.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1     1000              ADD  sample             25280.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1     1000              ADD  sample             53552.422              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1     1000              ADD  sample            114944.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1     1000           REMOVE  sample  388845      3225.273 ±    13.745  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1     1000           REMOVE  sample              2368.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1     1000           REMOVE  sample              2764.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1     1000           REMOVE  sample              3160.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1     1000           REMOVE  sample              3160.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1     1000           REMOVE  sample             19744.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1     1000           REMOVE  sample             26848.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1     1000           REMOVE  sample             48960.000              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1     1000           REMOVE  sample            114048.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1     1000         CONTAINS  sample  436202      2880.136 ±    12.715  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1     1000         CONTAINS  sample              1974.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1     1000         CONTAINS  sample              2368.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1     1000         CONTAINS  sample              2764.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1     1000         CONTAINS  sample              2764.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1     1000         CONTAINS  sample             18944.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1     1000         CONTAINS  sample             26464.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1     1000         CONTAINS  sample             55296.000              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1     1000         CONTAINS  sample            233216.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1     1000    ADD_OR_REMOVE  sample  403461      3115.443 ±    13.385  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1     1000    ADD_OR_REMOVE  sample              2368.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1     1000    ADD_OR_REMOVE  sample              2764.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1     1000    ADD_OR_REMOVE  sample              2764.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1     1000    ADD_OR_REMOVE  sample              3160.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1     1000    ADD_OR_REMOVE  sample             19328.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1     1000    ADD_OR_REMOVE  sample             26848.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1     1000    ADD_OR_REMOVE  sample             53179.059              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1     1000    ADD_OR_REMOVE  sample            124032.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1     1000  ADD_THEN_REMOVE  sample  379399      6613.052 ±    21.544  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1     1000  ADD_THEN_REMOVE  sample              5128.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1     1000  ADD_THEN_REMOVE  sample              5920.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1     1000  ADD_THEN_REMOVE  sample              5920.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1     1000  ADD_THEN_REMOVE  sample             11456.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1     1000  ADD_THEN_REMOVE  sample             24864.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1     1000  ADD_THEN_REMOVE  sample             40256.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1     1000  ADD_THEN_REMOVE  sample             76229.120              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1     1000  ADD_THEN_REMOVE  sample            259072.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1     1000  REMOVE_THEN_ADD  sample  389352      6438.277 ±    19.642  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1     1000  REMOVE_THEN_ADD  sample              5128.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1     1000  REMOVE_THEN_ADD  sample              5528.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1     1000  REMOVE_THEN_ADD  sample              5920.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1     1000  REMOVE_THEN_ADD  sample              6320.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1     1000  REMOVE_THEN_ADD  sample             24864.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1     1000  REMOVE_THEN_ADD  sample             35520.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1     1000  REMOVE_THEN_ADD  sample             70680.845              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1     1000  REMOVE_THEN_ADD  sample            212480.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1    10000              ADD  sample  313386     31832.618 ±    62.714  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1    10000              ADD  sample             25664.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1    10000              ADD  sample             28416.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1    10000              ADD  sample             43392.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1    10000              ADD  sample             59648.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1    10000              ADD  sample             80896.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1    10000              ADD  sample            100736.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1    10000              ADD  sample            137286.221              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1    10000              ADD  sample            269824.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1    10000           REMOVE  sample  314445     31721.877 ±    65.536  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1    10000           REMOVE  sample             25664.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1    10000           REMOVE  sample             28416.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1    10000           REMOVE  sample             43008.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1    10000           REMOVE  sample             58816.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1    10000           REMOVE  sample             80896.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1    10000           REMOVE  sample            100224.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1    10000           REMOVE  sample            125994.547              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1    10000           REMOVE  sample           2199552.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1    10000         CONTAINS  sample  344962     28907.997 ±    55.091  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1    10000         CONTAINS  sample             24480.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1    10000         CONTAINS  sample             26048.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1    10000         CONTAINS  sample             39872.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1    10000         CONTAINS  sample             54080.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1    10000         CONTAINS  sample             76928.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1    10000         CONTAINS  sample             86016.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1    10000         CONTAINS  sample            124609.421              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1    10000         CONTAINS  sample            406528.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1    10000    ADD_OR_REMOVE  sample  338760     29435.564 ±    58.194  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1    10000    ADD_OR_REMOVE  sample             24864.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1    10000    ADD_OR_REMOVE  sample             26048.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1    10000    ADD_OR_REMOVE  sample             40640.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1    10000    ADD_OR_REMOVE  sample             56448.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1    10000    ADD_OR_REMOVE  sample             77696.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1    10000    ADD_OR_REMOVE  sample             96768.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1    10000    ADD_OR_REMOVE  sample            129199.578              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1    10000    ADD_OR_REMOVE  sample            321536.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1    10000  ADD_THEN_REMOVE  sample  275749     72496.839 ±   142.745  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1    10000  ADD_THEN_REMOVE  sample             58432.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1    10000  ADD_THEN_REMOVE  sample             63936.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1    10000  ADD_THEN_REMOVE  sample            100224.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1    10000  ADD_THEN_REMOVE  sample            120064.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1    10000  ADD_THEN_REMOVE  sample            168960.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1    10000  ADD_THEN_REMOVE  sample            196096.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1    10000  ADD_THEN_REMOVE  sample            224614.400              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1    10000  ADD_THEN_REMOVE  sample           4317184.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1    10000  REMOVE_THEN_ADD  sample  272160     73448.777 ±   135.009  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1    10000  REMOVE_THEN_ADD  sample             59200.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1    10000  REMOVE_THEN_ADD  sample             65152.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1    10000  REMOVE_THEN_ADD  sample            101504.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1    10000  REMOVE_THEN_ADD  sample            121216.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1    10000  REMOVE_THEN_ADD  sample            169728.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1    10000  REMOVE_THEN_ADD  sample            200877.568              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1    10000  REMOVE_THEN_ADD  sample            230303.462              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1    10000  REMOVE_THEN_ADD  sample           1273856.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1   100000              ADD  sample   48306    414132.672 ±  1324.514  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1   100000              ADD  sample            333312.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1   100000              ADD  sample            378368.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1   100000              ADD  sample            511488.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1   100000              ADD  sample            607232.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1   100000              ADD  sample            806912.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1   100000              ADD  sample            976896.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1   100000              ADD  sample           1039706.726              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1   100000              ADD  sample           1087488.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1   100000           REMOVE  sample   46944    426016.960 ±  1424.539  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1   100000           REMOVE  sample            343552.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1   100000           REMOVE  sample            389120.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1   100000           REMOVE  sample            525312.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1   100000           REMOVE  sample            629760.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1   100000           REMOVE  sample            828979.200              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1   100000           REMOVE  sample           1010744.320              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1   100000           REMOVE  sample           1100514.304              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1   100000           REMOVE  sample           4644864.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1   100000         CONTAINS  sample   50341    397296.724 ±  1250.916  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1   100000         CONTAINS  sample            321536.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1   100000         CONTAINS  sample            364544.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1   100000         CONTAINS  sample            483840.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1   100000         CONTAINS  sample            585728.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1   100000         CONTAINS  sample            775761.920              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1   100000         CONTAINS  sample            954691.584              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1   100000         CONTAINS  sample           1004508.979              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1   100000         CONTAINS  sample           1050624.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1   100000    ADD_OR_REMOVE  sample   59283    337346.162 ±  1024.730  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1   100000    ADD_OR_REMOVE  sample            271872.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1   100000    ADD_OR_REMOVE  sample            308224.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1   100000    ADD_OR_REMOVE  sample            413696.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1   100000    ADD_OR_REMOVE  sample            499712.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1   100000    ADD_OR_REMOVE  sample            686080.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1   100000    ADD_OR_REMOVE  sample            829440.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1   100000    ADD_OR_REMOVE  sample            881664.000              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1   100000    ADD_OR_REMOVE  sample            911360.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1   100000  ADD_THEN_REMOVE  sample   28098    711625.298 ±  2726.686  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1   100000  ADD_THEN_REMOVE  sample            546816.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1   100000  ADD_THEN_REMOVE  sample            669696.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1   100000  ADD_THEN_REMOVE  sample            872448.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1   100000  ADD_THEN_REMOVE  sample           1032192.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1   100000  ADD_THEN_REMOVE  sample           1316864.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1   100000  ADD_THEN_REMOVE  sample           1512863.744              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1   100000  ADD_THEN_REMOVE  sample           1683764.429              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1   100000  ADD_THEN_REMOVE  sample           2670592.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1   100000  REMOVE_THEN_ADD  sample   29416    679788.993 ±  2434.129  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1   100000  REMOVE_THEN_ADD  sample            547840.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1   100000  REMOVE_THEN_ADD  sample            637952.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1   100000  REMOVE_THEN_ADD  sample            816435.200              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1   100000  REMOVE_THEN_ADD  sample            960512.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1   100000  REMOVE_THEN_ADD  sample           1255424.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1   100000  REMOVE_THEN_ADD  sample           1429504.000              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1   100000  REMOVE_THEN_ADD  sample           1526779.904              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1   100000  REMOVE_THEN_ADD  sample           1789952.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1  1000000              ADD  sample    3935   5090130.948 ± 30908.458  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1  1000000              ADD  sample           3596288.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1  1000000              ADD  sample           4997120.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1  1000000              ADD  sample           5890048.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1  1000000              ADD  sample           6094848.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1  1000000              ADD  sample           6411386.880              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1  1000000              ADD  sample           6980829.184              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1  1000000              ADD  sample           7569408.000              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1  1000000              ADD  sample           7569408.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1  1000000           REMOVE  sample    5108   3922394.713 ± 19187.451  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1  1000000           REMOVE  sample           3411968.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1  1000000           REMOVE  sample           3731456.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1  1000000           REMOVE  sample           4562944.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1  1000000           REMOVE  sample           4800512.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1  1000000           REMOVE  sample           5111808.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1  1000000           REMOVE  sample           5601542.144              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1  1000000           REMOVE  sample          10895360.000              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1  1000000           REMOVE  sample          10895360.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1  1000000         CONTAINS  sample    5955   3363217.690 ± 16136.392  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1  1000000         CONTAINS  sample           2920448.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1  1000000         CONTAINS  sample           3178496.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1  1000000         CONTAINS  sample           3977216.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1  1000000         CONTAINS  sample           4194304.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1  1000000         CONTAINS  sample           4554752.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1  1000000         CONTAINS  sample           4884955.136              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1  1000000         CONTAINS  sample           5955584.000              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1  1000000         CONTAINS  sample           5955584.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1  1000000    ADD_OR_REMOVE  sample    3203   6261483.459 ± 28149.942  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1  1000000    ADD_OR_REMOVE  sample           5013504.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1  1000000    ADD_OR_REMOVE  sample           6160384.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1  1000000    ADD_OR_REMOVE  sample           6963200.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1  1000000    ADD_OR_REMOVE  sample           7135232.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1  1000000    ADD_OR_REMOVE  sample           7503872.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1  1000000    ADD_OR_REMOVE  sample           7893417.984              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1  1000000    ADD_OR_REMOVE  sample          10469376.000              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1  1000000    ADD_OR_REMOVE  sample          10469376.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample    2500   8032213.402 ± 35549.484  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample           7159808.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample           7950336.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample           8732672.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample           8929280.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample           9420636.160              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample          11728027.648              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample          14909440.000              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1  1000000  ADD_THEN_REMOVE  sample          14909440.000              ns/op
+MerryIntSet.bench                MERRY_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample    2521   7964040.784 ± 33455.162  ns/op
+MerryIntSet.bench:bench·p0.00    MERRY_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample           7102464.000              ns/op
+MerryIntSet.bench:bench·p0.50    MERRY_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample           7880704.000              ns/op
+MerryIntSet.bench:bench·p0.90    MERRY_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample           8667136.000              ns/op
+MerryIntSet.bench:bench·p0.95    MERRY_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample           8847360.000              ns/op
+MerryIntSet.bench:bench·p0.99    MERRY_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample           9306112.000              ns/op
+MerryIntSet.bench:bench·p0.999   MERRY_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample           9907273.728              ns/op
+MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample          10174464.000              ns/op
+MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample          10174464.000              ns/op
