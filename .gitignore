@@ -221,8 +221,6 @@ target/
 .idea/
 jmh/.idea/
 
-*.jar
-
 .attach_pid*
 
 # javadoc
@@ -238,3 +236,4 @@ jmh/.idea/
 .gradle/
 jmh/.gradle/
 
+jmh/benchmarks.jar
