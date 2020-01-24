@@ -7,11 +7,17 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 
 public class ObjectSetCrash2 extends ApplicationAdapter {
-    private static final String[] problemStrings = (         
-               "l1nqp kPoRp jpOqp jpOs2 jop3p l2Os2 l2Q4Q l2Q3p l2PSQ kR0rQ l1p3p l1nrQ l2OrQ kQPRp" 
-            + " d7PoU d7R1U d6ooU d6q26 d8326 cVR1U d81oU buR26 bv1oU cUq26 cUop6 d7QOt cW30t" 
-            + " rTW1S rU7Or qrv0r rU7Q4 qsW1S qsUnr qrv1S qsVOr qt7Q4 qrtoS s680r s5UoS s66nr" 
-            + " 8PUQu 8PUS7 7ntQu 7oUQu 8Osr7 7oV3V 7nsr7 7nsqV 8Q5r7 90tQu 90u2u 7nu47 7ntS7"
+    private static final String[] problemStrings = (
+               "21oo 0oq1 0opP 0ooo 0pPo 21pP 21q1 1Poo 1Pq1 1PpP 0q31 0pR1 0q2P 0q1o 232P 231o 2331 0pQP" 
+            + " 22QP 22Po 22R1 1QQP 1R1o 1QR1 1R2P 1R31 1QPo 1Qup 1S7p 0r8Q 0r7p 0r92 23X2 2492 248Q 247p" 
+            + " 22vQ 22up 1S92 1S8Q 23WQ 23Vp 22w2 1QvQ 1Qw2 1RVp 1RWQ" // normally crashes here 
+                   + " 1RX2 0qX2" //  crashes here even with -Xmx8G 
+                   + " 0qWQ 0qVp 0pvQ 0pup 0pw2" // it may get part-way through these with -Xmx16G, which is _huge_
+        
+//               "l1nqp kPoRp jpOqp jpOs2 jop3p l2Os2 l2Q4Q l2Q3p l2PSQ kR0rQ l1p3p l1nrQ l2OrQ kQPRp" 
+//            + " d7PoU d7R1U d6ooU d6q26 d8326 cVR1U d81oU buR26 bv1oU cUq26 cUop6 d7QOt cW30t" 
+//            + " rTW1S rU7Or qrv0r rU7Q4 qsW1S qsUnr qrv1S qsVOr qt7Q4 qrtoS s680r s5UoS s66nr" 
+//            + " 8PUQu 8PUS7 7ntQu 7oUQu 8Osr7 7oV3V 7nsr7 7nsqV 8Q5r7 90tQu 90u2u 7nu47 7ntS7"
 //            + " HR2Y8 Gq39W HPox8 I1pY8 I1pWv HR2Wv HPq9W I31x8 I2R9W I339W I1ovv HPpXW"
 //            + " r53nu qST27 r54Ou r53p7 qT4Q7 pqrQ7 r551V r550u qT50u qT3p7 qT3oV qRs0u"
 //            + " ER321 EPq21 EPooP ER1no F2Pno F1op1 Dq321 DpR0o EQPp1 F32Q1 F32PP F31oP"
@@ -32,6 +38,7 @@ public class ObjectSetCrash2 extends ApplicationAdapter {
 //            + " 3T6S1 44US1 456S1 44V41 2s6S1 2s5r1 2rUQo 3Rspo 44URP 3SURP 43spo"
     ).split(" ");
 //mySet.addAll("l1nqp kPoRp jpOqp jpOs2 jop3p l2Os2 l2Q4Q l2Q3p l2PSQ kR0rQ l1p3p l1nrQ l2OrQ kQPRp d7PoU d7R1U d6ooU d6q26 d8326 cVR1U d81oU buR26 bv1oU cUq26 cUop6 d7QOt cW30t rTW1S rU7Or qrv0r rU7Q4 qsW1S qsUnr qrv1S qsVOr qt7Q4 qrtoS s680r s5UoS s66nr 8PUQu 8PUS7 7ntQu 7oUQu 8Osr7 7oV3V 7nsr7 7nsqV 8Q5r7 90tQu 90u2u 7nu47 3, 2, 1... 7ntS7".split(" "));
+//mySet.addAll("21oo 0oq1 0opP 0ooo 0pPo 21pP 21q1 1Poo 1Pq1 1PpP 0q31 0pR1 0q2P 0q1o 232P 231o 2331 0pQP 22QP 22Po 22R1 1QQP 1R1o 1QR1 1R2P 1R31 1QPo 1Qup 1S7p 0r8Q 0r7p 0r92 23X2 2492 248Q 247p 22vQ 22up 1S92 1S8Q 23WQ 23Vp 22w2 1QvQ 1Qw2 1RVp 1RWQ 1RX2 0qX2".split(" "));
     private ObjectSet<String> theSet;
     @Override
     public void create() {
@@ -57,7 +64,7 @@ public class ObjectSetCrash2 extends ApplicationAdapter {
                 stashCache = theSet.stashSize;
                 System.out.println("size: " + theSet.size + ", stash size: " + stashCache + ", capacity: " + theSet.capacity);
             }
-            System.out.println("attempting to add element " + (theSet.size + 1));
+            System.out.println("attempting to add element " + (theSet.size + 1) + ", " + problemStrings[x]);
             theSet.add(problemStrings[x]);
         }
         long taken = TimeUtils.timeSinceNanos(startTime);

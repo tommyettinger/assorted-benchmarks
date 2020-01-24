@@ -29,6 +29,10 @@ import java.util.HashSet;
  * All of these "words" collide, 10 total: oSUsX nrW4w nrVSw p57Sw p3v5X oSVU9 oRuSw oSVTX nqtsX nqv5X
  * All of these "words" collide, 10 total: E0qpT E1SR5 Cp52T E24QT E24R5 E0rR5 CnrPs DOs2T DPSR5 E0rPs
  * All of these "words" collide, 10 total: o2bUp o3D6p mpbW2 nRCUp nQav2 mqBv2 o3Bv2 o2c7Q nRCW2 nRCVQ
+ * With length 4, there are even more easily-discovered collisions:
+ * All of these "words" collide, 27 total: 0p5s 20tT 20ss 1Q75 1OtT 1Oss 0p75 0p6T 1Ou5 1Q5s 1PTs 1PUT 1PV5 1Q6T 0oV5 0oTs 21Ts 21UT 20u5 21V5 225s 226T 2275 0ntT 0nu5 0nss 0oUT
+ * All of these "words" collide, 27 total: 21oo 0oq1 0opP 0ooo 0pPo 21pP 21q1 1Poo 1Pq1 1PpP 0q31 0pR1 0q2P 0q1o 232P 231o 2331 0pQP 22QP 22Po 22R1 1QQP 1R1o 1QR1 1R2P 1R31 1QPo
+ * All of these "words" collide, 27 total: 1Qup 1S7p 0r8Q 0r7p 0r92 23X2 2492 248Q 247p 22vQ 22up 1S92 1S8Q 23WQ 23Vp 22w2 1QvQ 1Qw2 1RVp 1RWQ 1RX2 0qX2 0qWQ 0qVp 0pvQ 0pup 0pw2
  * <br>
  * More sophisticated techniques can generate Strings given a target hashCode() to collide with.
  * <br>
@@ -53,20 +57,20 @@ public class ProblemWordFinder {
 			// will take a short while to run with this LIMIT, maybe a minute or two
 			final int LIMIT = 0x2000000;
 			
-			HashSet<String> wordSet = new HashSet<>(LIMIT);
+			final HashSet<String> wordSet = new HashSet<>(LIMIT);
 //			SilkRNG rng = new SilkRNG(0);
 //			SilkRNG rng = new SilkRNG(1234567890);
-			SilkRNG rng = new SilkRNG();
+			final SilkRNG rng = new SilkRNG();
 			System.out.println(rng.getState());
-			char[] options = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-".toCharArray();
-			char[] w = new char[5];
+			final char[] options = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_$".toCharArray();
+			final char[] w = new char[4];
 			for (int i = 0; i < LIMIT; i++) {
-				int bits = rng.nextInt();
+				final int bits = rng.nextInt();
 				w[0] = options[bits & 63];
 				w[1] = options[bits >>> 6 & 63];
 				w[2] = options[bits >>> 12 & 63];
 				w[3] = options[bits >>> 18 & 63];
-				w[4] = options[bits >>> 24 & 63];
+//				w[4] = options[bits >>> 24 & 63];
 				wordSet.add(String.valueOf(w));
 			}
 			words = wordSet.toArray(new String[0]);
@@ -91,7 +95,7 @@ public class ProblemWordFinder {
 			sorting.put(k.next(), v.next());
 		}
 		sorting.sortByValue(Comparator.<Integer>naturalOrder().reversed());
-		StringBuilder sb = new StringBuilder(0xC0000);
+		StringBuilder sb = new StringBuilder(0xC00F0);
 		final int sz = sorting.size();
 		int count = 0;
 		for (int i = 0, current; i < sz; i++) {
