@@ -1636,543 +1636,543 @@ MerryIntSet.bench:bench·p0.9999  MERRY_I_HASH      -1  1000000  REMOVE_THEN_ADD
 MerryIntSet.bench:bench·p1.00    MERRY_I_HASH      -1  1000000  REMOVE_THEN_ADD  sample          10174464.000              ns/op
 
 Benchmark                               (impl)  (seed)   (size)       (workload)    Mode     Cnt         Score        Error  Units
-GDXObjectSet.bench                  GDX_O_HASH      -1      100              ADD  sample  487241       373.120 ±      3.420  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1      100              ADD  sample               332.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1      100              ADD  sample  487094       374.144 ±      3.458  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1      100              ADD  sample               331.000               ns/op
 GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1      100              ADD  sample               344.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1      100              ADD  sample               346.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1      100              ADD  sample               347.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1      100              ADD  sample               424.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1      100              ADD  sample             16336.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1      100              ADD  sample             25664.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1      100              ADD  sample             49920.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1      100           REMOVE  sample  412405       832.852 ±      4.595  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1      100           REMOVE  sample               772.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1      100           REMOVE  sample               785.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1      100           REMOVE  sample               788.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1      100           REMOVE  sample               789.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1      100           REMOVE  sample              1188.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1      100           REMOVE  sample             19488.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1      100           REMOVE  sample             28136.902               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1      100           REMOVE  sample             47104.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1      100         CONTAINS  sample  499534       363.076 ±      3.716  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1      100         CONTAINS  sample               321.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1      100         CONTAINS  sample               333.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1      100         CONTAINS  sample               336.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1      100         CONTAINS  sample               337.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1      100         CONTAINS  sample               463.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1      100         CONTAINS  sample             16480.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1      100         CONTAINS  sample             24359.440               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1      100         CONTAINS  sample            196352.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample  486145       704.202 ±      3.790  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               627.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               664.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               686.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               719.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               853.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1      100              ADD  sample               347.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1      100              ADD  sample               348.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1      100              ADD  sample               413.050               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1      100              ADD  sample             16448.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1      100              ADD  sample             24320.000               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1      100              ADD  sample             58816.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1      100           REMOVE  sample  750103       840.358 ±      2.924  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1      100           REMOVE  sample               781.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1      100           REMOVE  sample               810.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1      100           REMOVE  sample               817.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1      100           REMOVE  sample               850.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1      100           REMOVE  sample               874.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1      100           REMOVE  sample             16864.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1      100           REMOVE  sample             27100.006               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1      100           REMOVE  sample            195328.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1      100         CONTAINS  sample  500758       359.065 ±      3.455  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1      100         CONTAINS  sample               317.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1      100         CONTAINS  sample               332.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1      100         CONTAINS  sample               335.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1      100         CONTAINS  sample               336.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1      100         CONTAINS  sample               428.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1      100         CONTAINS  sample             16147.856               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1      100         CONTAINS  sample             24315.142               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1      100         CONTAINS  sample            187648.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample  497162       684.295 ±      3.920  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               609.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               643.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               658.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               662.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               919.000               ns/op
 GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample             19136.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample             25184.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample             49216.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample  553519      1192.676 ±      3.536  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample              1130.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample              1150.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample              1158.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample              1194.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample              1590.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample             19535.360               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample             26002.944               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample             50304.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample  541199      1216.528 ±      4.038  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample              1144.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample              1174.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample              1178.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample              1184.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample              1328.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample             19904.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample             27228.160               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample            196352.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1     1000              ADD  sample  449123      2878.738 ±      5.691  ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample             27583.549               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample             73472.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample  547425      1200.848 ±      3.022  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample              1138.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample              1162.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample              1196.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample              1262.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample              1696.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample             15287.104               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample             26026.131               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample             76160.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample  553873      1199.268 ±      4.165  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample              1124.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample              1152.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample              1166.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample              1170.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample              1662.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample             19616.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample             28512.000               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample            196864.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1     1000              ADD  sample  448683      2882.057 ±      5.676  ns/op
 GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1     1000              ADD  sample              2716.000               ns/op
 GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1     1000              ADD  sample              2820.000               ns/op
 GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1     1000              ADD  sample              2828.000               ns/op
 GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1     1000              ADD  sample              2832.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1     1000              ADD  sample              3328.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1     1000              ADD  sample             22968.064               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1     1000              ADD  sample             30818.803               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1     1000              ADD  sample            206080.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1     1000           REMOVE  sample  657166      7714.655 ±      4.541  ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1     1000              ADD  sample              3280.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1     1000              ADD  sample             24064.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1     1000              ADD  sample             30800.845               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1     1000              ADD  sample            172544.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1     1000           REMOVE  sample  656675      7719.310 ±      4.280  ns/op
 GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1     1000           REMOVE  sample              7368.000               ns/op
 GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1     1000           REMOVE  sample              7664.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1     1000           REMOVE  sample              7696.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1     1000           REMOVE  sample              7704.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1     1000           REMOVE  sample              7688.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1     1000           REMOVE  sample              7696.000               ns/op
 GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1     1000           REMOVE  sample              7888.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1     1000           REMOVE  sample             26528.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1     1000           REMOVE  sample             35218.131               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1     1000           REMOVE  sample            209920.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1     1000         CONTAINS  sample  423613      3045.344 ±      5.809  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1     1000         CONTAINS  sample              2956.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1     1000           REMOVE  sample             26720.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1     1000           REMOVE  sample             35264.000               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1     1000           REMOVE  sample            204032.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1     1000         CONTAINS  sample  425431      3040.781 ±      4.995  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1     1000         CONTAINS  sample              2960.000               ns/op
 GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1     1000         CONTAINS  sample              2976.000               ns/op
 GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1     1000         CONTAINS  sample              2988.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1     1000         CONTAINS  sample              2992.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1     1000         CONTAINS  sample              3496.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1     1000         CONTAINS  sample             24320.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1     1000         CONTAINS  sample             30289.741               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1     1000         CONTAINS  sample            209920.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample  369838      6854.403 ±      6.334  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              6616.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              6776.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              6816.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              6840.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              7536.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample             28192.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample             34048.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample            133888.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample  446663     11250.062 ±      6.822  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             11008.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1     1000         CONTAINS  sample              2988.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1     1000         CONTAINS  sample              4296.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1     1000         CONTAINS  sample             21888.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1     1000         CONTAINS  sample             32736.000               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1     1000         CONTAINS  sample            161024.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample  378350      6706.704 ±      6.643  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              6480.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              6600.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              6696.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              6968.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              7371.920               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample             28288.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample             35925.107               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample             76544.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample  447102     11234.249 ±      6.219  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             10992.000               ns/op
 GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             11152.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             11200.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             11392.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             11968.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             32640.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             11184.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             11200.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             11904.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             32704.000               ns/op
 GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             51136.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample            215552.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample  446987     11260.126 ±      6.719  ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample            247296.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample  448439     11267.813 ±      7.995  ns/op
 GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             10992.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             11168.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             11216.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             11232.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             12192.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             32896.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             51731.277               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample            206848.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1    10000              ADD  sample  226263     44330.121 ±     19.742  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1    10000              ADD  sample             44032.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             11152.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             11184.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             11184.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             12960.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             29888.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             47507.968               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample            217088.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1    10000              ADD  sample  226355     44377.199 ±     22.659  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1    10000              ADD  sample             43968.000               ns/op
 GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1    10000              ADD  sample             44096.000               ns/op
 GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1    10000              ADD  sample             44096.000               ns/op
 GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1    10000              ADD  sample             44096.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1    10000              ADD  sample             47680.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1    10000              ADD  sample             87006.208               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1    10000              ADD  sample            125487.821               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1    10000              ADD  sample            276480.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1    10000           REMOVE  sample  249465     80079.981 ±     24.643  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1    10000           REMOVE  sample             79232.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1    10000              ADD  sample             48192.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1    10000              ADD  sample             97408.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1    10000              ADD  sample            128966.502               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1    10000              ADD  sample            258816.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1    10000           REMOVE  sample  250558     79726.789 ±     25.988  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1    10000           REMOVE  sample             78080.000               ns/op
 GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1    10000           REMOVE  sample             79488.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1    10000           REMOVE  sample             81536.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1    10000           REMOVE  sample             83072.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1    10000           REMOVE  sample             81408.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1    10000           REMOVE  sample             82048.000               ns/op
 GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1    10000           REMOVE  sample             84352.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1    10000           REMOVE  sample            128324.352               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1    10000           REMOVE  sample            200731.341               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1    10000           REMOVE  sample            335360.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1    10000         CONTAINS  sample  337634     29687.858 ±     11.500  ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1    10000           REMOVE  sample            134000.896               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1    10000           REMOVE  sample            204159.206               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1    10000           REMOVE  sample            340992.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1    10000         CONTAINS  sample  337049     29729.037 ±     11.451  ns/op
 GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1    10000         CONTAINS  sample             29376.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1    10000         CONTAINS  sample             29536.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1    10000         CONTAINS  sample             29568.000               ns/op
 GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1    10000         CONTAINS  sample             29632.000               ns/op
 GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1    10000         CONTAINS  sample             29664.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1    10000         CONTAINS  sample             31200.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1    10000         CONTAINS  sample             64704.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1    10000         CONTAINS  sample             88569.088               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1    10000         CONTAINS  sample            182016.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample  314429     63548.389 ±     19.172  ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1    10000         CONTAINS  sample             31424.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1    10000         CONTAINS  sample             64576.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1    10000         CONTAINS  sample             88252.800               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1    10000         CONTAINS  sample            144640.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample  314658     63501.332 ±     16.800  ns/op
 GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             62720.000               ns/op
 GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             63232.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             63616.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             64000.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             65920.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample            111360.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample            165262.592               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample            291840.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample  150891    132389.391 ±     45.396  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            131328.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            131840.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            133120.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            134144.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            139520.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            214528.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            325120.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            346112.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample  142768    139965.303 ±     46.938  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            139008.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            139264.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            140544.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            144128.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            147968.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            216064.000               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            333824.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            365568.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1   100000              ADD  sample   33096    604026.400 ±    410.353  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1   100000              ADD  sample            601088.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1   100000              ADD  sample            601088.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1   100000              ADD  sample            603136.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1   100000              ADD  sample            604160.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1   100000              ADD  sample            653312.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1   100000              ADD  sample            957340.672               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1   100000              ADD  sample           1215044.813               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1   100000              ADD  sample           1284096.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1   100000           REMOVE  sample   25221    792848.311 ±   1227.967  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1   100000           REMOVE  sample            696320.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1   100000           REMOVE  sample            751616.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1   100000           REMOVE  sample            848896.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1   100000           REMOVE  sample            879616.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1   100000           REMOVE  sample            888832.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1   100000           REMOVE  sample           1326194.688               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1   100000           REMOVE  sample           1534566.810               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1   100000           REMOVE  sample           1689600.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1   100000         CONTAINS  sample   67222    297304.718 ±    116.740  ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             63360.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             63616.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             66816.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample            107392.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample            148736.000               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample            285184.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample  150156    133063.711 ±     46.806  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            131840.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            132352.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            133888.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            135168.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            140800.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            216064.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            308695.808               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            380928.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample  148844    134251.483 ±     50.422  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            132608.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            132864.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            139776.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            140544.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            145408.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            219904.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            325809.408               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            336384.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1   100000              ADD  sample   32914    607376.543 ±    317.380  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1   100000              ADD  sample            600064.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1   100000              ADD  sample            604160.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1   100000              ADD  sample            617472.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1   100000              ADD  sample            636928.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1   100000              ADD  sample            663552.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1   100000              ADD  sample            876129.280               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1   100000              ADD  sample           1015468.032               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1   100000              ADD  sample           1047552.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1   100000           REMOVE  sample   25197    793506.000 ±   1111.044  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1   100000           REMOVE  sample            719872.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1   100000           REMOVE  sample            752640.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1   100000           REMOVE  sample            849920.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1   100000           REMOVE  sample            849920.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1   100000           REMOVE  sample            886784.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1   100000           REMOVE  sample           1110016.000               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1   100000           REMOVE  sample           1264275.046               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1   100000           REMOVE  sample           1290240.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1   100000         CONTAINS  sample   67437    296342.946 ±    111.719  ns/op
 GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1   100000         CONTAINS  sample            293888.000               ns/op
 GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1   100000         CONTAINS  sample            295424.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1   100000         CONTAINS  sample            297472.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1   100000         CONTAINS  sample            309248.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1   100000         CONTAINS  sample            331264.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1   100000         CONTAINS  sample            432923.648               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1   100000         CONTAINS  sample            538282.189               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1   100000         CONTAINS  sample            604160.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample   31450    635663.645 ±    276.595  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            628736.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            632832.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            636928.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            640000.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            693248.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            841266.176               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            961668.506               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            970752.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample   16151   1238224.401 ±    690.335  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1220608.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1236992.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1247232.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1259520.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1335296.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1653850.112               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1840689.971               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1875968.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample   16075   1244224.402 ±    860.229  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1214464.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1257472.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1259520.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1261568.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1370112.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1637933.056               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1748992.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1748992.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1  1000000              ADD  sample    3375   5940899.081 ±  87417.297  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1  1000000              ADD  sample           5365760.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1  1000000              ADD  sample           5472256.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1  1000000              ADD  sample           5816320.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1  1000000              ADD  sample          10223616.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1  1000000              ADD  sample          11960320.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1  1000000              ADD  sample          12568494.080               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1  1000000              ADD  sample          12779520.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1  1000000              ADD  sample          12779520.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1  1000000           REMOVE  sample    2523   7949749.929 ±  34235.896  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1  1000000           REMOVE  sample           7856128.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1  1000000           REMOVE  sample           7888896.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1  1000000           REMOVE  sample           7929856.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1  1000000           REMOVE  sample           8028160.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1  1000000           REMOVE  sample           8777891.840               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1  1000000           REMOVE  sample          15540486.144               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1  1000000           REMOVE  sample          16941056.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1  1000000           REMOVE  sample          16941056.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1  1000000         CONTAINS  sample    4056   4939969.893 ±  33457.421  ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1   100000         CONTAINS  sample            296960.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1   100000         CONTAINS  sample            297472.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1   100000         CONTAINS  sample            329728.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1   100000         CONTAINS  sample            437311.488               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1   100000         CONTAINS  sample            542720.000               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1   100000         CONTAINS  sample            609280.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample   31181    641162.981 ±    647.311  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            627712.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            633856.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            637952.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            733184.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            735232.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample           1163632.640               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample           1453203.866               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample           1533952.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample   15996   1250031.676 ±    724.026  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1228800.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1249280.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1253376.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1255424.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1359872.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1667084.288               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1833012.224               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1937408.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample   16136   1239062.211 ±   1044.373  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1208320.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1243136.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1265664.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1300480.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1413120.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1650407.424               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1917202.842               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1959936.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1  1000000              ADD  sample    3015   6652406.660 ± 149772.305  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1  1000000              ADD  sample           5349376.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1  1000000              ADD  sample           5521408.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1  1000000              ADD  sample          11894784.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1  1000000              ADD  sample          11960320.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1  1000000              ADD  sample          14188544.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1  1000000              ADD  sample          14464974.848               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1  1000000              ADD  sample          15286272.000               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1  1000000              ADD  sample          15286272.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1  1000000           REMOVE  sample    2577   7785559.817 ±  43033.075  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1  1000000           REMOVE  sample           7553024.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1  1000000           REMOVE  sample           7757824.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1  1000000           REMOVE  sample           7806976.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1  1000000           REMOVE  sample           7929856.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1  1000000           REMOVE  sample           8730705.920               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1  1000000           REMOVE  sample          18295357.440               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1  1000000           REMOVE  sample          19300352.000               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1  1000000           REMOVE  sample          19300352.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1  1000000         CONTAINS  sample    4267   4694574.676 ±   4133.953  ns/op
 GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1  1000000         CONTAINS  sample           4628480.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1  1000000         CONTAINS  sample           4677632.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1  1000000         CONTAINS  sample           5718016.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1  1000000         CONTAINS  sample           6987776.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1  1000000         CONTAINS  sample           7020544.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1  1000000         CONTAINS  sample           7634771.968               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1  1000000         CONTAINS  sample           7839744.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1  1000000         CONTAINS  sample           7839744.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample    1581  12723445.475 ± 109888.696  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample           9322496.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          12664832.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          14417920.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          14991360.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          16002580.480               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          17606836.224               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          18579456.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          18579456.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample    1074  18785934.063 ± 209520.812  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          15007744.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          18841600.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          21151744.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          22151168.000               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          24223744.000               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          26859929.600               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          26869760.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          26869760.000               ns/op
-GDXObjectSet.bench                  GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample    1102  18307945.466 ± 211767.172  ns/op
-GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          14680064.000               ns/op
-GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          18350080.000               ns/op
-GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          21331968.000               ns/op
-GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          21851340.800               ns/op
-GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          23721082.880               ns/op
-GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          27018559.488               ns/op
-GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          27197440.000               ns/op
-GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          27197440.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1      100              ADD  sample  787171       436.658 ±      2.011  ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1  1000000         CONTAINS  sample           4685824.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1  1000000         CONTAINS  sample           4743168.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1  1000000         CONTAINS  sample           4759552.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1  1000000         CONTAINS  sample           5070848.000               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1  1000000         CONTAINS  sample           5704843.264               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1  1000000         CONTAINS  sample           6397952.000               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1  1000000         CONTAINS  sample           6397952.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample    1540  13047887.792 ± 111593.825  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample           9256960.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          13017088.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          14680064.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          15301836.800               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          16412999.680               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          18332352.512               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          18350080.000               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          18350080.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample    1058  19041552.938 ± 212409.130  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          15319040.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          19333120.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          21594112.000               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          22216704.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          24053350.400               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          25840418.816               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          25853952.000               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          25853952.000               ns/op
+GDXObjectSet.bench                  GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample    1030  19615147.495 ± 201035.670  ns/op
+GDXObjectSet.bench:bench·p0.00      GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          16171008.000               ns/op
+GDXObjectSet.bench:bench·p0.50      GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          19660800.000               ns/op
+GDXObjectSet.bench:bench·p0.90      GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          22177382.400               ns/op
+GDXObjectSet.bench:bench·p0.95      GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          22872064.000               ns/op
+GDXObjectSet.bench:bench·p0.99      GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          25102581.760               ns/op
+GDXObjectSet.bench:bench·p0.999     GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          27218018.304               ns/op
+GDXObjectSet.bench:bench·p0.9999    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          27230208.000               ns/op
+GDXObjectSet.bench:bench·p1.00      GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          27230208.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1      100              ADD  sample  789334       432.326 ±      2.011  ns/op
 MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1      100              ADD  sample               403.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1      100              ADD  sample               418.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1      100              ADD  sample               421.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1      100              ADD  sample               450.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1      100              ADD  sample               459.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1      100              ADD  sample              1961.656               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1      100              ADD  sample             22112.000               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1      100              ADD  sample             29440.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1      100           REMOVE  sample  787607       434.840 ±      2.099  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1      100           REMOVE  sample               404.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1      100           REMOVE  sample               418.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1      100           REMOVE  sample               421.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1      100           REMOVE  sample               422.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1      100           REMOVE  sample               428.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1      100           REMOVE  sample              1898.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1      100           REMOVE  sample             22144.000               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1      100           REMOVE  sample            167680.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1      100         CONTAINS  sample  484232       369.754 ±      3.027  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1      100         CONTAINS  sample               332.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1      100         CONTAINS  sample               346.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1      100         CONTAINS  sample               350.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1      100         CONTAINS  sample               351.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1      100         CONTAINS  sample               393.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1      100         CONTAINS  sample             16112.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1      100         CONTAINS  sample             22994.454               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1      100         CONTAINS  sample             44800.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample  610435       566.613 ±      3.112  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               516.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               535.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               548.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               551.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               791.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample             16658.048               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample             23870.605               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample            204288.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample  420843       815.442 ±      4.796  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample               754.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample               769.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample               773.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample               775.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample               976.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample             19456.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample             27268.992               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample            187648.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample  427144       845.619 ±      5.067  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample               777.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample               792.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample               811.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample               816.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample              1046.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample             19776.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample             27657.136               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample            201216.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1     1000              ADD  sample  705751      3593.522 ±      3.318  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1     1000              ADD  sample              3492.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1      100              ADD  sample               416.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1      100              ADD  sample               419.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1      100              ADD  sample               420.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1      100              ADD  sample               423.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1      100              ADD  sample              1876.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1      100              ADD  sample             22850.128               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1      100              ADD  sample             38464.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1      100           REMOVE  sample  435280       402.502 ±      2.803  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1      100           REMOVE  sample               366.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1      100           REMOVE  sample               381.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1      100           REMOVE  sample               386.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1      100           REMOVE  sample               390.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1      100           REMOVE  sample               554.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1      100           REMOVE  sample              2584.628               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1      100           REMOVE  sample             23782.109               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1      100           REMOVE  sample             46784.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1      100         CONTAINS  sample  448945       398.635 ±      3.573  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1      100         CONTAINS  sample               351.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1      100         CONTAINS  sample               369.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1      100         CONTAINS  sample               373.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1      100         CONTAINS  sample               374.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1      100         CONTAINS  sample               472.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1      100         CONTAINS  sample             18497.728               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1      100         CONTAINS  sample             24576.000               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1      100         CONTAINS  sample             49728.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample  621098       552.454 ±      2.811  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               508.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               526.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               531.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               533.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample               646.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample             16318.416               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample             23381.450               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1      100    ADD_OR_REMOVE  sample             84352.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample  425469       810.222 ±      4.826  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample               745.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample               759.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample               763.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample               765.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample               995.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample             19776.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample             27769.984               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1      100  ADD_THEN_REMOVE  sample             52224.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample  435878       836.115 ±      4.928  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample               764.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample               780.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample               806.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample               813.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample              1340.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample             19488.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample             28474.374               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1      100  REMOVE_THEN_ADD  sample            200192.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1     1000              ADD  sample  708822      3584.129 ±      3.484  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1     1000              ADD  sample              3488.000               ns/op
 MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1     1000              ADD  sample              3532.000               ns/op
 MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1     1000              ADD  sample              3556.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1     1000              ADD  sample              3872.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1     1000              ADD  sample              3924.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1     1000              ADD  sample             22183.936               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1     1000              ADD  sample             27821.594               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1     1000              ADD  sample            124544.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1     1000           REMOVE  sample  710378      3573.465 ±      3.148  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1     1000           REMOVE  sample              3460.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1     1000           REMOVE  sample              3532.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1     1000           REMOVE  sample              3544.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1     1000           REMOVE  sample              3548.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1     1000           REMOVE  sample              3700.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1     1000           REMOVE  sample             21760.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1     1000           REMOVE  sample             29597.574               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1     1000           REMOVE  sample            100096.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1     1000         CONTAINS  sample  679908      3727.889 ±      3.639  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1     1000         CONTAINS  sample              3644.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1     1000              ADD  sample              3600.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1     1000              ADD  sample              3724.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1     1000              ADD  sample             22272.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1     1000              ADD  sample             29923.766               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1     1000              ADD  sample            224768.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1     1000           REMOVE  sample  697929      3633.914 ±      3.703  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1     1000           REMOVE  sample              3540.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1     1000           REMOVE  sample              3580.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1     1000           REMOVE  sample              3632.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1     1000           REMOVE  sample              3652.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1     1000           REMOVE  sample              3724.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1     1000           REMOVE  sample             22336.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1     1000           REMOVE  sample             30438.624               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1     1000           REMOVE  sample            198400.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1     1000         CONTAINS  sample  680197      3740.992 ±      4.219  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1     1000         CONTAINS  sample              3636.000               ns/op
 MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1     1000         CONTAINS  sample              3684.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1     1000         CONTAINS  sample              3696.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1     1000         CONTAINS  sample              3696.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1     1000         CONTAINS  sample              3772.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1     1000         CONTAINS  sample             22560.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1     1000         CONTAINS  sample             31104.582               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1     1000         CONTAINS  sample             67840.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample  561016      4515.510 ±      4.797  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              4424.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              4464.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              4472.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              4480.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              4616.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample             23488.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample             31996.746               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample            207360.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample  373009      7142.668 ±      7.510  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample              6912.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample              7048.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample              7104.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample              7128.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample              7872.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             28640.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             35756.736               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample            207872.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample  689485      7300.614 ±      3.380  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample              7152.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample              7248.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample              7304.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample              7320.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample              7664.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             25536.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             36992.000               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             74112.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1    10000              ADD  sample  276662     36176.828 ±     13.790  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1    10000              ADD  sample             35008.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1     1000         CONTAINS  sample              3700.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1     1000         CONTAINS  sample              3704.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1     1000         CONTAINS  sample              3932.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1     1000         CONTAINS  sample             22592.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1     1000         CONTAINS  sample             30462.099               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1     1000         CONTAINS  sample            196864.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample  527488      4800.656 ±      4.408  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              4632.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              4744.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              4776.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              4944.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample              5000.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample             23776.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample             31328.000               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1     1000    ADD_OR_REMOVE  sample             58688.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample  591434      8497.182 ±      4.781  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample              8352.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample              8432.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample              8480.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample              8496.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample              8816.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             28704.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample             36672.000               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1     1000  ADD_THEN_REMOVE  sample            181504.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample  607614      8270.929 ±      4.428  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample              8048.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample              8208.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample              8256.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample              8272.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample              8496.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             27776.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample             35648.000               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1     1000  REMOVE_THEN_ADD  sample            201728.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1    10000              ADD  sample  275775     36331.242 ±     14.581  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1    10000              ADD  sample             34944.000               ns/op
 MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1    10000              ADD  sample             35968.000               ns/op
 MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1    10000              ADD  sample             36224.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1    10000              ADD  sample             36608.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1    10000              ADD  sample             38592.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1    10000              ADD  sample             70571.136               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1    10000              ADD  sample            102272.141               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1    10000              ADD  sample            294912.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1    10000           REMOVE  sample  290645     34521.134 ±     17.395  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1    10000           REMOVE  sample             33792.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1    10000           REMOVE  sample             34304.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1    10000           REMOVE  sample             34368.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1    10000           REMOVE  sample             34432.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1    10000           REMOVE  sample             36642.560               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1    10000           REMOVE  sample             80813.312               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1    10000           REMOVE  sample            106359.731               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1    10000           REMOVE  sample            220160.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1    10000         CONTAINS  sample  284373     35224.089 ±     19.617  ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1    10000              ADD  sample             39232.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1    10000              ADD  sample             40000.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1    10000              ADD  sample             74112.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1    10000              ADD  sample             97860.403               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1    10000              ADD  sample            242688.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1    10000           REMOVE  sample  265639     37732.339 ±     18.021  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1    10000           REMOVE  sample             36544.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1    10000           REMOVE  sample             37696.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1    10000           REMOVE  sample             37888.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1    10000           REMOVE  sample             37952.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1    10000           REMOVE  sample             40256.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1    10000           REMOVE  sample             76846.080               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1    10000           REMOVE  sample            117894.656               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1    10000           REMOVE  sample            273920.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1    10000         CONTAINS  sample  283924     35336.395 ±     16.829  ns/op
 MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1    10000         CONTAINS  sample             34176.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1    10000         CONTAINS  sample             35072.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1    10000         CONTAINS  sample             35136.000               ns/op
 MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1    10000         CONTAINS  sample             35392.000               ns/op
 MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1    10000         CONTAINS  sample             35392.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1    10000         CONTAINS  sample             37056.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1    10000         CONTAINS  sample             70400.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1    10000         CONTAINS  sample             98632.013               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1    10000         CONTAINS  sample            758784.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample  248638     40330.192 ±     15.952  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             39808.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             40064.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             40192.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             40832.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             43136.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             80558.208               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample            106274.842               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample            182528.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample  280430     71228.894 ±     33.228  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample             69504.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample             70784.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample             71936.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample             72192.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample             75008.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            115968.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            173812.966               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample           1513472.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample  274883     72645.001 ±     25.146  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample             70272.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample             72064.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample             73984.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample             75520.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample             76928.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            135709.696               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            188683.878               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            285184.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1   100000              ADD  sample   55049    363125.413 ±    160.543  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1   100000              ADD  sample            355328.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1    10000         CONTAINS  sample             38080.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1    10000         CONTAINS  sample             77312.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1    10000         CONTAINS  sample            109367.040               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1    10000         CONTAINS  sample            243968.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample  232303     43201.281 ±     18.783  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             42560.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             42944.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             43008.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             43072.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             46848.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample             85760.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample            121935.053               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1    10000    ADD_OR_REMOVE  sample            147456.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample  227299     87898.428 ±     24.323  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample             87168.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample             87552.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample             87680.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample             87808.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample             92800.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            135424.000               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            220684.800               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1    10000  ADD_THEN_REMOVE  sample            353280.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample  232227     86036.705 ±     25.808  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample             84992.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample             85632.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample             85888.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample             88448.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample             90496.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            137925.632               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            211853.926               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1    10000  REMOVE_THEN_ADD  sample            355328.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1   100000              ADD  sample   54868    364306.467 ±    198.114  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1   100000              ADD  sample            355840.000               ns/op
 MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1   100000              ADD  sample            360960.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1   100000              ADD  sample            369664.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1   100000              ADD  sample            371712.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1   100000              ADD  sample            401408.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1   100000              ADD  sample            530278.400               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1   100000              ADD  sample            650746.880               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1   100000              ADD  sample            786432.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1   100000           REMOVE  sample   55275    361639.193 ±    186.591  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1   100000           REMOVE  sample            354816.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1   100000           REMOVE  sample            357888.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1   100000           REMOVE  sample            384000.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1   100000           REMOVE  sample            386560.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1   100000           REMOVE  sample            396800.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1   100000           REMOVE  sample            532197.376               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1   100000           REMOVE  sample            639943.475               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1   100000           REMOVE  sample            673792.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1   100000         CONTAINS  sample   57085    350156.356 ±    139.676  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1   100000         CONTAINS  sample            343040.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1   100000         CONTAINS  sample            349696.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1   100000         CONTAINS  sample            351744.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1   100000         CONTAINS  sample            352256.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1   100000         CONTAINS  sample            385536.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1   100000         CONTAINS  sample            518656.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1   100000         CONTAINS  sample            601983.181               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1   100000         CONTAINS  sample            636928.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample   49481    404018.547 ±    181.943  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            393216.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            400896.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            406016.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            424960.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            443392.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            572946.432               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            672821.043               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            703488.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample   27527    726347.227 ±    606.937  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample            693248.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample            740352.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample            750592.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample            752640.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample            800768.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1024483.328               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1178612.531               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1212416.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample   27241    733984.751 ±    580.931  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample            706560.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample            714752.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample            759808.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample            761856.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample            804864.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1056768.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1147160.576               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1208320.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1  1000000              ADD  sample    4333   4623923.637 ±  10415.251  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1  1000000              ADD  sample           4530176.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1  1000000              ADD  sample           4595712.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1  1000000              ADD  sample           4636672.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1  1000000              ADD  sample           4694016.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1  1000000              ADD  sample           5371166.720               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1  1000000              ADD  sample           8628862.976               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1  1000000              ADD  sample          10158080.000               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1  1000000              ADD  sample          10158080.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1  1000000           REMOVE  sample    4967   4035347.534 ±   3797.779  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1  1000000           REMOVE  sample           4001792.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1  1000000           REMOVE  sample           4014080.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1  1000000           REMOVE  sample           4071424.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1  1000000           REMOVE  sample           4136960.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1  1000000           REMOVE  sample           4467261.440               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1  1000000           REMOVE  sample           4917297.152               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1  1000000           REMOVE  sample           5144576.000               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1  1000000           REMOVE  sample           5144576.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1  1000000         CONTAINS  sample    4630   4327492.119 ±   6270.811  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1  1000000         CONTAINS  sample           4259840.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1  1000000         CONTAINS  sample           4308992.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1  1000000         CONTAINS  sample           4333568.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1  1000000         CONTAINS  sample           4382720.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1  1000000         CONTAINS  sample           4838932.480               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1  1000000         CONTAINS  sample           5478178.816               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1  1000000         CONTAINS  sample           9437184.000               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1  1000000         CONTAINS  sample           9437184.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample    2218   9066641.890 ±  15033.623  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample           7249920.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample           9043968.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample           9125888.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample           9225011.200               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample           9974743.040               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          10158080.000               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          10256384.000               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          10256384.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample    2341   8547800.851 ±  10528.335  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample           8454144.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample           8519680.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample           8552448.000               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample           8650752.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample           9486336.000               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample           9835577.344               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample           9879552.000               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample           9879552.000               ns/op
-MerryObjectSet.bench                GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample    2275   8847676.877 ±  13354.835  ns/op
-MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample           8716288.000               ns/op
-MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample           8798208.000               ns/op
-MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample           8903065.600               ns/op
-MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample           9109504.000               ns/op
-MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          10018488.320               ns/op
-MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          10796466.176               ns/op
-MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          11255808.000               ns/op
-MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          11255808.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1   100000              ADD  sample            370176.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1   100000              ADD  sample            393728.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1   100000              ADD  sample            404638.720               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1   100000              ADD  sample            565382.144               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1   100000              ADD  sample            669197.414               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1   100000              ADD  sample            700416.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1   100000           REMOVE  sample   34298    582906.103 ±    430.177  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1   100000           REMOVE  sample            579584.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1   100000           REMOVE  sample            579584.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1   100000           REMOVE  sample            582656.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1   100000           REMOVE  sample            585728.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1   100000           REMOVE  sample            625664.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1   100000           REMOVE  sample            977613.824               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1   100000           REMOVE  sample           1314222.694               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1   100000           REMOVE  sample           1376256.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1   100000         CONTAINS  sample   57053    350364.715 ±    152.644  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1   100000         CONTAINS  sample            342528.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1   100000         CONTAINS  sample            349184.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1   100000         CONTAINS  sample            353280.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1   100000         CONTAINS  sample            355328.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1   100000         CONTAINS  sample            386560.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1   100000         CONTAINS  sample            530266.112               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1   100000         CONTAINS  sample            628315.341               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1   100000         CONTAINS  sample            670720.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample   45825    436291.987 ±    324.750  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            429568.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            431104.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            434176.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            486758.400               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            514048.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            657942.528               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            764082.176               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1   100000    ADD_OR_REMOVE  sample            855040.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample   23709    843376.619 ±    541.193  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample            835584.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample            837632.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample            840704.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample            909824.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample            927744.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1212149.760               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1315706.880               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1   100000  ADD_THEN_REMOVE  sample           1347584.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample   22965    870736.027 ±    738.214  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample            844800.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample            865280.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample            875520.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample            877568.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample            947200.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1411530.752               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1753383.322               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1   100000  REMOVE_THEN_ADD  sample           1904640.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1  1000000              ADD  sample    2942   6819361.066 ±  12415.811  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1  1000000              ADD  sample           6742016.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1  1000000              ADD  sample           6774784.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1  1000000              ADD  sample           6848512.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1  1000000              ADD  sample           6905856.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1  1000000              ADD  sample           8168570.880               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1  1000000              ADD  sample           8619851.776               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1  1000000              ADD  sample           8732672.000               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1  1000000              ADD  sample           8732672.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1  1000000           REMOVE  sample    4417   4534541.852 ±   4129.966  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1  1000000           REMOVE  sample           4497408.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1  1000000           REMOVE  sample           4513792.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1  1000000           REMOVE  sample           4554752.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1  1000000           REMOVE  sample           4603904.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1  1000000           REMOVE  sample           5054464.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1  1000000           REMOVE  sample           5324062.720               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1  1000000           REMOVE  sample           5357568.000               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1  1000000           REMOVE  sample           5357568.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1  1000000         CONTAINS  sample    4679   4277158.928 ±   2644.472  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1  1000000         CONTAINS  sample           4235264.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1  1000000         CONTAINS  sample           4268032.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1  1000000         CONTAINS  sample           4292608.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1  1000000         CONTAINS  sample           4317184.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1  1000000         CONTAINS  sample           4571136.000               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1  1000000         CONTAINS  sample           4923064.320               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1  1000000         CONTAINS  sample           5275648.000               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1  1000000         CONTAINS  sample           5275648.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample    1715  11713795.732 ±  25636.798  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample           9322496.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          11649024.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          11911168.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          12124160.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          12694978.560               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          13686996.992               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          14942208.000               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1  1000000    ADD_OR_REMOVE  sample          14942208.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample    1020  19635613.616 ± 781637.278  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          11894784.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          14262272.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          27361280.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          27459584.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          28337438.720               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          29054894.080               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          29065216.000               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1  1000000  ADD_THEN_REMOVE  sample          29065216.000               ns/op
+MerryObjectSet.bench                GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample    1135  17718119.528 ± 720641.322  ns/op
+MerryObjectSet.bench:bench·p0.00    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          10190848.000               ns/op
+MerryObjectSet.bench:bench·p0.50    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          10977280.000               ns/op
+MerryObjectSet.bench:bench·p0.90    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          25329664.000               ns/op
+MerryObjectSet.bench:bench·p0.95    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          25460736.000               ns/op
+MerryObjectSet.bench:bench·p0.99    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          25940459.520               ns/op
+MerryObjectSet.bench:bench·p0.999   GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          26525827.072               ns/op
+MerryObjectSet.bench:bench·p0.9999  GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          26574848.000               ns/op
+MerryObjectSet.bench:bench·p1.00    GDX_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample          26574848.000               ns/op

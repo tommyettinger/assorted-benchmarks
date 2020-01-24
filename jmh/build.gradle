@@ -58,7 +58,7 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
     implementation group: 'org.javolution', name: 'javolution-core-java', version: '6.0.0'
     implementation group: 'org.scala-lang', name: 'scala-library', version: '2.13.1'
-    implementation group: 'com.github.tommyettinger', name: 'merry-ds', version: '8e0e86bb89'
+    implementation group: 'com.github.tommyettinger', name: 'merry-ds', version: 'ee1a74ad36'
 
     // compile group: 'in.jlibs', name: 'jlibs-core', version:'2.2.1'
     // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
