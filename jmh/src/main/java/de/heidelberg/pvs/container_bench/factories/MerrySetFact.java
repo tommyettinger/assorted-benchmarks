@@ -6,7 +6,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public enum MerrySetFact {
-	GDX_O_HASH(ObjectSet::new, ObjectSet::new), //
+	MERRY_O_HASH(ObjectSet::new, ObjectSet::new), //
 	;
 
 	public final Supplier<ObjectSet<?>> maker;
