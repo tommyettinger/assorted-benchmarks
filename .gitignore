@@ -223,10 +223,6 @@ jmh/.idea/
 
 .attach_pid*
 
-# javadoc
-*.html
-*.css
-
 # jEdit garbage
 *~
 *#*#
