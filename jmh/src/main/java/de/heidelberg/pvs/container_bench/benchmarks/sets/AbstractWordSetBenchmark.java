@@ -155,11 +155,8 @@ public abstract class AbstractWordSetBenchmark<T> {
 			@Override
 			public <T> void run(AbstractWordSetBenchmark<T> self) throws InterruptedException {
 				List<String> words = self.words;
-				for (int i = 0, size = words.size(); i < size && failIfInterrupted();) {
+				for (int i = 0, size = words.size() - 1; i < size && failIfInterrupted();) {
 					self.add(words.get(i++));
-					if (i >= size) {
-						break;
-					}
 					self.remove(words.get(i++));
 				}
 			}

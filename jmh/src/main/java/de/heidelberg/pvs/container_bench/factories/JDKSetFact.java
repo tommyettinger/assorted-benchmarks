@@ -4,7 +4,8 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public enum JDKSetFact {
-	
+	//JDK_HASH,KOLOBOKE_HASH,FASTUTIL_HASH,ECLIPSE_HASH,TROVE_HASH,AGRONA_HASH
+	//JDK_LINKEDHASH,FASTUTIL_LINKEDHASH,APACHE_LINKEDHASH
 	JDK_HASH(java.util.HashSet::new), //
 	JDK_LINKEDHASH(java.util.LinkedHashSet::new), //
 	JDK_TREE(java.util.TreeSet::new), //

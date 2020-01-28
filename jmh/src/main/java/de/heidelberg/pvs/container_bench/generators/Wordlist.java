@@ -78,7 +78,7 @@ public class Wordlist {
 					}
 				}
 				len *= len;
-				repeats = (666666 - (line.hashCode() & 0x7FFF)) / (len * len) + 1;
+				repeats = (7777777 - (line.hashCode() & 0x3FFFF)) / (len * len) + 1;
 				for (int i = 0; i < repeats; i++) {
 					words.add(line);
 				}
