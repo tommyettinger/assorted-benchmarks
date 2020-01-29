@@ -36,5 +36,9 @@ public class StringDictionaryGenerator implements ElementGenerator<String> {
 		String[] array = new String[arraySize];
 		return words.subList(0, arraySize).toArray(array);
 	}
+	
+	public List<String> generateList(int listSize) {
+		return words.subList(0, listSize);
+	}
 
 }
