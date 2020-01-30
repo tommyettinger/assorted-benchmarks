@@ -1,10 +1,14 @@
 package de.heidelberg.pvs.container_bench;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectSet;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.OrderedSet;
 import de.heidelberg.pvs.container_bench.generators.TangleRNG;
 import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryGenerator;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 
@@ -13,8 +17,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -48,7 +53,7 @@ public class MemoryMBeanCheck {
 //        mainString();
         mainFloat();
     }
-    public static void mainString() {
+    public static void mainString () {
         StringDictionaryGenerator gen = new StringDictionaryGenerator();
         PrintStream out = System.out;
         try {
@@ -166,7 +171,7 @@ public class MemoryMBeanCheck {
             }
         }
     }
-    public static void mainFloat() {
+    public static void mainFloat () {
         TangleRNG rng = new TangleRNG(-10000L, 1111111L);
         PrintStream out = System.out;
         try {
@@ -178,13 +183,12 @@ public class MemoryMBeanCheck {
             if(i == 9)
                 System.setOut(out);
             for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
-                Float[] words = new Float[size];
+                Float[] floats = new Float[size];
                 rng.setStateA(size);
                 rng.setStateB(~size);
                 for (int j = 0; j < size; j++) {
-                    words[j] = rng.next(24) * 0.6180339887498949f;
+                    floats[j] = rng.next(24) * 0.6180339887498949f;
                 }
-                List<Float> wordList = Arrays.asList(words);
                 System.out.println("LIST");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK ArrayList", size,
@@ -193,7 +197,7 @@ public class MemoryMBeanCheck {
 
                         @Override public void run () {
                             x = new ArrayList<>(size);
-                            for (int j = 0; j < size; j++) x.add(words[j]);
+                            for (int j = 0; j < size; j++) x.add(floats[j]);
                         }
                     }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "GDX Array", size, measure(new Runnable() {
@@ -201,11 +205,11 @@ public class MemoryMBeanCheck {
 
                     @Override public void run () {
                         x = new Array<>(size);
-                        for (int j = 0; j < size; j++) x.add(words[j]);
+                        for (int j = 0; j < size; j++) x.add(floats[j]);
                     }
                 }));
 
-                System.out.println("UNORDERED");
+                System.out.println("UNORDERED SET");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK HashSet", size,
                     measure(new Runnable() {
@@ -213,7 +217,7 @@ public class MemoryMBeanCheck {
 
                         @Override public void run () {
                             x = new HashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(words[j]);
+                            for (int j = 0; j < size; j++) x.add(floats[j]);
                         }
                     }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "FastUtil Set", size,
@@ -222,7 +226,7 @@ public class MemoryMBeanCheck {
 
                         @Override public void run () {
                             x = new ObjectOpenHashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(words[j]);
+                            for (int j = 0; j < size; j++) x.add(floats[j]);
                         }
                     }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "GDX ObjectSet", size,
@@ -231,7 +235,7 @@ public class MemoryMBeanCheck {
 
                         @Override public void run () {
                             x = new ObjectSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(words[j]);
+                            for (int j = 0; j < size; j++) x.add(floats[j]);
                         }
                     }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Merry ObjectSet", size,
@@ -240,10 +244,10 @@ public class MemoryMBeanCheck {
 
                         @Override public void run () {
                             x = new com.github.tommyettinger.merry.lp.ObjectSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(words[j]);
+                            for (int j = 0; j < size; j++) x.add(floats[j]);
                         }
                     }));
-                System.out.println("INSERTION-ORDERED:");
+                System.out.println("INSERTION-ORDERED SET:");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
                     measure(new Runnable() {
@@ -251,7 +255,7 @@ public class MemoryMBeanCheck {
 
                         @Override public void run () {
                             x = new LinkedHashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(words[j]);
+                            for (int j = 0; j < size; j++) x.add(floats[j]);
                         }
                     }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "FastUtil Linked Set", size,
@@ -260,7 +264,7 @@ public class MemoryMBeanCheck {
 
                         @Override public void run () {
                             x = new ObjectLinkedOpenHashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(words[j]);
+                            for (int j = 0; j < size; j++) x.add(floats[j]);
                         }
                     }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "GDX OrderedSet", size,
@@ -269,7 +273,7 @@ public class MemoryMBeanCheck {
 
                         @Override public void run () {
                             x = new OrderedSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(words[j]);
+                            for (int j = 0; j < size; j++) x.add(floats[j]);
                         }
                     }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Merry OrderedSet", size,
@@ -278,7 +282,84 @@ public class MemoryMBeanCheck {
 
                         @Override public void run () {
                             x = new com.github.tommyettinger.merry.lp.OrderedSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(words[j]);
+                            for (int j = 0; j < size; j++) x.add(floats[j]);
+                        }
+                    }));
+
+                System.out.println("UNORDERED MAP");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK HashMap", size,
+                    measure(new Runnable() {
+                        HashMap<Float, Float> x;
+
+                        @Override public void run () {
+                            x = new HashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(floats[j], floats[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "FastUtil Map", size,
+                    measure(new Runnable() {
+                        Object2ObjectOpenHashMap<Float, Float> x;
+
+                        @Override public void run () {
+                            x = new Object2ObjectOpenHashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(floats[j], floats[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "GDX ObjectMap", size,
+                    measure(new Runnable() {
+                        ObjectMap<Float, Float> x;
+
+                        @Override public void run () {
+                            x = new ObjectMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(floats[j], floats[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Merry ObjectMap", size,
+                    measure(new Runnable() {
+                        com.github.tommyettinger.merry.lp.ObjectMap<Float, Float> x;
+
+                        @Override public void run () {
+                            x = new com.github.tommyettinger.merry.lp.ObjectMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(floats[j], floats[j]);
+                        }
+                    }));
+                System.out.println("INSERTION-ORDERED MAP:");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK LinkedHashMap", size,
+                    measure(new Runnable() {
+                        LinkedHashMap<Float, Float> x;
+
+                        @Override public void run () {
+                            x = new LinkedHashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(floats[j], floats[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "FastUtil Linked Map", size,
+                    measure(new Runnable() {
+                        Object2ObjectLinkedOpenHashMap<Float, Float> x;
+
+                        @Override public void run () {
+                            x = new Object2ObjectLinkedOpenHashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(floats[j], floats[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "GDX OrderedMap", size,
+                    measure(new Runnable() {
+                        OrderedMap<Float, Float> x;
+
+                        @Override public void run () {
+                            x = new OrderedMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(floats[j], floats[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Merry OrderedMap", size,
+                    measure(new Runnable() {
+                        com.github.tommyettinger.merry.lp.OrderedMap<Float, Float> x;
+
+                        @Override public void run () {
+                            x = new com.github.tommyettinger.merry.lp.OrderedMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(floats[j], floats[j]);
                         }
                     }));
             }
