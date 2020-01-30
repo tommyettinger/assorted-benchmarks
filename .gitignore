@@ -234,3 +234,7 @@ jmh/.gradle/
 
 jmh/benchmarks.jar
 *.*#
+
+**/out/
+**/generated/
+
