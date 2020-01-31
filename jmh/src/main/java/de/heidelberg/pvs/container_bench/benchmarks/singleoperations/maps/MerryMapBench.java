@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.maps;
 
-import com.github.tommyettinger.merry.lp.ObjectMap;
+import ds.merry.ObjectMap;
 import de.heidelberg.pvs.container_bench.factories.MerryMapFact;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;

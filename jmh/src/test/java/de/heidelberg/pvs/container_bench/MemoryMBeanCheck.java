@@ -51,7 +51,8 @@ public class MemoryMBeanCheck {
     
     public static void main(String[] args) {
 //        mainString();
-        mainFloat();
+//        mainFloat();
+        mainInteger();
     }
     public static void mainString () {
         StringDictionaryGenerator gen = new StringDictionaryGenerator();
@@ -123,10 +124,10 @@ public class MemoryMBeanCheck {
                     }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry ObjectSet", size,
                     measure(new Runnable() {
-                        com.github.tommyettinger.merry.lp.ObjectSet<String> x;
+                        ds.merry.ObjectSet<String> x;
 
                         @Override public void run () {
-                            x = new com.github.tommyettinger.merry.lp.ObjectSet<>(size);
+                            x = new ds.merry.ObjectSet<>(size);
                             for (int j = 0; j < size; j++) x.add(words[j]);
                         }
                     }));
@@ -161,10 +162,10 @@ public class MemoryMBeanCheck {
                     }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry OrderedSet", size,
                     measure(new Runnable() {
-                        com.github.tommyettinger.merry.lp.OrderedSet<String> x;
+                        ds.merry.OrderedSet<String> x;
 
                         @Override public void run () {
-                            x = new com.github.tommyettinger.merry.lp.OrderedSet<>(size);
+                            x = new ds.merry.OrderedSet<>(size);
                             for (int j = 0; j < size; j++) x.add(words[j]);
                         }
                     }));
@@ -187,7 +188,7 @@ public class MemoryMBeanCheck {
                 rng.setStateA(size);
                 rng.setStateB(~size);
                 for (int j = 0; j < size; j++) {
-                    floats[j] = rng.next(24) * 0.6180339887498949f;
+                    floats[j] = (rng.nextInt() << 10) * 1024f;// * 0.6180339887498949f;
                 }
                 System.out.println("LIST");
                 System.out.println("----------------------------------------");
@@ -240,10 +241,10 @@ public class MemoryMBeanCheck {
                     }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Merry ObjectSet", size,
                     measure(new Runnable() {
-                        com.github.tommyettinger.merry.lp.ObjectSet<Float> x;
+                        ds.merry.ObjectSet<Float> x;
 
                         @Override public void run () {
-                            x = new com.github.tommyettinger.merry.lp.ObjectSet<>(size);
+                            x = new ds.merry.ObjectSet<>(size);
                             for (int j = 0; j < size; j++) x.add(floats[j]);
                         }
                     }));
@@ -278,10 +279,10 @@ public class MemoryMBeanCheck {
                     }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Merry OrderedSet", size,
                     measure(new Runnable() {
-                        com.github.tommyettinger.merry.lp.OrderedSet<Float> x;
+                        ds.merry.OrderedSet<Float> x;
 
                         @Override public void run () {
-                            x = new com.github.tommyettinger.merry.lp.OrderedSet<>(size);
+                            x = new ds.merry.OrderedSet<>(size);
                             for (int j = 0; j < size; j++) x.add(floats[j]);
                         }
                     }));
@@ -317,10 +318,10 @@ public class MemoryMBeanCheck {
                     }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Merry ObjectMap", size,
                     measure(new Runnable() {
-                        com.github.tommyettinger.merry.lp.ObjectMap<Float, Float> x;
+                        ds.merry.ObjectMap<Float, Float> x;
 
                         @Override public void run () {
-                            x = new com.github.tommyettinger.merry.lp.ObjectMap<>(size);
+                            x = new ds.merry.ObjectMap<>(size);
                             for (int j = 0; j < size; j++) x.put(floats[j], floats[j]);
                         }
                     }));
@@ -355,11 +356,206 @@ public class MemoryMBeanCheck {
                     }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Merry OrderedMap", size,
                     measure(new Runnable() {
-                        com.github.tommyettinger.merry.lp.OrderedMap<Float, Float> x;
+                        ds.merry.OrderedMap<Float, Float> x;
 
                         @Override public void run () {
-                            x = new com.github.tommyettinger.merry.lp.OrderedMap<>(size);
+                            x = new ds.merry.OrderedMap<>(size);
                             for (int j = 0; j < size; j++) x.put(floats[j], floats[j]);
+                        }
+                    }));
+            }
+        }
+    }
+    public static void mainInteger () {
+        TangleRNG rng = new TangleRNG(-10000L, 1111111L);
+        PrintStream out = System.out;
+        try {
+            System.setOut(new PrintStream(".junk.txt#"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < 10; i++) {
+            if(i == 9)
+                System.setOut(out);
+            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
+                Integer[] integers = new Integer[size];
+                rng.setStateA(size);
+                rng.setStateB(~size);
+                for (int j = 0; j < size; j++) {
+                    integers[j] = (rng.nextInt() << 10);// * 0.6180339887498949f;
+                }
+                
+                System.out.println("LIST");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDK ArrayList", size,
+                    measure(new Runnable() {
+                        ArrayList<Integer> x;
+
+                        @Override public void run () {
+                            x = new ArrayList<>(size);
+                            for (int j = 0; j < size; j++) x.add(integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "GDX Array", size, measure(new Runnable() {
+                    Array<Integer> x;
+
+                    @Override public void run () {
+                        x = new Array<>(size);
+                        for (int j = 0; j < size; j++) x.add(integers[j]);
+                    }
+                }));
+
+                System.out.println("UNORDERED SET");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDK HashSet", size,
+                    measure(new Runnable() {
+                        HashSet<Integer> x;
+
+                        @Override public void run () {
+                            x = new HashSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "FastUtil Set", size,
+                    measure(new Runnable() {
+                        ObjectOpenHashSet<Integer> x;
+
+                        @Override public void run () {
+                            x = new ObjectOpenHashSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "GDX ObjectSet", size,
+                    measure(new Runnable() {
+                        ObjectSet<Integer> x;
+
+                        @Override public void run () {
+                            x = new ObjectSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "Merry ObjectSet", size,
+                    measure(new Runnable() {
+                        ds.merry.ObjectSet<Integer> x;
+
+                        @Override public void run () {
+                            x = new ds.merry.ObjectSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(integers[j]);
+                        }
+                    }));
+                System.out.println("INSERTION-ORDERED SET:");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
+                    measure(new Runnable() {
+                        LinkedHashSet<Integer> x;
+
+                        @Override public void run () {
+                            x = new LinkedHashSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "FastUtil Linked Set", size,
+                    measure(new Runnable() {
+                        ObjectLinkedOpenHashSet<Integer> x;
+
+                        @Override public void run () {
+                            x = new ObjectLinkedOpenHashSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "GDX OrderedSet", size,
+                    measure(new Runnable() {
+                        OrderedSet<Integer> x;
+
+                        @Override public void run () {
+                            x = new OrderedSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "Merry OrderedSet", size,
+                    measure(new Runnable() {
+                        ds.merry.OrderedSet<Integer> x;
+
+                        @Override public void run () {
+                            x = new ds.merry.OrderedSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(integers[j]);
+                        }
+                    }));
+
+                System.out.println("UNORDERED MAP");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDK HashMap", size,
+                    measure(new Runnable() {
+                        HashMap<Integer, Integer> x;
+
+                        @Override public void run () {
+                            x = new HashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(integers[j], integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "FastUtil Map", size,
+                    measure(new Runnable() {
+                        Object2ObjectOpenHashMap<Integer, Integer> x;
+
+                        @Override public void run () {
+                            x = new Object2ObjectOpenHashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(integers[j], integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "GDX ObjectMap", size,
+                    measure(new Runnable() {
+                        ObjectMap<Integer, Integer> x;
+
+                        @Override public void run () {
+                            x = new ObjectMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(integers[j], integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "Merry ObjectMap", size,
+                    measure(new Runnable() {
+                        ds.merry.ObjectMap<Integer, Integer> x;
+
+                        @Override public void run () {
+                            x = new ds.merry.ObjectMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(integers[j], integers[j]);
+                        }
+                    }));
+                System.out.println("INSERTION-ORDERED MAP:");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDK LinkedHashMap", size,
+                    measure(new Runnable() {
+                        LinkedHashMap<Integer, Integer> x;
+
+                        @Override public void run () {
+                            x = new LinkedHashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(integers[j], integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "FastUtil Linked Map", size,
+                    measure(new Runnable() {
+                        Object2ObjectLinkedOpenHashMap<Integer, Integer> x;
+
+                        @Override public void run () {
+                            x = new Object2ObjectLinkedOpenHashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(integers[j], integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "GDX OrderedMap", size,
+                    measure(new Runnable() {
+                        OrderedMap<Integer, Integer> x;
+
+                        @Override public void run () {
+                            x = new OrderedMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(integers[j], integers[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "Merry OrderedMap", size,
+                    measure(new Runnable() {
+                        ds.merry.OrderedMap<Integer, Integer> x;
+
+                        @Override public void run () {
+                            x = new ds.merry.OrderedMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(integers[j], integers[j]);
                         }
                     }));
             }

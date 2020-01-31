@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.sets;
 
-import com.github.tommyettinger.merry.lp.IntSet;
+import ds.merry.IntSet;
 import de.heidelberg.pvs.container_bench.factories.MerryIntSetFact;
 import org.openjdk.jmh.annotations.Param;
 

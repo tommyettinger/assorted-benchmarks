@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench.factories;
 
-import com.github.tommyettinger.merry.lp.OrderedSet;
+import ds.merry.OrderedSet;
 
 import java.util.function.Function;
 import java.util.function.Supplier;

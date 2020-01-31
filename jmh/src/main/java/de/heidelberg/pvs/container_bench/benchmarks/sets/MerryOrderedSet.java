@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench.benchmarks.sets;
 
-import com.github.tommyettinger.merry.lp.OrderedSet;
+import ds.merry.OrderedSet;
 import de.heidelberg.pvs.container_bench.factories.MerryOrderedSetFact;
 import org.openjdk.jmh.annotations.Param;
 

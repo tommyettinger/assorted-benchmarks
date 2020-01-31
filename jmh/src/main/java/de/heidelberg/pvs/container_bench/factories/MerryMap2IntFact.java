@@ -1,11 +1,11 @@
 package de.heidelberg.pvs.container_bench.factories;
 
-import com.github.tommyettinger.merry.lp.ObjectIntMap;
+import ds.merry.ObjectIntMap;
 
 import java.util.function.Supplier;
 
 public enum MerryMap2IntFact {
-	GDX_O2I_HASH(ObjectIntMap::new), //
+	MERRY_O2I_HASH(ObjectIntMap::new), //
 	;
 
 	public final Supplier<ObjectIntMap<Object>> maker;

@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench.benchmarks.sets;
 
-import com.github.tommyettinger.merry.lp.ObjectSet;
+import ds.merry.ObjectSet;
 import de.heidelberg.pvs.container_bench.factories.MerrySetFact;
 import org.openjdk.jmh.annotations.Param;
 

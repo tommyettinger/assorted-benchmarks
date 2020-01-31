@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench.factories;
 
-import com.github.tommyettinger.merry.lp.IntSet;
+import ds.merry.IntSet;
 
 import java.util.function.Supplier;
 

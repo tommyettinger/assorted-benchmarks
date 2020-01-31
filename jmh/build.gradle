@@ -34,8 +34,8 @@ targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 
 shadowJar {
-    destinationDir = project.rootDir
-    archiveName = 'benchmarks.jar'
+    destinationDirectory = project.rootDir
+    archiveFileName = 'benchmarks.jar'
     classifier = 'benchmarks'
     manifest.attributes('Main-Class': 'org.openjdk.jmh.Main')
 }
@@ -58,7 +58,7 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
     implementation group: 'org.javolution', name: 'javolution-core-java', version: '6.0.0'
     implementation group: 'org.scala-lang', name: 'scala-library', version: '2.13.1'
-    implementation group: 'com.github.tommyettinger', name: 'merry-ds', version: 'b891283c10'
+    implementation group: 'com.github.tommyettinger', name: 'merry-ds', version: 'e1b0cffcff'
 
     // compile group: 'in.jlibs', name: 'jlibs-core', version:'2.2.1'
     // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'

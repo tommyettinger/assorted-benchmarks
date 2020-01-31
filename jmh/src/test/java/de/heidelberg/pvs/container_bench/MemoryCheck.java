@@ -60,7 +60,7 @@ public class MemoryCheck {
 				System.out.println("----------------------------------------");
 			}
 			{
-				com.github.tommyettinger.merry.lp.ObjectSet<String> set = new com.github.tommyettinger.merry.lp.ObjectSet<>(size);
+				ds.merry.ObjectSet<String> set = new ds.merry.ObjectSet<>(size);
 				set.addAll(words);
 				System.out.printf("Merry ObjectSet, %7d Strings:\n", size);
 				evaluate(set);
@@ -83,7 +83,7 @@ public class MemoryCheck {
 				System.out.println("----------------------------------------");
 			}
 			{
-				com.github.tommyettinger.merry.lp.OrderedSet<String> set = new com.github.tommyettinger.merry.lp.OrderedSet<>(size);
+				ds.merry.OrderedSet<String> set = new ds.merry.OrderedSet<>(size);
 				set.addAll(words);
 				System.out.printf("Merry OrderedSet, %7d Strings:\n", size);
 				evaluate(set);

@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.maps;
 
-import com.github.tommyettinger.merry.lp.ObjectIntMap;
+import ds.merry.ObjectIntMap;
 import de.heidelberg.pvs.container_bench.factories.MerryMap2IntFact;
 import org.openjdk.jmh.annotations.Param;
 
