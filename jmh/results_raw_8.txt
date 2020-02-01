@@ -2161,3 +2161,1359 @@ MerryObjectSet.bench:bench·p0.99    MERRY_O_HASH      -1  1000000  REMOVE_THEN_
 MerryObjectSet.bench:bench·p0.999   MERRY_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample            7003086.848              ns/op
 MerryObjectSet.bench:bench·p0.9999  MERRY_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample            7512064.000              ns/op
 MerryObjectSet.bench:bench·p1.00    MERRY_O_HASH      -1  1000000  REMOVE_THEN_ADD  sample            7512064.000              ns/op
+
+
+
+Benchmark                                   (impl)  (seed)   (size)       (workload)    Mode      Cnt         Score       Error  Units
+JDKGetPut.bench                     JDK_LINKEDHASH      -1      100              ADD  sample   803359       643.442 ±     2.910  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1      100              ADD  sample                584.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1      100              ADD  sample                603.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1      100              ADD  sample                617.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1      100              ADD  sample                628.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1      100              ADD  sample                844.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1      100              ADD  sample              18848.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1      100              ADD  sample              24992.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1      100              ADD  sample              79616.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1      100           REMOVE  sample   900940       302.995 ±     2.132  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1      100           REMOVE  sample                269.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1      100           REMOVE  sample                281.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1      100           REMOVE  sample                283.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1      100           REMOVE  sample                284.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1      100           REMOVE  sample                398.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1      100           REMOVE  sample               5198.136              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1      100           REMOVE  sample              22300.989              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1      100           REMOVE  sample              78976.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1      100         CONTAINS  sample   648005       421.991 ±     3.087  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1      100         CONTAINS  sample                374.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1      100         CONTAINS  sample                388.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1      100         CONTAINS  sample                393.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1      100         CONTAINS  sample                394.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1      100         CONTAINS  sample                691.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1      100         CONTAINS  sample              18496.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1      100         CONTAINS  sample              25516.570              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1      100         CONTAINS  sample              96384.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample   630297       879.633 ±    29.080  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample                731.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample                757.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample                781.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample                818.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample               1866.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample              20064.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample              31190.464              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample            1648640.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample  1051626       953.065 ±    10.580  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample                879.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample                906.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample                930.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample                957.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample               1274.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample              19104.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample              25024.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample            1478656.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample   973524      1025.151 ±     7.125  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample                957.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample                981.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample               1001.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample               1034.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample               1848.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample               5456.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample              26016.240              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample            1343488.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1     1000              ADD  sample   672254      5656.415 ±     4.412  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1     1000              ADD  sample               5496.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1     1000              ADD  sample               5568.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1     1000              ADD  sample               5624.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1     1000              ADD  sample               5680.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1     1000              ADD  sample               6144.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1     1000              ADD  sample              26848.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1     1000              ADD  sample              33201.568              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1     1000              ADD  sample              71936.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1     1000           REMOVE  sample   689897      2803.039 ±     4.099  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1     1000           REMOVE  sample               2708.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1     1000           REMOVE  sample               2740.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1     1000           REMOVE  sample               2752.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1     1000           REMOVE  sample               2756.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1     1000           REMOVE  sample               3212.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1     1000           REMOVE  sample              23206.528              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1     1000           REMOVE  sample              29280.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1     1000           REMOVE  sample              56000.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1     1000         CONTAINS  sample  1011454      3759.110 ±     2.940  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1     1000         CONTAINS  sample               3648.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1     1000         CONTAINS  sample               3704.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1     1000         CONTAINS  sample               3728.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1     1000         CONTAINS  sample               3732.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1     1000         CONTAINS  sample               3964.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1     1000         CONTAINS  sample              22400.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1     1000         CONTAINS  sample              29522.032              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1     1000         CONTAINS  sample              72960.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample   837643      9143.339 ±    51.327  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               8656.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               8768.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               8960.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               9152.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample              12720.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample              31136.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample            1013459.763              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample            1550336.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample   825302      9149.977 ±     8.228  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample               8880.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample               9008.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample               9088.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample               9536.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              10768.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              29120.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              37824.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample            1804288.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample   818149      9213.237 ±     3.990  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample               9008.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample               9088.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample               9152.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample               9488.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample              10432.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample              28992.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample              37655.680              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample             112512.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1    10000              ADD  sample   519857     57644.754 ±    12.205  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1    10000              ADD  sample              56384.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1    10000              ADD  sample              57088.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1    10000              ADD  sample              59840.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1    10000              ADD  sample              61248.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1    10000              ADD  sample              62656.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1    10000              ADD  sample              97664.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1    10000              ADD  sample             129927.270              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1    10000              ADD  sample             166912.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1    10000           REMOVE  sample   541618     27736.270 ±     7.939  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1    10000           REMOVE  sample              27104.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1    10000           REMOVE  sample              27584.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1    10000           REMOVE  sample              27808.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1    10000           REMOVE  sample              27904.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1    10000           REMOVE  sample              29536.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1    10000           REMOVE  sample              62080.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1    10000           REMOVE  sample              75392.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1    10000           REMOVE  sample             107392.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1    10000         CONTAINS  sample   383397     39303.467 ±    18.919  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1    10000         CONTAINS  sample              38080.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1    10000         CONTAINS  sample              39040.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1    10000         CONTAINS  sample              39168.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1    10000         CONTAINS  sample              39232.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1    10000         CONTAINS  sample              42048.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1    10000         CONTAINS  sample              94848.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1    10000         CONTAINS  sample             131753.011              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1    10000         CONTAINS  sample             225792.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample   374476     80012.418 ±   173.334  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              77440.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              78080.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              80256.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              81408.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              99712.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample             235264.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample            1366016.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample            1701888.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample   322552     92918.634 ±    34.268  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample              91264.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample              92288.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample              92672.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample              94208.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample              99200.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             204032.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             249600.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             299520.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample   320358     93557.279 ±    23.142  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample              91904.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample              93056.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample              93568.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample              95104.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             100864.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             157440.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             196608.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             223744.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1   100000              ADD  sample    47013    637927.888 ±   311.537  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1   100000              ADD  sample             629760.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1   100000              ADD  sample             631808.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1   100000              ADD  sample             651264.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1   100000              ADD  sample             684032.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1   100000              ADD  sample             697344.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1   100000              ADD  sample             934897.664              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1   100000              ADD  sample            1038015.898              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1   100000              ADD  sample            1058816.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1   100000           REMOVE  sample   113228    264731.491 ±    85.808  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1   100000           REMOVE  sample             258304.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1   100000           REMOVE  sample             264192.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1   100000           REMOVE  sample             265216.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1   100000           REMOVE  sample             265728.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1   100000           REMOVE  sample             290816.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1   100000           REMOVE  sample             409600.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1   100000           REMOVE  sample             496341.402              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1   100000           REMOVE  sample             568320.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1   100000         CONTAINS  sample    68818    435772.003 ±   272.467  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1   100000         CONTAINS  sample             430592.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1   100000         CONTAINS  sample             433152.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1   100000         CONTAINS  sample             435712.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1   100000         CONTAINS  sample             443392.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1   100000         CONTAINS  sample             470528.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1   100000         CONTAINS  sample             839026.688              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1   100000         CONTAINS  sample            1048640.410              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1   100000         CONTAINS  sample            1097728.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample    38769    773653.883 ±  4845.398  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             737280.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             762880.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             776192.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             798720.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             944435.200              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample            8341340.160              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample            8851390.464              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample            9142272.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample    30375    987582.616 ±   654.576  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample             973824.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample             977920.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1018880.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1058816.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1112064.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1398521.856              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1549950.976              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1576960.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample    31462    953609.097 ±   530.926  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample             942080.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample             946176.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample             961536.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1001472.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1060864.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1317963.776              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1494440.755              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1585152.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1  1000000              ADD  sample     4545   6611964.170 ± 14713.919  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1  1000000              ADD  sample            6520832.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1  1000000              ADD  sample            6529024.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1  1000000              ADD  sample            6643712.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1  1000000              ADD  sample            7028736.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1  1000000              ADD  sample            8257536.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1  1000000              ADD  sample            8388608.000              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1  1000000              ADD  sample            9142272.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1  1000000              ADD  sample            9142272.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1  1000000           REMOVE  sample    11373   2639560.289 ±  2276.720  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1  1000000           REMOVE  sample            2584576.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1  1000000           REMOVE  sample            2637824.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1  1000000           REMOVE  sample            2658304.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1  1000000           REMOVE  sample            2682880.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1  1000000           REMOVE  sample            2879488.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1  1000000           REMOVE  sample            3525124.096              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1  1000000           REMOVE  sample            5242445.824              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1  1000000           REMOVE  sample            5349376.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1  1000000         CONTAINS  sample     6594   4551407.617 ±  5249.692  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1  1000000         CONTAINS  sample            4505600.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1  1000000         CONTAINS  sample            4530176.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1  1000000         CONTAINS  sample            4562944.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1  1000000         CONTAINS  sample            4653056.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1  1000000         CONTAINS  sample            4917248.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1  1000000         CONTAINS  sample            5478891.520              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1  1000000         CONTAINS  sample            9093120.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1  1000000         CONTAINS  sample            9093120.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample     3626   8312480.688 ± 46979.234  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            8134656.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            8159232.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            8273920.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            8781824.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample           15056896.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample           15790014.464              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample           17465344.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample           17465344.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample     2965  10158107.629 ± 19910.914  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           10027008.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           10043392.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           10289152.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           10502144.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           11272192.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           16213245.952              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           17367040.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           17367040.000              ns/op
+JDKGetPut.bench                     JDK_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample     2923  10323276.458 ± 29803.930  ns/op
+JDKGetPut.bench:bench·p0.00         JDK_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           10125312.000              ns/op
+JDKGetPut.bench:bench·p0.50         JDK_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           10141696.000              ns/op
+JDKGetPut.bench:bench·p0.90         JDK_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           10944512.000              ns/op
+JDKGetPut.bench:bench·p0.95         JDK_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           11878400.000              ns/op
+JDKGetPut.bench:bench·p0.99         JDK_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           11943936.000              ns/op
+JDKGetPut.bench:bench·p0.999        JDK_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           15405547.520              ns/op
+JDKGetPut.bench:bench·p0.9999       JDK_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           15876096.000              ns/op
+JDKGetPut.bench:bench·p1.00         JDK_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           15876096.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1      100              ADD  sample   755658       355.962 ±     2.507  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1      100              ADD  sample                318.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1      100              ADD  sample                331.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1      100              ADD  sample                334.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1      100              ADD  sample                335.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1      100              ADD  sample                380.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1      100              ADD  sample              16144.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1      100              ADD  sample              23648.000              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1      100              ADD  sample              40896.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1      100           REMOVE  sample   916977       296.076 ±     1.893  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1      100           REMOVE  sample                264.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1      100           REMOVE  sample                277.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1      100           REMOVE  sample                283.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1      100           REMOVE  sample                284.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1      100           REMOVE  sample                332.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1      100           REMOVE  sample               1890.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1      100           REMOVE  sample              21856.000              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1      100           REMOVE  sample              41344.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1      100         CONTAINS  sample   663409       409.451 ±     2.942  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1      100         CONTAINS  sample                363.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1      100         CONTAINS  sample                376.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1      100         CONTAINS  sample                395.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1      100         CONTAINS  sample                396.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1      100         CONTAINS  sample                457.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1      100         CONTAINS  sample              17617.280              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1      100         CONTAINS  sample              24597.088              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1      100         CONTAINS  sample              60608.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample  1091232       466.923 ±     1.771  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample                429.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample                444.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample                459.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample                499.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample                550.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample               2016.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample              22712.109              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample              70656.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample   744496       689.463 ±     3.011  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample                633.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample                654.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample                664.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample                668.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample               1002.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample              18848.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample              25016.048              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample             183296.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample   724780       713.567 ±     3.199  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample                654.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample                672.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample                677.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample                681.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample               1012.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample              19264.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample              24513.402              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample              60928.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1     1000              ADD  sample   614867      3304.731 ±     3.851  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1     1000              ADD  sample               3156.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1     1000              ADD  sample               3192.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1     1000              ADD  sample               3208.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1     1000              ADD  sample               3544.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1     1000              ADD  sample               6888.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1     1000              ADD  sample              19724.672              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1     1000              ADD  sample              30160.422              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1     1000              ADD  sample              58176.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1     1000           REMOVE  sample   641829      3020.599 ±     4.519  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1     1000           REMOVE  sample               2912.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1     1000           REMOVE  sample               2952.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1     1000           REMOVE  sample               2960.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1     1000           REMOVE  sample               2964.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1     1000           REMOVE  sample               3436.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1     1000           REMOVE  sample              24320.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1     1000           REMOVE  sample              29946.144              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1     1000           REMOVE  sample              60992.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1     1000         CONTAINS  sample  1087632      3509.318 ±     2.622  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1     1000         CONTAINS  sample               3400.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1     1000         CONTAINS  sample               3464.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1     1000         CONTAINS  sample               3476.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1     1000         CONTAINS  sample               3480.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1     1000         CONTAINS  sample               3748.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1     1000         CONTAINS  sample              22048.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1     1000         CONTAINS  sample              28839.574              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1     1000         CONTAINS  sample              59648.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample  1034241      3674.942 ±     2.815  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               3560.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               3604.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               3716.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               3760.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               3852.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample              22400.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample              30564.851              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample              62080.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample   598151      6381.859 ±     5.218  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample               6160.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample               6296.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample               6328.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample               6336.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample               7360.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              27936.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              35264.000              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              88960.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample   730728      5217.094 ±     3.843  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample               5088.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample               5152.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample               5176.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample               5176.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample               6032.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample              24320.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample              34048.000              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample             121728.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1    10000              ADD  sample   350745     42912.078 ±    14.715  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1    10000              ADD  sample              41728.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1    10000              ADD  sample              42688.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1    10000              ADD  sample              42752.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1    10000              ADD  sample              42752.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1    10000              ADD  sample              46144.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1    10000              ADD  sample              83840.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1    10000              ADD  sample             110592.000              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1    10000              ADD  sample             158720.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1    10000           REMOVE  sample   501638     29945.089 ±     8.334  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1    10000           REMOVE  sample              29120.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1    10000           REMOVE  sample              29888.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1    10000           REMOVE  sample              30176.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1    10000           REMOVE  sample              30208.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1    10000           REMOVE  sample              31488.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1    10000           REMOVE  sample              64320.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1    10000           REMOVE  sample              78059.021              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1    10000           REMOVE  sample             117504.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1    10000         CONTAINS  sample   420982     35695.884 ±    10.727  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1    10000         CONTAINS  sample              35008.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1    10000         CONTAINS  sample              35584.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1    10000         CONTAINS  sample              35712.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1    10000         CONTAINS  sample              35776.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1    10000         CONTAINS  sample              37312.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1    10000         CONTAINS  sample              72448.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1    10000         CONTAINS  sample              97779.418              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1    10000         CONTAINS  sample             120192.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample   399962     37567.703 ±    11.245  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              36288.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              37248.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              37504.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              38592.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              41600.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              73088.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              99712.000              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample             139776.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample   557804     53719.150 ±    13.713  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample              52544.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample              53440.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample              53760.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample              53888.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample              57472.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             112768.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             143360.000              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             193792.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample   484243     61889.777 ±    11.764  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample              60352.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample              61696.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample              62080.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample              62336.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample              65216.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             102272.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             144640.000              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             175616.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1   100000              ADD  sample    74186    404232.144 ±   136.155  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1   100000              ADD  sample             400384.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1   100000              ADD  sample             403456.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1   100000              ADD  sample             404992.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1   100000              ADD  sample             406016.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1   100000              ADD  sample             442368.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1   100000              ADD  sample             587393.024              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1   100000              ADD  sample             703059.251              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1   100000              ADD  sample             782336.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1   100000           REMOVE  sample    92538    323990.118 ±   115.428  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1   100000           REMOVE  sample             311296.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1   100000           REMOVE  sample             324608.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1   100000           REMOVE  sample             326144.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1   100000           REMOVE  sample             331264.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1   100000           REMOVE  sample             358912.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1   100000           REMOVE  sample             476160.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1   100000           REMOVE  sample             584428.032              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1   100000           REMOVE  sample             630784.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1   100000         CONTAINS  sample    95491    313945.477 ±   103.286  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1   100000         CONTAINS  sample             308736.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1   100000         CONTAINS  sample             312832.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1   100000         CONTAINS  sample             316416.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1   100000         CONTAINS  sample             317952.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1   100000         CONTAINS  sample             349184.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1   100000         CONTAINS  sample             456192.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1   100000         CONTAINS  sample             570829.619              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1   100000         CONTAINS  sample             648192.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample    79694    376246.875 ±   162.050  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             367616.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             373248.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             378368.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             382976.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             420352.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             564224.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             669914.624              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             793600.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample    48146    622815.108 ±   326.599  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample             610304.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample             620544.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample             622592.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample             623616.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample             679936.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample             957861.888              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1262555.955              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1402880.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample    49089    610840.646 ±   239.151  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample             603136.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample             608256.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample             613376.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample             629760.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample             661504.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample             858112.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample             980899.840              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1064960.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1  1000000              ADD  sample    10010   3000737.784 ±  1731.913  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1  1000000              ADD  sample            2953216.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1  1000000              ADD  sample            2994176.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1  1000000              ADD  sample            3014656.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1  1000000              ADD  sample            3031040.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1  1000000              ADD  sample            3227648.000              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1  1000000              ADD  sample            3620818.944              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1  1000000              ADD  sample            3719127.450              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1  1000000              ADD  sample            3719168.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1  1000000           REMOVE  sample    12712   2361401.999 ±  2322.383  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1  1000000           REMOVE  sample            2240512.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1  1000000           REMOVE  sample            2351104.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1  1000000           REMOVE  sample            2424832.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1  1000000           REMOVE  sample            2445312.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1  1000000           REMOVE  sample            2706923.520              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1  1000000           REMOVE  sample            3219456.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1  1000000           REMOVE  sample            3560186.266              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1  1000000           REMOVE  sample            3563520.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1  1000000         CONTAINS  sample    10918   2749508.842 ±  2225.545  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1  1000000         CONTAINS  sample            2646016.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1  1000000         CONTAINS  sample            2744320.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1  1000000         CONTAINS  sample            2805760.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1  1000000         CONTAINS  sample            2818048.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1  1000000         CONTAINS  sample            3012321.280              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1  1000000         CONTAINS  sample            3412631.552              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1  1000000         CONTAINS  sample            4299798.528              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1  1000000         CONTAINS  sample            4358144.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample     8031   3740950.090 ±  2168.103  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            3686400.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            3731456.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            3756032.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            3776512.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            3995074.560              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            4431872.000              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            4481024.000              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            4481024.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample     4398   6843652.307 ±  5773.989  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample            6791168.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample            6807552.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample            6979584.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample            7077888.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample            7462993.920              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample            7934943.232              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample            8126464.000              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample            8126464.000              ns/op
+JDKGetPut.bench                FASTUTIL_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample     4934   6100393.456 ±  6256.314  ns/op
+JDKGetPut.bench:bench·p0.00    FASTUTIL_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample            6045696.000              ns/op
+JDKGetPut.bench:bench·p0.50    FASTUTIL_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample            6070272.000              ns/op
+JDKGetPut.bench:bench·p0.90    FASTUTIL_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample            6135808.000              ns/op
+JDKGetPut.bench:bench·p0.95    FASTUTIL_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample            6187008.000              ns/op
+JDKGetPut.bench:bench·p0.99    FASTUTIL_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample            6845644.800              ns/op
+JDKGetPut.bench:bench·p0.999   FASTUTIL_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample            7278755.840              ns/op
+JDKGetPut.bench:bench·p0.9999  FASTUTIL_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           11255808.000              ns/op
+JDKGetPut.bench:bench·p1.00    FASTUTIL_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           11255808.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1      100              ADD  sample   695051       798.293 ±     3.231  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1      100              ADD  sample                705.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1      100              ADD  sample                737.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1      100              ADD  sample                868.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1      100              ADD  sample                895.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1      100              ADD  sample               1276.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1      100              ADD  sample              19104.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1      100              ADD  sample              27983.834              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1      100              ADD  sample             168192.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1      100           REMOVE  sample  1100930       467.060 ±     2.160  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1      100           REMOVE  sample                429.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1      100           REMOVE  sample                445.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1      100           REMOVE  sample                451.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1      100           REMOVE  sample                453.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1      100           REMOVE  sample                577.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1      100           REMOVE  sample               2996.276              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1      100           REMOVE  sample              22624.000              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1      100           REMOVE  sample             207616.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1      100         CONTAINS  sample  1067731       479.300 ±     1.868  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1      100         CONTAINS  sample                443.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1      100         CONTAINS  sample                459.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1      100         CONTAINS  sample                465.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1      100         CONTAINS  sample                468.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1      100         CONTAINS  sample                478.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1      100         CONTAINS  sample               2520.288              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1      100         CONTAINS  sample              22407.258              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1      100         CONTAINS  sample              45312.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample   919195      1125.107 ±    25.464  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample                961.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample               1019.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample               1088.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample               1132.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample               1646.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample              19776.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample              29634.573              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1      100    ADD_OR_REMOVE  sample            2146304.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample   787221      1254.269 ±     8.355  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample               1162.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample               1208.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample               1216.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample               1228.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample               1440.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample              19936.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample              28017.779              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1      100  ADD_THEN_REMOVE  sample            1320960.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample   817333      1209.525 ±     8.065  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample               1132.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample               1156.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample               1188.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample               1254.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample               1538.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample              19712.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample              26434.125              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1      100  REMOVE_THEN_ADD  sample            1398784.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1     1000              ADD  sample   556105      6848.147 ±     5.335  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1     1000              ADD  sample               6688.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1     1000              ADD  sample               6744.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1     1000              ADD  sample               6832.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1     1000              ADD  sample               6888.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1     1000              ADD  sample               7656.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1     1000              ADD  sample              28288.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1     1000              ADD  sample              34048.000              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1     1000              ADD  sample              68480.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1     1000           REMOVE  sample   822519      4626.400 ±     3.508  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1     1000           REMOVE  sample               4384.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1     1000           REMOVE  sample               4568.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1     1000           REMOVE  sample               4584.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1     1000           REMOVE  sample               4592.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1     1000           REMOVE  sample               4888.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1     1000           REMOVE  sample              23616.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1     1000           REMOVE  sample              30839.680              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1     1000           REMOVE  sample              50944.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1     1000         CONTAINS  sample   844795      4492.542 ±     3.244  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1     1000         CONTAINS  sample               4392.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1     1000         CONTAINS  sample               4432.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1     1000         CONTAINS  sample               4464.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1     1000         CONTAINS  sample               4472.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1     1000         CONTAINS  sample               4872.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1     1000         CONTAINS  sample              23232.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1     1000         CONTAINS  sample              31264.000              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1     1000         CONTAINS  sample              79488.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample   789526      9679.897 ±    54.636  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               9200.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               9280.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               9584.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample               9936.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample              11920.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample              32096.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample            1014929.306              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1     1000    ADD_OR_REMOVE  sample            2066432.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample   668624     11295.210 ±     5.400  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              10880.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              11088.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              11344.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              12304.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              13296.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              32576.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              51336.800              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1     1000  ADD_THEN_REMOVE  sample              92800.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample   676973     11219.148 ±     6.735  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample              10736.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample              10928.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample              11824.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample              12352.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample              14912.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample              32640.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample              59758.298              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1     1000  REMOVE_THEN_ADD  sample             125056.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1    10000              ADD  sample   327248     91587.666 ±    24.264  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1    10000              ADD  sample              89856.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1    10000              ADD  sample              90880.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1    10000              ADD  sample              93056.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1    10000              ADD  sample              94592.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1    10000              ADD  sample              97664.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1    10000              ADD  sample             163072.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1    10000              ADD  sample             205408.128              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1    10000              ADD  sample             344064.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1    10000           REMOVE  sample   339030     45834.090 ±    15.298  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1    10000           REMOVE  sample              44992.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1    10000           REMOVE  sample              45312.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1    10000           REMOVE  sample              45696.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1    10000           REMOVE  sample              49600.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1    10000           REMOVE  sample              50880.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1    10000           REMOVE  sample              86528.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1    10000           REMOVE  sample             114481.613              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1    10000           REMOVE  sample             167936.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1    10000         CONTAINS  sample   330694     45610.831 ±    22.217  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1    10000         CONTAINS  sample              44672.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1    10000         CONTAINS  sample              45248.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1    10000         CONTAINS  sample              45440.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1    10000         CONTAINS  sample              45440.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1    10000         CONTAINS  sample              49664.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1    10000         CONTAINS  sample             108160.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1    10000         CONTAINS  sample             139008.000              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1    10000         CONTAINS  sample             178176.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample   321288     93280.008 ±   204.063  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              87552.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              88704.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample              97792.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample             102912.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample             110848.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample             287368.192              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample            1398784.000              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1    10000    ADD_OR_REMOVE  sample            1898496.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample   252885    118551.875 ±    37.689  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             116480.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             117120.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             120832.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             127232.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             134144.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             197207.552              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             259180.237              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1    10000  ADD_THEN_REMOVE  sample             368128.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample   229172    130819.617 ±    52.785  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             126720.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             128384.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             136192.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             147456.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             153344.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             201939.712              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             272126.054              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1    10000  REMOVE_THEN_ADD  sample             337920.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1   100000              ADD  sample    39456    760135.007 ±   616.410  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1   100000              ADD  sample             700416.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1   100000              ADD  sample             768000.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1   100000              ADD  sample             816128.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1   100000              ADD  sample             827392.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1   100000              ADD  sample             839680.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1   100000              ADD  sample            1065136.128              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1   100000              ADD  sample            1395132.826              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1   100000              ADD  sample            1509376.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1   100000           REMOVE  sample    75974    394710.372 ±   152.495  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1   100000           REMOVE  sample             385536.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1   100000           REMOVE  sample             391168.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1   100000           REMOVE  sample             396288.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1   100000           REMOVE  sample             400896.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1   100000           REMOVE  sample             439808.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1   100000           REMOVE  sample             545792.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1   100000           REMOVE  sample             669084.160              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1   100000           REMOVE  sample             695296.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1   100000         CONTAINS  sample    59960    500205.095 ±   187.035  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1   100000         CONTAINS  sample             495616.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1   100000         CONTAINS  sample             498176.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1   100000         CONTAINS  sample             501248.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1   100000         CONTAINS  sample             502272.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1   100000         CONTAINS  sample             540672.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1   100000         CONTAINS  sample             714871.808              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1   100000         CONTAINS  sample             896015.974              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1   100000         CONTAINS  sample             930816.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample    32248    930264.625 ±  5186.596  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             891904.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample             900096.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample            1004544.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample            1010688.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample            1083392.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample            8519680.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample            9506865.152              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1   100000    ADD_OR_REMOVE  sample           12075008.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample    25248   1187981.871 ±   560.270  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1155072.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1185792.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1193984.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1212416.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1294336.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1595400.192              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1715918.029              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1   100000  ADD_THEN_REMOVE  sample            1765376.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample    25526   1175079.033 ±   927.086  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1148928.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1157120.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1245184.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1280000.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1338839.040              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1569736.704              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1728780.493              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1   100000  REMOVE_THEN_ADD  sample            1785856.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1  1000000              ADD  sample     3969   7577395.664 ± 22263.044  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1  1000000              ADD  sample            7290880.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1  1000000              ADD  sample            7389184.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1  1000000              ADD  sample            8019968.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1  1000000              ADD  sample            8634368.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1  1000000              ADD  sample            8830976.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1  1000000              ADD  sample            9718333.440              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1  1000000              ADD  sample           14368768.000              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1  1000000              ADD  sample           14368768.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1  1000000           REMOVE  sample     7649   3929521.617 ±  3965.667  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1  1000000           REMOVE  sample            3862528.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1  1000000           REMOVE  sample            3915776.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1  1000000           REMOVE  sample            3948544.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1  1000000           REMOVE  sample            3964928.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1  1000000           REMOVE  sample            4456448.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1  1000000           REMOVE  sample            5405900.800              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1  1000000           REMOVE  sample            5586944.000              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1  1000000           REMOVE  sample            5586944.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1  1000000         CONTAINS  sample     5818   5168374.760 ±  3654.889  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1  1000000         CONTAINS  sample            5136384.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1  1000000         CONTAINS  sample            5152768.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1  1000000         CONTAINS  sample            5177344.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1  1000000         CONTAINS  sample            5226496.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1  1000000         CONTAINS  sample            5757419.520              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1  1000000         CONTAINS  sample            6012928.000              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1  1000000         CONTAINS  sample            6094848.000              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1  1000000         CONTAINS  sample            6094848.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample     3233   9308042.809 ± 54583.375  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            8945664.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample            8994816.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample           10043392.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample           10567680.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample           16023224.320              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample           17187864.576              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample           17367040.000              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1  1000000    ADD_OR_REMOVE  sample           17367040.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample     2416  12460832.212 ± 18871.179  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           12255232.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           12353536.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           12976128.000              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           13205504.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           13336576.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           13978271.744              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           14204928.000              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1  1000000  ADD_THEN_REMOVE  sample           14204928.000              ns/op
+JDKGetPut.bench                  APACHE_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample     2156  14030008.282 ± 17677.811  ns/op
+JDKGetPut.bench:bench·p0.00      APACHE_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           13828096.000              ns/op
+JDKGetPut.bench:bench·p0.50      APACHE_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           13959168.000              ns/op
+JDKGetPut.bench:bench·p0.90      APACHE_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           14111539.200              ns/op
+JDKGetPut.bench:bench·p0.95      APACHE_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           14729216.000              ns/op
+JDKGetPut.bench:bench·p0.99      APACHE_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           15073280.000              ns/op
+JDKGetPut.bench:bench·p0.999     APACHE_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           15966683.136              ns/op
+JDKGetPut.bench:bench·p0.9999    APACHE_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           18284544.000              ns/op
+JDKGetPut.bench:bench·p1.00      APACHE_LINKEDHASH      -1  1000000  REMOVE_THEN_ADD  sample           18284544.000              ns/op
+
+Benchmark                                     (impl)  (seed)   (size)       (workload)    Mode      Cnt         Score       Error  Units
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1      100              ADD  sample   904865       302.169 ±     2.173  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1      100              ADD  sample                269.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1      100              ADD  sample                280.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1      100              ADD  sample                284.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1      100              ADD  sample                286.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1      100              ADD  sample                334.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1      100              ADD  sample               6489.072              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1      100              ADD  sample              22816.000              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1      100              ADD  sample             104576.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1      100           REMOVE  sample   806618       637.632 ±     2.838  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1      100           REMOVE  sample                584.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1      100           REMOVE  sample                603.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1      100           REMOVE  sample                609.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1      100           REMOVE  sample                616.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1      100           REMOVE  sample                730.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1      100           REMOVE  sample              18912.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1      100           REMOVE  sample              25674.819              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1      100           REMOVE  sample              96128.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1      100         CONTAINS  sample   817193       330.758 ±     2.182  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1      100         CONTAINS  sample                298.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1      100         CONTAINS  sample                310.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1      100         CONTAINS  sample                314.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1      100         CONTAINS  sample                315.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1      100         CONTAINS  sample                421.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1      100         CONTAINS  sample               4027.584              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1      100         CONTAINS  sample              22496.000              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1      100         CONTAINS  sample             118528.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample  1113404       889.651 ±     2.299  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                832.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                858.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                871.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                880.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                956.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample              16640.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample              25418.208              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample             198656.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample   858193      1154.538 ±     2.891  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample               1086.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample               1116.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample               1128.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample               1132.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample               1240.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample              19545.792              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample              25381.779              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample             106496.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample   858701      1152.213 ±     3.075  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample               1076.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample               1108.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample               1122.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample               1138.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample               1260.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample              19753.536              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample              27460.154              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample             165376.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1     1000              ADD  sample   771772      2514.517 ±     3.538  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1     1000              ADD  sample               2428.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1     1000              ADD  sample               2452.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1     1000              ADD  sample               2460.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1     1000              ADD  sample               2464.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1     1000              ADD  sample               3556.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1     1000              ADD  sample              21312.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1     1000              ADD  sample              29710.979              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1     1000              ADD  sample              94464.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1     1000           REMOVE  sample   706548      5401.792 ±     4.231  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1     1000           REMOVE  sample               5224.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1     1000           REMOVE  sample               5320.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1     1000           REMOVE  sample               5344.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1     1000           REMOVE  sample               5352.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1     1000           REMOVE  sample               6792.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1     1000           REMOVE  sample              24672.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1     1000           REMOVE  sample              36184.346              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1     1000           REMOVE  sample              61696.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1     1000         CONTAINS  sample   691059      2802.561 ±     4.044  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1     1000         CONTAINS  sample               2712.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1     1000         CONTAINS  sample               2744.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1     1000         CONTAINS  sample               2752.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1     1000         CONTAINS  sample               2752.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1     1000         CONTAINS  sample               3244.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1     1000         CONTAINS  sample              22304.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1     1000         CONTAINS  sample              29550.592              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1     1000         CONTAINS  sample             129792.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample   948993      7964.216 ±     4.038  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample               7672.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample               7864.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample               7896.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample               8144.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample               9488.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample              26848.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample              35328.000              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample             208384.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample   664603     11345.551 ±     5.185  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample              11056.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample              11248.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample              11312.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample              11328.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample              12544.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample              33024.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample              51968.000              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample              80768.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample   843598      8945.382 ±     3.966  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample               8720.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample               8864.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample               8928.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample               8960.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample               9520.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample              29785.664              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample              37672.966              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample              76544.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1    10000              ADD  sample   602392     24933.289 ±     7.519  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1    10000              ADD  sample              24512.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1    10000              ADD  sample              24736.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1    10000              ADD  sample              25056.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1    10000              ADD  sample              25088.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1    10000              ADD  sample              26528.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1    10000              ADD  sample              51520.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1    10000              ADD  sample              71296.000              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1    10000              ADD  sample             229376.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1    10000           REMOVE  sample   522152     57391.524 ±    16.730  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1    10000           REMOVE  sample              55616.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1    10000           REMOVE  sample              57472.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1    10000           REMOVE  sample              57664.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1    10000           REMOVE  sample              57664.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1    10000           REMOVE  sample              61568.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1    10000           REMOVE  sample             110080.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1    10000           REMOVE  sample             138496.000              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1    10000           REMOVE  sample             218624.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1    10000         CONTAINS  sample   542890     27671.346 ±     7.946  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1    10000         CONTAINS  sample              27168.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1    10000         CONTAINS  sample              27520.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1    10000         CONTAINS  sample              27616.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1    10000         CONTAINS  sample              27616.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1    10000         CONTAINS  sample              29280.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1    10000         CONTAINS  sample              56966.976              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1    10000         CONTAINS  sample              78426.995              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1    10000         CONTAINS  sample             109824.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample   369060     81200.033 ±    27.235  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              79488.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              80000.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              85120.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              87424.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              89600.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample             143360.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample             183064.038              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample             261888.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample   281310    106560.889 ±    25.562  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample             104960.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample             106112.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample             106240.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample             107648.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample             112256.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample             169728.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample             248273.946              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample             299520.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample   299507    100070.967 ±    23.243  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              98816.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              99712.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample             100096.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample             102144.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample             105216.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample             162685.952              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample             211237.786              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample             366080.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1   100000              ADD  sample   120413    249038.396 ±    83.420  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1   100000              ADD  sample             246528.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1   100000              ADD  sample             247552.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1   100000              ADD  sample             249856.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1   100000              ADD  sample             250368.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1   100000              ADD  sample             283648.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1   100000              ADD  sample             378368.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1   100000              ADD  sample             501569.229              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1   100000              ADD  sample             575488.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1   100000           REMOVE  sample    50904    589068.673 ±   241.535  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1   100000           REMOVE  sample             563200.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1   100000           REMOVE  sample             587776.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1   100000           REMOVE  sample             592896.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1   100000           REMOVE  sample             601088.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1   100000           REMOVE  sample             638976.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1   100000           REMOVE  sample             827586.560              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1   100000           REMOVE  sample             961443.328              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1   100000           REMOVE  sample            1048576.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1   100000         CONTAINS  sample   106123    282436.917 ±    83.167  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1   100000         CONTAINS  sample             281088.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1   100000         CONTAINS  sample             281600.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1   100000         CONTAINS  sample             283136.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1   100000         CONTAINS  sample             283648.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1   100000         CONTAINS  sample             310784.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1   100000         CONTAINS  sample             412672.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1   100000         CONTAINS  sample             511884.902              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1   100000         CONTAINS  sample             532480.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample    36381    824542.499 ±   618.344  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             812032.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             816128.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             841728.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             849920.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             894976.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            1413603.328              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            1749907.866              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            1964032.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample    30342    988716.076 ±   418.530  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             971776.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             985088.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             991232.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             999424.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample            1071104.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample            1361217.536              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample            1470323.507              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample            1505280.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample    29552   1015152.823 ±   520.624  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             995328.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1005568.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1069056.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1073152.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1089536.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1241088.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1384905.728              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1398784.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1  1000000              ADD  sample    12085   2484498.705 ±  1499.550  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1  1000000              ADD  sample            2469888.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1  1000000              ADD  sample            2473984.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1  1000000              ADD  sample            2482176.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1  1000000              ADD  sample            2514944.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1  1000000              ADD  sample            2707456.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1  1000000              ADD  sample            3153215.488              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1  1000000              ADD  sample            3276447.744              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1  1000000              ADD  sample            3284992.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1  1000000           REMOVE  sample     5216   5764871.853 ±  6136.098  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1  1000000           REMOVE  sample            5603328.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1  1000000           REMOVE  sample            5750784.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1  1000000           REMOVE  sample            5799936.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1  1000000           REMOVE  sample            5849088.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1  1000000           REMOVE  sample            6381568.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1  1000000           REMOVE  sample            6884139.008              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1  1000000           REMOVE  sample           10960896.000              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1  1000000           REMOVE  sample           10960896.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1  1000000         CONTAINS  sample    12337   2432544.246 ±  1397.860  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1  1000000         CONTAINS  sample            2416640.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1  1000000         CONTAINS  sample            2424832.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1  1000000         CONTAINS  sample            2433024.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1  1000000         CONTAINS  sample            2461696.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1  1000000         CONTAINS  sample            2637824.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1  1000000         CONTAINS  sample            3009175.552              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1  1000000         CONTAINS  sample            3635702.170              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1  1000000         CONTAINS  sample            3657728.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample     3716   8103973.477 ± 13819.234  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            7979008.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            8011776.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            8273920.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            8716288.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            9240576.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            9460367.360              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample           10108928.000              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample           10108928.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample     2580  11643315.002 ±  8266.122  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample           11550720.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample           11616256.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample           11681792.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample           11763712.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample           12419072.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample           12615680.000              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample           12664832.000              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample           12664832.000              ns/op
+GDXOrderedSet.bench                    GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample     2579  11653985.576 ± 11097.160  ns/op
+GDXOrderedSet.bench:bench·p0.00        GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample           11567104.000              ns/op
+GDXOrderedSet.bench:bench·p0.50        GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample           11616256.000              ns/op
+GDXOrderedSet.bench:bench·p0.90        GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample           11698176.000              ns/op
+GDXOrderedSet.bench:bench·p0.95        GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample           11829248.000              ns/op
+GDXOrderedSet.bench:bench·p0.99        GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample           12402688.000              ns/op
+GDXOrderedSet.bench:bench·p0.999       GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample           12790661.120              ns/op
+GDXOrderedSet.bench:bench·p0.9999      GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample           17235968.000              ns/op
+GDXOrderedSet.bench:bench·p1.00        GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample           17235968.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1      100              ADD  sample   830072       312.669 ±     1.277  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1      100              ADD  sample                293.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1      100              ADD  sample                303.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1      100              ADD  sample                305.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1      100              ADD  sample                306.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1      100              ADD  sample                370.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1      100              ADD  sample                983.927              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1      100              ADD  sample              19104.000              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1      100              ADD  sample              52864.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1      100           REMOVE  sample   907358       298.895 ±     1.993  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1      100           REMOVE  sample                268.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1      100           REMOVE  sample                279.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1      100           REMOVE  sample                284.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1      100           REMOVE  sample                285.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1      100           REMOVE  sample                290.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1      100           REMOVE  sample               2126.564              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1      100           REMOVE  sample              21960.451              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1      100           REMOVE  sample              90880.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1      100         CONTAINS  sample   722733       374.356 ±     2.646  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1      100         CONTAINS  sample                331.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1      100         CONTAINS  sample                347.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1      100         CONTAINS  sample                353.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1      100         CONTAINS  sample                358.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1      100         CONTAINS  sample                446.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1      100         CONTAINS  sample              16272.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1      100         CONTAINS  sample              23700.256              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1      100         CONTAINS  sample              52096.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample   645460       790.574 ±     3.536  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                701.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                743.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                784.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                803.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                906.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample              19296.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample              26664.624              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample              86144.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample   642392       790.934 ±     3.356  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                738.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                753.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                758.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                763.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                935.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample              19200.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample              24800.000              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample             113536.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample   658807       771.519 ±     3.275  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                719.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                733.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                740.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                745.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                873.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample              19168.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample              24803.814              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample              51008.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1     1000              ADD  sample   683392      2842.550 ±     4.163  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1     1000              ADD  sample               2708.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1     1000              ADD  sample               2772.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1     1000              ADD  sample               2792.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1     1000              ADD  sample               2796.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1     1000              ADD  sample               3580.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1     1000              ADD  sample              22464.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1     1000              ADD  sample              31562.285              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1     1000              ADD  sample              97280.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1     1000           REMOVE  sample   755767      2574.237 ±     3.846  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1     1000           REMOVE  sample               2444.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1     1000           REMOVE  sample               2504.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1     1000           REMOVE  sample               2512.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1     1000           REMOVE  sample               2516.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1     1000           REMOVE  sample               4040.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1     1000           REMOVE  sample              21728.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1     1000           REMOVE  sample              28992.000              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1     1000           REMOVE  sample             111488.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1     1000         CONTAINS  sample   612819      3161.820 ±     4.827  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1     1000         CONTAINS  sample               3048.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1     1000         CONTAINS  sample               3088.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1     1000         CONTAINS  sample               3100.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1     1000         CONTAINS  sample               3104.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1     1000         CONTAINS  sample               3712.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1     1000         CONTAINS  sample              24512.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1     1000         CONTAINS  sample              30326.976              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1     1000         CONTAINS  sample             171008.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample   672234      5697.458 ±     5.563  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample               5408.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample               5608.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample               5680.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample               5712.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample               7072.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample              26976.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample              34688.000              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample             204800.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample   594377      6447.632 ±     5.065  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample               6248.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample               6320.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample               6424.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample               6552.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample               8080.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample              27808.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample              34247.962              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample              61312.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample   680126      5604.244 ±     4.192  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample               5456.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample               5528.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample               5576.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample               5592.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample               6512.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample              26304.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample              33216.000              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample              56896.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1    10000              ADD  sample   509344     29450.155 ±     9.331  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1    10000              ADD  sample              28512.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1    10000              ADD  sample              29280.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1    10000              ADD  sample              29408.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1    10000              ADD  sample              29472.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1    10000              ADD  sample              31648.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1    10000              ADD  sample              64704.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1    10000              ADD  sample              83787.456              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1    10000              ADD  sample             130048.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1    10000           REMOVE  sample   626174     23960.177 ±     7.138  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1    10000           REMOVE  sample              23392.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1    10000           REMOVE  sample              23840.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1    10000           REMOVE  sample              24064.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1    10000           REMOVE  sample              24160.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1    10000           REMOVE  sample              25920.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1    10000           REMOVE  sample              50868.800              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1    10000           REMOVE  sample              70576.960              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1    10000           REMOVE  sample             105856.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1    10000         CONTAINS  sample   475897     31561.442 ±     9.128  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1    10000         CONTAINS  sample              30528.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1    10000         CONTAINS  sample              31456.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1    10000         CONTAINS  sample              31584.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1    10000         CONTAINS  sample              31616.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1    10000         CONTAINS  sample              33024.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1    10000         CONTAINS  sample              66432.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1    10000         CONTAINS  sample              90548.506              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1    10000         CONTAINS  sample             116864.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample   552620     54223.146 ±    10.083  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              52992.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              53952.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              54464.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              54976.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              56448.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              94208.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample             123136.000              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample             143104.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample   585091     51209.936 ±    11.108  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              50432.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              51008.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              51200.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              51328.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              55680.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              92404.224              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample             131965.645              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample             191488.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample   581946     51488.263 ±    10.207  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              50880.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              51264.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              51456.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              51584.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              54976.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              91136.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample             134350.157              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample             201216.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1   100000              ADD  sample   102224    293258.022 ±    95.405  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1   100000              ADD  sample             279040.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1   100000              ADD  sample             291840.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1   100000              ADD  sample             295936.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1   100000              ADD  sample             300544.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1   100000              ADD  sample             329728.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1   100000              ADD  sample             422963.200              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1   100000              ADD  sample             544540.160              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1   100000              ADD  sample             578560.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1   100000           REMOVE  sample   124473    240900.093 ±   123.970  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1   100000           REMOVE  sample             235008.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1   100000           REMOVE  sample             240384.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1   100000           REMOVE  sample             242944.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1   100000           REMOVE  sample             246784.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1   100000           REMOVE  sample             264192.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1   100000           REMOVE  sample             460853.248              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1   100000           REMOVE  sample             663552.000              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1   100000           REMOVE  sample             847872.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1   100000         CONTAINS  sample    86647    346030.745 ±   209.150  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1   100000         CONTAINS  sample             334336.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1   100000         CONTAINS  sample             343040.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1   100000         CONTAINS  sample             351744.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1   100000         CONTAINS  sample             364032.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1   100000         CONTAINS  sample             381706.240              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1   100000         CONTAINS  sample             648192.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1   100000         CONTAINS  sample             680279.245              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1   100000         CONTAINS  sample             705536.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample    55022    544885.099 ±   274.938  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             536576.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             539648.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             553984.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             566272.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             616448.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             776027.136              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             921071.514              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample             988160.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample    59151    507085.480 ±   212.205  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             499200.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             503808.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             516096.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             517632.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             555008.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             764616.704              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             847021.670              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             930816.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample    59100    507499.260 ±   211.458  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             501248.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             504832.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             510464.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             514022.400              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             559104.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             748130.304              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             883240.346              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             958464.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1  1000000              ADD  sample    10076   2979598.533 ±  2180.094  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1  1000000              ADD  sample            2801664.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1  1000000              ADD  sample            2973696.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1  1000000              ADD  sample            3026944.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1  1000000              ADD  sample            3039232.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1  1000000              ADD  sample            3235840.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1  1000000              ADD  sample            3661508.608              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1  1000000              ADD  sample            4066034.893              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1  1000000              ADD  sample            4067328.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1  1000000           REMOVE  sample    12374   2425843.918 ±  1970.437  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1  1000000           REMOVE  sample            2347008.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1  1000000           REMOVE  sample            2416640.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1  1000000           REMOVE  sample            2469888.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1  1000000           REMOVE  sample            2486272.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1  1000000           REMOVE  sample            2688000.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1  1000000           REMOVE  sample            3155968.000              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1  1000000           REMOVE  sample            3463731.200              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1  1000000           REMOVE  sample            3493888.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1  1000000         CONTAINS  sample    10430   2879195.036 ±  2940.596  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1  1000000         CONTAINS  sample            2772992.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1  1000000         CONTAINS  sample            2871296.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1  1000000         CONTAINS  sample            2953216.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1  1000000         CONTAINS  sample            2977792.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1  1000000         CONTAINS  sample            3248128.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1  1000000         CONTAINS  sample            3840847.872              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1  1000000         CONTAINS  sample            4099389.850              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1  1000000         CONTAINS  sample            4100096.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample     5424   5545577.723 ±  7696.901  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            5464064.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            5472256.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            5709824.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            6062080.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            6191104.000              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            6573670.400              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            6987776.000              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample            6987776.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample     5820   5163607.621 ± 10992.686  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            5070848.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            5136384.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            5185536.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            5242880.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            5921095.680              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample           10241212.416              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample           10813440.000              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample           10813440.000              ns/op
+MerryOrderedSet.bench                MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample     5791   5191613.160 ±  7921.217  ns/op
+MerryOrderedSet.bench:bench·p0.00    MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            5013504.000              ns/op
+MerryOrderedSet.bench:bench·p0.50    MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            5160960.000              ns/op
+MerryOrderedSet.bench:bench·p0.90    MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            5292032.000              ns/op
+MerryOrderedSet.bench:bench·p0.95    MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            5341184.000              ns/op
+MerryOrderedSet.bench:bench·p0.99    MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            5990973.440              ns/op
+MerryOrderedSet.bench:bench·p0.999   MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            7710375.936              ns/op
+MerryOrderedSet.bench:bench·p0.9999  MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            7757824.000              ns/op
+MerryOrderedSet.bench:bench·p1.00    MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            7757824.000              ns/op
