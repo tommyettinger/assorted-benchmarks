@@ -7,8 +7,10 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
@@ -94,6 +96,38 @@ public class Wordlist {
 			}
 			words.subList(size, words.size()).clear(); // Truncate
 			return words;
+		}
+	}
+
+	public static Set<String> loadWordSet(int size, int seed) throws IOException {
+
+		// Load the word list
+		try (InputStream is = ClassLoader.getSystemResourceAsStream(FILENAME);
+			InputStream gi = new GZIPInputStream(is);
+			Reader r = new InputStreamReader(gi);
+			BufferedReader reader = new BufferedReader(r)) {
+			
+			ArrayList<String> words = new ArrayList<>(size);
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				words.add(line);
+			}
+			final int n = words.size();
+			if (seed != DEFAULT_SEED) {
+				//Collections.shuffle(words, new Random(seed));
+				final TangleRNG rng = new TangleRNG(seed);
+				for (int i = n; i > 1; i--) {
+					Collections.swap(words, rng.nextInt(i), i - 1);
+				}
+			}
+			HashSet<String> set = new HashSet<>(size);
+			for (int i = 0; i < size;) {
+				for (int j = 0; j < n && i < size; j++) {
+					set.add(words.get(j) + i++);
+				}
+			}
+			return set;
 		}
 	}
 

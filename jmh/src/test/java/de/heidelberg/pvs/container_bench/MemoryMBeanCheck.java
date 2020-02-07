@@ -1,13 +1,17 @@
 package de.heidelberg.pvs.container_bench;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectIntMap;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.OrderedSet;
 import com.koloboke.collect.set.hash.HashObjSet;
 import de.heidelberg.pvs.container_bench.generators.TangleRNG;
+import de.heidelberg.pvs.container_bench.generators.Wordlist;
 import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryGenerator;
+import it.unimi.dsi.fastutil.objects.Object2IntLinkedOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
@@ -24,6 +28,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class MemoryMBeanCheck {
 
@@ -54,7 +59,8 @@ public class MemoryMBeanCheck {
     public static void main(String[] args) {
 //        mainString();
 //        mainFloat();
-        mainInteger();
+//        mainInteger();
+        mapStringInt();
     }
     public static void mainString () {
         StringDictionaryGenerator gen = new StringDictionaryGenerator();
@@ -168,6 +174,155 @@ public class MemoryMBeanCheck {
                         @Override public void run () {
                             x = new ds.merry.OrderedSet<>(size);
                             for (int j = 0; j < size; j++) x.add(items[j]);
+                        }
+                    }));
+            }
+        }
+    }
+    public static void mapStringInt () {
+        PrintStream out = System.out;
+        try {
+            System.setOut(new PrintStream(".junk.txt#"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < 6; i++) {
+            if(i == 5)
+                System.setOut(out);
+            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000, 470000}) {
+                Set<String> strings = new HashSet<>(size);
+                try {
+                    strings.addAll(Wordlist.loadWordSet(size,1));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String[] items = new String[strings.size()];
+                strings.toArray(items);
+
+                System.out.println("UNORDERED BOXED");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK HashMap", size,
+                    measure(new Runnable() {
+                        HashMap<String, Integer> x;
+
+                        @Override public void run () {
+                            x = new HashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "FastUtil Map", size,
+                    measure(new Runnable() {
+                        Object2ObjectOpenHashMap<String, Integer> x;
+
+                        @Override public void run () {
+                            x = new Object2ObjectOpenHashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX ObjectMap", size,
+                    measure(new Runnable() {
+                        ObjectMap<String, Integer> x;
+
+                        @Override public void run () {
+                            x = new ObjectMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry ObjectMap", size,
+                    measure(new Runnable() {
+                        ds.merry.ObjectMap<String, Integer> x;
+
+                        @Override public void run () {
+                            x = new ds.merry.ObjectMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+                        }
+                    }));
+
+                System.out.println("UNORDERED PRIMITIVE");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "FastUtil Primitive Map", size,
+                    measure(new Runnable() {
+                        Object2IntOpenHashMap<String> x;
+
+                        @Override public void run () {
+                            x = new Object2IntOpenHashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX ObjectIntMap", size,
+                    measure(new Runnable() {
+                        ObjectIntMap<String> x;
+
+                        @Override public void run () {
+                            x = new ObjectIntMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry ObjectIntMap", size,
+                    measure(new Runnable() {
+                        ds.merry.ObjectIntMap<String> x;
+
+                        @Override public void run () {
+                            x = new ds.merry.ObjectIntMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+                        }
+                    }));
+                System.out.println("INSERTION-ORDERED BOXED:");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK LinkedHashMap", size,
+                    measure(new Runnable() {
+                        LinkedHashMap<String, Integer> x;
+
+                        @Override public void run () {
+                            x = new LinkedHashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "FastUtil Linked Map", size,
+                    measure(new Runnable() {
+                        Object2ObjectLinkedOpenHashMap<String, Integer> x;
+
+                        @Override public void run () {
+                            x = new Object2ObjectLinkedOpenHashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX OrderedMap", size,
+                    measure(new Runnable() {
+                        OrderedMap<String, Integer> x;
+
+                        @Override public void run () {
+                            x = new OrderedMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry OrderedMap", size,
+                    measure(new Runnable() {
+                        ds.merry.OrderedMap<String, Integer> x;
+
+                        @Override public void run () {
+                            x = new ds.merry.OrderedMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+                        }
+                    }));
+                System.out.println("INSERTION-ORDERED PRIMITIVE:");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "FastUtil Linked Primitive Map", size,
+                    measure(new Runnable() {
+                        Object2IntLinkedOpenHashMap<String> x;
+
+                        @Override public void run () {
+                            x = new Object2IntLinkedOpenHashMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry ObjectIntOrderedMap", size,
+                    measure(new Runnable() {
+                        ds.merry.ObjectIntOrderedMap<String> x;
+
+                        @Override public void run () {
+                            x = new ds.merry.ObjectIntOrderedMap<>(size);
+                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
             }
