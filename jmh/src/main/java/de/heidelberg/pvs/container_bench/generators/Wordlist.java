@@ -62,14 +62,15 @@ public class Wordlist {
 			Reader r = new InputStreamReader(gi);
 			BufferedReader reader = new BufferedReader(r)) {
 
-			// Always read twice as much the size
-			final int stop = size << 1;
+			// Always read at least the word list in full
+			final int stop = 235971;
 			ArrayList<String> words = new ArrayList<>(stop);
 
 			String line;
-			int repeats, len;
+			int len;
+			double repeats;
 			char c;
-			while ((line = reader.readLine()) != null && words.size() < stop) {
+			while ((line = reader.readLine()) != null) {
 				len = line.length();
 				for (int i = 0; i < len; i++) {
 					c = line.charAt(i);
@@ -80,14 +81,13 @@ public class Wordlist {
 					}
 				}
 				len *= len;
-				repeats = (7777777 - (line.hashCode() & 0x3FFFF)) / (len * len) + 1;
+				repeats = (line.hashCode() & 0xFFF) * 0x0.00FFFp-10 * size / (len * len) + 1.5;
 				for (int i = 0; i < repeats; i++) {
 					words.add(line);
 				}
 			}
 
 			if (seed != DEFAULT_SEED) {
-				//Collections.shuffle(words, new Random(seed));
 				final TangleRNG rng = new TangleRNG(seed);
 				final int n = words.size();
 				for (int i = n; i > 1; i--) {
@@ -115,7 +115,6 @@ public class Wordlist {
 			}
 			final int n = words.size();
 			if (seed != DEFAULT_SEED) {
-				//Collections.shuffle(words, new Random(seed));
 				final TangleRNG rng = new TangleRNG(seed);
 				for (int i = n; i > 1; i--) {
 					Collections.swap(words, rng.nextInt(i), i - 1);

@@ -10,6 +10,7 @@ import com.koloboke.collect.set.hash.HashObjSet;
 import de.heidelberg.pvs.container_bench.generators.TangleRNG;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryGenerator;
+import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryGenerator.CustomString;
 import it.unimi.dsi.fastutil.objects.Object2IntLinkedOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
@@ -57,10 +58,11 @@ public class MemoryMBeanCheck {
     }
     
     public static void main(String[] args) {
-//        mainString();
+//        mainCharSeq();
+        mainString();
 //        mainFloat();
 //        mainInteger();
-        mapStringInt();
+//        mapStringInt();
     }
     public static void mainString () {
         StringDictionaryGenerator gen = new StringDictionaryGenerator();
@@ -70,12 +72,12 @@ public class MemoryMBeanCheck {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < 10; i++) {
-            if(i == 9)
+        for (int i = 0; i < 6; i++) {
+            if(i == 5)
                 System.setOut(out);
-            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
+            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000, 470000}) {
                 try {
-                    gen.init(size, -1);
+                    gen.init(size, i);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -170,6 +172,124 @@ public class MemoryMBeanCheck {
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry OrderedSet", size,
                     measure(new Runnable() {
                         ds.merry.OrderedSet<String> x;
+
+                        @Override public void run () {
+                            x = new ds.merry.OrderedSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(items[j]);
+                        }
+                    }));
+            }
+        }
+    }
+    public static void mainCharSeq () {
+        StringDictionaryGenerator gen = new StringDictionaryGenerator();
+        PrintStream out = System.out;
+        try {
+            System.setOut(new PrintStream(".junk.txt#"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < 6; i++) {
+            if(i == 5)
+                System.setOut(out);
+            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000, 470000}) {
+                try {
+                    gen.init(size, i);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                CustomString[] items = gen.generateCustomArray(size);
+                System.out.println("LIST");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK ArrayList", size,
+                    measure(new Runnable() {
+                        ArrayList<CustomString> x;
+
+                        @Override public void run () {
+                            x = new ArrayList<>(size);
+                            for (int j = 0; j < size; j++) x.add(items[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX Array", size, measure(new Runnable() {
+                    Array<CustomString> x;
+
+                    @Override public void run () {
+                        x = new Array<>(size);
+                        for (int j = 0; j < size; j++) x.add(items[j]);
+                    }
+                }));
+
+                System.out.println("UNORDERED");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK HashSet", size,
+                    measure(new Runnable() {
+                        HashSet<CustomString> x;
+
+                        @Override public void run () {
+                            x = new HashSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(items[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "FastUtil Set", size,
+                    measure(new Runnable() {
+                        ObjectOpenHashSet<CustomString> x;
+
+                        @Override public void run () {
+                            x = new ObjectOpenHashSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(items[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX ObjectSet", size,
+                    measure(new Runnable() {
+                        ObjectSet<CustomString> x;
+
+                        @Override public void run () {
+                            x = new ObjectSet<>(size);
+                            for (int j = 0; j < size; j++)
+                                x.add(items[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry ObjectSet", size,
+                    measure(new Runnable() {
+                        ds.merry.ObjectSet<CustomString> x;
+
+                        @Override public void run () {
+                            x = new ds.merry.ObjectSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(items[j]);
+                        }
+                    }));
+                System.out.println("INSERTION-ORDERED:");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
+                    measure(new Runnable() {
+                        LinkedHashSet<CustomString> x;
+
+                        @Override public void run () {
+                            x = new LinkedHashSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(items[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "FastUtil Linked Set", size,
+                    measure(new Runnable() {
+                        ObjectLinkedOpenHashSet<CustomString> x;
+
+                        @Override public void run () {
+                            x = new ObjectLinkedOpenHashSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(items[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX OrderedSet", size,
+                    measure(new Runnable() {
+                        OrderedSet<CustomString> x;
+
+                        @Override public void run () {
+                            x = new OrderedSet<>(size);
+                            for (int j = 0; j < size; j++) x.add(items[j]);
+                        }
+                    }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry OrderedSet", size,
+                    measure(new Runnable() {
+                        ds.merry.OrderedSet<CustomString> x;
 
                         @Override public void run () {
                             x = new ds.merry.OrderedSet<>(size);
