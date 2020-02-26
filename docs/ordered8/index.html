@@ -1,9 +1,9 @@
 <html>
 <head>
-<title>Set Performance Comparison</title>
+<title>Set Performance Comparison, JDK 8</title>
 </head>
 <body>
-<p>Here, we're comparing the performance of several collections libraries, including libGDX, on various operations on insertion-ordered sets of String.</p>
+<p>Here, we're comparing the performance of several collections libraries, including libGDX, on various operations on insertion-ordered sets of String with JDK 8.</p>
 <p>Add:</p>
 <img src="add.png" width="605" height="366" />
 <p>Add Or Remove:</p>
@@ -22,7 +22,8 @@ FastUtil is the big winner here, close to the top or better than the rest in mos
 uses a particularly well-optimized technique for its usage conditions, treating every key-value pair as having two "pointers" to the
 earlier and later items, and this makes iteration from front or back very fast. It doesn't allow for the same (very powerful) usage
 that libGDX and Merry's sets have, though, because it acts like a LinkedList where libGDX and Merry act like an ArrayList, and those
-two allow access-by-index. Not shown here, it does use more memory than Merry or GDX, though less than the JDK's LinkedHashSet.
+two allow access-by-index. Not shown here, it does use more memory than Merry or GDX, though less than the JDK's LinkedHashSet. The
+gap between FastUtil and Merry is smaller on JDK 8 than JDK 13, but the memory usage is the same, favoring Merry.
 </p>
 <p>
 Again, libGDX's ObjectSet performs very well, except when it has to remove an item. Then, it's consistently at or near the worst
