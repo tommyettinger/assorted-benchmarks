@@ -66,7 +66,7 @@ dependencies {
     // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
 
     implementation 'com.github.SquidPony.SquidLib:squidlib-util:a3d81f38e9'
-    implementation 'com.github.tommyettinger:simple-graphs:e0aabae80d'
+    implementation 'com.github.tommyettinger:simple-graphs:0634f92632'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
 
 

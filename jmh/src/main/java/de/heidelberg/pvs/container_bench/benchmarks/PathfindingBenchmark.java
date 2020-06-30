@@ -41,7 +41,7 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
-import space.earlygrey.simplegraphs.UndirectedGraph;
+import space.earlygrey.simplegraphs.DirectedGraph;
 import squidpony.squidai.CustomDijkstraMap;
 import squidpony.squidai.DijkstraMap;
 import squidpony.squidai.astar.DefaultGraph;
@@ -190,6 +190,15 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathSimple          avgt    5    17.383 ±  0.439  ms/op <-- comparison point, external
  * </pre>
  * There's still a ways to go, but simple-graphs is getting much faster.
+ * <br>
+ * More improvements on simple-graphs! This time I switched to a directed graph.
+ * <pre>
+ * Benchmark                                    Mode  Cnt    Score   Error  Units
+ * PathfindingBenchmark.doPathIndexedAStar      avgt    5  192.564 ± 7.769  ms/op
+ * PathfindingBenchmark.doPathSimple            avgt    5  356.095 ± 4.833  ms/op
+ * PathfindingBenchmark.doTinyPathIndexedAStar  avgt    5    5.484 ± 0.634  ms/op
+ * PathfindingBenchmark.doTinyPathSimple        avgt    5   16.303 ± 0.292  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -222,7 +231,7 @@ public class PathfindingBenchmark {
         public GraphPath<Coord> dgp;
         public ArrayList<Coord> path;
 
-        public UndirectedGraph<Coord> simpleGraph;
+        public DirectedGraph<Coord> simpleGraph;
         public space.earlygrey.simplegraphs.Heuristic<Coord> simpleHeu;
         @Setup(Level.Trial)
         public void setup() {
@@ -263,7 +272,7 @@ public class PathfindingBenchmark {
             iasSquid = new Pathfinder<>(dg, false);
             path = new ArrayList<>(DIMENSION << 2);
             
-            simpleGraph = new UndirectedGraph<>(floors);
+            simpleGraph = new DirectedGraph<>(floors);
             simpleHeu = new space.earlygrey.simplegraphs.Heuristic<Coord>() {
                 @Override
                 public float getEstimate(Coord currentNode, Coord targetNode) {
