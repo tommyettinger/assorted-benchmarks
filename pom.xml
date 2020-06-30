@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.github.SquidPony.SquidLib</groupId>
             <artifactId>squidlib-util</artifactId>
-            <version>e0e9aec84c</version>
+            <version>a6158b22b1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -74,22 +74,34 @@
             <version>3.2</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>             
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-ai</artifactId>
+            <version>1.8.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!--        Using JitPack-->
+        
+        <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>jaunt</artifactId>
             <version>abe1c29244</version>
             <scope>compile</scope>
         </dependency>
-
-        <!--        Using JitPack-->
-
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>merry-ds</artifactId>
             <version>dd7e5210bf</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.tommyettinger</groupId>
+            <artifactId>simple-graphs</artifactId>
+            <version>e0aabae80d</version>
+            <scope>compile</scope>
+        </dependency>
+        
         <!--        For local installations-->
 
 <!--        <dependency>-->

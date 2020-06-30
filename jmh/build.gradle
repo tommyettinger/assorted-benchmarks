@@ -63,6 +63,11 @@ dependencies {
     // compile group: 'in.jlibs', name: 'jlibs-core', version:'2.2.1'
     // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
 
+    implementation 'com.github.SquidPony.SquidLib:squidlib-util:a3d81f38e9'
+    implementation 'com.github.tommyettinger:simple-graphs:e0aabae80d'
+    implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
+
+
     testImplementation group: 'junit', name: 'junit', version:'4.12'
     testImplementation group: 'org.openjdk.jol', name: 'jol-core', version: '0.10'
 }
