@@ -29,7 +29,7 @@
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package de.heidelberg.pvs.container_bench.benchmarks;
+package de.heidelberg.pvs.container_bench.benchmarks.squidlib;
 
 import com.badlogic.gdx.ai.pfa.*;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
