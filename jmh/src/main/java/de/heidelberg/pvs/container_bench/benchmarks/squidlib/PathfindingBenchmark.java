@@ -155,53 +155,25 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * <br> 
  * And some tests back on Windows with the 64x64 map, testing simple-graphs by earlygrey...
  * <pre>
- * Benchmark                                   Mode  Cnt     Score     Error  Units
- * PathfindingBenchmark.doPathAStarSearch         avgt    3   201.018 ±  98.294  ms/op <-- comparison point, best internal
- * PathfindingBenchmark.doPathCustomDijkstra      avgt    3   550.774 ±  83.914  ms/op
- * PathfindingBenchmark.doPathDijkstra            avgt    3   314.758 ±  39.804  ms/op
- * PathfindingBenchmark.doPathGDXAStar            avgt    3   259.834 ±  31.066  ms/op
- * PathfindingBenchmark.doPathIndexedAStar        avgt    3   218.580 ±  19.475  ms/op
- * PathfindingBenchmark.doPathSimple              avgt    3   775.550 ± 129.804  ms/op <-- comparison point, external
- * PathfindingBenchmark.doScanCustomDijkstra      avgt    3  1066.569 ± 268.600  ms/op
- * PathfindingBenchmark.doScanDijkstra            avgt    3   560.739 ±   8.138  ms/op
- * PathfindingBenchmark.doTinyPathAStarSearch     avgt    3     6.061 ±   0.193  ms/op
- * PathfindingBenchmark.doTinyPathCustomDijkstra  avgt    3    25.803 ±   8.823  ms/op
- * PathfindingBenchmark.doTinyPathDijkstra        avgt    3    16.131 ±   2.245  ms/op
- * PathfindingBenchmark.doTinyPathGDXAStar        avgt    3     7.743 ±   0.471  ms/op
- * PathfindingBenchmark.doTinyPathIndexedAStar    avgt    3     5.389 ±   0.362  ms/op <-- comparison point, best internal
- * PathfindingBenchmark.doTinyPathSimple          avgt    3    32.315 ±   0.503  ms/op <-- comparison point, external
+ * Benchmark                                      Mode  Cnt     Score    Error  Units
+ * PathfindingBenchmark.doPathAStarSearch         avgt    5   216.193 ± 16.730  ms/op
+ * PathfindingBenchmark.doPathCustomDijkstra      avgt    5   565.110 ± 43.113  ms/op
+ * PathfindingBenchmark.doPathDijkstra            avgt    5   315.056 ±  2.200  ms/op
+ * PathfindingBenchmark.doPathGDXAStar            avgt    5   285.316 ±  7.891  ms/op
+ * PathfindingBenchmark.doPathIndexedAStar        avgt    5   208.834 ±  1.571  ms/op
+ * PathfindingBenchmark.doPathSimple              avgt    5   146.671 ±  1.963  ms/op
+ * PathfindingBenchmark.doScanCustomDijkstra      avgt    5  1091.020 ± 42.863  ms/op
+ * PathfindingBenchmark.doScanDijkstra            avgt    5   565.924 ±  9.877  ms/op
+ * PathfindingBenchmark.doTinyPathAStarSearch     avgt    5     6.476 ±  0.533  ms/op
+ * PathfindingBenchmark.doTinyPathCustomDijkstra  avgt    5    27.532 ±  3.278  ms/op
+ * PathfindingBenchmark.doTinyPathDijkstra        avgt    5    16.403 ±  1.509  ms/op
+ * PathfindingBenchmark.doTinyPathGDXAStar        avgt    5     7.651 ±  0.383  ms/op
+ * PathfindingBenchmark.doTinyPathIndexedAStar    avgt    5     5.762 ±  0.221  ms/op
+ * PathfindingBenchmark.doTinyPathSimple          avgt    5     4.729 ±  0.815  ms/op
  * </pre>
- * And the results I get using my fork of simple-graphs, with a few optimizations...
- * <pre>
- * Benchmark                                   Mode  Cnt     Score    Error  Units
- * PathfindingBenchmark.doPathAStarSearch         avgt    5   228.174 ±  3.207  ms/op
- * PathfindingBenchmark.doPathCustomDijkstra      avgt    5   542.062 ± 18.640  ms/op
- * PathfindingBenchmark.doPathDijkstra            avgt    5   313.257 ±  3.390  ms/op
- * PathfindingBenchmark.doPathGDXAStar            avgt    5   290.614 ±  4.313  ms/op
- * PathfindingBenchmark.doPathIndexedAStar        avgt    5   222.829 ±  6.354  ms/op <-- comparison point, best internal
- * PathfindingBenchmark.doPathSimple              avgt    5   393.835 ±  6.341  ms/op <-- comparison point, external
- * PathfindingBenchmark.doScanCustomDijkstra      avgt    5  1101.455 ± 43.271  ms/op
- * PathfindingBenchmark.doScanDijkstra            avgt    5   546.962 ±  5.344  ms/op
- * PathfindingBenchmark.doTinyPathAStarSearch     avgt    5     5.863 ±  0.151  ms/op <-- comparison point, best internal
- * PathfindingBenchmark.doTinyPathCustomDijkstra  avgt    5    24.927 ±  0.496  ms/op
- * PathfindingBenchmark.doTinyPathDijkstra        avgt    5    17.401 ±  1.018  ms/op
- * PathfindingBenchmark.doTinyPathGDXAStar        avgt    5     7.770 ±  0.268  ms/op
- * PathfindingBenchmark.doTinyPathIndexedAStar    avgt    5     6.051 ±  0.062  ms/op
- * PathfindingBenchmark.doTinyPathSimple          avgt    5    17.383 ±  0.439  ms/op <-- comparison point, external
- * </pre>
- * There's still a ways to go, but simple-graphs is getting much faster.
- * <br>
- * WHOOPS.
- * <br>
- * The simple-graphs heuristic was bad in the above tests! Before I redo them, here's the new
- * results with a correct Chebyshev heuristic for everything... simple-graphs = great.
- * <pre>
- * Benchmark                                    Mode  Cnt    Score    Error  Units
- * PathfindingBenchmark.doPathIndexedAStar      avgt    5  216.813 ± 17.476  ms/op
- * PathfindingBenchmark.doPathSimple            avgt    5  143.876 ±  6.126  ms/op
- * PathfindingBenchmark.doTinyPathIndexedAStar  avgt    5    5.688 ±  0.175  ms/op
- * PathfindingBenchmark.doTinyPathSimple        avgt    5    4.474 ±  0.113  ms/op
- * </pre>
+ * Here, simple-graphs strongly outperforms everything else; I'm not sure if there's any one reason,
+ * but I had made a mistake in my benchmark earlier that made it seem very slow... so earlygrey
+ * optimized the living daylights out of the code. It appears that effort has paid off.
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
