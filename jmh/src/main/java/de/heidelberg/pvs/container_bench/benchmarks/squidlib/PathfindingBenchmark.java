@@ -191,13 +191,16 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * </pre>
  * There's still a ways to go, but simple-graphs is getting much faster.
  * <br>
- * More improvements on simple-graphs! This time I switched to a directed graph.
+ * WHOOPS.
+ * <br>
+ * The simple-graphs heuristic was bad in the above tests! Before I redo them, here's the new
+ * results with a correct Chebyshev heuristic for everything... simple-graphs = great.
  * <pre>
- * Benchmark                                    Mode  Cnt    Score   Error  Units
- * PathfindingBenchmark.doPathIndexedAStar      avgt    5  192.564 ± 7.769  ms/op
- * PathfindingBenchmark.doPathSimple            avgt    5  356.095 ± 4.833  ms/op
- * PathfindingBenchmark.doTinyPathIndexedAStar  avgt    5    5.484 ± 0.634  ms/op
- * PathfindingBenchmark.doTinyPathSimple        avgt    5   16.303 ± 0.292  ms/op
+ * Benchmark                                    Mode  Cnt    Score    Error  Units
+ * PathfindingBenchmark.doPathIndexedAStar      avgt    5  216.813 ± 17.476  ms/op
+ * PathfindingBenchmark.doPathSimple            avgt    5  143.876 ±  6.126  ms/op
+ * PathfindingBenchmark.doTinyPathIndexedAStar  avgt    5    5.688 ±  0.175  ms/op
+ * PathfindingBenchmark.doTinyPathSimple        avgt    5    4.474 ±  0.113  ms/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
@@ -273,12 +276,7 @@ public class PathfindingBenchmark {
             path = new ArrayList<>(DIMENSION << 2);
             
             simpleGraph = new DirectedGraph<>(floors);
-            simpleHeu = new space.earlygrey.simplegraphs.Heuristic<Coord>() {
-                @Override
-                public float getEstimate(Coord currentNode, Coord targetNode) {
-                    return Math.max(currentNode.x - targetNode.x, currentNode.y - targetNode.y);
-                }
-            };
+            simpleHeu = (currentNode, targetNode) -> Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
             Coord center;
             Direction[] outer = Direction.CLOCKWISE;
             Direction dir;
