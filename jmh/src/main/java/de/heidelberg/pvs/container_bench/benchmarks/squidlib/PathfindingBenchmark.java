@@ -42,6 +42,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import space.earlygrey.simplegraphs.DirectedGraph;
+import space.earlygrey.simplegraphs.DirectedGraphAlgorithms;
 import squidpony.squidai.CustomDijkstraMap;
 import squidpony.squidai.DijkstraMap;
 import squidpony.squidai.astar.DefaultGraph;
@@ -207,7 +208,7 @@ public class PathfindingBenchmark {
         public ArrayList<Coord> path;
 
         public DirectedGraph<Coord> simpleGraph;
-        public space.earlygrey.simplegraphs.Heuristic<Coord> simpleHeu;
+        public space.earlygrey.simplegraphs.utils.Heuristic<Coord> simpleHeu;
         @Setup(Level.Trial)
         public void setup() {
             Coord.expandPoolTo(DIMENSION, DIMENSION);
@@ -248,7 +249,12 @@ public class PathfindingBenchmark {
             path = new ArrayList<>(DIMENSION << 2);
             
             simpleGraph = new DirectedGraph<>(floors);
-            simpleHeu = (currentNode, targetNode) -> Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
+            simpleHeu = new space.earlygrey.simplegraphs.utils.Heuristic<Coord>() {
+                @Override
+                public float getEstimate(Coord currentNode, Coord targetNode) {
+                    return Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
+                }
+            };
             Coord center;
             Direction[] outer = Direction.CLOCKWISE;
             Direction dir;
@@ -706,6 +712,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
+        final DirectedGraphAlgorithms<Coord> algo = state.simpleGraph.algorithms();
         for (int x = 1; x < state.DIMENSION - 1; x++) {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -714,7 +721,7 @@ public class PathfindingBenchmark {
                 state.srng.setState((x << 22) | (y << 16) | (x * y));
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
-                if(state.simpleGraph.findShortestPath(r, Coord.get(x, y), state.path, state.simpleHeu))
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, state.simpleHeu))
                     scanned += state.path.size();
             }
         }
@@ -726,6 +733,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
+        final DirectedGraphAlgorithms<Coord> algo = state.simpleGraph.algorithms();
         for (int x = 1; x < state.DIMENSION - 1; x++) {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -734,7 +742,7 @@ public class PathfindingBenchmark {
                 //state.srng.setState((x << 22) | (y << 16) | (x * y));
                 r = state.nearbyMap[x][y];
                 state.path.clear();
-                if(state.simpleGraph.findShortestPath(r, Coord.get(x, y), state.path, state.simpleHeu))
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, state.simpleHeu))
                     scanned += state.path.size();
             }
         }

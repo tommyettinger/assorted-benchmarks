@@ -18,6 +18,7 @@ plugins {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
     maven { url 'https://jitpack.io' }
@@ -66,7 +67,8 @@ dependencies {
     // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
 
     implementation 'com.github.SquidPony.SquidLib:squidlib-util:a3d81f38e9'
-    implementation 'com.github.tommyettinger:simple-graphs:ec68d362fd'
+    implementation 'com.github.tommyettinger:simple-graphs:7dd28324c6'
+//    implementation 'space.earlygrey.simplegraphs:simple-graphs:1.0-SNAPSHOT'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
 
 
