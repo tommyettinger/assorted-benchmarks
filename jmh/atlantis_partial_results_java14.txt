@@ -1,0 +1,820 @@
+# Run complete. Total time: 02:03:06
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                                           (impl)  (seed)   (size)       (workload)    Mode     Cnt             Score             Error  Units
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1      100              ADD  sample  816703           973.022 ±           4.908  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1      100              ADD  sample                   395.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1      100              ADD  sample                   790.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1      100              ADD  sample                  1184.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1      100              ADD  sample                  1184.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1      100              ADD  sample                  1186.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1      100              ADD  sample                 20128.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1      100              ADD  sample                 23680.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1      100              ADD  sample                 88832.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1      100           REMOVE  sample  968689           420.370 ±           3.157  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1      100           REMOVE  sample                       ≈ 0                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1      100           REMOVE  sample                   395.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1      100           REMOVE  sample                   395.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1      100           REMOVE  sample                   395.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1      100           REMOVE  sample                   396.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1      100           REMOVE  sample                 18560.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1      100           REMOVE  sample                 22112.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1      100           REMOVE  sample                105472.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1      100         CONTAINS  sample  888707           895.523 ±           4.545  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1      100         CONTAINS  sample                   394.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1      100         CONTAINS  sample                   790.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1      100         CONTAINS  sample                   791.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1      100         CONTAINS  sample                   791.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1      100         CONTAINS  sample                  1186.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1      100         CONTAINS  sample                 19744.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1      100         CONTAINS  sample                 23345.613                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1      100         CONTAINS  sample                110208.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1      100    ADD_OR_REMOVE  sample  515942           777.896 ±           5.752  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1      100    ADD_OR_REMOVE  sample                   394.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1      100    ADD_OR_REMOVE  sample                   790.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1      100    ADD_OR_REMOVE  sample                   790.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1      100    ADD_OR_REMOVE  sample                   791.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1      100    ADD_OR_REMOVE  sample                   791.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1      100    ADD_OR_REMOVE  sample                 19744.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1      100    ADD_OR_REMOVE  sample                 24864.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1      100    ADD_OR_REMOVE  sample                 92800.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1      100  ADD_THEN_REMOVE  sample  712823          4413.798 ±          31.596  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1      100  ADD_THEN_REMOVE  sample                  3160.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1      100  ADD_THEN_REMOVE  sample                  3948.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1      100  ADD_THEN_REMOVE  sample                  3948.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1      100  ADD_THEN_REMOVE  sample                  4344.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1      100  ADD_THEN_REMOVE  sample                 22496.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1      100  ADD_THEN_REMOVE  sample                 25664.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1      100  ADD_THEN_REMOVE  sample                 45973.043                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1      100  ADD_THEN_REMOVE  sample               2310144.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1      100  REMOVE_THEN_ADD  sample  683292          4587.940 ±          24.960  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1      100  REMOVE_THEN_ADD  sample                  3552.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1      100  REMOVE_THEN_ADD  sample                  3948.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1      100  REMOVE_THEN_ADD  sample                  4344.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1      100  REMOVE_THEN_ADD  sample                  4344.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1      100  REMOVE_THEN_ADD  sample                 22496.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1      100  REMOVE_THEN_ADD  sample                 25664.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1      100  REMOVE_THEN_ADD  sample                 37504.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1      100  REMOVE_THEN_ADD  sample               1708032.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1     1000              ADD  sample  617159         10108.805 ±          18.215  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1     1000              ADD  sample                  7896.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1     1000              ADD  sample                  9072.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1     1000              ADD  sample                  9472.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1     1000              ADD  sample                 23296.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1     1000              ADD  sample                 28416.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1     1000              ADD  sample                 39104.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1     1000              ADD  sample                 51712.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1     1000              ADD  sample                239360.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1     1000           REMOVE  sample  441894          7080.053 ±          21.722  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1     1000           REMOVE  sample                  5528.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1     1000           REMOVE  sample                  6320.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1     1000           REMOVE  sample                  6712.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1     1000           REMOVE  sample                  6712.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1     1000           REMOVE  sample                 25280.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1     1000           REMOVE  sample                 28032.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1     1000           REMOVE  sample                 41783.232                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1     1000           REMOVE  sample               1636352.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1     1000         CONTAINS  sample  612987         10175.162 ±          18.180  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1     1000         CONTAINS  sample                  7896.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1     1000         CONTAINS  sample                  9072.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1     1000         CONTAINS  sample                  9472.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1     1000         CONTAINS  sample                 23296.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1     1000         CONTAINS  sample                 28416.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1     1000         CONTAINS  sample                 41856.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1     1000         CONTAINS  sample                 52480.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1     1000         CONTAINS  sample                158720.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1     1000    ADD_OR_REMOVE  sample  257438         97015.236 ±         187.462  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1     1000    ADD_OR_REMOVE  sample                 78208.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1     1000    ADD_OR_REMOVE  sample                 87296.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1     1000    ADD_OR_REMOVE  sample                125568.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1     1000    ADD_OR_REMOVE  sample                156416.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1     1000    ADD_OR_REMOVE  sample                244480.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1     1000    ADD_OR_REMOVE  sample                265216.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1     1000    ADD_OR_REMOVE  sample                283398.246                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1     1000    ADD_OR_REMOVE  sample               1804288.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1     1000  ADD_THEN_REMOVE  sample  338906         73687.877 ±         144.000  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1     1000  ADD_THEN_REMOVE  sample                 59200.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1     1000  ADD_THEN_REMOVE  sample                 65920.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1     1000  ADD_THEN_REMOVE  sample                100224.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1     1000  ADD_THEN_REMOVE  sample                120448.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1     1000  ADD_THEN_REMOVE  sample                188416.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1     1000  ADD_THEN_REMOVE  sample                209920.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1     1000  ADD_THEN_REMOVE  sample                280119.962                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1     1000  ADD_THEN_REMOVE  sample               1873920.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1     1000  REMOVE_THEN_ADD  sample  346059         72177.480 ±         140.971  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1     1000  REMOVE_THEN_ADD  sample                 58432.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1     1000  REMOVE_THEN_ADD  sample                 64384.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1     1000  REMOVE_THEN_ADD  sample                 99072.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1     1000  REMOVE_THEN_ADD  sample                118784.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1     1000  REMOVE_THEN_ADD  sample                187136.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1     1000  REMOVE_THEN_ADD  sample                206848.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1     1000  REMOVE_THEN_ADD  sample                250003.456                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1     1000  REMOVE_THEN_ADD  sample               1849344.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1    10000              ADD  sample  147234        169639.904 ±         402.201  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1    10000              ADD  sample                135680.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1    10000              ADD  sample                153088.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1    10000              ADD  sample                204800.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1    10000              ADD  sample                264192.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1    10000              ADD  sample                409600.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1    10000              ADD  sample                454656.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1    10000              ADD  sample                482587.136                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1    10000              ADD  sample                693248.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1    10000           REMOVE  sample  287759         86775.396 ±         186.548  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1    10000           REMOVE  sample                 70272.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1    10000           REMOVE  sample                 77312.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1    10000           REMOVE  sample                115328.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1    10000           REMOVE  sample                139776.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1    10000           REMOVE  sample                217600.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1    10000           REMOVE  sample                237568.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1    10000           REMOVE  sample                254720.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1    10000           REMOVE  sample               4857856.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1    10000         CONTAINS  sample  154930        161213.236 ±         374.507  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1    10000         CONTAINS  sample                129920.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1    10000         CONTAINS  sample                144896.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1    10000         CONTAINS  sample                196608.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1    10000         CONTAINS  sample                251392.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1    10000         CONTAINS  sample                392192.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1    10000         CONTAINS  sample                430080.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1    10000         CONTAINS  sample                455687.066                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1    10000         CONTAINS  sample                641024.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1    10000    ADD_OR_REMOVE  sample    5749       4347459.774 ±       19531.437  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1    10000    ADD_OR_REMOVE  sample               1986560.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1    10000    ADD_OR_REMOVE  sample               4202496.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1    10000    ADD_OR_REMOVE  sample               5111808.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1    10000    ADD_OR_REMOVE  sample               5275648.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1    10000    ADD_OR_REMOVE  sample               5480448.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1    10000    ADD_OR_REMOVE  sample               5773312.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1    10000    ADD_OR_REMOVE  sample               9863168.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1    10000    ADD_OR_REMOVE  sample               9863168.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1    10000  ADD_THEN_REMOVE  sample    6863       3641832.202 ±       17046.266  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1    10000  ADD_THEN_REMOVE  sample               3002368.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1    10000  ADD_THEN_REMOVE  sample               3493888.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1    10000  ADD_THEN_REMOVE  sample               4358144.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1    10000  ADD_THEN_REMOVE  sample               4594073.600                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1    10000  ADD_THEN_REMOVE  sample               4792320.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1    10000  ADD_THEN_REMOVE  sample               5081268.224                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1    10000  ADD_THEN_REMOVE  sample               5275648.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1    10000  ADD_THEN_REMOVE  sample               5275648.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1    10000  REMOVE_THEN_ADD  sample    6950       3596598.589 ±       17192.951  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1    10000  REMOVE_THEN_ADD  sample               3002368.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1    10000  REMOVE_THEN_ADD  sample               3457024.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1    10000  REMOVE_THEN_ADD  sample               4349952.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1    10000  REMOVE_THEN_ADD  sample               4562944.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1    10000  REMOVE_THEN_ADD  sample               4759552.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1    10000  REMOVE_THEN_ADD  sample               5025308.672                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1    10000  REMOVE_THEN_ADD  sample               5275648.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1    10000  REMOVE_THEN_ADD  sample               5275648.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1   100000              ADD  sample   17835       1400723.830 ±        6670.622  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1   100000              ADD  sample               1183744.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1   100000              ADD  sample               1300480.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1   100000              ADD  sample               1732608.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1   100000              ADD  sample               2062336.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1   100000              ADD  sample               2433024.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1   100000              ADD  sample               2780446.720                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1   100000              ADD  sample               6320304.947                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1   100000              ADD  sample               6602752.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1   100000           REMOVE  sample   27893        895684.977 ±       45235.833  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1   100000           REMOVE  sample                691200.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1   100000           REMOVE  sample                808960.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1   100000           REMOVE  sample               1064960.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1   100000           REMOVE  sample               1309286.400                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1   100000           REMOVE  sample               1624064.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1   100000           REMOVE  sample               1845465.088                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1   100000           REMOVE  sample             171621692.211                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1   100000           REMOVE  sample             174063616.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1   100000         CONTAINS  sample   16810       1486140.642 ±        6708.956  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1   100000         CONTAINS  sample               1273856.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1   100000         CONTAINS  sample               1380352.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1   100000         CONTAINS  sample               1828864.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1   100000         CONTAINS  sample               2134016.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1   100000         CONTAINS  sample               2527232.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1   100000         CONTAINS  sample               2881585.152                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1   100000         CONTAINS  sample               3562520.576                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1   100000         CONTAINS  sample               3674112.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1   100000    ADD_OR_REMOVE  sample      77     335038756.571 ±    23223824.340  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1   100000    ADD_OR_REMOVE  sample             112590848.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1   100000    ADD_OR_REMOVE  sample             345505792.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1   100000    ADD_OR_REMOVE  sample             369832755.200                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1   100000    ADD_OR_REMOVE  sample             383306956.800                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1   100000    ADD_OR_REMOVE  sample             412614656.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1   100000    ADD_OR_REMOVE  sample             412614656.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1   100000    ADD_OR_REMOVE  sample             412614656.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1   100000    ADD_OR_REMOVE  sample             412614656.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1   100000  ADD_THEN_REMOVE  sample     139     182429592.863 ±     4238836.687  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1   100000  ADD_THEN_REMOVE  sample             147587072.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1   100000  ADD_THEN_REMOVE  sample             184287232.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1   100000  ADD_THEN_REMOVE  sample             201850880.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1   100000  ADD_THEN_REMOVE  sample             203948032.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1   100000  ADD_THEN_REMOVE  sample             207408332.800                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1   100000  ADD_THEN_REMOVE  sample             208142336.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1   100000  ADD_THEN_REMOVE  sample             208142336.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1   100000  ADD_THEN_REMOVE  sample             208142336.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1   100000  REMOVE_THEN_ADD  sample     143     178422905.734 ±     4023173.147  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1   100000  REMOVE_THEN_ADD  sample             147587072.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1   100000  REMOVE_THEN_ADD  sample             178520064.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1   100000  REMOVE_THEN_ADD  sample             195716710.400                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1   100000  REMOVE_THEN_ADD  sample             205468467.200                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1   100000  REMOVE_THEN_ADD  sample             209599856.640                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1   100000  REMOVE_THEN_ADD  sample             209715200.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1   100000  REMOVE_THEN_ADD  sample             209715200.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1   100000  REMOVE_THEN_ADD  sample             209715200.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1  1000000              ADD  sample    1381      18117749.897 ±      149504.944  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1  1000000              ADD  sample              16220160.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1  1000000              ADD  sample              17989632.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1  1000000              ADD  sample              19070976.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1  1000000              ADD  sample              19398656.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1  1000000              ADD  sample              20414464.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1  1000000              ADD  sample              44253052.928                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1  1000000              ADD  sample              45154304.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1  1000000              ADD  sample              45154304.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1  1000000           REMOVE  sample     606      41277027.696 ±    45895105.253  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1  1000000           REMOVE  sample               9043968.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1  1000000           REMOVE  sample              10158080.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1  1000000           REMOVE  sample              10764288.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1  1000000           REMOVE  sample              10895360.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1  1000000           REMOVE  sample              12065832.960                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1  1000000           REMOVE  sample            3812622336.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1  1000000           REMOVE  sample            3812622336.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1  1000000           REMOVE  sample            3812622336.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1  1000000         CONTAINS  sample    1280      19559884.800 ±      130796.181  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1  1000000         CONTAINS  sample              17465344.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1  1000000         CONTAINS  sample              19365888.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1  1000000         CONTAINS  sample              20676608.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1  1000000         CONTAINS  sample              21299200.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1  1000000         CONTAINS  sample              26281246.720                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1  1000000         CONTAINS  sample              36079992.832                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1  1000000         CONTAINS  sample              36503552.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1  1000000         CONTAINS  sample              36503552.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1  1000000    ADD_OR_REMOVE  sample       5    8355053568.000 ±   439348477.213  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1  1000000    ADD_OR_REMOVE  sample            8212447232.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1  1000000    ADD_OR_REMOVE  sample            8363442176.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1  1000000    ADD_OR_REMOVE  sample            8514437120.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1  1000000    ADD_OR_REMOVE  sample            8514437120.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1  1000000    ADD_OR_REMOVE  sample            8514437120.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1  1000000    ADD_OR_REMOVE  sample            8514437120.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1  1000000    ADD_OR_REMOVE  sample            8514437120.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1  1000000    ADD_OR_REMOVE  sample            8514437120.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1  1000000  ADD_THEN_REMOVE  sample      10    4079799500.800 ±    81757906.904  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1  1000000  ADD_THEN_REMOVE  sample            3946840064.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1  1000000  ADD_THEN_REMOVE  sample            4097835008.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1  1000000  ADD_THEN_REMOVE  sample            4141455769.600                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1  1000000  ADD_THEN_REMOVE  sample            4143972352.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1  1000000  ADD_THEN_REMOVE  sample            4143972352.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1  1000000  ADD_THEN_REMOVE  sample            4143972352.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1  1000000  ADD_THEN_REMOVE  sample            4143972352.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1  1000000  ADD_THEN_REMOVE  sample            4143972352.000                    ns/op
+AtlantisIndexedSet.bench                ATLANTIS_O_INDEXED      -1  1000000  REMOVE_THEN_ADD  sample      10    3936773734.400 ±   119128876.696  ns/op
+AtlantisIndexedSet.bench:bench·p0.00    ATLANTIS_O_INDEXED      -1  1000000  REMOVE_THEN_ADD  sample            3833593856.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.50    ATLANTIS_O_INDEXED      -1  1000000  REMOVE_THEN_ADD  sample            3932160000.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.90    ATLANTIS_O_INDEXED      -1  1000000  REMOVE_THEN_ADD  sample            4075605196.800                    ns/op
+AtlantisIndexedSet.bench:bench·p0.95    ATLANTIS_O_INDEXED      -1  1000000  REMOVE_THEN_ADD  sample            4081057792.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.99    ATLANTIS_O_INDEXED      -1  1000000  REMOVE_THEN_ADD  sample            4081057792.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.999   ATLANTIS_O_INDEXED      -1  1000000  REMOVE_THEN_ADD  sample            4081057792.000                    ns/op
+AtlantisIndexedSet.bench:bench·p0.9999  ATLANTIS_O_INDEXED      -1  1000000  REMOVE_THEN_ADD  sample            4081057792.000                    ns/op
+AtlantisIndexedSet.bench:bench·p1.00    ATLANTIS_O_INDEXED      -1  1000000  REMOVE_THEN_ADD  sample            4081057792.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1      100              ADD  sample  692993          1141.344 ±           5.855  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1      100              ADD  sample                   789.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1      100              ADD  sample                  1184.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1      100              ADD  sample                  1184.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1      100              ADD  sample                  1186.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1      100              ADD  sample                  1186.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1      100              ADD  sample                 20128.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1      100              ADD  sample                 25155.450                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1      100              ADD  sample                 89216.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1      100           REMOVE  sample  760882          1039.957 ±           5.269  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1      100           REMOVE  sample                   789.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1      100           REMOVE  sample                   790.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1      100           REMOVE  sample                  1184.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1      100           REMOVE  sample                  1186.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1      100           REMOVE  sample                  1186.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1      100           REMOVE  sample                 20128.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1      100           REMOVE  sample                 24446.093                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1      100           REMOVE  sample                 64384.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1      100         CONTAINS  sample  883000           901.886 ±           4.637  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1      100         CONTAINS  sample                   394.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1      100         CONTAINS  sample                   790.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1      100         CONTAINS  sample                   791.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1      100         CONTAINS  sample                   791.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1      100         CONTAINS  sample                  1186.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1      100         CONTAINS  sample                 19744.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1      100         CONTAINS  sample                 24864.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1      100         CONTAINS  sample                139776.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample  589184          1341.083 ±           8.133  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                   789.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                  1184.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                  1186.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                  1580.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                  1974.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                 20512.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                 25664.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                710656.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample  578613          5395.898 ±          13.680  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                  3552.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                  4736.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                  5528.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                  5920.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                 23296.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                 26848.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                 40693.222                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                125568.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample  551287          5664.552 ±          14.296  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                  3948.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                  5128.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                  5920.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                  6320.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                 23680.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                 27232.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                 34310.298                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                112128.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1     1000              ADD  sample  560466         11125.164 ±          22.421  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1     1000              ADD  sample                  7104.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1     1000              ADD  sample                 10656.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1     1000              ADD  sample                 11056.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1     1000              ADD  sample                 24480.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1     1000              ADD  sample                 31584.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1     1000              ADD  sample                 47744.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1     1000              ADD  sample                 58798.067                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1     1000              ADD  sample                548864.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1     1000           REMOVE  sample  561211         11114.170 ±          21.706  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1     1000           REMOVE  sample                  8688.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1     1000           REMOVE  sample                  9872.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1     1000           REMOVE  sample                 11056.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1     1000           REMOVE  sample                 24864.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1     1000           REMOVE  sample                 30400.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1     1000           REMOVE  sample                 45824.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1     1000           REMOVE  sample                 60416.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1     1000           REMOVE  sample                457216.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1     1000         CONTAINS  sample  651365          9585.630 ±          17.096  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1     1000         CONTAINS  sample                  7504.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1     1000         CONTAINS  sample                  8688.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1     1000         CONTAINS  sample                  9072.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1     1000         CONTAINS  sample                 22496.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1     1000         CONTAINS  sample                 27648.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1     1000         CONTAINS  sample                 31200.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1     1000         CONTAINS  sample                 48192.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1     1000         CONTAINS  sample                230144.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample  410034         60907.102 ±          95.865  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                 48192.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                 54848.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                 82560.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                104960.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                151296.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                174080.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                186366.208                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                539648.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample  366011         68221.878 ±         117.613  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                 54080.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                 60800.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                 93184.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                114560.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                178432.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                189952.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                209152.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                263168.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample  366778         68097.466 ±         115.372  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                 53312.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                 60800.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                 93184.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                114560.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                174848.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                189184.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                208978.458                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                678912.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1    10000              ADD  sample  161548        154601.233 ±         356.446  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1    10000              ADD  sample                124800.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1    10000              ADD  sample                139776.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1    10000              ADD  sample                190720.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1    10000              ADD  sample                238592.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1    10000              ADD  sample                385536.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1    10000              ADD  sample                423424.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1    10000              ADD  sample                445281.382                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1    10000              ADD  sample               1118208.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1    10000           REMOVE  sample  195722        127608.529 ±         292.680  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1    10000           REMOVE  sample                103808.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1    10000           REMOVE  sample                114048.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1    10000           REMOVE  sample                162560.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1    10000           REMOVE  sample                198656.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1    10000           REMOVE  sample                322048.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1    10000           REMOVE  sample                345088.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1    10000           REMOVE  sample                364176.947                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1    10000           REMOVE  sample               4055040.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1    10000         CONTAINS  sample  186038        134278.063 ±         304.401  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1    10000         CONTAINS  sample                107392.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1    10000         CONTAINS  sample                120448.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1    10000         CONTAINS  sample                170496.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1    10000         CONTAINS  sample                209664.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1    10000         CONTAINS  sample                336384.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1    10000         CONTAINS  sample                368128.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1    10000         CONTAINS  sample                389110.016                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1    10000         CONTAINS  sample               4055040.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample    1038      24143118.304 ±       86651.472  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              16334848.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              24150016.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              25034752.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              25298534.400                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              25939476.480                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              26214400.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              26214400.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              26214400.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample   14806       1687380.757 ±        7404.420  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample               1411072.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample               1583104.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample               2044518.400                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample               2363392.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample               2760704.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample               2933526.528                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample               3317947.597                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample               3526656.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample   15432       1619060.388 ±        7886.033  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample               1179648.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample               1568768.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample               2019328.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample               2326528.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample               2723840.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample               2916900.864                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample               3239969.587                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample               3342336.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1   100000              ADD  sample   12145       2057277.297 ±       10178.062  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1   100000              ADD  sample               1757184.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1   100000              ADD  sample               1910784.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1   100000              ADD  sample               2580480.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1   100000              ADD  sample               2887680.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1   100000              ADD  sample               3192995.840                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1   100000              ADD  sample               3829161.984                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1   100000              ADD  sample               7457493.811                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1   100000              ADD  sample               7561216.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1   100000           REMOVE  sample   16275       1534961.214 ±       45019.422  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1   100000           REMOVE  sample               1288192.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1   100000           REMOVE  sample               1398784.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1   100000           REMOVE  sample               1867776.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1   100000           REMOVE  sample               2187264.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1   100000           REMOVE  sample               2568192.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1   100000           REMOVE  sample               2848129.024                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1   100000           REMOVE  sample             105132379.341                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1   100000           REMOVE  sample             106037248.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1   100000         CONTAINS  sample   12473       2002964.360 ±       11511.308  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1   100000         CONTAINS  sample               1662976.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1   100000         CONTAINS  sample               1830912.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1   100000         CONTAINS  sample               2578841.600                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1   100000         CONTAINS  sample               2834432.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1   100000         CONTAINS  sample               3383296.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1   100000         CONTAINS  sample               5019942.912                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1   100000         CONTAINS  sample               6275430.810                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1   100000         CONTAINS  sample               6504448.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample      15    2525670058.667 ±   815507656.682  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            1480589312.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3036676096.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3062680780.800                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3070230528.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3070230528.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3070230528.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3070230528.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3070230528.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample     261      96820526.100 ±     2237982.491  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample              81133568.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             104595456.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             107714969.600                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             108527616.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             111004876.800                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             114688000.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             114688000.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             114688000.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample     277      91074693.083 ±     2279164.660  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample              79429632.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample              83755008.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             107610112.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             108540723.200                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             110375731.200                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             111017984.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             111017984.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             111017984.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1  1000000              ADD  sample    1055      23726268.300 ±      340016.670  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1  1000000              ADD  sample              20840448.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1  1000000              ADD  sample              22806528.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1  1000000              ADD  sample              27734835.200                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1  1000000              ADD  sample              29471539.200                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1  1000000              ADD  sample              32174243.840                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1  1000000              ADD  sample              74859413.504                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1  1000000              ADD  sample              75890688.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1  1000000              ADD  sample              75890688.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1  1000000           REMOVE  sample     855      29257493.258 ±    20261313.887  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1  1000000           REMOVE  sample              14139392.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1  1000000           REMOVE  sample              15466496.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1  1000000           REMOVE  sample              16325017.600                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1  1000000           REMOVE  sample              16682188.800                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1  1000000           REMOVE  sample              17373593.600                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1  1000000           REMOVE  sample            2373976064.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1  1000000           REMOVE  sample            2373976064.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1  1000000           REMOVE  sample            2373976064.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1  1000000         CONTAINS  sample    1288      19435062.062 ±       63333.476  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1  1000000         CONTAINS  sample              17760256.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1  1000000         CONTAINS  sample              19398656.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1  1000000         CONTAINS  sample              20316160.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1  1000000         CONTAINS  sample              20578304.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1  1000000         CONTAINS  sample              21168128.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1  1000000         CONTAINS  sample              22606905.344                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1  1000000         CONTAINS  sample              22872064.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1  1000000         CONTAINS  sample              22872064.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample       5  108877420953.600 ±  6889488155.465  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          107374182400.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          108179488768.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          111937585152.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          111937585152.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          111937585152.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          111937585152.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          111937585152.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          111937585152.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample      15    2416757964.800 ±    10745490.820  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            2407530496.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            2411724800.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            2434374041.600                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            2436890624.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            2436890624.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            2436890624.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            2436890624.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            2436890624.000                    ns/op
+GDXOrderedSet.bench                          GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample      15    2407250875.733 ±     6219325.487  ns/op
+GDXOrderedSet.bench:bench·p0.00              GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            2394947584.000                    ns/op
+GDXOrderedSet.bench:bench·p0.50              GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            2407530496.000                    ns/op
+GDXOrderedSet.bench:bench·p0.90              GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            2415919104.000                    ns/op
+GDXOrderedSet.bench:bench·p0.95              GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            2415919104.000                    ns/op
+GDXOrderedSet.bench:bench·p0.99              GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            2415919104.000                    ns/op
+GDXOrderedSet.bench:bench·p0.999             GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            2415919104.000                    ns/op
+GDXOrderedSet.bench:bench·p0.9999            GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            2415919104.000                    ns/op
+GDXOrderedSet.bench:bench·p1.00              GDX_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            2415919104.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1      100              ADD  sample  633463          1250.179 ±           6.295  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1      100              ADD  sample                   789.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1      100              ADD  sample                  1184.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1      100              ADD  sample                  1186.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1      100              ADD  sample                  1186.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1      100              ADD  sample                  1580.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1      100              ADD  sample                 20512.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1      100              ADD  sample                 24864.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1      100              ADD  sample                 80512.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1      100           REMOVE  sample  871932           911.889 ±           4.719  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1      100           REMOVE  sample                   394.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1      100           REMOVE  sample                   790.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1      100           REMOVE  sample                   791.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1      100           REMOVE  sample                  1184.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1      100           REMOVE  sample                  1186.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1      100           REMOVE  sample                 19744.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1      100           REMOVE  sample                 23680.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1      100           REMOVE  sample                214272.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1      100         CONTAINS  sample  654001          1207.505 ±           6.124  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1      100         CONTAINS  sample                   789.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1      100         CONTAINS  sample                  1184.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1      100         CONTAINS  sample                  1186.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1      100         CONTAINS  sample                  1186.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1      100         CONTAINS  sample                  1186.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1      100         CONTAINS  sample                 20128.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1      100         CONTAINS  sample                 25280.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1      100         CONTAINS  sample                115712.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample  651829          1216.557 ±           7.453  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                   789.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                  1184.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                  1186.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                  1186.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                  1186.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                 20128.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                 25280.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1      100    ADD_OR_REMOVE  sample                835584.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample  716835          4347.992 ±          13.371  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                  3160.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                  3948.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                  3948.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                  4344.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                 22496.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                 25664.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample                 30400.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1      100  ADD_THEN_REMOVE  sample               1660928.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample  659248          4817.206 ±          22.301  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                  3552.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                  4344.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                  4736.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                  4736.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                 22912.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                 26048.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample                 31200.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1      100  REMOVE_THEN_ADD  sample               3796992.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1     1000              ADD  sample  647061          9645.418 ±          16.711  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1     1000              ADD  sample                  7504.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1     1000              ADD  sample                  8688.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1     1000              ADD  sample                  9072.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1     1000              ADD  sample                 22496.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1     1000              ADD  sample                 28032.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1     1000              ADD  sample                 30784.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1     1000              ADD  sample                 49840.819                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1     1000              ADD  sample                131072.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1     1000           REMOVE  sample  444825          7020.656 ±          17.573  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1     1000           REMOVE  sample                  5528.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1     1000           REMOVE  sample                  6320.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1     1000           REMOVE  sample                  6712.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1     1000           REMOVE  sample                  6712.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1     1000           REMOVE  sample                 25280.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1     1000           REMOVE  sample                 28032.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1     1000           REMOVE  sample                 44224.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1     1000           REMOVE  sample                212480.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1     1000         CONTAINS  sample  828376          7545.216 ±          13.489  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1     1000         CONTAINS  sample                  5920.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1     1000         CONTAINS  sample                  6712.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1     1000         CONTAINS  sample                  7104.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1     1000         CONTAINS  sample                  7896.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1     1000         CONTAINS  sample                 25664.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1     1000         CONTAINS  sample                 28832.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1     1000         CONTAINS  sample                 48254.323                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1     1000         CONTAINS  sample                226304.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample  425499         58691.365 ±         104.461  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                 43840.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                 52096.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                 83712.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                101120.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                144384.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                171520.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample                201958.400                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1     1000    ADD_OR_REMOVE  sample               5603328.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample  249697        100022.812 ±         198.008  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                 73472.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                 92032.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                131328.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                158720.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                246784.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                289280.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                299008.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1     1000  ADD_THEN_REMOVE  sample                712704.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample  244779        102025.413 ±         213.339  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                 75008.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                 93952.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                134144.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                161024.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                257024.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                291840.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample                314635.264                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1     1000  REMOVE_THEN_ADD  sample               4083712.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1    10000              ADD  sample  154221        161954.414 ±         377.387  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1    10000              ADD  sample                130688.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1    10000              ADD  sample                146944.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1    10000              ADD  sample                197376.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1    10000              ADD  sample                252416.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1    10000              ADD  sample                397824.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1    10000              ADD  sample                437760.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1    10000              ADD  sample                464384.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1    10000              ADD  sample                664576.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1    10000           REMOVE  sample  225641        110691.137 ±         236.829  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1    10000           REMOVE  sample                 95104.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1    10000           REMOVE  sample                100224.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1    10000           REMOVE  sample                140544.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1    10000           REMOVE  sample                175616.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1    10000           REMOVE  sample                260096.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1    10000           REMOVE  sample                296448.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1    10000           REMOVE  sample                336461.722                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1    10000           REMOVE  sample               3985408.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1    10000         CONTAINS  sample  205286        121665.620 ±         257.626  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1    10000         CONTAINS  sample                 97920.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1    10000         CONTAINS  sample                108544.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1    10000         CONTAINS  sample                157184.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1    10000         CONTAINS  sample                187904.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1    10000         CONTAINS  sample                306176.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1    10000         CONTAINS  sample                336896.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1    10000         CONTAINS  sample                365568.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1    10000         CONTAINS  sample                635904.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample    1062      23596971.149 ±       79492.594  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              15351808.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              23592960.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              24412160.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              24608768.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              25231360.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              25712558.080                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              25722880.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1    10000    ADD_OR_REMOVE  sample              25722880.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample    1922      13035470.984 ±      232198.613  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample               3207168.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              12484608.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              17324441.600                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              19628032.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              22602383.360                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              27111981.056                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              30015488.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1    10000  ADD_THEN_REMOVE  sample              30015488.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample    1926      13003404.893 ±      229125.304  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample               2936832.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              12484608.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              17245798.400                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              19660800.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              22609920.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              24148344.832                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              24543232.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1    10000  REMOVE_THEN_ADD  sample              24543232.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1   100000              ADD  sample   11692       2137207.461 ±       10282.819  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1   100000              ADD  sample               1804288.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1   100000              ADD  sample               1988608.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1   100000              ADD  sample               2654208.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1   100000              ADD  sample               2969600.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1   100000              ADD  sample               3264512.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1   100000              ADD  sample               3865976.832                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1   100000              ADD  sample               7011020.800                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1   100000              ADD  sample               7184384.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1   100000           REMOVE  sample   19098       1307995.339 ±      150092.517  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1   100000           REMOVE  sample               1028096.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1   100000           REMOVE  sample               1118208.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1   100000           REMOVE  sample               1497088.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1   100000           REMOVE  sample               1783808.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1   100000           REMOVE  sample               2146304.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1   100000           REMOVE  sample               2387562.496                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1   100000           REMOVE  sample             390396274.278                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1   100000           REMOVE  sample             398983168.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1   100000         CONTAINS  sample   13487       1852478.486 ±        8583.560  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1   100000         CONTAINS  sample               1585152.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1   100000         CONTAINS  sample               1724416.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1   100000         CONTAINS  sample               2301952.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1   100000         CONTAINS  sample               2603417.600                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1   100000         CONTAINS  sample               2940928.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1   100000         CONTAINS  sample               3285385.216                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1   100000         CONTAINS  sample               3688687.206                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1   100000         CONTAINS  sample               3698688.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample      15    2692463547.733 ±   865845748.082  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            1574961152.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3233808384.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3287495475.200                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3292528640.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3292528640.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3292528640.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3292528640.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1   100000    ADD_OR_REMOVE  sample            3292528640.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample      25    1097565470.720 ±   286274288.958  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample             379060224.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample            1247805440.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample            1396703232.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample            1404462694.400                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample            1405091840.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample            1405091840.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample            1405091840.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1   100000  ADD_THEN_REMOVE  sample            1405091840.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample      25    1178473594.880 ±   311497990.938  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample             399507456.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1327497216.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1504496844.800                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1508691148.800                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1509949440.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1509949440.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1509949440.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1   100000  REMOVE_THEN_ADD  sample            1509949440.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1  1000000              ADD  sample    1040      24104770.954 ±      168787.834  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1  1000000              ADD  sample              22183936.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1  1000000              ADD  sample              23920640.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1  1000000              ADD  sample              25031475.200                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1  1000000              ADD  sample              25460736.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1  1000000              ADD  sample              26607616.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1  1000000              ADD  sample              47337897.984                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1  1000000              ADD  sample              47448064.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1  1000000              ADD  sample              47448064.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1  1000000           REMOVE  sample       5    8480882688.000 ±   861307168.202  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1  1000000           REMOVE  sample            8237613056.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1  1000000           REMOVE  sample            8581545984.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1  1000000           REMOVE  sample            8740929536.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1  1000000           REMOVE  sample            8740929536.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1  1000000           REMOVE  sample            8740929536.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1  1000000           REMOVE  sample            8740929536.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1  1000000           REMOVE  sample            8740929536.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1  1000000           REMOVE  sample            8740929536.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1  1000000         CONTAINS  sample    1081      23168976.636 ±       80414.316  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1  1000000         CONTAINS  sample              21299200.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1  1000000         CONTAINS  sample              23101440.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1  1000000         CONTAINS  sample              24248320.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1  1000000         CONTAINS  sample              24641536.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1  1000000         CONTAINS  sample              25329664.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1  1000000         CONTAINS  sample              26651656.192                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1  1000000         CONTAINS  sample              26673152.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1  1000000         CONTAINS  sample              26673152.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample       5  165463615078.400 ± 26114737322.478  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          158645354496.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          161598144512.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          173677740032.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          173677740032.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          173677740032.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          173677740032.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          173677740032.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1  1000000    ADD_OR_REMOVE  sample          173677740032.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample       5    8747640422.400 ±   162152456.251  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            8707375104.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            8724152320.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            8808038400.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            8808038400.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            8808038400.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            8808038400.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            8808038400.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1  1000000  ADD_THEN_REMOVE  sample            8808038400.000                    ns/op
+MerryOrderedSet.bench                      MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample       5    8292977868.800 ±   544642705.114  ns/op
+MerryOrderedSet.bench:bench·p0.00          MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            8103395328.000                    ns/op
+MerryOrderedSet.bench:bench·p0.50          MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            8380219392.000                    ns/op
+MerryOrderedSet.bench:bench·p0.90          MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            8405385216.000                    ns/op
+MerryOrderedSet.bench:bench·p0.95          MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            8405385216.000                    ns/op
+MerryOrderedSet.bench:bench·p0.99          MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            8405385216.000                    ns/op
+MerryOrderedSet.bench:bench·p0.999         MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            8405385216.000                    ns/op
+MerryOrderedSet.bench:bench·p0.9999        MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            8405385216.000                    ns/op
+MerryOrderedSet.bench:bench·p1.00          MERRY_O_ORDERED      -1  1000000  REMOVE_THEN_ADD  sample            8405385216.000                    ns/op
+

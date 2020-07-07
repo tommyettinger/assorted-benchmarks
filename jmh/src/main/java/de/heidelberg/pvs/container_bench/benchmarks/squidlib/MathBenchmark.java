@@ -39,6 +39,7 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 import squidpony.squidmath.DiverRNG;
+import squidpony.squidmath.HashCommon;
 import squidpony.squidmath.NumberTools;
 
 import java.util.concurrent.TimeUnit;
@@ -151,6 +152,10 @@ public class MathBenchmark {
     private short atan2ApproxAY = -0x8000;
     private short atan2ApproxAXF = -0x4000;
     private short atan2ApproxAYF = -0x8000;
+    
+    private int npotHC = 0;
+    private int npotM = 0;
+    private int npotCLZ = 0;
 
 
     @Benchmark
@@ -545,7 +550,21 @@ public class MathBenchmark {
     {
         return floatInputs[atan2ApproxAYF++ & 0xFFFF] + floatInputs[atan2ApproxAXF++ & 0xFFFF];
     }
-
+    
+    @Benchmark
+    public int measureNextPowerOfTwoHashCommon(){
+        return HashCommon.nextPowerOfTwo(npotHC++ & 0x3FFFFFFF);
+    }
+    @Benchmark
+    public int measureNextPowerOfTwoMath(){
+        return Math.max(1, Integer.highestOneBit((npotM++ & 0x3FFFFFFF) - 1 << 1));
+    }
+    @Benchmark
+    public int measureNextPowerOfTwoCLZ(){
+        return 1 << -Integer.numberOfLeadingZeros((npotCLZ++ & 0x3FFFFFFF) - 1);
+    }
+    
+    
     /*
 mvn clean install
 java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
