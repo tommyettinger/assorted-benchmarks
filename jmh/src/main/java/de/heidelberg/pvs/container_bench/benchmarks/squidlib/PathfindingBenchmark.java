@@ -177,6 +177,17 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * Here, simple-graphs strongly outperforms everything else; I'm not sure if there's any one reason,
  * but I had made a mistake in my benchmark earlier that made it seem very slow... so earlygrey
  * optimized the living daylights out of the code. It appears that effort has paid off.
+ * <br>
+ * I brought simple-graphs into SquidLib, with some needed changes for Java 7 compatibility,
+ * and the undirected graph results are below -- still better than the existing SquidLib code,
+ * but not as good as pure simple-graphs.
+ * <pre>
+ * Benchmark                                Mode  Cnt    Score   Error  Units
+ * PathfindingBenchmark.doPathSimpleUD      avgt    5  130.235 ± 0.679  ms/op
+ * PathfindingBenchmark.doPathSquidUD       avgt    5  138.597 ± 0.668  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleUD  avgt    5    4.083 ± 0.439  ms/op
+ * PathfindingBenchmark.doTinyPathSquidUD   avgt    5    4.484 ± 0.021  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -210,9 +221,13 @@ public class PathfindingBenchmark {
         public ArrayList<Coord> path;
 
         public DirectedGraph<Coord> simpleDirectedGraph;
-        public space.earlygrey.simplegraphs.utils.Heuristic<Coord> simpleHeu;
-        
         public UndirectedGraph<Coord> simpleUndirectedGraph;
+        
+        public space.earlygrey.simplegraphs.utils.Heuristic<Coord> simpleHeu;
+
+        public squidpony.squidai.astar.eg.DirectedGraph<Coord> squidDirectedGraph;
+        public squidpony.squidai.astar.eg.UndirectedGraph<Coord> squidUndirectedGraph;
+        
         @Setup(Level.Trial)
         public void setup() {
             Coord.expandPoolTo(DIMENSION, DIMENSION);
@@ -254,6 +269,9 @@ public class PathfindingBenchmark {
             
             simpleDirectedGraph = new DirectedGraph<>(floors);
             simpleUndirectedGraph = new UndirectedGraph<>(floors);
+            
+            squidDirectedGraph   = new squidpony.squidai.astar.eg.DirectedGraph<>(floors);
+            squidUndirectedGraph = new squidpony.squidai.astar.eg.UndirectedGraph<>(floors);
             simpleHeu = new space.earlygrey.simplegraphs.utils.Heuristic<Coord>() {
                 @Override
                 public float getEstimate(Coord currentNode, Coord targetNode) {
@@ -270,8 +288,12 @@ public class PathfindingBenchmark {
                     if(floors.contains(center.x + dir.deltaX, center.y + dir.deltaY))
                     {
                         simpleDirectedGraph.addEdge(center, center.translate(dir));
+                        squidDirectedGraph.addEdge(center, center.translate(dir));
                         if(!simpleUndirectedGraph.edgeExists(center, center.translate(dir)))
+                        {
                             simpleUndirectedGraph.addEdge(center, center.translate(dir));
+                            squidUndirectedGraph.addEdge(center, center.translate(dir));
+                        }
                     }
                 }
             }
@@ -795,6 +817,91 @@ public class PathfindingBenchmark {
                 r = state.nearbyMap[x][y];
                 state.path.clear();
                 if(algo.findShortestPath(r, Coord.get(x, y), state.path, state.simpleHeu))
+                    scanned += state.path.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doPathSquidD(BenchmarkState state)
+    {
+        Coord r;
+        long scanned = 0;
+        final squidpony.squidai.astar.eg.DirectedGraphAlgorithms<Coord> algo = state.squidDirectedGraph.algorithms();
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
+                r = state.srng.getRandomElement(state.floorArray);
+                state.path.clear();
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, DefaultGraph.CHEBYSHEV))
+                    scanned += state.path.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathSquidD(BenchmarkState state)
+    {
+        Coord r;
+        long scanned = 0;
+        final squidpony.squidai.astar.eg.DirectedGraphAlgorithms<Coord> algo = state.squidDirectedGraph.algorithms();
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
+                r = state.nearbyMap[x][y];
+                state.path.clear();
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, DefaultGraph.CHEBYSHEV))
+                    scanned += state.path.size();
+            }
+        }
+        return scanned;
+    }
+
+
+    @Benchmark
+    public long doPathSquidUD(BenchmarkState state)
+    {
+        Coord r;
+        long scanned = 0;
+        final squidpony.squidai.astar.eg.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
+                r = state.srng.getRandomElement(state.floorArray);
+                state.path.clear();
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, DefaultGraph.CHEBYSHEV))
+                    scanned += state.path.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathSquidUD(BenchmarkState state)
+    {
+        Coord r;
+        long scanned = 0;
+        final squidpony.squidai.astar.eg.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
+                r = state.nearbyMap[x][y];
+                state.path.clear();
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, DefaultGraph.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
