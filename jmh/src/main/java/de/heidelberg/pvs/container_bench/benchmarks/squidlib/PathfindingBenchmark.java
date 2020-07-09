@@ -43,6 +43,8 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import space.earlygrey.simplegraphs.DirectedGraph;
 import space.earlygrey.simplegraphs.DirectedGraphAlgorithms;
+import space.earlygrey.simplegraphs.UndirectedGraph;
+import space.earlygrey.simplegraphs.UndirectedGraphAlgorithms;
 import squidpony.squidai.CustomDijkstraMap;
 import squidpony.squidai.DijkstraMap;
 import squidpony.squidai.astar.DefaultGraph;
@@ -207,8 +209,10 @@ public class PathfindingBenchmark {
         public GraphPath<Coord> dgp;
         public ArrayList<Coord> path;
 
-        public DirectedGraph<Coord> simpleGraph;
+        public DirectedGraph<Coord> simpleDirectedGraph;
         public space.earlygrey.simplegraphs.utils.Heuristic<Coord> simpleHeu;
+        
+        public UndirectedGraph<Coord> simpleUndirectedGraph;
         @Setup(Level.Trial)
         public void setup() {
             Coord.expandPoolTo(DIMENSION, DIMENSION);
@@ -248,7 +252,8 @@ public class PathfindingBenchmark {
             iasSquid = new Pathfinder<>(dg, false);
             path = new ArrayList<>(DIMENSION << 2);
             
-            simpleGraph = new DirectedGraph<>(floors);
+            simpleDirectedGraph = new DirectedGraph<>(floors);
+            simpleUndirectedGraph = new UndirectedGraph<>(floors);
             simpleHeu = new space.earlygrey.simplegraphs.utils.Heuristic<Coord>() {
                 @Override
                 public float getEstimate(Coord currentNode, Coord targetNode) {
@@ -263,7 +268,11 @@ public class PathfindingBenchmark {
                 for (int j = 0; j < 8; j++) {
                     dir = outer[j];
                     if(floors.contains(center.x + dir.deltaX, center.y + dir.deltaY))
-                        simpleGraph.addEdge(center, center.translate(dir));
+                    {
+                        simpleDirectedGraph.addEdge(center, center.translate(dir));
+                        if(!simpleUndirectedGraph.edgeExists(center, center.translate(dir)))
+                            simpleUndirectedGraph.addEdge(center, center.translate(dir));
+                    }
                 }
             }
         }
@@ -338,7 +347,7 @@ public class PathfindingBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
-                state.srng.setState((x << 22) | (y << 16) | (x * y));
+                state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
                 r = state.srng.getRandomElement(state.floorArray);
                 tgts[0] = Coord.get(x, y);
@@ -364,7 +373,7 @@ public class PathfindingBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
-                //state.srng.setState((x << 22) | (y << 16) | (x * y));
+                //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
                 r = state.nearbyMap[x][y];
                 tgts[0] = Coord.get(x, y);
@@ -393,7 +402,7 @@ public class PathfindingBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
-                state.srng.setState((x << 22) | (y << 16) | (x * y));
+                state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
                 r = state.srng.getRandomElement(state.floorArray);
                 p = state.adj.composite(r.x, r.y, 0, 0);
@@ -419,7 +428,7 @@ public class PathfindingBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
-                //state.srng.setState((x << 22) | (y << 16) | (x * y));
+                //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
                 r = state.nearbyMap[x][y];
                 p = state.adj.composite(r.x, r.y, 0, 0);
@@ -449,7 +458,7 @@ public class PathfindingBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
-                state.srng.setState((x << 22) | (y << 16) | (x * y));
+                state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
                 r = state.srng.getRandomElement(state.floorArray);
                 tgt = Coord.get(x, y);
@@ -496,7 +505,7 @@ public class PathfindingBenchmark {
 //                if (map[x][y] == '#')
 //                    continue;
 //                // this should ensure no blatant correlation between R and W
-//                utility.rng.setState((x << 22) | (y << 16) | (x * y));
+//                utility.rng.setState((x << 22) ^ (y << 16) ^ (x * y));
 //                r = floors.singleRandom(utility.rng);
 //                latestPath = astar.path(r, Coord.get(x, y));
 //                scanned+= latestPath.size();
@@ -525,7 +534,7 @@ public class PathfindingBenchmark {
 //                if (map[x][y] == '#')
 //                    continue;
 //                // this should ensure no blatant correlation between R and W
-//                utility.rng.setState((x << 22) | (y << 16) | (x * y));
+//                utility.rng.setState((x << 22) ^ (y << 16) ^ (x * y));
 //                r = floors.singleRandom(utility.rng);
 //                latestPath = astar.path(r, Coord.get(x, y));
 //                scanned+= latestPath.size();
@@ -554,7 +563,7 @@ public class PathfindingBenchmark {
 //                if (map[x][y] == '#')
 //                    continue;
 //                // this should ensure no blatant correlation between R and W
-//                utility.rng.setState((x << 22) | (y << 16) | (x * y));
+//                utility.rng.setState((x << 22) ^ (y << 16) ^ (x * y));
 //                r = nearbyMap[x][y];
 //                latestPath = astar.path(r, Coord.get(x, y));
 //                scanned += latestPath.size();
@@ -637,7 +646,7 @@ public class PathfindingBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
-                state.srng.setState((x << 22) | (y << 16) | (x * y));
+                state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.srng.getRandomElement(state.floorArray);
                 state.dgp.clear();
                 if(state.astar.searchNodePath(r, Coord.get(x, y), state.gg.heu, state.dgp))
@@ -657,7 +666,7 @@ public class PathfindingBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
-                //state.srng.setState((x << 22) | (y << 16) | (x * y));
+                //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.nearbyMap[x][y];
                 state.dgp.clear();
                 if(state.astar.searchNodePath(r, Coord.get(x, y), state.gg.heu, state.dgp))
@@ -677,7 +686,7 @@ public class PathfindingBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
-                state.srng.setState((x << 22) | (y << 16) | (x * y));
+                state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
                 if(state.iasSquid.searchNodePath(r, Coord.get(x, y), DefaultGraph.CHEBYSHEV, state.path))
@@ -697,7 +706,7 @@ public class PathfindingBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
-                //state.srng.setState((x << 22) | (y << 16) | (x * y));
+                //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.nearbyMap[x][y];
                 state.path.clear();
                 if(state.iasSquid.searchNodePath(r, Coord.get(x, y), DefaultGraph.CHEBYSHEV, state.path))
@@ -708,17 +717,17 @@ public class PathfindingBenchmark {
     }
 
     @Benchmark
-    public long doPathSimple(BenchmarkState state)
+    public long doPathSimpleD(BenchmarkState state)
     {
         Coord r;
         long scanned = 0;
-        final DirectedGraphAlgorithms<Coord> algo = state.simpleGraph.algorithms();
+        final DirectedGraphAlgorithms<Coord> algo = state.simpleDirectedGraph.algorithms();
         for (int x = 1; x < state.DIMENSION - 1; x++) {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
-                state.srng.setState((x << 22) | (y << 16) | (x * y));
+                state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
                 if(algo.findShortestPath(r, Coord.get(x, y), state.path, state.simpleHeu))
@@ -729,17 +738,60 @@ public class PathfindingBenchmark {
     }
 
     @Benchmark
-    public long doTinyPathSimple(BenchmarkState state)
+    public long doTinyPathSimpleD(BenchmarkState state)
     {
         Coord r;
         long scanned = 0;
-        final DirectedGraphAlgorithms<Coord> algo = state.simpleGraph.algorithms();
+        final DirectedGraphAlgorithms<Coord> algo = state.simpleDirectedGraph.algorithms();
         for (int x = 1; x < state.DIMENSION - 1; x++) {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
-                //state.srng.setState((x << 22) | (y << 16) | (x * y));
+                //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
+                r = state.nearbyMap[x][y];
+                state.path.clear();
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, state.simpleHeu))
+                    scanned += state.path.size();
+            }
+        }
+        return scanned;
+    }
+
+
+    @Benchmark
+    public long doPathSimpleUD(BenchmarkState state)
+    {
+        Coord r;
+        long scanned = 0;
+        final UndirectedGraphAlgorithms<Coord> algo = state.simpleUndirectedGraph.algorithms();
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
+                r = state.srng.getRandomElement(state.floorArray);
+                state.path.clear();
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, state.simpleHeu))
+                    scanned += state.path.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathSimpleUD(BenchmarkState state)
+    {
+        Coord r;
+        long scanned = 0;
+        final UndirectedGraphAlgorithms<Coord> algo = state.simpleUndirectedGraph.algorithms();
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.nearbyMap[x][y];
                 state.path.clear();
                 if(algo.findShortestPath(r, Coord.get(x, y), state.path, state.simpleHeu))
