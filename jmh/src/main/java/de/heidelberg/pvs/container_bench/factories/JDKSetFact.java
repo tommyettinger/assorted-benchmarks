@@ -1,5 +1,8 @@
 package de.heidelberg.pvs.container_bench.factories;
 
+import com.github.tommyettinger.ds.IndexedSet;
+import squidpony.squidmath.OrderedSet;
+
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -34,12 +37,14 @@ public enum JDKSetFact {
 
 	AGRONA_HASH(org.agrona.collections.ObjectHashSet::new), //
 
-	CORENLP_ARRAY(edu.stanford.nlp.util.ArraySet::new); //
+	CORENLP_ARRAY(edu.stanford.nlp.util.ArraySet::new), //
+	ATLANTIS_INDEXED(IndexedSet::new),
+	SQUID_ORDERED(OrderedSet::new)
 	;
 
 	public Supplier<Set<?>> maker;
 
-	private JDKSetFact(Supplier<Set<?>> maker) {
+	JDKSetFact(Supplier<Set<?>> maker) {
 		this.maker = maker;
 	}
 }

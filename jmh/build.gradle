@@ -67,10 +67,10 @@ dependencies {
     // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
 
     implementation 'com.github.SquidPony.SquidLib:squidlib-util:d9e4f1dbf0'
-    implementation 'com.github.tommyettinger:simple-graphs:93bc1e7378'
+    implementation 'com.github.tommyettinger:simple-graphs:3a4cb9a90a'
 //    implementation 'space.earlygrey.simplegraphs:simple-graphs:1.0-SNAPSHOT'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
-    implementation 'com.github.tommyettinger:atlantis:ec51e910cc'
+    implementation 'com.github.tommyettinger:atlantis:5574642135'
 
 
     testImplementation group: 'junit', name: 'junit', version:'4.12'
