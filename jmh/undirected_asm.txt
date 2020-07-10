@@ -1,0 +1,1165 @@
+# JMH version: 1.23
+# VM version: JDK 14, OpenJDK 64-Bit Server VM, 14+36
+# VM invoker: C:\Program Files\AdoptOpenJDK\jdk-14-hotspot\bin\java.exe
+# VM options: -XX:+UnlockDiagnosticVMOptions -XX:PrintAssemblyOptions=intel
+# Warmup: 5 iterations, 7 s each
+# Measurement: 5 iterations, 7 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark.doPathSimpleUD
+
+# Run progress: 0.00% complete, ETA 00:02:20
+# Fork: 1 of 1
+# Preparing profilers: WinPerfAsmProfiler 
+# Profilers consume stdout and stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: Floors: 2328
+Percentage walkable: 56.8359375%
+151.556 ms/op
+# Warmup Iteration   2: 134.061 ms/op
+# Warmup Iteration   3: 133.407 ms/op
+# Warmup Iteration   4: 133.336 ms/op
+# Warmup Iteration   5: 133.099 ms/op
+Iteration   1: 133.130 ms/op
+Iteration   2: 133.258 ms/op
+Iteration   3: 133.151 ms/op
+Iteration   4: 132.998 ms/op
+Iteration   5: 133.107 ms/op
+# Processing profiler results: WinPerfAsmProfiler 
+
+
+Result "de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark.doPathSimpleUD":
+  133.129 ±(99.9%) 0.359 ms/op [Average]
+  (min, avg, max) = (132.998, 133.129, 133.258), stdev = 0.093
+  CI (99.9%): [132.769, 133.488] (assumes normal distribution)
+
+Secondary result "de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark.doPathSimpleUD:·asm":
+PrintAssembly processed: 60511 total address lines.
+Perf output processed (skipped 39.714 seconds):
+ Column 1: SampledProfile (35416 events)
+
+Hottest code regions (>10.00% "SampledProfile" events):
+
+....[Hottest Region 1]..............................................................................
+c2, level 4, space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch, version 781 (709 bytes) 
+
+           0x000000001313ed30: bc6d ffff | 4c8b 5424 | 2045 8b52 
+           0x000000001313ed3c: ;*getfield heap {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@39 (line 190)
+           0x000000001313ed3c: 1443 8b6c 
+           0x000000001313ed40: ;*getfield size {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@42 (line 190)
+           0x000000001313ed40: d40c 85ed | 0f84 b20e 
+           0x000000001313ed48: ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@45 (line 190)
+                               ;   {section_word}
+           0x000000001313ed48: 0000 c5fa | 1005 0eff 
+           0x000000001313ed50: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::clear@20 (line 128)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@67 (line 193)
+           0x000000001313ed50: ffff eb26 | 4d8b 9710 
+           0x000000001313ed58: ; ImmutableOopMap {[32]=Oop [40]=Oop [48]=Oop }
+                               ;*goto {reexecute=1 rethrow=0 return_oop=0}
+                               ; - (reexecute) space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@282 (line 221)
+                               ;   {poll}
+           0x000000001313ed58: 0100 0041 
+           0x000000001313ed5c: ;*goto {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@282 (line 221)
+           0x000000001313ed5c: 8502 4c8b | 5424 2045 
+           0x000000001313ed64: ;*getfield heap {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@39 (line 190)
+           0x000000001313ed64: 8b52 1443 
+           0x000000001313ed68: ;*getfield size {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@42 (line 190)
+           0x000000001313ed68: 8b6c d40c | 85ed 0f84 | e80a 0000 | c5fa 1044 
+           0x000000001313ed78: ;*aload_0 {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@48 (line 191)
+           0x000000001313ed78: 2438 4585 | d20f 84b5 
+           0x000000001313ed80: ;*invokevirtual pop {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@52 (line 191)
+           0x000000001313ed80: 0900 00c5 | fa11 4424 | 384b 8d14 
+           0x000000001313ed8c: ;*getfield heap {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@49 (line 191)
+           0x000000001313ed8c: d466 6690 
+  0.02%    0x000000001313ed90: ;   {optimized virtual_call}
+  0.02%    0x000000001313ed90: c5f8 77e8 
+           0x000000001313ed94: ; ImmutableOopMap {[32]=Oop [40]=Oop [48]=Oop }
+                               ;*invokevirtual pop {reexecute=0 rethrow=0 return_oop=1}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@52 (line 191)
+           0x000000001313ed94: 9898 ffff | 4889 4424 | 404c 8b5c | 2428 493b | c30f 842a 
+           0x000000001313eda8: ;*if_acmpne {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@60 (line 192)
+           0x000000001313eda8: 0400 000f 
+           0x000000001313edac: ;*getfield visited {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@75 (line 196)
+           0x000000001313edac: b668 2885 | ed0f 8579 
+           0x000000001313edb4: ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@78 (line 196)
+           0x000000001313edb4: 0a00 00c6 
+           0x000000001313edb8: ;*putfield visited {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@84 (line 197)
+           0x000000001313edb8: 4028 0144 
+           0x000000001313edbc: ;*getfield outEdges {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@89 (line 198)
+           0x000000001313edbc: 8b58 3847 
+           0x000000001313edc0: ;*getfield size {reexecute=0 rethrow=0 return_oop=0}
+                               ; - java.util.ArrayList::size@1 (line 252)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@92 (line 198)
+           0x000000001313edc0: 8b44 dc10 | 4585 c07e 
+           0x000000001313edc8: ;*if_icmpge {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@104 (line 199)
+           0x000000001313edc8: 8b4c 8b54 | 2428 4d85 | d20f 848d | 0900 0044 | 8b54 2460 
+  0.02%    0x000000001313eddc: ;   {metadata(&apos;de/heidelberg/pvs/container_bench/benchmarks/squidlib/PathfindingBenchmark$BenchmarkState$1&apos;)}
+  0.02%    0x000000001313eddc: 4181 fa09 | e517 000f | 857b 0900 | 004c 8b54 
+           0x000000001313edec: ;*invokeinterface getEstimate {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@210 (line 209)
+           0x000000001313edec: 2430 4c89 | 5424 6848 | 8bd0 48c1 
+           0x000000001313edf8: ;*putfield prev {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@182 (line 207)
+           0x000000001313edf8: ea03 4533 | d2eb 5448 | 896c 2450 | 895c 244c | 4489 5424 | 4889 5424 
+           0x000000001313ee10: ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@195 (line 208)
+           0x000000001313ee10: 3c41 8be8 
+  0.00%    0x000000001313ee14: ;*getfield heap {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@227 (line 212)
+  0.00%    0x000000001313ee14: 4b8d 14dc | 4c8b 4424 | 5066 6690 
+  0.05%    0x000000001313ee20: ;   {optimized virtual_call}
+  0.05%    0x000000001313ee20: c5f8 77e8 
+           0x000000001313ee24: ; ImmutableOopMap {[32]=Oop [40]=Oop [48]=Oop [60]=NarrowOop [64]=Oop [76]=NarrowOop [80]=Oop [104]=Oop }
+                               ;*invokevirtual add {reexecute=0 rethrow=0 return_oop=1}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@243 (line 212)
+           0x000000001313ee24: 4882 ffff | 448b c58b | 5424 3c44 | 8b54 2448 
+  0.05%    0x000000001313ee34: ;*aload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@270 (line 216)
+  0.05%    0x000000001313ee34: 8b5c 244c | 41c6 44dc | 2901 41ff 
+           0x000000001313ee40: ;*iinc {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@276 (line 199)
+           0x000000001313ee40: c245 3bd0 | 0f8d 0aff | ffff 4c8b | 5c24 4045 
+           0x000000001313ee50: ;*aload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@107 (line 200)
+           0x000000001313ee50: 8b5b 3843 
+           0x000000001313ee54: ;*getfield size {reexecute=0 rethrow=0 return_oop=0}
+                               ; - java.util.ArrayList::get@2 (line 426)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@114 (line 200)
+           0x000000001313ee54: 8b4c dc10 | 85c9 0f8c 
+           0x000000001313ee5c: ;*invokestatic checkIndex {reexecute=0 rethrow=0 return_oop=0}
+                               ; - java.util.Objects::checkIndex@3 (line 373)
+                               ; - java.util.ArrayList::get@5 (line 426)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@114 (line 200)
+           0x000000001313ee5c: 3c08 0000 | 443b d10f | 8371 0700 | 0047 8b5c 
+           0x000000001313ee6c: ;*getfield elementData {reexecute=0 rethrow=0 return_oop=0}
+                               ; - java.util.ArrayList::elementData@1 (line 410)
+                               ; - java.util.ArrayList::get@11 (line 427)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@114 (line 200)
+           0x000000001313ee6c: dc14 478b | 4cdc 0c45 | 3bd1 0f83 | c407 0000 | 49c1 e303 | 478b 5c93 
+           0x000000001313ee84: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - java.util.ArrayList::elementData@5 (line 410)
+                               ; - java.util.ArrayList::get@11 (line 427)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@114 (line 200)
+           0x000000001313ee84: 1043 8b4c 
+           0x000000001313ee88: ;   {metadata(&apos;space/earlygrey/simplegraphs/Connection$UndirectedConnection&apos;)}
+           0x000000001313ee88: dc08 81f9 | 28df 1700 | 0f85 aa0d 
+           0x000000001313ee94: ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@117 (line 200)
+           0x000000001313ee94: 0000 4c8b | 4c24 2045 
+           0x000000001313ee9c: ;*getfield runID {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@132 (line 202)
+           0x000000001313ee9c: 8b71 0c4f 
+           0x000000001313eea0: ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@117 (line 200)
+           0x000000001313eea0: 8d2c dc41 
+           0x000000001313eea4: ;*getfield b {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@124 (line 201)
+           0x000000001313eea4: 8b5d 1445 | 8b5c dc1c | 453b f374 
+           0x000000001313eeb0: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::clear@20 (line 128)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@67 (line 193)
+           0x000000001313eeb0: 5341 807f | 3000 0f85 
+           0x000000001313eeb8: ;*putfield prev {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.Node::resetAlgorithmAttribs@17 (line 120)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@135 (line 202)
+           0x000000001313eeb8: df04 0000 | 4589 74dc 
+           0x000000001313eec0: ;*putfield lastRunID {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.Node::resetAlgorithmAttribs@43 (line 125)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@135 (line 202)
+           0x000000001313eec0: 1c41 c644 
+           0x000000001313eec4: ;*putfield visited {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.Node::resetAlgorithmAttribs@12 (line 119)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@135 (line 202)
+           0x000000001313eec4: dc28 0041 | c744 dc10 
+           0x000000001313eecc: ;*putfield distance {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.Node::resetAlgorithmAttribs@23 (line 121)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@135 (line 202)
+           0x000000001313eecc: 0000 807f | 41c7 44dc | 3c00 0000 
+           0x000000001313eed8: ;*putfield prev {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.Node::resetAlgorithmAttribs@17 (line 120)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@135 (line 202)
+           0x000000001313eed8: 004c 8b5c | 2440 c4c1 
+           0x000000001313eee0: ;*getfield distance {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@149 (line 204)
+           0x000000001313eee0: 7a10 5310 | 41c7 44dc | 1400 0000 
+           0x000000001313eeec: ;*putfield estimate {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.Node::resetAlgorithmAttribs@28 (line 122)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@135 (line 202)
+           0x000000001313eeec: 0041 c744 | dc18 0000 
+           0x000000001313eef4: ;*putfield i {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.Node::resetAlgorithmAttribs@33 (line 123)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@135 (line 202)
+           0x000000001313eef4: 0000 41c6 
+           0x000000001313eef8: ;*putfield seen {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.Node::resetAlgorithmAttribs@38 (line 124)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@135 (line 202)
+           0x000000001313eef8: 44dc 2900 | c5fa 1044 | 2438 eb21 | 450f b65c | dc28 4585 | db0f 852b 
+           0x000000001313ef10: ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@144 (line 203)
+           0x000000001313ef10: ffff ffc4 | c17a 1044 | dc10 4c8b | 5c24 40c4 | c17a 1053 
+           0x000000001313ef24: ;*getfield distance {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@164 (line 205)
+           0x000000001313ef24: 10c4 c16a 
+           0x000000001313ef28: ;*fadd {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@157 (line 204)
+           0x000000001313ef28: 585d 0cc5 | f82e c30f | 8609 ffff 
+           0x000000001313ef34: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::clear@20 (line 128)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@67 (line 193)
+           0x000000001313ef34: ff41 807f | 3000 0f85 
+           0x000000001313ef3c: ;*putfield prev {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@182 (line 207)
+           0x000000001313ef3c: b803 0000 | c4c1 7a11 
+           0x000000001313ef44: ;*putfield distance {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@175 (line 206)
+           0x000000001313ef44: 5cdc 1041 
+           0x000000001313ef48: ;*putfield prev {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@182 (line 207)
+           0x000000001313ef48: 8954 dc3c 
+  0.18%    0x000000001313ef4c: ;*getfield b {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@124 (line 201)
+  0.18%    0x000000001313ef4c: 498d 2cdc | 4c8b 5c24 | 404c 8bcd | 4d33 d949 | c1eb 144d | 85db 7415 | 49c1 e909 | b900 70e3 
+           0x000000001313ef6c: 1749 03c9 | 8039 080f | 85b7 0300 
+           0x000000001313ef78: ;*getfield distance {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@234 (line 212)
+           0x000000001313ef78: 0045 0fb6 | 4cdc 294c | 8b5c 2420 
+  0.16%    0x000000001313ef84: ;*getfield heap {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@227 (line 212)
+  0.16%    0x000000001313ef84: 458b 5b14 | 4585 c90f | 85b3 0000 
+           0x000000001313ef90: ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@195 (line 208)
+           0x000000001313ef90: 0041 8b4c 
+           0x000000001313ef94: ;*getfield object {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@203 (line 209)
+           0x000000001313ef94: dc30 4c8b | 4c24 2845 
+           0x000000001313ef9c: ;*getfield object {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@207 (line 209)
+           0x000000001313ef9c: 8b49 3041 | 8b7c cc08 
+  1.62%    0x000000001313efa4: ;   {metadata(&apos;squidpony/squidmath/Coord&apos;)}
+  1.62%    0x000000001313efa4: 81ff 45bb | 1700 0f85 | ec0c 0000 
+  0.42%    0x000000001313efb0: ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                               ; - de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark$BenchmarkState$1::getEstimate@2 (line 275)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@210 (line 209)
+  0.42%    0x000000001313efb0: 48c1 e103 
+  0.07%    0x000000001313efb4: ; implicit exception: dispatches to 0x000000001313fe7c
+  0.07%    0x000000001313efb4: 438b 74cc 
+           0x000000001313efb8: ;   {metadata(&apos;squidpony/squidmath/Coord&apos;)}
+           0x000000001313efb8: 0881 fe45 | bb17 000f | 8533 0d00 | 008b 790c | 8b71 1049 
+           0x000000001313efcc: ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                               ; - de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark$BenchmarkState$1::getEstimate@6 (line 275)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@210 (line 209)
+           0x000000001313efcc: c1e1 0341 | 2b79 0c41 | 2b71 108b | c7c1 f81f | 448b cf44 | 33c8 442b 
+           0x000000001313efe4: ;*invokestatic abs {reexecute=0 rethrow=0 return_oop=0}
+                               ; - de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark$BenchmarkState$1::getEstimate@9 (line 278)
+                               ; - de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark$BenchmarkState$1::getEstimate@9 (line 275)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@210 (line 209)
+           0x000000001313efe4: c88b fec1 | ff1f 8bce 
+  0.05%    0x000000001313efec: ;*invokestatic abs {reexecute=0 rethrow=0 return_oop=0}
+                               ; - de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark$BenchmarkState$1::getEstimate@21 (line 278)
+                               ; - de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark$BenchmarkState$1::getEstimate@9 (line 275)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@210 (line 209)
+  0.05%    0x000000001313efec: 33cf 2bcf | 443b c944 | 0f4c c9c4 
+           0x000000001313eff8: ;*i2f {reexecute=0 rethrow=0 return_oop=0}
+                               ; - de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark$BenchmarkState$1::getEstimate@27 (line 278)
+                               ; - de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark$BenchmarkState$1::getEstimate@9 (line 275)
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@210 (line 209)
+           0x000000001313eff8: c172 2ac9 | c4c1 7a11 
+           0x000000001313f000: ;*putfield estimate {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@215 (line 209)
+           0x000000001313f000: 4cdc 14c5 
+           0x000000001313f004: ;*fadd {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@242 (line 212)
+           0x000000001313f004: f258 c345 | 85db 0f85 | effd ffff | baf6 ffff | ff8b ebc5 | fa11 4424 | 2066 6690 
+           0x000000001313f020: ;   {runtime_call UncommonTrapBlob}
+           0x000000001313f020: c5f8 77e8 
+           0x000000001313f024: ; ImmutableOopMap {rbp=NarrowOop }
+                               ;*invokevirtual add {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch@243 (line 212)
+           0x000000001313f024: 58a0 4ff8 
+           0x000000001313f028: ;   {external_word}
+           0x000000001313f028: 48b9 5021 | 95cb fe07 | 0000 4883 
+           0x000000001313f034: ;   {runtime_call}
+           0x000000001313f034: e4f0 49ba | 7095 5ccb | fe07 0000 
+           0x000000001313f040: ;*invokevirtual add {reexecute=0 rethrow=0 return_oop=0}
+....................................................................................................
+ 60.40%  <total for region 1>
+
+....[Hottest Region 2]..............................................................................
+c2, level 4, space.earlygrey.simplegraphs.BinaryHeap::pop, version 771 (409 bytes) 
+
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x000000001313875c: c349 8bd7 | 49ba 708e | 32cb fe07 | 0000 41ff | d2c5 f96e | c366 6666 | 0f1f 8400 | 0000 0000 
+           0x000000001313877c: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@153 (line 197)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x000000001313877c: 6666 6690 | 448b 5c24 | 3444 895d 
+           0x0000000013138788: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@24 (line 105)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x0000000013138788: 204d 8b97 
+           0x000000001313878c: ; ImmutableOopMap {[32]=NarrowOop [36]=NarrowOop [40]=Oop [48]=NarrowOop [72]=Oop [80]=Oop }
+                               ;*goto {reexecute=1 rethrow=0 return_oop=0}
+                               ; - (reexecute) space.earlygrey.simplegraphs.BinaryHeap::down@163 (line 201)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x000000001313878c: 1001 0000 
+  0.11%    0x0000000013138790: ;*goto {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@163 (line 201)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+                               ;   {poll}
+  0.11%    0x0000000013138790: 4185 0244 | 8b5c 2438 
+  0.25%    0x0000000013138798: ;*ishl {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@25 (line 170)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+  0.25%    0x0000000013138798: 41d1 e345 | 8bd3 41ff 
+           0x00000000131387a0: ;*iadd {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@26 (line 170)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x00000000131387a0: c245 3bd5 | 0f8d bd01 
+           0x00000000131387a8: ;*if_icmplt {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@32 (line 171)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x00000000131387a8: 0000 4183 
+           0x00000000131387ac: ;*iadd {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@41 (line 172)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x00000000131387ac: c302 498b | fe48 8b6c | 2428 448b | 4424 248b | 5c24 3044 | 8b4c 2438 
+  0.04%    0x00000000131387c4: ;*goto {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@35 (line 171)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+  0.04%    0x00000000131387c4: 418b cb44 | 3b54 2440 | 0f83 8804 | 0000 4c8b | 5c24 5047 
+           0x00000000131387d8: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@47 (line 175)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x00000000131387d8: 8b74 9310 
+  0.43%    0x00000000131387dc: ; implicit exception: dispatches to 0x0000000013138f3b
+  0.43%    0x00000000131387dc: c481 7a10 
+           0x00000000131387e0: ;*getfield heapValue {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@52 (line 176)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x00000000131387e0: 5cf4 2441 | 3bcd 0f8d 
+           0x00000000131387e8: ;*if_icmplt {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@60 (line 181)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x00000000131387e8: 1502 0000 | 3b4c 2440 | 0f83 b204 | 0000 4489 | 7424 3c89 | 4c24 3844 | 8954 2434 | 895c 2430 
+  0.10%    0x0000000013138808: 4489 4424 | 2448 896c | 2428 4c8b | f748 8b5c | 2450 448b 
+           0x000000001313881c: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@76 (line 185)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x000000001313881c: 5c8b 10c4 | 817a 104c 
+           0x0000000013138824: ;*getfield heapValue {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@81 (line 186)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x0000000013138824: dc24 4b8d 
+           0x0000000013138828: ;*fload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@86 (line 190)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x0000000013138828: 2cdc 488b | 5c24 504a 
+           0x0000000013138830: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@153 (line 197)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x0000000013138830: 8d5c 8b10 | c5f8 2ecb 
+  0.68%    0x0000000013138838: ;*ifge {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@91 (line 190)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+  0.68%    0x0000000013138838: 7676 c5f8 | 2ed8 7a06 | 0f84 9a01 
+           0x0000000013138844: ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@99 (line 191)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x0000000013138844: 0000 c5f8 | 2ed8 0f87 
+           0x000000001313884c: ;*ifle {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@107 (line 191)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x000000001313884c: df01 0000 | 443b 4c24 | 400f 83dd 
+           0x0000000013138858: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@24 (line 105)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x0000000013138858: 0400 0041 | 807f 3000 | 0f85 3002 | 0000 418b | e944 8b54 | 243c 4489 | 1349 c1e2 | 034c 8bdb 
+  0.02%    0x0000000013138878: 4d33 d349 | c1ea 144d | 85d2 7415 | 49c1 eb09 | b900 70e3 | 1749 03cb | 8039 080f | 8536 0200 
+           0x0000000013138898: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@117 (line 192)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x0000000013138898: 0044 8b54 | 243c 4389 
+           0x00000000131388a0: ;*putfield heapIndex {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@121 (line 193)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x00000000131388a0: 6cd4 208b | 5c24 3489 | 5c24 38e9 | d9fe ffff | c5f8 2ec8 | 7a06 0f84 
+           0x00000000131388b8: ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@135 (line 196)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x00000000131388b8: 9800 0000 | c5f8 2ec8 | 0f87 7f01 
+           0x00000000131388c4: ;*ifle {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@143 (line 196)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x00000000131388c4: 0000 443b | 4c24 400f | 832f 0400 | 0041 807f | 3000 0f85 | 7f01 0000 | 4489 4c24 | 344c 8bd5 
+  0.07%    0x00000000131388e4: 4c8b dd49 | c1eb 0344 | 891b 4c8b | db4d 33d3 | 49c1 ea14 | 4d85 d20f | 847f feff | ff48 85ed 
+           0x0000000013138904: 0f84 76fe | ffff 49c1 | eb09 b900 | 70e3 1749 | 03cb 8039 | 080f 8461 | feff ff4d 
+           0x0000000013138920: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@24 (line 105)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x0000000013138920: 8b57 784d | 8b5f 68f0 | 8344 24c0 | 0080 3900 | 0f84 4afe | ffff c601 | 004d 85db | 0f84 17fe 
+           0x0000000013138940: ffff 4b89 
+           0x0000000013138944: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::down@153 (line 197)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::remove@49 (line 107)
+                               ; - space.earlygrey.simplegraphs.BinaryHeap::pop@2 (line 95)
+           0x0000000013138944: 4c1a f849 
+           0x0000000013138948: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+....................................................................................................
+ 19.68%  <total for region 2>
+
+....[Hottest Regions]...............................................................................
+ 60.40%       c2, level 4  space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch, version 781 (709 bytes) 
+ 19.68%       c2, level 4  space.earlygrey.simplegraphs.BinaryHeap::pop, version 771 (409 bytes) 
+  8.55%       c2, level 4  space.earlygrey.simplegraphs.BinaryHeap::add, version 769 (488 bytes) 
+  4.28%       c2, level 4  space.earlygrey.simplegraphs.BinaryHeap::pop, version 771 (254 bytes) 
+  3.85%       c2, level 4  space.earlygrey.simplegraphs.BinaryHeap::pop, version 771 (295 bytes) 
+  0.95%       c2, level 4  space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch, version 781 (448 bytes) 
+  0.66%       c2, level 4  space.earlygrey.simplegraphs.AlgorithmImplementations::findShortestPath, version 789 (199 bytes) 
+  0.60%                    <unknown> (0 bytes) 
+  0.25%       c2, level 4  space.earlygrey.simplegraphs.AlgorithmImplementations::findShortestPath, version 789 (340 bytes) 
+  0.09%       c2, level 4  space.earlygrey.simplegraphs.Algorithms::findShortestPath, version 795 (52 bytes) 
+  0.08%       c2, level 4  space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch, version 781 (57 bytes) 
+  0.05%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSimpleUD, version 799 (7 bytes) 
+  0.04%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSimpleUD, version 799 (12 bytes) 
+  0.04%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSimpleUD, version 799 (77 bytes) 
+  0.03%       c2, level 4  space.earlygrey.simplegraphs.AlgorithmImplementations::findShortestPath, version 789 (54 bytes) 
+  0.03%       c2, level 4  space.earlygrey.simplegraphs.Algorithms::findShortestPath, version 795 (24 bytes) 
+  0.03%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSimpleUD, version 799 (46 bytes) 
+  0.02%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSimpleUD, version 799 (30 bytes) 
+  0.02%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSimpleUD, version 799 (18 bytes) 
+  0.02%       c2, level 4  space.earlygrey.simplegraphs.Algorithms::findShortestPath, version 795 (21 bytes) 
+  0.33%  <...other 71 warm regions...>
+....................................................................................................
+100.00%  <totals>
+
+....[Hottest Methods (after inlining)]..............................................................
+ 61.45%       c2, level 4  space.earlygrey.simplegraphs.AlgorithmImplementations::aStarSearch, version 781 
+ 27.82%       c2, level 4  space.earlygrey.simplegraphs.BinaryHeap::pop, version 771 
+  8.55%       c2, level 4  space.earlygrey.simplegraphs.BinaryHeap::add, version 769 
+  0.96%       c2, level 4  space.earlygrey.simplegraphs.AlgorithmImplementations::findShortestPath, version 789 
+  0.60%                    <unknown> 
+  0.20%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSimpleUD, version 799 
+  0.20%       c2, level 4  space.earlygrey.simplegraphs.Algorithms::findShortestPath, version 795 
+  0.04%       c2, level 4  jdk.internal.reflect.ClassFileAssembler::cpi, version 860 
+  0.02%       c2, level 4  squidpony.squidmath.Coord::hashCode, version 620 
+  0.02%       c2, level 4  space.earlygrey.simplegraphs.BinaryHeap::add, version 766 
+  0.02%      ucrtbase.dll  0x000007fed7831534 
+  0.01%  vcruntime140.dll  0x000007fef2fd10b4 
+  0.01%      ucrtbase.dll  0x000007fed7824bb2 
+  0.01%      ucrtbase.dll  0x000007fed782e62c 
+  0.01%           jvm.dll  0x000007fecb664ca0 
+  0.01%           jvm.dll  0x000007fecb8673e2 
+  0.01%    KernelBase.dll  0x000007fefc86f55e 
+  0.00%       c2, level 4  space.earlygrey.simplegraphs.AlgorithmImplementations::init, version 791 
+  0.00%      ucrtbase.dll  0x000007fed782d516 
+  0.00%      ucrtbase.dll  0x000007fed783145b 
+  0.09%  <...other 31 warm methods...>
+....................................................................................................
+100.00%  <totals>
+
+....[Distribution by Source]........................................................................
+ 99.25%       c2, level 4
+  0.60%                  
+  0.07%           jvm.dll
+  0.05%      ucrtbase.dll
+  0.01%  vcruntime140.dll
+  0.01%    KernelBase.dll
+  0.00%      runtime stub
+  0.00%       interpreter
+....................................................................................................
+100.00%  <totals>
+
+
+
+# JMH version: 1.23
+# VM version: JDK 14, OpenJDK 64-Bit Server VM, 14+36
+# VM invoker: C:\Program Files\AdoptOpenJDK\jdk-14-hotspot\bin\java.exe
+# VM options: -XX:+UnlockDiagnosticVMOptions -XX:PrintAssemblyOptions=intel
+# Warmup: 5 iterations, 7 s each
+# Measurement: 5 iterations, 7 s each
+# Timeout: 10 min per iteration
+# Threads: 1 thread, will synchronize iterations
+# Benchmark mode: Average time, time/op
+# Benchmark: de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark.doPathSquidUD
+
+# Run progress: 50.00% complete, ETA 00:01:22
+# Fork: 1 of 1
+# Preparing profilers: WinPerfAsmProfiler 
+# Profilers consume stdout and stderr from target VM, use -v EXTRA to copy to console
+# Warmup Iteration   1: Floors: 2328
+Percentage walkable: 56.8359375%
+148.943 ms/op
+# Warmup Iteration   2: 137.185 ms/op
+# Warmup Iteration   3: 137.470 ms/op
+# Warmup Iteration   4: 137.150 ms/op
+# Warmup Iteration   5: 137.210 ms/op
+Iteration   1: 137.285 ms/op
+Iteration   2: 137.217 ms/op
+Iteration   3: 137.065 ms/op
+Iteration   4: 137.297 ms/op
+Iteration   5: 137.314 ms/op
+# Processing profiler results: WinPerfAsmProfiler 
+
+
+Result "de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark.doPathSquidUD":
+  137.236 ±(99.9%) 0.394 ms/op [Average]
+  (min, avg, max) = (137.065, 137.236, 137.314), stdev = 0.102
+  CI (99.9%): [136.841, 137.630] (assumes normal distribution)
+
+Secondary result "de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark.doPathSquidUD:·asm":
+PrintAssembly processed: 59303 total address lines.
+Perf output processed (skipped 40.069 seconds):
+ Column 1: SampledProfile (35817 events)
+
+Hottest code regions (>10.00% "SampledProfile" events):
+
+....[Hottest Region 1]..............................................................................
+c2, level 4, squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch, version 771 (995 bytes) 
+
+           0x0000000012da40d4: 5879 ffff | 4c8b 5424 | 2045 8b52 
+           0x0000000012da40e0: ;*getfield heap {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@39 (line 187)
+           0x0000000012da40e0: 1444 8954 | 2458 438b 
+           0x0000000012da40e8: ;*getfield size {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@42 (line 187)
+           0x0000000012da40e8: 6cd4 0c85 | ed0f 84aa 
+           0x0000000012da40f0: ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@45 (line 187)
+                               ;   {section_word}
+           0x0000000012da40f0: 1300 00c5 | fb10 0d05 | ffff ffeb 
+           0x0000000012da40fc: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@35 (line 86)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da40fc: 2a4d 8b97 
+           0x0000000012da4100: ; ImmutableOopMap {r8=Oop [32]=Oop [48]=Oop }
+                               ;*goto {reexecute=1 rethrow=0 return_oop=0}
+                               ; - (reexecute) squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@286 (line 218)
+           0x0000000012da4100: 1001 0000 
+  0.46%    0x0000000012da4104: ;*goto {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@286 (line 218)
+                               ;   {poll}
+  0.46%    0x0000000012da4104: 4185 024c | 8b54 2420 
+  0.16%    0x0000000012da410c: ;*getfield heap {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@39 (line 187)
+  0.16%    0x0000000012da410c: 458b 5a14 | 4489 5c24 | 5843 8b6c 
+           0x0000000012da4118: ;*getfield size {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@42 (line 187)
+           0x0000000012da4118: dc0c 85ed | 0f84 b50e | 0000 4c89 
+           0x0000000012da4124: ;*aload_0 {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@48 (line 188)
+           0x0000000012da4124: 4424 2844 | 8b54 2458 
+  0.05%    0x0000000012da412c: ; implicit exception: dispatches to 0x0000000012da5748
+  0.05%    0x0000000012da412c: 438b 5cd4 
+           0x0000000012da4130: ;*getfield nodes {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@1 (line 84)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da4130: 1441 8b4c 
+           0x0000000012da4134: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@5 (line 84)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da4134: dc0c 85c9 | 0f86 660c | 0000 478b 
+           0x0000000012da4140: ;*getfield size {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@9 (line 85)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da4140: 54d4 0c4d 
+           0x0000000012da4144: ;*getfield nodes {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@1 (line 84)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da4144: 8d0c dc4d 
+           0x0000000012da4148: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@5 (line 84)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da4148: 8d6c dc10 
+           0x0000000012da414c: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@60 (line 90)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da414c: 458b 7500 | 458b da41 
+           0x0000000012da4154: ;*isub {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@13 (line 85)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da4154: ffcb 8b7c | 2458 4589 
+           0x0000000012da415c: ;*putfield size {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@15 (line 85)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da415c: 5cfc 0c4d | 8bc6 49c1 
+           0x0000000012da4164: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@60 (line 90)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da4164: e003 4585 | db0f 8e2e 
+           0x0000000012da416c: ;*ifle {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@18 (line 85)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da416c: 0600 0044 | 3bd9 0f83 | 8c0b 0000 | 438b 6c91 
+           0x0000000012da417c: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@34 (line 86)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da417c: 0c45 8b54 
+           0x0000000012da4180: ;   {metadata(&apos;squidpony/squidmath/BinaryHeap$Node&apos;[])}
+           0x0000000012da4180: dc08 4181 | fac4 d217 | 000f 855d | 0c00 0041 | 807f 3000 | 0f85 4c07 | 0000 4189 | 6d00 4c8b 
+           0x0000000012da41a0: d549 c1e2 | 034d 8bcd | 4d33 d149 | c1ea 144d | 85d2 7419 | 85ed 7415 | 49c1 e909 | b900 70d6 
+           0x0000000012da41c0: 1749 03c9 | 8039 080f | 8589 0700 | 0045 8b54 | dc0c 453b | da0f 8379 | 0b00 0049 
+           0x0000000012da41dc: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@35 (line 86)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da41dc: 8d2c dc41 | 807f 3000 | 0f85 2807 | 0000 c5fb | 114c 2440 | 4489 7424 | 484c 8944 | 2438 42c7 
+           0x0000000012da41fc: 449d 1000 
+           0x0000000012da4200: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@45 (line 87)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da4200: 0000 0044 | 8b54 2458 
+  0.08%    0x0000000012da4208: ;*getfield heap {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@49 (line 188)
+  0.08%    0x0000000012da4208: 4b8d 14d4 | 4533 c090 
+  0.03%    0x0000000012da4210: ;   {optimized virtual_call}
+  0.03%    0x0000000012da4210: c5f8 77e8 
+           0x0000000012da4214: ; ImmutableOopMap {[32]=Oop [40]=Oop [48]=Oop [56]=Oop [72]=NarrowOop }
+                               ;*invokespecial down {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@48 (line 88)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da4214: 5853 ffff | c5fb 104c | 2440 448b 
+           0x0000000012da4220: ;*aload_1 {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@61 (line 91)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da4220: 7424 4847 | 8b5c f408 
+  0.03%    0x0000000012da4228: ;   {metadata(&apos;squidpony/squidai/astar/eg/Node&apos;)}
+  0.03%    0x0000000012da4228: 4181 fbb6 | e217 000f | 8593 1200 | 004f 8d14 
+           0x0000000012da4238: ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@55 (line 188)
+           0x0000000012da4238: f44c 8954 | 2468 4c8b | 4424 284d | 3bd0 0f84 
+           0x0000000012da4248: ;*if_acmpne {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@63 (line 189)
+           0x0000000012da4248: 6905 0000 | 410f b66a 
+           0x0000000012da4250: ;*getfield visited {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@78 (line 193)
+           0x0000000012da4250: 3485 ed0f | 85cb 0c00 
+           0x0000000012da4258: ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@81 (line 193)
+           0x0000000012da4258: 0041 c642 
+           0x0000000012da425c: ;*putfield visited {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@87 (line 194)
+           0x0000000012da425c: 3401 458b 
+           0x0000000012da4260: ;*getfield outEdges {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@92 (line 195)
+           0x0000000012da4260: 4a44 478b 
+           0x0000000012da4264: ;*getfield size {reexecute=0 rethrow=0 return_oop=0}
+                               ; - java.util.ArrayList::size@1 (line 252)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@95 (line 195)
+           0x0000000012da4264: 5ccc 1045 | 85db 0f8e 
+           0x0000000012da426c: ;*if_icmpge {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@107 (line 196)
+           0x0000000012da426c: 8dfe ffff | 4d85 c00f | 84a7 0b00 | 0044 8b54 
+           0x0000000012da427c: ;   {metadata(&apos;squidpony/squidai/astar/DefaultGraph$2&apos;)}
+           0x0000000012da427c: 2464 4181 | facd ce17 | 000f 8595 | 0b00 004c 
+           0x0000000012da428c: ;*invokeinterface estimate {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@214 (line 206)
+           0x0000000012da428c: 8b74 2430 | 4c8b 5424 | 6849 8bd2 
+  0.03%    0x0000000012da4298: ;*putfield prev {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@186 (line 204)
+  0.03%    0x0000000012da4298: 48c1 ea03 | 4533 d2eb | 744c 896c | 2450 895c | 244c 4489 | 5424 4889 | 5424 444c | 8974 2438 
+           0x0000000012da42b8: 4489 5c24 | 40c4 e1f9 | 7ecd 4c89 
+           0x0000000012da42c4: ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@199 (line 205)
+           0x0000000012da42c4: 4424 2849 
+           0x0000000012da42c8: ;*getfield heap {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@231 (line 209)
+           0x0000000012da42c8: 8d14 cc4d | 8bc5 6690 
+  0.08%    0x0000000012da42d0: ;   {optimized virtual_call}
+  0.08%    0x0000000012da42d0: c5f8 77e8 
+           0x0000000012da42d4: ; ImmutableOopMap {[32]=Oop [40]=Oop [48]=Oop [56]=Oop [68]=NarrowOop [76]=NarrowOop [80]=Oop [104]=Oop }
+                               ;*invokevirtual add {reexecute=0 rethrow=0 return_oop=1}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@247 (line 209)
+           0x0000000012da42d4: d891 ffff | c4e1 f96e 
+           0x0000000012da42dc: ;*aload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@274 (line 213)
+           0x0000000012da42dc: cd44 8b54 | 244c 43c6 
+           0x0000000012da42e4: ;*putfield seen {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@277 (line 213)
+           0x0000000012da42e4: 44d4 3501 | 4c8b 4424 | 2844 8b5c | 2440 4c8b | 7424 388b | 5424 4444 | 8b54 2448 
+  1.30%    0x0000000012da4300: ;*iinc {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@280 (line 196)
+  1.30%    0x0000000012da4300: 41ff c245 | 3bd3 0f8d 
+           0x0000000012da4308: ;*aload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@110 (line 197)
+           0x0000000012da4308: f1fd ffff | 4c8b 4c24 | 6845 8b49 
+           0x0000000012da4314: ;*getfield outEdges {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@112 (line 197)
+           0x0000000012da4314: 4443 8b5c 
+           0x0000000012da4318: ;*getfield size {reexecute=0 rethrow=0 return_oop=0}
+                               ; - java.util.ArrayList::get@2 (line 426)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@117 (line 197)
+           0x0000000012da4318: cc10 85db | 0f8c 5e09 
+           0x0000000012da4320: ;*invokestatic checkIndex {reexecute=0 rethrow=0 return_oop=0}
+                               ; - java.util.Objects::checkIndex@3 (line 373)
+                               ; - java.util.ArrayList::get@5 (line 426)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@117 (line 197)
+           0x0000000012da4320: 0000 443b | d30f 83b3 | 0800 0047 
+           0x0000000012da432c: ;*getfield elementData {reexecute=0 rethrow=0 return_oop=0}
+                               ; - java.util.ArrayList::elementData@1 (line 410)
+                               ; - java.util.ArrayList::get@11 (line 427)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@117 (line 197)
+           0x0000000012da432c: 8b4c cc14 
+  0.42%    0x0000000012da4330: ; implicit exception: dispatches to 0x0000000012da5618
+  0.42%    0x0000000012da4330: 438b 4ccc | 0c44 3bd1 | 0f83 f608 | 0000 49c1 | e103 438b 
+           0x0000000012da4344: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - java.util.ArrayList::elementData@5 (line 410)
+                               ; - java.util.ArrayList::get@11 (line 427)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@117 (line 197)
+           0x0000000012da4344: 4c91 1041 | 8b5c cc08 
+  6.15%    0x0000000012da434c: ;   {metadata(&apos;squidpony/squidai/astar/eg/Connection$UndirectedConnection&apos;)}
+  6.15%    0x0000000012da434c: 81fb b9e4 | 1700 0f85 
+           0x0000000012da4354: ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@120 (line 197)
+           0x0000000012da4354: b811 0000 | 4c8b 4c24 | 2041 8b69 
+           0x0000000012da4360: ;*getfield runID {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@135 (line 199)
+           0x0000000012da4360: 0c4d 8d2c 
+           0x0000000012da4364: ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@120 (line 197)
+           0x0000000012da4364: cc41 8b5d 
+           0x0000000012da4368: ;*getfield b {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@127 (line 198)
+           0x0000000012da4368: 1445 8b4c | dc30 413b 
+           0x0000000012da4370: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@35 (line 86)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da4370: e974 5141 | 807f 3000 | 0f85 3005 
+           0x0000000012da437c: ;*putfield prev {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.Node::resetAlgorithmAttribs@17 (line 124)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@138 (line 199)
+           0x0000000012da437c: 0000 c4c1 | 7b11 4cdc 
+           0x0000000012da4384: ;*putfield distance {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.Node::resetAlgorithmAttribs@24 (line 125)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@138 (line 199)
+           0x0000000012da4384: 18c5 f957 | c0c4 c17b 
+           0x0000000012da438c: ;*putfield estimate {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.Node::resetAlgorithmAttribs@29 (line 126)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@138 (line 199)
+           0x0000000012da438c: 1144 dc20 | 4189 6cdc 
+           0x0000000012da4394: ;*putfield lastRunID {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.Node::resetAlgorithmAttribs@44 (line 129)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@138 (line 199)
+           0x0000000012da4394: 3041 c744 | dc48 0000 
+           0x0000000012da439c: ;*putfield prev {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.Node::resetAlgorithmAttribs@17 (line 124)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@138 (line 199)
+           0x0000000012da439c: 0000 4c8b | 4c24 68c4 | c17b 1051 
+           0x0000000012da43a8: ;*getfield distance {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@152 (line 201)
+           0x0000000012da43a8: 1841 c744 | dc2c 0000 
+           0x0000000012da43b0: ;*putfield i {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.Node::resetAlgorithmAttribs@34 (line 127)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@138 (line 199)
+           0x0000000012da43b0: 0000 41c6 
+           0x0000000012da43b4: ;*putfield seen {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.Node::resetAlgorithmAttribs@39 (line 128)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@138 (line 199)
+           0x0000000012da43b4: 44dc 3500 | 41c6 44dc 
+           0x0000000012da43bc: ;*putfield visited {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.Node::resetAlgorithmAttribs@12 (line 123)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@138 (line 199)
+           0x0000000012da43bc: 3400 c5f9 | 28c1 eb21 | 450f b64c | dc34 4585 | c90f 852d 
+           0x0000000012da43d0: ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@147 (line 200)
+           0x0000000012da43d0: ffff ffc4 | c17b 1044 | dc18 4c8b | 4c24 68c4 | c17b 1051 
+           0x0000000012da43e4: ;*getfield distance {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@168 (line 202)
+           0x0000000012da43e4: 18c4 c162 | 5a5d 0cc5 
+           0x0000000012da43ec: ;*dadd {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@161 (line 201)
+           0x0000000012da43ec: e358 dac5 | f92e c30f | 8607 ffff 
+           0x0000000012da43f8: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::pop@35 (line 86)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@52 (line 188)
+           0x0000000012da43f8: ff41 807f | 3000 0f85 
+           0x0000000012da4400: ;*putfield prev {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@186 (line 204)
+           0x0000000012da4400: ed03 0000 | c4c1 7b11 
+           0x0000000012da4408: ;*putfield distance {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@179 (line 203)
+           0x0000000012da4408: 5cdc 1841 
+           0x0000000012da440c: ;*putfield prev {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@186 (line 204)
+           0x0000000012da440c: 8954 dc48 
+  0.11%    0x0000000012da4410: ;*getfield b {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@127 (line 198)
+  0.11%    0x0000000012da4410: 4d8d 2cdc | 4c8b 4c24 | 6849 8bfd | 4c33 cf49 | c1e9 144d | 85c9 7415 | 48c1 ef09 | b900 70d6 
+           0x0000000012da4430: 1748 03cf | 8039 080f | 85e8 0300 
+           0x0000000012da443c: ;*getfield distance {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@238 (line 209)
+           0x0000000012da443c: 0041 0fb6 | 4cdc 354c | 8b4c 2420 
+  0.11%    0x0000000012da4448: ;*getfield heap {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@231 (line 209)
+  0.11%    0x0000000012da4448: 418b 7114 | 85c9 0f85 
+           0x0000000012da4450: ;*ifne {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@199 (line 205)
+           0x0000000012da4450: b400 0000 | c5f9 6ed6 
+  0.03%    0x0000000012da4458: ;*getfield object {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@211 (line 206)
+  0.03%    0x0000000012da4458: 418b 683c | 458b 4cdc 
+           0x0000000012da4460: ;*getfield object {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@207 (line 206)
+           0x0000000012da4460: 3c43 8b4c 
+           0x0000000012da4464: ;   {metadata(&apos;squidpony/squidmath/Coord&apos;)}
+           0x0000000012da4464: cc08 81f9 | 45bb 1700 | 0f85 ea10 | 0000 4b8d 
+           0x0000000012da4474: ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.DefaultGraph$2::estimate@2 (line 36)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@214 (line 206)
+           0x0000000012da4474: 0ccc 458b 
+           0x0000000012da4478: ;   {metadata(&apos;squidpony/squidmath/Coord&apos;)}
+           0x0000000012da4478: 4cec 0841 | 81f9 45bb | 1700 0f85 | 1c11 0000 | 8b71 0c8b | 4910 4d8d 
+           0x0000000012da4490: ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.DefaultGraph$2::estimate@6 (line 36)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@214 (line 206)
+           0x0000000012da4490: 0cec 412b | 710c 412b | 4910 8be9 | c1fd 1f8b | f933 fd2b 
+           0x0000000012da44a4: ;*invokestatic abs {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.DefaultGraph$2::estimate@21 (line 39)
+                               ; - squidpony.squidai.astar.DefaultGraph$2::estimate@9 (line 36)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@214 (line 206)
+           0x0000000012da44a4: fd8b eec1 | fd1f 448b | ce44 33cd 
+  0.17%    0x0000000012da44b0: ;*invokestatic abs {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.DefaultGraph$2::estimate@9 (line 39)
+                               ; - squidpony.squidai.astar.DefaultGraph$2::estimate@9 (line 36)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@214 (line 206)
+  0.17%    0x0000000012da44b0: 442b cd44 | 3bcf 440f | 4ccf c4c1 
+           0x0000000012da44bc: ;*i2d {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.DefaultGraph$2::estimate@27 (line 39)
+                               ; - squidpony.squidai.astar.DefaultGraph$2::estimate@9 (line 36)
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@214 (line 206)
+           0x0000000012da44bc: 7b2a c1c4 | c17b 1144 
+           0x0000000012da44c4: ;*putfield estimate {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@219 (line 206)
+           0x0000000012da44c4: dc20 c5fb 
+           0x0000000012da44c8: ;*dadd {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@246 (line 209)
+           0x0000000012da44c8: 58c3 c5f9 | 7ed1 85c9 | 0f85 cbfd | ffff baf6 | ffff ff8b | ebc5 fb11 | 4424 2090 
+           0x0000000012da44e4: ;   {runtime_call UncommonTrapBlob}
+           0x0000000012da44e4: c5f8 77e8 
+           0x0000000012da44e8: ; ImmutableOopMap {rbp=NarrowOop }
+                               ;*invokevirtual add {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch@247 (line 209)
+           0x0000000012da44e8: 944b 50f8 
+           0x0000000012da44ec: ;   {external_word}
+           0x0000000012da44ec: 48b9 5021 | 95cb fe07 | 0000 4883 
+           0x0000000012da44f8: ;   {runtime_call}
+           0x0000000012da44f8: e4f0 49ba | 7095 5ccb | fe07 0000 
+           0x0000000012da4504: ;*invokevirtual add {reexecute=0 rethrow=0 return_oop=0}
+....................................................................................................
+ 59.93%  <total for region 1>
+
+....[Hottest Region 2]..............................................................................
+c2, level 4, squidpony.squidmath.BinaryHeap::down, version 754 (894 bytes) 
+
+         [Entry Point]
+           # {method} {0x0000000027e276a0} &apos;down&apos; &apos;(I)V&apos; in &apos;squidpony/squidmath/BinaryHeap&apos;
+           # this:     rdx:rdx   = &apos;squidpony/squidmath/BinaryHeap&apos;
+           # parm0:    r8        = int
+           #           [sp+0x80]  (sp of caller)
+           0x0000000012d99540: ;   {no_reloc}
+           0x0000000012d99540: 448b 5208 | 49c1 e203 | 49bc 0000 | 0000 0800 | 0000 4d03 | d44d 33e4 
+           0x0000000012d99558: ;   {runtime_call ic_miss_stub}
+           0x0000000012d99558: 493b c20f | 859f 1a51 | f866 6690 | 0f1f 8400 | 0000 0000 | 6666 6690 
+         [Verified Entry Point]
+  0.10%    0x0000000012d99570: 8984 2400 | 90ff ff55 
+  0.08%    0x0000000012d99578: ;*synchronization entry
+                               ; - squidpony.squidmath.BinaryHeap::down@-1 (line 152)
+  0.08%    0x0000000012d99578: 4883 ec70 | 458b c848 | 8bc2 8b7a 
+           0x0000000012d99584: ;*getfield nodes {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@1 (line 152)
+           0x0000000012d99584: 1445 8b5c 
+           0x0000000012d99588: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@12 (line 155)
+           0x0000000012d99588: fc0c 448b 
+           0x0000000012d9958c: ;*getfield size {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@6 (line 153)
+           0x0000000012d9958c: 420c 458b | d145 3bd3 | 0f83 1206 | 0000 4d8d 
+           0x0000000012d9959c: ;*getfield nodes {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@1 (line 152)
+           0x0000000012d9959c: 0cfc 478b 
+           0x0000000012d995a0: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@12 (line 155)
+           0x0000000012d995a0: 7491 10c4 | 817b 1044 
+           0x0000000012d995a8: ;*getfield value {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@17 (line 156)
+           0x0000000012d995a8: f410 418b 
+           0x0000000012d995ac: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@157 (line 181)
+           0x0000000012d995ac: 54fc 0841 | 8bda d1e3 
+  0.02%    0x0000000012d995b4: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@12 (line 155)
+  0.02%    0x0000000012d995b4: 4f8d 2cf4 
+  0.05%    0x0000000012d995b8: ;*iadd {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@26 (line 159)
+  0.05%    0x0000000012d995b8: ffc3 413b | d80f 8d21 
+           0x0000000012d995c0: ;*if_icmplt {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@32 (line 160)
+                               ;   {metadata(&apos;squidpony/squidmath/BinaryHeap$Node&apos;[])}
+           0x0000000012d995c0: 0200 0081 | fac4 d217 | 000f 8581 | 0600 00be | 0070 d617 | e9af 0000 | 0085 ff0f | 84cd 0100 
+           0x0000000012d995e0: 0066 6666 | 0f1f 8400 | 0000 0000 
+           0x0000000012d995ec: ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@196 (line 185)
+           0x0000000012d995ec: 6666 6690 | 443b 4424 | 480f 832d 
+           0x0000000012d995f8: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@157 (line 181)
+           0x0000000012d995f8: 0500 0041 | 807f 3000 | 0f85 ed02 | 0000 418b | d84c 8bc5 | 4d8b d54d | 33c2 4c8b | dd49 c1eb 
+           0x0000000012d99618: 0345 895d | 0049 c1e8 | 144d 85c0 | 741a 4885 | ed74 1549 | c1ea 09b9 | 0070 d617 | 4903 ca80 
+           0x0000000012d99638: 3908 0f85 
+           0x0000000012d9963c: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@206 (line 186)
+           0x0000000012d9963c: ed02 0000 
+  0.20%    0x0000000012d99640: ; implicit exception: dispatches to 0x0000000012d99ec8
+                               ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@157 (line 181)
+  0.20%    0x0000000012d99640: 895d 0c4d | 8b97 1001 
+           0x0000000012d99648: ; ImmutableOopMap {r9=Oop r14=Oop [44]=NarrowOop [52]=NarrowOop [80]=Oop }
+                               ;*goto {reexecute=1 rethrow=0 return_oop=0}
+                               ; - (reexecute) squidpony.squidmath.BinaryHeap::down@221 (line 190)
+                               ;   {poll}
+           0x0000000012d99648: 0000 4185 
+           0x0000000012d9964c: ;*goto {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@221 (line 190)
+           0x0000000012d9964c: 028b 5c24 | 28d1 e3ff 
+           0x0000000012d99654: ;*iadd {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@26 (line 159)
+           0x0000000012d99654: c33b 5c24 | 300f 8d64 
+           0x0000000012d9965c: ;*if_icmplt {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@32 (line 160)
+           0x0000000012d9965c: 0100 0049 | 8bc6 448b | 5424 288b | 7c24 2c44 | 8b44 2430 | 448b 7424 | 3448 8b74 | 2420 448b 
+           0x0000000012d9967c: 5c24 488b | 5424 4c4c 
+           0x0000000012d99684: ;*goto {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@35 (line 160)
+           0x0000000012d99684: 8b6c 2450 
+  0.25%    0x0000000012d99688: ;*iadd {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@41 (line 161)
+  0.25%    0x0000000012d99688: 8bcb ffc1 | 894c 2428 | 413b db0f | 8302 0400 | 004c 896c | 2450 8954 | 244c 4489 | 5c24 4845 
+           0x0000000012d996a8: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@47 (line 164)
+           0x0000000012d996a8: 8b6c 9910 
+  0.26%    0x0000000012d996ac: ; implicit exception: dispatches to 0x0000000012d99e78
+  0.26%    0x0000000012d996ac: c481 7b10 
+           0x0000000012d996b0: ;*getfield value {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@52 (line 165)
+           0x0000000012d996b0: 54ec 1044 | 896c 2438 | 4889 7424 | 2044 8974 | 2434 4489 | 4424 3089 | 7c24 2c45 | 8bc2 4c8b 
+           0x0000000012d996d0: f00f b678 
+           0x0000000012d996d4: ;*getfield isMaxHeap {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@67 (line 172)
+           0x0000000012d996d4: 103b 4c24 | 300f 8ddd 
+           0x0000000012d996dc: ;*if_icmplt {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@60 (line 170)
+           0x0000000012d996dc: 0100 003b | 4c24 480f | 83ff 0300 | 004c 63d3 | 478b 5491 
+           0x0000000012d996f0: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@90 (line 174)
+           0x0000000012d996f0: 14c4 817b 
+           0x0000000012d996f4: ;*getfield value {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@95 (line 175)
+           0x0000000012d996f4: 104c d410 
+  0.38%    0x0000000012d996f8: ;*dload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@100 (line 179)
+  0.38%    0x0000000012d996f8: 4b8d 2cd4 | 4f8d 6c81 
+           0x0000000012d99700: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@206 (line 186)
+           0x0000000012d99700: 1041 ba01 | 0000 0033 | c9c5 f92e | ca44 0f46 | d144 33d7 | 4585 d274 
+           0x0000000012d99718: ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@118 (line 179)
+           0x0000000012d99718: 7bc5 f92e | d07a 060f | 847f 0100 
+           0x0000000012d99724: ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@126 (line 180)
+           0x0000000012d99724: 00c5 f92e | d00f 87a4 
+           0x0000000012d9972c: ;*ifle {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@134 (line 180)
+           0x0000000012d9972c: 0100 0085 | ff0f 85a4 
+           0x0000000012d99734: ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@147 (line 180)
+           0x0000000012d99734: 0100 0044 | 3b44 2448 | 0f83 2e04 | 0000 4180 | 7f30 000f | 853a 0200 | 0041 8be8 | 448b 5424 
+           0x0000000012d99754: 3845 8955 | 0049 c1e2 | 034d 8bdd | 4d33 d349 | c1ea 144d | 85d2 7415 | 49c1 eb09 | b900 70d6 
+           0x0000000012d99774: 1749 03cb | 8039 080f | 8540 0200 
+           0x0000000012d99780: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@157 (line 181)
+           0x0000000012d99780: 0044 8b54 | 2438 4389 
+           0x0000000012d99788: ;*putfield index {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@161 (line 182)
+           0x0000000012d99788: 6cd4 0c89 | 5c24 28e9 | affe ffff | c5f9 2ec8 
+  1.23%    0x0000000012d99798: ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@175 (line 185)
+  1.23%    0x0000000012d99798: 7a02 7459 | c5f9 2ec8 | 0f87 33fe 
+           0x0000000012d997a4: ;*ifle {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@183 (line 185)
+           0x0000000012d997a4: ffff 85ff | 0f84 42fe 
+           0x0000000012d997ac: ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@196 (line 185)
+           0x0000000012d997ac: ffff 8b7c | 242c 448b | 7424 3444 | 8b5c 2448 | 4c8b 6c24 | 50eb 4549 | 8bc6 8b7c | 242c 448b 
+           0x0000000012d997cc: 7424 3448 | 8b74 2420 | 448b 5c24 | 488b 5424 | 4c4c 8b6c | 2450 eb0a | 4489 5424 | 28be 0070 
+           0x0000000012d997ec: d617 448b | 4424 28eb | 138b 7c24 | 2c44 8b74 | 2434 448b | 5c24 484c 
+           0x0000000012d99804: ;*goto {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@35 (line 160)
+           0x0000000012d99804: 8b6c 2450 | 418b d845 
+           0x0000000012d9980c: ;*ifle {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@225 (line 192)
+           0x0000000012d9980c: 85c0 7e34 | 458b d041 | ffca 41d1 
+           0x0000000012d99818: ;*ishr {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@232 (line 193)
+           0x0000000012d99818: fa45 3bd3 | 0f83 7604 | 0000 478b 
+           0x0000000012d99824: ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@238 (line 194)
+           0x0000000012d99824: 4491 10c4 | 817b 104c 
+           0x0000000012d9982c: ;*getfield value {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@245 (line 195)
+           0x0000000012d9982c: c410 c5f9 | 2ec8 0f87 
+           0x0000000012d99834: ;*ifge {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@249 (line 195)
+           0x0000000012d99834: 2305 0000 
+  0.22%    0x0000000012d99838: ;*getfield isMaxHeap {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@258 (line 195)
+  0.22%    0x0000000012d99838: 0fb6 6810 | 85ed 0f85 
+           0x0000000012d99840: ;*aload_2 {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@282 (line 203)
+           0x0000000012d99840: 8005 0000 | 413b db0f | 839b 0300 
+           0x0000000012d9984c: ;   {metadata(&apos;squidpony/squidmath/BinaryHeap$Node&apos;[])}
+           0x0000000012d9984c: 0081 fac4 | d217 000f | 85c3 0300 | 0049 8d6c 
+           0x0000000012d9985c: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@157 (line 181)
+           0x0000000012d9985c: 9910 4180 | 7f30 000f | 85b2 0100 | 0044 8975 | 004d 8bd5 | 4c8b dd4d | 33d3 49c1 | ea14 4d85 
+           0x0000000012d9987c: d274 1049 | c1eb 0949 | 03f3 803e | 080f 85c3 
+           0x0000000012d9988c: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@286 (line 203)
+           0x0000000012d9988c: 0100 0043 
+           0x0000000012d99890: ;*synchronization entry
+                               ; - squidpony.squidmath.BinaryHeap::down@-1 (line 152)
+           0x0000000012d99890: 895c f40c | 4883 c470 | 5d4d 8b97 | 1001 0000 
+  0.06%    0x0000000012d998a0: ;   {poll_return}
+  0.06%    0x0000000012d998a0: 4185 02c3 | 8b7c 242c | 448b 7424 | 3444 8b5c | 2448 4c8b | 6c24 50e9 | 4cff ffff | 85ff 0f85 
+           0x0000000012d998c0: ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@70 (line 172)
+           0x0000000012d998c0: 4805 0000 
+  0.07%    0x0000000012d998c4: ;   {section_word}
+  0.07%    0x0000000012d998c4: 33ed c5fb | 100d 52fc | ffff e929 | feff ff85 | ff0f 855c 
+           0x0000000012d998d8: ;*ifeq {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@147 (line 180)
+           0x0000000012d998d8: feff ff8b | 7c24 2c44 | 8b74 2434 | 448b 5c24 | 484c 8b6c | 2450 e915 | ffff ff41 | 8bd8 458b 
+           0x0000000012d998f8: 5500 4585 | d20f 8406 | fdff ff4d | 8b5f 3849 | 8bca 48c1 | e103 4d85 | db0f 84c5 
+           0x0000000012d99914: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@157 (line 181)
+           0x0000000012d99914: 0300 004d | 8b57 484b 
+           0x0000000012d9991c: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@206 (line 186)
+           0x0000000012d9991c: 894c 1af8 | 4983 c3f8 | 4d89 5f38 | e9dc fcff | ff4d 8b57 
+           0x0000000012d99930: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+                               ; - squidpony.squidmath.BinaryHeap::down@157 (line 181)
+           0x0000000012d99930: 784d 8b5f | 68f0 8344 | 24c0 0080 | 3900 0f84 | fcfc ffff | c601 004d 
+           0x0000000012d99948: ;*aastore {reexecute=0 rethrow=0 return_oop=0}
+....................................................................................................
+ 27.30%  <total for region 2>
+
+....[Hottest Regions]...............................................................................
+ 59.93%       c2, level 4  squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch, version 771 (995 bytes) 
+ 27.30%       c2, level 4  squidpony.squidmath.BinaryHeap::down, version 754 (894 bytes) 
+  9.55%       c2, level 4  squidpony.squidmath.BinaryHeap::add, version 762 (734 bytes) 
+  1.25%       c2, level 4  squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch, version 771 (741 bytes) 
+  0.53%       c2, level 4  squidpony.squidai.astar.eg.AlgorithmImplementations::findShortestPath, version 785 (215 bytes) 
+  0.30%                    <unknown> (0 bytes) 
+  0.25%       c2, level 4  squidpony.squidai.astar.eg.AlgorithmImplementations::findShortestPath, version 785 (355 bytes) 
+  0.20%       c2, level 4  jdk.internal.reflect.ClassFileAssembler::cpi, version 871 (36 bytes) 
+  0.06%       c2, level 4  squidpony.squidai.astar.eg.Algorithms::findShortestPath, version 798 (5 bytes) 
+  0.06%       c2, level 4  java.util.Arrays::fill, version 793 (87 bytes) 
+  0.05%       c2, level 4  squidpony.squidai.astar.eg.Algorithms::findShortestPath, version 798 (42 bytes) 
+  0.04%       c2, level 4  squidpony.squidai.astar.eg.Algorithms::findShortestPath, version 798 (101 bytes) 
+  0.04%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSquidUD, version 802 (4 bytes) 
+  0.03%       c2, level 4  squidpony.squidai.astar.eg.Algorithms::findShortestPath, version 798 (46 bytes) 
+  0.03%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSquidUD, version 802 (25 bytes) 
+  0.03%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSquidUD, version 802 (10 bytes) 
+  0.03%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSquidUD, version 802 (52 bytes) 
+  0.03%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSquidUD, version 802 (53 bytes) 
+  0.02%       c2, level 4  squidpony.squidai.astar.eg.AlgorithmImplementations::findShortestPath, version 785 (9 bytes) 
+  0.01%       c2, level 4  squidpony.squidmath.BinaryHeap::clear, version 794 (47 bytes) 
+  0.27%  <...other 58 warm regions...>
+....................................................................................................
+100.00%  <totals>
+
+....[Hottest Methods (after inlining)]..............................................................
+ 61.18%       c2, level 4  squidpony.squidai.astar.eg.AlgorithmImplementations::aStarSearch, version 771 
+ 27.30%       c2, level 4  squidpony.squidmath.BinaryHeap::down, version 754 
+  9.55%       c2, level 4  squidpony.squidmath.BinaryHeap::add, version 762 
+  0.81%       c2, level 4  squidpony.squidai.astar.eg.AlgorithmImplementations::findShortestPath, version 785 
+  0.30%                    <unknown> 
+  0.21%       c2, level 4  jdk.internal.reflect.ClassFileAssembler::cpi, version 871 
+  0.21%       c2, level 4  squidpony.squidai.astar.eg.Algorithms::findShortestPath, version 798 
+  0.19%       c2, level 4  de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark::doPathSquidUD, version 802 
+  0.08%       c2, level 4  java.util.Arrays::fill, version 793 
+  0.02%       c2, level 4  squidpony.squidmath.BinaryHeap::add, version 760 
+  0.01%       c2, level 4  squidpony.squidmath.BinaryHeap::clear, version 794 
+  0.01%    KernelBase.dll  0x000007fefc86f55e 
+  0.01%       interpreter  invoke return entry points  
+  0.01%      ucrtbase.dll  0x000007fed7831556 
+  0.01%      ucrtbase.dll  0x000007fed7825434 
+  0.01%       interpreter  aload_2  44 aload_2  
+  0.01%      ucrtbase.dll  0x000007fed782e62f 
+  0.01%           jvm.dll  0x000007fecb6e08fe 
+  0.01%      ucrtbase.dll  0x000007fed7824beb 
+  0.01%    KernelBase.dll  0x000007fefc841b25 
+  0.07%  <...other 26 warm methods...>
+....................................................................................................
+100.00%  <totals>
+
+....[Distribution by Source]........................................................................
+ 99.57%       c2, level 4
+  0.30%                  
+  0.05%      ucrtbase.dll
+  0.04%           jvm.dll
+  0.02%       interpreter
+  0.02%    KernelBase.dll
+  0.00%  vcruntime140.dll
+....................................................................................................
+100.00%  <totals>
+
+
+
+# Run complete. Total time: 00:02:45
+
+REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
+why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
+experiments, perform baseline and negative tests that provide experimental control, make sure
+the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
+Do not assume the numbers tell you what you want them to tell.
+
+Benchmark                                 Mode  Cnt    Score   Error  Units
+PathfindingBenchmark.doPathSimpleUD       avgt    5  133.129 ± 0.359  ms/op
+PathfindingBenchmark.doPathSimpleUD:·asm  avgt           NaN            ---
+PathfindingBenchmark.doPathSquidUD        avgt    5  137.236 ± 0.394  ms/op
+PathfindingBenchmark.doPathSquidUD:·asm   avgt           NaN            ---
