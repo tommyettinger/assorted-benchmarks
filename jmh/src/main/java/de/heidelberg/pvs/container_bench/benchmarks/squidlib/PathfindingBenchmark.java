@@ -183,26 +183,39 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * SquidLib's specialized DefaultGraph (it extends UndirectedGraph), and 'CG' is SquidLib's
  * CostlyGraph (which extends DirectedGraph).
  * <pre>
- * Benchmark                                Mode  Cnt    Score   Error  Units
- * PathfindingBenchmark.doPathSimpleD       avgt    7  128.241 ± 0.186  ms/op
- * PathfindingBenchmark.doPathSimpleUD      avgt    7  124.049 ± 0.309  ms/op
- * PathfindingBenchmark.doPathSquidCG       avgt    7  126.513 ± 6.732  ms/op
- * PathfindingBenchmark.doPathSquidD        avgt    7  135.061 ± 0.366  ms/op
- * PathfindingBenchmark.doPathSquidDG       avgt    7  125.373 ± 0.644  ms/op
- * PathfindingBenchmark.doPathSquidUD       avgt    7  138.700 ± 0.438  ms/op
- * PathfindingBenchmark.doTinyPathSimpleD   avgt    7    4.144 ± 0.017  ms/op
- * PathfindingBenchmark.doTinyPathSimpleUD  avgt    7    3.897 ± 0.012  ms/op
- * PathfindingBenchmark.doTinyPathSquidCG   avgt    7    3.831 ± 0.027  ms/op
- * PathfindingBenchmark.doTinyPathSquidD    avgt    7    4.292 ± 0.018  ms/op
- * PathfindingBenchmark.doTinyPathSquidDG   avgt    7    4.116 ± 0.020  ms/op
- * PathfindingBenchmark.doTinyPathSquidUD   avgt    7    3.980 ± 0.072  ms/op
+ * Benchmark                                      Mode  Cnt    Score   Error  Units
+ * PathfindingBenchmark.doPathAStarSearch         avgt    5  166.372 ± 1.415  ms/op
+ * PathfindingBenchmark.doPathCustomDijkstra      avgt    5  427.736 ± 4.447  ms/op
+ * PathfindingBenchmark.doPathDijkstra            avgt    5  262.994 ± 2.529  ms/op
+ * PathfindingBenchmark.doPathGDXAStar            avgt    5  216.825 ± 2.103  ms/op
+ * PathfindingBenchmark.doPathIndexedAStar        avgt    5  144.692 ± 1.644  ms/op
+ * PathfindingBenchmark.doPathSimpleD             avgt    5  100.271 ± 1.327  ms/op
+ * PathfindingBenchmark.doPathSimpleUD            avgt    5  103.599 ± 1.639  ms/op
+ * PathfindingBenchmark.doPathSquidCG             avgt    5   99.514 ± 0.744  ms/op
+ * PathfindingBenchmark.doPathSquidD              avgt    5  108.840 ± 1.163  ms/op
+ * PathfindingBenchmark.doPathSquidDG             avgt    5  100.960 ± 1.029  ms/op
+ * PathfindingBenchmark.doPathSquidUD             avgt    5  107.156 ± 1.520  ms/op
+ * PathfindingBenchmark.doScanCustomDijkstra      avgt    5  860.925 ± 7.217  ms/op
+ * PathfindingBenchmark.doScanDijkstra            avgt    5  473.206 ± 4.655  ms/op
+ * PathfindingBenchmark.doTinyPathAStarSearch     avgt    5    4.473 ± 0.099  ms/op
+ * PathfindingBenchmark.doTinyPathCustomDijkstra  avgt    5   21.174 ± 0.235  ms/op
+ * PathfindingBenchmark.doTinyPathDijkstra        avgt    5   10.978 ± 0.132  ms/op
+ * PathfindingBenchmark.doTinyPathGDXAStar        avgt    5    6.045 ± 0.082  ms/op
+ * PathfindingBenchmark.doTinyPathIndexedAStar    avgt    5    4.065 ± 0.029  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleD         avgt    5    2.940 ± 0.029  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleUD        avgt    5    3.054 ± 0.027  ms/op
+ * PathfindingBenchmark.doTinyPathSquidCG         avgt    5    3.128 ± 0.019  ms/op
+ * PathfindingBenchmark.doTinyPathSquidD          avgt    5    3.076 ± 0.029  ms/op
+ * PathfindingBenchmark.doTinyPathSquidDG         avgt    5    3.185 ± 0.025  ms/op
+ * PathfindingBenchmark.doTinyPathSquidUD         avgt    5    3.147 ± 0.025  ms/op
  * </pre>
  * For unknown reasons, DefaultGraph and CostlyGraph from SquidLib's
- * squidpony.squidai.astar.eg package do really, really well here.
- * It seems like some background process threw off the SquidCG
- * CostlyGraph test, since the error is large. The TinyPath benchmarks
- * seem to have a lot of variance in which one is best, and it's always
- * by a small margin.
+ * squidpony.squidai.graph package do really, really well here, and sometimes
+ * outperform simple-graphs itself. All of the simple-graphs and SquidLib runs
+ * are consistently faster than the other types, sometimes by a large factor
+ * (doTinyPathSimpleD vs. doTinyPathCustomDijkstra is a 7x factor in runtime).
+ * The TinyPath benchmarks seem to have a lot of variance in which one is best,
+ * but it's always by a small margin, and always simple or Squid.
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -240,10 +253,10 @@ public class PathfindingBenchmark {
         
         public space.earlygrey.simplegraphs.utils.Heuristic<Coord> simpleHeu;
 
-        public squidpony.squidai.astar.eg.DirectedGraph<Coord> squidDirectedGraph;
-        public squidpony.squidai.astar.eg.UndirectedGraph<Coord> squidUndirectedGraph;
-        public squidpony.squidai.astar.eg.DefaultGraph squidDefaultGraph;
-        public squidpony.squidai.astar.eg.CostlyGraph squidCostlyGraph;
+        public squidpony.squidai.graph.DirectedGraph<Coord> squidDirectedGraph;
+        public squidpony.squidai.graph.UndirectedGraph<Coord> squidUndirectedGraph;
+        public squidpony.squidai.graph.DefaultGraph squidDefaultGraph;
+        public squidpony.squidai.graph.CostlyGraph squidCostlyGraph;
         
         @Setup(Level.Trial)
         public void setup() {
@@ -287,10 +300,10 @@ public class PathfindingBenchmark {
             simpleDirectedGraph = new DirectedGraph<>(floors);
             simpleUndirectedGraph = new UndirectedGraph<>(floors);
             
-            squidDirectedGraph   = new squidpony.squidai.astar.eg.DirectedGraph<>(floors);
-            squidUndirectedGraph = new squidpony.squidai.astar.eg.UndirectedGraph<>(floors);
-            squidDefaultGraph = new squidpony.squidai.astar.eg.DefaultGraph(map, true);
-            squidCostlyGraph = new squidpony.squidai.astar.eg.CostlyGraph(astarMap, true);
+            squidDirectedGraph   = new squidpony.squidai.graph.DirectedGraph<>(floors);
+            squidUndirectedGraph = new squidpony.squidai.graph.UndirectedGraph<>(floors);
+            squidDefaultGraph = new squidpony.squidai.graph.DefaultGraph(map, true);
+            squidCostlyGraph = new squidpony.squidai.graph.CostlyGraph(astarMap, true);
             simpleHeu = new space.earlygrey.simplegraphs.utils.Heuristic<Coord>() {
                 @Override
                 public float getEstimate(Coord currentNode, Coord targetNode) {
@@ -730,7 +743,7 @@ public class PathfindingBenchmark {
                 state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
-                if(state.iasSquid.searchNodePath(r, Coord.get(x, y), DefaultGraph.CHEBYSHEV, state.path))
+                if(state.iasSquid.searchNodePath(r, Coord.get(x, y), squidpony.squidai.astar.Heuristic.CHEBYSHEV, state.path))
                     scanned += state.path.size();
             }
         }
@@ -750,7 +763,7 @@ public class PathfindingBenchmark {
                 //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.nearbyMap[x][y];
                 state.path.clear();
-                if(state.iasSquid.searchNodePath(r, Coord.get(x, y), DefaultGraph.CHEBYSHEV, state.path))
+                if(state.iasSquid.searchNodePath(r, Coord.get(x, y), squidpony.squidai.astar.Heuristic.CHEBYSHEV, state.path))
                     scanned += state.path.size();
             }
         }
@@ -847,7 +860,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
-        final squidpony.squidai.astar.eg.DirectedGraphAlgorithms<Coord> algo = state.squidDirectedGraph.algorithms();
+        final squidpony.squidai.graph.DirectedGraphAlgorithms<Coord> algo = state.squidDirectedGraph.algorithms();
         for (int x = 1; x < state.DIMENSION - 1; x++) {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -868,7 +881,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
-        final squidpony.squidai.astar.eg.DirectedGraphAlgorithms<Coord> algo = state.squidDirectedGraph.algorithms();
+        final squidpony.squidai.graph.DirectedGraphAlgorithms<Coord> algo = state.squidDirectedGraph.algorithms();
         for (int x = 1; x < state.DIMENSION - 1; x++) {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -890,7 +903,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
-        final squidpony.squidai.astar.eg.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
+        final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
         for (int x = 1; x < state.DIMENSION - 1; x++) {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -911,7 +924,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
-        final squidpony.squidai.astar.eg.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
+        final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
         for (int x = 1; x < state.DIMENSION - 1; x++) {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -934,7 +947,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
-        final squidpony.squidai.astar.eg.UndirectedGraphAlgorithms<Coord> algo = state.squidDefaultGraph.algorithms();
+        final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidDefaultGraph.algorithms();
         for (int x = 1; x < state.DIMENSION - 1; x++) {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -955,7 +968,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
-        final squidpony.squidai.astar.eg.UndirectedGraphAlgorithms<Coord> algo = state.squidDefaultGraph.algorithms();
+        final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidDefaultGraph.algorithms();
         for (int x = 1; x < state.DIMENSION - 1; x++) {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -977,7 +990,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
-        final squidpony.squidai.astar.eg.DirectedGraphAlgorithms<Coord> algo = state.squidCostlyGraph.algorithms();
+        final squidpony.squidai.graph.DirectedGraphAlgorithms<Coord> algo = state.squidCostlyGraph.algorithms();
         for (int x = 1; x < state.DIMENSION - 1; x++) {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -998,7 +1011,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
-        final squidpony.squidai.astar.eg.DirectedGraphAlgorithms<Coord> algo = state.squidCostlyGraph.algorithms();
+        final squidpony.squidai.graph.DirectedGraphAlgorithms<Coord> algo = state.squidCostlyGraph.algorithms();
         for (int x = 1; x < state.DIMENSION - 1; x++) {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
