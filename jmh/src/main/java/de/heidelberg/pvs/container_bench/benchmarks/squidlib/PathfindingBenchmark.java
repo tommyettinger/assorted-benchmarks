@@ -218,31 +218,31 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * The TinyPath benchmarks seem to have a lot of variance in which one is best,
  * but it's always by a small margin, and always simple or Squid.
  * <br>
- * Something's wrong here...
+ * Latest results, after the extraneous astar package was removed from SquidLib:
  * <pre>
  * Benchmark                                      Mode  Cnt    Score   Error  Units
- * PathfindingBenchmark.doPathAStarSearch         avgt    5  149.037 ± 0.292  ms/op
- * PathfindingBenchmark.doPathCustomDijkstra      avgt    5  420.705 ± 4.411  ms/op
- * PathfindingBenchmark.doPathDijkstra            avgt    5  273.222 ± 0.550  ms/op
- * PathfindingBenchmark.doPathGDXAStar            avgt    5  219.257 ± 0.314  ms/op
- * PathfindingBenchmark.doPathSimpleD             avgt    5   97.405 ± 1.120  ms/op
- * PathfindingBenchmark.doPathSimpleUD            avgt    5  102.668 ± 0.530  ms/op
- * PathfindingBenchmark.doPathSquidCG             avgt    5  129.840 ± 0.186  ms/op
- * PathfindingBenchmark.doPathSquidD              avgt    5  132.065 ± 0.178  ms/op
- * PathfindingBenchmark.doPathSquidDG             avgt    5  124.865 ± 0.119  ms/op
- * PathfindingBenchmark.doPathSquidUD             avgt    5  132.166 ± 0.396  ms/op
- * PathfindingBenchmark.doScanCustomDijkstra      avgt    5  868.858 ± 0.679  ms/op
- * PathfindingBenchmark.doScanDijkstra            avgt    5  472.336 ± 0.453  ms/op
- * PathfindingBenchmark.doTinyPathAStarSearch     avgt    5   33.709 ± 0.078  ms/op
- * PathfindingBenchmark.doTinyPathCustomDijkstra  avgt    5   26.735 ± 0.126  ms/op
- * PathfindingBenchmark.doTinyPathDijkstra        avgt    5   11.031 ± 0.080  ms/op
- * PathfindingBenchmark.doTinyPathGDXAStar        avgt    5    5.656 ± 0.015  ms/op
- * PathfindingBenchmark.doTinyPathSimpleD         avgt    5    3.001 ± 0.002  ms/op
- * PathfindingBenchmark.doTinyPathSimpleUD        avgt    5    3.067 ± 0.008  ms/op
- * PathfindingBenchmark.doTinyPathSquidCG         avgt    5   29.525 ± 0.041  ms/op
- * PathfindingBenchmark.doTinyPathSquidD          avgt    5   30.030 ± 0.057  ms/op
- * PathfindingBenchmark.doTinyPathSquidDG         avgt    5   28.919 ± 0.027  ms/op
- * PathfindingBenchmark.doTinyPathSquidUD         avgt    5   28.788 ± 0.020  ms/op
+ * PathfindingBenchmark.doPathAStarSearch         avgt    5  117.008 ± 0.149  ms/op
+ * PathfindingBenchmark.doPathCustomDijkstra      avgt    5  420.218 ± 0.882  ms/op
+ * PathfindingBenchmark.doPathDijkstra            avgt    5  265.302 ± 0.331  ms/op
+ * PathfindingBenchmark.doPathGDXAStar            avgt    5  218.328 ± 0.722  ms/op
+ * PathfindingBenchmark.doPathSimpleD             avgt    5   97.991 ± 0.155  ms/op
+ * PathfindingBenchmark.doPathSimpleUD            avgt    5   98.518 ± 0.063  ms/op
+ * PathfindingBenchmark.doPathSquidCG             avgt    5   99.225 ± 0.135  ms/op
+ * PathfindingBenchmark.doPathSquidD              avgt    5  106.474 ± 0.145  ms/op
+ * PathfindingBenchmark.doPathSquidDG             avgt    5   98.688 ± 0.122  ms/op
+ * PathfindingBenchmark.doPathSquidUD             avgt    5  105.891 ± 0.344  ms/op
+ * PathfindingBenchmark.doScanCustomDijkstra      avgt    5  853.187 ± 1.813  ms/op
+ * PathfindingBenchmark.doScanDijkstra            avgt    5  469.455 ± 0.425  ms/op
+ * PathfindingBenchmark.doTinyPathAStarSearch     avgt    5    3.860 ± 0.004  ms/op
+ * PathfindingBenchmark.doTinyPathCustomDijkstra  avgt    5   28.355 ± 0.039  ms/op
+ * PathfindingBenchmark.doTinyPathDijkstra        avgt    5   10.697 ± 0.083  ms/op
+ * PathfindingBenchmark.doTinyPathGDXAStar        avgt    5    6.182 ± 0.011  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleD         avgt    5    2.907 ± 0.002  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleUD        avgt    5    3.037 ± 0.008  ms/op
+ * PathfindingBenchmark.doTinyPathSquidCG         avgt    5    3.097 ± 0.011  ms/op
+ * PathfindingBenchmark.doTinyPathSquidD          avgt    5    2.985 ± 0.002  ms/op
+ * PathfindingBenchmark.doTinyPathSquidDG         avgt    5    3.145 ± 0.011  ms/op
+ * PathfindingBenchmark.doTinyPathSquidUD         avgt    5    3.076 ± 0.005  ms/op
  * </pre>
  *
  */
