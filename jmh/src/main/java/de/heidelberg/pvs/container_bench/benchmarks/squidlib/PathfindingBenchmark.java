@@ -32,6 +32,8 @@
 package de.heidelberg.pvs.container_bench.benchmarks.squidlib;
 
 import com.badlogic.gdx.ai.pfa.*;
+import com.badlogic.gdx.ai.pfa.Connection;
+import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.utils.Array;
@@ -47,8 +49,7 @@ import space.earlygrey.simplegraphs.UndirectedGraph;
 import space.earlygrey.simplegraphs.UndirectedGraphAlgorithms;
 import squidpony.squidai.CustomDijkstraMap;
 import squidpony.squidai.DijkstraMap;
-import squidpony.squidai.astar.DefaultGraph;
-import squidpony.squidai.astar.Pathfinder;
+import squidpony.squidai.graph.*;
 import squidpony.squidgrid.Adjacency;
 import squidpony.squidgrid.Direction;
 import squidpony.squidgrid.mapping.DungeonGenerator;
@@ -216,6 +217,34 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * (doTinyPathSimpleD vs. doTinyPathCustomDijkstra is a 7x factor in runtime).
  * The TinyPath benchmarks seem to have a lot of variance in which one is best,
  * but it's always by a small margin, and always simple or Squid.
+ * <br>
+ * Something's wrong here...
+ * <pre>
+ * Benchmark                                      Mode  Cnt    Score   Error  Units
+ * PathfindingBenchmark.doPathAStarSearch         avgt    5  149.037 ± 0.292  ms/op
+ * PathfindingBenchmark.doPathCustomDijkstra      avgt    5  420.705 ± 4.411  ms/op
+ * PathfindingBenchmark.doPathDijkstra            avgt    5  273.222 ± 0.550  ms/op
+ * PathfindingBenchmark.doPathGDXAStar            avgt    5  219.257 ± 0.314  ms/op
+ * PathfindingBenchmark.doPathSimpleD             avgt    5   97.405 ± 1.120  ms/op
+ * PathfindingBenchmark.doPathSimpleUD            avgt    5  102.668 ± 0.530  ms/op
+ * PathfindingBenchmark.doPathSquidCG             avgt    5  129.840 ± 0.186  ms/op
+ * PathfindingBenchmark.doPathSquidD              avgt    5  132.065 ± 0.178  ms/op
+ * PathfindingBenchmark.doPathSquidDG             avgt    5  124.865 ± 0.119  ms/op
+ * PathfindingBenchmark.doPathSquidUD             avgt    5  132.166 ± 0.396  ms/op
+ * PathfindingBenchmark.doScanCustomDijkstra      avgt    5  868.858 ± 0.679  ms/op
+ * PathfindingBenchmark.doScanDijkstra            avgt    5  472.336 ± 0.453  ms/op
+ * PathfindingBenchmark.doTinyPathAStarSearch     avgt    5   33.709 ± 0.078  ms/op
+ * PathfindingBenchmark.doTinyPathCustomDijkstra  avgt    5   26.735 ± 0.126  ms/op
+ * PathfindingBenchmark.doTinyPathDijkstra        avgt    5   11.031 ± 0.080  ms/op
+ * PathfindingBenchmark.doTinyPathGDXAStar        avgt    5    5.656 ± 0.015  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleD         avgt    5    3.001 ± 0.002  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleUD        avgt    5    3.067 ± 0.008  ms/op
+ * PathfindingBenchmark.doTinyPathSquidCG         avgt    5   29.525 ± 0.041  ms/op
+ * PathfindingBenchmark.doTinyPathSquidD          avgt    5   30.030 ± 0.057  ms/op
+ * PathfindingBenchmark.doTinyPathSquidDG         avgt    5   28.919 ± 0.027  ms/op
+ * PathfindingBenchmark.doTinyPathSquidUD         avgt    5   28.788 ± 0.020  ms/op
+ * </pre>
+ *
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -241,9 +270,7 @@ public class PathfindingBenchmark {
         public CustomDijkstraMap customDijkstra;
         public StatefulRNG srng;
         public GridGraph gg;
-        public DefaultGraph dg;
         public IndexedAStarPathFinder<Coord> astar;
-        public Pathfinder<Coord> iasSquid;
         public AStarSearch as;
         public GraphPath<Coord> dgp;
         public ArrayList<Coord> path;
@@ -293,8 +320,6 @@ public class PathfindingBenchmark {
             gg = new GridGraph(floors, map);
             astar = new IndexedAStarPathFinder<>(gg, false);
             dgp = new DefaultGraphPath<>(DIMENSION << 2);
-            dg = new DefaultGraph(map, true);
-            iasSquid = new Pathfinder<>(dg, false);
             path = new ArrayList<>(DIMENSION << 2);
             
             simpleDirectedGraph = new DirectedGraph<>(floors);
@@ -731,46 +756,6 @@ public class PathfindingBenchmark {
     }
 
     @Benchmark
-    public long doPathIndexedAStar(BenchmarkState state)
-    {
-        Coord r;
-        long scanned = 0;
-        for (int x = 1; x < state.DIMENSION - 1; x++) {
-            for (int y = 1; y < state.DIMENSION - 1; y++) {
-                if (state.map[x][y] == '#')
-                    continue;
-                // this should ensure no blatant correlation between R and W
-                state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
-                r = state.srng.getRandomElement(state.floorArray);
-                state.path.clear();
-                if(state.iasSquid.searchNodePath(r, Coord.get(x, y), squidpony.squidai.astar.Heuristic.CHEBYSHEV, state.path))
-                    scanned += state.path.size();
-            }
-        }
-        return scanned;
-    }
-
-    @Benchmark
-    public long doTinyPathIndexedAStar(BenchmarkState state)
-    {
-        Coord r;
-        long scanned = 0;
-        for (int x = 1; x < state.DIMENSION - 1; x++) {
-            for (int y = 1; y < state.DIMENSION - 1; y++) {
-                if (state.map[x][y] == '#')
-                    continue;
-                // this should ensure no blatant correlation between R and W
-                //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
-                r = state.nearbyMap[x][y];
-                state.path.clear();
-                if(state.iasSquid.searchNodePath(r, Coord.get(x, y), squidpony.squidai.astar.Heuristic.CHEBYSHEV, state.path))
-                    scanned += state.path.size();
-            }
-        }
-        return scanned;
-    }
-
-    @Benchmark
     public long doPathSimpleD(BenchmarkState state)
     {
         Coord r;
@@ -869,7 +854,7 @@ public class PathfindingBenchmark {
                 state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, DefaultGraph.CHEBYSHEV))
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -890,7 +875,7 @@ public class PathfindingBenchmark {
                 //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.nearbyMap[x][y];
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, DefaultGraph.CHEBYSHEV))
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -912,7 +897,7 @@ public class PathfindingBenchmark {
                 state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, DefaultGraph.CHEBYSHEV))
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -933,7 +918,7 @@ public class PathfindingBenchmark {
                 //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.nearbyMap[x][y];
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, DefaultGraph.CHEBYSHEV))
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -956,7 +941,7 @@ public class PathfindingBenchmark {
                 state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, DefaultGraph.CHEBYSHEV))
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -977,7 +962,7 @@ public class PathfindingBenchmark {
                 //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.nearbyMap[x][y];
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, DefaultGraph.CHEBYSHEV))
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -999,7 +984,7 @@ public class PathfindingBenchmark {
                 state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, DefaultGraph.CHEBYSHEV))
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -1020,7 +1005,7 @@ public class PathfindingBenchmark {
                 //state.srng.setState((x << 22) ^ (y << 16) ^ (x * y));
                 r = state.nearbyMap[x][y];
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, DefaultGraph.CHEBYSHEV))
+                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
