@@ -436,15 +436,15 @@ public class MemoryMBeanCheck {
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry ObjectIntOrderedMap", size,
-                    measure(new Runnable() {
-                        ds.merry.ObjectIntOrderedMap<String> x;
-
-                        @Override public void run () {
-                            x = new ds.merry.ObjectIntOrderedMap<>(size);
-                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
-                        }
-                    }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry ObjectIntOrderedMap", size,
+//                    measure(new Runnable() {
+//                        ds.merry.ObjectIntOrderedMap<String> x;
+//
+//                        @Override public void run () {
+//                            x = new ds.merry.ObjectIntOrderedMap<>(size);
+//                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
+//                        }
+//                    }));
             }
         }
     }

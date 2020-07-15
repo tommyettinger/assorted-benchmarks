@@ -257,7 +257,6 @@ public class PathfindingBenchmark {
     public static class BenchmarkState {
         public int DIMENSION = 64;
         public DungeonGenerator dungeonGen = new DungeonGenerator(DIMENSION, DIMENSION, new StatefulRNG(0x1337BEEFDEAL));
-        //public SerpentMapGenerator serpent = new SerpentMapGenerator(DIMENSION, DIMENSION, new StatefulRNG(0x1337BEEFDEAL));
         public char[][] map;
         public double[][] astarMap;
         public GreasedRegion floors;
@@ -288,8 +287,6 @@ public class PathfindingBenchmark {
         @Setup(Level.Trial)
         public void setup() {
             Coord.expandPoolTo(DIMENSION, DIMENSION);
-            //serpent.putWalledBoxRoomCarvers(1);
-            //map = dungeonGen.generate(serpent.generate());
             map = dungeonGen.generate();
             floors = new GreasedRegion(map, '.');
             floorCount = floors.size();
