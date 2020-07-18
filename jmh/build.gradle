@@ -66,7 +66,7 @@ dependencies {
     // compile group: 'in.jlibs', name: 'jlibs-core', version:'2.2.1'
     // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
 
-    implementation 'com.github.SquidPony.SquidLib:squidlib-util:ae53eed80a'
+    implementation 'com.github.SquidPony.SquidLib:squidlib-util:aba4c22230'
     implementation 'com.github.tommyettinger:simple-graphs:ef743fde62'
     //implementation 'space.earlygrey:simple-graphs:6e671fabc2'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
