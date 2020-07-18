@@ -46,110 +46,25 @@ import java.util.concurrent.TimeUnit;
  * The Score column is the most relevant; the score is how much time it takes to complete one call, so lower is better.
  * The Error column can be ignored if it is relatively small, but large Error values may show a measurement inaccuracy.
  * <br>
- * All 2D and higher noise benchmarks, run with Java 11, on October 21, 2018:
+ * All 2D and higher noise benchmarks, run with Java 14, Manjaro Linux, 8th generation i7 mobile processor, on July 18,
+ * 2020:
  * <pre>
- * Benchmark                                Mode  Cnt    Score    Error  Units
- * NoiseBenchmark.measureClassic2D          avgt    4   38.779 ±  0.258  ns/op
- * NoiseBenchmark.measureClassic3D          avgt    4   75.015 ±  2.274  ns/op
- * NoiseBenchmark.measureClassic4D          avgt    4   86.665 ±  0.476  ns/op
- * NoiseBenchmark.measureFast3Octave3D      avgt    4  126.118 ±  0.532  ns/op // has 3 octaves of 3D noise
- * NoiseBenchmark.measureFast3Octave4D      avgt    4  212.586 ±  9.077  ns/op // has 3 octaves of 4D noise
- * NoiseBenchmark.measureFast5Octave3D      avgt    4  198.581 ±  1.399  ns/op // has 5 octaves of 3D noise
- * NoiseBenchmark.measureFast5Octave4D      avgt    4  368.770 ±  2.516  ns/op // has 5 octaves of 4D noise
- * NoiseBenchmark.measureFastNoise2D        avgt    4   29.546 ±  0.907  ns/op // fastest 2D
- * NoiseBenchmark.measureFastNoise3D        avgt    4   45.995 ±  0.333  ns/op // fastest 3D
- * NoiseBenchmark.measureFastNoise4D        avgt    4   79.852 ±  0.635  ns/op // tie for fastest 4D?
- * NoiseBenchmark.measureJitter2D           avgt    4   43.965 ±  0.181  ns/op
- * NoiseBenchmark.measureJitter3D           avgt    4  100.873 ±  0.305  ns/op
- * NoiseBenchmark.measureJitter4D           avgt    4  150.578 ±  0.841  ns/op
- * NoiseBenchmark.measurePerlin2D           avgt    4   40.355 ±  1.160  ns/op
- * NoiseBenchmark.measurePerlin3D           avgt    4   60.745 ±  0.385  ns/op
- * NoiseBenchmark.measurePerlin4D           avgt    4  118.092 ±  0.773  ns/op
- * NoiseBenchmark.measureSeeded2D           avgt    4   36.989 ±  1.326  ns/op
- * NoiseBenchmark.measureSeeded3D           avgt    4   65.921 ±  1.286  ns/op
- * NoiseBenchmark.measureSeeded4D           avgt    4   79.034 ± 21.792  ns/op // tie for fastest 4D? high error
- * NoiseBenchmark.measureSeeded6D           avgt    4  182.435 ±  4.713  ns/op // only 6D impl, so... fastest 6D
- * NoiseBenchmark.measureWhirling2D         avgt    4   39.140 ±  0.437  ns/op
- * NoiseBenchmark.measureWhirling3D         avgt    4   55.484 ±  0.505  ns/op
- * NoiseBenchmark.measureWhirling3Octave3D  avgt    4  201.752 ±  4.705  ns/op // has 3 octaves of 3D noise
- * NoiseBenchmark.measureWhirling3Octave4D  avgt    4  248.357 ±  3.296  ns/op // has 3 octaves of 4D noise
- * NoiseBenchmark.measureWhirling4D         avgt    4   96.235 ±  0.893  ns/op
- * NoiseBenchmark.measureWhirling5Octave3D  avgt    4  276.712 ±  2.404  ns/op // has 5 octaves of 3D noise
- * NoiseBenchmark.measureWhirling5Octave4D  avgt    4  422.289 ±  0.777  ns/op // has 5 octaves of 4D noise
- * NoiseBenchmark.measureWhirlingAlt2D      avgt    4   39.591 ±  2.450  ns/op
- * NoiseBenchmark.measureWhirlingAlt3D      avgt    4   47.147 ±  9.241  ns/op
+ * Benchmark                            Mode  Cnt     Score   Error  Units
+ * NoiseBenchmark.measureFastNoise2D    avgt   10    25.291 ± 0.011  ns/op
+ * NoiseBenchmark.measureFastNoise3D    avgt   10    28.999 ± 0.028  ns/op
+ * NoiseBenchmark.measureFastNoise4D    avgt   10    56.042 ± 0.047  ns/op
+ * NoiseBenchmark.measureFastNoise6D    avgt   10   126.849 ± 0.053  ns/op
+ * NoiseBenchmark.measureOSFNoise2D     avgt   10    25.721 ± 0.008  ns/op
+ * NoiseBenchmark.measureOSFNoise3D     avgt   10    44.014 ± 0.033  ns/op
+ * NoiseBenchmark.measureOSFNoise4D     avgt   10    42.879 ± 0.066  ns/op
+ * NoiseBenchmark.measureOpenSimplex2D  avgt   10    35.201 ± 0.047  ns/op
+ * NoiseBenchmark.measureOpenSimplex3D  avgt   10    70.975 ± 0.050  ns/op
+ * NoiseBenchmark.measureOpenSimplex4D  avgt   10  1585.893 ± 6.257  ns/op
+ * NoiseBenchmark.measureSeeded2D       avgt   10    32.130 ± 0.034  ns/op
+ * NoiseBenchmark.measureSeeded3D       avgt   10    45.323 ± 0.031  ns/op
+ * NoiseBenchmark.measureSeeded4D       avgt   10    60.873 ± 0.026  ns/op
+ * NoiseBenchmark.measureSeeded6D       avgt   10   134.626 ± 0.117  ns/op
  * </pre>
- * The "Octave" benchmarks should be noted. FastNoise doesn't need Noise.Layered3D or Noise.Layered4D to produce
- * multiple octaves of noise; it can do that using just FastNoise methods, and it does so much faster than WhirlingNoise
- * can using the Layered classes nested in Noise. FastNoise can produce 5 octaves of 3D noise in less time than
- * WhirlingNoise takes to produce 3 octaves of 3D noise. These benchmarks aren't the same on Java 8, which suggests some
- * optimizations are occuring only in newer JVM versions (such as dot products being turned into SIMD calls).
- * <br>
- * 1D sway methods, some of which are used in or for noise (Feb 10, 2018):
- * <pre>
- * Benchmark                                   Mode  Cnt    Score    Error  Units
- * NoiseBenchmark.measureSwayBitDouble         avgt    5   11.289 ±  0.774  ns/op // The Bit functions were in SquidLib,
- * NoiseBenchmark.measureSwayBitDoubleTight    avgt    5   10.680 ±  0.811  ns/op // and were replaced with the later
- * NoiseBenchmark.measureSwayBitFloat          avgt    5   11.063 ±  0.163  ns/op // methods that have identical output
- * NoiseBenchmark.measureSwayBitFloatTight     avgt    5   10.256 ±  0.036  ns/op
- * NoiseBenchmark.measureSwayDouble            avgt    5    8.746 ±  0.124  ns/op
- * NoiseBenchmark.measureSwayDoubleTight       avgt    5    8.789 ±  0.290  ns/op
- * NoiseBenchmark.measureSwayFloat             avgt    5    8.614 ±  0.085  ns/op
- * NoiseBenchmark.measureSwayFloatTight        avgt    5    8.471 ±  0.070  ns/op
- * NoiseBenchmark.measureSwayRandomizedDouble  avgt    5   10.334 ±  0.438  ns/op
- * NoiseBenchmark.measureSwayRandomizedFloat   avgt    5   11.258 ±  0.109  ns/op
- * NoiseBenchmark.measureZigzagBitDouble       avgt    5    9.125 ±  0.061  ns/op
- * NoiseBenchmark.measureZigzagBitFloat        avgt    5   10.243 ±  0.144  ns/op
- * NoiseBenchmark.measureZigzagDouble          avgt    5    7.111 ±  0.065  ns/op
- * NoiseBenchmark.measureZigzagFloat           avgt    5    6.889 ±  0.089  ns/op
- * </pre>
- * <br>
- * Just simplex noise classes in this next set: 
- * <pre>
- * Benchmark                            Mode  Cnt    Score   Error  Units
- * NoiseBenchmark.measureFastNoise2D    avgt    5   35.573 ± 0.219  ns/op
- * NoiseBenchmark.measureFastNoise3D    avgt    5   46.687 ± 0.126  ns/op
- * NoiseBenchmark.measureFastNoise4D    avgt    5   84.014 ± 3.109  ns/op
- * NoiseBenchmark.measurePerlin2D       avgt    5   41.912 ± 0.279  ns/op
- * NoiseBenchmark.measurePerlin3D       avgt    5   63.417 ± 0.658  ns/op
- * NoiseBenchmark.measurePerlin4D       avgt    5  125.655 ± 0.710  ns/op
- * NoiseBenchmark.measureSeeded2D       avgt    5   41.759 ± 0.264  ns/op
- * NoiseBenchmark.measureSeeded3D       avgt    5   59.276 ± 0.262  ns/op
- * NoiseBenchmark.measureSeeded4D       avgt    5   85.117 ± 0.383  ns/op
- * NoiseBenchmark.measureSeeded6D       avgt    5  178.206 ± 2.428  ns/op
- * NoiseBenchmark.measureWhirling2D     avgt    5   41.902 ± 0.203  ns/op
- * NoiseBenchmark.measureWhirling3D     avgt    5   63.774 ± 0.538  ns/op
- * NoiseBenchmark.measureWhirling4D     avgt    5   91.431 ± 0.350  ns/op
- * NoiseBenchmark.measureWhirlingAlt2D  avgt    5   42.433 ± 0.268  ns/op
- * NoiseBenchmark.measureWhirlingAlt3D  avgt    5   49.947 ± 0.322  ns/op
- * </pre>
- * And with just 6D noise, including FastNoise now that it implements Noise6D:
- * <pre>
- * Benchmark                          Mode  Cnt    Score   Error  Units
- * NoiseBenchmark.measureFastNoise6D  avgt    4  172.374 ± 0.353  ns/op
- * NoiseBenchmark.measureSeeded6D     avgt    4  185.143 ± 3.575  ns/op
- * </pre>
- * Note that FastNoise is the best for each dimensionality of noise.
- * <br>
- * Also checking OpenSimplexNoise for completeness:
- * <pre>
- * Benchmark                            Mode  Cnt     Score     Error  Units
- * NoiseBenchmark.measureFastNoise2D    avgt    5    35.433 ±   0.388  ns/op
- * NoiseBenchmark.measureFastNoise3D    avgt    5    48.866 ±   1.844  ns/op
- * NoiseBenchmark.measureFastNoise4D    avgt    5    91.408 ±   7.168  ns/op
- * NoiseBenchmark.measureFastNoise6D    avgt    5   179.456 ±   3.873  ns/op
- * NoiseBenchmark.measureOpenSimplex2D  avgt    5    51.852 ±   0.711  ns/op
- * NoiseBenchmark.measureOpenSimplex3D  avgt    5   115.087 ±   5.407  ns/op
- * NoiseBenchmark.measureOpenSimplex4D  avgt    5  2440.526 ± 430.446  ns/op
- * NoiseBenchmark.measurePerlin2D       avgt    5    44.975 ±   1.400  ns/op
- * NoiseBenchmark.measurePerlin3D       avgt    5    64.337 ±   0.819  ns/op
- * NoiseBenchmark.measurePerlin4D       avgt    5    92.932 ±   1.337  ns/op
- * NoiseBenchmark.measureSeeded2D       avgt    5    42.552 ±   1.203  ns/op
- * NoiseBenchmark.measureSeeded3D       avgt    5    59.289 ±   0.679  ns/op
- * NoiseBenchmark.measureSeeded4D       avgt    5    88.440 ±   6.013  ns/op
- * NoiseBenchmark.measureSeeded6D       avgt    5   184.532 ±   4.244  ns/op
- * </pre>
- * As to the 4D performance of OpenSimplex... ouch. It's slower all-around, but ponderously slow in 4D.
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
