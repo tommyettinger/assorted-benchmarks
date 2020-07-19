@@ -45,25 +45,29 @@ import java.util.concurrent.TimeUnit;
  * Various different noise functions, most variants on Simplex noise. These measurements are per-call, in nanoseconds.
  * The Score column is the most relevant; the score is how much time it takes to complete one call, so lower is better.
  * The Error column can be ignored if it is relatively small, but large Error values may show a measurement inaccuracy.
+ * OSF is OpenSimplex2F, OSS is OpenSimplex2S, OpenSimplex refers to the first version.
  * <br>
  * All 2D and higher noise benchmarks, run with Java 14, Manjaro Linux, 8th generation i7 mobile processor, on July 18,
  * 2020:
  * <pre>
- * Benchmark                            Mode  Cnt     Score   Error  Units
- * NoiseBenchmark.measureFastNoise2D    avgt   10    25.291 ± 0.011  ns/op
- * NoiseBenchmark.measureFastNoise3D    avgt   10    28.999 ± 0.028  ns/op
- * NoiseBenchmark.measureFastNoise4D    avgt   10    56.042 ± 0.047  ns/op
- * NoiseBenchmark.measureFastNoise6D    avgt   10   126.849 ± 0.053  ns/op
- * NoiseBenchmark.measureOSFNoise2D     avgt   10    25.721 ± 0.008  ns/op
- * NoiseBenchmark.measureOSFNoise3D     avgt   10    44.014 ± 0.033  ns/op
- * NoiseBenchmark.measureOSFNoise4D     avgt   10    42.879 ± 0.066  ns/op
- * NoiseBenchmark.measureOpenSimplex2D  avgt   10    35.201 ± 0.047  ns/op
- * NoiseBenchmark.measureOpenSimplex3D  avgt   10    70.975 ± 0.050  ns/op
- * NoiseBenchmark.measureOpenSimplex4D  avgt   10  1585.893 ± 6.257  ns/op
- * NoiseBenchmark.measureSeeded2D       avgt   10    32.130 ± 0.034  ns/op
- * NoiseBenchmark.measureSeeded3D       avgt   10    45.323 ± 0.031  ns/op
- * NoiseBenchmark.measureSeeded4D       avgt   10    60.873 ± 0.026  ns/op
- * NoiseBenchmark.measureSeeded6D       avgt   10   134.626 ± 0.117  ns/op
+ * Benchmark                            Mode  Cnt     Score    Error  Units
+ * NoiseBenchmark.measureFastNoise2D    avgt    5    25.040 ±  0.023  ns/op
+ * NoiseBenchmark.measureFastNoise3D    avgt    5    29.250 ±  0.042  ns/op
+ * NoiseBenchmark.measureFastNoise4D    avgt    5    66.120 ±  0.094  ns/op
+ * NoiseBenchmark.measureFastNoise6D    avgt    5   124.677 ±  0.084  ns/op
+ * NoiseBenchmark.measureOSFNoise2D     avgt    5    25.261 ±  0.018  ns/op
+ * NoiseBenchmark.measureOSFNoise3D     avgt    5    43.317 ±  0.127  ns/op
+ * NoiseBenchmark.measureOSFNoise4D     avgt    5    42.937 ±  0.075  ns/op
+ * NoiseBenchmark.measureOSSNoise2D     avgt    5    30.246 ±  0.029  ns/op
+ * NoiseBenchmark.measureOSSNoise3D     avgt    5    54.604 ±  0.054  ns/op
+ * NoiseBenchmark.measureOSSNoise4D     avgt    5   105.006 ±  0.324  ns/op
+ * NoiseBenchmark.measureOpenSimplex2D  avgt    5    35.855 ±  0.234  ns/op
+ * NoiseBenchmark.measureOpenSimplex3D  avgt    5    75.841 ±  0.087  ns/op
+ * NoiseBenchmark.measureOpenSimplex4D  avgt    5  1562.718 ± 12.655  ns/op
+ * NoiseBenchmark.measureSeeded2D       avgt    5    29.052 ±  0.060  ns/op
+ * NoiseBenchmark.measureSeeded3D       avgt    5    40.755 ±  0.159  ns/op
+ * NoiseBenchmark.measureSeeded4D       avgt    5    60.508 ±  0.064  ns/op
+ * NoiseBenchmark.measureSeeded6D       avgt    5   134.823 ±  0.246  ns/op
  * </pre>
  * <br>
  * Added in OpenSimplex2S as OSSNoise. It isn't too bad in low dimensions, but it loses
