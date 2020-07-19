@@ -88,6 +88,20 @@ import java.util.concurrent.TimeUnit;
  * NoiseBenchmark.measureOSSNoise3D   avgt    5   78.379 ± 0.329  ns/op
  * NoiseBenchmark.measureOSSNoise4D   avgt    5  134.307 ± 0.414  ns/op
  * </pre>
+ * And briefly testing hashed OpenSimplex2, avoiding 28KB of permutation tables per seed:
+ * <pre>
+ * Benchmark                          Mode  Cnt    Score   Error  Units
+ * NoiseBenchmark.measureFastNoise2D  avgt    5   35.204 ± 0.245  ns/op
+ * NoiseBenchmark.measureFastNoise3D  avgt    5   41.534 ± 0.556  ns/op
+ * NoiseBenchmark.measureFastNoise4D  avgt    5   80.002 ± 0.444  ns/op
+ * NoiseBenchmark.measureFastNoise6D  avgt    5  176.253 ± 0.517  ns/op
+ * NoiseBenchmark.measureOSFNoise2D   avgt    5   36.774 ± 0.175  ns/op
+ * NoiseBenchmark.measureOSFNoise3D   avgt    5   62.686 ± 0.302  ns/op
+ * NoiseBenchmark.measureOSFNoise4D   avgt    5   63.983 ± 0.476  ns/op
+ * NoiseBenchmark.measureOSHNoise2D   avgt    5   40.309 ± 0.556  ns/op
+ * NoiseBenchmark.measureOSHNoise3D   avgt    5   64.572 ± 0.148  ns/op
+ * NoiseBenchmark.measureOSHNoise4D   avgt    5   73.817 ± 0.650  ns/op
+ * </pre>
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -103,6 +117,7 @@ public class NoiseBenchmark {
             fast5 = new FastNoise(12345);
     private final OpenSimplex2F osf = new OpenSimplex2F(12345L);
     private final OpenSimplex2S oss = new OpenSimplex2S(12345L);
+    private final OpenSimplex2H osh = new OpenSimplex2H(12345L);
 
     @Setup(Level.Trial)
     public void setup() {
@@ -390,6 +405,21 @@ public class NoiseBenchmark {
     @Benchmark
     public double measureOSSNoise4D() {
         return oss.noise4_Classic(++x, --y, z++, w--);
+    }
+
+    @Benchmark
+    public double measureOSHNoise2D() {
+        return osh.noise2(++x, --y);
+    }
+
+    @Benchmark
+    public double measureOSHNoise3D() {
+        return osh.noise3_Classic(++x, --y, z++);
+    }
+
+    @Benchmark
+    public double measureOSHNoise4D() {
+        return osh.noise4_Classic(++x, --y, z++, w--);
     }
 
 
