@@ -65,6 +65,25 @@ import java.util.concurrent.TimeUnit;
  * NoiseBenchmark.measureSeeded4D       avgt   10    60.873 ± 0.026  ns/op
  * NoiseBenchmark.measureSeeded6D       avgt   10   134.626 ± 0.117  ns/op
  * </pre>
+ * <br>
+ * Added in OpenSimplex2S as OSSNoise. It isn't too bad in low dimensions, but it loses
+ * the impressive advantage OpenSimplex2F has in 4D, and OSS 4D is slower than OSS 3D
+ * (which is what you would expect, but it isn't the case for OSF) and FastNoise 4D.
+ * <br>
+ * These benchmarks are from an older Windows 7 machine; Java 14, 6th generation i7 mobile processor:
+ * <pre>
+ * Benchmark                          Mode  Cnt    Score   Error  Units
+ * NoiseBenchmark.measureFastNoise2D  avgt    5   35.277 ± 0.116  ns/op
+ * NoiseBenchmark.measureFastNoise3D  avgt    5   41.478 ± 0.077  ns/op
+ * NoiseBenchmark.measureFastNoise4D  avgt    5   82.395 ± 0.985  ns/op
+ * NoiseBenchmark.measureFastNoise6D  avgt    5  184.830 ± 0.621  ns/op
+ * NoiseBenchmark.measureOSFNoise2D   avgt    5   36.729 ± 0.123  ns/op
+ * NoiseBenchmark.measureOSFNoise3D   avgt    5   62.726 ± 0.405  ns/op
+ * NoiseBenchmark.measureOSFNoise4D   avgt    5   60.681 ± 0.350  ns/op
+ * NoiseBenchmark.measureOSSNoise2D   avgt    5   43.932 ± 2.871  ns/op
+ * NoiseBenchmark.measureOSSNoise3D   avgt    5   78.379 ± 0.329  ns/op
+ * NoiseBenchmark.measureOSSNoise4D   avgt    5  134.307 ± 0.414  ns/op
+ * </pre>
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -79,6 +98,7 @@ public class NoiseBenchmark {
             fast3 = new FastNoise(12345),
             fast5 = new FastNoise(12345);
     private final OpenSimplex2F osf = new OpenSimplex2F(12345L);
+    private final OpenSimplex2S oss = new OpenSimplex2S(12345L);
 
     @Setup(Level.Trial)
     public void setup() {
@@ -351,6 +371,21 @@ public class NoiseBenchmark {
     @Benchmark
     public double measureOSFNoise4D() {
         return osf.noise4_Classic(++x, --y, z++, w--);
+    }
+
+    @Benchmark
+    public double measureOSSNoise2D() {
+        return oss.noise2(++x, --y);
+    }
+
+    @Benchmark
+    public double measureOSSNoise3D() {
+        return oss.noise3_Classic(++x, --y, z++);
+    }
+
+    @Benchmark
+    public double measureOSSNoise4D() {
+        return oss.noise4_Classic(++x, --y, z++, w--);
     }
 
 
