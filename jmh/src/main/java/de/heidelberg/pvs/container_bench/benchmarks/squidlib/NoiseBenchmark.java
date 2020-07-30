@@ -118,7 +118,8 @@ public class NoiseBenchmark {
     private final OpenSimplex2F osf = new OpenSimplex2F(12345L);
     private final OpenSimplex2S oss = new OpenSimplex2S(12345L);
     private final OpenSimplex2H osh = new OpenSimplex2H(12345L);
-
+    private final Fnospiral fno = new Fnospiral(12345);
+    
     @Setup(Level.Trial)
     public void setup() {
         fast.setFractalOctaves(1);
@@ -128,6 +129,9 @@ public class NoiseBenchmark {
         fast3.setFractalOctaves(3);
         fast5.setNoiseType(FastNoise.SIMPLEX_FRACTAL);
         fast5.setFractalOctaves(5);
+        fno.setFractalOctaves(1);
+        fno.setNoiseType(FastNoise.SIMPLEX);
+        fno.setFrequency(0.03125f);
     }
 //    public static double swayTightBit(final double value)
 //    {
@@ -361,6 +365,27 @@ public class NoiseBenchmark {
     }
 
 
+    @Benchmark
+    public float measureFnospiral2D() {
+        return fno.getSimplex(++x, --y);
+    }
+
+    @Benchmark
+    public float measureFnospiral3D() {
+        return fno.getSimplex(++x, --y, z++);
+    }
+
+    @Benchmark
+    public float measureFnospiral4D() {
+        return fno.getSimplex(++x, --y, z++, w--);
+    }
+
+    @Benchmark
+    public double measureFnospiral6D() {
+        return fno.getSimplex(++x, --y, z++, w--, ++u, ++v);
+    }
+
+
 
     @Benchmark
     public double measureOpenSimplex2D() {
@@ -379,47 +404,47 @@ public class NoiseBenchmark {
 
     @Benchmark
     public double measureOSFNoise2D() {
-        return osf.noise2(++x, --y);
+        return osf.noise2(++x * 0.03125, --y * 0.03125);
     }
 
     @Benchmark
     public double measureOSFNoise3D() {
-        return osf.noise3_Classic(++x, --y, z++);
+        return osf.noise3_Classic(++x * 0.03125, --y * 0.03125, z++ * 0.03125);
     }
 
     @Benchmark
     public double measureOSFNoise4D() {
-        return osf.noise4_Classic(++x, --y, z++, w--);
+        return osf.noise4_Classic(++x * 0.03125, --y * 0.03125, z++ * 0.03125, w-- * 0.03125);
     }
 
     @Benchmark
     public double measureOSSNoise2D() {
-        return oss.noise2(++x, --y);
+        return oss.noise2(++x * 0.03125, --y * 0.03125);
     }
 
     @Benchmark
     public double measureOSSNoise3D() {
-        return oss.noise3_Classic(++x, --y, z++);
+        return oss.noise3_Classic(++x * 0.03125, --y * 0.03125, z++ * 0.03125);
     }
 
     @Benchmark
     public double measureOSSNoise4D() {
-        return oss.noise4_Classic(++x, --y, z++, w--);
+        return oss.noise4_Classic(++x * 0.03125, --y * 0.03125, z++ * 0.03125, w-- * 0.03125);
     }
 
     @Benchmark
     public double measureOSHNoise2D() {
-        return osh.noise2(++x, --y);
+        return osh.noise2(++x * 0.03125, --y * 0.03125);
     }
 
     @Benchmark
     public double measureOSHNoise3D() {
-        return osh.noise3_Classic(++x, --y, z++);
+        return osh.noise3_Classic(++x * 0.03125, --y * 0.03125, z++ * 0.03125);
     }
 
     @Benchmark
     public double measureOSHNoise4D() {
-        return osh.noise4_Classic(++x, --y, z++, w--);
+        return osh.noise4_Classic(++x * 0.03125, --y * 0.03125, z++ * 0.03125, w-- * 0.03125);
     }
 
 

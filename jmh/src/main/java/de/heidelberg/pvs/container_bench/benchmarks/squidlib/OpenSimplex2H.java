@@ -14,7 +14,7 @@ package de.heidelberg.pvs.container_bench.benchmarks.squidlib;
  */
 public class OpenSimplex2H {
 	
-	private long seed;
+	private final long seed;
 
 	public OpenSimplex2H(long seed) {
 		this.seed = (seed + 0x91E10DA5C79E7B1DL) * 0x8CB92BA72F3D8DD7L;
@@ -269,21 +269,21 @@ public class OpenSimplex2H {
 		double asi, bsi;
 		if (aabbScore > ababScore && aabbScore > abbaScore) {
 			if (aabb > 0) {
-				asi = zsi; bsi = wsi; vertexIndex = 0b0011; via = 0b0111; vib = 0b1011;
+				asi = zsi; bsi = wsi; vertexIndex = 3; via = 7; vib = 11;
 			} else {
-				asi = xsi; bsi = ysi; vertexIndex = 0b1100; via = 0b1101; vib = 0b1110;
+				asi = xsi; bsi = ysi; vertexIndex = 12; via = 13; vib = 14;
 			}
 		} else if (ababScore > abbaScore) {
 			if (abab > 0) {
-				asi = ysi; bsi = wsi; vertexIndex = 0b0101; via = 0b0111; vib = 0b1101;
+				asi = ysi; bsi = wsi; vertexIndex = 5; via = 7; vib = 13;
 			} else {
-				asi = xsi; bsi = zsi; vertexIndex = 0b1010; via = 0b1011; vib = 0b1110;
+				asi = xsi; bsi = zsi; vertexIndex = 10; via = 11; vib = 14;
 			}
 		} else {
 			if (abba > 0) {
-				asi = ysi; bsi = zsi; vertexIndex = 0b1001; via = 0b1011; vib = 0b1101;
+				asi = ysi; bsi = zsi; vertexIndex = 9; via = 11; vib = 13;
 			} else {
-				asi = xsi; bsi = wsi; vertexIndex = 0b0110; via = 0b0111; vib = 0b1110;
+				asi = xsi; bsi = wsi; vertexIndex = 6; via = 7; vib = 14;
 			}
 		}
 		if (bsi > asi) {
@@ -295,14 +295,14 @@ public class OpenSimplex2H {
 		if (siSum + asi > 3) {
 			vertexIndex = via;
 			if (siSum + bsi > 4) {
-				vertexIndex = 0b1111;
+				vertexIndex = 15;
 			}
 		}
 		
 		// Now flip back if we're actually in the lower half.
 		if (inLowerHalf) {
 			xsi = 1 - xsi; ysi = 1 - ysi; zsi = 1 - zsi; wsi = 1 - wsi;
-			vertexIndex ^= 0b1111;
+			vertexIndex ^= 15;
 		}
 		
 		// Five points to add, total, from five copies of the A4 lattice.
@@ -333,18 +333,18 @@ public class OpenSimplex2H {
 			
 			// Next point is the closest vertex on the 4-simplex whose base vertex is the aforementioned vertex.
 			double score0 = 1.0 + ssi * (-1.0 / 0.309016994374947); // Seems slightly faster than 1.0-xsi-ysi-zsi-wsi
-			vertexIndex = 0b0000;
+			vertexIndex = 0;
 			if (xsi >= ysi && xsi >= zsi && xsi >= wsi && xsi >= score0) {
-				vertexIndex = 0b0001;
+				vertexIndex = 1;
 			}
 			else if (ysi > xsi && ysi >= zsi && ysi >= wsi && ysi >= score0) {
-				vertexIndex = 0b0010;
+				vertexIndex = 2;
 			}
 			else if (zsi > xsi && zsi > ysi && zsi >= wsi && zsi >= score0) {
-				vertexIndex = 0b0100;
+				vertexIndex = 4;
 			}
 			else if (wsi > xsi && wsi > ysi && wsi > zsi && wsi >= score0) {
-				vertexIndex = 0b1000;
+				vertexIndex = 8;
 			}
 		}
 		
@@ -446,16 +446,19 @@ public class OpenSimplex2H {
 		double xsi, ysi, zsi, wsi;
 		double ssiDelta;
 		public LatticePoint4D(int xsv, int ysv, int zsv, int wsv) {
-			this.xsv = xsv + 409; this.ysv = ysv + 409; this.zsv = zsv + 409; this.wsv = wsv + 409;
+			this.xsv = xsv + 409;
+			this.ysv = ysv + 409;
+			this.zsv = zsv + 409;
+			this.wsv = wsv + 409;
 			double ssv = (xsv + ysv + zsv + wsv) * 0.309016994374947;
 			this.dx = -xsv - ssv;
 			this.dy = -ysv - ssv;
 			this.dz = -zsv - ssv;
 			this.dw = -wsv - ssv;
-			this.xsi = xsi = 0.2 - xsv;
-			this.ysi = ysi = 0.2 - ysv;
-			this.zsi = zsi = 0.2 - zsv;
-			this.wsi = wsi = 0.2 - wsv;
+			xsi = 0.2 - xsv;
+			ysi = 0.2 - ysv;
+			zsi = 0.2 - zsv;
+			wsi = 0.2 - wsv;
 			this.ssiDelta = (0.8 - xsv - ysv - zsv - wsv) * 0.309016994374947;
 		}
 	}
@@ -757,7 +760,7 @@ public class OpenSimplex2H {
 	 * @return 32-bit hash of the x,y point with the given state s
 	 */
 	public int hash(int x, int y) {
-		return (int)(((0xD1B54A32D192ED03L * x + 0xABC98388FB8FAC03L * y - seed ^ 0x9E3779B97F4A7C15L) * 0xC6BC279692B5CC83L >>> 32) * 24L >>> 32);
+		return (int)(((0xD1B54A32D192ED03L * x + 0xABC98388FB8FAC03L * y - seed) * 0x9E3779B97F4A7C15L >>> 32) * 24L >>> 32);
 	}
 	/**
 	 * A 32-bit-result point hash that uses multiplication with long constants.
@@ -767,7 +770,7 @@ public class OpenSimplex2H {
 	 * @return 32-bit hash of the x,y,z point with the given state s
 	 */
 	public int hash(int x, int y, int z) {
-		return (int)(((0xDB4F0B9175AE2165L * x + 0xBBE0563303A4615FL * y + -0xA0F2EC75A1FE1575L * z + seed ^ 0x9E3779B97F4A7C15L) * 0xC6BC279692B5CC83L >>> 32) * 48L >>> 32);
+		return (int)(((0xDB4F0B9175AE2165L * x + 0xBBE0563303A4615FL * y + -0xA0F2EC75A1FE1575L * z + seed) * 0x9E3779B97F4A7C15L >>> 32) * 48L >>> 32);
 	}
 
 	/**
@@ -780,6 +783,6 @@ public class OpenSimplex2H {
 	 */
 	public int hash(int x, int y, int z, int w) {
 		return (int) (((0xE19B01AA9D42C633L * x + 0xC6D1D6C8ED0C9631L * y + -0xAF36D01EF7518DBBL * z +
-				0x9A69443F36F710E7L * w - seed ^ 0x9E3779B97F4A7C15L) * 0xC6BC279692B5CC83L >>> 32) * 160L >>> 32);
+				0x9A69443F36F710E7L * w - seed) * 0x9E3779B97F4A7C15L >>> 32) * 160L >>> 32);
 	}
 }
