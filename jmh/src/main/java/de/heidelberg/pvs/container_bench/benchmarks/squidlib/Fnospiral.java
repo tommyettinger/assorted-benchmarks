@@ -1824,23 +1824,23 @@ new Float6(-0.02973230696179f, -0.51371026289118f, 0.34133522703692f,
     }
 
     protected float gradCoord2D(int x, int y, float xd, float yd) {
-        final Float2 g = permGrad2[perm[x] ^ y];
+        final Float2 g = permGrad2[perm[x & PMASK] ^ y & PMASK];
         return xd * g.x + yd * g.y;
     }
 
     protected float gradCoord3D(int x, int y, int z, float xd, float yd, float zd) {
-        final Float3 g = permGrad3[perm[perm[x] ^ y] ^ z];
+        final Float3 g = permGrad3[perm[perm[x & PMASK] ^ y & PMASK] ^ z & PMASK];
         return xd * g.x + yd * g.y + zd * g.z;
     }
 
     protected float gradCoord4D(int x, int y, int z, int w, float xd, float yd, float zd, float wd) {
-        final Float4 g = permGrad4[perm[perm[perm[x] ^ y] ^ z] ^ w];
+        final Float4 g = permGrad4[perm[perm[perm[x & PMASK] ^ y & PMASK] ^ z & PMASK] ^ w & PMASK];
         return xd * g.x + yd * g.y + zd * g.z + wd * g.w; 
     }
 
     protected float gradCoord6D(int x, int y, int z, int w, int u, int v,
                                        float xd, float yd, float zd, float wd, float ud, float vd) {
-        final Float6 g = permGrad6[perm[perm[perm[perm[perm[x] ^ y] ^ z] ^ w] ^ u] ^ w];
+        final Float6 g = permGrad6[perm[perm[perm[perm[perm[x & PMASK] ^ y & PMASK] ^ z & PMASK] ^ w & PMASK] ^ u & PMASK] ^ w & PMASK];
         return xd * g.x + yd * g.y + zd * g.z + wd * g.w + ud * g.u + vd * g.v;
     }
 

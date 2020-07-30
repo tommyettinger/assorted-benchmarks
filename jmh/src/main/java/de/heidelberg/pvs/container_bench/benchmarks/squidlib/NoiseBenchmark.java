@@ -102,6 +102,38 @@ import java.util.concurrent.TimeUnit;
  * NoiseBenchmark.measureOSHNoise3D   avgt    5   64.572 ± 0.148  ns/op
  * NoiseBenchmark.measureOSHNoise4D   avgt    5   73.817 ± 0.650  ns/op
  * </pre>
+ * <br>
+ * With an experimental mix of FastNoise' Simplex code and OpenSimplex2F's perm code,
+ * called Fnospiral here:
+ * <pre>
+ * Benchmark                            Mode  Cnt     Score    Error  Units
+ * NoiseBenchmark.measureFastNoise2D    avgt    5    25.028 ±  0.048  ns/op
+ * NoiseBenchmark.measureFastNoise3D    avgt    5    29.224 ±  0.112  ns/op
+ * NoiseBenchmark.measureFastNoise4D    avgt    5    66.217 ±  0.109  ns/op
+ * NoiseBenchmark.measureFastNoise6D    avgt    5   127.115 ±  0.444  ns/op
+ * NoiseBenchmark.measureFnospiral2D    avgt    5    24.940 ±  0.026  ns/op
+ * NoiseBenchmark.measureFnospiral3D    avgt    5    26.940 ±  0.023  ns/op
+ * NoiseBenchmark.measureFnospiral4D    avgt    5    48.949 ±  0.375  ns/op
+ * NoiseBenchmark.measureFnospiral6D    avgt    5   130.221 ±  0.242  ns/op
+ * NoiseBenchmark.measureOSFNoise2D     avgt    5    30.382 ±  0.080  ns/op
+ * NoiseBenchmark.measureOSFNoise3D     avgt    5    47.526 ±  0.236  ns/op
+ * NoiseBenchmark.measureOSFNoise4D     avgt    5    52.697 ±  0.101  ns/op
+ * NoiseBenchmark.measureOSHNoise2D     avgt    5    36.132 ±  2.219  ns/op
+ * NoiseBenchmark.measureOSHNoise3D     avgt    5    49.253 ±  0.153  ns/op
+ * NoiseBenchmark.measureOSHNoise4D     avgt    5    52.676 ±  0.174  ns/op
+ * NoiseBenchmark.measureOSSNoise2D     avgt    5    37.889 ±  0.154  ns/op
+ * NoiseBenchmark.measureOSSNoise3D     avgt    5    59.187 ±  0.047  ns/op
+ * NoiseBenchmark.measureOSSNoise4D     avgt    5    89.812 ±  0.309  ns/op
+ * NoiseBenchmark.measureOpenSimplex2D  avgt    5    35.963 ±  0.028  ns/op
+ * NoiseBenchmark.measureOpenSimplex3D  avgt    5    75.904 ±  0.116  ns/op
+ * NoiseBenchmark.measureOpenSimplex4D  avgt    5  1577.699 ± 37.611  ns/op
+ * NoiseBenchmark.measureSeeded2D       avgt    5    29.071 ±  0.054  ns/op
+ * NoiseBenchmark.measureSeeded3D       avgt    5    40.740 ±  0.045  ns/op
+ * NoiseBenchmark.measureSeeded4D       avgt    5    60.504 ±  0.037  ns/op
+ * NoiseBenchmark.measureSeeded6D       avgt    5   136.941 ±  0.128  ns/op
+ * </pre>
+ * <br>
+ * Fnospiral is fastest in almost all cases, but also doesn't allow reseeding per-call.
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
