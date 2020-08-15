@@ -1,0 +1,56 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
+        jcenter()
+    }
+    ext.jmh_version = '1.23' // JMH version to use
+}
+
+plugins {
+    id 'java'
+    id 'maven'
+    id 'eclipse'
+    id 'idea'
+    // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work
+    id "com.github.johnrengelman.shadow" version "5.2.0"
+    id 'com.github.ben-manes.versions' version '0.27.0' // for "gradlew dependencyUpdates -Drevision=release"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
+    maven { url 'https://jitpack.io' }
+    jcenter()
+}
+
+group = 'com.github.tommyettinger'
+version = '1.0'
+
+description = """Benchmarks for SquidLib-related code"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
+
+shadowJar {
+    destinationDirectory = project.rootDir
+    archiveFileName = 'benchmarks.jar'
+    classifier = 'benchmarks'
+    manifest.attributes('Main-Class': 'org.openjdk.jmh.Main')
+}
+
+dependencies {
+    implementation group: 'org.openjdk.jmh', name: 'jmh-core', version: jmh_version
+    annotationProcessor group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: jmh_version
+    implementation group: 'org.openjdk.jol', name: 'jol-core', version:'0.10'
+
+    implementation 'com.github.SquidPony.SquidLib:squidlib:ba84804c05'
+    implementation 'space.earlygrey:simple-graphs:155a48e25d'
+    implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
+
+    testImplementation group: 'junit', name: 'junit', version:'4.12'
+    testImplementation group: 'org.openjdk.jol', name: 'jol-core', version: '0.10'
+}
+
