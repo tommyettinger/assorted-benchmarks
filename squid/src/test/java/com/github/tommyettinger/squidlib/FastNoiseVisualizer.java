@@ -146,7 +146,7 @@ public class FastNoiseVisualizer extends ApplicationAdapter {
             case 2:
                 for (int x = 0; x < width; x++) {
                     for (int y = 0; y < height; y++) {
-                        bright = basicPrepare(noise.getConfiguredNoise(x, y, ctr, 0x1p-4f * (x + y - ctr)));
+                        bright = basicPrepare(noise.getConfiguredNoise(x, y, ctr, -0.125f * (x + y + ctr)));
                         renderer.color(bright, bright, bright, 1f);
                         renderer.vertex(x, y, 0);
                     }

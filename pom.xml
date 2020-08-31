@@ -18,7 +18,7 @@
         <maven.source.version>3.0.1</maven.source.version>
         <maven.gpg.version>1.6</maven.gpg.version>
         <jdk.version>1.8</jdk.version>
-        <gdx.version>1.9.11-SNAPSHOT</gdx.version>
+        <gdx.version>1.9.10</gdx.version>
     </properties>
     <licenses>
         <license>
@@ -63,11 +63,17 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.SquidPony.SquidLib</groupId>
+            <groupId>com.squidpony</groupId>
             <artifactId>squidlib-util</artifactId>
-            <version>a6158b22b1</version>
+            <version>3.0.0</version>
             <scope>compile</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.github.SquidPony.SquidLib</groupId>-->
+<!--            <artifactId>squidlib-util</artifactId>-->
+<!--            <version>ac154d5f65</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
@@ -92,13 +98,13 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>merry-ds</artifactId>
-            <version>dd7e5210bf</version>
+            <version>dc9e1bceb6</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.tommyettinger</groupId>
+            <groupId>space.earlygrey</groupId>
             <artifactId>simple-graphs</artifactId>
-            <version>e0aabae80d</version>
+            <version>155a48e25d</version>
             <scope>compile</scope>
         </dependency>
         

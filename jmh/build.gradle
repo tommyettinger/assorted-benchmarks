@@ -33,6 +33,8 @@ description = """Benchmarks for Java containers"""
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
+sourceSets.main.resources.srcDirs += [ file('src/main/resources').path ]
+sourceSets.test.resources.srcDirs += [ file('src/main/resources').path ]
 
 shadowJar {
     destinationDirectory = project.rootDir
@@ -61,13 +63,12 @@ dependencies {
     implementation group: 'org.scala-lang', name: 'scala-library', version: '2.13.1'
 
     // transitively grabs libGDX 1.9.10:
-    implementation group: 'com.github.tommyettinger', name: 'merry-ds', version: 'acfd734bb3'// 'e1b0cffcff'
-
+    implementation 'com.github.tommyettinger:merry-ds:dc9e1bceb6'
+    
     // compile group: 'in.jlibs', name: 'jlibs-core', version:'2.2.1'
     // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
 
-    implementation 'com.github.SquidPony.SquidLib:squidlib-util:aba4c22230'
-//    implementation 'com.github.tommyettinger:simple-graphs:ef743fde62'
+    //implementation 'com.github.tommyettinger:simple-graphs:ef743fde62'
     //implementation 'space.earlygrey:simple-graphs:6e671fabc2'
     implementation 'space.earlygrey:simple-graphs:155a48e25d'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'

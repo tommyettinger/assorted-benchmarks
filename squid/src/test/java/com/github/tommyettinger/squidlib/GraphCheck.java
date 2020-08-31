@@ -1,9 +1,5 @@
-package de.heidelberg.pvs.container_bench;
+package com.github.tommyettinger.squidlib;
 
-import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
-import com.badlogic.gdx.ai.pfa.GraphPath;
-import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
-import de.heidelberg.pvs.container_bench.benchmarks.squidlib.PathfindingBenchmark;
 import space.earlygrey.simplegraphs.DirectedGraph;
 import space.earlygrey.simplegraphs.UndirectedGraph;
 import squidpony.squidai.CustomDijkstraMap;

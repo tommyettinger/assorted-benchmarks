@@ -15,7 +15,7 @@ public class IntegerDictionaryGenerator implements IntElementGenerator{
 	
 	public void init(int size, int seed) throws IOException {
 		
-		words = Wordlist.loadInts(size, seed, 1);
+		words = Wordlist.loadInts(size, seed, -1);
 		randomGenerator = new TangleRNG(seed);
 		
 	}
