@@ -29,5 +29,14 @@ public class IntegerDictionaryGenerator implements IntElementGenerator{
 	public int[] generateIntArray(int arraySize) {
 		return Arrays.copyOfRange(words, 0, arraySize);
 	}
+	
+	public Integer[] generateIntegerArray(final int arraySize, final int shift) {
+		Integer[] arr = new Integer[arraySize];
+		int state = 12345;
+		for (int i = 0; i < arraySize; i++) {
+			arr[i] = (state = state * 0xcf019d85 + 0x87654321) << shift;
+		}
+		return arr;
+	}
 
 }

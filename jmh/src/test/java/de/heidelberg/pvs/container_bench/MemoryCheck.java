@@ -1,10 +1,12 @@
 package de.heidelberg.pvs.container_bench;
 
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.LongMap;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.OrderedSet;
 import de.heidelberg.pvs.container_bench.generators.dictionary.IntegerDictionaryGenerator;
 import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryGenerator;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 
@@ -122,12 +124,9 @@ public class MemoryCheck {
 					e.printStackTrace();
 				}
 				System.gc();
-				int[] raw = gen.generateIntArray(size);
-				Integer[] numbers = new Integer[size];
+				Integer[] numbers = gen.generateIntegerArray(size, 10);
 				List<Integer> numberList = new ArrayList<>(size);
-				for (int i = 0; i < size; i++) {
-					numberList.add(numbers[i] = raw[i] << 10);
-				}
+				Collections.addAll(numberList, numbers);
 				System.out.println("LIST");
 				System.out.println("----------------------------------------");
 				{
@@ -212,6 +211,151 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 
+			}
+		}
+		{
+			IntegerDictionaryGenerator gen = new IntegerDictionaryGenerator();
+			for (int size : new int[]{1, 10, 100, 1000, 10000, 100000, 1000000}) {
+				try {
+					gen.init(size, -1);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				System.gc();
+				Integer[] ints = gen.generateIntegerArray(size, 0);
+				Long[] numbers = new Long[size];
+				List<Long> numberList = new ArrayList<>(size);
+				for (int i = 0; i < size; i++) {
+					//// this is downright cruel to libGDX 1.9.10
+					//// if you use the next line, libGDX will crash trying to process 100 Longs.
+//					numberList.add(numbers[i] = ((ints[i] & 0xFFFFFFFFL) * 0x100000001L));
+					numberList.add(numbers[i] = (ints[i] * 0xCC62FCEB9202FAADL));
+				}
+				System.out.println("LIST");
+				System.out.println("----------------------------------------");
+				{
+					ArrayList<Long> set = new ArrayList<>(size);
+					set.addAll(numberList);
+					System.out.printf("JDK ArrayList, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+				{
+					Array<Long> set = new Array<>(size);
+					set.addAll(numbers);
+					System.out.printf("GDX Array, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+				System.out.println("UNORDERED");
+				System.out.println("----------------------------------------");
+				{
+					HashSet<Long> set = new HashSet<>(size);
+					set.addAll(numberList);
+					System.out.printf("JDK HashSet, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+				{
+					ObjectOpenHashSet<Long> set = new ObjectOpenHashSet<>(size, 0.8f);
+					set.addAll(numberList);
+					System.out.printf("FastUtil Set, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+				{
+					ObjectSet<Long> set = new ObjectSet<>(size);
+					set.addAll(numbers);
+					System.out.printf("GDX ObjectSet, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+				{
+					ds.merry.ObjectSet<Long> set = new ds.merry.ObjectSet<>(size);
+					set.addAll(numbers);
+					System.out.printf("Merry ObjectSet, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+				System.out.println("INSERTION-ORDERED:");
+				System.out.println("----------------------------------------");
+				{
+					LinkedHashSet<Long> set = new LinkedHashSet<>(size, 0.8f);
+					set.addAll(numberList);
+					System.out.printf("JDK LinkedHashSet, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+				{
+					ObjectLinkedOpenHashSet<Long> set = new ObjectLinkedOpenHashSet<>(size, 0.8f);
+					set.addAll(numberList);
+					System.out.printf("FastUtil Linked Set, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+				{
+					OrderedSet<Long> set = new OrderedSet<>(size, 0.8f);
+					set.addAll(numbers);
+					System.out.printf("GDX OrderedSet, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+				{
+					ds.merry.OrderedSet<Long> set = new ds.merry.OrderedSet<>(size, 0.8f);
+					set.addAll(numbers);
+					System.out.printf("Merry OrderedSet, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+				{
+					com.github.tommyettinger.ds.IndexedSet<Long> set = new com.github.tommyettinger.ds.IndexedSet<>(size, 0.8f);
+					set.addAll(numbers);
+					System.out.printf("Atlantis IndexedSet, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+			}
+		}
+		{
+			IntegerDictionaryGenerator gen = new IntegerDictionaryGenerator();
+			for (int size : new int[]{1, 10, 100, 1000, 10000, 100000, 1000000}) {
+				try {
+					gen.init(size, -1);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				System.gc();
+				Integer[] ints = gen.generateIntegerArray(size, 0);
+				long[] numbers = new long[size];
+				List<Long> numberList = new ArrayList<>(size);
+				for (int i = 0; i < size; i++) {
+					//// libGDX 1.9.10 survives this with LongMap because it doesn't use Long.hashCode()
+					numberList.add(numbers[i] = ((ints[i] & 0xFFFFFFFFL) * 0x100000001L));
+//					numberList.add(numbers[i] = (ints[i] * 0xCC62FCEB9202FAADL));
+				}
+				System.out.println("UNORDERED");
+				System.out.println("----------------------------------------");
+				{
+					Long2ObjectOpenHashMap<Object> set = new Long2ObjectOpenHashMap<>(size, 0.8f);
+					for (int i = 0; i < size; i++) set.put(numbers[i], null);
+					System.out.printf("FastUtil Map, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+				{
+					LongMap<Object> set = new LongMap<>(size);
+					for (int i = 0; i < size; i++) set.put(numbers[i], null);
+					System.out.printf("GDX LongMap, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
+				{
+					ds.merry.LongMap<Object> set = new ds.merry.LongMap<>(size);
+					for (int i = 0; i < size; i++) set.put(numbers[i], null);
+					System.out.printf("Merry LongMap, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
 			}
 		}
 	}
