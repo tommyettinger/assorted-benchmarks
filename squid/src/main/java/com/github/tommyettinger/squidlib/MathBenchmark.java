@@ -149,10 +149,12 @@ public class MathBenchmark {
     private short baseline = -0x8000;
     private short mathAtan2X = -0x4000;
     private short mathAtan2Y = -0x8000;
-    private short atan2ApproxX = -0x4000;
-    private short atan2ApproxY = -0x8000;
-    private short atan2ApproxXF = -0x4000;
-    private short atan2ApproxYF = -0x8000;
+    private short mathAtan2_X = -0x4000;
+    private short mathAtan2_Y = -0x8000;
+    private short atan2SquidX = -0x4000;
+    private short atan2SquidY = -0x8000;
+    private short atan2SquidXF = -0x4000;
+    private short atan2SquidYF = -0x8000;
     private short atan2GdxX = -0x4000;
     private short atan2GdxY = -0x8000;
     private short atan2GtX = -0x4000;
@@ -161,16 +163,18 @@ public class MathBenchmark {
     private short atan2NtY = -0x8000;
     private short atan2ImX = -0x4000;
     private short atan2ImY = -0x8000;
-    private short atan2Im2X = -0x4000;
-    private short atan2Im2Y = -0x8000;
+    private short atan2Im_X = -0x4000;
+    private short atan2Im_Y = -0x8000;
+    private short atan2_SquidXF = -0x4000;
+    private short atan2_SquidYF = -0x8000;
     private short atan2DegSquidXF = -0x4000;
     private short atan2DegSquidYF = -0x8000;
     private short atan2DegGdxX = -0x4000;
     private short atan2DegGdxY = -0x8000;
-    private short atan2ApproxAX = -0x4000;
-    private short atan2ApproxAY = -0x8000;
-    private short atan2ApproxAXF = -0x4000;
-    private short atan2ApproxAYF = -0x8000;
+    private short atan2BaselineX = -0x4000;
+    private short atan2BaselineY = -0x8000;
+    private short atan2BaselineXF = -0x4000;
+    private short atan2BaselineYF = -0x8000;
     
     private int npotHC = 0;
     private int npotM = 0;
@@ -529,17 +533,23 @@ public class MathBenchmark {
     {
         return Math.atan2(inputs[mathAtan2Y++ & 0xFFFF], inputs[mathAtan2X++ & 0xFFFF]);
     }
+    @Benchmark
+    public double measureMathAtan2_()
+    {
+        final double z = Math.atan2(inputs[mathAtan2_Y++ & 0xFFFF], inputs[mathAtan2_X++ & 0xFFFF]) * 0.15915494309189535 + 1.0;
+        return z - (int)z;
+    }
 
     @Benchmark
     public double measureSquidAtan2()
     {
-        return NumberTools.atan2(inputs[atan2ApproxY++ & 0xFFFF], inputs[atan2ApproxX++ & 0xFFFF]);
+        return NumberTools.atan2(inputs[atan2SquidY++ & 0xFFFF], inputs[atan2SquidX++ & 0xFFFF]);
     }
 
     @Benchmark
     public float measureSquidAtan2Float()
     {
-        return NumberTools.atan2(floatInputs[atan2ApproxYF++ & 0xFFFF], floatInputs[atan2ApproxXF++ & 0xFFFF]);
+        return NumberTools.atan2(floatInputs[atan2SquidYF++ & 0xFFFF], floatInputs[atan2SquidXF++ & 0xFFFF]);
     }
 
     @Benchmark
@@ -557,19 +567,25 @@ public class MathBenchmark {
     @Benchmark
     public float measureNtAtan2()
     {
-        return GtMathUtils.atan2_nt(floatInputs[atan2NtY++ & 0xFFFF], floatInputs[atan2NtX++ & 0xFFFF]);
+        return NumberTools2.atan2_nt(floatInputs[atan2NtY++ & 0xFFFF], floatInputs[atan2NtX++ & 0xFFFF]);
     }
  
     @Benchmark
     public float measureImuliAtan2()
     {
-        return GtMathUtils.atan2_quartic(floatInputs[atan2ImY++ & 0xFFFF], floatInputs[atan2ImX++ & 0xFFFF]);
+        return NumberTools2.atan2_quartic(floatInputs[atan2ImY++ & 0xFFFF], floatInputs[atan2ImX++ & 0xFFFF]);
     }
  
     @Benchmark
-    public float measureImuli2Atan2()
+    public float measureImuliAtan2_()
     {
-        return GtMathUtils.atan2_imuli2(floatInputs[atan2Im2Y++ & 0xFFFF], floatInputs[atan2Im2X++ & 0xFFFF]);
+        return NumberTools2.atan2_imuli_(floatInputs[atan2Im_Y++ & 0xFFFF], floatInputs[atan2Im_X++ & 0xFFFF]);
+    }
+ 
+    @Benchmark
+    public float measureSquidAtan2_Float()
+    {
+        return NumberTools.atan2_(floatInputs[atan2_SquidYF++ & 0xFFFF], floatInputs[atan2_SquidXF++ & 0xFFFF]);
     }
  
     @Benchmark
@@ -586,12 +602,12 @@ public class MathBenchmark {
     @Benchmark
     public double measureAtan2Baseline()
     {
-        return inputs[atan2ApproxAY++ & 0xFFFF] + inputs[atan2ApproxAX++ & 0xFFFF];
+        return inputs[atan2BaselineY++ & 0xFFFF] + inputs[atan2BaselineX++ & 0xFFFF];
     }
     @Benchmark
     public float measureAtan2BaselineFloat()
     {
-        return floatInputs[atan2ApproxAYF++ & 0xFFFF] + floatInputs[atan2ApproxAXF++ & 0xFFFF];
+        return floatInputs[atan2BaselineYF++ & 0xFFFF] + floatInputs[atan2BaselineXF++ & 0xFFFF];
     }
     
     @Benchmark
@@ -632,15 +648,10 @@ java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
                 asinChristensenError = 0.0, asinSquidError = 0.0;
         ;
         System.out.println("Math.sin()       : " + u.measureMathSin());
-        System.out.println("Math.sin()       : " + u.measureMathSin());
         System.out.println("Math.cos()       : " + u.measureMathCos());
         System.out.println("double sin approx: " + u.measureSquidSin());
         System.out.println("double cos approx: " + u.measureSquidCos());
-//        System.out.println("float approx     : " + u.measureCosApproxFloat());
-//        System.out.println("Climatiano       : " + u.measureCosApproxClimatiano());
-//        System.out.println("ClimatianoLP     : " + u.measureCosApproxClimatianoLP());
         for (int r = 0; r < 0x1000; r++) {
-            //margin += 0.0001;
             short i = (short) (DiverRNG.determine(r) & 0xFFFF);
             u.mathCos = i;
             u.mathSin = i;
@@ -681,7 +692,6 @@ java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
             asinChristensenError += Math.abs(u.measureChristensenASin() - as);
             asinSquidError += Math.abs(u.measureSquidASin() - as);
         }
-        //System.out.println("Margin allowed   : " + margin);
         System.out.println("base float error : " + precisionError);
         System.out.println("cos GDX          : " + cosGdxError);
         System.out.println("sin GDX          : " + sinGdxError);
@@ -699,23 +709,26 @@ java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
         System.out.println("cos GDX deg      : " + cosDegGdxError);
         System.out.println("asin Chr.        : " + asinChristensenError);
         System.out.println("asin Squid       : " + asinSquidError);
-        double atan2ApproxError = 0;
+        double atan2SquidError = 0;
+        double atan2_SquidError = 0;
         double atan2GDXError = 0;
         double atan2GtError = 0;
         double atan2NtError = 0;
         double atan2ImError = 0;
-        double atan2Im2Error = 0;
-        double at;
+        double atan2_ImError = 0;
+        double at, at_;
         for(int r = 0; r < 0x10000; r++)
         {
             short i = (short) (DiverRNG.determine(r) & 0xFFFF);
             short j = (short) (DiverRNG.determine(-0x20000 - r - i) & 0xFFFF);
             u.mathAtan2X = i;
             u.mathAtan2Y = j;
-            u.atan2ApproxX = i;
-            u.atan2ApproxY = j;
-            u.atan2ApproxAX = i;
-            u.atan2ApproxAY = j;
+            u.mathAtan2_X = i;
+            u.mathAtan2_Y = j;
+            u.atan2SquidXF = i;
+            u.atan2SquidYF = j;
+            u.atan2_SquidXF = i;
+            u.atan2_SquidYF = j;
             u.atan2GdxX = i;
             u.atan2GdxY = j;
             u.atan2GtX = i;
@@ -724,21 +737,24 @@ java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
             u.atan2NtY = j;
             u.atan2ImX = i;
             u.atan2ImY = j;
-            u.atan2Im2X = i;
-            u.atan2Im2Y = j;
+            u.atan2Im_X = i;
+            u.atan2Im_Y = j;
             at = u.measureMathAtan2();
-            atan2ApproxError += Math.abs(u.measureSquidAtan2() - at);
+            at_ = u.measureMathAtan2_();
+            atan2SquidError += Math.abs(u.measureSquidAtan2Float() - at);
             atan2GDXError += Math.abs(u.measureGdxAtan2() - at);
             atan2GtError += Math.abs(u.measureGtAtan2() - at);
             atan2NtError += Math.abs(u.measureNtAtan2() - at);
             atan2ImError += Math.abs(u.measureImuliAtan2() - at);
-            atan2Im2Error += Math.abs(u.measureImuli2Atan2() - at);
+            atan2_SquidError += Math.abs(u.measureSquidAtan2_Float() - at_);
+            atan2_ImError += Math.abs(u.measureImuliAtan2_() - at_);
         }
-        System.out.println("atan2 Squid      : " + atan2ApproxError);
+        System.out.println("atan2 Squid      : " + atan2SquidError);
         System.out.println("atan2 GDX        : " + atan2GDXError);
         System.out.println("atan2 Gt         : " + atan2GtError);
         System.out.println("atan2 Nt         : " + atan2NtError);
         System.out.println("atan2 Imuli      : " + atan2ImError);
-        System.out.println("atan2 Imuli2     : " + atan2Im2Error);
+        System.out.println("atan2_ Squid     : " + atan2_SquidError);
+        System.out.println("atan2_ Imuli     : " + atan2_ImError);
     }
 }

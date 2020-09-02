@@ -1,0 +1,117 @@
+/* ******************************************************************************
+ * Copyright 2020 See AUTHORS file.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ ******************************************************************************/
+package com.github.tommyettinger.squidlib;
+
+import static com.badlogic.gdx.math.MathUtils.PI;
+
+/**
+ * Math helper functions.
+ */
+public final class NumberTools2 {
+    private NumberTools2() {
+    }
+    
+    static public float atan2_imuli0(float y, float x){
+
+        float ay = Math.abs(y), ax = Math.abs(x);
+        boolean invert = ay > ax;
+        float z = invert ? ax/ay : ay/ax;                                                  // [0,1]
+        float th = (0.97239411f - 0.19194795f * z * z) * z;                                // [0,π/4]
+        if(invert) th = 1.5707963267948966f - th;                                           // [0,π/2]
+        if(x < 0) th = 3.141592653589793f - th;                                            // [0,π]
+        return Math.copySign(th, y);                                                       // [-π,π]
+    }
+    
+    static public float atan2_imuli_(float y, float x){
+        float ay = Math.abs(y), ax = Math.abs(x);
+        boolean invert = ay > ax;
+        float z = invert ? ax/ay : ay/ax;
+        z = (((((0.022520265292560102f) * z) - (0.054640279287594046f)) * z - (0.0025821297967229097f)) * z + (0.1597659389184251f)) * z - (0.000025146481008519463f);
+        if(invert) z = 0.25f - z;
+        if(x < 0) z = 0.5f - z;
+        return y < 0 ? 1f - z : z;
+    }
+
+    /**
+     * Credit to imuli and Nic Taylor; imuli commented on
+     * <a href="https://www.dsprelated.com/showarticle/1052.php">Taylor's article</a> with very useful info.
+     * @param y
+     * @param x
+     * @return
+     */
+    static public float atan2_quartic(float y, float x){
+
+        float ay = Math.abs(y), ax = Math.abs(x);
+        boolean invert = ay > ax;
+        float z = invert ? ax/ay : ay/ax;
+        z = ((((0.141499f * z) - 0.343315f) * z - 0.016224f) * z + 1.003839f) * z - 0.000158f;
+        if(invert) z = 1.5707963267948966f - z;
+        if(x < 0) z = 3.141592653589793f - z;
+        return Math.copySign(z, y);
+    }
+
+    static public float atan2_nt(float y, float x)
+    {
+        if (x != 0.0f)
+        {
+            if (Math.abs(x) > Math.abs(y))
+            { 
+                final float z = y / x;
+                if (x > 0.0)
+                {
+                    // atan2(y,x) = atan(y/x) if x > 0
+                    return (0.97239411f - 0.19194795f * z * z) * z;
+                }
+                else if (y >= 0.0)
+                {
+                    // atan2(y,x) = atan(y/x) + PI if x < 0, y >= 0
+                    return (0.97239411f - 0.19194795f * z * z) * z + PI;
+                }
+                else
+                {
+                    // atan2(y,x) = atan(y/x) - PI if x < 0, y < 0
+                    return (0.97239411f - 0.19194795f * z * z) * z - PI;
+                }
+            }
+            else // Use property atan(y/x) = PI/2 - atan(x/y) if |y/x| > 1.
+            {
+                final float z = x / y;
+                if (y > 0.0)
+                {
+                    // atan2(y,x) = PI/2 - atan(x/y) if |y/x| > 1, y > 0
+                    return 1.5707963267948966f - (0.97239411f - 0.19194795f * z * z) * z;
+                }
+                else
+                {
+                    // atan2(y,x) = -PI/2 - atan(x/y) if |y/x| > 1, y < 0
+                    return -1.5707964f - (0.97239411f - 0.19194795f * z * z) * z;
+                }
+            }
+        }
+        else
+        {
+            if (y > 0.0f) // x = 0, y > 0
+            {
+                return 1.5707963267948966f;
+            }
+            else if (y < 0.0f) // x = 0, y < 0
+            {
+                return -1.5707964f;
+            }
+        }
+        return 0.0f; // x,y = 0. Could return NaN instead.
+    }
+}
