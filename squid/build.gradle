@@ -26,6 +26,7 @@ repositories {
 }
 
 group = 'com.github.tommyettinger'
+
 version = '1.0'
 
 description = """Benchmarks for SquidLib-related code"""

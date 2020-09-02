@@ -78,12 +78,24 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureSquidSinF           avgt    5    8.327 ± 0.083  ns/op
  * </pre>
  * <br>
- * And here's those two atan2() methods, each in the 0-360 range instead of -pi to pi:
+ * And here's just the atan2() methods, two measured in degrees and marked with a *:
  * <pre>
  * Benchmark                                Mode  Cnt   Score   Error  Units
- * MathBenchmark.measureGdxAtan2Deg         avgt    5  37.212 ± 0.479  ns/op
- * MathBenchmark.measureSquidAtan2DegFloat  avgt    5  22.696 ± 0.346  ns/op
+ * MathBenchmark.measureAtan2Baseline       avgt    5   4.414 ± 0.019  ns/op
+ * MathBenchmark.measureAtan2BaselineFloat  avgt    5   4.380 ± 0.537  ns/op
+ * MathBenchmark.measureGdxAtan2            avgt    5  20.574 ± 0.084  ns/op
+ * MathBenchmark.measureGdxAtan2Deg         avgt    5  36.738 ± 0.204  ns/op *
+ * MathBenchmark.measureGtAtan2             avgt    5  21.665 ± 0.086  ns/op
+ * MathBenchmark.measureImuli2Atan2         avgt    5  18.459 ± 1.160  ns/op
+ * MathBenchmark.measureImuliAtan2          avgt    5  18.588 ± 0.055  ns/op
+ * MathBenchmark.measureMathAtan2           avgt    5  84.168 ± 1.465  ns/op
+ * MathBenchmark.measureNtAtan2             avgt    5  19.847 ± 1.796  ns/op
+ * MathBenchmark.measureSquidAtan2          avgt    5  23.232 ± 0.856  ns/op
+ * MathBenchmark.measureSquidAtan2DegFloat  avgt    5  23.690 ± 2.294  ns/op *
+ * MathBenchmark.measureSquidAtan2Float     avgt    5  24.059 ± 2.169  ns/op
  * </pre>
+ * Here, Imuli has the best speed without sacrificing quality, but Gt has slightly better
+ * quality and slightly worse speed. Imuli doesn't use a LUT, Gt does.
  */
 
 @State(Scope.Thread)
@@ -100,10 +112,9 @@ public class MathBenchmark {
     {
         for (int i = 0; i < 65536; i++) {
             floatInputs[i] = (float) (inputs[i] =
-                    //-2.0 + (i * 0.0625)
-                    NumberTools.randomSignedDouble(i + 107) * 4096.0
+                    (DiverRNG.determine(i) >> 10) * 0x1p-41
             );
-            arcInputs[i] = NumberTools.randomSignedDouble(i + 421L);
+            arcInputs[i] = (DiverRNG.determine(~i) >> 10) * 0x1p-53;
         }
     }
     public static double asin(double a)
@@ -144,6 +155,14 @@ public class MathBenchmark {
     private short atan2ApproxYF = -0x8000;
     private short atan2GdxX = -0x4000;
     private short atan2GdxY = -0x8000;
+    private short atan2GtX = -0x4000;
+    private short atan2GtY = -0x8000;
+    private short atan2NtX = -0x4000;
+    private short atan2NtY = -0x8000;
+    private short atan2ImX = -0x4000;
+    private short atan2ImY = -0x8000;
+    private short atan2Im2X = -0x4000;
+    private short atan2Im2Y = -0x8000;
     private short atan2DegSquidXF = -0x4000;
     private short atan2DegSquidYF = -0x8000;
     private short atan2DegGdxX = -0x4000;
@@ -530,6 +549,30 @@ public class MathBenchmark {
     }
  
     @Benchmark
+    public float measureGtAtan2()
+    {
+        return GtMathUtils.atan2(floatInputs[atan2GtY++ & 0xFFFF], floatInputs[atan2GtX++ & 0xFFFF]);
+    }
+ 
+    @Benchmark
+    public float measureNtAtan2()
+    {
+        return GtMathUtils.atan2_nt(floatInputs[atan2NtY++ & 0xFFFF], floatInputs[atan2NtX++ & 0xFFFF]);
+    }
+ 
+    @Benchmark
+    public float measureImuliAtan2()
+    {
+        return GtMathUtils.atan2_quartic(floatInputs[atan2ImY++ & 0xFFFF], floatInputs[atan2ImX++ & 0xFFFF]);
+    }
+ 
+    @Benchmark
+    public float measureImuli2Atan2()
+    {
+        return GtMathUtils.atan2_imuli2(floatInputs[atan2Im2Y++ & 0xFFFF], floatInputs[atan2Im2X++ & 0xFFFF]);
+    }
+ 
+    @Benchmark
     public float measureSquidAtan2DegFloat()
     {
         return NumberTools.atan2Degrees360(floatInputs[atan2DegSquidYF++ & 0xFFFF], floatInputs[atan2DegSquidXF++ & 0xFFFF]);
@@ -658,6 +701,10 @@ java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
         System.out.println("asin Squid       : " + asinSquidError);
         double atan2ApproxError = 0;
         double atan2GDXError = 0;
+        double atan2GtError = 0;
+        double atan2NtError = 0;
+        double atan2ImError = 0;
+        double atan2Im2Error = 0;
         double at;
         for(int r = 0; r < 0x10000; r++)
         {
@@ -671,11 +718,27 @@ java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
             u.atan2ApproxAY = j;
             u.atan2GdxX = i;
             u.atan2GdxY = j;
+            u.atan2GtX = i;
+            u.atan2GtY = j;
+            u.atan2NtX = i;
+            u.atan2NtY = j;
+            u.atan2ImX = i;
+            u.atan2ImY = j;
+            u.atan2Im2X = i;
+            u.atan2Im2Y = j;
             at = u.measureMathAtan2();
             atan2ApproxError += Math.abs(u.measureSquidAtan2() - at);
             atan2GDXError += Math.abs(u.measureGdxAtan2() - at);
+            atan2GtError += Math.abs(u.measureGtAtan2() - at);
+            atan2NtError += Math.abs(u.measureNtAtan2() - at);
+            atan2ImError += Math.abs(u.measureImuliAtan2() - at);
+            atan2Im2Error += Math.abs(u.measureImuli2Atan2() - at);
         }
         System.out.println("atan2 Squid      : " + atan2ApproxError);
         System.out.println("atan2 GDX        : " + atan2GDXError);
+        System.out.println("atan2 Gt         : " + atan2GtError);
+        System.out.println("atan2 Nt         : " + atan2NtError);
+        System.out.println("atan2 Imuli      : " + atan2ImError);
+        System.out.println("atan2 Imuli2     : " + atan2Im2Error);
     }
 }
