@@ -6,6 +6,8 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.OrderedSet;
+import com.github.tommyettinger.ds.IndexedMap;
+import com.github.tommyettinger.ds.IndexedSet;
 import com.koloboke.collect.set.hash.HashObjSet;
 import de.heidelberg.pvs.container_bench.generators.TangleRNG;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
@@ -58,10 +60,10 @@ public class MemoryMBeanCheck {
     }
     
     public static void main(String[] args) {
-//        mainCharSeq();
+        mainCharSeq();
         mainString();
-//        mainFloat();
-//        mainInteger();
+        mainFloat();
+        mainInteger();
 //        mapStringInt();
     }
     public static void mainString () {
@@ -75,7 +77,7 @@ public class MemoryMBeanCheck {
         for (int i = 0; i < 6; i++) {
             if(i == 5)
                 System.setOut(out);
-            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000, 470000}) {
+            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
                 try {
                     gen.init(size, i);
                 } catch (IOException e) {
@@ -85,14 +87,14 @@ public class MemoryMBeanCheck {
                 System.out.println("LIST");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK ArrayList", size,
-                    measure(new Runnable() {
-                        ArrayList<String> x;
+                        measure(new Runnable() {
+                            ArrayList<String> x;
 
-                        @Override public void run () {
-                            x = new ArrayList<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ArrayList<>(size);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX Array", size, measure(new Runnable() {
                     Array<String> x;
 
@@ -102,82 +104,231 @@ public class MemoryMBeanCheck {
                     }
                 }));
 
-                System.out.println("UNORDERED");
+                System.out.println("UNORDERED SET");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK HashSet", size,
-                    measure(new Runnable() {
-                        HashSet<String> x;
+                        measure(new Runnable() {
+                            HashSet<String> x;
 
-                        @Override public void run () {
-                            x = new HashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new HashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "FastUtil Set", size,
-                    measure(new Runnable() {
-                        ObjectOpenHashSet<String> x;
+                        measure(new Runnable() {
+                            ObjectOpenHashSet<String> x;
 
-                        @Override public void run () {
-                            x = new ObjectOpenHashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ObjectOpenHashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Koloboke Set", size,
+                        measure(new Runnable() {
+                            HashObjSet<String> x;
+
+                            @Override public void run () {
+                                x = com.koloboke.collect.set.hash.HashObjSets.newMutableSet(size);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Eclipse Set", size,
+                        measure(new Runnable() {
+                            org.eclipse.collections.impl.set.mutable.UnifiedSet<String> x;
+
+                            @Override public void run () {
+                                x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Agrona Set", size,
+                        measure(new Runnable() {
+                            org.agrona.collections.ObjectHashSet<String> x;
+
+                            @Override public void run () {
+                                x = new org.agrona.collections.ObjectHashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX ObjectSet", size,
-                    measure(new Runnable() {
-                        ObjectSet<String> x;
+                        measure(new Runnable() {
+                            ObjectSet<String> x;
 
-                        @Override public void run () {
-                            x = new ObjectSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ObjectSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry ObjectSet", size,
-                    measure(new Runnable() {
-                        ds.merry.ObjectSet<String> x;
+                        measure(new Runnable() {
+                            ds.merry.ObjectSet<String> x;
 
-                        @Override public void run () {
-                            x = new ds.merry.ObjectSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
-                System.out.println("INSERTION-ORDERED:");
+                            @Override public void run () {
+                                x = new ds.merry.ObjectSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.println("INSERTION-ORDERED SET:");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
-                    measure(new Runnable() {
-                        LinkedHashSet<String> x;
+                        measure(new Runnable() {
+                            LinkedHashSet<String> x;
 
-                        @Override public void run () {
-                            x = new LinkedHashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new LinkedHashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "FastUtil Linked Set", size,
-                    measure(new Runnable() {
-                        ObjectLinkedOpenHashSet<String> x;
+                        measure(new Runnable() {
+                            ObjectLinkedOpenHashSet<String> x;
 
-                        @Override public void run () {
-                            x = new ObjectLinkedOpenHashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ObjectLinkedOpenHashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX OrderedSet", size,
-                    measure(new Runnable() {
-                        OrderedSet<String> x;
+                        measure(new Runnable() {
+                            OrderedSet<String> x;
 
-                        @Override public void run () {
-                            x = new OrderedSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new OrderedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry OrderedSet", size,
-                    measure(new Runnable() {
-                        ds.merry.OrderedSet<String> x;
+                        measure(new Runnable() {
+                            ds.merry.OrderedSet<String> x;
 
-                        @Override public void run () {
-                            x = new ds.merry.OrderedSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ds.merry.OrderedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Atlantis IndexedSet", size,
+                        measure(new Runnable() {
+                            IndexedSet<String> x;
+
+                            @Override public void run () {
+                                x = new IndexedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+
+                System.out.println("UNORDERED MAP");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK HashMap", size,
+                        measure(new Runnable() {
+                            HashMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new HashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "FastUtil Map", size,
+                        measure(new Runnable() {
+                            Object2ObjectOpenHashMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new Object2ObjectOpenHashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Koloboke Map", size,
+                        measure(new Runnable() {
+                            com.koloboke.collect.map.hash.HashObjObjMap<String, String> x;
+
+                            @Override public void run () {
+                                x = com.koloboke.collect.map.hash.HashObjObjMaps.newMutableMap(size);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Eclipse Map", size,
+                        measure(new Runnable() {
+                            UnifiedMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new UnifiedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Agrona Map", size,
+                        measure(new Runnable() {
+                            org.agrona.collections.Object2ObjectHashMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new Object2ObjectHashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX ObjectMap", size,
+                        measure(new Runnable() {
+                            ObjectMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new ObjectMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry ObjectMap", size,
+                        measure(new Runnable() {
+                            ds.merry.ObjectMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new ds.merry.ObjectMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.println("INSERTION-ORDERED MAP:");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK LinkedHashMap", size,
+                        measure(new Runnable() {
+                            LinkedHashMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new LinkedHashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "FastUtil Linked Map", size,
+                        measure(new Runnable() {
+                            Object2ObjectLinkedOpenHashMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new Object2ObjectLinkedOpenHashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX OrderedMap", size,
+                        measure(new Runnable() {
+                            OrderedMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new OrderedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry OrderedMap", size,
+                        measure(new Runnable() {
+                            ds.merry.OrderedMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new ds.merry.OrderedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Atlantis IndexedMap", size,
+                        measure(new Runnable() {
+                            IndexedMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new IndexedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
             }
         }
     }
@@ -192,7 +343,7 @@ public class MemoryMBeanCheck {
         for (int i = 0; i < 6; i++) {
             if(i == 5)
                 System.setOut(out);
-            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000, 470000}) {
+            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
                 try {
                     gen.init(size, i);
                 } catch (IOException e) {
@@ -201,16 +352,16 @@ public class MemoryMBeanCheck {
                 CustomString[] items = gen.generateCustomArray(size);
                 System.out.println("LIST");
                 System.out.println("----------------------------------------");
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK ArrayList", size,
-                    measure(new Runnable() {
-                        ArrayList<CustomString> x;
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDK ArrayList", size,
+                        measure(new Runnable() {
+                            ArrayList<CustomString> x;
 
-                        @Override public void run () {
-                            x = new ArrayList<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX Array", size, measure(new Runnable() {
+                            @Override public void run () {
+                                x = new ArrayList<>(size);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "GDX Array", size, measure(new Runnable() {
                     Array<CustomString> x;
 
                     @Override public void run () {
@@ -219,83 +370,231 @@ public class MemoryMBeanCheck {
                     }
                 }));
 
-                System.out.println("UNORDERED");
+                System.out.println("UNORDERED SET");
                 System.out.println("----------------------------------------");
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK HashSet", size,
-                    measure(new Runnable() {
-                        HashSet<CustomString> x;
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDK HashSet", size,
+                        measure(new Runnable() {
+                            HashSet<CustomString> x;
 
-                        @Override public void run () {
-                            x = new HashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "FastUtil Set", size,
-                    measure(new Runnable() {
-                        ObjectOpenHashSet<CustomString> x;
+                            @Override public void run () {
+                                x = new HashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "FastUtil Set", size,
+                        measure(new Runnable() {
+                            ObjectOpenHashSet<CustomString> x;
 
-                        @Override public void run () {
-                            x = new ObjectOpenHashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX ObjectSet", size,
-                    measure(new Runnable() {
-                        ObjectSet<CustomString> x;
+                            @Override public void run () {
+                                x = new ObjectOpenHashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Koloboke Set", size,
+                        measure(new Runnable() {
+                            HashObjSet<CustomString> x;
 
-                        @Override public void run () {
-                            x = new ObjectSet<>(size);
-                            for (int j = 0; j < size; j++)
-                                x.add(items[j]);
-                        }
-                    }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry ObjectSet", size,
-                    measure(new Runnable() {
-                        ds.merry.ObjectSet<CustomString> x;
+                            @Override public void run () {
+                                x = com.koloboke.collect.set.hash.HashObjSets.newMutableSet(size);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Eclipse Set", size,
+                        measure(new Runnable() {
+                            org.eclipse.collections.impl.set.mutable.UnifiedSet<CustomString> x;
 
-                        @Override public void run () {
-                            x = new ds.merry.ObjectSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
-                System.out.println("INSERTION-ORDERED:");
+                            @Override public void run () {
+                                x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Agrona Set", size,
+                        measure(new Runnable() {
+                            org.agrona.collections.ObjectHashSet<CustomString> x;
+
+                            @Override public void run () {
+                                x = new org.agrona.collections.ObjectHashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "GDX ObjectSet", size,
+                        measure(new Runnable() {
+                            ObjectSet<CustomString> x;
+
+                            @Override public void run () {
+                                x = new ObjectSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Merry ObjectSet", size,
+                        measure(new Runnable() {
+                            ds.merry.ObjectSet<CustomString> x;
+
+                            @Override public void run () {
+                                x = new ds.merry.ObjectSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.println("INSERTION-ORDERED SET:");
                 System.out.println("----------------------------------------");
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
-                    measure(new Runnable() {
-                        LinkedHashSet<CustomString> x;
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
+                        measure(new Runnable() {
+                            LinkedHashSet<CustomString> x;
 
-                        @Override public void run () {
-                            x = new LinkedHashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "FastUtil Linked Set", size,
-                    measure(new Runnable() {
-                        ObjectLinkedOpenHashSet<CustomString> x;
+                            @Override public void run () {
+                                x = new LinkedHashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "FastUtil Linked Set", size,
+                        measure(new Runnable() {
+                            ObjectLinkedOpenHashSet<CustomString> x;
 
-                        @Override public void run () {
-                            x = new ObjectLinkedOpenHashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX OrderedSet", size,
-                    measure(new Runnable() {
-                        OrderedSet<CustomString> x;
+                            @Override public void run () {
+                                x = new ObjectLinkedOpenHashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "GDX OrderedSet", size,
+                        measure(new Runnable() {
+                            OrderedSet<CustomString> x;
 
-                        @Override public void run () {
-                            x = new OrderedSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Merry OrderedSet", size,
-                    measure(new Runnable() {
-                        ds.merry.OrderedSet<CustomString> x;
+                            @Override public void run () {
+                                x = new OrderedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Merry OrderedSet", size,
+                        measure(new Runnable() {
+                            ds.merry.OrderedSet<CustomString> x;
 
-                        @Override public void run () {
-                            x = new ds.merry.OrderedSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ds.merry.OrderedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Atlantis IndexedSet", size,
+                        measure(new Runnable() {
+                            IndexedSet<CustomString> x;
+
+                            @Override public void run () {
+                                x = new IndexedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+
+                System.out.println("UNORDERED MAP");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDK HashMap", size,
+                        measure(new Runnable() {
+                            HashMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new HashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "FastUtil Map", size,
+                        measure(new Runnable() {
+                            Object2ObjectOpenHashMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new Object2ObjectOpenHashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Koloboke Map", size,
+                        measure(new Runnable() {
+                            com.koloboke.collect.map.hash.HashObjObjMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = com.koloboke.collect.map.hash.HashObjObjMaps.newMutableMap(size);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Eclipse Map", size,
+                        measure(new Runnable() {
+                            UnifiedMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new UnifiedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Agrona Map", size,
+                        measure(new Runnable() {
+                            org.agrona.collections.Object2ObjectHashMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new Object2ObjectHashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "GDX ObjectMap", size,
+                        measure(new Runnable() {
+                            ObjectMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new ObjectMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Merry ObjectMap", size,
+                        measure(new Runnable() {
+                            ds.merry.ObjectMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new ds.merry.ObjectMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.println("INSERTION-ORDERED MAP:");
+                System.out.println("----------------------------------------");
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDK LinkedHashMap", size,
+                        measure(new Runnable() {
+                            LinkedHashMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new LinkedHashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "FastUtil Linked Map", size,
+                        measure(new Runnable() {
+                            Object2ObjectLinkedOpenHashMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new Object2ObjectLinkedOpenHashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "GDX OrderedMap", size,
+                        measure(new Runnable() {
+                            OrderedMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new OrderedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Merry OrderedMap", size,
+                        measure(new Runnable() {
+                            ds.merry.OrderedMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new ds.merry.OrderedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Atlantis IndexedMap", size,
+                        measure(new Runnable() {
+                            IndexedMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new IndexedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
             }
         }
     }
@@ -309,8 +608,8 @@ public class MemoryMBeanCheck {
         for (int i = 0; i < 6; i++) {
             if(i == 5)
                 System.setOut(out);
-            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000, 470000}) {
-                Set<String> strings = new HashSet<>(size);
+            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
+                Set<String> strings = new HashSet<>(size, 0.8f);
                 try {
                     strings.addAll(Wordlist.loadWordSet(size,1));
                 } catch (IOException e) {
@@ -326,7 +625,7 @@ public class MemoryMBeanCheck {
                         HashMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new HashMap<>(size);
+                            x = new HashMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -335,7 +634,7 @@ public class MemoryMBeanCheck {
                         Object2ObjectOpenHashMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new Object2ObjectOpenHashMap<>(size);
+                            x = new Object2ObjectOpenHashMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -344,7 +643,7 @@ public class MemoryMBeanCheck {
                         ObjectMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectMap<>(size);
+                            x = new ObjectMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -353,7 +652,7 @@ public class MemoryMBeanCheck {
                         ds.merry.ObjectMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new ds.merry.ObjectMap<>(size);
+                            x = new ds.merry.ObjectMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -365,7 +664,7 @@ public class MemoryMBeanCheck {
                         Object2IntOpenHashMap<String> x;
 
                         @Override public void run () {
-                            x = new Object2IntOpenHashMap<>(size);
+                            x = new Object2IntOpenHashMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -394,7 +693,7 @@ public class MemoryMBeanCheck {
                         LinkedHashMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new LinkedHashMap<>(size);
+                            x = new LinkedHashMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -403,7 +702,7 @@ public class MemoryMBeanCheck {
                         Object2ObjectLinkedOpenHashMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new Object2ObjectLinkedOpenHashMap<>(size);
+                            x = new Object2ObjectLinkedOpenHashMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -412,7 +711,7 @@ public class MemoryMBeanCheck {
                         OrderedMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new OrderedMap<>(size);
+                            x = new OrderedMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -421,7 +720,7 @@ public class MemoryMBeanCheck {
                         ds.merry.OrderedMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new ds.merry.OrderedMap<>(size);
+                            x = new ds.merry.OrderedMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -432,7 +731,7 @@ public class MemoryMBeanCheck {
                         Object2IntLinkedOpenHashMap<String> x;
 
                         @Override public void run () {
-                            x = new Object2IntLinkedOpenHashMap<>(size);
+                            x = new Object2IntLinkedOpenHashMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -441,7 +740,7 @@ public class MemoryMBeanCheck {
 //                        ds.merry.ObjectIntOrderedMap<String> x;
 //
 //                        @Override public void run () {
-//                            x = new ds.merry.ObjectIntOrderedMap<>(size);
+//                            x = new ds.merry.ObjectIntOrderedMap<>(size, 0.8f);
 //                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
 //                        }
 //                    }));
@@ -469,14 +768,14 @@ public class MemoryMBeanCheck {
                 System.out.println("LIST");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK ArrayList", size,
-                    measure(new Runnable() {
-                        ArrayList<Float> x;
+                        measure(new Runnable() {
+                            ArrayList<Float> x;
 
-                        @Override public void run () {
-                            x = new ArrayList<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ArrayList<>(size);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "GDX Array", size, measure(new Runnable() {
                     Array<Float> x;
 
@@ -489,156 +788,228 @@ public class MemoryMBeanCheck {
                 System.out.println("UNORDERED SET");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK HashSet", size,
-                    measure(new Runnable() {
-                        HashSet<Float> x;
+                        measure(new Runnable() {
+                            HashSet<Float> x;
 
-                        @Override public void run () {
-                            x = new HashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new HashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "FastUtil Set", size,
-                    measure(new Runnable() {
-                        ObjectOpenHashSet<Float> x;
+                        measure(new Runnable() {
+                            ObjectOpenHashSet<Float> x;
 
-                        @Override public void run () {
-                            x = new ObjectOpenHashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ObjectOpenHashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Koloboke Set", size,
+                        measure(new Runnable() {
+                            HashObjSet<Float> x;
+
+                            @Override public void run () {
+                                x = com.koloboke.collect.set.hash.HashObjSets.newMutableSet(size);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Eclipse Set", size,
+                        measure(new Runnable() {
+                            org.eclipse.collections.impl.set.mutable.UnifiedSet<Float> x;
+
+                            @Override public void run () {
+                                x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Agrona Set", size,
+                        measure(new Runnable() {
+                            org.agrona.collections.ObjectHashSet<Float> x;
+
+                            @Override public void run () {
+                                x = new org.agrona.collections.ObjectHashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "GDX ObjectSet", size,
-                    measure(new Runnable() {
-                        ObjectSet<Float> x;
+                        measure(new Runnable() {
+                            ObjectSet<Float> x;
 
-                        @Override public void run () {
-                            x = new ObjectSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ObjectSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Merry ObjectSet", size,
-                    measure(new Runnable() {
-                        ds.merry.ObjectSet<Float> x;
+                        measure(new Runnable() {
+                            ds.merry.ObjectSet<Float> x;
 
-                        @Override public void run () {
-                            x = new ds.merry.ObjectSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ds.merry.ObjectSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.println("INSERTION-ORDERED SET:");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
-                    measure(new Runnable() {
-                        LinkedHashSet<Float> x;
+                        measure(new Runnable() {
+                            LinkedHashSet<Float> x;
 
-                        @Override public void run () {
-                            x = new LinkedHashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new LinkedHashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "FastUtil Linked Set", size,
-                    measure(new Runnable() {
-                        ObjectLinkedOpenHashSet<Float> x;
+                        measure(new Runnable() {
+                            ObjectLinkedOpenHashSet<Float> x;
 
-                        @Override public void run () {
-                            x = new ObjectLinkedOpenHashSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ObjectLinkedOpenHashSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "GDX OrderedSet", size,
-                    measure(new Runnable() {
-                        OrderedSet<Float> x;
+                        measure(new Runnable() {
+                            OrderedSet<Float> x;
 
-                        @Override public void run () {
-                            x = new OrderedSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new OrderedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Merry OrderedSet", size,
-                    measure(new Runnable() {
-                        ds.merry.OrderedSet<Float> x;
+                        measure(new Runnable() {
+                            ds.merry.OrderedSet<Float> x;
 
-                        @Override public void run () {
-                            x = new ds.merry.OrderedSet<>(size);
-                            for (int j = 0; j < size; j++) x.add(items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ds.merry.OrderedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Atlantis IndexedSet", size,
+                        measure(new Runnable() {
+                            IndexedSet<Float> x;
+
+                            @Override public void run () {
+                                x = new IndexedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
 
                 System.out.println("UNORDERED MAP");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK HashMap", size,
-                    measure(new Runnable() {
-                        HashMap<Float, Float> x;
+                        measure(new Runnable() {
+                            HashMap<Float, Float> x;
 
-                        @Override public void run () {
-                            x = new HashMap<>(size);
-                            for (int j = 0; j < size; j++) x.put(items[j], items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new HashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "FastUtil Map", size,
-                    measure(new Runnable() {
-                        Object2ObjectOpenHashMap<Float, Float> x;
+                        measure(new Runnable() {
+                            Object2ObjectOpenHashMap<Float, Float> x;
 
-                        @Override public void run () {
-                            x = new Object2ObjectOpenHashMap<>(size);
-                            for (int j = 0; j < size; j++) x.put(items[j], items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new Object2ObjectOpenHashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Koloboke Map", size,
+                        measure(new Runnable() {
+                            com.koloboke.collect.map.hash.HashObjObjMap<Float, Float> x;
+
+                            @Override public void run () {
+                                x = com.koloboke.collect.map.hash.HashObjObjMaps.newMutableMap(size);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Eclipse Map", size,
+                        measure(new Runnable() {
+                            UnifiedMap<Float, Float> x;
+
+                            @Override public void run () {
+                                x = new UnifiedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Agrona Map", size,
+                        measure(new Runnable() {
+                            org.agrona.collections.Object2ObjectHashMap<Float, Float> x;
+
+                            @Override public void run () {
+                                x = new Object2ObjectHashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "GDX ObjectMap", size,
-                    measure(new Runnable() {
-                        ObjectMap<Float, Float> x;
+                        measure(new Runnable() {
+                            ObjectMap<Float, Float> x;
 
-                        @Override public void run () {
-                            x = new ObjectMap<>(size);
-                            for (int j = 0; j < size; j++) x.put(items[j], items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ObjectMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Merry ObjectMap", size,
-                    measure(new Runnable() {
-                        ds.merry.ObjectMap<Float, Float> x;
+                        measure(new Runnable() {
+                            ds.merry.ObjectMap<Float, Float> x;
 
-                        @Override public void run () {
-                            x = new ds.merry.ObjectMap<>(size);
-                            for (int j = 0; j < size; j++) x.put(items[j], items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ds.merry.ObjectMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.println("INSERTION-ORDERED MAP:");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK LinkedHashMap", size,
-                    measure(new Runnable() {
-                        LinkedHashMap<Float, Float> x;
+                        measure(new Runnable() {
+                            LinkedHashMap<Float, Float> x;
 
-                        @Override public void run () {
-                            x = new LinkedHashMap<>(size);
-                            for (int j = 0; j < size; j++) x.put(items[j], items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new LinkedHashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "FastUtil Linked Map", size,
-                    measure(new Runnable() {
-                        Object2ObjectLinkedOpenHashMap<Float, Float> x;
+                        measure(new Runnable() {
+                            Object2ObjectLinkedOpenHashMap<Float, Float> x;
 
-                        @Override public void run () {
-                            x = new Object2ObjectLinkedOpenHashMap<>(size);
-                            for (int j = 0; j < size; j++) x.put(items[j], items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new Object2ObjectLinkedOpenHashMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "GDX OrderedMap", size,
-                    measure(new Runnable() {
-                        OrderedMap<Float, Float> x;
+                        measure(new Runnable() {
+                            OrderedMap<Float, Float> x;
 
-                        @Override public void run () {
-                            x = new OrderedMap<>(size);
-                            for (int j = 0; j < size; j++) x.put(items[j], items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new OrderedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Merry OrderedMap", size,
-                    measure(new Runnable() {
-                        ds.merry.OrderedMap<Float, Float> x;
+                        measure(new Runnable() {
+                            ds.merry.OrderedMap<Float, Float> x;
 
-                        @Override public void run () {
-                            x = new ds.merry.OrderedMap<>(size);
-                            for (int j = 0; j < size; j++) x.put(items[j], items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new ds.merry.OrderedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Atlantis IndexedMap", size,
+                        measure(new Runnable() {
+                            IndexedMap<Float, Float> x;
+
+                            @Override public void run () {
+                                x = new IndexedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
             }
         }
     }
@@ -688,7 +1059,7 @@ public class MemoryMBeanCheck {
                         HashSet<Integer> x;
 
                         @Override public void run () {
-                            x = new HashSet<>(size);
+                            x = new HashSet<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -697,7 +1068,7 @@ public class MemoryMBeanCheck {
                         ObjectOpenHashSet<Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectOpenHashSet<>(size);
+                            x = new ObjectOpenHashSet<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -715,7 +1086,7 @@ public class MemoryMBeanCheck {
                         org.eclipse.collections.impl.set.mutable.UnifiedSet<Integer> x;
 
                         @Override public void run () {
-                            x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size);
+                            x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -724,7 +1095,7 @@ public class MemoryMBeanCheck {
                         org.agrona.collections.ObjectHashSet<Integer> x;
 
                         @Override public void run () {
-                            x = new org.agrona.collections.ObjectHashSet<>(size);
+                            x = new org.agrona.collections.ObjectHashSet<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -733,7 +1104,7 @@ public class MemoryMBeanCheck {
                         ObjectSet<Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectSet<>(size);
+                            x = new ObjectSet<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -742,7 +1113,7 @@ public class MemoryMBeanCheck {
                         ds.merry.ObjectSet<Integer> x;
 
                         @Override public void run () {
-                            x = new ds.merry.ObjectSet<>(size);
+                            x = new ds.merry.ObjectSet<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -753,7 +1124,7 @@ public class MemoryMBeanCheck {
                         LinkedHashSet<Integer> x;
 
                         @Override public void run () {
-                            x = new LinkedHashSet<>(size);
+                            x = new LinkedHashSet<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -762,7 +1133,7 @@ public class MemoryMBeanCheck {
                         ObjectLinkedOpenHashSet<Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectLinkedOpenHashSet<>(size);
+                            x = new ObjectLinkedOpenHashSet<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -771,7 +1142,7 @@ public class MemoryMBeanCheck {
                         OrderedSet<Integer> x;
 
                         @Override public void run () {
-                            x = new OrderedSet<>(size);
+                            x = new OrderedSet<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -780,10 +1151,19 @@ public class MemoryMBeanCheck {
                         ds.merry.OrderedSet<Integer> x;
 
                         @Override public void run () {
-                            x = new ds.merry.OrderedSet<>(size);
+                            x = new ds.merry.OrderedSet<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "Atlantis IndexedSet", size,
+                        measure(new Runnable() {
+                            IndexedSet<Integer> x;
+
+                            @Override public void run () {
+                                x = new IndexedSet<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
 
                 System.out.println("UNORDERED MAP");
                 System.out.println("----------------------------------------");
@@ -792,7 +1172,7 @@ public class MemoryMBeanCheck {
                         HashMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new HashMap<>(size);
+                            x = new HashMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -801,7 +1181,7 @@ public class MemoryMBeanCheck {
                         Object2ObjectOpenHashMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new Object2ObjectOpenHashMap<>(size);
+                            x = new Object2ObjectOpenHashMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -819,7 +1199,7 @@ public class MemoryMBeanCheck {
                         UnifiedMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new UnifiedMap<>(size);
+                            x = new UnifiedMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -828,7 +1208,7 @@ public class MemoryMBeanCheck {
                         org.agrona.collections.Object2ObjectHashMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new Object2ObjectHashMap<>(size, 0.55f); // agrona's default load factor
+                            x = new Object2ObjectHashMap<>(size, 0.8f); // agrona's default load factor
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -837,7 +1217,7 @@ public class MemoryMBeanCheck {
                         ObjectMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectMap<>(size);
+                            x = new ObjectMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -846,7 +1226,7 @@ public class MemoryMBeanCheck {
                         ds.merry.ObjectMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new ds.merry.ObjectMap<>(size);
+                            x = new ds.merry.ObjectMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -857,7 +1237,7 @@ public class MemoryMBeanCheck {
                         LinkedHashMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new LinkedHashMap<>(size);
+                            x = new LinkedHashMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -866,28 +1246,37 @@ public class MemoryMBeanCheck {
                         Object2ObjectLinkedOpenHashMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new Object2ObjectLinkedOpenHashMap<>(size);
+                            x = new Object2ObjectLinkedOpenHashMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "GDX OrderedMap", size,
-                    measure(new Runnable() {
-                        OrderedMap<Integer, Integer> x;
+                        measure(new Runnable() {
+                            OrderedMap<Integer, Integer> x;
 
-                        @Override public void run () {
-                            x = new OrderedMap<>(size);
-                            for (int j = 0; j < size; j++) x.put(items[j], items[j]);
-                        }
-                    }));
+                            @Override public void run () {
+                                x = new OrderedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "Merry OrderedMap", size,
                     measure(new Runnable() {
                         ds.merry.OrderedMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new ds.merry.OrderedMap<>(size);
+                            x = new ds.merry.OrderedMap<>(size, 0.8f);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "Atlantis IndexedMap", size,
+                        measure(new Runnable() {
+                            IndexedMap<Integer, Integer> x;
+
+                            @Override public void run () {
+                                x = new IndexedMap<>(size, 0.8f);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
             }
         }
     }

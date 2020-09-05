@@ -2,6 +2,443 @@ NOTE: String results may be inaccurate due to deduplication.
 Float results are below the String results, and should be more representative.
 Integer results are below Float results, and check problematic keys (only the upper 22 bits are used).
 
+CUSTOM STRINGS (different hashCode(), better for short Strings)
+
+LIST
+----------------------------------------
+                 JDK ArrayList,       1 CustomStrings: 48
+----------------------------------------
+                     GDX Array,       1 CustomStrings: 56
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,       1 CustomStrings: 144
+----------------------------------------
+                  FastUtil Set,       1 CustomStrings: 80
+----------------------------------------
+                  Koloboke Set,       1 CustomStrings: 64
+----------------------------------------
+                   Eclipse Set,       1 CustomStrings: 56
+----------------------------------------
+                    Agrona Set,       1 CustomStrings: 88
+----------------------------------------
+                 GDX ObjectSet,       1 CustomStrings: 104
+----------------------------------------
+               Merry ObjectSet,       1 CustomStrings: 104
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,       1 CustomStrings: 160
+----------------------------------------
+           FastUtil Linked Set,       1 CustomStrings: 128
+----------------------------------------
+                GDX OrderedSet,       1 CustomStrings: 168
+----------------------------------------
+              Merry OrderedSet,       1 CustomStrings: 168
+----------------------------------------
+           Atlantis IndexedSet,       1 CustomStrings: 128
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,       1 CustomStrings: 128
+----------------------------------------
+                  FastUtil Map,       1 CustomStrings: 128
+----------------------------------------
+                  Koloboke Map,       1 CustomStrings: 80
+----------------------------------------
+                   Eclipse Map,       1 CustomStrings: 64
+----------------------------------------
+                    Agrona Map,       1 CustomStrings: 128
+----------------------------------------
+                 GDX ObjectMap,       1 CustomStrings: 160
+----------------------------------------
+               Merry ObjectMap,       1 CustomStrings: 176
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,       1 CustomStrings: 144
+----------------------------------------
+           FastUtil Linked Map,       1 CustomStrings: 184
+----------------------------------------
+                GDX OrderedMap,       1 CustomStrings: 224
+----------------------------------------
+              Merry OrderedMap,       1 CustomStrings: 240
+----------------------------------------
+           Atlantis IndexedMap,       1 CustomStrings: 184
+----------------------------------------
+LIST
+----------------------------------------
+                 JDK ArrayList,      10 CustomStrings: 80
+----------------------------------------
+                     GDX Array,      10 CustomStrings: 88
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,      10 CustomStrings: 464
+----------------------------------------
+                  FastUtil Set,      10 CustomStrings: 136
+----------------------------------------
+                  Koloboke Set,      10 CustomStrings: 112
+----------------------------------------
+                   Eclipse Set,      10 CustomStrings: 208
+----------------------------------------
+                    Agrona Set,      10 CustomStrings: 120
+----------------------------------------
+                 GDX ObjectSet,      10 CustomStrings: 168
+----------------------------------------
+               Merry ObjectSet,      10 CustomStrings: 128
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,      10 CustomStrings: 552
+----------------------------------------
+           FastUtil Linked Set,      10 CustomStrings: 296
+----------------------------------------
+                GDX OrderedSet,      10 CustomStrings: 288
+----------------------------------------
+              Merry OrderedSet,      10 CustomStrings: 224
+----------------------------------------
+           Atlantis IndexedSet,      10 CustomStrings: 216
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,      10 CustomStrings: 448
+----------------------------------------
+                  FastUtil Map,      10 CustomStrings: 240
+----------------------------------------
+                  Koloboke Map,      10 CustomStrings: 176
+----------------------------------------
+                   Eclipse Map,      10 CustomStrings: 272
+----------------------------------------
+                    Agrona Map,      10 CustomStrings: 192
+----------------------------------------
+                 GDX ObjectMap,      10 CustomStrings: 288
+----------------------------------------
+               Merry ObjectMap,      10 CustomStrings: 224
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,      10 CustomStrings: 536
+----------------------------------------
+           FastUtil Linked Map,      10 CustomStrings: 408
+----------------------------------------
+                GDX OrderedMap,      10 CustomStrings: 408
+----------------------------------------
+              Merry OrderedMap,      10 CustomStrings: 320
+----------------------------------------
+           Atlantis IndexedMap,      10 CustomStrings: 328
+----------------------------------------
+LIST
+----------------------------------------
+                 JDK ArrayList,     100 CustomStrings: 440
+----------------------------------------
+                     GDX Array,     100 CustomStrings: 448
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,     100 CustomStrings: 3792
+----------------------------------------
+                  FastUtil Set,     100 CustomStrings: 584
+----------------------------------------
+                  Koloboke Set,     100 CustomStrings: 1072
+----------------------------------------
+                   Eclipse Set,     100 CustomStrings: 1328
+----------------------------------------
+                    Agrona Set,     100 CustomStrings: 568
+----------------------------------------
+                 GDX ObjectSet,     100 CustomStrings: 632
+----------------------------------------
+               Merry ObjectSet,     100 CustomStrings: 576
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,     100 CustomStrings: 4600
+----------------------------------------
+           FastUtil Linked Set,     100 CustomStrings: 1640
+----------------------------------------
+                GDX OrderedSet,     100 CustomStrings: 1200
+----------------------------------------
+              Merry OrderedSet,     100 CustomStrings: 1032
+----------------------------------------
+           Atlantis IndexedSet,     100 CustomStrings: 1024
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,     100 CustomStrings: 3776
+----------------------------------------
+                  FastUtil Map,     100 CustomStrings: 1136
+----------------------------------------
+                  Koloboke Map,     100 CustomStrings: 2096
+----------------------------------------
+                   Eclipse Map,     100 CustomStrings: 2032
+----------------------------------------
+                    Agrona Map,     100 CustomStrings: 1088
+----------------------------------------
+                 GDX ObjectMap,     100 CustomStrings: 1216
+----------------------------------------
+               Merry ObjectMap,     100 CustomStrings: 1120
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,     100 CustomStrings: 4584
+----------------------------------------
+           FastUtil Linked Map,     100 CustomStrings: 2200
+----------------------------------------
+                GDX OrderedMap,     100 CustomStrings: 1784
+----------------------------------------
+              Merry OrderedMap,     100 CustomStrings: 1576
+----------------------------------------
+           Atlantis IndexedMap,     100 CustomStrings: 1584
+----------------------------------------
+LIST
+----------------------------------------
+                 JDK ArrayList,    1000 CustomStrings: 4040
+----------------------------------------
+                     GDX Array,    1000 CustomStrings: 4048
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,    1000 CustomStrings: 44352
+----------------------------------------
+                  FastUtil Set,    1000 CustomStrings: 8264
+----------------------------------------
+                  Koloboke Set,    1000 CustomStrings: 8240
+----------------------------------------
+                   Eclipse Set,    1000 CustomStrings: 14480
+----------------------------------------
+                    Agrona Set,    1000 CustomStrings: 12360
+----------------------------------------
+                 GDX ObjectSet,    1000 CustomStrings: 8336
+----------------------------------------
+               Merry ObjectSet,    1000 CustomStrings: 8256
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,    1000 CustomStrings: 52352
+----------------------------------------
+           FastUtil Linked Set,    1000 CustomStrings: 24680
+----------------------------------------
+                GDX OrderedSet,    1000 CustomStrings: 16584
+----------------------------------------
+              Merry OrderedSet,    1000 CustomStrings: 12312
+----------------------------------------
+           Atlantis IndexedSet,    1000 CustomStrings: 12304
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,    1000 CustomStrings: 44336
+----------------------------------------
+                  FastUtil Map,    1000 CustomStrings: 16496
+----------------------------------------
+                  Koloboke Map,    1000 CustomStrings: 16432
+----------------------------------------
+                   Eclipse Map,    1000 CustomStrings: 23776
+----------------------------------------
+                    Agrona Map,    1000 CustomStrings: 24656
+----------------------------------------
+                 GDX ObjectMap,    1000 CustomStrings: 16624
+----------------------------------------
+               Merry ObjectMap,    1000 CustomStrings: 16480
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,    1000 CustomStrings: 52336
+----------------------------------------
+           FastUtil Linked Map,    1000 CustomStrings: 32920
+----------------------------------------
+                GDX OrderedMap,    1000 CustomStrings: 24872
+----------------------------------------
+              Merry OrderedMap,    1000 CustomStrings: 20536
+----------------------------------------
+           Atlantis IndexedMap,    1000 CustomStrings: 20544
+----------------------------------------
+LIST
+----------------------------------------
+                 JDK ArrayList,   10000 CustomStrings: 40040
+----------------------------------------
+                     GDX Array,   10000 CustomStrings: 40048
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,   10000 CustomStrings: 382000
+----------------------------------------
+                  FastUtil Set,   10000 CustomStrings: 65608
+----------------------------------------
+                  Koloboke Set,   10000 CustomStrings: 65584
+----------------------------------------
+                   Eclipse Set,   10000 CustomStrings: 131792
+----------------------------------------
+                    Agrona Set,   10000 CustomStrings: 65592
+----------------------------------------
+                 GDX ObjectSet,   10000 CustomStrings: 65696
+----------------------------------------
+               Merry ObjectSet,   10000 CustomStrings: 65600
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,   10000 CustomStrings: 461104
+----------------------------------------
+           FastUtil Linked Set,   10000 CustomStrings: 196712
+----------------------------------------
+                GDX OrderedSet,   10000 CustomStrings: 131288
+----------------------------------------
+              Merry OrderedSet,   10000 CustomStrings: 105656
+----------------------------------------
+           Atlantis IndexedSet,   10000 CustomStrings: 105648
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,   10000 CustomStrings: 381984
+----------------------------------------
+                  FastUtil Map,   10000 CustomStrings: 131184
+----------------------------------------
+                  Koloboke Map,   10000 CustomStrings: 131120
+----------------------------------------
+                   Eclipse Map,   10000 CustomStrings: 214576
+----------------------------------------
+                    Agrona Map,   10000 CustomStrings: 131136
+----------------------------------------
+                 GDX ObjectMap,   10000 CustomStrings: 131344
+----------------------------------------
+               Merry ObjectMap,   10000 CustomStrings: 131168
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,   10000 CustomStrings: 461088
+----------------------------------------
+           FastUtil Linked Map,   10000 CustomStrings: 262296
+----------------------------------------
+                GDX OrderedMap,   10000 CustomStrings: 196936
+----------------------------------------
+              Merry OrderedMap,   10000 CustomStrings: 171224
+----------------------------------------
+           Atlantis IndexedMap,   10000 CustomStrings: 171232
+----------------------------------------
+LIST
+----------------------------------------
+                 JDK ArrayList,  100000 CustomStrings: 400040
+----------------------------------------
+                     GDX Array,  100000 CustomStrings: 400048
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,  100000 CustomStrings: 3246576
+----------------------------------------
+                  FastUtil Set,  100000 CustomStrings: 524360
+----------------------------------------
+                  Koloboke Set,  100000 CustomStrings: 1048624
+----------------------------------------
+                   Eclipse Set,  100000 CustomStrings: 1105584
+----------------------------------------
+                    Agrona Set,  100000 CustomStrings: 524344
+----------------------------------------
+                 GDX ObjectSet,  100000 CustomStrings: 524464
+----------------------------------------
+               Merry ObjectSet,  100000 CustomStrings: 524352
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,  100000 CustomStrings: 3927136
+----------------------------------------
+           FastUtil Linked Set,  100000 CustomStrings: 1572968
+----------------------------------------
+                GDX OrderedSet,  100000 CustomStrings: 1048808
+----------------------------------------
+              Merry OrderedSet,  100000 CustomStrings: 924408
+----------------------------------------
+           Atlantis IndexedSet,  100000 CustomStrings: 924400
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,  100000 CustomStrings: 3246560
+----------------------------------------
+                  FastUtil Map,  100000 CustomStrings: 1048688
+----------------------------------------
+                  Koloboke Map,  100000 CustomStrings: 2097200
+----------------------------------------
+                   Eclipse Map,  100000 CustomStrings: 1813424
+----------------------------------------
+                    Agrona Map,  100000 CustomStrings: 1048640
+----------------------------------------
+                 GDX ObjectMap,  100000 CustomStrings: 1048880
+----------------------------------------
+               Merry ObjectMap,  100000 CustomStrings: 1048672
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,  100000 CustomStrings: 3927120
+----------------------------------------
+           FastUtil Linked Map,  100000 CustomStrings: 2097304
+----------------------------------------
+                GDX OrderedMap,  100000 CustomStrings: 1573224
+----------------------------------------
+              Merry OrderedMap,  100000 CustomStrings: 1448728
+----------------------------------------
+           Atlantis IndexedMap,  100000 CustomStrings: 1448736
+----------------------------------------
+LIST
+----------------------------------------
+                 JDK ArrayList, 1000000 CustomStrings: 4000040
+----------------------------------------
+                     GDX Array, 1000000 CustomStrings: 4000048
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet, 1000000 CustomStrings: 11624432
+----------------------------------------
+                  FastUtil Set, 1000000 CustomStrings: 8388680
+----------------------------------------
+                  Koloboke Set, 1000000 CustomStrings: 8388656
+----------------------------------------
+                   Eclipse Set, 1000000 CustomStrings: 8769200
+----------------------------------------
+                    Agrona Set, 1000000 CustomStrings: 4194360
+----------------------------------------
+                 GDX ObjectSet, 1000000 CustomStrings: 8388808
+----------------------------------------
+               Merry ObjectSet, 1000000 CustomStrings: 8388672
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet, 1000000 CustomStrings: 13481952
+----------------------------------------
+           FastUtil Linked Set, 1000000 CustomStrings: 25165928
+----------------------------------------
+                GDX OrderedSet, 1000000 CustomStrings: 16777472
+----------------------------------------
+              Merry OrderedSet, 1000000 CustomStrings: 12388728
+----------------------------------------
+           Atlantis IndexedSet, 1000000 CustomStrings: 12388720
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap, 1000000 CustomStrings: 11624416
+----------------------------------------
+                  FastUtil Map, 1000000 CustomStrings: 16777328
+----------------------------------------
+                  Koloboke Map, 1000000 CustomStrings: 16777264
+----------------------------------------
+                   Eclipse Map, 1000000 CustomStrings: 17178816
+----------------------------------------
+                    Agrona Map, 1000000 CustomStrings: 8388672
+----------------------------------------
+                 GDX ObjectMap, 1000000 CustomStrings: 16777568
+----------------------------------------
+               Merry ObjectMap, 1000000 CustomStrings: 16777312
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap, 1000000 CustomStrings: 13481936
+----------------------------------------
+           FastUtil Linked Map, 1000000 CustomStrings: 33554584
+----------------------------------------
+                GDX OrderedMap, 1000000 CustomStrings: 25166232
+----------------------------------------
+              Merry OrderedMap, 1000000 CustomStrings: 20777368
+----------------------------------------
+           Atlantis IndexedMap, 1000000 CustomStrings: 20777376
+----------------------------------------
+
 STRINGS
 
 LIST
@@ -10,17 +447,23 @@ LIST
 ----------------------------------------
                      GDX Array,       1 Strings: 56
 ----------------------------------------
-UNORDERED
+UNORDERED SET
 ----------------------------------------
                    JDK HashSet,       1 Strings: 144
 ----------------------------------------
                   FastUtil Set,       1 Strings: 80
 ----------------------------------------
+                  Koloboke Set,       1 Strings: 64
+----------------------------------------
+                   Eclipse Set,       1 Strings: 56
+----------------------------------------
+                    Agrona Set,       1 Strings: 88
+----------------------------------------
                  GDX ObjectSet,       1 Strings: 104
 ----------------------------------------
                Merry ObjectSet,       1 Strings: 104
 ----------------------------------------
-INSERTION-ORDERED:
+INSERTION-ORDERED SET:
 ----------------------------------------
              JDK LinkedHashSet,       1 Strings: 160
 ----------------------------------------
@@ -30,23 +473,59 @@ INSERTION-ORDERED:
 ----------------------------------------
               Merry OrderedSet,       1 Strings: 168
 ----------------------------------------
+           Atlantis IndexedSet,       1 Strings: 128
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,       1 Strings: 128
+----------------------------------------
+                  FastUtil Map,       1 Strings: 128
+----------------------------------------
+                  Koloboke Map,       1 Strings: 80
+----------------------------------------
+                   Eclipse Map,       1 Strings: 64
+----------------------------------------
+                    Agrona Map,       1 Strings: 128
+----------------------------------------
+                 GDX ObjectMap,       1 Strings: 160
+----------------------------------------
+               Merry ObjectMap,       1 Strings: 176
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,       1 Strings: 144
+----------------------------------------
+           FastUtil Linked Map,       1 Strings: 184
+----------------------------------------
+                GDX OrderedMap,       1 Strings: 224
+----------------------------------------
+              Merry OrderedMap,       1 Strings: 240
+----------------------------------------
+           Atlantis IndexedMap,       1 Strings: 184
+----------------------------------------
 LIST
 ----------------------------------------
                  JDK ArrayList,      10 Strings: 80
 ----------------------------------------
                      GDX Array,      10 Strings: 88
 ----------------------------------------
-UNORDERED
+UNORDERED SET
 ----------------------------------------
                    JDK HashSet,      10 Strings: 464
 ----------------------------------------
                   FastUtil Set,      10 Strings: 136
 ----------------------------------------
+                  Koloboke Set,      10 Strings: 112
+----------------------------------------
+                   Eclipse Set,      10 Strings: 176
+----------------------------------------
+                    Agrona Set,      10 Strings: 120
+----------------------------------------
                  GDX ObjectSet,      10 Strings: 168
 ----------------------------------------
                Merry ObjectSet,      10 Strings: 128
 ----------------------------------------
-INSERTION-ORDERED:
+INSERTION-ORDERED SET:
 ----------------------------------------
              JDK LinkedHashSet,      10 Strings: 552
 ----------------------------------------
@@ -56,31 +535,97 @@ INSERTION-ORDERED:
 ----------------------------------------
               Merry OrderedSet,      10 Strings: 224
 ----------------------------------------
+           Atlantis IndexedSet,      10 Strings: 216
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,      10 Strings: 448
+----------------------------------------
+                  FastUtil Map,      10 Strings: 240
+----------------------------------------
+                  Koloboke Map,      10 Strings: 176
+----------------------------------------
+                   Eclipse Map,      10 Strings: 288
+----------------------------------------
+                    Agrona Map,      10 Strings: 192
+----------------------------------------
+                 GDX ObjectMap,      10 Strings: 288
+----------------------------------------
+               Merry ObjectMap,      10 Strings: 224
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,      10 Strings: 536
+----------------------------------------
+           FastUtil Linked Map,      10 Strings: 408
+----------------------------------------
+                GDX OrderedMap,      10 Strings: 408
+----------------------------------------
+              Merry OrderedMap,      10 Strings: 320
+----------------------------------------
+           Atlantis IndexedMap,      10 Strings: 328
+----------------------------------------
 LIST
 ----------------------------------------
                  JDK ArrayList,     100 Strings: 440
 ----------------------------------------
                      GDX Array,     100 Strings: 448
 ----------------------------------------
-UNORDERED
+UNORDERED SET
 ----------------------------------------
-                   JDK HashSet,     100 Strings: 4832
+                   JDK HashSet,     100 Strings: 3792
 ----------------------------------------
-                  FastUtil Set,     100 Strings: 1096
+                  FastUtil Set,     100 Strings: 584
+----------------------------------------
+                  Koloboke Set,     100 Strings: 1072
+----------------------------------------
+                   Eclipse Set,     100 Strings: 1264
+----------------------------------------
+                    Agrona Set,     100 Strings: 568
 ----------------------------------------
                  GDX ObjectSet,     100 Strings: 632
 ----------------------------------------
                Merry ObjectSet,     100 Strings: 576
 ----------------------------------------
-INSERTION-ORDERED:
+INSERTION-ORDERED SET:
 ----------------------------------------
-             JDK LinkedHashSet,     100 Strings: 5640
+             JDK LinkedHashSet,     100 Strings: 4600
 ----------------------------------------
-           FastUtil Linked Set,     100 Strings: 3176
+           FastUtil Linked Set,     100 Strings: 1640
 ----------------------------------------
                 GDX OrderedSet,     100 Strings: 1200
 ----------------------------------------
               Merry OrderedSet,     100 Strings: 1032
+----------------------------------------
+           Atlantis IndexedSet,     100 Strings: 1024
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,     100 Strings: 3776
+----------------------------------------
+                  FastUtil Map,     100 Strings: 1136
+----------------------------------------
+                  Koloboke Map,     100 Strings: 2096
+----------------------------------------
+                   Eclipse Map,     100 Strings: 2064
+----------------------------------------
+                    Agrona Map,     100 Strings: 1088
+----------------------------------------
+                 GDX ObjectMap,     100 Strings: 1216
+----------------------------------------
+               Merry ObjectMap,     100 Strings: 1120
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,     100 Strings: 4584
+----------------------------------------
+           FastUtil Linked Map,     100 Strings: 2200
+----------------------------------------
+                GDX OrderedMap,     100 Strings: 1784
+----------------------------------------
+              Merry OrderedMap,     100 Strings: 1576
+----------------------------------------
+           Atlantis IndexedMap,     100 Strings: 1584
 ----------------------------------------
 LIST
 ----------------------------------------
@@ -88,17 +633,23 @@ LIST
 ----------------------------------------
                      GDX Array,    1000 Strings: 4048
 ----------------------------------------
-UNORDERED
+UNORDERED SET
 ----------------------------------------
                    JDK HashSet,    1000 Strings: 44352
 ----------------------------------------
                   FastUtil Set,    1000 Strings: 8264
 ----------------------------------------
+                  Koloboke Set,    1000 Strings: 8240
+----------------------------------------
+                   Eclipse Set,    1000 Strings: 13968
+----------------------------------------
+                    Agrona Set,    1000 Strings: 12360
+----------------------------------------
                  GDX ObjectSet,    1000 Strings: 8336
 ----------------------------------------
                Merry ObjectSet,    1000 Strings: 8256
 ----------------------------------------
-INSERTION-ORDERED:
+INSERTION-ORDERED SET:
 ----------------------------------------
              JDK LinkedHashSet,    1000 Strings: 52352
 ----------------------------------------
@@ -108,23 +659,59 @@ INSERTION-ORDERED:
 ----------------------------------------
               Merry OrderedSet,    1000 Strings: 12312
 ----------------------------------------
+           Atlantis IndexedSet,    1000 Strings: 12304
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,    1000 Strings: 44336
+----------------------------------------
+                  FastUtil Map,    1000 Strings: 16496
+----------------------------------------
+                  Koloboke Map,    1000 Strings: 16432
+----------------------------------------
+                   Eclipse Map,    1000 Strings: 23312
+----------------------------------------
+                    Agrona Map,    1000 Strings: 24656
+----------------------------------------
+                 GDX ObjectMap,    1000 Strings: 16624
+----------------------------------------
+               Merry ObjectMap,    1000 Strings: 16480
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,    1000 Strings: 52336
+----------------------------------------
+           FastUtil Linked Map,    1000 Strings: 32920
+----------------------------------------
+                GDX OrderedMap,    1000 Strings: 24872
+----------------------------------------
+              Merry OrderedMap,    1000 Strings: 20536
+----------------------------------------
+           Atlantis IndexedMap,    1000 Strings: 20544
+----------------------------------------
 LIST
 ----------------------------------------
                  JDK ArrayList,   10000 Strings: 40040
 ----------------------------------------
                      GDX Array,   10000 Strings: 40048
 ----------------------------------------
-UNORDERED
+UNORDERED SET
 ----------------------------------------
                    JDK HashSet,   10000 Strings: 382000
 ----------------------------------------
                   FastUtil Set,   10000 Strings: 65608
 ----------------------------------------
+                  Koloboke Set,   10000 Strings: 65584
+----------------------------------------
+                   Eclipse Set,   10000 Strings: 130800
+----------------------------------------
+                    Agrona Set,   10000 Strings: 65592
+----------------------------------------
                  GDX ObjectSet,   10000 Strings: 65696
 ----------------------------------------
                Merry ObjectSet,   10000 Strings: 65600
 ----------------------------------------
-INSERTION-ORDERED:
+INSERTION-ORDERED SET:
 ----------------------------------------
              JDK LinkedHashSet,   10000 Strings: 461104
 ----------------------------------------
@@ -134,31 +721,97 @@ INSERTION-ORDERED:
 ----------------------------------------
               Merry OrderedSet,   10000 Strings: 105656
 ----------------------------------------
+           Atlantis IndexedSet,   10000 Strings: 105648
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,   10000 Strings: 381984
+----------------------------------------
+                  FastUtil Map,   10000 Strings: 131184
+----------------------------------------
+                  Koloboke Map,   10000 Strings: 131120
+----------------------------------------
+                   Eclipse Map,   10000 Strings: 216272
+----------------------------------------
+                    Agrona Map,   10000 Strings: 131136
+----------------------------------------
+                 GDX ObjectMap,   10000 Strings: 131344
+----------------------------------------
+               Merry ObjectMap,   10000 Strings: 131168
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,   10000 Strings: 461088
+----------------------------------------
+           FastUtil Linked Map,   10000 Strings: 262296
+----------------------------------------
+                GDX OrderedMap,   10000 Strings: 196936
+----------------------------------------
+              Merry OrderedMap,   10000 Strings: 171224
+----------------------------------------
+           Atlantis IndexedMap,   10000 Strings: 171232
+----------------------------------------
 LIST
 ----------------------------------------
                  JDK ArrayList,  100000 Strings: 400040
 ----------------------------------------
                      GDX Array,  100000 Strings: 400048
 ----------------------------------------
-UNORDERED
+UNORDERED SET
 ----------------------------------------
                    JDK HashSet,  100000 Strings: 3246576
 ----------------------------------------
-                  FastUtil Set,  100000 Strings: 1048648
+                  FastUtil Set,  100000 Strings: 524360
+----------------------------------------
+                  Koloboke Set,  100000 Strings: 1048624
+----------------------------------------
+                   Eclipse Set,  100000 Strings: 1106320
+----------------------------------------
+                    Agrona Set,  100000 Strings: 524344
 ----------------------------------------
                  GDX ObjectSet,  100000 Strings: 524464
 ----------------------------------------
                Merry ObjectSet,  100000 Strings: 524352
 ----------------------------------------
-INSERTION-ORDERED:
+INSERTION-ORDERED SET:
 ----------------------------------------
              JDK LinkedHashSet,  100000 Strings: 3927136
 ----------------------------------------
-           FastUtil Linked Set,  100000 Strings: 3145832
+           FastUtil Linked Set,  100000 Strings: 1572968
 ----------------------------------------
                 GDX OrderedSet,  100000 Strings: 1048808
 ----------------------------------------
               Merry OrderedSet,  100000 Strings: 924408
+----------------------------------------
+           Atlantis IndexedSet,  100000 Strings: 924400
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,  100000 Strings: 3246560
+----------------------------------------
+                  FastUtil Map,  100000 Strings: 1048688
+----------------------------------------
+                  Koloboke Map,  100000 Strings: 2097200
+----------------------------------------
+                   Eclipse Map,  100000 Strings: 1808592
+----------------------------------------
+                    Agrona Map,  100000 Strings: 1048640
+----------------------------------------
+                 GDX ObjectMap,  100000 Strings: 1048880
+----------------------------------------
+               Merry ObjectMap,  100000 Strings: 1048672
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,  100000 Strings: 3927120
+----------------------------------------
+           FastUtil Linked Map,  100000 Strings: 2097304
+----------------------------------------
+                GDX OrderedMap,  100000 Strings: 1573224
+----------------------------------------
+              Merry OrderedMap,  100000 Strings: 1448728
+----------------------------------------
+           Atlantis IndexedMap,  100000 Strings: 1448736
 ----------------------------------------
 LIST
 ----------------------------------------
@@ -166,17 +819,23 @@ LIST
 ----------------------------------------
                      GDX Array, 1000000 Strings: 4000048
 ----------------------------------------
-UNORDERED
+UNORDERED SET
 ----------------------------------------
                    JDK HashSet, 1000000 Strings: 11624432
 ----------------------------------------
                   FastUtil Set, 1000000 Strings: 8388680
 ----------------------------------------
+                  Koloboke Set, 1000000 Strings: 8388656
+----------------------------------------
+                   Eclipse Set, 1000000 Strings: 8771120
+----------------------------------------
+                    Agrona Set, 1000000 Strings: 4194360
+----------------------------------------
                  GDX ObjectSet, 1000000 Strings: 8388808
 ----------------------------------------
                Merry ObjectSet, 1000000 Strings: 8388672
 ----------------------------------------
-INSERTION-ORDERED:
+INSERTION-ORDERED SET:
 ----------------------------------------
              JDK LinkedHashSet, 1000000 Strings: 13481952
 ----------------------------------------
@@ -186,8 +845,38 @@ INSERTION-ORDERED:
 ----------------------------------------
               Merry OrderedSet, 1000000 Strings: 12388728
 ----------------------------------------
+           Atlantis IndexedSet, 1000000 Strings: 12388720
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap, 1000000 Strings: 11624416
+----------------------------------------
+                  FastUtil Map, 1000000 Strings: 16777328
+----------------------------------------
+                  Koloboke Map, 1000000 Strings: 16777264
+----------------------------------------
+                   Eclipse Map, 1000000 Strings: 17180080
+----------------------------------------
+                    Agrona Map, 1000000 Strings: 8388672
+----------------------------------------
+                 GDX ObjectMap, 1000000 Strings: 16777568
+----------------------------------------
+               Merry ObjectMap, 1000000 Strings: 16777312
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap, 1000000 Strings: 13481936
+----------------------------------------
+           FastUtil Linked Map, 1000000 Strings: 33554584
+----------------------------------------
+                GDX OrderedMap, 1000000 Strings: 25166232
+----------------------------------------
+              Merry OrderedMap, 1000000 Strings: 20777368
+----------------------------------------
+           Atlantis IndexedMap, 1000000 Strings: 20777376
+----------------------------------------
 
-FLOATS
+FLOATS (all very large; can be positive or negative; no data after decimal point)
 
 LIST
 ----------------------------------------
@@ -200,6 +889,12 @@ UNORDERED SET
                    JDK HashSet,       1 Floats: 144
 ----------------------------------------
                   FastUtil Set,       1 Floats: 80
+----------------------------------------
+                  Koloboke Set,       1 Floats: 64
+----------------------------------------
+                   Eclipse Set,       1 Floats: 56
+----------------------------------------
+                    Agrona Set,       1 Floats: 88
 ----------------------------------------
                  GDX ObjectSet,       1 Floats: 104
 ----------------------------------------
@@ -215,11 +910,19 @@ INSERTION-ORDERED SET:
 ----------------------------------------
               Merry OrderedSet,       1 Floats: 168
 ----------------------------------------
+           Atlantis IndexedSet,       1 Floats: 128
+----------------------------------------
 UNORDERED MAP
 ----------------------------------------
                    JDK HashMap,       1 Floats: 128
 ----------------------------------------
                   FastUtil Map,       1 Floats: 128
+----------------------------------------
+                  Koloboke Map,       1 Floats: 80
+----------------------------------------
+                   Eclipse Map,       1 Floats: 64
+----------------------------------------
+                    Agrona Map,       1 Floats: 128
 ----------------------------------------
                  GDX ObjectMap,       1 Floats: 160
 ----------------------------------------
@@ -235,6 +938,8 @@ INSERTION-ORDERED MAP:
 ----------------------------------------
               Merry OrderedMap,       1 Floats: 240
 ----------------------------------------
+           Atlantis IndexedMap,       1 Floats: 184
+----------------------------------------
 LIST
 ----------------------------------------
                  JDK ArrayList,      10 Floats: 80
@@ -246,6 +951,12 @@ UNORDERED SET
                    JDK HashSet,      10 Floats: 464
 ----------------------------------------
                   FastUtil Set,      10 Floats: 136
+----------------------------------------
+                  Koloboke Set,      10 Floats: 112
+----------------------------------------
+                   Eclipse Set,      10 Floats: 144
+----------------------------------------
+                    Agrona Set,      10 Floats: 120
 ----------------------------------------
                  GDX ObjectSet,      10 Floats: 168
 ----------------------------------------
@@ -259,13 +970,21 @@ INSERTION-ORDERED SET:
 ----------------------------------------
                 GDX OrderedSet,      10 Floats: 288
 ----------------------------------------
-              Merry OrderedSet,      10 Floats: 248
+              Merry OrderedSet,      10 Floats: 224
+----------------------------------------
+           Atlantis IndexedSet,      10 Floats: 216
 ----------------------------------------
 UNORDERED MAP
 ----------------------------------------
                    JDK HashMap,      10 Floats: 448
 ----------------------------------------
                   FastUtil Map,      10 Floats: 240
+----------------------------------------
+                  Koloboke Map,      10 Floats: 176
+----------------------------------------
+                   Eclipse Map,      10 Floats: 208
+----------------------------------------
+                    Agrona Map,      10 Floats: 192
 ----------------------------------------
                  GDX ObjectMap,      10 Floats: 288
 ----------------------------------------
@@ -279,7 +998,9 @@ INSERTION-ORDERED MAP:
 ----------------------------------------
                 GDX OrderedMap,      10 Floats: 408
 ----------------------------------------
-              Merry OrderedMap,      10 Floats: 344
+              Merry OrderedMap,      10 Floats: 320
+----------------------------------------
+           Atlantis IndexedMap,      10 Floats: 328
 ----------------------------------------
 LIST
 ----------------------------------------
@@ -289,9 +1010,15 @@ LIST
 ----------------------------------------
 UNORDERED SET
 ----------------------------------------
-                   JDK HashSet,     100 Floats: 4832
+                   JDK HashSet,     100 Floats: 3792
 ----------------------------------------
-                  FastUtil Set,     100 Floats: 1096
+                  FastUtil Set,     100 Floats: 584
+----------------------------------------
+                  Koloboke Set,     100 Floats: 1072
+----------------------------------------
+                   Eclipse Set,     100 Floats: 1264
+----------------------------------------
+                    Agrona Set,     100 Floats: 568
 ----------------------------------------
                  GDX ObjectSet,     100 Floats: 632
 ----------------------------------------
@@ -299,19 +1026,27 @@ UNORDERED SET
 ----------------------------------------
 INSERTION-ORDERED SET:
 ----------------------------------------
-             JDK LinkedHashSet,     100 Floats: 5640
+             JDK LinkedHashSet,     100 Floats: 4600
 ----------------------------------------
-           FastUtil Linked Set,     100 Floats: 3176
+           FastUtil Linked Set,     100 Floats: 1640
 ----------------------------------------
                 GDX OrderedSet,     100 Floats: 1200
 ----------------------------------------
-              Merry OrderedSet,     100 Floats: 1144
+              Merry OrderedSet,     100 Floats: 1032
+----------------------------------------
+           Atlantis IndexedSet,     100 Floats: 1024
 ----------------------------------------
 UNORDERED MAP
 ----------------------------------------
-                   JDK HashMap,     100 Floats: 4816
+                   JDK HashMap,     100 Floats: 3776
 ----------------------------------------
-                  FastUtil Map,     100 Floats: 2160
+                  FastUtil Map,     100 Floats: 1136
+----------------------------------------
+                  Koloboke Map,     100 Floats: 2096
+----------------------------------------
+                   Eclipse Map,     100 Floats: 2208
+----------------------------------------
+                    Agrona Map,     100 Floats: 1088
 ----------------------------------------
                  GDX ObjectMap,     100 Floats: 1216
 ----------------------------------------
@@ -319,13 +1054,15 @@ UNORDERED MAP
 ----------------------------------------
 INSERTION-ORDERED MAP:
 ----------------------------------------
-             JDK LinkedHashMap,     100 Floats: 5624
+             JDK LinkedHashMap,     100 Floats: 4584
 ----------------------------------------
-           FastUtil Linked Map,     100 Floats: 4248
+           FastUtil Linked Map,     100 Floats: 2200
 ----------------------------------------
                 GDX OrderedMap,     100 Floats: 1784
 ----------------------------------------
-              Merry OrderedMap,     100 Floats: 1688
+              Merry OrderedMap,     100 Floats: 1576
+----------------------------------------
+           Atlantis IndexedMap,     100 Floats: 1584
 ----------------------------------------
 LIST
 ----------------------------------------
@@ -339,6 +1076,12 @@ UNORDERED SET
 ----------------------------------------
                   FastUtil Set,    1000 Floats: 8264
 ----------------------------------------
+                  Koloboke Set,    1000 Floats: 8240
+----------------------------------------
+                   Eclipse Set,    1000 Floats: 13808
+----------------------------------------
+                    Agrona Set,    1000 Floats: 12360
+----------------------------------------
                  GDX ObjectSet,    1000 Floats: 8336
 ----------------------------------------
                Merry ObjectSet,    1000 Floats: 8256
@@ -351,13 +1094,21 @@ INSERTION-ORDERED SET:
 ----------------------------------------
                 GDX OrderedSet,    1000 Floats: 16584
 ----------------------------------------
-              Merry OrderedSet,    1000 Floats: 16504
+              Merry OrderedSet,    1000 Floats: 12312
+----------------------------------------
+           Atlantis IndexedSet,    1000 Floats: 12304
 ----------------------------------------
 UNORDERED MAP
 ----------------------------------------
                    JDK HashMap,    1000 Floats: 44368
 ----------------------------------------
                   FastUtil Map,    1000 Floats: 16496
+----------------------------------------
+                  Koloboke Map,    1000 Floats: 16432
+----------------------------------------
+                   Eclipse Map,    1000 Floats: 23616
+----------------------------------------
+                    Agrona Map,    1000 Floats: 24656
 ----------------------------------------
                  GDX ObjectMap,    1000 Floats: 16624
 ----------------------------------------
@@ -371,7 +1122,9 @@ INSERTION-ORDERED MAP:
 ----------------------------------------
                 GDX OrderedMap,    1000 Floats: 24872
 ----------------------------------------
-              Merry OrderedMap,    1000 Floats: 24728
+              Merry OrderedMap,    1000 Floats: 20536
+----------------------------------------
+           Atlantis IndexedMap,    1000 Floats: 20544
 ----------------------------------------
 LIST
 ----------------------------------------
@@ -381,43 +1134,59 @@ LIST
 ----------------------------------------
 UNORDERED SET
 ----------------------------------------
-                   JDK HashSet,   10000 Floats: 385456
+                   JDK HashSet,   10000 Floats: 385264
 ----------------------------------------
                   FastUtil Set,   10000 Floats: 65608
 ----------------------------------------
-                 GDX ObjectSet,   10000 Floats: 65696
+                  Koloboke Set,   10000 Floats: 65584
+----------------------------------------
+                   Eclipse Set,   10000 Floats: 129744
+----------------------------------------
+                    Agrona Set,   10000 Floats: 65592
+----------------------------------------
+                 GDX ObjectSet,   10000 Floats: 196872
 ----------------------------------------
                Merry ObjectSet,   10000 Floats: 65600
 ----------------------------------------
 INSERTION-ORDERED SET:
 ----------------------------------------
-             JDK LinkedHashSet,   10000 Floats: 465424
+             JDK LinkedHashSet,   10000 Floats: 465184
 ----------------------------------------
            FastUtil Linked Set,   10000 Floats: 196712
 ----------------------------------------
-                GDX OrderedSet,   10000 Floats: 131288
+                GDX OrderedSet,   10000 Floats: 262464
 ----------------------------------------
-              Merry OrderedSet,   10000 Floats: 131192
+              Merry OrderedSet,   10000 Floats: 105656
+----------------------------------------
+           Atlantis IndexedSet,   10000 Floats: 105648
 ----------------------------------------
 UNORDERED MAP
 ----------------------------------------
-                   JDK HashMap,   10000 Floats: 385440
+                   JDK HashMap,   10000 Floats: 385248
 ----------------------------------------
                   FastUtil Map,   10000 Floats: 131184
 ----------------------------------------
-                 GDX ObjectMap,   10000 Floats: 131344
+                  Koloboke Map,   10000 Floats: 131120
+----------------------------------------
+                   Eclipse Map,   10000 Floats: 214352
+----------------------------------------
+                    Agrona Map,   10000 Floats: 131136
+----------------------------------------
+                 GDX ObjectMap,   10000 Floats: 393696
 ----------------------------------------
                Merry ObjectMap,   10000 Floats: 131168
 ----------------------------------------
 INSERTION-ORDERED MAP:
 ----------------------------------------
-             JDK LinkedHashMap,   10000 Floats: 465408
+             JDK LinkedHashMap,   10000 Floats: 465168
 ----------------------------------------
            FastUtil Linked Map,   10000 Floats: 262296
 ----------------------------------------
-                GDX OrderedMap,   10000 Floats: 196936
+                GDX OrderedMap,   10000 Floats: 459288
 ----------------------------------------
-              Merry OrderedMap,   10000 Floats: 196760
+              Merry OrderedMap,   10000 Floats: 171224
+----------------------------------------
+           Atlantis IndexedMap,   10000 Floats: 171232
 ----------------------------------------
 LIST
 ----------------------------------------
@@ -427,43 +1196,59 @@ LIST
 ----------------------------------------
 UNORDERED SET
 ----------------------------------------
-                   JDK HashSet,  100000 Floats: 4762752
+                   JDK HashSet,  100000 Floats: 3689416
 ----------------------------------------
-                  FastUtil Set,  100000 Floats: 1048648
+                  FastUtil Set,  100000 Floats: 524360
 ----------------------------------------
-                 GDX ObjectSet,  100000 Floats: 524464
+                  Koloboke Set,  100000 Floats: 1048624
+----------------------------------------
+                   Eclipse Set,  100000 Floats: 1254992
+----------------------------------------
+                    Agrona Set,  100000 Floats: 524344
+----------------------------------------
+                 GDX ObjectSet,  100000 Floats: 1573160
 ----------------------------------------
                Merry ObjectSet,  100000 Floats: 524352
 ----------------------------------------
 INSERTION-ORDERED SET:
 ----------------------------------------
-             JDK LinkedHashSet,  100000 Floats: 5560208
+             JDK LinkedHashSet,  100000 Floats: 4480392
 ----------------------------------------
-           FastUtil Linked Set,  100000 Floats: 3145832
+           FastUtil Linked Set,  100000 Floats: 1572968
 ----------------------------------------
-                GDX OrderedSet,  100000 Floats: 1048808
+                GDX OrderedSet,  100000 Floats: 2097504
 ----------------------------------------
-              Merry OrderedSet,  100000 Floats: 1048696
+              Merry OrderedSet,  100000 Floats: 924408
+----------------------------------------
+           Atlantis IndexedSet,  100000 Floats: 924400
 ----------------------------------------
 UNORDERED MAP
 ----------------------------------------
-                   JDK HashMap,  100000 Floats: 4762736
+                   JDK HashMap,  100000 Floats: 3689400
 ----------------------------------------
-                  FastUtil Map,  100000 Floats: 2097264
+                  FastUtil Map,  100000 Floats: 1048688
 ----------------------------------------
-                 GDX ObjectMap,  100000 Floats: 1048880
+                  Koloboke Map,  100000 Floats: 2097200
+----------------------------------------
+                   Eclipse Map,  100000 Floats: 2029408
+----------------------------------------
+                    Agrona Map,  100000 Floats: 1048640
+----------------------------------------
+                 GDX ObjectMap,  100000 Floats: 3146272
 ----------------------------------------
                Merry ObjectMap,  100000 Floats: 1048672
 ----------------------------------------
 INSERTION-ORDERED MAP:
 ----------------------------------------
-             JDK LinkedHashMap,  100000 Floats: 5560192
+             JDK LinkedHashMap,  100000 Floats: 4480376
 ----------------------------------------
-           FastUtil Linked Map,  100000 Floats: 4194456
+           FastUtil Linked Map,  100000 Floats: 2097304
 ----------------------------------------
-                GDX OrderedMap,  100000 Floats: 1573224
+                GDX OrderedMap,  100000 Floats: 3670616
 ----------------------------------------
-              Merry OrderedMap,  100000 Floats: 1573016
+              Merry OrderedMap,  100000 Floats: 1448728
+----------------------------------------
+           Atlantis IndexedMap,  100000 Floats: 1448736
 ----------------------------------------
 LIST
 ----------------------------------------
@@ -473,9 +1258,15 @@ LIST
 ----------------------------------------
 UNORDERED SET
 ----------------------------------------
-                   JDK HashSet, 1000000 Floats: 43515104
+                   JDK HashSet, 1000000 Floats: 71801488
 ----------------------------------------
                   FastUtil Set, 1000000 Floats: 8388680
+----------------------------------------
+                  Koloboke Set, 1000000 Floats: 8388656
+----------------------------------------
+                   Eclipse Set, 1000000 Floats: 12086512
+----------------------------------------
+                    Agrona Set, 1000000 Floats: 12582984
 ----------------------------------------
                  GDX ObjectSet, 1000000 Floats: 8388808
 ----------------------------------------
@@ -483,19 +1274,27 @@ UNORDERED SET
 ----------------------------------------
 INSERTION-ORDERED SET:
 ----------------------------------------
-             JDK LinkedHashSet, 1000000 Floats: 51248136
+             JDK LinkedHashSet, 1000000 Floats: 79831376
 ----------------------------------------
            FastUtil Linked Set, 1000000 Floats: 25165928
 ----------------------------------------
                 GDX OrderedSet, 1000000 Floats: 16777472
 ----------------------------------------
-              Merry OrderedSet, 1000000 Floats: 16777336
+              Merry OrderedSet, 1000000 Floats: 12388728
+----------------------------------------
+           Atlantis IndexedSet, 1000000 Floats: 12388720
 ----------------------------------------
 UNORDERED MAP
 ----------------------------------------
-                   JDK HashMap, 1000000 Floats: 43515088
+                   JDK HashMap, 1000000 Floats: 71801472
 ----------------------------------------
                   FastUtil Map, 1000000 Floats: 16777328
+----------------------------------------
+                  Koloboke Map, 1000000 Floats: 16777264
+----------------------------------------
+                   Eclipse Map, 1000000 Floats: 20746384
+----------------------------------------
+                    Agrona Map, 1000000 Floats: 25165904
 ----------------------------------------
                  GDX ObjectMap, 1000000 Floats: 16777568
 ----------------------------------------
@@ -503,16 +1302,18 @@ UNORDERED MAP
 ----------------------------------------
 INSERTION-ORDERED MAP:
 ----------------------------------------
-             JDK LinkedHashMap, 1000000 Floats: 51248120
+             JDK LinkedHashMap, 1000000 Floats: 79831360
 ----------------------------------------
            FastUtil Linked Map, 1000000 Floats: 33554584
 ----------------------------------------
                 GDX OrderedMap, 1000000 Floats: 25166232
 ----------------------------------------
-              Merry OrderedMap, 1000000 Floats: 25165976
+              Merry OrderedMap, 1000000 Floats: 20777368
+----------------------------------------
+           Atlantis IndexedMap, 1000000 Floats: 20777376
 ----------------------------------------
 
-INTEGERS
+INTEGERS (only upper 22 bits are used, including sign bit)
 
 LIST
 ----------------------------------------
@@ -546,6 +1347,8 @@ INSERTION-ORDERED SET:
 ----------------------------------------
               Merry OrderedSet,       1 Integers: 168
 ----------------------------------------
+           Atlantis IndexedSet,       1 Integers: 128
+----------------------------------------
 UNORDERED MAP
 ----------------------------------------
                    JDK HashMap,       1 Integers: 128
@@ -572,6 +1375,8 @@ INSERTION-ORDERED MAP:
 ----------------------------------------
               Merry OrderedMap,       1 Integers: 240
 ----------------------------------------
+           Atlantis IndexedMap,       1 Integers: 184
+----------------------------------------
 LIST
 ----------------------------------------
                  JDK ArrayList,      10 Integers: 80
@@ -588,7 +1393,7 @@ UNORDERED SET
 ----------------------------------------
                    Eclipse Set,      10 Integers: 176
 ----------------------------------------
-                    Agrona Set,      10 Integers: 264
+                    Agrona Set,      10 Integers: 120
 ----------------------------------------
                  GDX ObjectSet,      10 Integers: 168
 ----------------------------------------
@@ -604,6 +1409,8 @@ INSERTION-ORDERED SET:
 ----------------------------------------
               Merry OrderedSet,      10 Integers: 224
 ----------------------------------------
+           Atlantis IndexedSet,      10 Integers: 216
+----------------------------------------
 UNORDERED MAP
 ----------------------------------------
                    JDK HashMap,      10 Integers: 448
@@ -614,7 +1421,7 @@ UNORDERED MAP
 ----------------------------------------
                    Eclipse Map,      10 Integers: 240
 ----------------------------------------
-                    Agrona Map,      10 Integers: 464
+                    Agrona Map,      10 Integers: 192
 ----------------------------------------
                  GDX ObjectMap,      10 Integers: 288
 ----------------------------------------
@@ -630,6 +1437,8 @@ INSERTION-ORDERED MAP:
 ----------------------------------------
               Merry OrderedMap,      10 Integers: 320
 ----------------------------------------
+           Atlantis IndexedMap,      10 Integers: 328
+----------------------------------------
 LIST
 ----------------------------------------
                  JDK ArrayList,     100 Integers: 440
@@ -638,15 +1447,15 @@ LIST
 ----------------------------------------
 UNORDERED SET
 ----------------------------------------
-                   JDK HashSet,     100 Integers: 4832
+                   JDK HashSet,     100 Integers: 3792
 ----------------------------------------
-                  FastUtil Set,     100 Integers: 1096
+                  FastUtil Set,     100 Integers: 584
 ----------------------------------------
                   Koloboke Set,     100 Integers: 1072
 ----------------------------------------
-                   Eclipse Set,     100 Integers: 1584
+                   Eclipse Set,     100 Integers: 1264
 ----------------------------------------
-                    Agrona Set,     100 Integers: 1608
+                    Agrona Set,     100 Integers: 568
 ----------------------------------------
                  GDX ObjectSet,     100 Integers: 632
 ----------------------------------------
@@ -654,25 +1463,27 @@ UNORDERED SET
 ----------------------------------------
 INSERTION-ORDERED SET:
 ----------------------------------------
-             JDK LinkedHashSet,     100 Integers: 5640
+             JDK LinkedHashSet,     100 Integers: 4600
 ----------------------------------------
-           FastUtil Linked Set,     100 Integers: 3176
+           FastUtil Linked Set,     100 Integers: 1640
 ----------------------------------------
                 GDX OrderedSet,     100 Integers: 1200
 ----------------------------------------
               Merry OrderedSet,     100 Integers: 1032
 ----------------------------------------
+           Atlantis IndexedSet,     100 Integers: 1024
+----------------------------------------
 UNORDERED MAP
 ----------------------------------------
-                   JDK HashMap,     100 Integers: 4816
+                   JDK HashMap,     100 Integers: 3776
 ----------------------------------------
-                  FastUtil Map,     100 Integers: 2160
+                  FastUtil Map,     100 Integers: 1136
 ----------------------------------------
                   Koloboke Map,     100 Integers: 2096
 ----------------------------------------
-                   Eclipse Map,     100 Integers: 2608
+                   Eclipse Map,     100 Integers: 2016
 ----------------------------------------
-                    Agrona Map,     100 Integers: 3152
+                    Agrona Map,     100 Integers: 1088
 ----------------------------------------
                  GDX ObjectMap,     100 Integers: 1216
 ----------------------------------------
@@ -680,13 +1491,15 @@ UNORDERED MAP
 ----------------------------------------
 INSERTION-ORDERED MAP:
 ----------------------------------------
-             JDK LinkedHashMap,     100 Integers: 5624
+             JDK LinkedHashMap,     100 Integers: 4584
 ----------------------------------------
-           FastUtil Linked Map,     100 Integers: 4248
+           FastUtil Linked Map,     100 Integers: 2200
 ----------------------------------------
                 GDX OrderedMap,     100 Integers: 1784
 ----------------------------------------
               Merry OrderedMap,     100 Integers: 1576
+----------------------------------------
+           Atlantis IndexedMap,     100 Integers: 1584
 ----------------------------------------
 LIST
 ----------------------------------------
@@ -720,6 +1533,8 @@ INSERTION-ORDERED SET:
 ----------------------------------------
               Merry OrderedSet,    1000 Integers: 12312
 ----------------------------------------
+           Atlantis IndexedSet,    1000 Integers: 12304
+----------------------------------------
 UNORDERED MAP
 ----------------------------------------
                    JDK HashMap,    1000 Integers: 44368
@@ -742,9 +1557,11 @@ INSERTION-ORDERED MAP:
 ----------------------------------------
            FastUtil Linked Map,    1000 Integers: 32920
 ----------------------------------------
-                GDX OrderedMap,    1000 Integers: 24872
+                GDX OrderedMap,    1000 Integers: 57816
 ----------------------------------------
               Merry OrderedMap,    1000 Integers: 20536
+----------------------------------------
+           Atlantis IndexedMap,    1000 Integers: 20544
 ----------------------------------------
 LIST
 ----------------------------------------
@@ -762,7 +1579,7 @@ UNORDERED SET
 ----------------------------------------
                    Eclipse Set,   10000 Integers: 129936
 ----------------------------------------
-                    Agrona Set,   10000 Integers: 196680
+                    Agrona Set,   10000 Integers: 65592
 ----------------------------------------
                  GDX ObjectSet,   10000 Integers: 196872
 ----------------------------------------
@@ -778,6 +1595,8 @@ INSERTION-ORDERED SET:
 ----------------------------------------
               Merry OrderedSet,   10000 Integers: 105656
 ----------------------------------------
+           Atlantis IndexedSet,   10000 Integers: 105648
+----------------------------------------
 UNORDERED MAP
 ----------------------------------------
                    JDK HashMap,   10000 Integers: 385248
@@ -788,7 +1607,7 @@ UNORDERED MAP
 ----------------------------------------
                    Eclipse Map,   10000 Integers: 214592
 ----------------------------------------
-                    Agrona Map,   10000 Integers: 393296
+                    Agrona Map,   10000 Integers: 131136
 ----------------------------------------
                  GDX ObjectMap,   10000 Integers: 393696
 ----------------------------------------
@@ -804,6 +1623,8 @@ INSERTION-ORDERED MAP:
 ----------------------------------------
               Merry OrderedMap,   10000 Integers: 171224
 ----------------------------------------
+           Atlantis IndexedMap,   10000 Integers: 171232
+----------------------------------------
 LIST
 ----------------------------------------
                  JDK ArrayList,  100000 Integers: 400040
@@ -812,15 +1633,15 @@ LIST
 ----------------------------------------
 UNORDERED SET
 ----------------------------------------
-                   JDK HashSet,  100000 Integers: 4737432
+                   JDK HashSet,  100000 Integers: 3688840
 ----------------------------------------
-                  FastUtil Set,  100000 Integers: 1048648
+                  FastUtil Set,  100000 Integers: 524360
 ----------------------------------------
                   Koloboke Set,  100000 Integers: 1048624
 ----------------------------------------
-                   Eclipse Set,  100000 Integers: 1494832
+                   Eclipse Set,  100000 Integers: 1255152
 ----------------------------------------
-                    Agrona Set,  100000 Integers: 1572936
+                    Agrona Set,  100000 Integers: 524344
 ----------------------------------------
                  GDX ObjectSet,  100000 Integers: 1573160
 ----------------------------------------
@@ -828,25 +1649,27 @@ UNORDERED SET
 ----------------------------------------
 INSERTION-ORDERED SET:
 ----------------------------------------
-             JDK LinkedHashSet,  100000 Integers: 5528432
+             JDK LinkedHashSet,  100000 Integers: 4479840
 ----------------------------------------
-           FastUtil Linked Set,  100000 Integers: 3145832
+           FastUtil Linked Set,  100000 Integers: 1572968
 ----------------------------------------
                 GDX OrderedSet,  100000 Integers: 2097504
 ----------------------------------------
               Merry OrderedSet,  100000 Integers: 924408
 ----------------------------------------
+           Atlantis IndexedSet,  100000 Integers: 924400
+----------------------------------------
 UNORDERED MAP
 ----------------------------------------
-                   JDK HashMap,  100000 Integers: 4737416
+                   JDK HashMap,  100000 Integers: 3688824
 ----------------------------------------
-                  FastUtil Map,  100000 Integers: 2097264
+                  FastUtil Map,  100000 Integers: 1048688
 ----------------------------------------
                   Koloboke Map,  100000 Integers: 2097200
 ----------------------------------------
-                   Eclipse Map,  100000 Integers: 2615360
+                   Eclipse Map,  100000 Integers: 2028800
 ----------------------------------------
-                    Agrona Map,  100000 Integers: 3145808
+                    Agrona Map,  100000 Integers: 1048640
 ----------------------------------------
                  GDX ObjectMap,  100000 Integers: 3146272
 ----------------------------------------
@@ -854,13 +1677,15 @@ UNORDERED MAP
 ----------------------------------------
 INSERTION-ORDERED MAP:
 ----------------------------------------
-             JDK LinkedHashMap,  100000 Integers: 5528416
+             JDK LinkedHashMap,  100000 Integers: 4479824
 ----------------------------------------
-           FastUtil Linked Map,  100000 Integers: 4194456
+           FastUtil Linked Map,  100000 Integers: 2097304
 ----------------------------------------
                 GDX OrderedMap,  100000 Integers: 3670616
 ----------------------------------------
               Merry OrderedMap,  100000 Integers: 1448728
+----------------------------------------
+           Atlantis IndexedMap,  100000 Integers: 1448736
 ----------------------------------------
 LIST
 ----------------------------------------
@@ -894,6 +1719,8 @@ INSERTION-ORDERED SET:
 ----------------------------------------
               Merry OrderedSet, 1000000 Integers: 12388728
 ----------------------------------------
+           Atlantis IndexedSet, 1000000 Integers: 12388720
+----------------------------------------
 UNORDERED MAP
 ----------------------------------------
                    JDK HashMap, 1000000 Integers: 79628640
@@ -919,4 +1746,6 @@ INSERTION-ORDERED MAP:
                 GDX OrderedMap, 1000000 Integers: 1065355160
 ----------------------------------------
               Merry OrderedMap, 1000000 Integers: 20777368
+----------------------------------------
+           Atlantis IndexedMap, 1000000 Integers: 20777376
 ----------------------------------------

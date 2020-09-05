@@ -50,6 +50,7 @@ dependencies {
     implementation 'com.github.SquidPony.SquidLib:squidlib:94a19dd232'
     implementation 'space.earlygrey:simple-graphs:155a48e25d'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
+    implementation 'com.github.tommyettinger:atlantis:5574642135'
 
     testImplementation group: 'junit', name: 'junit', version:'4.12'
     testImplementation group: 'org.openjdk.jol', name: 'jol-core', version: '0.10'
