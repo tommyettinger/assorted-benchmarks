@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.OrderedSet;
 import com.github.tommyettinger.ds.IndexedMap;
 import com.github.tommyettinger.ds.IndexedSet;
 import com.koloboke.collect.set.hash.HashObjSet;
+import de.heidelberg.pvs.container_bench.factories.LoadFactor;
 import de.heidelberg.pvs.container_bench.generators.TangleRNG;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryGenerator;
@@ -111,7 +112,7 @@ public class MemoryMBeanCheck {
                             HashSet<String> x;
 
                             @Override public void run () {
-                                x = new HashSet<>(size, 0.8f);
+                                x = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -120,7 +121,7 @@ public class MemoryMBeanCheck {
                             ObjectOpenHashSet<String> x;
 
                             @Override public void run () {
-                                x = new ObjectOpenHashSet<>(size, 0.8f);
+                                x = new ObjectOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -138,7 +139,7 @@ public class MemoryMBeanCheck {
                             org.eclipse.collections.impl.set.mutable.UnifiedSet<String> x;
 
                             @Override public void run () {
-                                x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size, 0.8f);
+                                x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -147,7 +148,7 @@ public class MemoryMBeanCheck {
                             org.agrona.collections.ObjectHashSet<String> x;
 
                             @Override public void run () {
-                                x = new org.agrona.collections.ObjectHashSet<>(size, 0.8f);
+                                x = new org.agrona.collections.ObjectHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -156,7 +157,7 @@ public class MemoryMBeanCheck {
                             ObjectSet<String> x;
 
                             @Override public void run () {
-                                x = new ObjectSet<>(size, 0.8f);
+                                x = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -165,7 +166,7 @@ public class MemoryMBeanCheck {
                             ds.merry.ObjectSet<String> x;
 
                             @Override public void run () {
-                                x = new ds.merry.ObjectSet<>(size, 0.8f);
+                                x = new ds.merry.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -176,7 +177,7 @@ public class MemoryMBeanCheck {
                             LinkedHashSet<String> x;
 
                             @Override public void run () {
-                                x = new LinkedHashSet<>(size, 0.8f);
+                                x = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -185,7 +186,7 @@ public class MemoryMBeanCheck {
                             ObjectLinkedOpenHashSet<String> x;
 
                             @Override public void run () {
-                                x = new ObjectLinkedOpenHashSet<>(size, 0.8f);
+                                x = new ObjectLinkedOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -194,7 +195,7 @@ public class MemoryMBeanCheck {
                             OrderedSet<String> x;
 
                             @Override public void run () {
-                                x = new OrderedSet<>(size, 0.8f);
+                                x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -203,7 +204,7 @@ public class MemoryMBeanCheck {
                             ds.merry.OrderedSet<String> x;
 
                             @Override public void run () {
-                                x = new ds.merry.OrderedSet<>(size, 0.8f);
+                                x = new ds.merry.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -212,7 +213,7 @@ public class MemoryMBeanCheck {
                             IndexedSet<String> x;
 
                             @Override public void run () {
-                                x = new IndexedSet<>(size, 0.8f);
+                                x = new IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -224,7 +225,7 @@ public class MemoryMBeanCheck {
                             HashMap<String, String> x;
 
                             @Override public void run () {
-                                x = new HashMap<>(size, 0.8f);
+                                x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -233,7 +234,7 @@ public class MemoryMBeanCheck {
                             Object2ObjectOpenHashMap<String, String> x;
 
                             @Override public void run () {
-                                x = new Object2ObjectOpenHashMap<>(size, 0.8f);
+                                x = new Object2ObjectOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -251,7 +252,7 @@ public class MemoryMBeanCheck {
                             UnifiedMap<String, String> x;
 
                             @Override public void run () {
-                                x = new UnifiedMap<>(size, 0.8f);
+                                x = new UnifiedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -260,7 +261,7 @@ public class MemoryMBeanCheck {
                             org.agrona.collections.Object2ObjectHashMap<String, String> x;
 
                             @Override public void run () {
-                                x = new Object2ObjectHashMap<>(size, 0.8f);
+                                x = new Object2ObjectHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -269,7 +270,7 @@ public class MemoryMBeanCheck {
                             ObjectMap<String, String> x;
 
                             @Override public void run () {
-                                x = new ObjectMap<>(size, 0.8f);
+                                x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -278,7 +279,7 @@ public class MemoryMBeanCheck {
                             ds.merry.ObjectMap<String, String> x;
 
                             @Override public void run () {
-                                x = new ds.merry.ObjectMap<>(size, 0.8f);
+                                x = new ds.merry.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -289,7 +290,7 @@ public class MemoryMBeanCheck {
                             LinkedHashMap<String, String> x;
 
                             @Override public void run () {
-                                x = new LinkedHashMap<>(size, 0.8f);
+                                x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -298,7 +299,7 @@ public class MemoryMBeanCheck {
                             Object2ObjectLinkedOpenHashMap<String, String> x;
 
                             @Override public void run () {
-                                x = new Object2ObjectLinkedOpenHashMap<>(size, 0.8f);
+                                x = new Object2ObjectLinkedOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -307,7 +308,7 @@ public class MemoryMBeanCheck {
                             OrderedMap<String, String> x;
 
                             @Override public void run () {
-                                x = new OrderedMap<>(size, 0.8f);
+                                x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -316,7 +317,7 @@ public class MemoryMBeanCheck {
                             ds.merry.OrderedMap<String, String> x;
 
                             @Override public void run () {
-                                x = new ds.merry.OrderedMap<>(size, 0.8f);
+                                x = new ds.merry.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -325,7 +326,7 @@ public class MemoryMBeanCheck {
                             IndexedMap<String, String> x;
 
                             @Override public void run () {
-                                x = new IndexedMap<>(size, 0.8f);
+                                x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -377,7 +378,7 @@ public class MemoryMBeanCheck {
                             HashSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new HashSet<>(size, 0.8f);
+                                x = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -386,7 +387,7 @@ public class MemoryMBeanCheck {
                             ObjectOpenHashSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new ObjectOpenHashSet<>(size, 0.8f);
+                                x = new ObjectOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -404,7 +405,7 @@ public class MemoryMBeanCheck {
                             org.eclipse.collections.impl.set.mutable.UnifiedSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size, 0.8f);
+                                x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -413,7 +414,7 @@ public class MemoryMBeanCheck {
                             org.agrona.collections.ObjectHashSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new org.agrona.collections.ObjectHashSet<>(size, 0.8f);
+                                x = new org.agrona.collections.ObjectHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -422,7 +423,7 @@ public class MemoryMBeanCheck {
                             ObjectSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new ObjectSet<>(size, 0.8f);
+                                x = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -431,7 +432,7 @@ public class MemoryMBeanCheck {
                             ds.merry.ObjectSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new ds.merry.ObjectSet<>(size, 0.8f);
+                                x = new ds.merry.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -442,7 +443,7 @@ public class MemoryMBeanCheck {
                             LinkedHashSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new LinkedHashSet<>(size, 0.8f);
+                                x = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -451,7 +452,7 @@ public class MemoryMBeanCheck {
                             ObjectLinkedOpenHashSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new ObjectLinkedOpenHashSet<>(size, 0.8f);
+                                x = new ObjectLinkedOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -460,7 +461,7 @@ public class MemoryMBeanCheck {
                             OrderedSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new OrderedSet<>(size, 0.8f);
+                                x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -469,7 +470,7 @@ public class MemoryMBeanCheck {
                             ds.merry.OrderedSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new ds.merry.OrderedSet<>(size, 0.8f);
+                                x = new ds.merry.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -478,7 +479,7 @@ public class MemoryMBeanCheck {
                             IndexedSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new IndexedSet<>(size, 0.8f);
+                                x = new IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -490,7 +491,7 @@ public class MemoryMBeanCheck {
                             HashMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new HashMap<>(size, 0.8f);
+                                x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -499,7 +500,7 @@ public class MemoryMBeanCheck {
                             Object2ObjectOpenHashMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new Object2ObjectOpenHashMap<>(size, 0.8f);
+                                x = new Object2ObjectOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -517,7 +518,7 @@ public class MemoryMBeanCheck {
                             UnifiedMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new UnifiedMap<>(size, 0.8f);
+                                x = new UnifiedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -526,7 +527,7 @@ public class MemoryMBeanCheck {
                             org.agrona.collections.Object2ObjectHashMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new Object2ObjectHashMap<>(size, 0.8f);
+                                x = new Object2ObjectHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -535,7 +536,7 @@ public class MemoryMBeanCheck {
                             ObjectMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new ObjectMap<>(size, 0.8f);
+                                x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -544,7 +545,7 @@ public class MemoryMBeanCheck {
                             ds.merry.ObjectMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new ds.merry.ObjectMap<>(size, 0.8f);
+                                x = new ds.merry.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -555,7 +556,7 @@ public class MemoryMBeanCheck {
                             LinkedHashMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new LinkedHashMap<>(size, 0.8f);
+                                x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -564,7 +565,7 @@ public class MemoryMBeanCheck {
                             Object2ObjectLinkedOpenHashMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new Object2ObjectLinkedOpenHashMap<>(size, 0.8f);
+                                x = new Object2ObjectLinkedOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -573,7 +574,7 @@ public class MemoryMBeanCheck {
                             OrderedMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new OrderedMap<>(size, 0.8f);
+                                x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -582,7 +583,7 @@ public class MemoryMBeanCheck {
                             ds.merry.OrderedMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new ds.merry.OrderedMap<>(size, 0.8f);
+                                x = new ds.merry.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -591,7 +592,7 @@ public class MemoryMBeanCheck {
                             IndexedMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new IndexedMap<>(size, 0.8f);
+                                x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -609,7 +610,7 @@ public class MemoryMBeanCheck {
             if(i == 5)
                 System.setOut(out);
             for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
-                Set<String> strings = new HashSet<>(size, 0.8f);
+                Set<String> strings = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
                 try {
                     strings.addAll(Wordlist.loadWordSet(size,1));
                 } catch (IOException e) {
@@ -625,7 +626,7 @@ public class MemoryMBeanCheck {
                         HashMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new HashMap<>(size, 0.8f);
+                            x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -634,7 +635,7 @@ public class MemoryMBeanCheck {
                         Object2ObjectOpenHashMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new Object2ObjectOpenHashMap<>(size, 0.8f);
+                            x = new Object2ObjectOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -643,7 +644,7 @@ public class MemoryMBeanCheck {
                         ObjectMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectMap<>(size, 0.8f);
+                            x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -652,7 +653,7 @@ public class MemoryMBeanCheck {
                         ds.merry.ObjectMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new ds.merry.ObjectMap<>(size, 0.8f);
+                            x = new ds.merry.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -664,7 +665,7 @@ public class MemoryMBeanCheck {
                         Object2IntOpenHashMap<String> x;
 
                         @Override public void run () {
-                            x = new Object2IntOpenHashMap<>(size, 0.8f);
+                            x = new Object2IntOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -693,7 +694,7 @@ public class MemoryMBeanCheck {
                         LinkedHashMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new LinkedHashMap<>(size, 0.8f);
+                            x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -702,7 +703,7 @@ public class MemoryMBeanCheck {
                         Object2ObjectLinkedOpenHashMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new Object2ObjectLinkedOpenHashMap<>(size, 0.8f);
+                            x = new Object2ObjectLinkedOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -711,7 +712,7 @@ public class MemoryMBeanCheck {
                         OrderedMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new OrderedMap<>(size, 0.8f);
+                            x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -720,7 +721,7 @@ public class MemoryMBeanCheck {
                         ds.merry.OrderedMap<String, Integer> x;
 
                         @Override public void run () {
-                            x = new ds.merry.OrderedMap<>(size, 0.8f);
+                            x = new ds.merry.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -731,7 +732,7 @@ public class MemoryMBeanCheck {
                         Object2IntLinkedOpenHashMap<String> x;
 
                         @Override public void run () {
-                            x = new Object2IntLinkedOpenHashMap<>(size, 0.8f);
+                            x = new Object2IntLinkedOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -740,7 +741,7 @@ public class MemoryMBeanCheck {
 //                        ds.merry.ObjectIntOrderedMap<String> x;
 //
 //                        @Override public void run () {
-//                            x = new ds.merry.ObjectIntOrderedMap<>(size, 0.8f);
+//                            x = new ds.merry.ObjectIntOrderedMap<>(size, LoadFactor.LOAD_FACTOR);
 //                            for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
 //                        }
 //                    }));
@@ -792,7 +793,7 @@ public class MemoryMBeanCheck {
                             HashSet<Float> x;
 
                             @Override public void run () {
-                                x = new HashSet<>(size, 0.8f);
+                                x = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -801,7 +802,7 @@ public class MemoryMBeanCheck {
                             ObjectOpenHashSet<Float> x;
 
                             @Override public void run () {
-                                x = new ObjectOpenHashSet<>(size, 0.8f);
+                                x = new ObjectOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -819,7 +820,7 @@ public class MemoryMBeanCheck {
                             org.eclipse.collections.impl.set.mutable.UnifiedSet<Float> x;
 
                             @Override public void run () {
-                                x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size, 0.8f);
+                                x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -828,7 +829,7 @@ public class MemoryMBeanCheck {
                             org.agrona.collections.ObjectHashSet<Float> x;
 
                             @Override public void run () {
-                                x = new org.agrona.collections.ObjectHashSet<>(size, 0.8f);
+                                x = new org.agrona.collections.ObjectHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -837,7 +838,7 @@ public class MemoryMBeanCheck {
                             ObjectSet<Float> x;
 
                             @Override public void run () {
-                                x = new ObjectSet<>(size, 0.8f);
+                                x = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -846,7 +847,7 @@ public class MemoryMBeanCheck {
                             ds.merry.ObjectSet<Float> x;
 
                             @Override public void run () {
-                                x = new ds.merry.ObjectSet<>(size, 0.8f);
+                                x = new ds.merry.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -857,7 +858,7 @@ public class MemoryMBeanCheck {
                             LinkedHashSet<Float> x;
 
                             @Override public void run () {
-                                x = new LinkedHashSet<>(size, 0.8f);
+                                x = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -866,7 +867,7 @@ public class MemoryMBeanCheck {
                             ObjectLinkedOpenHashSet<Float> x;
 
                             @Override public void run () {
-                                x = new ObjectLinkedOpenHashSet<>(size, 0.8f);
+                                x = new ObjectLinkedOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -875,7 +876,7 @@ public class MemoryMBeanCheck {
                             OrderedSet<Float> x;
 
                             @Override public void run () {
-                                x = new OrderedSet<>(size, 0.8f);
+                                x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -884,7 +885,7 @@ public class MemoryMBeanCheck {
                             ds.merry.OrderedSet<Float> x;
 
                             @Override public void run () {
-                                x = new ds.merry.OrderedSet<>(size, 0.8f);
+                                x = new ds.merry.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -893,7 +894,7 @@ public class MemoryMBeanCheck {
                             IndexedSet<Float> x;
 
                             @Override public void run () {
-                                x = new IndexedSet<>(size, 0.8f);
+                                x = new IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -905,7 +906,7 @@ public class MemoryMBeanCheck {
                             HashMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new HashMap<>(size, 0.8f);
+                                x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -914,7 +915,7 @@ public class MemoryMBeanCheck {
                             Object2ObjectOpenHashMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new Object2ObjectOpenHashMap<>(size, 0.8f);
+                                x = new Object2ObjectOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -932,7 +933,7 @@ public class MemoryMBeanCheck {
                             UnifiedMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new UnifiedMap<>(size, 0.8f);
+                                x = new UnifiedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -941,7 +942,7 @@ public class MemoryMBeanCheck {
                             org.agrona.collections.Object2ObjectHashMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new Object2ObjectHashMap<>(size, 0.8f);
+                                x = new Object2ObjectHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -950,7 +951,7 @@ public class MemoryMBeanCheck {
                             ObjectMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new ObjectMap<>(size, 0.8f);
+                                x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -959,7 +960,7 @@ public class MemoryMBeanCheck {
                             ds.merry.ObjectMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new ds.merry.ObjectMap<>(size, 0.8f);
+                                x = new ds.merry.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -970,7 +971,7 @@ public class MemoryMBeanCheck {
                             LinkedHashMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new LinkedHashMap<>(size, 0.8f);
+                                x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -979,7 +980,7 @@ public class MemoryMBeanCheck {
                             Object2ObjectLinkedOpenHashMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new Object2ObjectLinkedOpenHashMap<>(size, 0.8f);
+                                x = new Object2ObjectLinkedOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -988,7 +989,7 @@ public class MemoryMBeanCheck {
                             OrderedMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new OrderedMap<>(size, 0.8f);
+                                x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -997,7 +998,7 @@ public class MemoryMBeanCheck {
                             ds.merry.OrderedMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new ds.merry.OrderedMap<>(size, 0.8f);
+                                x = new ds.merry.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -1006,7 +1007,7 @@ public class MemoryMBeanCheck {
                             IndexedMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new IndexedMap<>(size, 0.8f);
+                                x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -1059,7 +1060,7 @@ public class MemoryMBeanCheck {
                         HashSet<Integer> x;
 
                         @Override public void run () {
-                            x = new HashSet<>(size, 0.8f);
+                            x = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -1068,7 +1069,7 @@ public class MemoryMBeanCheck {
                         ObjectOpenHashSet<Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectOpenHashSet<>(size, 0.8f);
+                            x = new ObjectOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -1086,7 +1087,7 @@ public class MemoryMBeanCheck {
                         org.eclipse.collections.impl.set.mutable.UnifiedSet<Integer> x;
 
                         @Override public void run () {
-                            x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size, 0.8f);
+                            x = new org.eclipse.collections.impl.set.mutable.UnifiedSet<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -1095,7 +1096,7 @@ public class MemoryMBeanCheck {
                         org.agrona.collections.ObjectHashSet<Integer> x;
 
                         @Override public void run () {
-                            x = new org.agrona.collections.ObjectHashSet<>(size, 0.8f);
+                            x = new org.agrona.collections.ObjectHashSet<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -1104,7 +1105,7 @@ public class MemoryMBeanCheck {
                         ObjectSet<Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectSet<>(size, 0.8f);
+                            x = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -1113,7 +1114,7 @@ public class MemoryMBeanCheck {
                         ds.merry.ObjectSet<Integer> x;
 
                         @Override public void run () {
-                            x = new ds.merry.ObjectSet<>(size, 0.8f);
+                            x = new ds.merry.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -1124,7 +1125,7 @@ public class MemoryMBeanCheck {
                         LinkedHashSet<Integer> x;
 
                         @Override public void run () {
-                            x = new LinkedHashSet<>(size, 0.8f);
+                            x = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -1133,7 +1134,7 @@ public class MemoryMBeanCheck {
                         ObjectLinkedOpenHashSet<Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectLinkedOpenHashSet<>(size, 0.8f);
+                            x = new ObjectLinkedOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -1142,7 +1143,7 @@ public class MemoryMBeanCheck {
                         OrderedSet<Integer> x;
 
                         @Override public void run () {
-                            x = new OrderedSet<>(size, 0.8f);
+                            x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -1151,7 +1152,7 @@ public class MemoryMBeanCheck {
                         ds.merry.OrderedSet<Integer> x;
 
                         @Override public void run () {
-                            x = new ds.merry.OrderedSet<>(size, 0.8f);
+                            x = new ds.merry.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -1160,7 +1161,7 @@ public class MemoryMBeanCheck {
                             IndexedSet<Integer> x;
 
                             @Override public void run () {
-                                x = new IndexedSet<>(size, 0.8f);
+                                x = new IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -1172,7 +1173,7 @@ public class MemoryMBeanCheck {
                         HashMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new HashMap<>(size, 0.8f);
+                            x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -1181,7 +1182,7 @@ public class MemoryMBeanCheck {
                         Object2ObjectOpenHashMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new Object2ObjectOpenHashMap<>(size, 0.8f);
+                            x = new Object2ObjectOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -1199,7 +1200,7 @@ public class MemoryMBeanCheck {
                         UnifiedMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new UnifiedMap<>(size, 0.8f);
+                            x = new UnifiedMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -1208,7 +1209,7 @@ public class MemoryMBeanCheck {
                         org.agrona.collections.Object2ObjectHashMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new Object2ObjectHashMap<>(size, 0.8f); // agrona's default load factor
+                            x = new Object2ObjectHashMap<>(size, LoadFactor.LOAD_FACTOR); // agrona's default load factor
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -1217,7 +1218,7 @@ public class MemoryMBeanCheck {
                         ObjectMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectMap<>(size, 0.8f);
+                            x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -1226,7 +1227,7 @@ public class MemoryMBeanCheck {
                         ds.merry.ObjectMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new ds.merry.ObjectMap<>(size, 0.8f);
+                            x = new ds.merry.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -1237,7 +1238,7 @@ public class MemoryMBeanCheck {
                         LinkedHashMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new LinkedHashMap<>(size, 0.8f);
+                            x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -1246,7 +1247,7 @@ public class MemoryMBeanCheck {
                         Object2ObjectLinkedOpenHashMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new Object2ObjectLinkedOpenHashMap<>(size, 0.8f);
+                            x = new Object2ObjectLinkedOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -1255,7 +1256,7 @@ public class MemoryMBeanCheck {
                             OrderedMap<Integer, Integer> x;
 
                             @Override public void run () {
-                                x = new OrderedMap<>(size, 0.8f);
+                                x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -1264,7 +1265,7 @@ public class MemoryMBeanCheck {
                         ds.merry.OrderedMap<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new ds.merry.OrderedMap<>(size, 0.8f);
+                            x = new ds.merry.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -1273,7 +1274,7 @@ public class MemoryMBeanCheck {
                             IndexedMap<Integer, Integer> x;
 
                             @Override public void run () {
-                                x = new IndexedMap<>(size, 0.8f);
+                                x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));

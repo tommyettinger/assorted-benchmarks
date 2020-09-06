@@ -6,7 +6,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public enum AtlantisIndexedSetFact {
-	ATLANTIS_O_INDEXED(() -> new IndexedSet(16, 0.8f), IndexedSet::new),
+	ATLANTIS_O_INDEXED(() -> new IndexedSet(16, LoadFactor.LOAD_FACTOR), IndexedSet::new),
 	;
 
 	public final Supplier<IndexedSet<?>> maker;

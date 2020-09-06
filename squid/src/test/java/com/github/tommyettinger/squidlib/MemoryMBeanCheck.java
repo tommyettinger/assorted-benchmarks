@@ -72,7 +72,7 @@ public class MemoryMBeanCheck {
                             HashSet<String> x;
 
                             @Override public void run () {
-                                x = new HashSet<>(size, 0.8f);
+                                x = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -81,7 +81,7 @@ public class MemoryMBeanCheck {
                             UnorderedSet<String> x;
 
                             @Override public void run () {
-                                x = new UnorderedSet<>(size, 0.8f);
+                                x = new UnorderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -90,7 +90,7 @@ public class MemoryMBeanCheck {
                             ObjectSet<String> x;
 
                             @Override public void run () {
-                                x = new ObjectSet<>(size, 0.8f);
+                                x = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -101,7 +101,7 @@ public class MemoryMBeanCheck {
                             LinkedHashSet<String> x;
 
                             @Override public void run () {
-                                x = new LinkedHashSet<>(size, 0.8f);
+                                x = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -110,7 +110,7 @@ public class MemoryMBeanCheck {
                             squidpony.squidmath.OrderedSet<String> x;
 
                             @Override public void run () {
-                                x = new squidpony.squidmath.OrderedSet<>(size, 0.8f);
+                                x = new squidpony.squidmath.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -119,7 +119,7 @@ public class MemoryMBeanCheck {
                             OrderedSet<String> x;
 
                             @Override public void run () {
-                                x = new OrderedSet<>(size, 0.8f);
+                                x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -128,7 +128,7 @@ public class MemoryMBeanCheck {
                             IndexedSet<String> x;
 
                             @Override public void run () {
-                                x = new IndexedSet<>(size, 0.8f);
+                                x = new IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -140,7 +140,7 @@ public class MemoryMBeanCheck {
                             HashMap<String, String> x;
 
                             @Override public void run () {
-                                x = new HashMap<>(size, 0.8f);
+                                x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -149,7 +149,7 @@ public class MemoryMBeanCheck {
                             squidpony.squidmath.UnorderedMap<String, String> x;
 
                             @Override public void run () {
-                                x = new squidpony.squidmath.UnorderedMap<>(size, 0.8f);
+                                x = new squidpony.squidmath.UnorderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -158,7 +158,7 @@ public class MemoryMBeanCheck {
                             ObjectMap<String, String> x;
 
                             @Override public void run () {
-                                x = new ObjectMap<>(size, 0.8f);
+                                x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -169,7 +169,7 @@ public class MemoryMBeanCheck {
                             LinkedHashMap<String, String> x;
 
                             @Override public void run () {
-                                x = new LinkedHashMap<>(size, 0.8f);
+                                x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -178,7 +178,7 @@ public class MemoryMBeanCheck {
                             squidpony.squidmath.OrderedMap<String, String> x;
 
                             @Override public void run () {
-                                x = new squidpony.squidmath.OrderedMap<>(size, 0.8f);
+                                x = new squidpony.squidmath.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -187,7 +187,7 @@ public class MemoryMBeanCheck {
                             OrderedMap<String, String> x;
 
                             @Override public void run () {
-                                x = new OrderedMap<>(size, 0.8f);
+                                x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -196,7 +196,7 @@ public class MemoryMBeanCheck {
                             IndexedMap<String, String> x;
 
                             @Override public void run () {
-                                x = new IndexedMap<>(size, 0.8f);
+                                x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -228,7 +228,7 @@ public class MemoryMBeanCheck {
                             HashSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new HashSet<>(size, 0.8f);
+                                x = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -237,7 +237,7 @@ public class MemoryMBeanCheck {
                             UnorderedSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new UnorderedSet<>(size, 0.8f);
+                                x = new UnorderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -246,7 +246,7 @@ public class MemoryMBeanCheck {
                             ObjectSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new ObjectSet<>(size, 0.8f);
+                                x = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -257,7 +257,7 @@ public class MemoryMBeanCheck {
                             LinkedHashSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new LinkedHashSet<>(size, 0.8f);
+                                x = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -266,7 +266,7 @@ public class MemoryMBeanCheck {
                             squidpony.squidmath.OrderedSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new squidpony.squidmath.OrderedSet<>(size, 0.8f);
+                                x = new squidpony.squidmath.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -275,7 +275,7 @@ public class MemoryMBeanCheck {
                             OrderedSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new OrderedSet<>(size, 0.8f);
+                                x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -284,7 +284,7 @@ public class MemoryMBeanCheck {
                             IndexedSet<CustomString> x;
 
                             @Override public void run () {
-                                x = new IndexedSet<>(size, 0.8f);
+                                x = new IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -296,7 +296,7 @@ public class MemoryMBeanCheck {
                             HashMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new HashMap<>(size, 0.8f);
+                                x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -305,7 +305,7 @@ public class MemoryMBeanCheck {
                             squidpony.squidmath.UnorderedMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new squidpony.squidmath.UnorderedMap<>(size, 0.8f);
+                                x = new squidpony.squidmath.UnorderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -314,7 +314,7 @@ public class MemoryMBeanCheck {
                             ObjectMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new ObjectMap<>(size, 0.8f);
+                                x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -325,7 +325,7 @@ public class MemoryMBeanCheck {
                             LinkedHashMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new LinkedHashMap<>(size, 0.8f);
+                                x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -334,7 +334,7 @@ public class MemoryMBeanCheck {
                             squidpony.squidmath.OrderedMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new squidpony.squidmath.OrderedMap<>(size, 0.8f);
+                                x = new squidpony.squidmath.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -343,7 +343,7 @@ public class MemoryMBeanCheck {
                             OrderedMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new OrderedMap<>(size, 0.8f);
+                                x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -352,7 +352,7 @@ public class MemoryMBeanCheck {
                             IndexedMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new IndexedMap<>(size, 0.8f);
+                                x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -384,7 +384,7 @@ public class MemoryMBeanCheck {
                             HashSet<Float> x;
 
                             @Override public void run () {
-                                x = new HashSet<>(size, 0.8f);
+                                x = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -393,7 +393,7 @@ public class MemoryMBeanCheck {
                             UnorderedSet<Float> x;
 
                             @Override public void run () {
-                                x = new UnorderedSet<>(size, 0.8f);
+                                x = new UnorderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -402,7 +402,7 @@ public class MemoryMBeanCheck {
                             ObjectSet<Float> x;
 
                             @Override public void run () {
-                                x = new ObjectSet<>(size, 0.8f);
+                                x = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -413,7 +413,7 @@ public class MemoryMBeanCheck {
                             LinkedHashSet<Float> x;
 
                             @Override public void run () {
-                                x = new LinkedHashSet<>(size, 0.8f);
+                                x = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -422,7 +422,7 @@ public class MemoryMBeanCheck {
                             squidpony.squidmath.OrderedSet<Float> x;
 
                             @Override public void run () {
-                                x = new squidpony.squidmath.OrderedSet<>(size, 0.8f);
+                                x = new squidpony.squidmath.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -431,7 +431,7 @@ public class MemoryMBeanCheck {
                             OrderedSet<Float> x;
 
                             @Override public void run () {
-                                x = new OrderedSet<>(size, 0.8f);
+                                x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -440,7 +440,7 @@ public class MemoryMBeanCheck {
                             IndexedSet<Float> x;
 
                             @Override public void run () {
-                                x = new IndexedSet<>(size, 0.8f);
+                                x = new IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -452,7 +452,7 @@ public class MemoryMBeanCheck {
                             HashMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new HashMap<>(size, 0.8f);
+                                x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -461,7 +461,7 @@ public class MemoryMBeanCheck {
                             squidpony.squidmath.UnorderedMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new squidpony.squidmath.UnorderedMap<>(size, 0.8f);
+                                x = new squidpony.squidmath.UnorderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -470,7 +470,7 @@ public class MemoryMBeanCheck {
                             ObjectMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new ObjectMap<>(size, 0.8f);
+                                x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -481,7 +481,7 @@ public class MemoryMBeanCheck {
                             LinkedHashMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new LinkedHashMap<>(size, 0.8f);
+                                x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -490,7 +490,7 @@ public class MemoryMBeanCheck {
                             squidpony.squidmath.OrderedMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new squidpony.squidmath.OrderedMap<>(size, 0.8f);
+                                x = new squidpony.squidmath.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -499,7 +499,7 @@ public class MemoryMBeanCheck {
                             OrderedMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new OrderedMap<>(size, 0.8f);
+                                x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -508,7 +508,7 @@ public class MemoryMBeanCheck {
                             IndexedMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new IndexedMap<>(size, 0.8f);
+                                x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -541,7 +541,7 @@ public class MemoryMBeanCheck {
                             HashSet<Integer> x;
 
                             @Override public void run () {
-                                x = new HashSet<>(size, 0.8f);
+                                x = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -550,7 +550,7 @@ public class MemoryMBeanCheck {
                             UnorderedSet<Integer> x;
 
                             @Override public void run () {
-                                x = new UnorderedSet<>(size, 0.8f);
+                                x = new UnorderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -559,7 +559,7 @@ public class MemoryMBeanCheck {
                             ObjectSet<Integer> x;
 
                             @Override public void run () {
-                                x = new ObjectSet<>(size, 0.8f);
+                                x = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -570,7 +570,7 @@ public class MemoryMBeanCheck {
                             LinkedHashSet<Integer> x;
 
                             @Override public void run () {
-                                x = new LinkedHashSet<>(size, 0.8f);
+                                x = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -579,7 +579,7 @@ public class MemoryMBeanCheck {
                             squidpony.squidmath.OrderedSet<Integer> x;
 
                             @Override public void run () {
-                                x = new squidpony.squidmath.OrderedSet<>(size, 0.8f);
+                                x = new squidpony.squidmath.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -588,7 +588,7 @@ public class MemoryMBeanCheck {
                             OrderedSet<Integer> x;
 
                             @Override public void run () {
-                                x = new OrderedSet<>(size, 0.8f);
+                                x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -597,7 +597,7 @@ public class MemoryMBeanCheck {
                             IndexedSet<Integer> x;
 
                             @Override public void run () {
-                                x = new IndexedSet<>(size, 0.8f);
+                                x = new IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -609,7 +609,7 @@ public class MemoryMBeanCheck {
                             HashMap<Integer, Integer> x;
 
                             @Override public void run () {
-                                x = new HashMap<>(size, 0.8f);
+                                x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -618,7 +618,7 @@ public class MemoryMBeanCheck {
                             squidpony.squidmath.UnorderedMap<Integer, Integer> x;
 
                             @Override public void run () {
-                                x = new squidpony.squidmath.UnorderedMap<>(size, 0.8f);
+                                x = new squidpony.squidmath.UnorderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -627,7 +627,7 @@ public class MemoryMBeanCheck {
                             ObjectMap<Integer, Integer> x;
 
                             @Override public void run () {
-                                x = new ObjectMap<>(size, 0.8f);
+                                x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -638,7 +638,7 @@ public class MemoryMBeanCheck {
                             LinkedHashMap<Integer, Integer> x;
 
                             @Override public void run () {
-                                x = new LinkedHashMap<>(size, 0.8f);
+                                x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -647,7 +647,7 @@ public class MemoryMBeanCheck {
                             squidpony.squidmath.OrderedMap<Integer, Integer> x;
 
                             @Override public void run () {
-                                x = new squidpony.squidmath.OrderedMap<>(size, 0.8f);
+                                x = new squidpony.squidmath.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -656,7 +656,7 @@ public class MemoryMBeanCheck {
                             OrderedMap<Integer, Integer> x;
 
                             @Override public void run () {
-                                x = new OrderedMap<>(size, 0.8f);
+                                x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -665,7 +665,7 @@ public class MemoryMBeanCheck {
                             IndexedMap<Integer, Integer> x;
 
                             @Override public void run () {
-                                x = new IndexedMap<>(size, 0.8f);
+                                x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));

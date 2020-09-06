@@ -8,22 +8,22 @@ import java.util.function.Supplier;
 public enum JDKSetFact {
 	//JDK_HASH,KOLOBOKE_HASH,FASTUTIL_HASH,ECLIPSE_HASH,TROVE_HASH,AGRONA_HASH
 	//JDK_LINKEDHASH,FASTUTIL_LINKEDHASH,APACHE_LINKEDHASH,ATLANTIS_INDEXED
-	JDK_HASH(() -> new java.util.HashSet(16, 0.8f)), //
-	JDK_LINKEDHASH(() -> new java.util.LinkedHashSet(16, 0.8f)), //
+	JDK_HASH(() -> new java.util.HashSet(16, LoadFactor.LOAD_FACTOR)), //
+	JDK_LINKEDHASH(() -> new java.util.LinkedHashSet(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_TREE(() -> new java.util.TreeSet()), //
 
 	KOLOBOKE_HASH(com.koloboke.collect.set.hash.HashObjSets::newMutableSet), //
 	KOLOBOKE_QHASH(KolobokeQHash.ObjSets::newMutableSet), //
 
-	FASTUTIL_HASH(() -> new it.unimi.dsi.fastutil.objects.ObjectOpenHashSet(16, 0.8f)), //
-	FASTUTIL_LINKEDHASH(() -> new it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet(16, 0.8f)), //
+	FASTUTIL_HASH(() -> new it.unimi.dsi.fastutil.objects.ObjectOpenHashSet(16, LoadFactor.LOAD_FACTOR)), //
+	FASTUTIL_LINKEDHASH(() -> new it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet(16, LoadFactor.LOAD_FACTOR)), //
 	FASTUTIL_AVL(() -> new it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet()), //
 	FASTUTIL_RB(() -> new it.unimi.dsi.fastutil.objects.ObjectRBTreeSet()), //
 	FASTUTIL_ARRAY(() -> new it.unimi.dsi.fastutil.objects.ObjectArraySet()), //
 
-	TROVE_HASH(() -> new gnu.trove.set.hash.THashSet(16, 0.8f)), //
+	TROVE_HASH(() -> new gnu.trove.set.hash.THashSet(16, LoadFactor.LOAD_FACTOR)), //
 
-	ECLIPSE_HASH(() -> new org.eclipse.collections.impl.set.mutable.UnifiedSet(16, 0.8f)), //
+	ECLIPSE_HASH(() -> new org.eclipse.collections.impl.set.mutable.UnifiedSet(16, LoadFactor.LOAD_FACTOR)), //
 	ECLIPSE_TREE(() -> new org.eclipse.collections.impl.set.sorted.mutable.TreeSortedSet()), //
 
 	APACHE_HASH(() -> org.apache.commons.collections4.set.MapBackedSet.mapBackedSet(//
@@ -34,10 +34,10 @@ public enum JDKSetFact {
 	JAVOLUTION_HASH(() -> new javolution.util.FastSet()), //
 	JAVOLUTION_SORTED(() -> new javolution.util.FastSortedSet()), //
 
-	AGRONA_HASH(() -> new org.agrona.collections.ObjectHashSet(16, 0.8f)), //
+	AGRONA_HASH(() -> new org.agrona.collections.ObjectHashSet(16, LoadFactor.LOAD_FACTOR)), //
 
-	CORENLP_ARRAY(() -> new edu.stanford.nlp.util.ArraySet(16, 0.8f)), //
-	ATLANTIS_INDEXED(() -> new IndexedSet(16, 0.8f))
+	CORENLP_ARRAY(() -> new edu.stanford.nlp.util.ArraySet(16, LoadFactor.LOAD_FACTOR)), //
+	ATLANTIS_INDEXED(() -> new IndexedSet(16, LoadFactor.LOAD_FACTOR))
 	;
 
 	public Supplier<Set<?>> maker;
