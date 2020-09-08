@@ -65,6 +65,9 @@ public class MemoryMBeanCheck {
                     e.printStackTrace();
                 }
                 String[] items = gen.generateArray(size);
+                
+                
+                
                 System.out.println("UNORDERED SET");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK HashSet", size,
@@ -94,6 +97,15 @@ public class MemoryMBeanCheck {
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectSet", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.ObjectSet<String> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.println("INSERTION-ORDERED SET:");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
@@ -120,6 +132,15 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedSet", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.OrderedSet<String> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -162,6 +183,15 @@ public class MemoryMBeanCheck {
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.ObjectMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.println("INSERTION-ORDERED MAP:");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK LinkedHashMap", size,
@@ -188,6 +218,15 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMap", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.OrderedMap<String, String> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -221,6 +260,9 @@ public class MemoryMBeanCheck {
                     e.printStackTrace();
                 }
                 CustomString[] items = gen.generateCustomArray(size);
+
+
+
                 System.out.println("UNORDERED SET");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDK HashSet", size,
@@ -250,6 +292,15 @@ public class MemoryMBeanCheck {
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS ObjectSet", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.ObjectSet<CustomString> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.println("INSERTION-ORDERED SET:");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
@@ -276,6 +327,15 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS OrderedSet", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.OrderedSet<CustomString> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -318,6 +378,15 @@ public class MemoryMBeanCheck {
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.ObjectMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.println("INSERTION-ORDERED MAP:");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDK LinkedHashMap", size,
@@ -344,6 +413,15 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMap", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.OrderedMap<CustomString, CustomString> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -377,6 +455,9 @@ public class MemoryMBeanCheck {
                 for (int j = 0; j < size; j++) {
                     items[j] = (rng.nextInt() << 10) * 1024f;// * 0.6180339887498949f;
                 }
+
+
+
                 System.out.println("UNORDERED SET");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK HashSet", size,
@@ -406,6 +487,15 @@ public class MemoryMBeanCheck {
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS ObjectSet", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.ObjectSet<Float> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.println("INSERTION-ORDERED SET:");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
@@ -432,6 +522,15 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS OrderedSet", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.OrderedSet<Float> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -474,6 +573,15 @@ public class MemoryMBeanCheck {
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.ObjectMap<Float, Float> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.println("INSERTION-ORDERED MAP:");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDK LinkedHashMap", size,
@@ -500,6 +608,15 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS OrderedMap", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.OrderedMap<Float, Float> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -534,6 +651,8 @@ public class MemoryMBeanCheck {
                     items[j] = (rng.nextInt() << 10);// * 0.6180339887498949f;
                 }
 
+
+
                 System.out.println("UNORDERED SET");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDK HashSet", size,
@@ -563,6 +682,15 @@ public class MemoryMBeanCheck {
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS ObjectSet", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.ObjectSet<Integer> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
                 System.out.println("INSERTION-ORDERED SET:");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
@@ -589,6 +717,15 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.add(items[j]);
+                            }
+                        }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS OrderedSet", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.OrderedSet<Integer> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -631,6 +768,15 @@ public class MemoryMBeanCheck {
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.ObjectMap<Integer, Integer> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.println("INSERTION-ORDERED MAP:");
                 System.out.println("----------------------------------------");
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDK LinkedHashMap", size,
@@ -660,6 +806,15 @@ public class MemoryMBeanCheck {
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
+                System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS OrderedMap", size,
+                        measure(new Runnable() {
+                            com.github.tommyettinger.ds.OrderedMap<Integer, Integer> x;
+
+                            @Override public void run () {
+                                x = new com.github.tommyettinger.ds.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
+                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                            }
+                        }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "Atlantis IndexedMap", size,
                         measure(new Runnable() {
                             IndexedMap<Integer, Integer> x;
@@ -669,6 +824,7 @@ public class MemoryMBeanCheck {
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
+
             }
         }
     }
