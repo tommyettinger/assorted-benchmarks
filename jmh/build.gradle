@@ -72,7 +72,9 @@ dependencies {
     //implementation 'space.earlygrey:simple-graphs:6e671fabc2'
     implementation 'space.earlygrey:simple-graphs:155a48e25d'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
-    implementation 'com.github.tommyettinger:atlantis:5574642135'
+    //implementation 'com.github.tommyettinger:atlantis:5574642135' // release 0.0.1
+    //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
+    implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
 
 
     testImplementation group: 'junit', name: 'junit', version:'4.12'

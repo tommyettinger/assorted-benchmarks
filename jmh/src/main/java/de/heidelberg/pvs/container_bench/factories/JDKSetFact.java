@@ -7,37 +7,37 @@ import java.util.function.Supplier;
 
 public enum JDKSetFact {
 	//JDK_HASH,KOLOBOKE_HASH,FASTUTIL_HASH,ECLIPSE_HASH,TROVE_HASH,AGRONA_HASH
-	//JDK_LINKEDHASH,FASTUTIL_LINKEDHASH,APACHE_LINKEDHASH
-	JDK_HASH(java.util.HashSet::new), //
-	JDK_LINKEDHASH(java.util.LinkedHashSet::new), //
-	JDK_TREE(java.util.TreeSet::new), //
+	//JDK_LINKEDHASH,FASTUTIL_LINKEDHASH,APACHE_LINKEDHASH,ATLANTIS_INDEXED
+	JDK_HASH(() -> new java.util.HashSet(16, LoadFactor.LOAD_FACTOR)), //
+	JDK_LINKEDHASH(() -> new java.util.LinkedHashSet(16, LoadFactor.LOAD_FACTOR)), //
+	JDK_TREE(() -> new java.util.TreeSet()), //
 
 	KOLOBOKE_HASH(com.koloboke.collect.set.hash.HashObjSets::newMutableSet), //
 	KOLOBOKE_QHASH(KolobokeQHash.ObjSets::newMutableSet), //
 
-	FASTUTIL_HASH(it.unimi.dsi.fastutil.objects.ObjectOpenHashSet::new), //
-	FASTUTIL_LINKEDHASH(it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet::new), //
-	FASTUTIL_AVL(it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet::new), //
-	FASTUTIL_RB(it.unimi.dsi.fastutil.objects.ObjectRBTreeSet::new), //
-	FASTUTIL_ARRAY(it.unimi.dsi.fastutil.objects.ObjectArraySet::new), //
+	FASTUTIL_HASH(() -> new it.unimi.dsi.fastutil.objects.ObjectOpenHashSet(16, LoadFactor.LOAD_FACTOR)), //
+	FASTUTIL_LINKEDHASH(() -> new it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet(16, LoadFactor.LOAD_FACTOR)), //
+	FASTUTIL_AVL(() -> new it.unimi.dsi.fastutil.objects.ObjectAVLTreeSet()), //
+	FASTUTIL_RB(() -> new it.unimi.dsi.fastutil.objects.ObjectRBTreeSet()), //
+	FASTUTIL_ARRAY(() -> new it.unimi.dsi.fastutil.objects.ObjectArraySet()), //
 
-	TROVE_HASH(gnu.trove.set.hash.THashSet::new), //
+	TROVE_HASH(() -> new gnu.trove.set.hash.THashSet(16, LoadFactor.LOAD_FACTOR)), //
 
-	ECLIPSE_HASH(org.eclipse.collections.impl.set.mutable.UnifiedSet::new), //
-	ECLIPSE_TREE(org.eclipse.collections.impl.set.sorted.mutable.TreeSortedSet::new), //
+	ECLIPSE_HASH(() -> new org.eclipse.collections.impl.set.mutable.UnifiedSet(16, LoadFactor.LOAD_FACTOR)), //
+	ECLIPSE_TREE(() -> new org.eclipse.collections.impl.set.sorted.mutable.TreeSortedSet()), //
 
 	APACHE_HASH(() -> org.apache.commons.collections4.set.MapBackedSet.mapBackedSet(//
 			new org.apache.commons.collections4.map.HashedMap<>())), //
-	APACHE_LINKEDHASH(org.apache.commons.collections4.set.ListOrderedSet::new), //
-	MAHOUT_HASH(org.apache.mahout.math.set.OpenHashSet::new), //
+	APACHE_LINKEDHASH(() -> new org.apache.commons.collections4.set.ListOrderedSet()), //
+	MAHOUT_HASH(() -> new org.apache.mahout.math.set.OpenHashSet()), //
 
-	JAVOLUTION_HASH(javolution.util.FastSet::new), //
-	JAVOLUTION_SORTED(javolution.util.FastSortedSet::new), //
+	JAVOLUTION_HASH(() -> new javolution.util.FastSet()), //
+	JAVOLUTION_SORTED(() -> new javolution.util.FastSortedSet()), //
 
-	AGRONA_HASH(org.agrona.collections.ObjectHashSet::new), //
+	AGRONA_HASH(() -> new org.agrona.collections.ObjectHashSet(16, LoadFactor.LOAD_FACTOR)), //
 
-	CORENLP_ARRAY(edu.stanford.nlp.util.ArraySet::new), //
-	ATLANTIS_INDEXED(IndexedSet::new)
+	CORENLP_ARRAY(() -> new edu.stanford.nlp.util.ArraySet(16, LoadFactor.LOAD_FACTOR)), //
+	ATLANTIS_INDEXED(() -> new IndexedSet(16, LoadFactor.LOAD_FACTOR))
 	;
 
 	public Supplier<Set<?>> maker;

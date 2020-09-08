@@ -1,0 +1,1008 @@
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,       1 CustomStrings: 144
+----------------------------------------
+         SquidLib UnorderedSet,       1 CustomStrings: 80
+----------------------------------------
+                 GDX ObjectSet,       1 CustomStrings: 104
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,       1 CustomStrings: 160
+----------------------------------------
+           SquidLib OrderedSet,       1 CustomStrings: 128
+----------------------------------------
+                GDX OrderedSet,       1 CustomStrings: 168
+----------------------------------------
+           Atlantis IndexedSet,       1 CustomStrings: 128
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,       1 CustomStrings: 128
+----------------------------------------
+         SquidLib UnorderedMap,       1 CustomStrings: 128
+----------------------------------------
+                 GDX ObjectMap,       1 CustomStrings: 176
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,       1 CustomStrings: 144
+----------------------------------------
+           SquidLib OrderedMap,       1 CustomStrings: 184
+----------------------------------------
+                GDX OrderedMap,       1 CustomStrings: 240
+----------------------------------------
+           Atlantis IndexedMap,       1 CustomStrings: 184
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,      10 CustomStrings: 464
+----------------------------------------
+         SquidLib UnorderedSet,      10 CustomStrings: 136
+----------------------------------------
+                 GDX ObjectSet,      10 CustomStrings: 128
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,      10 CustomStrings: 552
+----------------------------------------
+           SquidLib OrderedSet,      10 CustomStrings: 216
+----------------------------------------
+                GDX OrderedSet,      10 CustomStrings: 224
+----------------------------------------
+           Atlantis IndexedSet,      10 CustomStrings: 216
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,      10 CustomStrings: 448
+----------------------------------------
+         SquidLib UnorderedMap,      10 CustomStrings: 240
+----------------------------------------
+                 GDX ObjectMap,      10 CustomStrings: 224
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,      10 CustomStrings: 536
+----------------------------------------
+           SquidLib OrderedMap,      10 CustomStrings: 328
+----------------------------------------
+                GDX OrderedMap,      10 CustomStrings: 320
+----------------------------------------
+           Atlantis IndexedMap,      10 CustomStrings: 328
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,     100 CustomStrings: 3792
+----------------------------------------
+         SquidLib UnorderedSet,     100 CustomStrings: 584
+----------------------------------------
+                 GDX ObjectSet,     100 CustomStrings: 576
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,     100 CustomStrings: 4600
+----------------------------------------
+           SquidLib OrderedSet,     100 CustomStrings: 1024
+----------------------------------------
+                GDX OrderedSet,     100 CustomStrings: 1032
+----------------------------------------
+           Atlantis IndexedSet,     100 CustomStrings: 1024
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,     100 CustomStrings: 3776
+----------------------------------------
+         SquidLib UnorderedMap,     100 CustomStrings: 1136
+----------------------------------------
+                 GDX ObjectMap,     100 CustomStrings: 1120
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,     100 CustomStrings: 4584
+----------------------------------------
+           SquidLib OrderedMap,     100 CustomStrings: 1584
+----------------------------------------
+                GDX OrderedMap,     100 CustomStrings: 1576
+----------------------------------------
+           Atlantis IndexedMap,     100 CustomStrings: 1584
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,    1000 CustomStrings: 44352
+----------------------------------------
+         SquidLib UnorderedSet,    1000 CustomStrings: 8264
+----------------------------------------
+                 GDX ObjectSet,    1000 CustomStrings: 8256
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,    1000 CustomStrings: 52352
+----------------------------------------
+           SquidLib OrderedSet,    1000 CustomStrings: 12304
+----------------------------------------
+                GDX OrderedSet,    1000 CustomStrings: 12312
+----------------------------------------
+           Atlantis IndexedSet,    1000 CustomStrings: 12304
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,    1000 CustomStrings: 44336
+----------------------------------------
+         SquidLib UnorderedMap,    1000 CustomStrings: 16496
+----------------------------------------
+                 GDX ObjectMap,    1000 CustomStrings: 16480
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,    1000 CustomStrings: 52336
+----------------------------------------
+           SquidLib OrderedMap,    1000 CustomStrings: 20544
+----------------------------------------
+                GDX OrderedMap,    1000 CustomStrings: 20536
+----------------------------------------
+           Atlantis IndexedMap,    1000 CustomStrings: 20544
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,   10000 CustomStrings: 382000
+----------------------------------------
+         SquidLib UnorderedSet,   10000 CustomStrings: 65608
+----------------------------------------
+                 GDX ObjectSet,   10000 CustomStrings: 65600
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,   10000 CustomStrings: 461104
+----------------------------------------
+           SquidLib OrderedSet,   10000 CustomStrings: 105648
+----------------------------------------
+                GDX OrderedSet,   10000 CustomStrings: 105656
+----------------------------------------
+           Atlantis IndexedSet,   10000 CustomStrings: 105648
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,   10000 CustomStrings: 381984
+----------------------------------------
+         SquidLib UnorderedMap,   10000 CustomStrings: 131184
+----------------------------------------
+                 GDX ObjectMap,   10000 CustomStrings: 131168
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,   10000 CustomStrings: 461088
+----------------------------------------
+           SquidLib OrderedMap,   10000 CustomStrings: 171232
+----------------------------------------
+                GDX OrderedMap,   10000 CustomStrings: 171224
+----------------------------------------
+           Atlantis IndexedMap,   10000 CustomStrings: 171232
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,  100000 CustomStrings: 3246576
+----------------------------------------
+         SquidLib UnorderedSet,  100000 CustomStrings: 524360
+----------------------------------------
+                 GDX ObjectSet,  100000 CustomStrings: 524352
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,  100000 CustomStrings: 3927136
+----------------------------------------
+           SquidLib OrderedSet,  100000 CustomStrings: 924400
+----------------------------------------
+                GDX OrderedSet,  100000 CustomStrings: 924408
+----------------------------------------
+           Atlantis IndexedSet,  100000 CustomStrings: 924400
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,  100000 CustomStrings: 3246560
+----------------------------------------
+         SquidLib UnorderedMap,  100000 CustomStrings: 1048688
+----------------------------------------
+                 GDX ObjectMap,  100000 CustomStrings: 1048672
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,  100000 CustomStrings: 3927120
+----------------------------------------
+           SquidLib OrderedMap,  100000 CustomStrings: 1448736
+----------------------------------------
+                GDX OrderedMap,  100000 CustomStrings: 1448728
+----------------------------------------
+           Atlantis IndexedMap,  100000 CustomStrings: 1448736
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet, 1000000 CustomStrings: 11624432
+----------------------------------------
+         SquidLib UnorderedSet, 1000000 CustomStrings: 8388680
+----------------------------------------
+                 GDX ObjectSet, 1000000 CustomStrings: 8388672
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet, 1000000 CustomStrings: 13481952
+----------------------------------------
+           SquidLib OrderedSet, 1000000 CustomStrings: 12388720
+----------------------------------------
+                GDX OrderedSet, 1000000 CustomStrings: 12388728
+----------------------------------------
+           Atlantis IndexedSet, 1000000 CustomStrings: 12388720
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap, 1000000 CustomStrings: 11624416
+----------------------------------------
+         SquidLib UnorderedMap, 1000000 CustomStrings: 16777328
+----------------------------------------
+                 GDX ObjectMap, 1000000 CustomStrings: 16777312
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap, 1000000 CustomStrings: 13481936
+----------------------------------------
+           SquidLib OrderedMap, 1000000 CustomStrings: 20777376
+----------------------------------------
+                GDX OrderedMap, 1000000 CustomStrings: 20777368
+----------------------------------------
+           Atlantis IndexedMap, 1000000 CustomStrings: 20777376
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,       1 Strings: 144
+----------------------------------------
+         SquidLib UnorderedSet,       1 Strings: 80
+----------------------------------------
+                 GDX ObjectSet,       1 Strings: 104
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,       1 Strings: 160
+----------------------------------------
+           SquidLib OrderedSet,       1 Strings: 128
+----------------------------------------
+                GDX OrderedSet,       1 Strings: 168
+----------------------------------------
+           Atlantis IndexedSet,       1 Strings: 128
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,       1 Strings: 128
+----------------------------------------
+         SquidLib UnorderedMap,       1 Strings: 128
+----------------------------------------
+                 GDX ObjectMap,       1 Strings: 176
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,       1 Strings: 144
+----------------------------------------
+           SquidLib OrderedMap,       1 Strings: 184
+----------------------------------------
+                GDX OrderedMap,       1 Strings: 240
+----------------------------------------
+           Atlantis IndexedMap,       1 Strings: 184
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,      10 Strings: 464
+----------------------------------------
+         SquidLib UnorderedSet,      10 Strings: 136
+----------------------------------------
+                 GDX ObjectSet,      10 Strings: 128
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,      10 Strings: 552
+----------------------------------------
+           SquidLib OrderedSet,      10 Strings: 216
+----------------------------------------
+                GDX OrderedSet,      10 Strings: 224
+----------------------------------------
+           Atlantis IndexedSet,      10 Strings: 216
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,      10 Strings: 448
+----------------------------------------
+         SquidLib UnorderedMap,      10 Strings: 240
+----------------------------------------
+                 GDX ObjectMap,      10 Strings: 224
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,      10 Strings: 536
+----------------------------------------
+           SquidLib OrderedMap,      10 Strings: 328
+----------------------------------------
+                GDX OrderedMap,      10 Strings: 320
+----------------------------------------
+           Atlantis IndexedMap,      10 Strings: 328
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,     100 Strings: 3792
+----------------------------------------
+         SquidLib UnorderedSet,     100 Strings: 584
+----------------------------------------
+                 GDX ObjectSet,     100 Strings: 576
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,     100 Strings: 4600
+----------------------------------------
+           SquidLib OrderedSet,     100 Strings: 1024
+----------------------------------------
+                GDX OrderedSet,     100 Strings: 1032
+----------------------------------------
+           Atlantis IndexedSet,     100 Strings: 1024
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,     100 Strings: 3776
+----------------------------------------
+         SquidLib UnorderedMap,     100 Strings: 1136
+----------------------------------------
+                 GDX ObjectMap,     100 Strings: 1120
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,     100 Strings: 4584
+----------------------------------------
+           SquidLib OrderedMap,     100 Strings: 1584
+----------------------------------------
+                GDX OrderedMap,     100 Strings: 1576
+----------------------------------------
+           Atlantis IndexedMap,     100 Strings: 1584
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,    1000 Strings: 44352
+----------------------------------------
+         SquidLib UnorderedSet,    1000 Strings: 8264
+----------------------------------------
+                 GDX ObjectSet,    1000 Strings: 8256
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,    1000 Strings: 52352
+----------------------------------------
+           SquidLib OrderedSet,    1000 Strings: 12304
+----------------------------------------
+                GDX OrderedSet,    1000 Strings: 12312
+----------------------------------------
+           Atlantis IndexedSet,    1000 Strings: 12304
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,    1000 Strings: 44336
+----------------------------------------
+         SquidLib UnorderedMap,    1000 Strings: 16496
+----------------------------------------
+                 GDX ObjectMap,    1000 Strings: 16480
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,    1000 Strings: 52336
+----------------------------------------
+           SquidLib OrderedMap,    1000 Strings: 20544
+----------------------------------------
+                GDX OrderedMap,    1000 Strings: 20536
+----------------------------------------
+           Atlantis IndexedMap,    1000 Strings: 20544
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,   10000 Strings: 382000
+----------------------------------------
+         SquidLib UnorderedSet,   10000 Strings: 65608
+----------------------------------------
+                 GDX ObjectSet,   10000 Strings: 65600
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,   10000 Strings: 461104
+----------------------------------------
+           SquidLib OrderedSet,   10000 Strings: 105648
+----------------------------------------
+                GDX OrderedSet,   10000 Strings: 105656
+----------------------------------------
+           Atlantis IndexedSet,   10000 Strings: 105648
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,   10000 Strings: 381984
+----------------------------------------
+         SquidLib UnorderedMap,   10000 Strings: 131184
+----------------------------------------
+                 GDX ObjectMap,   10000 Strings: 131168
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,   10000 Strings: 461088
+----------------------------------------
+           SquidLib OrderedMap,   10000 Strings: 171232
+----------------------------------------
+                GDX OrderedMap,   10000 Strings: 171224
+----------------------------------------
+           Atlantis IndexedMap,   10000 Strings: 171232
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,  100000 Strings: 3246576
+----------------------------------------
+         SquidLib UnorderedSet,  100000 Strings: 524360
+----------------------------------------
+                 GDX ObjectSet,  100000 Strings: 524352
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,  100000 Strings: 3927136
+----------------------------------------
+           SquidLib OrderedSet,  100000 Strings: 924400
+----------------------------------------
+                GDX OrderedSet,  100000 Strings: 924408
+----------------------------------------
+           Atlantis IndexedSet,  100000 Strings: 924400
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,  100000 Strings: 3246560
+----------------------------------------
+         SquidLib UnorderedMap,  100000 Strings: 1048688
+----------------------------------------
+                 GDX ObjectMap,  100000 Strings: 1048672
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,  100000 Strings: 3927120
+----------------------------------------
+           SquidLib OrderedMap,  100000 Strings: 1448736
+----------------------------------------
+                GDX OrderedMap,  100000 Strings: 1448728
+----------------------------------------
+           Atlantis IndexedMap,  100000 Strings: 1448736
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet, 1000000 Strings: 11624432
+----------------------------------------
+         SquidLib UnorderedSet, 1000000 Strings: 8388680
+----------------------------------------
+                 GDX ObjectSet, 1000000 Strings: 8388672
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet, 1000000 Strings: 13481952
+----------------------------------------
+           SquidLib OrderedSet, 1000000 Strings: 12388720
+----------------------------------------
+                GDX OrderedSet, 1000000 Strings: 12388728
+----------------------------------------
+           Atlantis IndexedSet, 1000000 Strings: 12388720
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap, 1000000 Strings: 11624416
+----------------------------------------
+         SquidLib UnorderedMap, 1000000 Strings: 16777328
+----------------------------------------
+                 GDX ObjectMap, 1000000 Strings: 16777312
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap, 1000000 Strings: 13481936
+----------------------------------------
+           SquidLib OrderedMap, 1000000 Strings: 20777376
+----------------------------------------
+                GDX OrderedMap, 1000000 Strings: 20777368
+----------------------------------------
+           Atlantis IndexedMap, 1000000 Strings: 20777376
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,       1 Floats: 144
+----------------------------------------
+         SquidLib UnorderedSet,       1 Floats: 80
+----------------------------------------
+                 GDX ObjectSet,       1 Floats: 104
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,       1 Floats: 160
+----------------------------------------
+           SquidLib OrderedSet,       1 Floats: 128
+----------------------------------------
+                GDX OrderedSet,       1 Floats: 168
+----------------------------------------
+           Atlantis IndexedSet,       1 Floats: 128
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,       1 Floats: 128
+----------------------------------------
+         SquidLib UnorderedMap,       1 Floats: 128
+----------------------------------------
+                 GDX ObjectMap,       1 Floats: 176
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,       1 Floats: 144
+----------------------------------------
+           SquidLib OrderedMap,       1 Floats: 184
+----------------------------------------
+                GDX OrderedMap,       1 Floats: 240
+----------------------------------------
+           Atlantis IndexedMap,       1 Floats: 184
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,      10 Floats: 464
+----------------------------------------
+         SquidLib UnorderedSet,      10 Floats: 136
+----------------------------------------
+                 GDX ObjectSet,      10 Floats: 128
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,      10 Floats: 552
+----------------------------------------
+           SquidLib OrderedSet,      10 Floats: 216
+----------------------------------------
+                GDX OrderedSet,      10 Floats: 224
+----------------------------------------
+           Atlantis IndexedSet,      10 Floats: 216
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,      10 Floats: 448
+----------------------------------------
+         SquidLib UnorderedMap,      10 Floats: 240
+----------------------------------------
+                 GDX ObjectMap,      10 Floats: 224
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,      10 Floats: 536
+----------------------------------------
+           SquidLib OrderedMap,      10 Floats: 328
+----------------------------------------
+                GDX OrderedMap,      10 Floats: 320
+----------------------------------------
+           Atlantis IndexedMap,      10 Floats: 328
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,     100 Floats: 3792
+----------------------------------------
+         SquidLib UnorderedSet,     100 Floats: 584
+----------------------------------------
+                 GDX ObjectSet,     100 Floats: 576
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,     100 Floats: 4600
+----------------------------------------
+           SquidLib OrderedSet,     100 Floats: 1024
+----------------------------------------
+                GDX OrderedSet,     100 Floats: 1032
+----------------------------------------
+           Atlantis IndexedSet,     100 Floats: 1024
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,     100 Floats: 3776
+----------------------------------------
+         SquidLib UnorderedMap,     100 Floats: 1136
+----------------------------------------
+                 GDX ObjectMap,     100 Floats: 1120
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,     100 Floats: 4584
+----------------------------------------
+           SquidLib OrderedMap,     100 Floats: 1584
+----------------------------------------
+                GDX OrderedMap,     100 Floats: 1576
+----------------------------------------
+           Atlantis IndexedMap,     100 Floats: 1584
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,    1000 Floats: 44384
+----------------------------------------
+         SquidLib UnorderedSet,    1000 Floats: 8264
+----------------------------------------
+                 GDX ObjectSet,    1000 Floats: 8256
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,    1000 Floats: 52392
+----------------------------------------
+           SquidLib OrderedSet,    1000 Floats: 12304
+----------------------------------------
+                GDX OrderedSet,    1000 Floats: 12312
+----------------------------------------
+           Atlantis IndexedSet,    1000 Floats: 12304
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,    1000 Floats: 44368
+----------------------------------------
+         SquidLib UnorderedMap,    1000 Floats: 16496
+----------------------------------------
+                 GDX ObjectMap,    1000 Floats: 16480
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,    1000 Floats: 52376
+----------------------------------------
+           SquidLib OrderedMap,    1000 Floats: 20544
+----------------------------------------
+                GDX OrderedMap,    1000 Floats: 20536
+----------------------------------------
+           Atlantis IndexedMap,    1000 Floats: 20544
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,   10000 Floats: 385264
+----------------------------------------
+         SquidLib UnorderedSet,   10000 Floats: 65608
+----------------------------------------
+                 GDX ObjectSet,   10000 Floats: 65600
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,   10000 Floats: 465184
+----------------------------------------
+           SquidLib OrderedSet,   10000 Floats: 105648
+----------------------------------------
+                GDX OrderedSet,   10000 Floats: 105656
+----------------------------------------
+           Atlantis IndexedSet,   10000 Floats: 105648
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,   10000 Floats: 385248
+----------------------------------------
+         SquidLib UnorderedMap,   10000 Floats: 131184
+----------------------------------------
+                 GDX ObjectMap,   10000 Floats: 131168
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,   10000 Floats: 465168
+----------------------------------------
+           SquidLib OrderedMap,   10000 Floats: 171232
+----------------------------------------
+                GDX OrderedMap,   10000 Floats: 171224
+----------------------------------------
+           Atlantis IndexedMap,   10000 Floats: 171232
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,  100000 Floats: 3689416
+----------------------------------------
+         SquidLib UnorderedSet,  100000 Floats: 524360
+----------------------------------------
+                 GDX ObjectSet,  100000 Floats: 524352
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,  100000 Floats: 4480392
+----------------------------------------
+           SquidLib OrderedSet,  100000 Floats: 924400
+----------------------------------------
+                GDX OrderedSet,  100000 Floats: 924408
+----------------------------------------
+           Atlantis IndexedSet,  100000 Floats: 924400
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,  100000 Floats: 3689400
+----------------------------------------
+         SquidLib UnorderedMap,  100000 Floats: 1048688
+----------------------------------------
+                 GDX ObjectMap,  100000 Floats: 1048672
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,  100000 Floats: 4480376
+----------------------------------------
+           SquidLib OrderedMap,  100000 Floats: 1448736
+----------------------------------------
+                GDX OrderedMap,  100000 Floats: 1448728
+----------------------------------------
+           Atlantis IndexedMap,  100000 Floats: 1448736
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet, 1000000 Floats: 71801488
+----------------------------------------
+         SquidLib UnorderedSet, 1000000 Floats: 8388680
+----------------------------------------
+                 GDX ObjectSet, 1000000 Floats: 8388672
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet, 1000000 Floats: 79831376
+----------------------------------------
+           SquidLib OrderedSet, 1000000 Floats: 12388720
+----------------------------------------
+                GDX OrderedSet, 1000000 Floats: 12388728
+----------------------------------------
+           Atlantis IndexedSet, 1000000 Floats: 12388720
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap, 1000000 Floats: 71801472
+----------------------------------------
+         SquidLib UnorderedMap, 1000000 Floats: 16777328
+----------------------------------------
+                 GDX ObjectMap, 1000000 Floats: 16777312
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap, 1000000 Floats: 79831360
+----------------------------------------
+           SquidLib OrderedMap, 1000000 Floats: 20777376
+----------------------------------------
+                GDX OrderedMap, 1000000 Floats: 20777368
+----------------------------------------
+           Atlantis IndexedMap, 1000000 Floats: 20777376
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,       1 Integers: 144
+----------------------------------------
+         SquidLib UnorderedSet,       1 Integers: 80
+----------------------------------------
+                 GDX ObjectSet,       1 Integers: 104
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,       1 Integers: 160
+----------------------------------------
+           SquidLib OrderedSet,       1 Integers: 128
+----------------------------------------
+                GDX OrderedSet,       1 Integers: 168
+----------------------------------------
+           Atlantis IndexedSet,       1 Integers: 128
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,       1 Integers: 128
+----------------------------------------
+         SquidLib UnorderedMap,       1 Integers: 128
+----------------------------------------
+                 GDX ObjectMap,       1 Integers: 176
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,       1 Integers: 144
+----------------------------------------
+           SquidLib OrderedMap,       1 Integers: 184
+----------------------------------------
+                GDX OrderedMap,       1 Integers: 240
+----------------------------------------
+           Atlantis IndexedMap,       1 Integers: 184
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,      10 Integers: 464
+----------------------------------------
+         SquidLib UnorderedSet,      10 Integers: 136
+----------------------------------------
+                 GDX ObjectSet,      10 Integers: 128
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,      10 Integers: 552
+----------------------------------------
+           SquidLib OrderedSet,      10 Integers: 216
+----------------------------------------
+                GDX OrderedSet,      10 Integers: 224
+----------------------------------------
+           Atlantis IndexedSet,      10 Integers: 216
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,      10 Integers: 448
+----------------------------------------
+         SquidLib UnorderedMap,      10 Integers: 240
+----------------------------------------
+                 GDX ObjectMap,      10 Integers: 224
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,      10 Integers: 536
+----------------------------------------
+           SquidLib OrderedMap,      10 Integers: 328
+----------------------------------------
+                GDX OrderedMap,      10 Integers: 320
+----------------------------------------
+           Atlantis IndexedMap,      10 Integers: 328
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,     100 Integers: 3792
+----------------------------------------
+         SquidLib UnorderedSet,     100 Integers: 584
+----------------------------------------
+                 GDX ObjectSet,     100 Integers: 576
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,     100 Integers: 4600
+----------------------------------------
+           SquidLib OrderedSet,     100 Integers: 1024
+----------------------------------------
+                GDX OrderedSet,     100 Integers: 1032
+----------------------------------------
+           Atlantis IndexedSet,     100 Integers: 1024
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,     100 Integers: 3776
+----------------------------------------
+         SquidLib UnorderedMap,     100 Integers: 1136
+----------------------------------------
+                 GDX ObjectMap,     100 Integers: 1120
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,     100 Integers: 4584
+----------------------------------------
+           SquidLib OrderedMap,     100 Integers: 1584
+----------------------------------------
+                GDX OrderedMap,     100 Integers: 1576
+----------------------------------------
+           Atlantis IndexedMap,     100 Integers: 1584
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,    1000 Integers: 44384
+----------------------------------------
+         SquidLib UnorderedSet,    1000 Integers: 8264
+----------------------------------------
+                 GDX ObjectSet,    1000 Integers: 8256
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,    1000 Integers: 52392
+----------------------------------------
+           SquidLib OrderedSet,    1000 Integers: 12304
+----------------------------------------
+                GDX OrderedSet,    1000 Integers: 12312
+----------------------------------------
+           Atlantis IndexedSet,    1000 Integers: 12304
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,    1000 Integers: 44368
+----------------------------------------
+         SquidLib UnorderedMap,    1000 Integers: 16496
+----------------------------------------
+                 GDX ObjectMap,    1000 Integers: 16480
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,    1000 Integers: 52376
+----------------------------------------
+           SquidLib OrderedMap,    1000 Integers: 20544
+----------------------------------------
+                GDX OrderedMap,    1000 Integers: 20536
+----------------------------------------
+           Atlantis IndexedMap,    1000 Integers: 20544
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,   10000 Integers: 385264
+----------------------------------------
+         SquidLib UnorderedSet,   10000 Integers: 65608
+----------------------------------------
+                 GDX ObjectSet,   10000 Integers: 65600
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,   10000 Integers: 465184
+----------------------------------------
+           SquidLib OrderedSet,   10000 Integers: 105648
+----------------------------------------
+                GDX OrderedSet,   10000 Integers: 105656
+----------------------------------------
+           Atlantis IndexedSet,   10000 Integers: 105648
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,   10000 Integers: 385248
+----------------------------------------
+         SquidLib UnorderedMap,   10000 Integers: 131184
+----------------------------------------
+                 GDX ObjectMap,   10000 Integers: 131168
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,   10000 Integers: 465168
+----------------------------------------
+           SquidLib OrderedMap,   10000 Integers: 171232
+----------------------------------------
+                GDX OrderedMap,   10000 Integers: 171224
+----------------------------------------
+           Atlantis IndexedMap,   10000 Integers: 171232
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet,  100000 Integers: 3688840
+----------------------------------------
+         SquidLib UnorderedSet,  100000 Integers: 524360
+----------------------------------------
+                 GDX ObjectSet,  100000 Integers: 524352
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet,  100000 Integers: 4479840
+----------------------------------------
+           SquidLib OrderedSet,  100000 Integers: 924400
+----------------------------------------
+                GDX OrderedSet,  100000 Integers: 924408
+----------------------------------------
+           Atlantis IndexedSet,  100000 Integers: 924400
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap,  100000 Integers: 3688824
+----------------------------------------
+         SquidLib UnorderedMap,  100000 Integers: 1048688
+----------------------------------------
+                 GDX ObjectMap,  100000 Integers: 1048672
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap,  100000 Integers: 4479824
+----------------------------------------
+           SquidLib OrderedMap,  100000 Integers: 1448736
+----------------------------------------
+                GDX OrderedMap,  100000 Integers: 1448728
+----------------------------------------
+           Atlantis IndexedMap,  100000 Integers: 1448736
+----------------------------------------
+UNORDERED SET
+----------------------------------------
+                   JDK HashSet, 1000000 Integers: 79628656
+----------------------------------------
+         SquidLib UnorderedSet, 1000000 Integers: 8388680
+----------------------------------------
+                 GDX ObjectSet, 1000000 Integers: 8388672
+----------------------------------------
+INSERTION-ORDERED SET:
+----------------------------------------
+             JDK LinkedHashSet, 1000000 Integers: 84296792
+----------------------------------------
+           SquidLib OrderedSet, 1000000 Integers: 12388720
+----------------------------------------
+                GDX OrderedSet, 1000000 Integers: 12388728
+----------------------------------------
+           Atlantis IndexedSet, 1000000 Integers: 12388720
+----------------------------------------
+UNORDERED MAP
+----------------------------------------
+                   JDK HashMap, 1000000 Integers: 79628640
+----------------------------------------
+         SquidLib UnorderedMap, 1000000 Integers: 16777328
+----------------------------------------
+                 GDX ObjectMap, 1000000 Integers: 16777312
+----------------------------------------
+INSERTION-ORDERED MAP:
+----------------------------------------
+             JDK LinkedHashMap, 1000000 Integers: 84296776
+----------------------------------------
+           SquidLib OrderedMap, 1000000 Integers: 20777376
+----------------------------------------
+                GDX OrderedMap, 1000000 Integers: 20777368
+----------------------------------------
+           Atlantis IndexedMap, 1000000 Integers: 20777376
+----------------------------------------

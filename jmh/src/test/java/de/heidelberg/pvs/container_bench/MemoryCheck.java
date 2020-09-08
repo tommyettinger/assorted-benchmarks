@@ -4,6 +4,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LongMap;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.OrderedSet;
+import de.heidelberg.pvs.container_bench.factories.LoadFactor;
 import de.heidelberg.pvs.container_bench.generators.dictionary.IntegerDictionaryGenerator;
 import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryGenerator;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
@@ -55,7 +56,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectOpenHashSet<String> set = new ObjectOpenHashSet<>(size, 0.8f);
+					ObjectOpenHashSet<String> set = new ObjectOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(wordList);
 					System.out.printf("FastUtil Set, %7d Strings:\n", size);
 					evaluate(set);
@@ -78,35 +79,35 @@ public class MemoryCheck {
 				System.out.println("INSERTION-ORDERED:");
 				System.out.println("----------------------------------------");
 				{
-					LinkedHashSet<String> set = new LinkedHashSet<>(size, 0.8f);
+					LinkedHashSet<String> set = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(wordList);
 					System.out.printf("JDK LinkedHashSet, %7d Strings:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectLinkedOpenHashSet<String> set = new ObjectLinkedOpenHashSet<>(size, 0.8f);
+					ObjectLinkedOpenHashSet<String> set = new ObjectLinkedOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(wordList);
 					System.out.printf("FastUtil Linked Set, %7d Strings:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					OrderedSet<String> set = new OrderedSet<>(size, 0.8f);
+					OrderedSet<String> set = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(words);
 					System.out.printf("GDX OrderedSet, %7d Strings:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					ds.merry.OrderedSet<String> set = new ds.merry.OrderedSet<>(size, 0.8f);
+					ds.merry.OrderedSet<String> set = new ds.merry.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(words);
 					System.out.printf("Merry OrderedSet, %7d Strings:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					com.github.tommyettinger.ds.IndexedSet<String> set = new com.github.tommyettinger.ds.IndexedSet<>(size, 0.8f);
+					com.github.tommyettinger.ds.IndexedSet<String> set = new com.github.tommyettinger.ds.IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(words);
 					System.out.printf("Atlantis IndexedSet, %7d Strings:\n", size);
 					evaluate(set);
@@ -153,7 +154,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectOpenHashSet<Integer> set = new ObjectOpenHashSet<>(size, 0.8f);
+					ObjectOpenHashSet<Integer> set = new ObjectOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numberList);
 					System.out.printf("FastUtil Set, %7d Integers:\n", size);
 					evaluate(set);
@@ -176,35 +177,35 @@ public class MemoryCheck {
 				System.out.println("INSERTION-ORDERED:");
 				System.out.println("----------------------------------------");
 				{
-					LinkedHashSet<Integer> set = new LinkedHashSet<>(size, 0.8f);
+					LinkedHashSet<Integer> set = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numberList);
 					System.out.printf("JDK LinkedHashSet, %7d Integers:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectLinkedOpenHashSet<Integer> set = new ObjectLinkedOpenHashSet<>(size, 0.8f);
+					ObjectLinkedOpenHashSet<Integer> set = new ObjectLinkedOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numberList);
 					System.out.printf("FastUtil Linked Set, %7d Integers:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					OrderedSet<Integer> set = new OrderedSet<>(size, 0.8f);
+					OrderedSet<Integer> set = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
 					System.out.printf("GDX OrderedSet, %7d Integers:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					ds.merry.OrderedSet<Integer> set = new ds.merry.OrderedSet<>(size, 0.8f);
+					ds.merry.OrderedSet<Integer> set = new ds.merry.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
 					System.out.printf("Merry OrderedSet, %7d Integers:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					com.github.tommyettinger.ds.IndexedSet<Integer> set = new com.github.tommyettinger.ds.IndexedSet<>(size, 0.8f);
+					com.github.tommyettinger.ds.IndexedSet<Integer> set = new com.github.tommyettinger.ds.IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
 					System.out.printf("Atlantis IndexedSet, %7d Integers:\n", size);
 					evaluate(set);
@@ -257,7 +258,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectOpenHashSet<Long> set = new ObjectOpenHashSet<>(size, 0.8f);
+					ObjectOpenHashSet<Long> set = new ObjectOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numberList);
 					System.out.printf("FastUtil Set, %7d Longs:\n", size);
 					evaluate(set);
@@ -280,35 +281,35 @@ public class MemoryCheck {
 				System.out.println("INSERTION-ORDERED:");
 				System.out.println("----------------------------------------");
 				{
-					LinkedHashSet<Long> set = new LinkedHashSet<>(size, 0.8f);
+					LinkedHashSet<Long> set = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numberList);
 					System.out.printf("JDK LinkedHashSet, %7d Longs:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectLinkedOpenHashSet<Long> set = new ObjectLinkedOpenHashSet<>(size, 0.8f);
+					ObjectLinkedOpenHashSet<Long> set = new ObjectLinkedOpenHashSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numberList);
 					System.out.printf("FastUtil Linked Set, %7d Longs:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					OrderedSet<Long> set = new OrderedSet<>(size, 0.8f);
+					OrderedSet<Long> set = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
 					System.out.printf("GDX OrderedSet, %7d Longs:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					ds.merry.OrderedSet<Long> set = new ds.merry.OrderedSet<>(size, 0.8f);
+					ds.merry.OrderedSet<Long> set = new ds.merry.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
 					System.out.printf("Merry OrderedSet, %7d Longs:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					com.github.tommyettinger.ds.IndexedSet<Long> set = new com.github.tommyettinger.ds.IndexedSet<>(size, 0.8f);
+					com.github.tommyettinger.ds.IndexedSet<Long> set = new com.github.tommyettinger.ds.IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
 					System.out.printf("Atlantis IndexedSet, %7d Longs:\n", size);
 					evaluate(set);
@@ -336,7 +337,7 @@ public class MemoryCheck {
 				System.out.println("UNORDERED");
 				System.out.println("----------------------------------------");
 				{
-					Long2ObjectOpenHashMap<Object> set = new Long2ObjectOpenHashMap<>(size, 0.8f);
+					Long2ObjectOpenHashMap<Object> set = new Long2ObjectOpenHashMap<>(size, LoadFactor.LOAD_FACTOR);
 					for (int i = 0; i < size; i++) set.put(numbers[i], null);
 					System.out.printf("FastUtil Map, %7d Longs:\n", size);
 					evaluate(set);
