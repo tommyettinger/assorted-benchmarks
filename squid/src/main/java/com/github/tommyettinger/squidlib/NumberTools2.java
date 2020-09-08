@@ -35,7 +35,8 @@ public final class NumberTools2 {
         return Math.copySign(th, y);                                                       // [-π,π]
     }
     
-    static public float atan2_imuli_(float y, float x){
+    public static float atan2_imuli_(float y, float x){
+        if (y == 0f && x >= 0f) return 0f;
         float ay = Math.abs(y), ax = Math.abs(x);
         boolean invert = ay > ax;
         float z = invert ? ax/ay : ay/ax;
@@ -52,8 +53,10 @@ public final class NumberTools2 {
      * @param x
      * @return
      */
-    static public float atan2_quartic(float y, float x){
-
+    // credit to https://www.dsprelated.com/showarticle/1052.php
+    public static float atan2_quartic(float y, float x)
+    {
+        if (y == 0f && x >= 0f) return 0f;
         float ay = Math.abs(y), ax = Math.abs(x);
         boolean invert = ay > ax;
         float z = invert ? ax/ay : ay/ax;
