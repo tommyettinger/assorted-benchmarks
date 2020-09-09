@@ -1,5 +1,9 @@
 package de.heidelberg.pvs.container_bench.factories;
 
+import com.github.tommyettinger.ds.IndexedMap;
+import com.github.tommyettinger.ds.ObjectMap;
+import com.github.tommyettinger.ds.OrderedMap;
+
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -34,6 +38,11 @@ public enum JDKMap2ObjFact {
 	JAVOLUTION_SORTED(javolution.util.FastSortedMap::new, 1000000), //
 
 	AGRONA_O2O_HASH(() -> new org.agrona.collections.Object2ObjectHashMap(16, LoadFactor.LOAD_FACTOR)), //
+	
+	ATLANTIS_INDEXED(() -> new IndexedMap(16, LoadFactor.LOAD_FACTOR)),
+	
+	JDKGDXDS_HASH(() -> new ObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_INDEXED(() -> new OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 	
 	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000), //
 	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000); //

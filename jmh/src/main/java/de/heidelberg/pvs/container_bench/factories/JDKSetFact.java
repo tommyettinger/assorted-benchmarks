@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench.factories;
 
-import com.github.tommyettinger.ds.IndexedSet;
+import com.github.tommyettinger.ds.*;
 
 import java.util.Set;
 import java.util.function.Supplier;
@@ -37,7 +37,9 @@ public enum JDKSetFact {
 	AGRONA_HASH(() -> new org.agrona.collections.ObjectHashSet(16, LoadFactor.LOAD_FACTOR)), //
 
 	CORENLP_ARRAY(() -> new edu.stanford.nlp.util.ArraySet(16, LoadFactor.LOAD_FACTOR)), //
-	ATLANTIS_INDEXED(() -> new IndexedSet(16, LoadFactor.LOAD_FACTOR))
+	ATLANTIS_INDEXED(() -> new IndexedSet(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_HASH(() -> new ObjectSet<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_INDEXED(() -> new OrderedSet<>(16, LoadFactor.LOAD_FACTOR))
 	;
 
 	public Supplier<Set<?>> maker;
