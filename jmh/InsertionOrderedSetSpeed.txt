@@ -227,3 +227,444 @@ JDKSetBench.bench:bench·p0.999   JDK_LINKEDHASH  INTEGER_UNIFORM  467505   1000
 JDKSetBench.bench:bench·p0.9999  JDK_LINKEDHASH  INTEGER_UNIFORM  467505   10000    CONTAINS  sample            21344.000             ns/op
 JDKSetBench.bench:bench·p1.00    JDK_LINKEDHASH  INTEGER_UNIFORM  467505   10000    CONTAINS  sample            49984.000             ns/op
 
+
+
+
+
+
+Benchmark                                  (impl)      (payloadType)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
+JDKSetBench.bench                  JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    POPULATE  sample  554771    22646.068 ±  93.681  ns/op
+JDKSetBench.bench:bench·p0.00      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    POPULATE  sample            20896.000            ns/op
+JDKSetBench.bench:bench·p0.50      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    POPULATE  sample            21984.000            ns/op
+JDKSetBench.bench:bench·p0.90      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    POPULATE  sample            22464.000            ns/op
+JDKSetBench.bench:bench·p0.95      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    POPULATE  sample            22720.000            ns/op
+JDKSetBench.bench:bench·p0.99      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    POPULATE  sample            30400.000            ns/op
+JDKSetBench.bench:bench·p0.999     JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    POPULATE  sample            86045.184            ns/op
+JDKSetBench.bench:bench·p0.9999    JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    POPULATE  sample          1293358.694            ns/op
+JDKSetBench.bench:bench·p1.00      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    POPULATE  sample          2058240.000            ns/op
+JDKSetBench.bench                  JDK_LINKEDHASH     STRING_UNIFORM  467505    1000     ITERATE  sample  571541     2773.334 ±   2.910  ns/op
+JDKSetBench.bench:bench·p0.00      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000     ITERATE  sample             2684.000            ns/op
+JDKSetBench.bench:bench·p0.50      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000     ITERATE  sample             2744.000            ns/op
+JDKSetBench.bench:bench·p0.90      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000     ITERATE  sample             2760.000            ns/op
+JDKSetBench.bench:bench·p0.95      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000     ITERATE  sample             2764.000            ns/op
+JDKSetBench.bench:bench·p0.99      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000     ITERATE  sample             2828.000            ns/op
+JDKSetBench.bench:bench·p0.999     JDK_LINKEDHASH     STRING_UNIFORM  467505    1000     ITERATE  sample             8295.328            ns/op
+JDKSetBench.bench:bench·p0.9999    JDK_LINKEDHASH     STRING_UNIFORM  467505    1000     ITERATE  sample            28091.066            ns/op
+JDKSetBench.bench:bench·p1.00      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000     ITERATE  sample            78976.000            ns/op
+JDKSetBench.bench                  JDK_LINKEDHASH     STRING_UNIFORM  467505    1000        COPY  sample  571968    21960.261 ±  88.553  ns/op
+JDKSetBench.bench:bench·p0.00      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000        COPY  sample            20448.000            ns/op
+JDKSetBench.bench:bench·p0.50      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000        COPY  sample            21344.000            ns/op
+JDKSetBench.bench:bench·p0.90      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000        COPY  sample            21760.000            ns/op
+JDKSetBench.bench:bench·p0.95      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000        COPY  sample            21920.000            ns/op
+JDKSetBench.bench:bench·p0.99      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000        COPY  sample            26624.000            ns/op
+JDKSetBench.bench:bench·p0.999     JDK_LINKEDHASH     STRING_UNIFORM  467505    1000        COPY  sample            85120.000            ns/op
+JDKSetBench.bench:bench·p0.9999    JDK_LINKEDHASH     STRING_UNIFORM  467505    1000        COPY  sample          1261568.000            ns/op
+JDKSetBench.bench:bench·p1.00      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000        COPY  sample          1576960.000            ns/op
+JDKSetBench.bench                  JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    CONTAINS  sample  548157       52.031 ±   1.581  ns/op
+JDKSetBench.bench:bench·p0.00      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               31.000            ns/op
+JDKSetBench.bench:bench·p0.50      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               41.000            ns/op
+JDKSetBench.bench:bench·p0.90      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               53.000            ns/op
+JDKSetBench.bench:bench·p0.95      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               58.000            ns/op
+JDKSetBench.bench:bench·p0.99      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               69.000            ns/op
+JDKSetBench.bench:bench·p0.999     JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    CONTAINS  sample              859.684            ns/op
+JDKSetBench.bench:bench·p0.9999    JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    CONTAINS  sample            21376.000            ns/op
+JDKSetBench.bench:bench·p1.00      JDK_LINKEDHASH     STRING_UNIFORM  467505    1000    CONTAINS  sample            53120.000            ns/op
+JDKSetBench.bench                  JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample  660155    19017.907 ±  77.145  ns/op
+JDKSetBench.bench:bench·p0.00      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            17728.000            ns/op
+JDKSetBench.bench:bench·p0.50      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            18496.000            ns/op
+JDKSetBench.bench:bench·p0.90      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            18848.000            ns/op
+JDKSetBench.bench:bench·p0.95      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            19040.000            ns/op
+JDKSetBench.bench:bench·p0.99      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            22112.000            ns/op
+JDKSetBench.bench:bench·p0.999     JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            67436.032            ns/op
+JDKSetBench.bench:bench·p0.9999    JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1251296.051            ns/op
+JDKSetBench.bench:bench·p1.00      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1556480.000            ns/op
+JDKSetBench.bench                  JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample  573566     2766.241 ±   2.972  ns/op
+JDKSetBench.bench:bench·p0.00      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             2676.000            ns/op
+JDKSetBench.bench:bench·p0.50      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             2736.000            ns/op
+JDKSetBench.bench:bench·p0.90      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             2756.000            ns/op
+JDKSetBench.bench:bench·p0.95      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             2760.000            ns/op
+JDKSetBench.bench:bench·p0.99      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             2772.000            ns/op
+JDKSetBench.bench:bench·p0.999     JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample            10469.280            ns/op
+JDKSetBench.bench:bench·p0.9999    JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample            28980.586            ns/op
+JDKSetBench.bench:bench·p1.00      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample            58880.000            ns/op
+JDKSetBench.bench                  JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000        COPY  sample  608925    20630.124 ±  84.929  ns/op
+JDKSetBench.bench:bench·p0.00      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000        COPY  sample            19232.000            ns/op
+JDKSetBench.bench:bench·p0.50      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000        COPY  sample            20064.000            ns/op
+JDKSetBench.bench:bench·p0.90      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000        COPY  sample            20480.000            ns/op
+JDKSetBench.bench:bench·p0.95      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000        COPY  sample            20672.000            ns/op
+JDKSetBench.bench:bench·p0.99      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000        COPY  sample            23744.000            ns/op
+JDKSetBench.bench:bench·p0.999     JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000        COPY  sample            76297.472            ns/op
+JDKSetBench.bench:bench·p0.9999    JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000        COPY  sample          1276343.910            ns/op
+JDKSetBench.bench:bench·p1.00      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000        COPY  sample          1595392.000            ns/op
+JDKSetBench.bench                  JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample  552623       50.588 ±   1.578  ns/op
+JDKSetBench.bench:bench·p0.00      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               32.000            ns/op
+JDKSetBench.bench:bench·p0.50      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               40.000            ns/op
+JDKSetBench.bench:bench·p0.90      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               51.000            ns/op
+JDKSetBench.bench:bench·p0.95      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               55.000            ns/op
+JDKSetBench.bench:bench·p0.99      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               65.000            ns/op
+JDKSetBench.bench:bench·p0.999     JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample              827.000            ns/op
+JDKSetBench.bench:bench·p0.9999    JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            21335.603            ns/op
+JDKSetBench.bench:bench·p1.00      JDK_LINKEDHASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            55104.000            ns/op
+JDKSetBench.bench                  JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    POPULATE  sample  584939    21490.304 ±  94.138  ns/op
+JDKSetBench.bench:bench·p0.00      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            19968.000            ns/op
+JDKSetBench.bench:bench·p0.50      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            20864.000            ns/op
+JDKSetBench.bench:bench·p0.90      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            21408.000            ns/op
+JDKSetBench.bench:bench·p0.95      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            21664.000            ns/op
+JDKSetBench.bench:bench·p0.99      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            25184.000            ns/op
+JDKSetBench.bench:bench·p0.999     JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            76423.680            ns/op
+JDKSetBench.bench:bench·p0.9999    JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    POPULATE  sample          1304649.728            ns/op
+JDKSetBench.bench:bench·p1.00      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    POPULATE  sample          5611520.000            ns/op
+JDKSetBench.bench                  JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000     ITERATE  sample  572605     2775.485 ±   3.013  ns/op
+JDKSetBench.bench:bench·p0.00      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             2680.000            ns/op
+JDKSetBench.bench:bench·p0.50      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             2744.000            ns/op
+JDKSetBench.bench:bench·p0.90      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             2760.000            ns/op
+JDKSetBench.bench:bench·p0.95      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             2768.000            ns/op
+JDKSetBench.bench:bench·p0.99      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             2784.000            ns/op
+JDKSetBench.bench:bench·p0.999     JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000     ITERATE  sample            12914.912            ns/op
+JDKSetBench.bench:bench·p0.9999    JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000     ITERATE  sample            28928.000            ns/op
+JDKSetBench.bench:bench·p1.00      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000     ITERATE  sample            66304.000            ns/op
+JDKSetBench.bench                  JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000        COPY  sample  531931    23638.309 ± 100.345  ns/op
+JDKSetBench.bench:bench·p0.00      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000        COPY  sample            21984.000            ns/op
+JDKSetBench.bench:bench·p0.50      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000        COPY  sample            22976.000            ns/op
+JDKSetBench.bench:bench·p0.90      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000        COPY  sample            23424.000            ns/op
+JDKSetBench.bench:bench·p0.95      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000        COPY  sample            23680.000            ns/op
+JDKSetBench.bench:bench·p0.99      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000        COPY  sample            28576.000            ns/op
+JDKSetBench.bench:bench·p0.999     JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000        COPY  sample            90504.704            ns/op
+JDKSetBench.bench:bench·p0.9999    JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000        COPY  sample          1332852.326            ns/op
+JDKSetBench.bench:bench·p1.00      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000        COPY  sample          1525760.000            ns/op
+JDKSetBench.bench                  JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample  592812       51.921 ±   1.560  ns/op
+JDKSetBench.bench:bench·p0.00      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               30.000            ns/op
+JDKSetBench.bench:bench·p0.50      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               40.000            ns/op
+JDKSetBench.bench:bench·p0.90      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               52.000            ns/op
+JDKSetBench.bench:bench·p0.95      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               56.000            ns/op
+JDKSetBench.bench:bench·p0.99      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               69.000            ns/op
+JDKSetBench.bench:bench·p0.999     JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample              930.000            ns/op
+JDKSetBench.bench:bench·p0.9999    JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample            21462.998            ns/op
+JDKSetBench.bench:bench·p1.00      JDK_LINKEDHASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample            31456.000            ns/op
+JDKSetBench.bench                ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample  526603    23856.332 ±  98.951  ns/op
+JDKSetBench.bench:bench·p0.00    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample            21824.000            ns/op
+JDKSetBench.bench:bench·p0.50    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample            23168.000            ns/op
+JDKSetBench.bench:bench·p0.90    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample            23904.000            ns/op
+JDKSetBench.bench:bench·p0.95    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample            24320.000            ns/op
+JDKSetBench.bench:bench·p0.99    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample            28384.000            ns/op
+JDKSetBench.bench:bench·p0.999   ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample            90880.000            ns/op
+JDKSetBench.bench:bench·p0.9999  ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample          1329847.501            ns/op
+JDKSetBench.bench:bench·p1.00    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample          1918976.000            ns/op
+JDKSetBench.bench                ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample  516075     6083.236 ±   3.404  ns/op
+JDKSetBench.bench:bench·p0.00    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample             6008.000            ns/op
+JDKSetBench.bench:bench·p0.50    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample             6048.000            ns/op
+JDKSetBench.bench:bench·p0.90    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample             6064.000            ns/op
+JDKSetBench.bench:bench·p0.95    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample             6072.000            ns/op
+JDKSetBench.bench:bench·p0.99    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample             6080.000            ns/op
+JDKSetBench.bench:bench·p0.999   ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample            23264.000            ns/op
+JDKSetBench.bench:bench·p0.9999  ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample            31766.682            ns/op
+JDKSetBench.bench:bench·p1.00    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample            81792.000            ns/op
+JDKSetBench.bench                ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample  542533    11722.811 ±  83.687  ns/op
+JDKSetBench.bench:bench·p0.00    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample            10688.000            ns/op
+JDKSetBench.bench:bench·p0.50    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample            11264.000            ns/op
+JDKSetBench.bench:bench·p0.90    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample            11584.000            ns/op
+JDKSetBench.bench:bench·p0.95    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample            11744.000            ns/op
+JDKSetBench.bench:bench·p0.99    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample            13024.000            ns/op
+JDKSetBench.bench:bench·p0.999   ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample            46144.000            ns/op
+JDKSetBench.bench:bench·p0.9999  ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample          1226233.037            ns/op
+JDKSetBench.bench:bench·p1.00    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample          1671168.000            ns/op
+JDKSetBench.bench                ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample  559408       49.759 ±   1.510  ns/op
+JDKSetBench.bench:bench·p0.00    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample               28.000            ns/op
+JDKSetBench.bench:bench·p0.50    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample               35.000            ns/op
+JDKSetBench.bench:bench·p0.90    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample               62.000            ns/op
+JDKSetBench.bench:bench·p0.95    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample               77.000            ns/op
+JDKSetBench.bench:bench·p0.99    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample              107.000            ns/op
+JDKSetBench.bench:bench·p0.999   ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample              803.000            ns/op
+JDKSetBench.bench:bench·p0.9999  ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample            21472.000            ns/op
+JDKSetBench.bench:bench·p1.00    ATLANTIS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample            36608.000            ns/op
+JDKSetBench.bench                ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample  498114    12789.471 ±  94.415  ns/op
+JDKSetBench.bench:bench·p0.00    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            11616.000            ns/op
+JDKSetBench.bench:bench·p0.50    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            12288.000            ns/op
+JDKSetBench.bench:bench·p0.90    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            12560.000            ns/op
+JDKSetBench.bench:bench·p0.95    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            12688.000            ns/op
+JDKSetBench.bench:bench·p0.99    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            14416.000            ns/op
+JDKSetBench.bench:bench·p0.999   ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            53888.000            ns/op
+JDKSetBench.bench:bench·p0.9999  ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1307010.048            ns/op
+JDKSetBench.bench:bench·p1.00    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1884160.000            ns/op
+JDKSetBench.bench                ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample  516167     6082.213 ±   3.529  ns/op
+JDKSetBench.bench:bench·p0.00    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5992.000            ns/op
+JDKSetBench.bench:bench·p0.50    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             6048.000            ns/op
+JDKSetBench.bench:bench·p0.90    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             6064.000            ns/op
+JDKSetBench.bench:bench·p0.95    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             6064.000            ns/op
+JDKSetBench.bench:bench·p0.99    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             6184.000            ns/op
+JDKSetBench.bench:bench·p0.999   ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample            24352.000            ns/op
+JDKSetBench.bench:bench·p0.9999  ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample            32620.262            ns/op
+JDKSetBench.bench:bench·p1.00    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample            57920.000            ns/op
+JDKSetBench.bench                ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample  731304     8646.997 ±  56.578  ns/op
+JDKSetBench.bench:bench·p0.00    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample             7984.000            ns/op
+JDKSetBench.bench:bench·p0.50    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample             8352.000            ns/op
+JDKSetBench.bench:bench·p0.90    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample             8576.000            ns/op
+JDKSetBench.bench:bench·p0.95    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample             8672.000            ns/op
+JDKSetBench.bench:bench·p0.99    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample             9360.000            ns/op
+JDKSetBench.bench:bench·p0.999   ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample            31232.000            ns/op
+JDKSetBench.bench:bench·p0.9999  ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample          1127646.208            ns/op
+JDKSetBench.bench:bench·p1.00    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample          1486848.000            ns/op
+JDKSetBench.bench                ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample  709890       40.520 ±   0.995  ns/op
+JDKSetBench.bench:bench·p0.00    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               28.000            ns/op
+JDKSetBench.bench:bench·p0.50    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               31.000            ns/op
+JDKSetBench.bench:bench·p0.90    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               50.000            ns/op
+JDKSetBench.bench:bench·p0.95    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               62.000            ns/op
+JDKSetBench.bench:bench·p0.99    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               76.000            ns/op
+JDKSetBench.bench:bench·p0.999   ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample              492.109            ns/op
+JDKSetBench.bench:bench·p0.9999  ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            18400.349            ns/op
+JDKSetBench.bench:bench·p1.00    ATLANTIS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            35520.000            ns/op
+JDKSetBench.bench                ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample  598677    20979.332 ±  86.553  ns/op
+JDKSetBench.bench:bench·p0.00    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample            19424.000            ns/op
+JDKSetBench.bench:bench·p0.50    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample            20384.000            ns/op
+JDKSetBench.bench:bench·p0.90    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample            20896.000            ns/op
+JDKSetBench.bench:bench·p0.95    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample            21120.000            ns/op
+JDKSetBench.bench:bench·p0.99    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample            24032.000            ns/op
+JDKSetBench.bench:bench·p0.999   ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample            75008.000            ns/op
+JDKSetBench.bench:bench·p0.9999  ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample          1280541.491            ns/op
+JDKSetBench.bench:bench·p1.00    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample          1556480.000            ns/op
+JDKSetBench.bench                ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample  507062     6194.614 ±   3.464  ns/op
+JDKSetBench.bench:bench·p0.00    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample             6112.000            ns/op
+JDKSetBench.bench:bench·p0.50    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample             6160.000            ns/op
+JDKSetBench.bench:bench·p0.90    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample             6184.000            ns/op
+JDKSetBench.bench:bench·p0.95    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample             6184.000            ns/op
+JDKSetBench.bench:bench·p0.99    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample             6304.000            ns/op
+JDKSetBench.bench:bench·p0.999   ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample            22240.000            ns/op
+JDKSetBench.bench:bench·p0.9999  ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample            33957.594            ns/op
+JDKSetBench.bench:bench·p1.00    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample            87936.000            ns/op
+JDKSetBench.bench                ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample  521374    12198.295 ±  87.685  ns/op
+JDKSetBench.bench:bench·p0.00    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample            11168.000            ns/op
+JDKSetBench.bench:bench·p0.50    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample            11728.000            ns/op
+JDKSetBench.bench:bench·p0.90    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample            12080.000            ns/op
+JDKSetBench.bench:bench·p0.95    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample            12224.000            ns/op
+JDKSetBench.bench:bench·p0.99    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample            13392.000            ns/op
+JDKSetBench.bench:bench·p0.999   ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample            46848.000            ns/op
+JDKSetBench.bench:bench·p0.9999  ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample          1262771.200            ns/op
+JDKSetBench.bench:bench·p1.00    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample          1497088.000            ns/op
+JDKSetBench.bench                ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample  568573       49.596 ±   1.312  ns/op
+JDKSetBench.bench:bench·p0.00    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample               28.000            ns/op
+JDKSetBench.bench:bench·p0.50    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample               36.000            ns/op
+JDKSetBench.bench:bench·p0.90    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample               61.000            ns/op
+JDKSetBench.bench:bench·p0.95    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample               74.000            ns/op
+JDKSetBench.bench:bench·p0.99    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample              106.000            ns/op
+JDKSetBench.bench:bench·p0.999   ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample              876.426            ns/op
+JDKSetBench.bench:bench·p0.9999  ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample            18788.563            ns/op
+JDKSetBench.bench:bench·p1.00    ATLANTIS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample            29888.000            ns/op
+JDKSetBench.bench                JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample  279104    45229.896 ± 206.550  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample            42304.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample            43904.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample            44544.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample            44928.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample            51712.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample           177152.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample          1440110.592            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    POPULATE  sample          1941504.000            ns/op
+JDKSetBench.bench                JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample  645129     4864.335 ±   2.648  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample             4736.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample             4840.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample             4856.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample             4864.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample             4872.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample             7944.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample            31566.752            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000     ITERATE  sample            82048.000            ns/op
+JDKSetBench.bench                JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample  482045    13178.130 ±  94.143  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample            11952.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample            12688.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample            13040.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample            13168.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample            14640.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample            50944.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample          1291449.958            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000        COPY  sample          1642496.000            ns/op
+JDKSetBench.bench                JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample  992011       53.094 ±   0.933  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample               32.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample               41.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample               70.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample               86.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample              119.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample              682.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample            19033.562            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_INDEXED     STRING_UNIFORM  467505    1000    CONTAINS  sample            46400.000            ns/op
+JDKSetBench.bench                JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample  687795    18207.323 ±  69.095  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            16672.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            17696.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            18400.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            18688.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            21184.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            59981.056            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1214915.379            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1773568.000            ns/op
+JDKSetBench.bench                JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample  620488     5058.775 ±   2.955  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             4880.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5032.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5048.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5048.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5056.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample            20896.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample            31838.435            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000     ITERATE  sample            57472.000            ns/op
+JDKSetBench.bench                JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample  558182    11357.316 ±  76.977  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample            10464.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample            10960.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample            11216.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample            11328.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample            12976.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample            42368.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample          1210740.122            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000        COPY  sample          1748992.000            ns/op
+JDKSetBench.bench                JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample  687843       42.646 ±   1.152  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               29.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               33.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               53.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               62.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               83.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample              535.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            19017.395            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_INDEXED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            54400.000            ns/op
+JDKSetBench.bench                JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample  445083    28275.043 ± 121.089  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample            26432.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample            27520.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample            28000.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample            28224.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample            32672.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample           108544.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample          1366016.000            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    POPULATE  sample          1562624.000            ns/op
+JDKSetBench.bench                JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample  683007     4601.511 ±   2.636  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample             4424.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample             4576.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample             4664.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample             4680.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample             4704.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample             8399.872            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample            31168.000            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000     ITERATE  sample            81664.000            ns/op
+JDKSetBench.bench                JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample  468666    13569.572 ±  97.952  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample            12384.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample            13056.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample            13392.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample            13536.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample            15088.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample            51200.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample          1275904.000            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000        COPY  sample          1589248.000            ns/op
+JDKSetBench.bench                JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample  508468       55.601 ±   1.378  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample               32.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample               47.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample               64.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample               75.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample              101.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample              810.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample            18656.000            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_INDEXED  STRING_DICTIONARY  467505    1000    CONTAINS  sample            52288.000            ns/op
+
+Benchmark                                          (impl)      (payloadType)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
+MerryOrderedSetBench.bench                MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    POPULATE  sample  300340    42045.578 ± 191.730  ns/op
+MerryOrderedSetBench.bench:bench·p0.00    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    POPULATE  sample            39360.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.50    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    POPULATE  sample            40768.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.90    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    POPULATE  sample            41408.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.95    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    POPULATE  sample            41728.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.99    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    POPULATE  sample            47360.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.999   MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    POPULATE  sample           177664.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.9999  MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    POPULATE  sample          1417146.163            ns/op
+MerryOrderedSetBench.bench:bench·p1.00    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    POPULATE  sample          1597440.000            ns/op
+MerryOrderedSetBench.bench                MERRY_O_ORDERED     STRING_UNIFORM  467505    1000     ITERATE  sample  787219     3988.854 ±   2.214  ns/op
+MerryOrderedSetBench.bench:bench·p0.00    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000     ITERATE  sample             3932.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.50    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000     ITERATE  sample             3968.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.90    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000     ITERATE  sample             3980.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.95    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000     ITERATE  sample             3984.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.99    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000     ITERATE  sample             4060.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.999   MERRY_O_ORDERED     STRING_UNIFORM  467505    1000     ITERATE  sample             6984.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.9999  MERRY_O_ORDERED     STRING_UNIFORM  467505    1000     ITERATE  sample            28032.000            ns/op
+MerryOrderedSetBench.bench:bench·p1.00    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000     ITERATE  sample            55744.000            ns/op
+MerryOrderedSetBench.bench                MERRY_O_ORDERED     STRING_UNIFORM  467505    1000        COPY  sample  868739      993.100 ±  24.788  ns/op
+MerryOrderedSetBench.bench:bench·p0.00    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000        COPY  sample              605.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.50    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000        COPY  sample              884.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.90    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000        COPY  sample             1060.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.95    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000        COPY  sample             1178.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.99    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000        COPY  sample             1610.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.999   MERRY_O_ORDERED     STRING_UNIFORM  467505    1000        COPY  sample            16608.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.9999  MERRY_O_ORDERED     STRING_UNIFORM  467505    1000        COPY  sample            31304.064            ns/op
+MerryOrderedSetBench.bench:bench·p1.00    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000        COPY  sample          1574912.000            ns/op
+MerryOrderedSetBench.bench                MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    CONTAINS  sample  951716       55.318 ±   0.804  ns/op
+MerryOrderedSetBench.bench:bench·p0.00    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    CONTAINS  sample               31.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.50    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    CONTAINS  sample               46.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.90    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    CONTAINS  sample               76.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.95    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    CONTAINS  sample               93.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.99    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    CONTAINS  sample              131.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.999   MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    CONTAINS  sample              682.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.9999  MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    CONTAINS  sample            17818.506            ns/op
+MerryOrderedSetBench.bench:bench·p1.00    MERRY_O_ORDERED     STRING_UNIFORM  467505    1000    CONTAINS  sample            43840.000            ns/op
+MerryOrderedSetBench.bench                MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    POPULATE  sample  443422    14370.087 ± 107.738  ns/op
+MerryOrderedSetBench.bench:bench·p0.00    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            13040.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.50    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            13776.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.90    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            14096.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.95    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            14240.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.99    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            16800.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.999   MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    POPULATE  sample            64740.928            ns/op
+MerryOrderedSetBench.bench:bench·p0.9999  MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1336642.970            ns/op
+MerryOrderedSetBench.bench:bench·p1.00    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1980416.000            ns/op
+MerryOrderedSetBench.bench                MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000     ITERATE  sample  838993     3739.433 ±   2.123  ns/op
+MerryOrderedSetBench.bench:bench·p0.00    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             3700.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.50    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             3720.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.90    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             3732.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.95    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             3736.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.99    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             3808.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.999   MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5984.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.9999  MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000     ITERATE  sample            29177.754            ns/op
+MerryOrderedSetBench.bench:bench·p1.00    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000     ITERATE  sample            81792.000            ns/op
+MerryOrderedSetBench.bench                MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000        COPY  sample  863678      988.131 ±  24.356  ns/op
+MerryOrderedSetBench.bench:bench·p0.00    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000        COPY  sample              508.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.50    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000        COPY  sample              881.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.90    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000        COPY  sample             1072.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.95    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000        COPY  sample             1194.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.99    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000        COPY  sample             1658.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.999   MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000        COPY  sample            13957.136            ns/op
+MerryOrderedSetBench.bench:bench·p0.9999  MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000        COPY  sample            30740.227            ns/op
+MerryOrderedSetBench.bench:bench·p1.00    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000        COPY  sample          1769472.000            ns/op
+MerryOrderedSetBench.bench                MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample  647985       44.428 ±   1.178  ns/op
+MerryOrderedSetBench.bench:bench·p0.00    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               31.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.50    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               35.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.90    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               55.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.95    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               64.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.99    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               83.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.999   MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample              514.014            ns/op
+MerryOrderedSetBench.bench:bench·p0.9999  MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            20289.568            ns/op
+MerryOrderedSetBench.bench:bench·p1.00    MERRY_O_ORDERED    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            29664.000            ns/op
+MerryOrderedSetBench.bench                MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    POPULATE  sample  586396    21405.261 ±  86.656  ns/op
+MerryOrderedSetBench.bench:bench·p0.00    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    POPULATE  sample            19776.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.50    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    POPULATE  sample            20800.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.90    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    POPULATE  sample            21440.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.95    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    POPULATE  sample            21696.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.99    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    POPULATE  sample            24992.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.999   MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    POPULATE  sample            75725.184            ns/op
+MerryOrderedSetBench.bench:bench·p0.9999  MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    POPULATE  sample          1313505.894            ns/op
+MerryOrderedSetBench.bench:bench·p1.00    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    POPULATE  sample          1624064.000            ns/op
+MerryOrderedSetBench.bench                MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000     ITERATE  sample  470905     3355.776 ±   3.406  ns/op
+MerryOrderedSetBench.bench:bench·p0.00    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000     ITERATE  sample             3232.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.50    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000     ITERATE  sample             3328.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.90    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000     ITERATE  sample             3352.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.95    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000     ITERATE  sample             3360.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.99    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000     ITERATE  sample             3388.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.999   MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000     ITERATE  sample             9252.512            ns/op
+MerryOrderedSetBench.bench:bench·p0.9999  MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000     ITERATE  sample            30461.101            ns/op
+MerryOrderedSetBench.bench:bench·p1.00    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000     ITERATE  sample            83328.000            ns/op
+MerryOrderedSetBench.bench                MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000        COPY  sample  870980      984.440 ±  24.375  ns/op
+MerryOrderedSetBench.bench:bench·p0.00    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000        COPY  sample              607.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.50    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000        COPY  sample              881.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.90    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000        COPY  sample             1052.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.95    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000        COPY  sample             1166.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.99    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000        COPY  sample             1588.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.999   MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000        COPY  sample            13904.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.9999  MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000        COPY  sample            31388.861            ns/op
+MerryOrderedSetBench.bench:bench·p1.00    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000        COPY  sample          1769472.000            ns/op
+MerryOrderedSetBench.bench                MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    CONTAINS  sample  507151       58.225 ±   1.704  ns/op
+MerryOrderedSetBench.bench:bench·p0.00    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    CONTAINS  sample               32.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.50    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    CONTAINS  sample               44.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.90    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    CONTAINS  sample               64.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.95    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    CONTAINS  sample               74.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.99    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    CONTAINS  sample              100.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.999   MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    CONTAINS  sample              817.000            ns/op
+MerryOrderedSetBench.bench:bench·p0.9999  MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    CONTAINS  sample            21440.000            ns/op
+MerryOrderedSetBench.bench:bench·p1.00    MERRY_O_ORDERED  STRING_DICTIONARY  467505    1000    CONTAINS  sample            76928.000            ns/op
+[tommy@

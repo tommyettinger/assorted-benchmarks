@@ -1,48 +1,60 @@
 package de.heidelberg.pvs.container_bench.factories;
 
+import com.github.tommyettinger.ds.IndexedMap;
+import com.github.tommyettinger.ds.ObjectMap;
+import com.github.tommyettinger.ds.OrderedMap;
+
 import java.util.Map;
 import java.util.function.Supplier;
 
 public enum JDKMap2IntFact {
-	
-	JDK_O2O_HASH(java.util.HashMap::new), //
-	JDK_O2O_LINKEDHASH(java.util.LinkedHashMap::new), //
-	JDK_O2O_TREE(java.util.TreeMap::new), //
-	JDK_O2O_HASHTABLE(java.util.Hashtable::new), //
 
+	JDK_O2O_HASH(() -> new java.util.HashMap<>(16, LoadFactor.LOAD_FACTOR)), //
+	JDK_O2O_LINKEDHASH(() -> new java.util.LinkedHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
+	JDK_O2O_TREE(() -> new java.util.TreeMap<>()), //
+	JDK_O2O_HASHTABLE(() -> new java.util.Hashtable<>(16, LoadFactor.LOAD_FACTOR)), //
+	
 	KOLOBOKE_O2O_HASH(com.koloboke.collect.map.hash.HashObjObjMaps::newMutableMap), //
 	KOLOBOKE_O2I_HASH(com.koloboke.collect.map.hash.HashObjIntMaps::newMutableMap), //
 	KOLOBOKE_O2O_QHASH(KolobokeQHash.ObjObjMaps::newMutableMap), //
 	KOLOBOKE_O2I_QHASH(KolobokeQHash.ObjIntMaps::newMutableMap), //
 
-	FASTUTIL_O2O_HASH(it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap::new), //
-	FASTUTIL_O2O_LINKEDHASH(it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap::new), //
-	FASTUTIL_O2O_AVL(it.unimi.dsi.fastutil.objects.Object2ObjectAVLTreeMap::new), //
-	FASTUTIL_O2O_RB(it.unimi.dsi.fastutil.objects.Object2ObjectRBTreeMap::new), //
+
+	FASTUTIL_O2O_HASH(() -> new it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
+	FASTUTIL_O2O_LINKEDHASH(() -> new it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
+	FASTUTIL_O2O_AVL(() -> new it.unimi.dsi.fastutil.objects.Object2ObjectAVLTreeMap<>()), //
+	FASTUTIL_O2O_RB(() -> new it.unimi.dsi.fastutil.objects.Object2ObjectRBTreeMap<>()), //
 	FASTUTIL_O2O_ARRAY(it.unimi.dsi.fastutil.objects.Object2ObjectArrayMap::new, 1000000), //
 
 	// Fastutil primitive-valued
-	FASTUTIL_O2I_HASH(it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap::new), //
-	FASTUTIL_O2I_LINKEDHASH(it.unimi.dsi.fastutil.objects.Object2IntLinkedOpenHashMap::new), //
-	FASTUTIL_O2I_AVL(it.unimi.dsi.fastutil.objects.Object2IntAVLTreeMap::new), //
-	FASTUTIL_O2I_RB(it.unimi.dsi.fastutil.objects.Object2IntRBTreeMap::new), //
+	FASTUTIL_O2I_HASH(() -> new it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
+	FASTUTIL_O2I_LINKEDHASH(() -> new it.unimi.dsi.fastutil.objects.Object2IntLinkedOpenHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
+	FASTUTIL_O2I_AVL(() -> new it.unimi.dsi.fastutil.objects.Object2IntAVLTreeMap<>()), //
+	FASTUTIL_O2I_RB(() -> new it.unimi.dsi.fastutil.objects.Object2IntRBTreeMap<>()), //
 	FASTUTIL_O2I_ARRAY(it.unimi.dsi.fastutil.objects.Object2IntArrayMap::new, 1000000), //
 
-	TROVE_O2O_HASH(gnu.trove.map.hash.THashMap::new), //
+	TROVE_O2O_HASH(() -> new gnu.trove.map.hash.THashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 
-	ECLIPSE_O2O_HASH(org.eclipse.collections.impl.map.mutable.UnifiedMap::new), //
-	ECLIPSE_O2O_TREE(org.eclipse.collections.impl.map.sorted.mutable.TreeSortedMap::new), //
+	ECLIPSE_O2O_HASH(() -> new org.eclipse.collections.impl.map.mutable.UnifiedMap<>(16, LoadFactor.LOAD_FACTOR)), //
+	ECLIPSE_O2O_TREE(() -> new org.eclipse.collections.impl.map.sorted.mutable.TreeSortedMap<>()), //
 
-	APACHE_O2O_HASH(org.apache.commons.collections4.map.HashedMap::new), //
-	APACHE_O2O_LINKEDHASH(org.apache.commons.collections4.map.LinkedMap::new), //
+	APACHE_O2O_HASH(() -> new org.apache.commons.collections4.map.HashedMap<>(16, LoadFactor.LOAD_FACTOR)), //
+	APACHE_O2O_LINKEDHASH(() -> new org.apache.commons.collections4.map.LinkedMap<>(16, LoadFactor.LOAD_FACTOR)), //
 
-	MAHOUT_O2O_HASH(org.apache.mahout.math.map.OpenHashMap::new), //
+	MAHOUT_O2O_HASH(() -> new org.apache.mahout.math.map.OpenHashMap<>(16, 0.5f, LoadFactor.LOAD_FACTOR)), //
 
-	JAVOLUTION_HASH(javolution.util.FastMap::new), //
+	JAVOLUTION_HASH(() -> new javolution.util.FastMap<>()), //
 	JAVOLUTION_SORTED(javolution.util.FastSortedMap::new, 1000000), //
 
-	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000), //
-	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000); //
+	AGRONA_O2O_HASH(() -> new org.agrona.collections.Object2ObjectHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
+
+	ATLANTIS_INDEXED(() -> new IndexedMap<>(16, LoadFactor.LOAD_FACTOR)),
+
+	JDKGDXDS_HASH(() -> new ObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_INDEXED(() -> new OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
+
+	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000),
+	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000)
 	;
 
 	public final Supplier<Map<Object, Integer>> maker;
