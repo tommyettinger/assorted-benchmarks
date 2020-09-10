@@ -1,0 +1,379 @@
+Benchmark                                                                 (impl)  (seed)  (size)       (workload)    Mode     Cnt        Score     Error  Units
+d.h.p.c.b.sets.JDKGetPut.bench                                          JDK_HASH      -1    1000              ADD  sample  558150     7185.426 ±   3.253  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                              JDK_HASH      -1    1000              ADD  sample             6856.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                              JDK_HASH      -1    1000              ADD  sample             7168.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                              JDK_HASH      -1    1000              ADD  sample             7272.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                              JDK_HASH      -1    1000              ADD  sample             7296.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                              JDK_HASH      -1    1000              ADD  sample             7408.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                             JDK_HASH      -1    1000              ADD  sample            19804.352            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                            JDK_HASH      -1    1000              ADD  sample            34315.834            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                              JDK_HASH      -1    1000              ADD  sample            94336.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                          JDK_HASH      -1    1000           REMOVE  sample  675152     3727.584 ±   2.223  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                              JDK_HASH      -1    1000           REMOVE  sample             3684.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                              JDK_HASH      -1    1000           REMOVE  sample             3708.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                              JDK_HASH      -1    1000           REMOVE  sample             3720.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                              JDK_HASH      -1    1000           REMOVE  sample             3724.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                              JDK_HASH      -1    1000           REMOVE  sample             3784.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                             JDK_HASH      -1    1000           REMOVE  sample             7248.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                            JDK_HASH      -1    1000           REMOVE  sample            27791.510            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                              JDK_HASH      -1    1000           REMOVE  sample            91136.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                          JDK_HASH      -1    1000         CONTAINS  sample  433202     5811.918 ±   3.893  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                              JDK_HASH      -1    1000         CONTAINS  sample             5728.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                              JDK_HASH      -1    1000         CONTAINS  sample             5776.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                              JDK_HASH      -1    1000         CONTAINS  sample             5800.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                              JDK_HASH      -1    1000         CONTAINS  sample             5808.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                              JDK_HASH      -1    1000         CONTAINS  sample             5904.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                             JDK_HASH      -1    1000         CONTAINS  sample            24064.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                            JDK_HASH      -1    1000         CONTAINS  sample            33216.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                              JDK_HASH      -1    1000         CONTAINS  sample            52864.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                          JDK_HASH      -1    1000    ADD_OR_REMOVE  sample  622912     8131.219 ±  57.846  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                              JDK_HASH      -1    1000    ADD_OR_REMOVE  sample             7632.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                              JDK_HASH      -1    1000    ADD_OR_REMOVE  sample             7848.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                              JDK_HASH      -1    1000    ADD_OR_REMOVE  sample             8152.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                              JDK_HASH      -1    1000    ADD_OR_REMOVE  sample             8192.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                              JDK_HASH      -1    1000    ADD_OR_REMOVE  sample             8448.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                             JDK_HASH      -1    1000    ADD_OR_REMOVE  sample            29280.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                            JDK_HASH      -1    1000    ADD_OR_REMOVE  sample          1037142.835            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                              JDK_HASH      -1    1000    ADD_OR_REMOVE  sample          2547712.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                          JDK_HASH      -1    1000  ADD_THEN_REMOVE  sample  350202    14531.112 ± 112.049  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                              JDK_HASH      -1    1000  ADD_THEN_REMOVE  sample            13584.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                              JDK_HASH      -1    1000  ADD_THEN_REMOVE  sample            13808.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                              JDK_HASH      -1    1000  ADD_THEN_REMOVE  sample            15216.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                              JDK_HASH      -1    1000  ADD_THEN_REMOVE  sample            15328.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                              JDK_HASH      -1    1000  ADD_THEN_REMOVE  sample            15680.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                             JDK_HASH      -1    1000  ADD_THEN_REMOVE  sample            50995.008            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                            JDK_HASH      -1    1000  ADD_THEN_REMOVE  sample          1224579.277            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                              JDK_HASH      -1    1000  ADD_THEN_REMOVE  sample          1406976.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                          JDK_HASH      -1    1000  REMOVE_THEN_ADD  sample  342343    14838.711 ± 103.665  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                              JDK_HASH      -1    1000  REMOVE_THEN_ADD  sample            14176.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                              JDK_HASH      -1    1000  REMOVE_THEN_ADD  sample            14384.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                              JDK_HASH      -1    1000  REMOVE_THEN_ADD  sample            14528.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                              JDK_HASH      -1    1000  REMOVE_THEN_ADD  sample            14608.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                              JDK_HASH      -1    1000  REMOVE_THEN_ADD  sample            15376.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                             JDK_HASH      -1    1000  REMOVE_THEN_ADD  sample            53075.968            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                            JDK_HASH      -1    1000  REMOVE_THEN_ADD  sample          1129663.693            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                              JDK_HASH      -1    1000  REMOVE_THEN_ADD  sample          1419264.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     KOLOBOKE_HASH      -1    1000              ADD  sample  465042     5409.009 ±   3.895  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         KOLOBOKE_HASH      -1    1000              ADD  sample             5336.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         KOLOBOKE_HASH      -1    1000              ADD  sample             5376.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         KOLOBOKE_HASH      -1    1000              ADD  sample             5392.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         KOLOBOKE_HASH      -1    1000              ADD  sample             5400.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         KOLOBOKE_HASH      -1    1000              ADD  sample             5504.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        KOLOBOKE_HASH      -1    1000              ADD  sample            14717.936            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       KOLOBOKE_HASH      -1    1000              ADD  sample            33152.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         KOLOBOKE_HASH      -1    1000              ADD  sample           141056.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     KOLOBOKE_HASH      -1    1000           REMOVE  sample  441632     5702.963 ±   3.868  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         KOLOBOKE_HASH      -1    1000           REMOVE  sample             5640.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         KOLOBOKE_HASH      -1    1000           REMOVE  sample             5664.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         KOLOBOKE_HASH      -1    1000           REMOVE  sample             5680.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         KOLOBOKE_HASH      -1    1000           REMOVE  sample             5680.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         KOLOBOKE_HASH      -1    1000           REMOVE  sample             5800.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        KOLOBOKE_HASH      -1    1000           REMOVE  sample            21719.488            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       KOLOBOKE_HASH      -1    1000           REMOVE  sample            33024.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         KOLOBOKE_HASH      -1    1000           REMOVE  sample            76288.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     KOLOBOKE_HASH      -1    1000         CONTAINS  sample  472369     5344.953 ±   3.438  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         KOLOBOKE_HASH      -1    1000         CONTAINS  sample             5216.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         KOLOBOKE_HASH      -1    1000         CONTAINS  sample             5312.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         KOLOBOKE_HASH      -1    1000         CONTAINS  sample             5336.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         KOLOBOKE_HASH      -1    1000         CONTAINS  sample             5352.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         KOLOBOKE_HASH      -1    1000         CONTAINS  sample             5400.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        KOLOBOKE_HASH      -1    1000         CONTAINS  sample            13878.560            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       KOLOBOKE_HASH      -1    1000         CONTAINS  sample            32312.416            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         KOLOBOKE_HASH      -1    1000         CONTAINS  sample            87808.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     KOLOBOKE_HASH      -1    1000    ADD_OR_REMOVE  sample  468943    10680.277 ±   4.436  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         KOLOBOKE_HASH      -1    1000    ADD_OR_REMOVE  sample            10432.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         KOLOBOKE_HASH      -1    1000    ADD_OR_REMOVE  sample            10640.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         KOLOBOKE_HASH      -1    1000    ADD_OR_REMOVE  sample            10720.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         KOLOBOKE_HASH      -1    1000    ADD_OR_REMOVE  sample            10816.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         KOLOBOKE_HASH      -1    1000    ADD_OR_REMOVE  sample            10992.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        KOLOBOKE_HASH      -1    1000    ADD_OR_REMOVE  sample            29217.792            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       KOLOBOKE_HASH      -1    1000    ADD_OR_REMOVE  sample            41101.517            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         KOLOBOKE_HASH      -1    1000    ADD_OR_REMOVE  sample           133632.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     KOLOBOKE_HASH      -1    1000  ADD_THEN_REMOVE  sample  352197    14229.150 ±   6.533  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         KOLOBOKE_HASH      -1    1000  ADD_THEN_REMOVE  sample            14016.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         KOLOBOKE_HASH      -1    1000  ADD_THEN_REMOVE  sample            14176.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         KOLOBOKE_HASH      -1    1000  ADD_THEN_REMOVE  sample            14240.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         KOLOBOKE_HASH      -1    1000  ADD_THEN_REMOVE  sample            14256.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         KOLOBOKE_HASH      -1    1000  ADD_THEN_REMOVE  sample            14320.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        KOLOBOKE_HASH      -1    1000  ADD_THEN_REMOVE  sample            35712.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       KOLOBOKE_HASH      -1    1000  ADD_THEN_REMOVE  sample            56227.866            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         KOLOBOKE_HASH      -1    1000  ADD_THEN_REMOVE  sample           143104.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     KOLOBOKE_HASH      -1    1000  REMOVE_THEN_ADD  sample  327445    15322.205 ±   7.485  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         KOLOBOKE_HASH      -1    1000  REMOVE_THEN_ADD  sample            15024.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         KOLOBOKE_HASH      -1    1000  REMOVE_THEN_ADD  sample            15248.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         KOLOBOKE_HASH      -1    1000  REMOVE_THEN_ADD  sample            15328.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         KOLOBOKE_HASH      -1    1000  REMOVE_THEN_ADD  sample            15360.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         KOLOBOKE_HASH      -1    1000  REMOVE_THEN_ADD  sample            15632.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        KOLOBOKE_HASH      -1    1000  REMOVE_THEN_ADD  sample            38179.456            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       KOLOBOKE_HASH      -1    1000  REMOVE_THEN_ADD  sample            58000.346            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         KOLOBOKE_HASH      -1    1000  REMOVE_THEN_ADD  sample           102784.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                    KOLOBOKE_QHASH      -1    1000              ADD  sample  519228     9655.919 ±   3.996  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                        KOLOBOKE_QHASH      -1    1000              ADD  sample             9424.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                        KOLOBOKE_QHASH      -1    1000              ADD  sample             9616.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                        KOLOBOKE_QHASH      -1    1000              ADD  sample             9696.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                        KOLOBOKE_QHASH      -1    1000              ADD  sample             9712.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                        KOLOBOKE_QHASH      -1    1000              ADD  sample             9872.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                       KOLOBOKE_QHASH      -1    1000              ADD  sample            28152.672            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                      KOLOBOKE_QHASH      -1    1000              ADD  sample            39488.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                        KOLOBOKE_QHASH      -1    1000              ADD  sample           112896.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                    KOLOBOKE_QHASH      -1    1000           REMOVE  sample  344870    14510.464 ±   5.359  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                        KOLOBOKE_QHASH      -1    1000           REMOVE  sample            14096.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                        KOLOBOKE_QHASH      -1    1000           REMOVE  sample            14480.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                        KOLOBOKE_QHASH      -1    1000           REMOVE  sample            14624.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                        KOLOBOKE_QHASH      -1    1000           REMOVE  sample            14656.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                        KOLOBOKE_QHASH      -1    1000           REMOVE  sample            14720.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                       KOLOBOKE_QHASH      -1    1000           REMOVE  sample            33352.256            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                      KOLOBOKE_QHASH      -1    1000           REMOVE  sample            50953.907            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                        KOLOBOKE_QHASH      -1    1000           REMOVE  sample            97664.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                    KOLOBOKE_QHASH      -1    1000         CONTAINS  sample  549786     9100.547 ±   3.363  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                        KOLOBOKE_QHASH      -1    1000         CONTAINS  sample             8912.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                        KOLOBOKE_QHASH      -1    1000         CONTAINS  sample             9072.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                        KOLOBOKE_QHASH      -1    1000         CONTAINS  sample             9120.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                        KOLOBOKE_QHASH      -1    1000         CONTAINS  sample             9136.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                        KOLOBOKE_QHASH      -1    1000         CONTAINS  sample             9184.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                       KOLOBOKE_QHASH      -1    1000         CONTAINS  sample            21103.712            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                      KOLOBOKE_QHASH      -1    1000         CONTAINS  sample            36480.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                        KOLOBOKE_QHASH      -1    1000         CONTAINS  sample            91904.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                    KOLOBOKE_QHASH      -1    1000    ADD_OR_REMOVE  sample  358400    13982.188 ±   6.811  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                        KOLOBOKE_QHASH      -1    1000    ADD_OR_REMOVE  sample            13728.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                        KOLOBOKE_QHASH      -1    1000    ADD_OR_REMOVE  sample            13920.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                        KOLOBOKE_QHASH      -1    1000    ADD_OR_REMOVE  sample            13984.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                        KOLOBOKE_QHASH      -1    1000    ADD_OR_REMOVE  sample            14016.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                        KOLOBOKE_QHASH      -1    1000    ADD_OR_REMOVE  sample            14304.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                       KOLOBOKE_QHASH      -1    1000    ADD_OR_REMOVE  sample            35520.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                      KOLOBOKE_QHASH      -1    1000    ADD_OR_REMOVE  sample            55956.467            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                        KOLOBOKE_QHASH      -1    1000    ADD_OR_REMOVE  sample           138752.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                    KOLOBOKE_QHASH      -1    1000  ADD_THEN_REMOVE  sample  273218    36610.788 ±  11.746  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                        KOLOBOKE_QHASH      -1    1000  ADD_THEN_REMOVE  sample            35328.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                        KOLOBOKE_QHASH      -1    1000  ADD_THEN_REMOVE  sample            36480.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                        KOLOBOKE_QHASH      -1    1000  ADD_THEN_REMOVE  sample            36864.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                        KOLOBOKE_QHASH      -1    1000  ADD_THEN_REMOVE  sample            36992.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                        KOLOBOKE_QHASH      -1    1000  ADD_THEN_REMOVE  sample            37440.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                       KOLOBOKE_QHASH      -1    1000  ADD_THEN_REMOVE  sample            68224.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                      KOLOBOKE_QHASH      -1    1000  ADD_THEN_REMOVE  sample           104749.594            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                        KOLOBOKE_QHASH      -1    1000  ADD_THEN_REMOVE  sample           167168.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                    KOLOBOKE_QHASH      -1    1000  REMOVE_THEN_ADD  sample  282506    35412.601 ±  11.381  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                        KOLOBOKE_QHASH      -1    1000  REMOVE_THEN_ADD  sample            34112.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                        KOLOBOKE_QHASH      -1    1000  REMOVE_THEN_ADD  sample            35264.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                        KOLOBOKE_QHASH      -1    1000  REMOVE_THEN_ADD  sample            35712.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                        KOLOBOKE_QHASH      -1    1000  REMOVE_THEN_ADD  sample            35904.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                        KOLOBOKE_QHASH      -1    1000  REMOVE_THEN_ADD  sample            36352.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                       KOLOBOKE_QHASH      -1    1000  REMOVE_THEN_ADD  sample            67712.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                      KOLOBOKE_QHASH      -1    1000  REMOVE_THEN_ADD  sample           100863.642            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                        KOLOBOKE_QHASH      -1    1000  REMOVE_THEN_ADD  sample           154624.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     FASTUTIL_HASH      -1    1000              ADD  sample  497841     5067.781 ±   4.601  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         FASTUTIL_HASH      -1    1000              ADD  sample             4936.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         FASTUTIL_HASH      -1    1000              ADD  sample             5032.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         FASTUTIL_HASH      -1    1000              ADD  sample             5072.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         FASTUTIL_HASH      -1    1000              ADD  sample             5080.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         FASTUTIL_HASH      -1    1000              ADD  sample             5104.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        FASTUTIL_HASH      -1    1000              ADD  sample            13314.528            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       FASTUTIL_HASH      -1    1000              ADD  sample            34139.622            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         FASTUTIL_HASH      -1    1000              ADD  sample           204544.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     FASTUTIL_HASH      -1    1000           REMOVE  sample  390799     3249.052 ±   4.384  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         FASTUTIL_HASH      -1    1000           REMOVE  sample             3196.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         FASTUTIL_HASH      -1    1000           REMOVE  sample             3212.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         FASTUTIL_HASH      -1    1000           REMOVE  sample             3220.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         FASTUTIL_HASH      -1    1000           REMOVE  sample             3224.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         FASTUTIL_HASH      -1    1000           REMOVE  sample             3292.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        FASTUTIL_HASH      -1    1000           REMOVE  sample            19200.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       FASTUTIL_HASH      -1    1000           REMOVE  sample            30301.440            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         FASTUTIL_HASH      -1    1000           REMOVE  sample           116736.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     FASTUTIL_HASH      -1    1000         CONTAINS  sample  466837     5391.075 ±   3.293  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         FASTUTIL_HASH      -1    1000         CONTAINS  sample             5272.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         FASTUTIL_HASH      -1    1000         CONTAINS  sample             5360.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         FASTUTIL_HASH      -1    1000         CONTAINS  sample             5408.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         FASTUTIL_HASH      -1    1000         CONTAINS  sample             5432.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         FASTUTIL_HASH      -1    1000         CONTAINS  sample             5488.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        FASTUTIL_HASH      -1    1000         CONTAINS  sample            11829.184            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       FASTUTIL_HASH      -1    1000         CONTAINS  sample            31375.302            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         FASTUTIL_HASH      -1    1000         CONTAINS  sample            86912.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     FASTUTIL_HASH      -1    1000    ADD_OR_REMOVE  sample  522063     9599.033 ±   4.165  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         FASTUTIL_HASH      -1    1000    ADD_OR_REMOVE  sample             9376.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         FASTUTIL_HASH      -1    1000    ADD_OR_REMOVE  sample             9552.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         FASTUTIL_HASH      -1    1000    ADD_OR_REMOVE  sample             9632.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         FASTUTIL_HASH      -1    1000    ADD_OR_REMOVE  sample             9680.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         FASTUTIL_HASH      -1    1000    ADD_OR_REMOVE  sample             9744.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        FASTUTIL_HASH      -1    1000    ADD_OR_REMOVE  sample            27709.952            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       FASTUTIL_HASH      -1    1000    ADD_OR_REMOVE  sample            39794.790            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         FASTUTIL_HASH      -1    1000    ADD_OR_REMOVE  sample           123648.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     FASTUTIL_HASH      -1    1000  ADD_THEN_REMOVE  sample  294990    34132.035 ± 154.061  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         FASTUTIL_HASH      -1    1000  ADD_THEN_REMOVE  sample            32256.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         FASTUTIL_HASH      -1    1000  ADD_THEN_REMOVE  sample            33344.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         FASTUTIL_HASH      -1    1000  ADD_THEN_REMOVE  sample            33728.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         FASTUTIL_HASH      -1    1000  ADD_THEN_REMOVE  sample            33920.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         FASTUTIL_HASH      -1    1000  ADD_THEN_REMOVE  sample            35968.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        FASTUTIL_HASH      -1    1000  ADD_THEN_REMOVE  sample           124804.608            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       FASTUTIL_HASH      -1    1000  ADD_THEN_REMOVE  sample          1362945.843            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         FASTUTIL_HASH      -1    1000  ADD_THEN_REMOVE  sample          1558528.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     FASTUTIL_HASH      -1    1000  REMOVE_THEN_ADD  sample  313688    32126.997 ± 144.955  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         FASTUTIL_HASH      -1    1000  REMOVE_THEN_ADD  sample            30240.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         FASTUTIL_HASH      -1    1000  REMOVE_THEN_ADD  sample            31328.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         FASTUTIL_HASH      -1    1000  REMOVE_THEN_ADD  sample            31840.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         FASTUTIL_HASH      -1    1000  REMOVE_THEN_ADD  sample            32064.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         FASTUTIL_HASH      -1    1000  REMOVE_THEN_ADD  sample            34560.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        FASTUTIL_HASH      -1    1000  REMOVE_THEN_ADD  sample           125175.424            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       FASTUTIL_HASH      -1    1000  REMOVE_THEN_ADD  sample          1335296.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         FASTUTIL_HASH      -1    1000  REMOVE_THEN_ADD  sample          1576960.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                      ECLIPSE_HASH      -1    1000              ADD  sample  550901     9090.638 ±   4.194  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                          ECLIPSE_HASH      -1    1000              ADD  sample             8720.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                          ECLIPSE_HASH      -1    1000              ADD  sample             9056.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                          ECLIPSE_HASH      -1    1000              ADD  sample             9152.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                          ECLIPSE_HASH      -1    1000              ADD  sample             9168.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                          ECLIPSE_HASH      -1    1000              ADD  sample             9264.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                         ECLIPSE_HASH      -1    1000              ADD  sample            27360.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                        ECLIPSE_HASH      -1    1000              ADD  sample            38848.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                          ECLIPSE_HASH      -1    1000              ADD  sample           208896.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                      ECLIPSE_HASH      -1    1000           REMOVE  sample  483414     5203.306 ±   3.157  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                          ECLIPSE_HASH      -1    1000           REMOVE  sample             5152.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                          ECLIPSE_HASH      -1    1000           REMOVE  sample             5176.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                          ECLIPSE_HASH      -1    1000           REMOVE  sample             5184.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                          ECLIPSE_HASH      -1    1000           REMOVE  sample             5192.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                          ECLIPSE_HASH      -1    1000           REMOVE  sample             5288.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                         ECLIPSE_HASH      -1    1000           REMOVE  sample            11168.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                        ECLIPSE_HASH      -1    1000           REMOVE  sample            31071.216            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                          ECLIPSE_HASH      -1    1000           REMOVE  sample            59200.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                      ECLIPSE_HASH      -1    1000         CONTAINS  sample  553415     9054.078 ±   3.400  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                          ECLIPSE_HASH      -1    1000         CONTAINS  sample             8736.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                          ECLIPSE_HASH      -1    1000         CONTAINS  sample             9024.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                          ECLIPSE_HASH      -1    1000         CONTAINS  sample             9136.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                          ECLIPSE_HASH      -1    1000         CONTAINS  sample             9152.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                          ECLIPSE_HASH      -1    1000         CONTAINS  sample             9248.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                         ECLIPSE_HASH      -1    1000         CONTAINS  sample            26386.688            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                        ECLIPSE_HASH      -1    1000         CONTAINS  sample            35904.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                          ECLIPSE_HASH      -1    1000         CONTAINS  sample            72576.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                      ECLIPSE_HASH      -1    1000    ADD_OR_REMOVE  sample  666576     7559.623 ±  14.713  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                          ECLIPSE_HASH      -1    1000    ADD_OR_REMOVE  sample             7144.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                          ECLIPSE_HASH      -1    1000    ADD_OR_REMOVE  sample             7536.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                          ECLIPSE_HASH      -1    1000    ADD_OR_REMOVE  sample             7656.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                          ECLIPSE_HASH      -1    1000    ADD_OR_REMOVE  sample             7688.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                          ECLIPSE_HASH      -1    1000    ADD_OR_REMOVE  sample             7752.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                         ECLIPSE_HASH      -1    1000    ADD_OR_REMOVE  sample            22717.504            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                        ECLIPSE_HASH      -1    1000    ADD_OR_REMOVE  sample            34496.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                          ECLIPSE_HASH      -1    1000    ADD_OR_REMOVE  sample          2904064.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                      ECLIPSE_HASH      -1    1000  ADD_THEN_REMOVE  sample  319366    15877.541 ± 103.410  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                          ECLIPSE_HASH      -1    1000  ADD_THEN_REMOVE  sample            15184.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                          ECLIPSE_HASH      -1    1000  ADD_THEN_REMOVE  sample            15488.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                          ECLIPSE_HASH      -1    1000  ADD_THEN_REMOVE  sample            15616.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                          ECLIPSE_HASH      -1    1000  ADD_THEN_REMOVE  sample            15680.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                          ECLIPSE_HASH      -1    1000  ADD_THEN_REMOVE  sample            16000.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                         ECLIPSE_HASH      -1    1000  ADD_THEN_REMOVE  sample            53544.512            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                        ECLIPSE_HASH      -1    1000  ADD_THEN_REMOVE  sample          1208708.915            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                          ECLIPSE_HASH      -1    1000  ADD_THEN_REMOVE  sample          1409024.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                      ECLIPSE_HASH      -1    1000  REMOVE_THEN_ADD  sample  310370    16325.596 ±  98.042  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                          ECLIPSE_HASH      -1    1000  REMOVE_THEN_ADD  sample            15552.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                          ECLIPSE_HASH      -1    1000  REMOVE_THEN_ADD  sample            15952.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                          ECLIPSE_HASH      -1    1000  REMOVE_THEN_ADD  sample            16080.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                          ECLIPSE_HASH      -1    1000  REMOVE_THEN_ADD  sample            16160.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                          ECLIPSE_HASH      -1    1000  REMOVE_THEN_ADD  sample            16448.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                         ECLIPSE_HASH      -1    1000  REMOVE_THEN_ADD  sample            55680.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                        ECLIPSE_HASH      -1    1000  REMOVE_THEN_ADD  sample          1130344.038            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                          ECLIPSE_HASH      -1    1000  REMOVE_THEN_ADD  sample          1441792.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                       AGRONA_HASH      -1    1000              ADD  sample  409751     6139.738 ±   4.547  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                           AGRONA_HASH      -1    1000              ADD  sample             5936.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                           AGRONA_HASH      -1    1000              ADD  sample             6096.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                           AGRONA_HASH      -1    1000              ADD  sample             6184.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                           AGRONA_HASH      -1    1000              ADD  sample             6216.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                           AGRONA_HASH      -1    1000              ADD  sample             6264.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                          AGRONA_HASH      -1    1000              ADD  sample            24416.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                         AGRONA_HASH      -1    1000              ADD  sample            33542.349            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                           AGRONA_HASH      -1    1000              ADD  sample           151808.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                       AGRONA_HASH      -1    1000           REMOVE  sample  685004     3669.930 ±   3.113  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                           AGRONA_HASH      -1    1000           REMOVE  sample             3568.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                           AGRONA_HASH      -1    1000           REMOVE  sample             3644.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                           AGRONA_HASH      -1    1000           REMOVE  sample             3684.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                           AGRONA_HASH      -1    1000           REMOVE  sample             3700.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                           AGRONA_HASH      -1    1000           REMOVE  sample             3744.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                          AGRONA_HASH      -1    1000           REMOVE  sample             8224.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                         AGRONA_HASH      -1    1000           REMOVE  sample            30415.984            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                           AGRONA_HASH      -1    1000           REMOVE  sample           201728.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                       AGRONA_HASH      -1    1000         CONTAINS  sample  481372     5235.241 ±   3.673  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                           AGRONA_HASH      -1    1000         CONTAINS  sample             5096.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                           AGRONA_HASH      -1    1000         CONTAINS  sample             5200.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                           AGRONA_HASH      -1    1000         CONTAINS  sample             5232.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                           AGRONA_HASH      -1    1000         CONTAINS  sample             5240.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                           AGRONA_HASH      -1    1000         CONTAINS  sample             5272.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                          AGRONA_HASH      -1    1000         CONTAINS  sample            21576.128            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                         AGRONA_HASH      -1    1000         CONTAINS  sample            34286.426            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                           AGRONA_HASH      -1    1000         CONTAINS  sample            65664.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                       AGRONA_HASH      -1    1000    ADD_OR_REMOVE  sample  505984     9911.432 ±   4.986  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                           AGRONA_HASH      -1    1000    ADD_OR_REMOVE  sample             9632.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                           AGRONA_HASH      -1    1000    ADD_OR_REMOVE  sample             9840.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                           AGRONA_HASH      -1    1000    ADD_OR_REMOVE  sample             9984.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                           AGRONA_HASH      -1    1000    ADD_OR_REMOVE  sample            10032.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                           AGRONA_HASH      -1    1000    ADD_OR_REMOVE  sample            10224.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                          AGRONA_HASH      -1    1000    ADD_OR_REMOVE  sample            28352.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                         AGRONA_HASH      -1    1000    ADD_OR_REMOVE  sample            41728.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                           AGRONA_HASH      -1    1000    ADD_OR_REMOVE  sample           176384.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                       AGRONA_HASH      -1    1000  ADD_THEN_REMOVE  sample  442513    11328.984 ±   5.802  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                           AGRONA_HASH      -1    1000  ADD_THEN_REMOVE  sample            11120.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                           AGRONA_HASH      -1    1000  ADD_THEN_REMOVE  sample            11264.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                           AGRONA_HASH      -1    1000  ADD_THEN_REMOVE  sample            11312.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                           AGRONA_HASH      -1    1000  ADD_THEN_REMOVE  sample            11328.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                           AGRONA_HASH      -1    1000  ADD_THEN_REMOVE  sample            11568.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                          AGRONA_HASH      -1    1000  ADD_THEN_REMOVE  sample            29888.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                         AGRONA_HASH      -1    1000  ADD_THEN_REMOVE  sample            52575.821            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                           AGRONA_HASH      -1    1000  ADD_THEN_REMOVE  sample           180992.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                       AGRONA_HASH      -1    1000  REMOVE_THEN_ADD  sample  506632     9898.500 ±   4.467  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                           AGRONA_HASH      -1    1000  REMOVE_THEN_ADD  sample             9712.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                           AGRONA_HASH      -1    1000  REMOVE_THEN_ADD  sample             9856.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                           AGRONA_HASH      -1    1000  REMOVE_THEN_ADD  sample             9904.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                           AGRONA_HASH      -1    1000  REMOVE_THEN_ADD  sample             9920.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                           AGRONA_HASH      -1    1000  REMOVE_THEN_ADD  sample            10096.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                          AGRONA_HASH      -1    1000  REMOVE_THEN_ADD  sample            28384.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                         AGRONA_HASH      -1    1000  REMOVE_THEN_ADD  sample            44117.549            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                           AGRONA_HASH      -1    1000  REMOVE_THEN_ADD  sample           100736.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     JDKGDXDS_HASH      -1    1000              ADD  sample  448793     5613.334 ±   5.734  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         JDKGDXDS_HASH      -1    1000              ADD  sample             5408.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         JDKGDXDS_HASH      -1    1000              ADD  sample             5576.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         JDKGDXDS_HASH      -1    1000              ADD  sample             5632.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         JDKGDXDS_HASH      -1    1000              ADD  sample             5648.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         JDKGDXDS_HASH      -1    1000              ADD  sample             5704.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        JDKGDXDS_HASH      -1    1000              ADD  sample            12403.296            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       JDKGDXDS_HASH      -1    1000              ADD  sample            35271.718            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         JDKGDXDS_HASH      -1    1000              ADD  sample           204032.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     JDKGDXDS_HASH      -1    1000           REMOVE  sample  507767     4955.051 ±   3.197  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         JDKGDXDS_HASH      -1    1000           REMOVE  sample             4904.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         JDKGDXDS_HASH      -1    1000           REMOVE  sample             4928.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         JDKGDXDS_HASH      -1    1000           REMOVE  sample             4936.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         JDKGDXDS_HASH      -1    1000           REMOVE  sample             4944.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         JDKGDXDS_HASH      -1    1000           REMOVE  sample             5032.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        JDKGDXDS_HASH      -1    1000           REMOVE  sample            10663.424            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       JDKGDXDS_HASH      -1    1000           REMOVE  sample            31911.142            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         JDKGDXDS_HASH      -1    1000           REMOVE  sample            55232.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     JDKGDXDS_HASH      -1    1000         CONTAINS  sample  435554     5781.615 ±   4.039  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         JDKGDXDS_HASH      -1    1000         CONTAINS  sample             5632.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         JDKGDXDS_HASH      -1    1000         CONTAINS  sample             5744.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         JDKGDXDS_HASH      -1    1000         CONTAINS  sample             5792.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         JDKGDXDS_HASH      -1    1000         CONTAINS  sample             5816.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         JDKGDXDS_HASH      -1    1000         CONTAINS  sample             5888.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        JDKGDXDS_HASH      -1    1000         CONTAINS  sample            24128.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       JDKGDXDS_HASH      -1    1000         CONTAINS  sample            32924.448            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         JDKGDXDS_HASH      -1    1000         CONTAINS  sample            87552.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     JDKGDXDS_HASH      -1    1000    ADD_OR_REMOVE  sample  453035    11070.398 ±   5.108  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         JDKGDXDS_HASH      -1    1000    ADD_OR_REMOVE  sample            10896.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         JDKGDXDS_HASH      -1    1000    ADD_OR_REMOVE  sample            11008.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         JDKGDXDS_HASH      -1    1000    ADD_OR_REMOVE  sample            11072.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         JDKGDXDS_HASH      -1    1000    ADD_OR_REMOVE  sample            11088.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         JDKGDXDS_HASH      -1    1000    ADD_OR_REMOVE  sample            11296.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        JDKGDXDS_HASH      -1    1000    ADD_OR_REMOVE  sample            29856.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       JDKGDXDS_HASH      -1    1000    ADD_OR_REMOVE  sample            47518.848            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         JDKGDXDS_HASH      -1    1000    ADD_OR_REMOVE  sample           104576.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     JDKGDXDS_HASH      -1    1000  ADD_THEN_REMOVE  sample  587331    17012.462 ±   4.332  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         JDKGDXDS_HASH      -1    1000  ADD_THEN_REMOVE  sample            16672.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         JDKGDXDS_HASH      -1    1000  ADD_THEN_REMOVE  sample            16960.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         JDKGDXDS_HASH      -1    1000  ADD_THEN_REMOVE  sample            17120.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         JDKGDXDS_HASH      -1    1000  ADD_THEN_REMOVE  sample            17152.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         JDKGDXDS_HASH      -1    1000  ADD_THEN_REMOVE  sample            17248.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        JDKGDXDS_HASH      -1    1000  ADD_THEN_REMOVE  sample            35712.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       JDKGDXDS_HASH      -1    1000  ADD_THEN_REMOVE  sample            58065.075            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         JDKGDXDS_HASH      -1    1000  ADD_THEN_REMOVE  sample           117888.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench                                     JDKGDXDS_HASH      -1    1000  REMOVE_THEN_ADD  sample  593824    16820.978 ±   4.234  ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.00                         JDKGDXDS_HASH      -1    1000  REMOVE_THEN_ADD  sample            16448.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.50                         JDKGDXDS_HASH      -1    1000  REMOVE_THEN_ADD  sample            16768.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.90                         JDKGDXDS_HASH      -1    1000  REMOVE_THEN_ADD  sample            16896.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.95                         JDKGDXDS_HASH      -1    1000  REMOVE_THEN_ADD  sample            16928.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.99                         JDKGDXDS_HASH      -1    1000  REMOVE_THEN_ADD  sample            17216.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.999                        JDKGDXDS_HASH      -1    1000  REMOVE_THEN_ADD  sample            35584.000            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p0.9999                       JDKGDXDS_HASH      -1    1000  REMOVE_THEN_ADD  sample            57959.520            ns/op
+d.h.p.c.b.sets.JDKGetPut.bench:bench·p1.00                         JDKGDXDS_HASH      -1    1000  REMOVE_THEN_ADD  sample           103040.000            ns/op
