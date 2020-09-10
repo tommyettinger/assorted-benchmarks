@@ -1,112 +1,112 @@
-JDKGDXDS ObjectSet                          Merry ObjectSet                                            
-            ADD    5889.987 ns/op               ADD    5432.699 ns/op               ADD     5489.868 ns/op
-            ADD    5680.000 ns/op               ADD    5272.000 ns/op               ADD     5312.000 ns/op
-            ADD    5840.000 ns/op               ADD    5376.000 ns/op               ADD     5440.000 ns/op
-            ADD    5896.000 ns/op               ADD    5432.000 ns/op               ADD     5496.000 ns/op
-            ADD    5920.000 ns/op               ADD    5480.000 ns/op               ADD     5520.000 ns/op
-            ADD    6008.000 ns/op               ADD    5552.000 ns/op               ADD     5608.000 ns/op
-            ADD   24416.000 ns/op               ADD   24128.000 ns/op               ADD    23936.000 ns/op
-            ADD   35530.694 ns/op               ADD   33421.466 ns/op               ADD    34048.000 ns/op
-            ADD  136704.000 ns/op               ADD   99968.000 ns/op               ADD    97152.000 ns/op
-         REMOVE    4960.848 ns/op            REMOVE    4959.277 ns/op            REMOVE     4956.435 ns/op
-         REMOVE    4904.000 ns/op            REMOVE    4904.000 ns/op            REMOVE     4904.000 ns/op
-         REMOVE    4928.000 ns/op            REMOVE    4920.000 ns/op            REMOVE     4928.000 ns/op
-         REMOVE    4936.000 ns/op            REMOVE    4936.000 ns/op            REMOVE     4936.000 ns/op
-         REMOVE    4936.000 ns/op            REMOVE    4944.000 ns/op            REMOVE     4944.000 ns/op
-         REMOVE    5056.000 ns/op            REMOVE    5048.000 ns/op            REMOVE     4944.000 ns/op
-         REMOVE   21420.480 ns/op            REMOVE   21728.000 ns/op            REMOVE    12651.776 ns/op
-         REMOVE   31840.000 ns/op            REMOVE   31943.606 ns/op            REMOVE    30816.000 ns/op
-         REMOVE   83840.000 ns/op            REMOVE   70144.000 ns/op            REMOVE   107776.000 ns/op
-       CONTAINS    5831.062 ns/op          CONTAINS    5993.886 ns/op          CONTAINS     5860.906 ns/op
-       CONTAINS    5648.000 ns/op          CONTAINS    5832.000 ns/op          CONTAINS     5696.000 ns/op
-       CONTAINS    5776.000 ns/op          CONTAINS    5936.000 ns/op          CONTAINS     5816.000 ns/op
-       CONTAINS    5824.000 ns/op          CONTAINS    5992.000 ns/op          CONTAINS     5856.000 ns/op
-       CONTAINS    5840.000 ns/op          CONTAINS    6008.000 ns/op          CONTAINS     5872.000 ns/op
-       CONTAINS    5944.000 ns/op          CONTAINS    6120.000 ns/op          CONTAINS     5944.000 ns/op
-       CONTAINS   25248.000 ns/op          CONTAINS   25280.000 ns/op          CONTAINS    23044.224 ns/op
-       CONTAINS   35968.000 ns/op          CONTAINS   35068.736 ns/op          CONTAINS    35200.845 ns/op
-       CONTAINS  105856.000 ns/op          CONTAINS   54848.000 ns/op          CONTAINS    87808.000 ns/op
-  ADD_OR_REMOVE   11224.043 ns/op     ADD_OR_REMOVE   11076.326 ns/op     ADD_OR_REMOVE    12032.463 ns/op
-  ADD_OR_REMOVE   11040.000 ns/op     ADD_OR_REMOVE   10896.000 ns/op     ADD_OR_REMOVE    11568.000 ns/op
-  ADD_OR_REMOVE   11152.000 ns/op     ADD_OR_REMOVE   11024.000 ns/op     ADD_OR_REMOVE    11952.000 ns/op
-  ADD_OR_REMOVE   11216.000 ns/op     ADD_OR_REMOVE   11088.000 ns/op     ADD_OR_REMOVE    12112.000 ns/op
-  ADD_OR_REMOVE   11232.000 ns/op     ADD_OR_REMOVE   11104.000 ns/op     ADD_OR_REMOVE    12192.000 ns/op
-  ADD_OR_REMOVE   11472.000 ns/op     ADD_OR_REMOVE   11376.000 ns/op     ADD_OR_REMOVE    12560.000 ns/op
-  ADD_OR_REMOVE   31555.392 ns/op     ADD_OR_REMOVE   30040.992 ns/op     ADD_OR_REMOVE    31296.000 ns/op
-  ADD_OR_REMOVE   51667.878 ns/op     ADD_OR_REMOVE   49479.194 ns/op     ADD_OR_REMOVE    51605.184 ns/op
-  ADD_OR_REMOVE  137984.000 ns/op     ADD_OR_REMOVE   95360.000 ns/op     ADD_OR_REMOVE    97536.000 ns/op
-ADD_THEN_REMOVE   17267.732 ns/op   ADD_THEN_REMOVE   14437.292 ns/op   ADD_THEN_REMOVE    14750.353 ns/op
-ADD_THEN_REMOVE   16896.000 ns/op   ADD_THEN_REMOVE   14160.000 ns/op   ADD_THEN_REMOVE    14528.000 ns/op
-ADD_THEN_REMOVE   17152.000 ns/op   ADD_THEN_REMOVE   14336.000 ns/op   ADD_THEN_REMOVE    14672.000 ns/op
-ADD_THEN_REMOVE   17344.000 ns/op   ADD_THEN_REMOVE   14448.000 ns/op   ADD_THEN_REMOVE    14736.000 ns/op
-ADD_THEN_REMOVE   17472.000 ns/op   ADD_THEN_REMOVE   14672.000 ns/op   ADD_THEN_REMOVE    14768.000 ns/op
-ADD_THEN_REMOVE   17792.000 ns/op   ADD_THEN_REMOVE   14864.000 ns/op   ADD_THEN_REMOVE    14992.000 ns/op
-ADD_THEN_REMOVE   39168.000 ns/op   ADD_THEN_REMOVE   36928.000 ns/op   ADD_THEN_REMOVE    36480.000 ns/op
-ADD_THEN_REMOVE   59776.000 ns/op   ADD_THEN_REMOVE   56595.162 ns/op   ADD_THEN_REMOVE    55807.987 ns/op
-ADD_THEN_REMOVE   98816.000 ns/op   ADD_THEN_REMOVE  156416.000 ns/op   ADD_THEN_REMOVE   135168.000 ns/op
-REMOVE_THEN_ADD   13569.790 ns/op   REMOVE_THEN_ADD   12675.169 ns/op   REMOVE_THEN_ADD    12803.574 ns/op
-REMOVE_THEN_ADD   13328.000 ns/op   REMOVE_THEN_ADD   12496.000 ns/op   REMOVE_THEN_ADD    12560.000 ns/op
-REMOVE_THEN_ADD   13472.000 ns/op   REMOVE_THEN_ADD   12608.000 ns/op   REMOVE_THEN_ADD    12752.000 ns/op
-REMOVE_THEN_ADD   13696.000 ns/op   REMOVE_THEN_ADD   12672.000 ns/op   REMOVE_THEN_ADD    12816.000 ns/op
-REMOVE_THEN_ADD   13744.000 ns/op   REMOVE_THEN_ADD   12688.000 ns/op   REMOVE_THEN_ADD    12848.000 ns/op
-REMOVE_THEN_ADD   13904.000 ns/op   REMOVE_THEN_ADD   12784.000 ns/op   REMOVE_THEN_ADD    13088.000 ns/op
-REMOVE_THEN_ADD   35264.000 ns/op   REMOVE_THEN_ADD   33134.784 ns/op   REMOVE_THEN_ADD    31925.568 ns/op
-REMOVE_THEN_ADD   55115.117 ns/op   REMOVE_THEN_ADD   52864.000 ns/op   REMOVE_THEN_ADD    52663.514 ns/op
-REMOVE_THEN_ADD   89856.000 ns/op   REMOVE_THEN_ADD   67200.000 ns/op   REMOVE_THEN_ADD    91008.000 ns/op
+                   JDKGDXDS          Merry              (* * inline)       (rot rot)          (>>> &)            (* >>> &)
+            ADD    5889.987 ns/op    5432.699 ns/op     5489.868 ns/op     6400.837 ns/op     5878.591 ns/op     6119.153 ns/op
+            ADD    5680.000 ns/op    5272.000 ns/op     5312.000 ns/op     6264.000 ns/op     5688.000 ns/op     5904.000 ns/op
+            ADD    5840.000 ns/op    5376.000 ns/op     5440.000 ns/op     6352.000 ns/op     5824.000 ns/op     6072.000 ns/op
+            ADD    5896.000 ns/op    5432.000 ns/op     5496.000 ns/op     6376.000 ns/op     5872.000 ns/op     6128.000 ns/op
+            ADD    5920.000 ns/op    5480.000 ns/op     5520.000 ns/op     6392.000 ns/op     5888.000 ns/op     6152.000 ns/op
+            ADD    6008.000 ns/op    5552.000 ns/op     5608.000 ns/op     6520.000 ns/op     5976.000 ns/op     6280.000 ns/op
+            ADD   24416.000 ns/op   24128.000 ns/op    23936.000 ns/op    24672.000 ns/op    24503.328 ns/op    23087.168 ns/op
+            ADD   35530.694 ns/op   33421.466 ns/op    34048.000 ns/op    34683.648 ns/op    36798.266 ns/op    33321.434 ns/op
+            ADD  136704.000 ns/op   99968.000 ns/op    97152.000 ns/op   115840.000 ns/op   113024.000 ns/op    86784.000 ns/op
+         REMOVE    4960.848 ns/op    4959.277 ns/op     4956.435 ns/op     4215.635 ns/op     4708.785 ns/op     3698.299 ns/op
+         REMOVE    4904.000 ns/op    4904.000 ns/op     4904.000 ns/op     4168.000 ns/op     4656.000 ns/op     3592.000 ns/op
+         REMOVE    4928.000 ns/op    4920.000 ns/op     4928.000 ns/op     4192.000 ns/op     4680.000 ns/op     3672.000 ns/op
+         REMOVE    4936.000 ns/op    4936.000 ns/op     4936.000 ns/op     4200.000 ns/op     4696.000 ns/op     3692.000 ns/op
+         REMOVE    4936.000 ns/op    4944.000 ns/op     4944.000 ns/op     4208.000 ns/op     4696.000 ns/op     3700.000 ns/op
+         REMOVE    5056.000 ns/op    5048.000 ns/op     4944.000 ns/op     4288.000 ns/op     4784.000 ns/op     3768.000 ns/op
+         REMOVE   21420.480 ns/op   21728.000 ns/op    12651.776 ns/op     7888.000 ns/op     9456.000 ns/op     8184.000 ns/op
+         REMOVE   31840.000 ns/op   31943.606 ns/op    30816.000 ns/op    30583.584 ns/op    31386.272 ns/op    30201.587 ns/op
+         REMOVE   83840.000 ns/op   70144.000 ns/op   107776.000 ns/op    80384.000 ns/op    84096.000 ns/op    57088.000 ns/op
+       CONTAINS    5831.062 ns/op    5993.886 ns/op     5860.906 ns/op     5553.198 ns/op     6163.637 ns/op     5707.867 ns/op
+       CONTAINS    5648.000 ns/op    5832.000 ns/op     5696.000 ns/op     5416.000 ns/op     6000.000 ns/op     5520.000 ns/op
+       CONTAINS    5776.000 ns/op    5936.000 ns/op     5816.000 ns/op     5512.000 ns/op     6112.000 ns/op     5672.000 ns/op
+       CONTAINS    5824.000 ns/op    5992.000 ns/op     5856.000 ns/op     5552.000 ns/op     6176.000 ns/op     5712.000 ns/op
+       CONTAINS    5840.000 ns/op    6008.000 ns/op     5872.000 ns/op     5568.000 ns/op     6192.000 ns/op     5728.000 ns/op
+       CONTAINS    5944.000 ns/op    6120.000 ns/op     5944.000 ns/op     5648.000 ns/op     6312.000 ns/op     5840.000 ns/op
+       CONTAINS   25248.000 ns/op   25280.000 ns/op    23044.224 ns/op    19277.440 ns/op    24672.000 ns/op    24250.144 ns/op
+       CONTAINS   35968.000 ns/op   35068.736 ns/op    35200.845 ns/op    34288.973 ns/op    34053.888 ns/op    32736.000 ns/op
+       CONTAINS  105856.000 ns/op   54848.000 ns/op    87808.000 ns/op    94080.000 ns/op    83712.000 ns/op    48960.000 ns/op
+  ADD_OR_REMOVE   11224.043 ns/op   11076.326 ns/op    12032.463 ns/op    10091.506 ns/op    11584.070 ns/op     9567.523 ns/op
+  ADD_OR_REMOVE   11040.000 ns/op   10896.000 ns/op    11568.000 ns/op     9856.000 ns/op    11296.000 ns/op     9360.000 ns/op
+  ADD_OR_REMOVE   11152.000 ns/op   11024.000 ns/op    11952.000 ns/op    10032.000 ns/op    11520.000 ns/op     9504.000 ns/op
+  ADD_OR_REMOVE   11216.000 ns/op   11088.000 ns/op    12112.000 ns/op    10160.000 ns/op    11616.000 ns/op     9616.000 ns/op
+  ADD_OR_REMOVE   11232.000 ns/op   11104.000 ns/op    12192.000 ns/op    10224.000 ns/op    11648.000 ns/op     9648.000 ns/op
+  ADD_OR_REMOVE   11472.000 ns/op   11376.000 ns/op    12560.000 ns/op    10400.000 ns/op    11904.000 ns/op     9744.000 ns/op
+  ADD_OR_REMOVE   31555.392 ns/op   30040.992 ns/op    31296.000 ns/op    28512.000 ns/op    30535.232 ns/op    27840.000 ns/op
+  ADD_OR_REMOVE   51667.878 ns/op   49479.194 ns/op    51605.184 ns/op    40532.269 ns/op    51740.493 ns/op    44550.323 ns/op
+  ADD_OR_REMOVE  137984.000 ns/op   95360.000 ns/op    97536.000 ns/op    93568.000 ns/op   113280.000 ns/op   122880.000 ns/op
+ADD_THEN_REMOVE   17267.732 ns/op   14437.292 ns/op    14750.353 ns/op    12615.162 ns/op    13220.193 ns/op    12045.293 ns/op
+ADD_THEN_REMOVE   16896.000 ns/op   14160.000 ns/op    14528.000 ns/op    12464.000 ns/op    13024.000 ns/op    11808.000 ns/op
+ADD_THEN_REMOVE   17152.000 ns/op   14336.000 ns/op    14672.000 ns/op    12560.000 ns/op    13136.000 ns/op    11984.000 ns/op
+ADD_THEN_REMOVE   17344.000 ns/op   14448.000 ns/op    14736.000 ns/op    12608.000 ns/op    13264.000 ns/op    12080.000 ns/op
+ADD_THEN_REMOVE   17472.000 ns/op   14672.000 ns/op    14768.000 ns/op    12624.000 ns/op    13296.000 ns/op    12112.000 ns/op
+ADD_THEN_REMOVE   17792.000 ns/op   14864.000 ns/op    14992.000 ns/op    12656.000 ns/op    13360.000 ns/op    12240.000 ns/op
+ADD_THEN_REMOVE   39168.000 ns/op   36928.000 ns/op    36480.000 ns/op    31552.000 ns/op    33280.000 ns/op    31456.000 ns/op
+ADD_THEN_REMOVE   59776.000 ns/op   56595.162 ns/op    55807.987 ns/op    52320.512 ns/op    53832.717 ns/op    51364.864 ns/op
+ADD_THEN_REMOVE   98816.000 ns/op  156416.000 ns/op   135168.000 ns/op   102016.000 ns/op   138496.000 ns/op   120320.000 ns/op
+REMOVE_THEN_ADD   13569.790 ns/op   12675.169 ns/op    12803.574 ns/op    11889.478 ns/op    13738.433 ns/op    11751.542 ns/op
+REMOVE_THEN_ADD   13328.000 ns/op   12496.000 ns/op    12560.000 ns/op    11696.000 ns/op    13504.000 ns/op    11472.000 ns/op
+REMOVE_THEN_ADD   13472.000 ns/op   12608.000 ns/op    12752.000 ns/op    11824.000 ns/op    13664.000 ns/op    11696.000 ns/op
+REMOVE_THEN_ADD   13696.000 ns/op   12672.000 ns/op    12816.000 ns/op    11904.000 ns/op    13728.000 ns/op    11792.000 ns/op
+REMOVE_THEN_ADD   13744.000 ns/op   12688.000 ns/op    12848.000 ns/op    11920.000 ns/op    13760.000 ns/op    11840.000 ns/op
+REMOVE_THEN_ADD   13904.000 ns/op   12784.000 ns/op    13088.000 ns/op    12160.000 ns/op    13904.000 ns/op    12048.000 ns/op
+REMOVE_THEN_ADD   35264.000 ns/op   33134.784 ns/op    31925.568 ns/op    30944.000 ns/op    35072.000 ns/op    30752.000 ns/op
+REMOVE_THEN_ADD   55115.117 ns/op   52864.000 ns/op    52663.514 ns/op    48731.238 ns/op    57182.189 ns/op    45875.405 ns/op
+REMOVE_THEN_ADD   89856.000 ns/op   67200.000 ns/op    91008.000 ns/op   106112.000 ns/op   103552.000 ns/op    98304.000 ns/op
+ 
 
-
-
-JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000              ADD  sample  459701    5489.868 ± 4.346  ns/op
-JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000              ADD  sample            5312.000          ns/op
-JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000              ADD  sample            5440.000          ns/op
-JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000              ADD  sample            5496.000          ns/op
-JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000              ADD  sample            5520.000          ns/op
-JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000              ADD  sample            5608.000          ns/op
-JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000              ADD  sample           23936.000          ns/op
-JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000              ADD  sample           34048.000          ns/op
-JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000              ADD  sample           97152.000          ns/op
-JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000           REMOVE  sample  507815    4956.435 ± 3.223  ns/op
-JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            4904.000          ns/op
-JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            4928.000          ns/op
-JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            4936.000          ns/op
-JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            4944.000          ns/op
-JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            4944.000          ns/op
-JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000           REMOVE  sample           12651.776          ns/op
-JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000           REMOVE  sample           30816.000          ns/op
-JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000           REMOVE  sample          107776.000          ns/op
-JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000         CONTAINS  sample  429933    5860.906 ± 4.175  ns/op
-JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5696.000          ns/op
-JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5816.000          ns/op
-JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5856.000          ns/op
-JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5872.000          ns/op
-JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5944.000          ns/op
-JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000         CONTAINS  sample           23044.224          ns/op
-JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000         CONTAINS  sample           35200.845          ns/op
-JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample           87808.000          ns/op
-JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample  416689   12032.463 ± 5.402  ns/op
-JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample           11568.000          ns/op
-JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample           11952.000          ns/op
-JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample           12112.000          ns/op
-JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample           12192.000          ns/op
-JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample           12560.000          ns/op
-JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample           31296.000          ns/op
-JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample           51605.184          ns/op
-JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample           97536.000          ns/op
-JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample  340001   14750.353 ± 7.054  ns/op
-JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           14528.000          ns/op
-JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           14672.000          ns/op
-JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           14736.000          ns/op
-JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           14768.000          ns/op
-JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           14992.000          ns/op
-JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           36480.000          ns/op
-JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           55807.987          ns/op
-JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample          135168.000          ns/op
-JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample  391325   12803.574 ± 5.309  ns/op
-JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           12560.000          ns/op
-JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           12752.000          ns/op
-JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           12816.000          ns/op
-JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           12848.000          ns/op
-JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           13088.000          ns/op
-JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           31925.568          ns/op
-JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           52663.514          ns/op
-JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           91008.000          ns/op
+Benchmark                              (impl)  (seed)  (size)       (workload)    Mode     Cnt       Score   Error  Units
+JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000              ADD  sample  411762    6119.153 ± 4.208  ns/op
+JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000              ADD  sample            5904.000          ns/op
+JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000              ADD  sample            6072.000          ns/op
+JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000              ADD  sample            6128.000          ns/op
+JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000              ADD  sample            6152.000          ns/op
+JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000              ADD  sample            6280.000          ns/op
+JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000              ADD  sample           23087.168          ns/op
+JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000              ADD  sample           33321.434          ns/op
+JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000              ADD  sample           86784.000          ns/op
+JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000           REMOVE  sample  681001    3698.299 ± 2.528  ns/op
+JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            3592.000          ns/op
+JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            3672.000          ns/op
+JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            3692.000          ns/op
+JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            3700.000          ns/op
+JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            3768.000          ns/op
+JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000           REMOVE  sample            8184.000          ns/op
+JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000           REMOVE  sample           30201.587          ns/op
+JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000           REMOVE  sample           57088.000          ns/op
+JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000         CONTAINS  sample  441182    5707.867 ± 4.032  ns/op
+JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5520.000          ns/op
+JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5672.000          ns/op
+JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5712.000          ns/op
+JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5728.000          ns/op
+JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5840.000          ns/op
+JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000         CONTAINS  sample           24250.144          ns/op
+JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000         CONTAINS  sample           32736.000          ns/op
+JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample           48960.000          ns/op
+JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample  523833    9567.523 ± 4.286  ns/op
+JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample            9360.000          ns/op
+JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample            9504.000          ns/op
+JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample            9616.000          ns/op
+JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample            9648.000          ns/op
+JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample            9744.000          ns/op
+JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample           27840.000          ns/op
+JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample           44550.323          ns/op
+JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample          122880.000          ns/op
+JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample  416059   12045.293 ± 5.554  ns/op
+JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           11808.000          ns/op
+JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           11984.000          ns/op
+JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           12080.000          ns/op
+JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           12112.000          ns/op
+JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           12240.000          ns/op
+JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           31456.000          ns/op
+JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           51364.864          ns/op
+JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample          120320.000          ns/op
+JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample  426372   11751.542 ± 4.943  ns/op
+JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           11472.000          ns/op
+JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           11696.000          ns/op
+JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           11792.000          ns/op
+JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           11840.000          ns/op
+JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           12048.000          ns/op
+JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           30752.000          ns/op
+JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           45875.405          ns/op
+JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           98304.000          ns/op
