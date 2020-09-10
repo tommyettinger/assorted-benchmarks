@@ -1,6 +1,8 @@
 package de.heidelberg.pvs.container_bench.factories;
 
 import com.github.tommyettinger.ds.*;
+import com.github.tommyettinger.ds.x.ObjectSetX;
+import com.github.tommyettinger.ds.x.OrderedSetX;
 
 import java.util.Set;
 import java.util.function.Supplier;
@@ -39,7 +41,10 @@ public enum JDKSetFact {
 	CORENLP_ARRAY(() -> new edu.stanford.nlp.util.ArraySet<>(16, LoadFactor.LOAD_FACTOR)), //
 	ATLANTIS_INDEXED(() -> new IndexedSet<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_HASH(() -> new ObjectSet<>(16, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDS_INDEXED(() -> new OrderedSet<>(16, LoadFactor.LOAD_FACTOR))
+	JDKGDXDS_INDEXED(() -> new OrderedSet<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSX_HASH(() -> new ObjectSetX<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSX_INDEXED(() -> new OrderedSetX<>(16, LoadFactor.LOAD_FACTOR))
+
 	;
 
 	public Supplier<Set<?>> maker;
