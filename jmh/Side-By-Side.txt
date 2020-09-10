@@ -1,4 +1,11 @@
-                   JDKGDXDS          Merry              (* * inline)       (rot rot)          (>>> &)            (* >>> &)
+This file compares results of the sets.JDKGetPut benchmark run on only one Set implementation at a time.
+JDKGDXDS is the current implementation in JDKGDXDS' core package; it uses Fibonacci hashing using a long multiply and shift.
+Merry is very close to the current implementation in libGDX; it uses the same Fibonacci hashing, long multiply, and shift.
+The later columns apply to implementations used in JDKGDXDS' 'x' package. 
+The last column is the last implementation tested; it is the best or close to the best in all benchmarks except add() time. Even there, not bad...
+The most noticeable advantage of the last implementation is its worst-case performance, which is really excellent.
+
+                   JDKGDXDS          Merry              (* ^ * inline)     (^ rot ^ rot)      (>>> ^ &)          (* >>> ^ &)
             ADD    5889.987 ns/op    5432.699 ns/op     5489.868 ns/op     6400.837 ns/op     5878.591 ns/op     6119.153 ns/op
             ADD    5680.000 ns/op    5272.000 ns/op     5312.000 ns/op     6264.000 ns/op     5688.000 ns/op     5904.000 ns/op
             ADD    5840.000 ns/op    5376.000 ns/op     5440.000 ns/op     6352.000 ns/op     5824.000 ns/op     6072.000 ns/op
@@ -53,60 +60,4 @@ REMOVE_THEN_ADD   13904.000 ns/op   12784.000 ns/op    13088.000 ns/op    12160.
 REMOVE_THEN_ADD   35264.000 ns/op   33134.784 ns/op    31925.568 ns/op    30944.000 ns/op    35072.000 ns/op    30752.000 ns/op
 REMOVE_THEN_ADD   55115.117 ns/op   52864.000 ns/op    52663.514 ns/op    48731.238 ns/op    57182.189 ns/op    45875.405 ns/op
 REMOVE_THEN_ADD   89856.000 ns/op   67200.000 ns/op    91008.000 ns/op   106112.000 ns/op   103552.000 ns/op    98304.000 ns/op
- 
 
-Benchmark                              (impl)  (seed)  (size)       (workload)    Mode     Cnt       Score   Error  Units
-JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000              ADD  sample  411762    6119.153 ± 4.208  ns/op
-JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000              ADD  sample            5904.000          ns/op
-JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000              ADD  sample            6072.000          ns/op
-JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000              ADD  sample            6128.000          ns/op
-JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000              ADD  sample            6152.000          ns/op
-JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000              ADD  sample            6280.000          ns/op
-JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000              ADD  sample           23087.168          ns/op
-JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000              ADD  sample           33321.434          ns/op
-JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000              ADD  sample           86784.000          ns/op
-JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000           REMOVE  sample  681001    3698.299 ± 2.528  ns/op
-JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            3592.000          ns/op
-JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            3672.000          ns/op
-JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            3692.000          ns/op
-JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            3700.000          ns/op
-JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000           REMOVE  sample            3768.000          ns/op
-JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000           REMOVE  sample            8184.000          ns/op
-JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000           REMOVE  sample           30201.587          ns/op
-JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000           REMOVE  sample           57088.000          ns/op
-JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000         CONTAINS  sample  441182    5707.867 ± 4.032  ns/op
-JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5520.000          ns/op
-JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5672.000          ns/op
-JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5712.000          ns/op
-JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5728.000          ns/op
-JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample            5840.000          ns/op
-JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000         CONTAINS  sample           24250.144          ns/op
-JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000         CONTAINS  sample           32736.000          ns/op
-JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000         CONTAINS  sample           48960.000          ns/op
-JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample  523833    9567.523 ± 4.286  ns/op
-JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample            9360.000          ns/op
-JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample            9504.000          ns/op
-JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample            9616.000          ns/op
-JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample            9648.000          ns/op
-JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample            9744.000          ns/op
-JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample           27840.000          ns/op
-JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample           44550.323          ns/op
-JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000    ADD_OR_REMOVE  sample          122880.000          ns/op
-JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample  416059   12045.293 ± 5.554  ns/op
-JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           11808.000          ns/op
-JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           11984.000          ns/op
-JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           12080.000          ns/op
-JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           12112.000          ns/op
-JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           12240.000          ns/op
-JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           31456.000          ns/op
-JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample           51364.864          ns/op
-JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000  ADD_THEN_REMOVE  sample          120320.000          ns/op
-JDKGetPut.bench                JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample  426372   11751.542 ± 4.943  ns/op
-JDKGetPut.bench:bench·p0.00    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           11472.000          ns/op
-JDKGetPut.bench:bench·p0.50    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           11696.000          ns/op
-JDKGetPut.bench:bench·p0.90    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           11792.000          ns/op
-JDKGetPut.bench:bench·p0.95    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           11840.000          ns/op
-JDKGetPut.bench:bench·p0.99    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           12048.000          ns/op
-JDKGetPut.bench:bench·p0.999   JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           30752.000          ns/op
-JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           45875.405          ns/op
-JDKGetPut.bench:bench·p1.00    JDKGDXDSX_HASH      -1    1000  REMOVE_THEN_ADD  sample           98304.000          ns/op
