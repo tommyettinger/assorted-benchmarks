@@ -70,9 +70,9 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ds.merry.ObjectSet<String> set = new ds.merry.ObjectSet<>(size);
+					com.github.tommyettinger.ds.x.ObjectSetX<String> set = new com.github.tommyettinger.ds.x.ObjectSetX<>(size);
 					set.addAll(words);
-					System.out.printf("Merry ObjectSet, %7d Strings:\n", size);
+					System.out.printf("JDKGDXDS ObjectSetX, %7d Strings:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
@@ -100,9 +100,9 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ds.merry.OrderedSet<String> set = new ds.merry.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
+					com.github.tommyettinger.ds.x.OrderedSetX<String> set = new com.github.tommyettinger.ds.x.OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(words);
-					System.out.printf("Merry OrderedSet, %7d Strings:\n", size);
+					System.out.printf("JDKGDXDS OrderedSetX, %7d Strings:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
@@ -168,9 +168,9 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ds.merry.ObjectSet<Integer> set = new ds.merry.ObjectSet<>(size);
+					com.github.tommyettinger.ds.x.ObjectSetX<Integer> set = new com.github.tommyettinger.ds.x.ObjectSetX<>(size);
 					set.addAll(numbers);
-					System.out.printf("Merry ObjectSet, %7d Integers:\n", size);
+					System.out.printf("JDKGDXDS ObjectSetX, %7d Integers:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
@@ -198,9 +198,9 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ds.merry.OrderedSet<Integer> set = new ds.merry.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
+					com.github.tommyettinger.ds.x.OrderedSetX<Integer> set = new com.github.tommyettinger.ds.x.OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
-					System.out.printf("Merry OrderedSet, %7d Integers:\n", size);
+					System.out.printf("JDKGDXDS OrderedSetX, %7d Integers:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
@@ -272,9 +272,9 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ds.merry.ObjectSet<Long> set = new ds.merry.ObjectSet<>(size);
+					com.github.tommyettinger.ds.x.ObjectSetX<Long> set = new com.github.tommyettinger.ds.x.ObjectSetX<>(size);
 					set.addAll(numbers);
-					System.out.printf("Merry ObjectSet, %7d Longs:\n", size);
+					System.out.printf("JDKGDXDS ObjectSetX, %7d Longs:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
@@ -302,9 +302,9 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ds.merry.OrderedSet<Long> set = new ds.merry.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
+					com.github.tommyettinger.ds.x.OrderedSetX<Long> set = new com.github.tommyettinger.ds.x.OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
-					System.out.printf("Merry OrderedSet, %7d Longs:\n", size);
+					System.out.printf("JDKGDXDS OrderedSetX, %7d Longs:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
@@ -330,7 +330,6 @@ public class MemoryCheck {
 				long[] numbers = new long[size];
 				List<Long> numberList = new ArrayList<>(size);
 				for (int i = 0; i < size; i++) {
-					//// libGDX 1.9.10 survives this with LongMap because it doesn't use Long.hashCode()
 					numberList.add(numbers[i] = ((ints[i] & 0xFFFFFFFFL) * 0x100000001L));
 //					numberList.add(numbers[i] = (ints[i] * 0xCC62FCEB9202FAADL));
 				}
@@ -347,13 +346,6 @@ public class MemoryCheck {
 					LongMap<Object> set = new LongMap<>(size);
 					for (int i = 0; i < size; i++) set.put(numbers[i], null);
 					System.out.printf("GDX LongMap, %7d Longs:\n", size);
-					evaluate(set);
-					System.out.println("----------------------------------------");
-				}
-				{
-					ds.merry.LongMap<Object> set = new ds.merry.LongMap<>(size);
-					for (int i = 0; i < size; i++) set.put(numbers[i], null);
-					System.out.printf("Merry LongMap, %7d Longs:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}

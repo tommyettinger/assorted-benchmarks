@@ -1,0 +1,223 @@
+Benchmark                                 (impl)  (seed)  (size)       (workload)    Mode     Cnt       Score    Error  Units
+GDXOrderedSet.bench                GDX_O_ORDERED      -1    1000              ADD  sample  387975    6493.683 ±  5.172  ns/op
+GDXOrderedSet.bench:bench·p0.00    GDX_O_ORDERED      -1    1000              ADD  sample            6336.000           ns/op
+GDXOrderedSet.bench:bench·p0.50    GDX_O_ORDERED      -1    1000              ADD  sample            6440.000           ns/op
+GDXOrderedSet.bench:bench·p0.90    GDX_O_ORDERED      -1    1000              ADD  sample            6488.000           ns/op
+GDXOrderedSet.bench:bench·p0.95    GDX_O_ORDERED      -1    1000              ADD  sample            6504.000           ns/op
+GDXOrderedSet.bench:bench·p0.99    GDX_O_ORDERED      -1    1000              ADD  sample            6640.000           ns/op
+GDXOrderedSet.bench:bench·p0.999   GDX_O_ORDERED      -1    1000              ADD  sample           24928.000           ns/op
+GDXOrderedSet.bench:bench·p0.9999  GDX_O_ORDERED      -1    1000              ADD  sample           36108.954           ns/op
+GDXOrderedSet.bench:bench·p1.00    GDX_O_ORDERED      -1    1000              ADD  sample          145664.000           ns/op
+GDXOrderedSet.bench                GDX_O_ORDERED      -1    1000           REMOVE  sample  440231    5719.012 ±  4.304  ns/op
+GDXOrderedSet.bench:bench·p0.00    GDX_O_ORDERED      -1    1000           REMOVE  sample            5640.000           ns/op
+GDXOrderedSet.bench:bench·p0.50    GDX_O_ORDERED      -1    1000           REMOVE  sample            5672.000           ns/op
+GDXOrderedSet.bench:bench·p0.90    GDX_O_ORDERED      -1    1000           REMOVE  sample            5688.000           ns/op
+GDXOrderedSet.bench:bench·p0.95    GDX_O_ORDERED      -1    1000           REMOVE  sample            5688.000           ns/op
+GDXOrderedSet.bench:bench·p0.99    GDX_O_ORDERED      -1    1000           REMOVE  sample            5816.000           ns/op
+GDXOrderedSet.bench:bench·p0.999   GDX_O_ORDERED      -1    1000           REMOVE  sample           24096.000           ns/op
+GDXOrderedSet.bench:bench·p0.9999  GDX_O_ORDERED      -1    1000           REMOVE  sample           34750.515           ns/op
+GDXOrderedSet.bench:bench·p1.00    GDX_O_ORDERED      -1    1000           REMOVE  sample           85376.000           ns/op
+GDXOrderedSet.bench                GDX_O_ORDERED      -1    1000         CONTAINS  sample  433701    5815.241 ±  5.959  ns/op
+GDXOrderedSet.bench:bench·p0.00    GDX_O_ORDERED      -1    1000         CONTAINS  sample            5680.000           ns/op
+GDXOrderedSet.bench:bench·p0.50    GDX_O_ORDERED      -1    1000         CONTAINS  sample            5760.000           ns/op
+GDXOrderedSet.bench:bench·p0.90    GDX_O_ORDERED      -1    1000         CONTAINS  sample            5808.000           ns/op
+GDXOrderedSet.bench:bench·p0.95    GDX_O_ORDERED      -1    1000         CONTAINS  sample            5824.000           ns/op
+GDXOrderedSet.bench:bench·p0.99    GDX_O_ORDERED      -1    1000         CONTAINS  sample            5896.000           ns/op
+GDXOrderedSet.bench:bench·p0.999   GDX_O_ORDERED      -1    1000         CONTAINS  sample           24608.000           ns/op
+GDXOrderedSet.bench:bench·p0.9999  GDX_O_ORDERED      -1    1000         CONTAINS  sample           35560.307           ns/op
+GDXOrderedSet.bench:bench·p1.00    GDX_O_ORDERED      -1    1000         CONTAINS  sample          203520.000           ns/op
+GDXOrderedSet.bench                GDX_O_ORDERED      -1    1000    ADD_OR_REMOVE  sample  295212   33879.150 ± 13.096  ns/op
+GDXOrderedSet.bench:bench·p0.00    GDX_O_ORDERED      -1    1000    ADD_OR_REMOVE  sample           32000.000           ns/op
+GDXOrderedSet.bench:bench·p0.50    GDX_O_ORDERED      -1    1000    ADD_OR_REMOVE  sample           33408.000           ns/op
+GDXOrderedSet.bench:bench·p0.90    GDX_O_ORDERED      -1    1000    ADD_OR_REMOVE  sample           35712.000           ns/op
+GDXOrderedSet.bench:bench·p0.95    GDX_O_ORDERED      -1    1000    ADD_OR_REMOVE  sample           35840.000           ns/op
+GDXOrderedSet.bench:bench·p0.99    GDX_O_ORDERED      -1    1000    ADD_OR_REMOVE  sample           36864.000           ns/op
+GDXOrderedSet.bench:bench·p0.999   GDX_O_ORDERED      -1    1000    ADD_OR_REMOVE  sample           67456.000           ns/op
+GDXOrderedSet.bench:bench·p0.9999  GDX_O_ORDERED      -1    1000    ADD_OR_REMOVE  sample           98615.821           ns/op
+GDXOrderedSet.bench:bench·p1.00    GDX_O_ORDERED      -1    1000    ADD_OR_REMOVE  sample          171008.000           ns/op
+GDXOrderedSet.bench                GDX_O_ORDERED      -1    1000  ADD_THEN_REMOVE  sample  312473   32003.117 ± 11.918  ns/op
+GDXOrderedSet.bench:bench·p0.00    GDX_O_ORDERED      -1    1000  ADD_THEN_REMOVE  sample           30752.000           ns/op
+GDXOrderedSet.bench:bench·p0.50    GDX_O_ORDERED      -1    1000  ADD_THEN_REMOVE  sample           31936.000           ns/op
+GDXOrderedSet.bench:bench·p0.90    GDX_O_ORDERED      -1    1000  ADD_THEN_REMOVE  sample           32288.000           ns/op
+GDXOrderedSet.bench:bench·p0.95    GDX_O_ORDERED      -1    1000  ADD_THEN_REMOVE  sample           32384.000           ns/op
+GDXOrderedSet.bench:bench·p0.99    GDX_O_ORDERED      -1    1000  ADD_THEN_REMOVE  sample           32704.000           ns/op
+GDXOrderedSet.bench:bench·p0.999   GDX_O_ORDERED      -1    1000  ADD_THEN_REMOVE  sample           62470.656           ns/op
+GDXOrderedSet.bench:bench·p0.9999  GDX_O_ORDERED      -1    1000  ADD_THEN_REMOVE  sample           96480.333           ns/op
+GDXOrderedSet.bench:bench·p1.00    GDX_O_ORDERED      -1    1000  ADD_THEN_REMOVE  sample          188672.000           ns/op
+GDXOrderedSet.bench                GDX_O_ORDERED      -1    1000  REMOVE_THEN_ADD  sample  307404   32543.133 ± 10.795  ns/op
+GDXOrderedSet.bench:bench·p0.00    GDX_O_ORDERED      -1    1000  REMOVE_THEN_ADD  sample           31104.000           ns/op
+GDXOrderedSet.bench:bench·p0.50    GDX_O_ORDERED      -1    1000  REMOVE_THEN_ADD  sample           32544.000           ns/op
+GDXOrderedSet.bench:bench·p0.90    GDX_O_ORDERED      -1    1000  REMOVE_THEN_ADD  sample           32896.000           ns/op
+GDXOrderedSet.bench:bench·p0.95    GDX_O_ORDERED      -1    1000  REMOVE_THEN_ADD  sample           32960.000           ns/op
+GDXOrderedSet.bench:bench·p0.99    GDX_O_ORDERED      -1    1000  REMOVE_THEN_ADD  sample           33280.000           ns/op
+GDXOrderedSet.bench:bench·p0.999   GDX_O_ORDERED      -1    1000  REMOVE_THEN_ADD  sample           62246.080           ns/op
+GDXOrderedSet.bench:bench·p0.9999  GDX_O_ORDERED      -1    1000  REMOVE_THEN_ADD  sample           95042.432           ns/op
+GDXOrderedSet.bench:bench·p1.00    GDX_O_ORDERED      -1    1000  REMOVE_THEN_ADD  sample          150016.000           ns/op
+
+Benchmark                                 (impl)  (seed)  (size)       (workload)    Mode     Cnt       Score    Error  Units
+JDKGetPut.bench                JDKGDXDSX_INDEXED      -1    1000              ADD  sample  578518    8661.912 ±  3.532  ns/op
+JDKGetPut.bench:bench·p0.00    JDKGDXDSX_INDEXED      -1    1000              ADD  sample            8544.000           ns/op
+JDKGetPut.bench:bench·p0.50    JDKGDXDSX_INDEXED      -1    1000              ADD  sample            8624.000           ns/op
+JDKGetPut.bench:bench·p0.90    JDKGDXDSX_INDEXED      -1    1000              ADD  sample            8656.000           ns/op
+JDKGetPut.bench:bench·p0.95    JDKGDXDSX_INDEXED      -1    1000              ADD  sample            8672.000           ns/op
+JDKGetPut.bench:bench·p0.99    JDKGDXDSX_INDEXED      -1    1000              ADD  sample            8848.000           ns/op
+JDKGetPut.bench:bench·p0.999   JDKGDXDSX_INDEXED      -1    1000              ADD  sample           23168.000           ns/op
+JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_INDEXED      -1    1000              ADD  sample           37778.957           ns/op
+JDKGetPut.bench:bench·p1.00    JDKGDXDSX_INDEXED      -1    1000              ADD  sample          114304.000           ns/op
+JDKGetPut.bench                JDKGDXDSX_INDEXED      -1    1000           REMOVE  sample  423303    5948.116 ±  4.067  ns/op
+JDKGetPut.bench:bench·p0.00    JDKGDXDSX_INDEXED      -1    1000           REMOVE  sample            5880.000           ns/op
+JDKGetPut.bench:bench·p0.50    JDKGDXDSX_INDEXED      -1    1000           REMOVE  sample            5912.000           ns/op
+JDKGetPut.bench:bench·p0.90    JDKGDXDSX_INDEXED      -1    1000           REMOVE  sample            5920.000           ns/op
+JDKGetPut.bench:bench·p0.95    JDKGDXDSX_INDEXED      -1    1000           REMOVE  sample            5928.000           ns/op
+JDKGetPut.bench:bench·p0.99    JDKGDXDSX_INDEXED      -1    1000           REMOVE  sample            5944.000           ns/op
+JDKGetPut.bench:bench·p0.999   JDKGDXDSX_INDEXED      -1    1000           REMOVE  sample           23606.272           ns/op
+JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_INDEXED      -1    1000           REMOVE  sample           35456.000           ns/op
+JDKGetPut.bench:bench·p1.00    JDKGDXDSX_INDEXED      -1    1000           REMOVE  sample           97152.000           ns/op
+JDKGetPut.bench                JDKGDXDSX_INDEXED      -1    1000         CONTAINS  sample  440145    5725.947 ±  3.990  ns/op
+JDKGetPut.bench:bench·p0.00    JDKGDXDSX_INDEXED      -1    1000         CONTAINS  sample            5552.000           ns/op
+JDKGetPut.bench:bench·p0.50    JDKGDXDSX_INDEXED      -1    1000         CONTAINS  sample            5688.000           ns/op
+JDKGetPut.bench:bench·p0.90    JDKGDXDSX_INDEXED      -1    1000         CONTAINS  sample            5720.000           ns/op
+JDKGetPut.bench:bench·p0.95    JDKGDXDSX_INDEXED      -1    1000         CONTAINS  sample            5744.000           ns/op
+JDKGetPut.bench:bench·p0.99    JDKGDXDSX_INDEXED      -1    1000         CONTAINS  sample            5824.000           ns/op
+JDKGetPut.bench:bench·p0.999   JDKGDXDSX_INDEXED      -1    1000         CONTAINS  sample           23867.328           ns/op
+JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_INDEXED      -1    1000         CONTAINS  sample           32768.000           ns/op
+JDKGetPut.bench:bench·p1.00    JDKGDXDSX_INDEXED      -1    1000         CONTAINS  sample           80256.000           ns/op
+JDKGetPut.bench                JDKGDXDSX_INDEXED      -1    1000    ADD_OR_REMOVE  sample  302331   33086.713 ± 11.644  ns/op
+JDKGetPut.bench:bench·p0.00    JDKGDXDSX_INDEXED      -1    1000    ADD_OR_REMOVE  sample           31904.000           ns/op
+JDKGetPut.bench:bench·p0.50    JDKGDXDSX_INDEXED      -1    1000    ADD_OR_REMOVE  sample           32832.000           ns/op
+JDKGetPut.bench:bench·p0.90    JDKGDXDSX_INDEXED      -1    1000    ADD_OR_REMOVE  sample           34432.000           ns/op
+JDKGetPut.bench:bench·p0.95    JDKGDXDSX_INDEXED      -1    1000    ADD_OR_REMOVE  sample           34496.000           ns/op
+JDKGetPut.bench:bench·p0.99    JDKGDXDSX_INDEXED      -1    1000    ADD_OR_REMOVE  sample           35200.000           ns/op
+JDKGetPut.bench:bench·p0.999   JDKGDXDSX_INDEXED      -1    1000    ADD_OR_REMOVE  sample           65621.504           ns/op
+JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_INDEXED      -1    1000    ADD_OR_REMOVE  sample           94532.301           ns/op
+JDKGetPut.bench:bench·p1.00    JDKGDXDSX_INDEXED      -1    1000    ADD_OR_REMOVE  sample          142080.000           ns/op
+JDKGetPut.bench                JDKGDXDSX_INDEXED      -1    1000  ADD_THEN_REMOVE  sample  305219   32772.187 ± 10.628  ns/op
+JDKGetPut.bench:bench·p0.00    JDKGDXDSX_INDEXED      -1    1000  ADD_THEN_REMOVE  sample           31360.000           ns/op
+JDKGetPut.bench:bench·p0.50    JDKGDXDSX_INDEXED      -1    1000  ADD_THEN_REMOVE  sample           32768.000           ns/op
+JDKGetPut.bench:bench·p0.90    JDKGDXDSX_INDEXED      -1    1000  ADD_THEN_REMOVE  sample           33152.000           ns/op
+JDKGetPut.bench:bench·p0.95    JDKGDXDSX_INDEXED      -1    1000  ADD_THEN_REMOVE  sample           33280.000           ns/op
+JDKGetPut.bench:bench·p0.99    JDKGDXDSX_INDEXED      -1    1000  ADD_THEN_REMOVE  sample           33536.000           ns/op
+JDKGetPut.bench:bench·p0.999   JDKGDXDSX_INDEXED      -1    1000  ADD_THEN_REMOVE  sample           63232.000           ns/op
+JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_INDEXED      -1    1000  ADD_THEN_REMOVE  sample           92928.000           ns/op
+JDKGetPut.bench:bench·p1.00    JDKGDXDSX_INDEXED      -1    1000  ADD_THEN_REMOVE  sample          136704.000           ns/op
+JDKGetPut.bench                JDKGDXDSX_INDEXED      -1    1000  REMOVE_THEN_ADD  sample  300198   33316.855 ± 10.717  ns/op
+JDKGetPut.bench:bench·p0.00    JDKGDXDSX_INDEXED      -1    1000  REMOVE_THEN_ADD  sample           31904.000           ns/op
+JDKGetPut.bench:bench·p0.50    JDKGDXDSX_INDEXED      -1    1000  REMOVE_THEN_ADD  sample           33344.000           ns/op
+JDKGetPut.bench:bench·p0.90    JDKGDXDSX_INDEXED      -1    1000  REMOVE_THEN_ADD  sample           33728.000           ns/op
+JDKGetPut.bench:bench·p0.95    JDKGDXDSX_INDEXED      -1    1000  REMOVE_THEN_ADD  sample           33792.000           ns/op
+JDKGetPut.bench:bench·p0.99    JDKGDXDSX_INDEXED      -1    1000  REMOVE_THEN_ADD  sample           34432.000           ns/op
+JDKGetPut.bench:bench·p0.999   JDKGDXDSX_INDEXED      -1    1000  REMOVE_THEN_ADD  sample           63603.264           ns/op
+JDKGetPut.bench:bench·p0.9999  JDKGDXDSX_INDEXED      -1    1000  REMOVE_THEN_ADD  sample           94330.906           ns/op
+JDKGetPut.bench:bench·p1.00    JDKGDXDSX_INDEXED      -1    1000  REMOVE_THEN_ADD  sample          125184.000           ns/op
+
+Benchmark                              (impl)  (seed)  (size)       (workload)    Mode     Cnt        Score     Error  Units
+JDKGetPut.bench                JDK_LINKEDHASH      -1    1000              ADD  sample  539913     9283.845 ±   3.776  ns/op
+JDKGetPut.bench:bench·p0.00    JDK_LINKEDHASH      -1    1000              ADD  sample             8976.000            ns/op
+JDKGetPut.bench:bench·p0.50    JDK_LINKEDHASH      -1    1000              ADD  sample             9232.000            ns/op
+JDKGetPut.bench:bench·p0.90    JDK_LINKEDHASH      -1    1000              ADD  sample             9280.000            ns/op
+JDKGetPut.bench:bench·p0.95    JDK_LINKEDHASH      -1    1000              ADD  sample             9312.000            ns/op
+JDKGetPut.bench:bench·p0.99    JDK_LINKEDHASH      -1    1000              ADD  sample             9488.000            ns/op
+JDKGetPut.bench:bench·p0.999   JDK_LINKEDHASH      -1    1000              ADD  sample            25856.000            ns/op
+JDKGetPut.bench:bench·p0.9999  JDK_LINKEDHASH      -1    1000              ADD  sample            38528.550            ns/op
+JDKGetPut.bench:bench·p1.00    JDK_LINKEDHASH      -1    1000              ADD  sample            97920.000            ns/op
+JDKGetPut.bench                JDK_LINKEDHASH      -1    1000           REMOVE  sample  534235     4712.134 ±   3.128  ns/op
+JDKGetPut.bench:bench·p0.00    JDK_LINKEDHASH      -1    1000           REMOVE  sample             4656.000            ns/op
+JDKGetPut.bench:bench·p0.50    JDK_LINKEDHASH      -1    1000           REMOVE  sample             4680.000            ns/op
+JDKGetPut.bench:bench·p0.90    JDK_LINKEDHASH      -1    1000           REMOVE  sample             4696.000            ns/op
+JDKGetPut.bench:bench·p0.95    JDK_LINKEDHASH      -1    1000           REMOVE  sample             4696.000            ns/op
+JDKGetPut.bench:bench·p0.99    JDK_LINKEDHASH      -1    1000           REMOVE  sample             4800.000            ns/op
+JDKGetPut.bench:bench·p0.999   JDK_LINKEDHASH      -1    1000           REMOVE  sample             9916.224            ns/op
+JDKGetPut.bench:bench·p0.9999  JDK_LINKEDHASH      -1    1000           REMOVE  sample            31552.000            ns/op
+JDKGetPut.bench:bench·p1.00    JDK_LINKEDHASH      -1    1000           REMOVE  sample           111232.000            ns/op
+JDKGetPut.bench                JDK_LINKEDHASH      -1    1000         CONTAINS  sample  488310     5163.328 ±   3.708  ns/op
+JDKGetPut.bench:bench·p0.00    JDK_LINKEDHASH      -1    1000         CONTAINS  sample             4992.000            ns/op
+JDKGetPut.bench:bench·p0.50    JDK_LINKEDHASH      -1    1000         CONTAINS  sample             5128.000            ns/op
+JDKGetPut.bench:bench·p0.90    JDK_LINKEDHASH      -1    1000         CONTAINS  sample             5176.000            ns/op
+JDKGetPut.bench:bench·p0.95    JDK_LINKEDHASH      -1    1000         CONTAINS  sample             5184.000            ns/op
+JDKGetPut.bench:bench·p0.99    JDK_LINKEDHASH      -1    1000         CONTAINS  sample             5216.000            ns/op
+JDKGetPut.bench:bench·p0.999   JDK_LINKEDHASH      -1    1000         CONTAINS  sample            14187.024            ns/op
+JDKGetPut.bench:bench·p0.9999  JDK_LINKEDHASH      -1    1000         CONTAINS  sample            33685.619            ns/op
+JDKGetPut.bench:bench·p1.00    JDK_LINKEDHASH      -1    1000         CONTAINS  sample           107264.000            ns/op
+JDKGetPut.bench                JDK_LINKEDHASH      -1    1000    ADD_OR_REMOVE  sample  453926    11165.061 ±  79.392  ns/op
+JDKGetPut.bench:bench·p0.00    JDK_LINKEDHASH      -1    1000    ADD_OR_REMOVE  sample            10448.000            ns/op
+JDKGetPut.bench:bench·p0.50    JDK_LINKEDHASH      -1    1000    ADD_OR_REMOVE  sample            10816.000            ns/op
+JDKGetPut.bench:bench·p0.90    JDK_LINKEDHASH      -1    1000    ADD_OR_REMOVE  sample            10960.000            ns/op
+JDKGetPut.bench:bench·p0.95    JDK_LINKEDHASH      -1    1000    ADD_OR_REMOVE  sample            11040.000            ns/op
+JDKGetPut.bench:bench·p0.99    JDK_LINKEDHASH      -1    1000    ADD_OR_REMOVE  sample            11600.000            ns/op
+JDKGetPut.bench:bench·p0.999   JDK_LINKEDHASH      -1    1000    ADD_OR_REMOVE  sample            36612.672            ns/op
+JDKGetPut.bench:bench·p0.9999  JDK_LINKEDHASH      -1    1000    ADD_OR_REMOVE  sample          1095315.251            ns/op
+JDKGetPut.bench:bench·p1.00    JDK_LINKEDHASH      -1    1000    ADD_OR_REMOVE  sample          1425408.000            ns/op
+JDKGetPut.bench                JDK_LINKEDHASH      -1    1000  ADD_THEN_REMOVE  sample  316356    16112.065 ± 121.598  ns/op
+JDKGetPut.bench:bench·p0.00    JDK_LINKEDHASH      -1    1000  ADD_THEN_REMOVE  sample            15344.000            ns/op
+JDKGetPut.bench:bench·p0.50    JDK_LINKEDHASH      -1    1000  ADD_THEN_REMOVE  sample            15552.000            ns/op
+JDKGetPut.bench:bench·p0.90    JDK_LINKEDHASH      -1    1000  ADD_THEN_REMOVE  sample            15680.000            ns/op
+JDKGetPut.bench:bench·p0.95    JDK_LINKEDHASH      -1    1000  ADD_THEN_REMOVE  sample            15776.000            ns/op
+JDKGetPut.bench:bench·p0.99    JDK_LINKEDHASH      -1    1000  ADD_THEN_REMOVE  sample            17453.760            ns/op
+JDKGetPut.bench:bench·p0.999   JDK_LINKEDHASH      -1    1000  ADD_THEN_REMOVE  sample            55808.000            ns/op
+JDKGetPut.bench:bench·p0.9999  JDK_LINKEDHASH      -1    1000  ADD_THEN_REMOVE  sample          1162708.173            ns/op
+JDKGetPut.bench:bench·p1.00    JDK_LINKEDHASH      -1    1000  ADD_THEN_REMOVE  sample          1429504.000            ns/op
+JDKGetPut.bench                JDK_LINKEDHASH      -1    1000  REMOVE_THEN_ADD  sample  589775    16992.988 ±  63.792  ns/op
+JDKGetPut.bench:bench·p0.00    JDK_LINKEDHASH      -1    1000  REMOVE_THEN_ADD  sample            16448.000            ns/op
+JDKGetPut.bench:bench·p0.50    JDK_LINKEDHASH      -1    1000  REMOVE_THEN_ADD  sample            16672.000            ns/op
+JDKGetPut.bench:bench·p0.90    JDK_LINKEDHASH      -1    1000  REMOVE_THEN_ADD  sample            16768.000            ns/op
+JDKGetPut.bench:bench·p0.95    JDK_LINKEDHASH      -1    1000  REMOVE_THEN_ADD  sample            16864.000            ns/op
+JDKGetPut.bench:bench·p0.99    JDK_LINKEDHASH      -1    1000  REMOVE_THEN_ADD  sample            17344.000            ns/op
+JDKGetPut.bench:bench·p0.999   JDK_LINKEDHASH      -1    1000  REMOVE_THEN_ADD  sample            52160.000            ns/op
+JDKGetPut.bench:bench·p0.9999  JDK_LINKEDHASH      -1    1000  REMOVE_THEN_ADD  sample          1026093.875            ns/op
+JDKGetPut.bench:bench·p1.00    JDK_LINKEDHASH      -1    1000  REMOVE_THEN_ADD  sample          1357824.000            ns/op
+
+Benchmark                                (impl)  (seed)  (size)       (workload)    Mode     Cnt        Score     Error  Units
+JDKGetPut.bench                ATLANTIS_INDEXED      -1    1000              ADD  sample  454276     5554.126 ±   4.744  ns/op
+JDKGetPut.bench:bench·p0.00    ATLANTIS_INDEXED      -1    1000              ADD  sample             5448.000            ns/op
+JDKGetPut.bench:bench·p0.50    ATLANTIS_INDEXED      -1    1000              ADD  sample             5504.000            ns/op
+JDKGetPut.bench:bench·p0.90    ATLANTIS_INDEXED      -1    1000              ADD  sample             5536.000            ns/op
+JDKGetPut.bench:bench·p0.95    ATLANTIS_INDEXED      -1    1000              ADD  sample             5544.000            ns/op
+JDKGetPut.bench:bench·p0.99    ATLANTIS_INDEXED      -1    1000              ADD  sample             5640.000            ns/op
+JDKGetPut.bench:bench·p0.999   ATLANTIS_INDEXED      -1    1000              ADD  sample            24160.000            ns/op
+JDKGetPut.bench:bench·p0.9999  ATLANTIS_INDEXED      -1    1000              ADD  sample            35300.627            ns/op
+JDKGetPut.bench:bench·p1.00    ATLANTIS_INDEXED      -1    1000              ADD  sample           152576.000            ns/op
+JDKGetPut.bench                ATLANTIS_INDEXED      -1    1000           REMOVE  sample  675098     3729.857 ±   2.812  ns/op
+JDKGetPut.bench:bench·p0.00    ATLANTIS_INDEXED      -1    1000           REMOVE  sample             3684.000            ns/op
+JDKGetPut.bench:bench·p0.50    ATLANTIS_INDEXED      -1    1000           REMOVE  sample             3704.000            ns/op
+JDKGetPut.bench:bench·p0.90    ATLANTIS_INDEXED      -1    1000           REMOVE  sample             3716.000            ns/op
+JDKGetPut.bench:bench·p0.95    ATLANTIS_INDEXED      -1    1000           REMOVE  sample             3716.000            ns/op
+JDKGetPut.bench:bench·p0.99    ATLANTIS_INDEXED      -1    1000           REMOVE  sample             3784.000            ns/op
+JDKGetPut.bench:bench·p0.999   ATLANTIS_INDEXED      -1    1000           REMOVE  sample             8079.208            ns/op
+JDKGetPut.bench:bench·p0.9999  ATLANTIS_INDEXED      -1    1000           REMOVE  sample            30511.683            ns/op
+JDKGetPut.bench:bench·p1.00    ATLANTIS_INDEXED      -1    1000           REMOVE  sample           145920.000            ns/op
+JDKGetPut.bench                ATLANTIS_INDEXED      -1    1000         CONTAINS  sample  385111     6555.252 ±   4.420  ns/op
+JDKGetPut.bench:bench·p0.00    ATLANTIS_INDEXED      -1    1000         CONTAINS  sample             6400.000            ns/op
+JDKGetPut.bench:bench·p0.50    ATLANTIS_INDEXED      -1    1000         CONTAINS  sample             6512.000            ns/op
+JDKGetPut.bench:bench·p0.90    ATLANTIS_INDEXED      -1    1000         CONTAINS  sample             6552.000            ns/op
+JDKGetPut.bench:bench·p0.95    ATLANTIS_INDEXED      -1    1000         CONTAINS  sample             6560.000            ns/op
+JDKGetPut.bench:bench·p0.99    ATLANTIS_INDEXED      -1    1000         CONTAINS  sample             6664.000            ns/op
+JDKGetPut.bench:bench·p0.999   ATLANTIS_INDEXED      -1    1000         CONTAINS  sample            24672.000            ns/op
+JDKGetPut.bench:bench·p0.9999  ATLANTIS_INDEXED      -1    1000         CONTAINS  sample            34778.982            ns/op
+JDKGetPut.bench:bench·p1.00    ATLANTIS_INDEXED      -1    1000         CONTAINS  sample            90496.000            ns/op
+JDKGetPut.bench                ATLANTIS_INDEXED      -1    1000    ADD_OR_REMOVE  sample  290720    68697.668 ±  15.807  ns/op
+JDKGetPut.bench:bench·p0.00    ATLANTIS_INDEXED      -1    1000    ADD_OR_REMOVE  sample            67584.000            ns/op
+JDKGetPut.bench:bench·p0.50    ATLANTIS_INDEXED      -1    1000    ADD_OR_REMOVE  sample            68480.000            ns/op
+JDKGetPut.bench:bench·p0.90    ATLANTIS_INDEXED      -1    1000    ADD_OR_REMOVE  sample            68992.000            ns/op
+JDKGetPut.bench:bench·p0.95    ATLANTIS_INDEXED      -1    1000    ADD_OR_REMOVE  sample            69120.000            ns/op
+JDKGetPut.bench:bench·p0.99    ATLANTIS_INDEXED      -1    1000    ADD_OR_REMOVE  sample            70144.000            ns/op
+JDKGetPut.bench:bench·p0.999   ATLANTIS_INDEXED      -1    1000    ADD_OR_REMOVE  sample           113536.000            ns/op
+JDKGetPut.bench:bench·p0.9999  ATLANTIS_INDEXED      -1    1000    ADD_OR_REMOVE  sample           159213.542            ns/op
+JDKGetPut.bench:bench·p1.00    ATLANTIS_INDEXED      -1    1000    ADD_OR_REMOVE  sample           250624.000            ns/op
+JDKGetPut.bench                ATLANTIS_INDEXED      -1    1000  ADD_THEN_REMOVE  sample  288126    69312.312 ± 144.852  ns/op
+JDKGetPut.bench:bench·p0.00    ATLANTIS_INDEXED      -1    1000  ADD_THEN_REMOVE  sample            66944.000            ns/op
+JDKGetPut.bench:bench·p0.50    ATLANTIS_INDEXED      -1    1000  ADD_THEN_REMOVE  sample            68608.000            ns/op
+JDKGetPut.bench:bench·p0.90    ATLANTIS_INDEXED      -1    1000  ADD_THEN_REMOVE  sample            69120.000            ns/op
+JDKGetPut.bench:bench·p0.95    ATLANTIS_INDEXED      -1    1000  ADD_THEN_REMOVE  sample            69376.000            ns/op
+JDKGetPut.bench:bench·p0.99    ATLANTIS_INDEXED      -1    1000  ADD_THEN_REMOVE  sample            71424.000            ns/op
+JDKGetPut.bench:bench·p0.999   ATLANTIS_INDEXED      -1    1000  ADD_THEN_REMOVE  sample           143550.976            ns/op
+JDKGetPut.bench:bench·p0.9999  ATLANTIS_INDEXED      -1    1000  ADD_THEN_REMOVE  sample          1357310.362            ns/op
+JDKGetPut.bench:bench·p1.00    ATLANTIS_INDEXED      -1    1000  ADD_THEN_REMOVE  sample          1597440.000            ns/op
+JDKGetPut.bench                ATLANTIS_INDEXED      -1    1000  REMOVE_THEN_ADD  sample  293199    68114.223 ± 143.741  ns/op
+JDKGetPut.bench:bench·p0.00    ATLANTIS_INDEXED      -1    1000  REMOVE_THEN_ADD  sample            65920.000            ns/op
+JDKGetPut.bench:bench·p0.50    ATLANTIS_INDEXED      -1    1000  REMOVE_THEN_ADD  sample            67328.000            ns/op
+JDKGetPut.bench:bench·p0.90    ATLANTIS_INDEXED      -1    1000  REMOVE_THEN_ADD  sample            67840.000            ns/op
+JDKGetPut.bench:bench·p0.95    ATLANTIS_INDEXED      -1    1000  REMOVE_THEN_ADD  sample            68096.000            ns/op
+JDKGetPut.bench:bench·p0.99    ATLANTIS_INDEXED      -1    1000  REMOVE_THEN_ADD  sample            70016.000            ns/op
+JDKGetPut.bench:bench·p0.999   ATLANTIS_INDEXED      -1    1000  REMOVE_THEN_ADD  sample           158412.800            ns/op
+JDKGetPut.bench:bench·p0.9999  ATLANTIS_INDEXED      -1    1000  REMOVE_THEN_ADD  sample          1335296.000            ns/op
+JDKGetPut.bench:bench·p1.00    ATLANTIS_INDEXED      -1    1000  REMOVE_THEN_ADD  sample          1566720.000            ns/op

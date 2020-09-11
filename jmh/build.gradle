@@ -63,19 +63,14 @@ dependencies {
     implementation group: 'org.scala-lang', name: 'scala-library', version: '2.13.1'
 
     // transitively grabs libGDX 1.9.10:
-    implementation 'com.github.tommyettinger:merry-ds:dc9e1bceb6'
-    
-    // compile group: 'in.jlibs', name: 'jlibs-core', version:'2.2.1'
-    // compile group: 'de.heidelberg.pvs.diego', name: 'collections-online-adapter', version:'0.0.1-SNAPSHOT'
+    //implementation 'com.github.tommyettinger:merry-ds:dc9e1bceb6'
 
-    //implementation 'com.github.tommyettinger:simple-graphs:ef743fde62'
-    //implementation 'space.earlygrey:simple-graphs:6e671fabc2'
-    implementation 'space.earlygrey:simple-graphs:155a48e25d'
-    implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
-    //implementation 'com.github.tommyettinger:atlantis:5574642135' // release 0.0.1
+    implementation 'com.badlogicgames.gdx:gdx:1.9.11'
+
+    implementation 'com.github.tommyettinger:atlantis:5574642135' // release 0.0.1
     //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
-    implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
-    implementation 'com.github.tommyettinger:jdkgdxds:a34916ca8e'
+    //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
+    implementation 'com.github.tommyettinger:jdkgdxds:50b388afa3'
 
 
     testImplementation group: 'junit', name: 'junit', version:'4.12'
