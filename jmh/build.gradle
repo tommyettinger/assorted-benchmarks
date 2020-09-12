@@ -70,7 +70,7 @@ dependencies {
     implementation 'com.github.tommyettinger:atlantis:5574642135' // release 0.0.1
     //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
     //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
-    implementation 'com.github.tommyettinger:jdkgdxds:50b388afa3'
+    implementation 'com.github.tommyettinger:jdkgdxds:c3723f3596'
 
 
     testImplementation group: 'junit', name: 'junit', version:'4.12'
