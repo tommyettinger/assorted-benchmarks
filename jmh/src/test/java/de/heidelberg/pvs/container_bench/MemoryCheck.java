@@ -70,7 +70,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					com.github.tommyettinger.ds.x.ObjectSetX<String> set = new com.github.tommyettinger.ds.x.ObjectSetX<>(size);
+					ObjectSetX<String> set = new ObjectSetX<>(size);
 					set.addAll(words);
 					System.out.printf("JDKGDXDS ObjectSetX, %7d Strings:\n", size);
 					evaluate(set);
@@ -100,7 +100,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					com.github.tommyettinger.ds.x.OrderedSetX<String> set = new com.github.tommyettinger.ds.x.OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
+					OrderedSetX<String> set = new OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(words);
 					System.out.printf("JDKGDXDS OrderedSetX, %7d Strings:\n", size);
 					evaluate(set);
@@ -168,7 +168,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					com.github.tommyettinger.ds.x.ObjectSetX<Integer> set = new com.github.tommyettinger.ds.x.ObjectSetX<>(size);
+					ObjectSetX<Integer> set = new ObjectSetX<>(size);
 					set.addAll(numbers);
 					System.out.printf("JDKGDXDS ObjectSetX, %7d Integers:\n", size);
 					evaluate(set);
@@ -198,7 +198,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					com.github.tommyettinger.ds.x.OrderedSetX<Integer> set = new com.github.tommyettinger.ds.x.OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
+					OrderedSetX<Integer> set = new OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
 					System.out.printf("JDKGDXDS OrderedSetX, %7d Integers:\n", size);
 					evaluate(set);
@@ -272,7 +272,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					com.github.tommyettinger.ds.x.ObjectSetX<Long> set = new com.github.tommyettinger.ds.x.ObjectSetX<>(size);
+					ObjectSetX<Long> set = new ObjectSetX<>(size);
 					set.addAll(numbers);
 					System.out.printf("JDKGDXDS ObjectSetX, %7d Longs:\n", size);
 					evaluate(set);
@@ -302,7 +302,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					com.github.tommyettinger.ds.x.OrderedSetX<Long> set = new com.github.tommyettinger.ds.x.OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
+					OrderedSetX<Long> set = new OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
 					System.out.printf("JDKGDXDS OrderedSetX, %7d Longs:\n", size);
 					evaluate(set);

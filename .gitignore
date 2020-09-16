@@ -220,6 +220,7 @@ target/
 *.iml
 .idea/
 jmh/.idea/
+squid/.idea/
 
 .attach_pid*
 
@@ -233,9 +234,9 @@ jmh/.idea/
 jmh/.gradle/
 
 jmh/benchmarks.jar
+squid/benchmarks.jar
+
 *.*#
 
 **/out/
 **/generated/
-
-squid/benchmarks.jar
