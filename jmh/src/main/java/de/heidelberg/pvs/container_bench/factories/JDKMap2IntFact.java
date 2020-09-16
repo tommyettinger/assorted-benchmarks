@@ -3,8 +3,8 @@ package de.heidelberg.pvs.container_bench.factories;
 import com.github.tommyettinger.ds.IndexedMap;
 import com.github.tommyettinger.ds.ObjectMap;
 import com.github.tommyettinger.ds.OrderedMap;
-import com.github.tommyettinger.ds.x.ObjectMapX;
-import com.github.tommyettinger.ds.x.OrderedMapX;
+import de.heidelberg.pvs.container_bench.ObjectMapX;
+import de.heidelberg.pvs.container_bench.OrderedMapX;
 
 import java.util.Map;
 import java.util.function.Supplier;

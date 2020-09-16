@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public enum GDXOrderedSetFact {
-	GDX_O_ORDERED(OrderedSet::new, OrderedSet::new),
+	GDX_O_ORDERED(() -> new OrderedSet<>(16, LoadFactor.LOAD_FACTOR), OrderedSet::new),
 	;
 
 	public final Supplier<OrderedSet<?>> maker;

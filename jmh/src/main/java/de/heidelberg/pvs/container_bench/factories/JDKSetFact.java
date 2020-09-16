@@ -1,8 +1,8 @@
 package de.heidelberg.pvs.container_bench.factories;
 
 import com.github.tommyettinger.ds.*;
-import com.github.tommyettinger.ds.x.ObjectSetX;
-import com.github.tommyettinger.ds.x.OrderedSetX;
+import de.heidelberg.pvs.container_bench.ObjectSetX;
+import de.heidelberg.pvs.container_bench.OrderedSetX;
 
 import java.util.Set;
 import java.util.function.Supplier;

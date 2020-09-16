@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public enum GDXSetFact {
-	GDX_O_HASH(ObjectSet::new, ObjectSet::new),
+	GDX_O_HASH(() -> new ObjectSet<>(16, LoadFactor.LOAD_FACTOR), ObjectSet::new),
 	;
 
 	public final Supplier<ObjectSet<?>> maker;
