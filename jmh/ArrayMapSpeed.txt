@@ -1,0 +1,273 @@
+Benchmark                                                    (impl)  (seed)   (size)  (workload)    Mode     Cnt             Score            Error  Units
+GDXArrayGetPut.wordcount                              GDX_O2O_ARRAY      -1       10   WORDCOUNT  sample  504350           188.780 ±         11.837  ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.00              GDX_O2O_ARRAY      -1       10   WORDCOUNT  sample                   163.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.50              GDX_O2O_ARRAY      -1       10   WORDCOUNT  sample                   167.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.90              GDX_O2O_ARRAY      -1       10   WORDCOUNT  sample                   169.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.95              GDX_O2O_ARRAY      -1       10   WORDCOUNT  sample                   172.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.99              GDX_O2O_ARRAY      -1       10   WORDCOUNT  sample                   193.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.999             GDX_O2O_ARRAY      -1       10   WORDCOUNT  sample                  1369.298                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.9999            GDX_O2O_ARRAY      -1       10   WORDCOUNT  sample                 21984.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p1.00              GDX_O2O_ARRAY      -1       10   WORDCOUNT  sample               1144832.000                   ns/op
+GDXArrayGetPut.wordcount                              GDX_O2O_ARRAY      -1      100   WORDCOUNT  sample  407284          6299.355 ±         71.114  ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.00              GDX_O2O_ARRAY      -1      100   WORDCOUNT  sample                  5960.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.50              GDX_O2O_ARRAY      -1      100   WORDCOUNT  sample                  6064.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.90              GDX_O2O_ARRAY      -1      100   WORDCOUNT  sample                  6112.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.95              GDX_O2O_ARRAY      -1      100   WORDCOUNT  sample                  6136.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.99              GDX_O2O_ARRAY      -1      100   WORDCOUNT  sample                  6304.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.999             GDX_O2O_ARRAY      -1      100   WORDCOUNT  sample                 27840.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.9999            GDX_O2O_ARRAY      -1      100   WORDCOUNT  sample               1018500.096                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p1.00              GDX_O2O_ARRAY      -1      100   WORDCOUNT  sample               1419264.000                   ns/op
+GDXArrayGetPut.wordcount                              GDX_O2O_ARRAY      -1     1000   WORDCOUNT  sample   28836        693088.058 ±        726.005  ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.00              GDX_O2O_ARRAY      -1     1000   WORDCOUNT  sample                683008.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.50              GDX_O2O_ARRAY      -1     1000   WORDCOUNT  sample                691200.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.90              GDX_O2O_ARRAY      -1     1000   WORDCOUNT  sample                694272.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.95              GDX_O2O_ARRAY      -1     1000   WORDCOUNT  sample                695296.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.99              GDX_O2O_ARRAY      -1     1000   WORDCOUNT  sample                737280.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.999             GDX_O2O_ARRAY      -1     1000   WORDCOUNT  sample               1073485.824                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.9999            GDX_O2O_ARRAY      -1     1000   WORDCOUNT  sample               2486972.826                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p1.00              GDX_O2O_ARRAY      -1     1000   WORDCOUNT  sample               4136960.000                   ns/op
+GDXArrayGetPut.wordcount                              GDX_O2O_ARRAY      -1    10000   WORDCOUNT  sample     230      87876367.583 ±     179292.687  ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.00              GDX_O2O_ARRAY      -1    10000   WORDCOUNT  sample              87162880.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.50              GDX_O2O_ARRAY      -1    10000   WORDCOUNT  sample              87818240.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.90              GDX_O2O_ARRAY      -1    10000   WORDCOUNT  sample              88198348.800                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.95              GDX_O2O_ARRAY      -1    10000   WORDCOUNT  sample              88342528.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.99              GDX_O2O_ARRAY      -1    10000   WORDCOUNT  sample              92455567.360                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.999             GDX_O2O_ARRAY      -1    10000   WORDCOUNT  sample              93323264.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.9999            GDX_O2O_ARRAY      -1    10000   WORDCOUNT  sample              93323264.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p1.00              GDX_O2O_ARRAY      -1    10000   WORDCOUNT  sample              93323264.000                   ns/op
+GDXArrayGetPut.wordcount                              GDX_O2O_ARRAY      -1   100000   WORDCOUNT  sample       5    8400352051.200 ±   28891377.891  ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.00              GDX_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8388608000.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.50              GDX_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8405385216.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.90              GDX_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8405385216.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.95              GDX_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8405385216.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.99              GDX_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8405385216.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.999             GDX_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8405385216.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.9999            GDX_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8405385216.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p1.00              GDX_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8405385216.000                   ns/op
+GDXArrayGetPut.wordcount                              GDX_O2O_ARRAY      -1  1000000   WORDCOUNT  sample       5  313854735155.200 ± 1132306140.789  ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.00              GDX_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          313532612608.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.50              GDX_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          314069483520.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.90              GDX_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          314069483520.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.95              GDX_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          314069483520.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.99              GDX_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          314069483520.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.999             GDX_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          314069483520.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.9999            GDX_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          314069483520.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p1.00              GDX_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          314069483520.000                   ns/op
+GDXArrayGetPut.wordcount                    GDX_O2O_ARRAY_UNORDERED      -1       10   WORDCOUNT  sample  509142           193.760 ±         16.316  ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.00    GDX_O2O_ARRAY_UNORDERED      -1       10   WORDCOUNT  sample                   162.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.50    GDX_O2O_ARRAY_UNORDERED      -1       10   WORDCOUNT  sample                   166.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.90    GDX_O2O_ARRAY_UNORDERED      -1       10   WORDCOUNT  sample                   167.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.95    GDX_O2O_ARRAY_UNORDERED      -1       10   WORDCOUNT  sample                   170.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.99    GDX_O2O_ARRAY_UNORDERED      -1       10   WORDCOUNT  sample                   188.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.999   GDX_O2O_ARRAY_UNORDERED      -1       10   WORDCOUNT  sample                  1474.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.9999  GDX_O2O_ARRAY_UNORDERED      -1       10   WORDCOUNT  sample                 24170.970                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p1.00    GDX_O2O_ARRAY_UNORDERED      -1       10   WORDCOUNT  sample               1427456.000                   ns/op
+GDXArrayGetPut.wordcount                    GDX_O2O_ARRAY_UNORDERED      -1      100   WORDCOUNT  sample  436834          5882.314 ±         69.676  ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.00    GDX_O2O_ARRAY_UNORDERED      -1      100   WORDCOUNT  sample                  5520.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.50    GDX_O2O_ARRAY_UNORDERED      -1      100   WORDCOUNT  sample                  5656.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.90    GDX_O2O_ARRAY_UNORDERED      -1      100   WORDCOUNT  sample                  5696.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.95    GDX_O2O_ARRAY_UNORDERED      -1      100   WORDCOUNT  sample                  5720.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.99    GDX_O2O_ARRAY_UNORDERED      -1      100   WORDCOUNT  sample                  5856.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.999   GDX_O2O_ARRAY_UNORDERED      -1      100   WORDCOUNT  sample                 27365.280                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.9999  GDX_O2O_ARRAY_UNORDERED      -1      100   WORDCOUNT  sample               1021952.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p1.00    GDX_O2O_ARRAY_UNORDERED      -1      100   WORDCOUNT  sample               1433600.000                   ns/op
+GDXArrayGetPut.wordcount                    GDX_O2O_ARRAY_UNORDERED      -1     1000   WORDCOUNT  sample   28240        707718.817 ±        750.162  ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.00    GDX_O2O_ARRAY_UNORDERED      -1     1000   WORDCOUNT  sample                697344.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.50    GDX_O2O_ARRAY_UNORDERED      -1     1000   WORDCOUNT  sample                705536.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.90    GDX_O2O_ARRAY_UNORDERED      -1     1000   WORDCOUNT  sample                708608.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.95    GDX_O2O_ARRAY_UNORDERED      -1     1000   WORDCOUNT  sample                709632.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.99    GDX_O2O_ARRAY_UNORDERED      -1     1000   WORDCOUNT  sample                752640.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.999   GDX_O2O_ARRAY_UNORDERED      -1     1000   WORDCOUNT  sample               1167433.728                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.9999  GDX_O2O_ARRAY_UNORDERED      -1     1000   WORDCOUNT  sample               2565383.373                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p1.00    GDX_O2O_ARRAY_UNORDERED      -1     1000   WORDCOUNT  sample               4018176.000                   ns/op
+GDXArrayGetPut.wordcount                    GDX_O2O_ARRAY_UNORDERED      -1    10000   WORDCOUNT  sample     227      88887025.339 ±     156192.732  ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.00    GDX_O2O_ARRAY_UNORDERED      -1    10000   WORDCOUNT  sample              88211456.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.50    GDX_O2O_ARRAY_UNORDERED      -1    10000   WORDCOUNT  sample              88866816.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.90    GDX_O2O_ARRAY_UNORDERED      -1    10000   WORDCOUNT  sample              89128960.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.95    GDX_O2O_ARRAY_UNORDERED      -1    10000   WORDCOUNT  sample              89260032.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.99    GDX_O2O_ARRAY_UNORDERED      -1    10000   WORDCOUNT  sample              93024419.840                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.999   GDX_O2O_ARRAY_UNORDERED      -1    10000   WORDCOUNT  sample              93061120.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.9999  GDX_O2O_ARRAY_UNORDERED      -1    10000   WORDCOUNT  sample              93061120.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p1.00    GDX_O2O_ARRAY_UNORDERED      -1    10000   WORDCOUNT  sample              93061120.000                   ns/op
+GDXArrayGetPut.wordcount                    GDX_O2O_ARRAY_UNORDERED      -1   100000   WORDCOUNT  sample       5    8185603686.400 ±   57782755.782  ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.00    GDX_O2O_ARRAY_UNORDERED      -1   100000   WORDCOUNT  sample            8178892800.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.50    GDX_O2O_ARRAY_UNORDERED      -1   100000   WORDCOUNT  sample            8178892800.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.90    GDX_O2O_ARRAY_UNORDERED      -1   100000   WORDCOUNT  sample            8212447232.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.95    GDX_O2O_ARRAY_UNORDERED      -1   100000   WORDCOUNT  sample            8212447232.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.99    GDX_O2O_ARRAY_UNORDERED      -1   100000   WORDCOUNT  sample            8212447232.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.999   GDX_O2O_ARRAY_UNORDERED      -1   100000   WORDCOUNT  sample            8212447232.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.9999  GDX_O2O_ARRAY_UNORDERED      -1   100000   WORDCOUNT  sample            8212447232.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p1.00    GDX_O2O_ARRAY_UNORDERED      -1   100000   WORDCOUNT  sample            8212447232.000                   ns/op
+GDXArrayGetPut.wordcount                    GDX_O2O_ARRAY_UNORDERED      -1  1000000   WORDCOUNT  sample       5  303976310374.400 ± 2264612281.579  ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.00    GDX_O2O_ARRAY_UNORDERED      -1  1000000   WORDCOUNT  sample          303332065280.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.50    GDX_O2O_ARRAY_UNORDERED      -1  1000000   WORDCOUNT  sample          303868936192.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.90    GDX_O2O_ARRAY_UNORDERED      -1  1000000   WORDCOUNT  sample          304942678016.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.95    GDX_O2O_ARRAY_UNORDERED      -1  1000000   WORDCOUNT  sample          304942678016.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.99    GDX_O2O_ARRAY_UNORDERED      -1  1000000   WORDCOUNT  sample          304942678016.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.999   GDX_O2O_ARRAY_UNORDERED      -1  1000000   WORDCOUNT  sample          304942678016.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p0.9999  GDX_O2O_ARRAY_UNORDERED      -1  1000000   WORDCOUNT  sample          304942678016.000                   ns/op
+GDXArrayGetPut.wordcount:wordcount·p1.00    GDX_O2O_ARRAY_UNORDERED      -1  1000000   WORDCOUNT  sample          304942678016.000                   ns/op
+
+Benchmark                                                 (impl)  (seed)   (size)  (workload)    Mode     Cnt             Score            Error  Units
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_ARRAY      -1       10   WORDCOUNT  sample  760225           243.432 ±         12.222  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_ARRAY      -1       10   WORDCOUNT  sample                   210.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_ARRAY      -1       10   WORDCOUNT  sample                   224.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_ARRAY      -1       10   WORDCOUNT  sample                   228.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_ARRAY      -1       10   WORDCOUNT  sample                   229.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_ARRAY      -1       10   WORDCOUNT  sample                   242.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_ARRAY      -1       10   WORDCOUNT  sample                  1467.548                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_ARRAY      -1       10   WORDCOUNT  sample                 21918.554                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_ARRAY      -1       10   WORDCOUNT  sample               2113536.000                   ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_ARRAY      -1      100   WORDCOUNT  sample  669934          7513.342 ±         45.718  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_ARRAY      -1      100   WORDCOUNT  sample                  7248.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_ARRAY      -1      100   WORDCOUNT  sample                  7352.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_ARRAY      -1      100   WORDCOUNT  sample                  7400.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_ARRAY      -1      100   WORDCOUNT  sample                  7408.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_ARRAY      -1      100   WORDCOUNT  sample                  7552.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_ARRAY      -1      100   WORDCOUNT  sample                 26626.080                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_ARRAY      -1      100   WORDCOUNT  sample                878598.656                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_ARRAY      -1      100   WORDCOUNT  sample               1488896.000                   ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_ARRAY      -1     1000   WORDCOUNT  sample   28186        709113.897 ±        661.386  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_ARRAY      -1     1000   WORDCOUNT  sample                700416.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_ARRAY      -1     1000   WORDCOUNT  sample                706560.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_ARRAY      -1     1000   WORDCOUNT  sample                708608.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_ARRAY      -1     1000   WORDCOUNT  sample                710656.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_ARRAY      -1     1000   WORDCOUNT  sample                754821.120                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_ARRAY      -1     1000   WORDCOUNT  sample               1072386.048                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_ARRAY      -1     1000   WORDCOUNT  sample               2213997.773                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_ARRAY      -1     1000   WORDCOUNT  sample               3764224.000                   ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_ARRAY      -1    10000   WORDCOUNT  sample     245      82116340.506 ±     186142.800  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_ARRAY      -1    10000   WORDCOUNT  sample              81657856.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_ARRAY      -1    10000   WORDCOUNT  sample              81920000.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_ARRAY      -1    10000   WORDCOUNT  sample              82313216.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_ARRAY      -1    10000   WORDCOUNT  sample              83361792.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_ARRAY      -1    10000   WORDCOUNT  sample              88041062.400                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_ARRAY      -1    10000   WORDCOUNT  sample              88473600.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_ARRAY      -1    10000   WORDCOUNT  sample              88473600.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_ARRAY      -1    10000   WORDCOUNT  sample              88473600.000                   ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_ARRAY      -1   100000   WORDCOUNT  sample       5    6836715520.000 ±          0.001  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_ARRAY      -1   100000   WORDCOUNT  sample            6836715520.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_ARRAY      -1   100000   WORDCOUNT  sample            6836715520.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_ARRAY      -1   100000   WORDCOUNT  sample            6836715520.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_ARRAY      -1   100000   WORDCOUNT  sample            6836715520.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_ARRAY      -1   100000   WORDCOUNT  sample            6836715520.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_ARRAY      -1   100000   WORDCOUNT  sample            6836715520.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_ARRAY      -1   100000   WORDCOUNT  sample            6836715520.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_ARRAY      -1   100000   WORDCOUNT  sample            6836715520.000                   ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_ARRAY      -1  1000000   WORDCOUNT  sample       5  161114960691.200 ±  462262046.259  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          161061273600.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          161061273600.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          161329709056.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          161329709056.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          161329709056.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          161329709056.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          161329709056.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          161329709056.000                   ns/op
+MutableJDKGetPut.wordcount                      GOOGLE_O2O_ARRAY      -1       10   WORDCOUNT  sample  760015           240.425 ±          9.914  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      GOOGLE_O2O_ARRAY      -1       10   WORDCOUNT  sample                   210.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      GOOGLE_O2O_ARRAY      -1       10   WORDCOUNT  sample                   224.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      GOOGLE_O2O_ARRAY      -1       10   WORDCOUNT  sample                   230.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      GOOGLE_O2O_ARRAY      -1       10   WORDCOUNT  sample                   234.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      GOOGLE_O2O_ARRAY      -1       10   WORDCOUNT  sample                   244.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     GOOGLE_O2O_ARRAY      -1       10   WORDCOUNT  sample                  1246.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    GOOGLE_O2O_ARRAY      -1       10   WORDCOUNT  sample                 21760.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      GOOGLE_O2O_ARRAY      -1       10   WORDCOUNT  sample               1587200.000                   ns/op
+MutableJDKGetPut.wordcount                      GOOGLE_O2O_ARRAY      -1      100   WORDCOUNT  sample  484084          5288.195 ±         60.583  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      GOOGLE_O2O_ARRAY      -1      100   WORDCOUNT  sample                  4944.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      GOOGLE_O2O_ARRAY      -1      100   WORDCOUNT  sample                  5080.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      GOOGLE_O2O_ARRAY      -1      100   WORDCOUNT  sample                  5136.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      GOOGLE_O2O_ARRAY      -1      100   WORDCOUNT  sample                  5216.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      GOOGLE_O2O_ARRAY      -1      100   WORDCOUNT  sample                  5632.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     GOOGLE_O2O_ARRAY      -1      100   WORDCOUNT  sample                 26656.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    GOOGLE_O2O_ARRAY      -1      100   WORDCOUNT  sample                972381.696                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      GOOGLE_O2O_ARRAY      -1      100   WORDCOUNT  sample               2285568.000                   ns/op
+MutableJDKGetPut.wordcount                      GOOGLE_O2O_ARRAY      -1     1000   WORDCOUNT  sample   31231        639881.931 ±        640.771  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      GOOGLE_O2O_ARRAY      -1     1000   WORDCOUNT  sample                630784.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      GOOGLE_O2O_ARRAY      -1     1000   WORDCOUNT  sample                637952.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      GOOGLE_O2O_ARRAY      -1     1000   WORDCOUNT  sample                641024.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      GOOGLE_O2O_ARRAY      -1     1000   WORDCOUNT  sample                643072.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      GOOGLE_O2O_ARRAY      -1     1000   WORDCOUNT  sample                680960.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     GOOGLE_O2O_ARRAY      -1     1000   WORDCOUNT  sample                930652.160                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    GOOGLE_O2O_ARRAY      -1     1000   WORDCOUNT  sample               2211335.373                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      GOOGLE_O2O_ARRAY      -1     1000   WORDCOUNT  sample               2330624.000                   ns/op
+MutableJDKGetPut.wordcount                      GOOGLE_O2O_ARRAY      -1    10000   WORDCOUNT  sample     220      91670565.236 ±     189295.038  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      GOOGLE_O2O_ARRAY      -1    10000   WORDCOUNT  sample              90832896.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      GOOGLE_O2O_ARRAY      -1    10000   WORDCOUNT  sample              91488256.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      GOOGLE_O2O_ARRAY      -1    10000   WORDCOUNT  sample              91881472.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      GOOGLE_O2O_ARRAY      -1    10000   WORDCOUNT  sample              92143616.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      GOOGLE_O2O_ARRAY      -1    10000   WORDCOUNT  sample              96337920.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     GOOGLE_O2O_ARRAY      -1    10000   WORDCOUNT  sample              98697216.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    GOOGLE_O2O_ARRAY      -1    10000   WORDCOUNT  sample              98697216.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      GOOGLE_O2O_ARRAY      -1    10000   WORDCOUNT  sample              98697216.000                   ns/op
+MutableJDKGetPut.wordcount                      GOOGLE_O2O_ARRAY      -1   100000   WORDCOUNT  sample       5    8797972070.400 ±   57782755.782  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      GOOGLE_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8791261184.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      GOOGLE_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8791261184.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      GOOGLE_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8824815616.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      GOOGLE_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8824815616.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      GOOGLE_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8824815616.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     GOOGLE_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8824815616.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    GOOGLE_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8824815616.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      GOOGLE_O2O_ARRAY      -1   100000   WORDCOUNT  sample            8824815616.000                   ns/op
+MutableJDKGetPut.wordcount                      GOOGLE_O2O_ARRAY      -1  1000000   WORDCOUNT  sample       5  375594890035.200 ± 4286841861.953  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      GOOGLE_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          374199025664.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      GOOGLE_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          375809638400.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      GOOGLE_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          376883380224.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      GOOGLE_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          376883380224.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      GOOGLE_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          376883380224.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     GOOGLE_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          376883380224.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    GOOGLE_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          376883380224.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      GOOGLE_O2O_ARRAY      -1  1000000   WORDCOUNT  sample          376883380224.000                   ns/op
+MutableJDKGetPut.wordcount                         CORENLP_ARRAY      -1       10   WORDCOUNT  sample  475137           208.501 ±         17.216  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         CORENLP_ARRAY      -1       10   WORDCOUNT  sample                   172.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         CORENLP_ARRAY      -1       10   WORDCOUNT  sample                   182.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         CORENLP_ARRAY      -1       10   WORDCOUNT  sample                   194.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         CORENLP_ARRAY      -1       10   WORDCOUNT  sample                   197.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         CORENLP_ARRAY      -1       10   WORDCOUNT  sample                   224.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        CORENLP_ARRAY      -1       10   WORDCOUNT  sample                  1399.448                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       CORENLP_ARRAY      -1       10   WORDCOUNT  sample                 21951.117                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         CORENLP_ARRAY      -1       10   WORDCOUNT  sample               1241088.000                   ns/op
+MutableJDKGetPut.wordcount                         CORENLP_ARRAY      -1      100   WORDCOUNT  sample  441597          5819.835 ±         68.440  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         CORENLP_ARRAY      -1      100   WORDCOUNT  sample                  5448.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         CORENLP_ARRAY      -1      100   WORDCOUNT  sample                  5584.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         CORENLP_ARRAY      -1      100   WORDCOUNT  sample                  5640.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         CORENLP_ARRAY      -1      100   WORDCOUNT  sample                  5664.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         CORENLP_ARRAY      -1      100   WORDCOUNT  sample                  5808.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        CORENLP_ARRAY      -1      100   WORDCOUNT  sample                 27456.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       CORENLP_ARRAY      -1      100   WORDCOUNT  sample               1012123.648                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         CORENLP_ARRAY      -1      100   WORDCOUNT  sample               1443840.000                   ns/op
+MutableJDKGetPut.wordcount                         CORENLP_ARRAY      -1     1000   WORDCOUNT  sample   27884        716743.225 ±        840.296  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         CORENLP_ARRAY      -1     1000   WORDCOUNT  sample                703488.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         CORENLP_ARRAY      -1     1000   WORDCOUNT  sample                712704.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         CORENLP_ARRAY      -1     1000   WORDCOUNT  sample                721920.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         CORENLP_ARRAY      -1     1000   WORDCOUNT  sample                728064.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         CORENLP_ARRAY      -1     1000   WORDCOUNT  sample                758784.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        CORENLP_ARRAY      -1     1000   WORDCOUNT  sample               1327810.560                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       CORENLP_ARRAY      -1     1000   WORDCOUNT  sample               2355435.520                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         CORENLP_ARRAY      -1     1000   WORDCOUNT  sample               2424832.000                   ns/op
+MutableJDKGetPut.wordcount                         CORENLP_ARRAY      -1    10000   WORDCOUNT  sample     170     120004897.129 ±     383563.393  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         CORENLP_ARRAY      -1    10000   WORDCOUNT  sample             118489088.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         CORENLP_ARRAY      -1    10000   WORDCOUNT  sample             119668736.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         CORENLP_ARRAY      -1    10000   WORDCOUNT  sample             120704204.800                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         CORENLP_ARRAY      -1    10000   WORDCOUNT  sample             123266662.400                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         CORENLP_ARRAY      -1    10000   WORDCOUNT  sample             128226426.880                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        CORENLP_ARRAY      -1    10000   WORDCOUNT  sample             128319488.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       CORENLP_ARRAY      -1    10000   WORDCOUNT  sample             128319488.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         CORENLP_ARRAY      -1    10000   WORDCOUNT  sample             128319488.000                   ns/op
+MutableJDKGetPut.wordcount                         CORENLP_ARRAY      -1   100000   WORDCOUNT  sample       5    9747562496.000 ±  120861304.965  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         CORENLP_ARRAY      -1   100000   WORDCOUNT  sample            9697230848.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         CORENLP_ARRAY      -1   100000   WORDCOUNT  sample            9747562496.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         CORENLP_ARRAY      -1   100000   WORDCOUNT  sample            9781116928.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         CORENLP_ARRAY      -1   100000   WORDCOUNT  sample            9781116928.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         CORENLP_ARRAY      -1   100000   WORDCOUNT  sample            9781116928.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        CORENLP_ARRAY      -1   100000   WORDCOUNT  sample            9781116928.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       CORENLP_ARRAY      -1   100000   WORDCOUNT  sample            9781116928.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         CORENLP_ARRAY      -1   100000   WORDCOUNT  sample            9781116928.000                   ns/op
+MutableJDKGetPut.wordcount                         CORENLP_ARRAY      -1  1000000   WORDCOUNT  sample       5  531716951244.800 ± 9428332777.072  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         CORENLP_ARRAY      -1  1000000   WORDCOUNT  sample          529354719232.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         CORENLP_ARRAY      -1  1000000   WORDCOUNT  sample          530965331968.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         CORENLP_ARRAY      -1  1000000   WORDCOUNT  sample          535260299264.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         CORENLP_ARRAY      -1  1000000   WORDCOUNT  sample          535260299264.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         CORENLP_ARRAY      -1  1000000   WORDCOUNT  sample          535260299264.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        CORENLP_ARRAY      -1  1000000   WORDCOUNT  sample          535260299264.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       CORENLP_ARRAY      -1  1000000   WORDCOUNT  sample          535260299264.000                   ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         CORENLP_ARRAY      -1  1000000   WORDCOUNT  sample          535260299264.000                   ns/op

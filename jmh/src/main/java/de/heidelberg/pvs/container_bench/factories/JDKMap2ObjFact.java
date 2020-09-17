@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 
 public enum JDKMap2ObjFact {
 	
-
+//FASTUTIL_O2O_ARRAY,GOOGLE_O2O_ARRAY,CORENLP_ARRAY
 	JDK_O2O_HASH(() -> new java.util.HashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_O2O_LINKEDHASH(() -> new java.util.LinkedHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_O2O_TREE(() -> new java.util.TreeMap<>()), //
