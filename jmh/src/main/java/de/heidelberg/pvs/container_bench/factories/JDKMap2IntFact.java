@@ -4,7 +4,9 @@ import com.github.tommyettinger.ds.IndexedMap;
 import com.github.tommyettinger.ds.ObjectMap;
 import com.github.tommyettinger.ds.OrderedMap;
 import de.heidelberg.pvs.container_bench.ObjectMapX;
+import de.heidelberg.pvs.container_bench.ObjectMapY;
 import de.heidelberg.pvs.container_bench.OrderedMapX;
+import de.heidelberg.pvs.container_bench.OrderedMapY;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -57,6 +59,9 @@ public enum JDKMap2IntFact {
 
 	JDKGDXDSX_HASH(() -> new ObjectMapX<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSX_INDEXED(() -> new OrderedMapX<>(16, LoadFactor.LOAD_FACTOR)),
+
+	JDKGDXDSY_HASH(() -> new ObjectMapY<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSY_INDEXED(() -> new OrderedMapY<>(16, LoadFactor.LOAD_FACTOR)),
 
 	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000),
 	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000)

@@ -1,7 +1,6 @@
 package de.heidelberg.pvs.container_bench.benchmarks.wordcount;
 
 import com.badlogic.gdx.utils.ObjectMap;
-import de.heidelberg.pvs.container_bench.factories.GDXMapFact;
 import de.heidelberg.pvs.container_bench.factories.GDXXMapFact;
 import org.openjdk.jmh.annotations.Param;
 
