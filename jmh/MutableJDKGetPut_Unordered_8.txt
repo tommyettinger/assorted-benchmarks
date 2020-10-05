@@ -1,0 +1,487 @@
+Benchmark                                                (impl)  (seed)   (size)  (workload)    Mode     Cnt         Score        Error  Units
+MutableJDKGetPut.wordcount                         JDK_O2O_HASH      -1       10   WORDCOUNT  sample  675517       150.885 ±     11.845  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         JDK_O2O_HASH      -1       10   WORDCOUNT  sample               121.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         JDK_O2O_HASH      -1       10   WORDCOUNT  sample               129.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         JDK_O2O_HASH      -1       10   WORDCOUNT  sample               147.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         JDK_O2O_HASH      -1       10   WORDCOUNT  sample               152.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         JDK_O2O_HASH      -1       10   WORDCOUNT  sample               183.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        JDK_O2O_HASH      -1       10   WORDCOUNT  sample              1246.964               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       JDK_O2O_HASH      -1       10   WORDCOUNT  sample             21212.685               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         JDK_O2O_HASH      -1       10   WORDCOUNT  sample           1306624.000               ns/op
+MutableJDKGetPut.wordcount                         JDK_O2O_HASH      -1      100   WORDCOUNT  sample  495751      1383.992 ±     44.569  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         JDK_O2O_HASH      -1      100   WORDCOUNT  sample              1210.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         JDK_O2O_HASH      -1      100   WORDCOUNT  sample              1252.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         JDK_O2O_HASH      -1      100   WORDCOUNT  sample              1288.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         JDK_O2O_HASH      -1      100   WORDCOUNT  sample              1312.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         JDK_O2O_HASH      -1      100   WORDCOUNT  sample              1708.960               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        JDK_O2O_HASH      -1      100   WORDCOUNT  sample             19143.936               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       JDK_O2O_HASH      -1      100   WORDCOUNT  sample             33553.562               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         JDK_O2O_HASH      -1      100   WORDCOUNT  sample           1320960.000               ns/op
+MutableJDKGetPut.wordcount                         JDK_O2O_HASH      -1     1000   WORDCOUNT  sample  372982     13678.818 ±    111.054  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         JDK_O2O_HASH      -1     1000   WORDCOUNT  sample             12624.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         JDK_O2O_HASH      -1     1000   WORDCOUNT  sample             13104.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         JDK_O2O_HASH      -1     1000   WORDCOUNT  sample             13360.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         JDK_O2O_HASH      -1     1000   WORDCOUNT  sample             13488.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         JDK_O2O_HASH      -1     1000   WORDCOUNT  sample             18592.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        JDK_O2O_HASH      -1     1000   WORDCOUNT  sample             55233.088               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       JDK_O2O_HASH      -1     1000   WORDCOUNT  sample           1271197.082               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         JDK_O2O_HASH      -1     1000   WORDCOUNT  sample           1570816.000               ns/op
+MutableJDKGetPut.wordcount                         JDK_O2O_HASH      -1    10000   WORDCOUNT  sample   83180    240262.146 ±    725.012  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         JDK_O2O_HASH      -1    10000   WORDCOUNT  sample            230656.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         JDK_O2O_HASH      -1    10000   WORDCOUNT  sample            236032.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         JDK_O2O_HASH      -1    10000   WORDCOUNT  sample            239360.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         JDK_O2O_HASH      -1    10000   WORDCOUNT  sample            241408.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         JDK_O2O_HASH      -1    10000   WORDCOUNT  sample            286720.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        JDK_O2O_HASH      -1    10000   WORDCOUNT  sample           1613453.312               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       JDK_O2O_HASH      -1    10000   WORDCOUNT  sample           1904362.906               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         JDK_O2O_HASH      -1    10000   WORDCOUNT  sample           2920448.000               ns/op
+MutableJDKGetPut.wordcount                         JDK_O2O_HASH      -1   100000   WORDCOUNT  sample    7490   2668570.796 ±  10459.235  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         JDK_O2O_HASH      -1   100000   WORDCOUNT  sample           2584576.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         JDK_O2O_HASH      -1   100000   WORDCOUNT  sample           2625536.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         JDK_O2O_HASH      -1   100000   WORDCOUNT  sample           2695168.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         JDK_O2O_HASH      -1   100000   WORDCOUNT  sample           2744320.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         JDK_O2O_HASH      -1   100000   WORDCOUNT  sample           4153712.640               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        JDK_O2O_HASH      -1   100000   WORDCOUNT  sample           6836740.096               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       JDK_O2O_HASH      -1   100000   WORDCOUNT  sample           8036352.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         JDK_O2O_HASH      -1   100000   WORDCOUNT  sample           8036352.000               ns/op
+MutableJDKGetPut.wordcount                         JDK_O2O_HASH      -1  1000000   WORDCOUNT  sample     660  30395149.964 ± 116791.786  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         JDK_O2O_HASH      -1  1000000   WORDCOUNT  sample          29982720.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         JDK_O2O_HASH      -1  1000000   WORDCOUNT  sample          30244864.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         JDK_O2O_HASH      -1  1000000   WORDCOUNT  sample          30507008.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         JDK_O2O_HASH      -1  1000000   WORDCOUNT  sample          30736384.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         JDK_O2O_HASH      -1  1000000   WORDCOUNT  sample          36095918.080               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        JDK_O2O_HASH      -1  1000000   WORDCOUNT  sample          40960000.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       JDK_O2O_HASH      -1  1000000   WORDCOUNT  sample          40960000.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         JDK_O2O_HASH      -1  1000000   WORDCOUNT  sample          40960000.000               ns/op
+MutableJDKGetPut.wordcount                    KOLOBOKE_O2O_HASH      -1       10   WORDCOUNT  sample  523977       199.443 ±     17.388  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    KOLOBOKE_O2O_HASH      -1       10   WORDCOUNT  sample               155.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    KOLOBOKE_O2O_HASH      -1       10   WORDCOUNT  sample               168.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    KOLOBOKE_O2O_HASH      -1       10   WORDCOUNT  sample               173.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    KOLOBOKE_O2O_HASH      -1       10   WORDCOUNT  sample               176.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    KOLOBOKE_O2O_HASH      -1       10   WORDCOUNT  sample               197.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   KOLOBOKE_O2O_HASH      -1       10   WORDCOUNT  sample              1812.132               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  KOLOBOKE_O2O_HASH      -1       10   WORDCOUNT  sample             30080.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    KOLOBOKE_O2O_HASH      -1       10   WORDCOUNT  sample           1271808.000               ns/op
+MutableJDKGetPut.wordcount                    KOLOBOKE_O2O_HASH      -1      100   WORDCOUNT  sample  660701      1966.268 ±     33.460  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    KOLOBOKE_O2O_HASH      -1      100   WORDCOUNT  sample              1798.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    KOLOBOKE_O2O_HASH      -1      100   WORDCOUNT  sample              1852.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    KOLOBOKE_O2O_HASH      -1      100   WORDCOUNT  sample              1922.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    KOLOBOKE_O2O_HASH      -1      100   WORDCOUNT  sample              1968.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    KOLOBOKE_O2O_HASH      -1      100   WORDCOUNT  sample              2236.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   KOLOBOKE_O2O_HASH      -1      100   WORDCOUNT  sample             18688.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  KOLOBOKE_O2O_HASH      -1      100   WORDCOUNT  sample             31867.507               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    KOLOBOKE_O2O_HASH      -1      100   WORDCOUNT  sample           1419264.000               ns/op
+MutableJDKGetPut.wordcount                    KOLOBOKE_O2O_HASH      -1     1000   WORDCOUNT  sample  430197     23361.969 ±    100.088  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    KOLOBOKE_O2O_HASH      -1     1000   WORDCOUNT  sample             22176.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    KOLOBOKE_O2O_HASH      -1     1000   WORDCOUNT  sample             22848.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    KOLOBOKE_O2O_HASH      -1     1000   WORDCOUNT  sample             23168.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    KOLOBOKE_O2O_HASH      -1     1000   WORDCOUNT  sample             23328.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    KOLOBOKE_O2O_HASH      -1     1000   WORDCOUNT  sample             25376.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   KOLOBOKE_O2O_HASH      -1     1000   WORDCOUNT  sample             74240.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  KOLOBOKE_O2O_HASH      -1     1000   WORDCOUNT  sample           1298350.899               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    KOLOBOKE_O2O_HASH      -1     1000   WORDCOUNT  sample           1531904.000               ns/op
+MutableJDKGetPut.wordcount                    KOLOBOKE_O2O_HASH      -1    10000   WORDCOUNT  sample   58201    343344.098 ±   1022.720  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    KOLOBOKE_O2O_HASH      -1    10000   WORDCOUNT  sample            330240.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    KOLOBOKE_O2O_HASH      -1    10000   WORDCOUNT  sample            338944.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    KOLOBOKE_O2O_HASH      -1    10000   WORDCOUNT  sample            340992.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    KOLOBOKE_O2O_HASH      -1    10000   WORDCOUNT  sample            345088.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    KOLOBOKE_O2O_HASH      -1    10000   WORDCOUNT  sample            388608.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   KOLOBOKE_O2O_HASH      -1    10000   WORDCOUNT  sample           1781346.304               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  KOLOBOKE_O2O_HASH      -1    10000   WORDCOUNT  sample           2059712.922               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    KOLOBOKE_O2O_HASH      -1    10000   WORDCOUNT  sample           2203648.000               ns/op
+MutableJDKGetPut.wordcount                    KOLOBOKE_O2O_HASH      -1   100000   WORDCOUNT  sample    4446   4497448.536 ±  14111.535  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    KOLOBOKE_O2O_HASH      -1   100000   WORDCOUNT  sample           4423680.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    KOLOBOKE_O2O_HASH      -1   100000   WORDCOUNT  sample           4464640.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    KOLOBOKE_O2O_HASH      -1   100000   WORDCOUNT  sample           4505600.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    KOLOBOKE_O2O_HASH      -1   100000   WORDCOUNT  sample           4562944.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    KOLOBOKE_O2O_HASH      -1   100000   WORDCOUNT  sample           6028902.400               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   KOLOBOKE_O2O_HASH      -1   100000   WORDCOUNT  sample           9265643.520               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  KOLOBOKE_O2O_HASH      -1   100000   WORDCOUNT  sample           9682944.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    KOLOBOKE_O2O_HASH      -1   100000   WORDCOUNT  sample           9682944.000               ns/op
+MutableJDKGetPut.wordcount                    KOLOBOKE_O2O_HASH      -1  1000000   WORDCOUNT  sample     482  41736778.357 ± 229461.097  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    KOLOBOKE_O2O_HASH      -1  1000000   WORDCOUNT  sample          40960000.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    KOLOBOKE_O2O_HASH      -1  1000000   WORDCOUNT  sample          41287680.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    KOLOBOKE_O2O_HASH      -1  1000000   WORDCOUNT  sample          42513203.200               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    KOLOBOKE_O2O_HASH      -1  1000000   WORDCOUNT  sample          44761088.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    KOLOBOKE_O2O_HASH      -1  1000000   WORDCOUNT  sample          51667271.680               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   KOLOBOKE_O2O_HASH      -1  1000000   WORDCOUNT  sample          55967744.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  KOLOBOKE_O2O_HASH      -1  1000000   WORDCOUNT  sample          55967744.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    KOLOBOKE_O2O_HASH      -1  1000000   WORDCOUNT  sample          55967744.000               ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_HASH      -1       10   WORDCOUNT  sample  599418       171.846 ±     13.192  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_HASH      -1       10   WORDCOUNT  sample               135.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_HASH      -1       10   WORDCOUNT  sample               149.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_HASH      -1       10   WORDCOUNT  sample               159.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_HASH      -1       10   WORDCOUNT  sample               163.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_HASH      -1       10   WORDCOUNT  sample               204.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_HASH      -1       10   WORDCOUNT  sample              1498.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_HASH      -1       10   WORDCOUNT  sample             22307.718               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_HASH      -1       10   WORDCOUNT  sample           1294336.000               ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_HASH      -1      100   WORDCOUNT  sample  480265      1404.566 ±     42.837  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_HASH      -1      100   WORDCOUNT  sample              1242.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_HASH      -1      100   WORDCOUNT  sample              1308.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_HASH      -1      100   WORDCOUNT  sample              1338.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_HASH      -1      100   WORDCOUNT  sample              1356.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_HASH      -1      100   WORDCOUNT  sample              1568.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_HASH      -1      100   WORDCOUNT  sample             17184.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_HASH      -1      100   WORDCOUNT  sample             30944.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_HASH      -1      100   WORDCOUNT  sample           2162688.000               ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_HASH      -1     1000   WORDCOUNT  sample  386936     25989.423 ±    115.132  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_HASH      -1     1000   WORDCOUNT  sample             24512.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_HASH      -1     1000   WORDCOUNT  sample             25408.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_HASH      -1     1000   WORDCOUNT  sample             25760.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_HASH      -1     1000   WORDCOUNT  sample             25888.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_HASH      -1     1000   WORDCOUNT  sample             28192.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_HASH      -1     1000   WORDCOUNT  sample             84864.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_HASH      -1     1000   WORDCOUNT  sample           1335296.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_HASH      -1     1000   WORDCOUNT  sample           1599488.000               ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_HASH      -1    10000   WORDCOUNT  sample   47898    417263.314 ±   1094.637  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_HASH      -1    10000   WORDCOUNT  sample            405504.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_HASH      -1    10000   WORDCOUNT  sample            412160.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_HASH      -1    10000   WORDCOUNT  sample            414208.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_HASH      -1    10000   WORDCOUNT  sample            417280.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_HASH      -1    10000   WORDCOUNT  sample            465408.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_HASH      -1    10000   WORDCOUNT  sample           1835628.544               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_HASH      -1    10000   WORDCOUNT  sample           2068583.424               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_HASH      -1    10000   WORDCOUNT  sample           2514944.000               ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_HASH      -1   100000   WORDCOUNT  sample    4584   4361003.337 ±  15141.244  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_HASH      -1   100000   WORDCOUNT  sample           4284416.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_HASH      -1   100000   WORDCOUNT  sample           4308992.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_HASH      -1   100000   WORDCOUNT  sample           4366336.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_HASH      -1   100000   WORDCOUNT  sample           4415488.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_HASH      -1   100000   WORDCOUNT  sample           6193152.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_HASH      -1   100000   WORDCOUNT  sample           9426042.880               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_HASH      -1   100000   WORDCOUNT  sample           9682944.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_HASH      -1   100000   WORDCOUNT  sample           9682944.000               ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_HASH      -1  1000000   WORDCOUNT  sample     521  38541583.232 ± 228860.312  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_HASH      -1  1000000   WORDCOUNT  sample          37945344.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_HASH      -1  1000000   WORDCOUNT  sample          38207488.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_HASH      -1  1000000   WORDCOUNT  sample          38797312.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_HASH      -1  1000000   WORDCOUNT  sample          39256064.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_HASH      -1  1000000   WORDCOUNT  sample          49450844.160               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_HASH      -1  1000000   WORDCOUNT  sample          51838976.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_HASH      -1  1000000   WORDCOUNT  sample          51838976.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_HASH      -1  1000000   WORDCOUNT  sample          51838976.000               ns/op
+MutableJDKGetPut.wordcount                     ECLIPSE_O2O_HASH      -1       10   WORDCOUNT  sample  742033       137.327 ±     11.367  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00     ECLIPSE_O2O_HASH      -1       10   WORDCOUNT  sample               114.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50     ECLIPSE_O2O_HASH      -1       10   WORDCOUNT  sample               117.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90     ECLIPSE_O2O_HASH      -1       10   WORDCOUNT  sample               121.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95     ECLIPSE_O2O_HASH      -1       10   WORDCOUNT  sample               124.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99     ECLIPSE_O2O_HASH      -1       10   WORDCOUNT  sample               207.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999    ECLIPSE_O2O_HASH      -1       10   WORDCOUNT  sample              1342.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999   ECLIPSE_O2O_HASH      -1       10   WORDCOUNT  sample             21625.491               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00     ECLIPSE_O2O_HASH      -1       10   WORDCOUNT  sample           1249280.000               ns/op
+MutableJDKGetPut.wordcount                     ECLIPSE_O2O_HASH      -1      100   WORDCOUNT  sample  737413      1777.210 ±     33.558  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00     ECLIPSE_O2O_HASH      -1      100   WORDCOUNT  sample              1616.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50     ECLIPSE_O2O_HASH      -1      100   WORDCOUNT  sample              1664.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90     ECLIPSE_O2O_HASH      -1      100   WORDCOUNT  sample              1710.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95     ECLIPSE_O2O_HASH      -1      100   WORDCOUNT  sample              1724.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99     ECLIPSE_O2O_HASH      -1      100   WORDCOUNT  sample              1860.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999    ECLIPSE_O2O_HASH      -1      100   WORDCOUNT  sample             19936.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999   ECLIPSE_O2O_HASH      -1      100   WORDCOUNT  sample             35648.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00     ECLIPSE_O2O_HASH      -1      100   WORDCOUNT  sample           2293760.000               ns/op
+MutableJDKGetPut.wordcount                     ECLIPSE_O2O_HASH      -1     1000   WORDCOUNT  sample  382225     26325.590 ±    123.317  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00     ECLIPSE_O2O_HASH      -1     1000   WORDCOUNT  sample             24800.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50     ECLIPSE_O2O_HASH      -1     1000   WORDCOUNT  sample             25568.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90     ECLIPSE_O2O_HASH      -1     1000   WORDCOUNT  sample             25984.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95     ECLIPSE_O2O_HASH      -1     1000   WORDCOUNT  sample             26208.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99     ECLIPSE_O2O_HASH      -1     1000   WORDCOUNT  sample             31616.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999    ECLIPSE_O2O_HASH      -1     1000   WORDCOUNT  sample             90339.072               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999   ECLIPSE_O2O_HASH      -1     1000   WORDCOUNT  sample           1330744.115               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00     ECLIPSE_O2O_HASH      -1     1000   WORDCOUNT  sample           1579008.000               ns/op
+MutableJDKGetPut.wordcount                     ECLIPSE_O2O_HASH      -1    10000   WORDCOUNT  sample   57909    345079.875 ±    935.187  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00     ECLIPSE_O2O_HASH      -1    10000   WORDCOUNT  sample            334336.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50     ECLIPSE_O2O_HASH      -1    10000   WORDCOUNT  sample            339456.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90     ECLIPSE_O2O_HASH      -1    10000   WORDCOUNT  sample            347136.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95     ECLIPSE_O2O_HASH      -1    10000   WORDCOUNT  sample            349184.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99     ECLIPSE_O2O_HASH      -1    10000   WORDCOUNT  sample            392192.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999    ECLIPSE_O2O_HASH      -1    10000   WORDCOUNT  sample           1755136.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999   ECLIPSE_O2O_HASH      -1    10000   WORDCOUNT  sample           2036140.032               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00     ECLIPSE_O2O_HASH      -1    10000   WORDCOUNT  sample           2265088.000               ns/op
+MutableJDKGetPut.wordcount                     ECLIPSE_O2O_HASH      -1   100000   WORDCOUNT  sample    5727   3491473.456 ±  14897.918  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00     ECLIPSE_O2O_HASH      -1   100000   WORDCOUNT  sample           3411968.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50     ECLIPSE_O2O_HASH      -1   100000   WORDCOUNT  sample           3436544.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90     ECLIPSE_O2O_HASH      -1   100000   WORDCOUNT  sample           3506176.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95     ECLIPSE_O2O_HASH      -1   100000   WORDCOUNT  sample           3538944.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99     ECLIPSE_O2O_HASH      -1   100000   WORDCOUNT  sample           5398528.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999    ECLIPSE_O2O_HASH      -1   100000   WORDCOUNT  sample           8663990.272               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999   ECLIPSE_O2O_HASH      -1   100000   WORDCOUNT  sample           9568256.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00     ECLIPSE_O2O_HASH      -1   100000   WORDCOUNT  sample           9568256.000               ns/op
+MutableJDKGetPut.wordcount                     ECLIPSE_O2O_HASH      -1  1000000   WORDCOUNT  sample     684  29387674.199 ± 140549.210  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00     ECLIPSE_O2O_HASH      -1  1000000   WORDCOUNT  sample          28999680.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50     ECLIPSE_O2O_HASH      -1  1000000   WORDCOUNT  sample          29212672.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90     ECLIPSE_O2O_HASH      -1  1000000   WORDCOUNT  sample          29458432.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95     ECLIPSE_O2O_HASH      -1  1000000   WORDCOUNT  sample          29753344.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99     ECLIPSE_O2O_HASH      -1  1000000   WORDCOUNT  sample          33664204.800               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999    ECLIPSE_O2O_HASH      -1  1000000   WORDCOUNT  sample          42205184.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999   ECLIPSE_O2O_HASH      -1  1000000   WORDCOUNT  sample          42205184.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00     ECLIPSE_O2O_HASH      -1  1000000   WORDCOUNT  sample          42205184.000               ns/op
+MutableJDKGetPut.wordcount                      APACHE_O2O_HASH      -1       10   WORDCOUNT  sample  704403       151.802 ±     16.510  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      APACHE_O2O_HASH      -1       10   WORDCOUNT  sample               120.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      APACHE_O2O_HASH      -1       10   WORDCOUNT  sample               125.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      APACHE_O2O_HASH      -1       10   WORDCOUNT  sample               140.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      APACHE_O2O_HASH      -1       10   WORDCOUNT  sample               142.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      APACHE_O2O_HASH      -1       10   WORDCOUNT  sample               167.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     APACHE_O2O_HASH      -1       10   WORDCOUNT  sample              1092.384               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    APACHE_O2O_HASH      -1       10   WORDCOUNT  sample             21600.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      APACHE_O2O_HASH      -1       10   WORDCOUNT  sample           1744896.000               ns/op
+MutableJDKGetPut.wordcount                      APACHE_O2O_HASH      -1      100   WORDCOUNT  sample  590111      1126.885 ±     28.679  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      APACHE_O2O_HASH      -1      100   WORDCOUNT  sample              1017.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      APACHE_O2O_HASH      -1      100   WORDCOUNT  sample              1054.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      APACHE_O2O_HASH      -1      100   WORDCOUNT  sample              1088.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      APACHE_O2O_HASH      -1      100   WORDCOUNT  sample              1114.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      APACHE_O2O_HASH      -1      100   WORDCOUNT  sample              1368.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     APACHE_O2O_HASH      -1      100   WORDCOUNT  sample             10680.832               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    APACHE_O2O_HASH      -1      100   WORDCOUNT  sample             31007.642               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      APACHE_O2O_HASH      -1      100   WORDCOUNT  sample           1499136.000               ns/op
+MutableJDKGetPut.wordcount                      APACHE_O2O_HASH      -1     1000   WORDCOUNT  sample  357358     14262.548 ±    111.934  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      APACHE_O2O_HASH      -1     1000   WORDCOUNT  sample             13152.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      APACHE_O2O_HASH      -1     1000   WORDCOUNT  sample             13728.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      APACHE_O2O_HASH      -1     1000   WORDCOUNT  sample             14000.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      APACHE_O2O_HASH      -1     1000   WORDCOUNT  sample             14128.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      APACHE_O2O_HASH      -1     1000   WORDCOUNT  sample             16928.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     APACHE_O2O_HASH      -1     1000   WORDCOUNT  sample             54720.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    APACHE_O2O_HASH      -1     1000   WORDCOUNT  sample           1241628.877               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      APACHE_O2O_HASH      -1     1000   WORDCOUNT  sample           1550336.000               ns/op
+MutableJDKGetPut.wordcount                      APACHE_O2O_HASH      -1    10000   WORDCOUNT  sample   98615    202636.670 ±    628.478  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      APACHE_O2O_HASH      -1    10000   WORDCOUNT  sample            194048.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      APACHE_O2O_HASH      -1    10000   WORDCOUNT  sample            198400.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      APACHE_O2O_HASH      -1    10000   WORDCOUNT  sample            200960.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      APACHE_O2O_HASH      -1    10000   WORDCOUNT  sample            203776.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      APACHE_O2O_HASH      -1    10000   WORDCOUNT  sample            255191.040               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     APACHE_O2O_HASH      -1    10000   WORDCOUNT  sample           1497088.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    APACHE_O2O_HASH      -1    10000   WORDCOUNT  sample           1848932.762               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      APACHE_O2O_HASH      -1    10000   WORDCOUNT  sample           1951744.000               ns/op
+MutableJDKGetPut.wordcount                      APACHE_O2O_HASH      -1   100000   WORDCOUNT  sample    7396   2702710.931 ±  10095.662  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      APACHE_O2O_HASH      -1   100000   WORDCOUNT  sample           2629632.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      APACHE_O2O_HASH      -1   100000   WORDCOUNT  sample           2666496.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      APACHE_O2O_HASH      -1   100000   WORDCOUNT  sample           2719744.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      APACHE_O2O_HASH      -1   100000   WORDCOUNT  sample           2748416.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      APACHE_O2O_HASH      -1   100000   WORDCOUNT  sample           4083957.760               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     APACHE_O2O_HASH      -1   100000   WORDCOUNT  sample           7145234.432               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    APACHE_O2O_HASH      -1   100000   WORDCOUNT  sample           8069120.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      APACHE_O2O_HASH      -1   100000   WORDCOUNT  sample           8069120.000               ns/op
+MutableJDKGetPut.wordcount                      APACHE_O2O_HASH      -1  1000000   WORDCOUNT  sample     690  29017441.206 ± 130213.298  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      APACHE_O2O_HASH      -1  1000000   WORDCOUNT  sample          28639232.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      APACHE_O2O_HASH      -1  1000000   WORDCOUNT  sample          28835840.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      APACHE_O2O_HASH      -1  1000000   WORDCOUNT  sample          29065216.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      APACHE_O2O_HASH      -1  1000000   WORDCOUNT  sample          29276569.600               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      APACHE_O2O_HASH      -1  1000000   WORDCOUNT  sample          34871050.240               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     APACHE_O2O_HASH      -1  1000000   WORDCOUNT  sample          41877504.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    APACHE_O2O_HASH      -1  1000000   WORDCOUNT  sample          41877504.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      APACHE_O2O_HASH      -1  1000000   WORDCOUNT  sample          41877504.000               ns/op
+MutableJDKGetPut.wordcount                      MAHOUT_O2O_HASH      -1       10   WORDCOUNT  sample  700170       262.381 ±     13.151  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      MAHOUT_O2O_HASH      -1       10   WORDCOUNT  sample               228.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      MAHOUT_O2O_HASH      -1       10   WORDCOUNT  sample               239.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      MAHOUT_O2O_HASH      -1       10   WORDCOUNT  sample               252.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      MAHOUT_O2O_HASH      -1       10   WORDCOUNT  sample               254.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      MAHOUT_O2O_HASH      -1       10   WORDCOUNT  sample               292.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     MAHOUT_O2O_HASH      -1       10   WORDCOUNT  sample              1230.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    MAHOUT_O2O_HASH      -1       10   WORDCOUNT  sample             22494.906               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      MAHOUT_O2O_HASH      -1       10   WORDCOUNT  sample           1280000.000               ns/op
+MutableJDKGetPut.wordcount                      MAHOUT_O2O_HASH      -1      100   WORDCOUNT  sample  380233      3425.516 ±     61.187  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      MAHOUT_O2O_HASH      -1      100   WORDCOUNT  sample              3140.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      MAHOUT_O2O_HASH      -1      100   WORDCOUNT  sample              3248.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      MAHOUT_O2O_HASH      -1      100   WORDCOUNT  sample              3296.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      MAHOUT_O2O_HASH      -1      100   WORDCOUNT  sample              3336.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      MAHOUT_O2O_HASH      -1      100   WORDCOUNT  sample              3588.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     MAHOUT_O2O_HASH      -1      100   WORDCOUNT  sample             24864.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    MAHOUT_O2O_HASH      -1      100   WORDCOUNT  sample            892304.998               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      MAHOUT_O2O_HASH      -1      100   WORDCOUNT  sample           1339392.000               ns/op
+MutableJDKGetPut.wordcount                      MAHOUT_O2O_HASH      -1     1000   WORDCOUNT  sample  266336     74992.721 ±    210.587  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      MAHOUT_O2O_HASH      -1     1000   WORDCOUNT  sample             71936.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      MAHOUT_O2O_HASH      -1     1000   WORDCOUNT  sample             73600.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      MAHOUT_O2O_HASH      -1     1000   WORDCOUNT  sample             74624.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      MAHOUT_O2O_HASH      -1     1000   WORDCOUNT  sample             75520.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      MAHOUT_O2O_HASH      -1     1000   WORDCOUNT  sample             80896.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     MAHOUT_O2O_HASH      -1     1000   WORDCOUNT  sample            229120.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    MAHOUT_O2O_HASH      -1     1000   WORDCOUNT  sample           1495790.182               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      MAHOUT_O2O_HASH      -1     1000   WORDCOUNT  sample           2748416.000               ns/op
+MutableJDKGetPut.wordcount                      MAHOUT_O2O_HASH      -1    10000   WORDCOUNT  sample   23997    832920.072 ±   2388.084  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      MAHOUT_O2O_HASH      -1    10000   WORDCOUNT  sample            814080.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      MAHOUT_O2O_HASH      -1    10000   WORDCOUNT  sample            821248.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      MAHOUT_O2O_HASH      -1    10000   WORDCOUNT  sample            826368.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      MAHOUT_O2O_HASH      -1    10000   WORDCOUNT  sample            840704.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      MAHOUT_O2O_HASH      -1    10000   WORDCOUNT  sample            948326.400               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     MAHOUT_O2O_HASH      -1    10000   WORDCOUNT  sample           2387968.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    MAHOUT_O2O_HASH      -1    10000   WORDCOUNT  sample           2576388.096               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      MAHOUT_O2O_HASH      -1    10000   WORDCOUNT  sample           2629632.000               ns/op
+MutableJDKGetPut.wordcount                      MAHOUT_O2O_HASH      -1   100000   WORDCOUNT  sample    2005   9977913.201 ±  42693.901  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      MAHOUT_O2O_HASH      -1   100000   WORDCOUNT  sample           9781248.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      MAHOUT_O2O_HASH      -1   100000   WORDCOUNT  sample           9830400.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      MAHOUT_O2O_HASH      -1   100000   WORDCOUNT  sample           9912320.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      MAHOUT_O2O_HASH      -1   100000   WORDCOUNT  sample          11611340.800               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      MAHOUT_O2O_HASH      -1   100000   WORDCOUNT  sample          12450856.960               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     MAHOUT_O2O_HASH      -1   100000   WORDCOUNT  sample          14991065.088               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    MAHOUT_O2O_HASH      -1   100000   WORDCOUNT  sample          14991360.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      MAHOUT_O2O_HASH      -1   100000   WORDCOUNT  sample          14991360.000               ns/op
+MutableJDKGetPut.wordcount                      MAHOUT_O2O_HASH      -1  1000000   WORDCOUNT  sample     249  81261481.639 ± 509384.369  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      MAHOUT_O2O_HASH      -1  1000000   WORDCOUNT  sample          80216064.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      MAHOUT_O2O_HASH      -1  1000000   WORDCOUNT  sample          80609280.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      MAHOUT_O2O_HASH      -1  1000000   WORDCOUNT  sample          82051072.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      MAHOUT_O2O_HASH      -1  1000000   WORDCOUNT  sample          85262336.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      MAHOUT_O2O_HASH      -1  1000000   WORDCOUNT  sample          94502912.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     MAHOUT_O2O_HASH      -1  1000000   WORDCOUNT  sample          95289344.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    MAHOUT_O2O_HASH      -1  1000000   WORDCOUNT  sample          95289344.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      MAHOUT_O2O_HASH      -1  1000000   WORDCOUNT  sample          95289344.000               ns/op
+MutableJDKGetPut.wordcount                      AGRONA_O2O_HASH      -1       10   WORDCOUNT  sample  643709       151.936 ±      8.851  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      AGRONA_O2O_HASH      -1       10   WORDCOUNT  sample               128.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      AGRONA_O2O_HASH      -1       10   WORDCOUNT  sample               134.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      AGRONA_O2O_HASH      -1       10   WORDCOUNT  sample               138.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      AGRONA_O2O_HASH      -1       10   WORDCOUNT  sample               139.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      AGRONA_O2O_HASH      -1       10   WORDCOUNT  sample               158.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     AGRONA_O2O_HASH      -1       10   WORDCOUNT  sample              1222.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    AGRONA_O2O_HASH      -1       10   WORDCOUNT  sample             23448.768               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      AGRONA_O2O_HASH      -1       10   WORDCOUNT  sample           1232896.000               ns/op
+MutableJDKGetPut.wordcount                      AGRONA_O2O_HASH      -1      100   WORDCOUNT  sample  726287      1778.450 ±     25.873  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      AGRONA_O2O_HASH      -1      100   WORDCOUNT  sample              1670.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      AGRONA_O2O_HASH      -1      100   WORDCOUNT  sample              1698.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      AGRONA_O2O_HASH      -1      100   WORDCOUNT  sample              1738.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      AGRONA_O2O_HASH      -1      100   WORDCOUNT  sample              1756.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      AGRONA_O2O_HASH      -1      100   WORDCOUNT  sample              1910.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     AGRONA_O2O_HASH      -1      100   WORDCOUNT  sample             18720.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    AGRONA_O2O_HASH      -1      100   WORDCOUNT  sample             34944.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      AGRONA_O2O_HASH      -1      100   WORDCOUNT  sample           1388544.000               ns/op
+MutableJDKGetPut.wordcount                      AGRONA_O2O_HASH      -1     1000   WORDCOUNT  sample  431348     23305.953 ±    101.040  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      AGRONA_O2O_HASH      -1     1000   WORDCOUNT  sample             22048.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      AGRONA_O2O_HASH      -1     1000   WORDCOUNT  sample             22752.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      AGRONA_O2O_HASH      -1     1000   WORDCOUNT  sample             23104.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      AGRONA_O2O_HASH      -1     1000   WORDCOUNT  sample             23232.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      AGRONA_O2O_HASH      -1     1000   WORDCOUNT  sample             24704.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     AGRONA_O2O_HASH      -1     1000   WORDCOUNT  sample             77261.312               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    AGRONA_O2O_HASH      -1     1000   WORDCOUNT  sample           1304299.725               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      AGRONA_O2O_HASH      -1     1000   WORDCOUNT  sample           1738752.000               ns/op
+MutableJDKGetPut.wordcount                      AGRONA_O2O_HASH      -1    10000   WORDCOUNT  sample   48355    413316.259 ±   1078.796  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      AGRONA_O2O_HASH      -1    10000   WORDCOUNT  sample            403456.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      AGRONA_O2O_HASH      -1    10000   WORDCOUNT  sample            408064.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      AGRONA_O2O_HASH      -1    10000   WORDCOUNT  sample            411136.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      AGRONA_O2O_HASH      -1    10000   WORDCOUNT  sample            414208.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      AGRONA_O2O_HASH      -1    10000   WORDCOUNT  sample            460800.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     AGRONA_O2O_HASH      -1    10000   WORDCOUNT  sample           1854758.912               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    AGRONA_O2O_HASH      -1    10000   WORDCOUNT  sample           2088230.912               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      AGRONA_O2O_HASH      -1    10000   WORDCOUNT  sample           2244608.000               ns/op
+MutableJDKGetPut.wordcount                      AGRONA_O2O_HASH      -1   100000   WORDCOUNT  sample    4683   4268815.689 ±  18236.763  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      AGRONA_O2O_HASH      -1   100000   WORDCOUNT  sample           4182016.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      AGRONA_O2O_HASH      -1   100000   WORDCOUNT  sample           4202496.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      AGRONA_O2O_HASH      -1   100000   WORDCOUNT  sample           4259840.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      AGRONA_O2O_HASH      -1   100000   WORDCOUNT  sample           4317184.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      AGRONA_O2O_HASH      -1   100000   WORDCOUNT  sample           6432030.720               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     AGRONA_O2O_HASH      -1   100000   WORDCOUNT  sample           9577758.720               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    AGRONA_O2O_HASH      -1   100000   WORDCOUNT  sample           9732096.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      AGRONA_O2O_HASH      -1   100000   WORDCOUNT  sample           9732096.000               ns/op
+MutableJDKGetPut.wordcount                      AGRONA_O2O_HASH      -1  1000000   WORDCOUNT  sample     562  35710123.274 ± 208371.025  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      AGRONA_O2O_HASH      -1  1000000   WORDCOUNT  sample          35127296.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      AGRONA_O2O_HASH      -1  1000000   WORDCOUNT  sample          35323904.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      AGRONA_O2O_HASH      -1  1000000   WORDCOUNT  sample          36700160.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      AGRONA_O2O_HASH      -1  1000000   WORDCOUNT  sample          37149081.600               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      AGRONA_O2O_HASH      -1  1000000   WORDCOUNT  sample          44700794.880               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     AGRONA_O2O_HASH      -1  1000000   WORDCOUNT  sample          49676288.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    AGRONA_O2O_HASH      -1  1000000   WORDCOUNT  sample          49676288.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      AGRONA_O2O_HASH      -1  1000000   WORDCOUNT  sample          49676288.000               ns/op
+MutableJDKGetPut.wordcount                           SQUID_HASH      -1       10   WORDCOUNT  sample  588486       167.515 ±     10.953  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           SQUID_HASH      -1       10   WORDCOUNT  sample               139.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           SQUID_HASH      -1       10   WORDCOUNT  sample               148.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           SQUID_HASH      -1       10   WORDCOUNT  sample               151.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           SQUID_HASH      -1       10   WORDCOUNT  sample               161.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           SQUID_HASH      -1       10   WORDCOUNT  sample               202.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          SQUID_HASH      -1       10   WORDCOUNT  sample              1343.026               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         SQUID_HASH      -1       10   WORDCOUNT  sample             22441.683               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           SQUID_HASH      -1       10   WORDCOUNT  sample           1466368.000               ns/op
+MutableJDKGetPut.wordcount                           SQUID_HASH      -1      100   WORDCOUNT  sample  725670      1780.386 ±     27.076  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           SQUID_HASH      -1      100   WORDCOUNT  sample              1682.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           SQUID_HASH      -1      100   WORDCOUNT  sample              1706.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           SQUID_HASH      -1      100   WORDCOUNT  sample              1734.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           SQUID_HASH      -1      100   WORDCOUNT  sample              1750.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           SQUID_HASH      -1      100   WORDCOUNT  sample              1826.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          SQUID_HASH      -1      100   WORDCOUNT  sample              6418.632               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         SQUID_HASH      -1      100   WORDCOUNT  sample             29932.467               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           SQUID_HASH      -1      100   WORDCOUNT  sample           1390592.000               ns/op
+MutableJDKGetPut.wordcount                           SQUID_HASH      -1     1000   WORDCOUNT  sample  404926     24795.521 ±    100.357  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           SQUID_HASH      -1     1000   WORDCOUNT  sample             23296.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           SQUID_HASH      -1     1000   WORDCOUNT  sample             24096.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           SQUID_HASH      -1     1000   WORDCOUNT  sample             24480.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           SQUID_HASH      -1     1000   WORDCOUNT  sample             24704.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           SQUID_HASH      -1     1000   WORDCOUNT  sample             40430.720               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          SQUID_HASH      -1     1000   WORDCOUNT  sample             83849.344               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         SQUID_HASH      -1     1000   WORDCOUNT  sample           1253435.802               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           SQUID_HASH      -1     1000   WORDCOUNT  sample           1585152.000               ns/op
+MutableJDKGetPut.wordcount                           SQUID_HASH      -1    10000   WORDCOUNT  sample   52496    380682.251 ±   1085.491  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           SQUID_HASH      -1    10000   WORDCOUNT  sample            367104.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           SQUID_HASH      -1    10000   WORDCOUNT  sample            375296.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           SQUID_HASH      -1    10000   WORDCOUNT  sample            379392.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           SQUID_HASH      -1    10000   WORDCOUNT  sample            385536.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           SQUID_HASH      -1    10000   WORDCOUNT  sample            442368.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          SQUID_HASH      -1    10000   WORDCOUNT  sample           1797126.144               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         SQUID_HASH      -1    10000   WORDCOUNT  sample           2106371.686               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           SQUID_HASH      -1    10000   WORDCOUNT  sample           2170880.000               ns/op
+MutableJDKGetPut.wordcount                           SQUID_HASH      -1   100000   WORDCOUNT  sample    4579   4365997.872 ±  14200.071  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           SQUID_HASH      -1   100000   WORDCOUNT  sample           4276224.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           SQUID_HASH      -1   100000   WORDCOUNT  sample           4317184.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           SQUID_HASH      -1   100000   WORDCOUNT  sample           4366336.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           SQUID_HASH      -1   100000   WORDCOUNT  sample           4407296.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           SQUID_HASH      -1   100000   WORDCOUNT  sample           6186598.400               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          SQUID_HASH      -1   100000   WORDCOUNT  sample           8536719.360               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         SQUID_HASH      -1   100000   WORDCOUNT  sample           9289728.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           SQUID_HASH      -1   100000   WORDCOUNT  sample           9289728.000               ns/op
+MutableJDKGetPut.wordcount                           SQUID_HASH      -1  1000000   WORDCOUNT  sample     534  37514696.390 ± 181226.558  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           SQUID_HASH      -1  1000000   WORDCOUNT  sample          36962304.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           SQUID_HASH      -1  1000000   WORDCOUNT  sample          37224448.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           SQUID_HASH      -1  1000000   WORDCOUNT  sample          38273024.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           SQUID_HASH      -1  1000000   WORDCOUNT  sample          38600704.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           SQUID_HASH      -1  1000000   WORDCOUNT  sample          46019379.200               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          SQUID_HASH      -1  1000000   WORDCOUNT  sample          50331648.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         SQUID_HASH      -1  1000000   WORDCOUNT  sample          50331648.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           SQUID_HASH      -1  1000000   WORDCOUNT  sample          50331648.000               ns/op
+MutableJDKGetPut.wordcount                        JDKGDXDS_HASH      -1       10   WORDCOUNT  sample  572363       182.302 ±     18.644  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00        JDKGDXDS_HASH      -1       10   WORDCOUNT  sample               142.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50        JDKGDXDS_HASH      -1       10   WORDCOUNT  sample               152.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90        JDKGDXDS_HASH      -1       10   WORDCOUNT  sample               153.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95        JDKGDXDS_HASH      -1       10   WORDCOUNT  sample               162.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99        JDKGDXDS_HASH      -1       10   WORDCOUNT  sample               209.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999       JDKGDXDS_HASH      -1       10   WORDCOUNT  sample              1594.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999      JDKGDXDS_HASH      -1       10   WORDCOUNT  sample             22736.870               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00        JDKGDXDS_HASH      -1       10   WORDCOUNT  sample           1503232.000               ns/op
+MutableJDKGetPut.wordcount                        JDKGDXDS_HASH      -1      100   WORDCOUNT  sample  427549      1564.780 ±     47.380  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00        JDKGDXDS_HASH      -1      100   WORDCOUNT  sample              1408.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50        JDKGDXDS_HASH      -1      100   WORDCOUNT  sample              1448.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90        JDKGDXDS_HASH      -1      100   WORDCOUNT  sample              1480.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95        JDKGDXDS_HASH      -1      100   WORDCOUNT  sample              1498.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99        JDKGDXDS_HASH      -1      100   WORDCOUNT  sample              1718.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999       JDKGDXDS_HASH      -1      100   WORDCOUNT  sample             19712.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999      JDKGDXDS_HASH      -1      100   WORDCOUNT  sample             34335.360               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00        JDKGDXDS_HASH      -1      100   WORDCOUNT  sample           1505280.000               ns/op
+MutableJDKGetPut.wordcount                        JDKGDXDS_HASH      -1     1000   WORDCOUNT  sample  428450     23440.697 ±     96.573  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00        JDKGDXDS_HASH      -1     1000   WORDCOUNT  sample             22048.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50        JDKGDXDS_HASH      -1     1000   WORDCOUNT  sample             22912.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90        JDKGDXDS_HASH      -1     1000   WORDCOUNT  sample             23328.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95        JDKGDXDS_HASH      -1     1000   WORDCOUNT  sample             23488.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99        JDKGDXDS_HASH      -1     1000   WORDCOUNT  sample             25920.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999       JDKGDXDS_HASH      -1     1000   WORDCOUNT  sample             77056.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999      JDKGDXDS_HASH      -1     1000   WORDCOUNT  sample           1249280.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00        JDKGDXDS_HASH      -1     1000   WORDCOUNT  sample           1570816.000               ns/op
+MutableJDKGetPut.wordcount                        JDKGDXDS_HASH      -1    10000   WORDCOUNT  sample   48170    414939.255 ±   1126.508  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00        JDKGDXDS_HASH      -1    10000   WORDCOUNT  sample            404480.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50        JDKGDXDS_HASH      -1    10000   WORDCOUNT  sample            409600.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90        JDKGDXDS_HASH      -1    10000   WORDCOUNT  sample            412672.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95        JDKGDXDS_HASH      -1    10000   WORDCOUNT  sample            414720.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99        JDKGDXDS_HASH      -1    10000   WORDCOUNT  sample            459776.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999       JDKGDXDS_HASH      -1    10000   WORDCOUNT  sample           1887555.584               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999      JDKGDXDS_HASH      -1    10000   WORDCOUNT  sample           2117680.742               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00        JDKGDXDS_HASH      -1    10000   WORDCOUNT  sample           2605056.000               ns/op
+MutableJDKGetPut.wordcount                        JDKGDXDS_HASH      -1   100000   WORDCOUNT  sample    4640   4307911.503 ±  14530.860  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00        JDKGDXDS_HASH      -1   100000   WORDCOUNT  sample           4227072.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50        JDKGDXDS_HASH      -1   100000   WORDCOUNT  sample           4268032.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90        JDKGDXDS_HASH      -1   100000   WORDCOUNT  sample           4300800.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95        JDKGDXDS_HASH      -1   100000   WORDCOUNT  sample           4341760.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99        JDKGDXDS_HASH      -1   100000   WORDCOUNT  sample           6066913.280               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999       JDKGDXDS_HASH      -1   100000   WORDCOUNT  sample           8522203.136               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999      JDKGDXDS_HASH      -1   100000   WORDCOUNT  sample           9519104.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00        JDKGDXDS_HASH      -1   100000   WORDCOUNT  sample           9519104.000               ns/op
+MutableJDKGetPut.wordcount                        JDKGDXDS_HASH      -1  1000000   WORDCOUNT  sample     604  33224310.675 ± 186701.222  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00        JDKGDXDS_HASH      -1  1000000   WORDCOUNT  sample          32735232.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50        JDKGDXDS_HASH      -1  1000000   WORDCOUNT  sample          32964608.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90        JDKGDXDS_HASH      -1  1000000   WORDCOUNT  sample          33423360.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95        JDKGDXDS_HASH      -1  1000000   WORDCOUNT  sample          33865728.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99        JDKGDXDS_HASH      -1  1000000   WORDCOUNT  sample          44102451.200               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999       JDKGDXDS_HASH      -1  1000000   WORDCOUNT  sample          46268416.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999      JDKGDXDS_HASH      -1  1000000   WORDCOUNT  sample          46268416.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00        JDKGDXDS_HASH      -1  1000000   WORDCOUNT  sample          46268416.000               ns/op

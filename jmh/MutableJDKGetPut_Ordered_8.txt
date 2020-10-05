@@ -1,0 +1,325 @@
+Benchmark                                                      (impl)  (seed)   (size)  (workload)    Mode     Cnt         Score        Error  Units
+MutableJDKGetPut.wordcount                         JDK_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample  614629       162.393 ±     11.693  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         JDK_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               135.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         JDK_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               140.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         JDK_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               153.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         JDK_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               156.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         JDK_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               203.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        JDK_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample              1442.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       JDK_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample             21553.184               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         JDK_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample           1277952.000               ns/op
+MutableJDKGetPut.wordcount                         JDK_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample  763441      1697.359 ±     26.069  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         JDK_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1572.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         JDK_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1616.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         JDK_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1650.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         JDK_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1672.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         JDK_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1934.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        JDK_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              8144.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       JDK_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample             31091.942               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         JDK_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample           1630208.000               ns/op
+MutableJDKGetPut.wordcount                         JDK_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample  335174     15268.661 ±    131.675  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         JDK_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             14240.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         JDK_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             14624.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         JDK_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             14864.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         JDK_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             14976.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         JDK_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             18944.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        JDK_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             57460.800               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       JDK_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample           1357824.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         JDK_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample           1656832.000               ns/op
+MutableJDKGetPut.wordcount                         JDK_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample   87352    228787.193 ±    713.587  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         JDK_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            219904.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         JDK_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            224256.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         JDK_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            228096.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         JDK_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            230912.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         JDK_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            276480.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        JDK_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample           1584429.056               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       JDK_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample           1910904.422               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         JDK_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample           1982464.000               ns/op
+MutableJDKGetPut.wordcount                         JDK_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample    7028   2844213.910 ±  10034.693  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         JDK_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           2752512.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         JDK_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           2809856.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         JDK_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           2859008.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         JDK_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           2895872.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         JDK_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           4440064.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        JDK_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           6551937.024               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       JDK_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           7331840.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         JDK_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           7331840.000               ns/op
+MutableJDKGetPut.wordcount                         JDK_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample     962  20828049.297 ± 107062.901  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00         JDK_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          20348928.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50         JDK_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          20611072.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90         JDK_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          20938752.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95         JDK_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          21233664.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99         JDK_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          26468024.320               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999        JDK_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          29523968.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999       JDK_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          29523968.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00         JDK_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          29523968.000               ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample  538351       186.084 ±     12.337  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               147.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               159.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               177.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               187.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               375.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample              1886.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample             22213.274               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample           1275904.000               ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample  755461      1719.401 ±     28.990  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1588.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1628.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1674.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1704.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1958.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample             15016.608               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample             31947.565               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample           1579008.000               ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample  330757     30459.466 ±    144.640  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             28704.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             29600.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             30048.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             30304.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             36608.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample            111646.976               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample           1347584.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample           1564672.000               ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample   42093    474869.485 ±   1489.238  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            454656.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            466432.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            473088.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            477184.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            537600.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample           1965887.488               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample           2247846.298               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample           2461696.000               ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample    4095   4882430.000 ±  17375.593  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           4792320.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           4833280.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           4907008.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           4964352.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           6547701.760               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample          10106437.632               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample          10616832.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample          10616832.000               ns/op
+MutableJDKGetPut.wordcount                    FASTUTIL_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample     429  46755429.445 ± 273080.650  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00    FASTUTIL_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          45744128.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50    FASTUTIL_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          46333952.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90    FASTUTIL_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          47316992.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95    FASTUTIL_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          49872896.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99    FASTUTIL_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          59251097.600               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999   FASTUTIL_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          60227584.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999  FASTUTIL_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          60227584.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00    FASTUTIL_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          60227584.000               ns/op
+MutableJDKGetPut.wordcount                      APACHE_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample  567811       190.651 ±     13.036  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      APACHE_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               147.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      APACHE_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               168.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      APACHE_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               173.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      APACHE_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               175.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      APACHE_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample               242.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     APACHE_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample              1760.376               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    APACHE_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample             25226.061               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      APACHE_O2O_LINKEDHASH      -1       10   WORDCOUNT  sample           1251328.000               ns/op
+MutableJDKGetPut.wordcount                      APACHE_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample  487613      1380.878 ±     38.207  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      APACHE_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1252.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      APACHE_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1266.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      APACHE_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1304.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      APACHE_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1334.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      APACHE_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample              1704.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     APACHE_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample             19564.352               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    APACHE_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample             34127.270               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      APACHE_O2O_LINKEDHASH      -1      100   WORDCOUNT  sample           1419264.000               ns/op
+MutableJDKGetPut.wordcount                      APACHE_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample  353249     14437.675 ±    119.804  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      APACHE_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             13392.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      APACHE_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             13856.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      APACHE_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             14144.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      APACHE_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             14272.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      APACHE_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             16768.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     APACHE_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample             54720.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    APACHE_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample           1312819.200               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      APACHE_O2O_LINKEDHASH      -1     1000   WORDCOUNT  sample           1589248.000               ns/op
+MutableJDKGetPut.wordcount                      APACHE_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample   92328    216445.200 ±    657.503  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      APACHE_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            207104.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      APACHE_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            211968.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      APACHE_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            216320.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      APACHE_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            218368.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      APACHE_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample            263680.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     APACHE_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample           1538748.416               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    APACHE_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample           1847913.062               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      APACHE_O2O_LINKEDHASH      -1    10000   WORDCOUNT  sample           2097152.000               ns/op
+MutableJDKGetPut.wordcount                      APACHE_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample    7684   2601178.020 ±   9558.742  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      APACHE_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           2510848.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      APACHE_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           2564096.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      APACHE_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           2609152.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      APACHE_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           2641920.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      APACHE_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           4302028.800               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     APACHE_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           5491998.720               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    APACHE_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           7954432.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      APACHE_O2O_LINKEDHASH      -1   100000   WORDCOUNT  sample           7954432.000               ns/op
+MutableJDKGetPut.wordcount                      APACHE_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample    1009  19864097.998 ±  91856.597  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00      APACHE_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          19529728.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50      APACHE_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          19693568.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90      APACHE_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          19857408.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95      APACHE_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          20119552.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99      APACHE_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          25575424.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999     APACHE_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          26570915.840               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999    APACHE_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          26574848.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00      APACHE_O2O_LINKEDHASH      -1  1000000   WORDCOUNT  sample          26574848.000               ns/op
+MutableJDKGetPut.wordcount                              SQUID_INDEXED      -1       10   WORDCOUNT  sample  536436       197.381 ±     16.110  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00              SQUID_INDEXED      -1       10   WORDCOUNT  sample               148.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50              SQUID_INDEXED      -1       10   WORDCOUNT  sample               163.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90              SQUID_INDEXED      -1       10   WORDCOUNT  sample               175.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95              SQUID_INDEXED      -1       10   WORDCOUNT  sample               178.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99              SQUID_INDEXED      -1       10   WORDCOUNT  sample               285.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999             SQUID_INDEXED      -1       10   WORDCOUNT  sample              2136.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999            SQUID_INDEXED      -1       10   WORDCOUNT  sample             29931.402               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00              SQUID_INDEXED      -1       10   WORDCOUNT  sample           1429504.000               ns/op
+MutableJDKGetPut.wordcount                              SQUID_INDEXED      -1      100   WORDCOUNT  sample  643306      2009.688 ±     31.541  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00              SQUID_INDEXED      -1      100   WORDCOUNT  sample              1894.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50              SQUID_INDEXED      -1      100   WORDCOUNT  sample              1924.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90              SQUID_INDEXED      -1      100   WORDCOUNT  sample              1950.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95              SQUID_INDEXED      -1      100   WORDCOUNT  sample              1972.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99              SQUID_INDEXED      -1      100   WORDCOUNT  sample              2124.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999             SQUID_INDEXED      -1      100   WORDCOUNT  sample              8445.616               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999            SQUID_INDEXED      -1      100   WORDCOUNT  sample             29322.835               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00              SQUID_INDEXED      -1      100   WORDCOUNT  sample           1667072.000               ns/op
+MutableJDKGetPut.wordcount                              SQUID_INDEXED      -1     1000   WORDCOUNT  sample  384580     26208.323 ±    128.876  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00              SQUID_INDEXED      -1     1000   WORDCOUNT  sample             24672.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50              SQUID_INDEXED      -1     1000   WORDCOUNT  sample             25472.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90              SQUID_INDEXED      -1     1000   WORDCOUNT  sample             25856.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95              SQUID_INDEXED      -1     1000   WORDCOUNT  sample             26016.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99              SQUID_INDEXED      -1     1000   WORDCOUNT  sample             29216.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999             SQUID_INDEXED      -1     1000   WORDCOUNT  sample             92981.632               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999            SQUID_INDEXED      -1     1000   WORDCOUNT  sample           1371221.811               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00              SQUID_INDEXED      -1     1000   WORDCOUNT  sample           1585152.000               ns/op
+MutableJDKGetPut.wordcount                              SQUID_INDEXED      -1    10000   WORDCOUNT  sample   53268    375167.193 ±   1146.292  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00              SQUID_INDEXED      -1    10000   WORDCOUNT  sample            363008.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50              SQUID_INDEXED      -1    10000   WORDCOUNT  sample            369152.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90              SQUID_INDEXED      -1    10000   WORDCOUNT  sample            372224.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95              SQUID_INDEXED      -1    10000   WORDCOUNT  sample            375808.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99              SQUID_INDEXED      -1    10000   WORDCOUNT  sample            423424.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999             SQUID_INDEXED      -1    10000   WORDCOUNT  sample           1830912.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999            SQUID_INDEXED      -1    10000   WORDCOUNT  sample           2082816.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00              SQUID_INDEXED      -1    10000   WORDCOUNT  sample           2117632.000               ns/op
+MutableJDKGetPut.wordcount                              SQUID_INDEXED      -1   100000   WORDCOUNT  sample    4458   4484765.344 ±  16412.446  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00              SQUID_INDEXED      -1   100000   WORDCOUNT  sample           4390912.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50              SQUID_INDEXED      -1   100000   WORDCOUNT  sample           4423680.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90              SQUID_INDEXED      -1   100000   WORDCOUNT  sample           4481024.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95              SQUID_INDEXED      -1   100000   WORDCOUNT  sample           4538368.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99              SQUID_INDEXED      -1   100000   WORDCOUNT  sample           6393118.720               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999             SQUID_INDEXED      -1   100000   WORDCOUNT  sample           8894906.368               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999            SQUID_INDEXED      -1   100000   WORDCOUNT  sample           9699328.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00              SQUID_INDEXED      -1   100000   WORDCOUNT  sample           9699328.000               ns/op
+MutableJDKGetPut.wordcount                              SQUID_INDEXED      -1  1000000   WORDCOUNT  sample     488  41259209.443 ± 280873.498  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00              SQUID_INDEXED      -1  1000000   WORDCOUNT  sample          40566784.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50              SQUID_INDEXED      -1  1000000   WORDCOUNT  sample          40828928.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90              SQUID_INDEXED      -1  1000000   WORDCOUNT  sample          41549824.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95              SQUID_INDEXED      -1  1000000   WORDCOUNT  sample          43784601.600               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99              SQUID_INDEXED      -1  1000000   WORDCOUNT  sample          52574289.920               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999             SQUID_INDEXED      -1  1000000   WORDCOUNT  sample          57802752.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999            SQUID_INDEXED      -1  1000000   WORDCOUNT  sample          57802752.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00              SQUID_INDEXED      -1  1000000   WORDCOUNT  sample          57802752.000               ns/op
+MutableJDKGetPut.wordcount                           ATLANTIS_INDEXED      -1       10   WORDCOUNT  sample  545970       189.703 ±     16.956  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           ATLANTIS_INDEXED      -1       10   WORDCOUNT  sample               149.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           ATLANTIS_INDEXED      -1       10   WORDCOUNT  sample               162.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           ATLANTIS_INDEXED      -1       10   WORDCOUNT  sample               164.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           ATLANTIS_INDEXED      -1       10   WORDCOUNT  sample               167.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           ATLANTIS_INDEXED      -1       10   WORDCOUNT  sample               262.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          ATLANTIS_INDEXED      -1       10   WORDCOUNT  sample              1790.058               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         ATLANTIS_INDEXED      -1       10   WORDCOUNT  sample             23225.786               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           ATLANTIS_INDEXED      -1       10   WORDCOUNT  sample           1488896.000               ns/op
+MutableJDKGetPut.wordcount                           ATLANTIS_INDEXED      -1      100   WORDCOUNT  sample  657535      1961.698 ±     29.861  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           ATLANTIS_INDEXED      -1      100   WORDCOUNT  sample              1844.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           ATLANTIS_INDEXED      -1      100   WORDCOUNT  sample              1868.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           ATLANTIS_INDEXED      -1      100   WORDCOUNT  sample              1916.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           ATLANTIS_INDEXED      -1      100   WORDCOUNT  sample              1932.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           ATLANTIS_INDEXED      -1      100   WORDCOUNT  sample              2080.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          ATLANTIS_INDEXED      -1      100   WORDCOUNT  sample             20000.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         ATLANTIS_INDEXED      -1      100   WORDCOUNT  sample             35200.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           ATLANTIS_INDEXED      -1      100   WORDCOUNT  sample           1536000.000               ns/op
+MutableJDKGetPut.wordcount                           ATLANTIS_INDEXED      -1     1000   WORDCOUNT  sample  383454     26235.944 ±    118.836  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           ATLANTIS_INDEXED      -1     1000   WORDCOUNT  sample             24672.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           ATLANTIS_INDEXED      -1     1000   WORDCOUNT  sample             25440.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           ATLANTIS_INDEXED      -1     1000   WORDCOUNT  sample             25856.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           ATLANTIS_INDEXED      -1     1000   WORDCOUNT  sample             26048.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           ATLANTIS_INDEXED      -1     1000   WORDCOUNT  sample             39324.800               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          ATLANTIS_INDEXED      -1     1000   WORDCOUNT  sample             92928.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         ATLANTIS_INDEXED      -1     1000   WORDCOUNT  sample           1329152.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           ATLANTIS_INDEXED      -1     1000   WORDCOUNT  sample           1624064.000               ns/op
+MutableJDKGetPut.wordcount                           ATLANTIS_INDEXED      -1    10000   WORDCOUNT  sample   52312    382034.371 ±   1187.701  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           ATLANTIS_INDEXED      -1    10000   WORDCOUNT  sample            367616.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           ATLANTIS_INDEXED      -1    10000   WORDCOUNT  sample            376320.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           ATLANTIS_INDEXED      -1    10000   WORDCOUNT  sample            378880.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           ATLANTIS_INDEXED      -1    10000   WORDCOUNT  sample            381952.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           ATLANTIS_INDEXED      -1    10000   WORDCOUNT  sample            431104.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          ATLANTIS_INDEXED      -1    10000   WORDCOUNT  sample           1876733.952               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         ATLANTIS_INDEXED      -1    10000   WORDCOUNT  sample           2104061.952               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           ATLANTIS_INDEXED      -1    10000   WORDCOUNT  sample           2699264.000               ns/op
+MutableJDKGetPut.wordcount                           ATLANTIS_INDEXED      -1   100000   WORDCOUNT  sample    4168   4795710.403 ±  20150.760  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           ATLANTIS_INDEXED      -1   100000   WORDCOUNT  sample           4620288.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           ATLANTIS_INDEXED      -1   100000   WORDCOUNT  sample           4726784.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           ATLANTIS_INDEXED      -1   100000   WORDCOUNT  sample           4792320.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           ATLANTIS_INDEXED      -1   100000   WORDCOUNT  sample           4874240.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           ATLANTIS_INDEXED      -1   100000   WORDCOUNT  sample           6757253.120               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          ATLANTIS_INDEXED      -1   100000   WORDCOUNT  sample           9744793.600               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         ATLANTIS_INDEXED      -1   100000   WORDCOUNT  sample          11550720.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           ATLANTIS_INDEXED      -1   100000   WORDCOUNT  sample          11550720.000               ns/op
+MutableJDKGetPut.wordcount                           ATLANTIS_INDEXED      -1  1000000   WORDCOUNT  sample     490  41052820.376 ± 195977.721  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           ATLANTIS_INDEXED      -1  1000000   WORDCOUNT  sample          40566784.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           ATLANTIS_INDEXED      -1  1000000   WORDCOUNT  sample          40763392.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           ATLANTIS_INDEXED      -1  1000000   WORDCOUNT  sample          41091072.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           ATLANTIS_INDEXED      -1  1000000   WORDCOUNT  sample          41448243.200               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           ATLANTIS_INDEXED      -1  1000000   WORDCOUNT  sample          51451658.240               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          ATLANTIS_INDEXED      -1  1000000   WORDCOUNT  sample          53084160.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         ATLANTIS_INDEXED      -1  1000000   WORDCOUNT  sample          53084160.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           ATLANTIS_INDEXED      -1  1000000   WORDCOUNT  sample          53084160.000               ns/op
+MutableJDKGetPut.wordcount                           JDKGDXDS_INDEXED      -1       10   WORDCOUNT  sample  503625       202.855 ±     13.426  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           JDKGDXDS_INDEXED      -1       10   WORDCOUNT  sample               162.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           JDKGDXDS_INDEXED      -1       10   WORDCOUNT  sample               173.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           JDKGDXDS_INDEXED      -1       10   WORDCOUNT  sample               184.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           JDKGDXDS_INDEXED      -1       10   WORDCOUNT  sample               188.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           JDKGDXDS_INDEXED      -1       10   WORDCOUNT  sample               306.740               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          JDKGDXDS_INDEXED      -1       10   WORDCOUNT  sample              1959.496               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         JDKGDXDS_INDEXED      -1       10   WORDCOUNT  sample             23895.571               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           JDKGDXDS_INDEXED      -1       10   WORDCOUNT  sample           1087488.000               ns/op
+MutableJDKGetPut.wordcount                           JDKGDXDS_INDEXED      -1      100   WORDCOUNT  sample  734756      1769.236 ±     29.680  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           JDKGDXDS_INDEXED      -1      100   WORDCOUNT  sample              1636.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           JDKGDXDS_INDEXED      -1      100   WORDCOUNT  sample              1680.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           JDKGDXDS_INDEXED      -1      100   WORDCOUNT  sample              1714.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           JDKGDXDS_INDEXED      -1      100   WORDCOUNT  sample              1732.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           JDKGDXDS_INDEXED      -1      100   WORDCOUNT  sample              1896.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          JDKGDXDS_INDEXED      -1      100   WORDCOUNT  sample              8599.776               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         JDKGDXDS_INDEXED      -1      100   WORDCOUNT  sample             31297.555               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           JDKGDXDS_INDEXED      -1      100   WORDCOUNT  sample           1517568.000               ns/op
+MutableJDKGetPut.wordcount                           JDKGDXDS_INDEXED      -1     1000   WORDCOUNT  sample  394508     25504.720 ±    116.223  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           JDKGDXDS_INDEXED      -1     1000   WORDCOUNT  sample             24032.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           JDKGDXDS_INDEXED      -1     1000   WORDCOUNT  sample             24864.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           JDKGDXDS_INDEXED      -1     1000   WORDCOUNT  sample             25216.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           JDKGDXDS_INDEXED      -1     1000   WORDCOUNT  sample             25376.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           JDKGDXDS_INDEXED      -1     1000   WORDCOUNT  sample             28640.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          JDKGDXDS_INDEXED      -1     1000   WORDCOUNT  sample             89662.848               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         JDKGDXDS_INDEXED      -1     1000   WORDCOUNT  sample           1304054.784               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           JDKGDXDS_INDEXED      -1     1000   WORDCOUNT  sample           2082816.000               ns/op
+MutableJDKGetPut.wordcount                           JDKGDXDS_INDEXED      -1    10000   WORDCOUNT  sample   43910    455205.814 ±   1365.668  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           JDKGDXDS_INDEXED      -1    10000   WORDCOUNT  sample            439808.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           JDKGDXDS_INDEXED      -1    10000   WORDCOUNT  sample            447488.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           JDKGDXDS_INDEXED      -1    10000   WORDCOUNT  sample            451072.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           JDKGDXDS_INDEXED      -1    10000   WORDCOUNT  sample            457216.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           JDKGDXDS_INDEXED      -1    10000   WORDCOUNT  sample            540672.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          JDKGDXDS_INDEXED      -1    10000   WORDCOUNT  sample           1925302.272               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         JDKGDXDS_INDEXED      -1    10000   WORDCOUNT  sample           2185316.762               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           JDKGDXDS_INDEXED      -1    10000   WORDCOUNT  sample           2719744.000               ns/op
+MutableJDKGetPut.wordcount                           JDKGDXDS_INDEXED      -1   100000   WORDCOUNT  sample    4402   4540290.384 ±  12505.203  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           JDKGDXDS_INDEXED      -1   100000   WORDCOUNT  sample           4489216.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           JDKGDXDS_INDEXED      -1   100000   WORDCOUNT  sample           4505600.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           JDKGDXDS_INDEXED      -1   100000   WORDCOUNT  sample           4554752.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           JDKGDXDS_INDEXED      -1   100000   WORDCOUNT  sample           4571136.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           JDKGDXDS_INDEXED      -1   100000   WORDCOUNT  sample           5143838.720               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          JDKGDXDS_INDEXED      -1   100000   WORDCOUNT  sample           8863498.240               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         JDKGDXDS_INDEXED      -1   100000   WORDCOUNT  sample           9338880.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           JDKGDXDS_INDEXED      -1   100000   WORDCOUNT  sample           9338880.000               ns/op
+MutableJDKGetPut.wordcount                           JDKGDXDS_INDEXED      -1  1000000   WORDCOUNT  sample     519  38649950.705 ± 225886.104  ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.00           JDKGDXDS_INDEXED      -1  1000000   WORDCOUNT  sample          38076416.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.50           JDKGDXDS_INDEXED      -1  1000000   WORDCOUNT  sample          38273024.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.90           JDKGDXDS_INDEXED      -1  1000000   WORDCOUNT  sample          38731776.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.95           JDKGDXDS_INDEXED      -1  1000000   WORDCOUNT  sample          41680896.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.99           JDKGDXDS_INDEXED      -1  1000000   WORDCOUNT  sample          48667033.600               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.999          JDKGDXDS_INDEXED      -1  1000000   WORDCOUNT  sample          54853632.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p0.9999         JDKGDXDS_INDEXED      -1  1000000   WORDCOUNT  sample          54853632.000               ns/op
+MutableJDKGetPut.wordcount:wordcount·p1.00           JDKGDXDS_INDEXED      -1  1000000   WORDCOUNT  sample          54853632.000               ns/op

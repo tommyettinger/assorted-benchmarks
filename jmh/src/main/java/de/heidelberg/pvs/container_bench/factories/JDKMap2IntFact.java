@@ -7,6 +7,7 @@ import de.heidelberg.pvs.container_bench.ObjectMapX;
 import de.heidelberg.pvs.container_bench.ObjectMapY;
 import de.heidelberg.pvs.container_bench.OrderedMapX;
 import de.heidelberg.pvs.container_bench.OrderedMapY;
+import squidpony.squidmath.UnorderedMap;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -52,6 +53,8 @@ public enum JDKMap2IntFact {
 
 	AGRONA_O2O_HASH(() -> new org.agrona.collections.Object2ObjectHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 
+	SQUID_HASH(() -> new UnorderedMap<>(16, LoadFactor.LOAD_FACTOR)),
+	SQUID_INDEXED(() -> new squidpony.squidmath.OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 	ATLANTIS_INDEXED(() -> new IndexedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
 	JDKGDXDS_HASH(() -> new ObjectMap<>(16, LoadFactor.LOAD_FACTOR)),

@@ -7,12 +7,14 @@ import de.heidelberg.pvs.container_bench.ObjectMapX;
 import de.heidelberg.pvs.container_bench.ObjectMapY;
 import de.heidelberg.pvs.container_bench.OrderedMapX;
 import de.heidelberg.pvs.container_bench.OrderedMapY;
+import squidpony.squidmath.UnorderedMap;
 
 import java.util.Map;
 import java.util.function.Supplier;
 
 public enum JDKMap2ObjFact {
-	
+//JDK_O2O_HASH,KOLOBOKE_O2O_HASH,FASTUTIL_O2O_HASH,ECLIPSE_O2O_HASH,APACHE_O2O_HASH,MAHOUT_O2O_HASH,AGRONA_O2O_HASH,SQUID_HASH,JDKGDXDS_HASH
+//JDK_O2O_LINKEDHASH,FASTUTIL_O2O_LINKEDHASH,APACHE_O2O_LINKEDHASH,SQUID_INDEXED,ATLANTIS_INDEXED,JDKGDXDS_INDEXED
 //FASTUTIL_O2O_ARRAY,GOOGLE_O2O_ARRAY,CORENLP_ARRAY
 	JDK_O2O_HASH(() -> new java.util.HashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_O2O_LINKEDHASH(() -> new java.util.LinkedHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
@@ -43,8 +45,10 @@ public enum JDKMap2ObjFact {
 
 	AGRONA_O2O_HASH(() -> new org.agrona.collections.Object2ObjectHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 	
+	SQUID_HASH(() -> new UnorderedMap<>(16, LoadFactor.LOAD_FACTOR)),
+	SQUID_INDEXED(() -> new squidpony.squidmath.OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 	ATLANTIS_INDEXED(() -> new IndexedMap<>(16, LoadFactor.LOAD_FACTOR)),
-	
+
 	JDKGDXDS_HASH(() -> new ObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_INDEXED(() -> new OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 

@@ -1,7 +1,6 @@
 package de.heidelberg.pvs.container_bench;
 
 import com.github.tommyettinger.ds.OrderedSet;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 
@@ -53,7 +52,7 @@ public class OrderedSetY<T> extends OrderedSet<T> {
 	 * @param item a non-null Object; its hashCode() method should be used by most implementations.
 	 */
 	@Override
-	protected int place(@NotNull Object item) {
+	protected int place(Object item) {
 		return (item.hashCode() * 0x9E377 ^ 0x7F4A7C15) * 0x9E377 >>> shift;
 	}
 }
