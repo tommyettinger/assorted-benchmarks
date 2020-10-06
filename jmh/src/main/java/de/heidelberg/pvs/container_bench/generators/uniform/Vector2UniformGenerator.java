@@ -7,7 +7,7 @@ public class Vector2UniformGenerator extends AbstractUniformGenerator<Vector2> {
 	public Vector2[] generateArray(int arraySize) {
 		Vector2[] vectors = new Vector2[arraySize];
 		for (int i = 0; i < arraySize; i++) {
-			vectors[i] = new Vector2(generator.next(23), generator.next(23));
+			vectors[i] = new Vector2(generator.next(16), i);
 		}
 		return vectors;
 	}
