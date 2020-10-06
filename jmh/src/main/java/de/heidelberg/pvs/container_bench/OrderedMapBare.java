@@ -7,20 +7,20 @@ import java.util.Map;
 /**
  * Created by Tommy Ettinger on 9/16/2020.
  */
-public class OrderedMapY<K, V> extends OrderedMap<K, V> {
-	public OrderedMapY() {
+public class OrderedMapBare<K, V> extends OrderedMap<K, V> {
+	public OrderedMapBare() {
 		super();
 	}
 
-	public OrderedMapY(int initialCapacity) {
+	public OrderedMapBare(int initialCapacity) {
 		super(initialCapacity);
 	}
 
-	public OrderedMapY(int initialCapacity, float loadFactor) {
+	public OrderedMapBare(int initialCapacity, float loadFactor) {
 		super(initialCapacity, loadFactor);
 	}
 
-	public OrderedMapY(OrderedMap<? extends K, ? extends V> map) {
+	public OrderedMapBare(OrderedMap<? extends K, ? extends V> map) {
 		super(map);
 	}
 
@@ -29,7 +29,7 @@ public class OrderedMapY<K, V> extends OrderedMap<K, V> {
 	 *
 	 * @param map
 	 */
-	public OrderedMapY(Map<? extends K, ? extends V> map) {
+	public OrderedMapBare(Map<? extends K, ? extends V> map) {
 		super(map);
 	}
 
@@ -53,6 +53,6 @@ public class OrderedMapY<K, V> extends OrderedMap<K, V> {
 	 */
 	@Override
 	protected int place(Object item) {
-		return (item.hashCode() * 0x9E377 ^ 0x7F4A7C15) * 0x9E377 >>> shift;
+		return item.hashCode() & mask;
 	}
 }

@@ -1,0 +1,325 @@
+Benchmark                               (impl)      (payloadType)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
+JDKSetBench.bench                     JDK_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample  309450    16569.117 ± 142.910  ns/op
+JDKSetBench.bench:bench·p0.00         JDK_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            14432.000            ns/op
+JDKSetBench.bench:bench·p0.50         JDK_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            15616.000            ns/op
+JDKSetBench.bench:bench·p0.90         JDK_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            16832.000            ns/op
+JDKSetBench.bench:bench·p0.95         JDK_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            17088.000            ns/op
+JDKSetBench.bench:bench·p0.99         JDK_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            23456.000            ns/op
+JDKSetBench.bench:bench·p0.999        JDK_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            83456.000            ns/op
+JDKSetBench.bench:bench·p0.9999       JDK_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample          1351792.435            ns/op
+JDKSetBench.bench:bench·p1.00         JDK_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample          1716224.000            ns/op
+JDKSetBench.bench                     JDK_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample  474285     5319.212 ±  19.814  ns/op
+JDKSetBench.bench:bench·p0.00         JDK_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             4960.000            ns/op
+JDKSetBench.bench:bench·p0.50         JDK_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             5248.000            ns/op
+JDKSetBench.bench:bench·p0.90         JDK_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             5376.000            ns/op
+JDKSetBench.bench:bench·p0.95         JDK_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             5440.000            ns/op
+JDKSetBench.bench:bench·p0.99         JDK_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             5952.000            ns/op
+JDKSetBench.bench:bench·p0.999        JDK_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample            25440.000            ns/op
+JDKSetBench.bench:bench·p0.9999       JDK_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample            35136.000            ns/op
+JDKSetBench.bench:bench·p1.00         JDK_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample          2134016.000            ns/op
+JDKSetBench.bench                     JDK_HASH     STRING_UNIFORM  467505    1000        COPY  sample  556410    18051.548 ±  82.381  ns/op
+JDKSetBench.bench:bench·p0.00         JDK_HASH     STRING_UNIFORM  467505    1000        COPY  sample            16512.000            ns/op
+JDKSetBench.bench:bench·p0.50         JDK_HASH     STRING_UNIFORM  467505    1000        COPY  sample            17472.000            ns/op
+JDKSetBench.bench:bench·p0.90         JDK_HASH     STRING_UNIFORM  467505    1000        COPY  sample            18144.000            ns/op
+JDKSetBench.bench:bench·p0.95         JDK_HASH     STRING_UNIFORM  467505    1000        COPY  sample            18432.000            ns/op
+JDKSetBench.bench:bench·p0.99         JDK_HASH     STRING_UNIFORM  467505    1000        COPY  sample            22336.000            ns/op
+JDKSetBench.bench:bench·p0.999        JDK_HASH     STRING_UNIFORM  467505    1000        COPY  sample            74774.784            ns/op
+JDKSetBench.bench:bench·p0.9999       JDK_HASH     STRING_UNIFORM  467505    1000        COPY  sample          1236992.000            ns/op
+JDKSetBench.bench:bench·p1.00         JDK_HASH     STRING_UNIFORM  467505    1000        COPY  sample          1517568.000            ns/op
+JDKSetBench.bench                     JDK_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample  460251       52.508 ±   1.710  ns/op
+JDKSetBench.bench:bench·p0.00         JDK_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               30.000            ns/op
+JDKSetBench.bench:bench·p0.50         JDK_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               43.000            ns/op
+JDKSetBench.bench:bench·p0.90         JDK_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               55.000            ns/op
+JDKSetBench.bench:bench·p0.95         JDK_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               59.000            ns/op
+JDKSetBench.bench:bench·p0.99         JDK_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               72.000            ns/op
+JDKSetBench.bench:bench·p0.999        JDK_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample              858.748            ns/op
+JDKSetBench.bench:bench·p0.9999       JDK_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample            21342.387            ns/op
+JDKSetBench.bench:bench·p1.00         JDK_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample            48704.000            ns/op
+JDKSetBench.bench                     JDK_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample  503542    19957.757 ±  90.672  ns/op
+JDKSetBench.bench:bench·p0.00         JDK_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            18208.000            ns/op
+JDKSetBench.bench:bench·p0.50         JDK_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            19328.000            ns/op
+JDKSetBench.bench:bench·p0.90         JDK_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            20096.000            ns/op
+JDKSetBench.bench:bench·p0.95         JDK_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            20288.000            ns/op
+JDKSetBench.bench:bench·p0.99         JDK_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            24128.000            ns/op
+JDKSetBench.bench:bench·p0.999        JDK_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            69376.000            ns/op
+JDKSetBench.bench:bench·p0.9999       JDK_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1265664.000            ns/op
+JDKSetBench.bench:bench·p1.00         JDK_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1540096.000            ns/op
+JDKSetBench.bench                     JDK_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample  473340     5321.264 ±  13.823  ns/op
+JDKSetBench.bench:bench·p0.00         JDK_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             4936.000            ns/op
+JDKSetBench.bench:bench·p0.50         JDK_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5248.000            ns/op
+JDKSetBench.bench:bench·p0.90         JDK_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5464.000            ns/op
+JDKSetBench.bench:bench·p0.95         JDK_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5608.000            ns/op
+JDKSetBench.bench:bench·p0.99         JDK_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5960.000            ns/op
+JDKSetBench.bench:bench·p0.999        JDK_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample            24160.000            ns/op
+JDKSetBench.bench:bench·p0.9999       JDK_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample            33834.618            ns/op
+JDKSetBench.bench:bench·p1.00         JDK_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample          1898496.000            ns/op
+JDKSetBench.bench                     JDK_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample  408822    24583.079 ± 113.605  ns/op
+JDKSetBench.bench:bench·p0.00         JDK_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample            22528.000            ns/op
+JDKSetBench.bench:bench·p0.50         JDK_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample            23840.000            ns/op
+JDKSetBench.bench:bench·p0.90         JDK_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample            24512.000            ns/op
+JDKSetBench.bench:bench·p0.95         JDK_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample            24864.000            ns/op
+JDKSetBench.bench:bench·p0.99         JDK_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample            30720.000            ns/op
+JDKSetBench.bench:bench·p0.999        JDK_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample            91414.656            ns/op
+JDKSetBench.bench:bench·p0.9999       JDK_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample          1353969.050            ns/op
+JDKSetBench.bench:bench·p1.00         JDK_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample          1589248.000            ns/op
+JDKSetBench.bench                     JDK_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample  466965       49.996 ±   1.673  ns/op
+JDKSetBench.bench:bench·p0.00         JDK_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               32.000            ns/op
+JDKSetBench.bench:bench·p0.50         JDK_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               40.000            ns/op
+JDKSetBench.bench:bench·p0.90         JDK_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               51.000            ns/op
+JDKSetBench.bench:bench·p0.95         JDK_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               54.000            ns/op
+JDKSetBench.bench:bench·p0.99         JDK_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               69.000            ns/op
+JDKSetBench.bench:bench·p0.999        JDK_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample              676.068            ns/op
+JDKSetBench.bench:bench·p0.9999       JDK_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            21257.709            ns/op
+JDKSetBench.bench:bench·p1.00         JDK_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            36032.000            ns/op
+JDKSetBench.bench                     JDK_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample  343084    14888.835 ± 121.239  ns/op
+JDKSetBench.bench:bench·p0.00         JDK_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            13200.000            ns/op
+JDKSetBench.bench:bench·p0.50         JDK_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            14096.000            ns/op
+JDKSetBench.bench:bench·p0.90         JDK_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            15120.000            ns/op
+JDKSetBench.bench:bench·p0.95         JDK_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            15360.000            ns/op
+JDKSetBench.bench:bench·p0.99         JDK_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            21280.000            ns/op
+JDKSetBench.bench:bench·p0.999        JDK_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            74869.120            ns/op
+JDKSetBench.bench:bench·p0.9999       JDK_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample          1297320.960            ns/op
+JDKSetBench.bench:bench·p1.00         JDK_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample          1523712.000            ns/op
+JDKSetBench.bench                     JDK_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample  477896     5282.752 ±  17.888  ns/op
+JDKSetBench.bench:bench·p0.00         JDK_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             4952.000            ns/op
+JDKSetBench.bench:bench·p0.50         JDK_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             5216.000            ns/op
+JDKSetBench.bench:bench·p0.90         JDK_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             5336.000            ns/op
+JDKSetBench.bench:bench·p0.95         JDK_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             5384.000            ns/op
+JDKSetBench.bench:bench·p0.99         JDK_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             5856.000            ns/op
+JDKSetBench.bench:bench·p0.999        JDK_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample            25091.296            ns/op
+JDKSetBench.bench:bench·p0.9999       JDK_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample            34176.000            ns/op
+JDKSetBench.bench:bench·p1.00         JDK_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample          2514944.000            ns/op
+JDKSetBench.bench                     JDK_HASH  STRING_DICTIONARY  467505    1000        COPY  sample  432912    23231.426 ± 109.316  ns/op
+JDKSetBench.bench:bench·p0.00         JDK_HASH  STRING_DICTIONARY  467505    1000        COPY  sample            21376.000            ns/op
+JDKSetBench.bench:bench·p0.50         JDK_HASH  STRING_DICTIONARY  467505    1000        COPY  sample            22528.000            ns/op
+JDKSetBench.bench:bench·p0.90         JDK_HASH  STRING_DICTIONARY  467505    1000        COPY  sample            23136.000            ns/op
+JDKSetBench.bench:bench·p0.95         JDK_HASH  STRING_DICTIONARY  467505    1000        COPY  sample            23456.000            ns/op
+JDKSetBench.bench:bench·p0.99         JDK_HASH  STRING_DICTIONARY  467505    1000        COPY  sample            29696.000            ns/op
+JDKSetBench.bench:bench·p0.999        JDK_HASH  STRING_DICTIONARY  467505    1000        COPY  sample            88342.272            ns/op
+JDKSetBench.bench:bench·p0.9999       JDK_HASH  STRING_DICTIONARY  467505    1000        COPY  sample          1326507.418            ns/op
+JDKSetBench.bench:bench·p1.00         JDK_HASH  STRING_DICTIONARY  467505    1000        COPY  sample          1972224.000            ns/op
+JDKSetBench.bench                     JDK_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample  480964       50.583 ±   1.610  ns/op
+JDKSetBench.bench:bench·p0.00         JDK_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               29.000            ns/op
+JDKSetBench.bench:bench·p0.50         JDK_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               41.000            ns/op
+JDKSetBench.bench:bench·p0.90         JDK_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               54.000            ns/op
+JDKSetBench.bench:bench·p0.95         JDK_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               58.000            ns/op
+JDKSetBench.bench:bench·p0.99         JDK_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               72.000            ns/op
+JDKSetBench.bench:bench·p0.999        JDK_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample              781.035            ns/op
+JDKSetBench.bench:bench·p0.9999       JDK_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample            21276.912            ns/op
+JDKSetBench.bench:bench·p1.00         JDK_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample            76800.000            ns/op
+JDKSetBench.bench                JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample  368499    27279.821 ± 124.490  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            24928.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            26592.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            27232.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            27456.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            31136.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample           101952.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample          1366323.200            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample          1812480.000            ns/op
+JDKSetBench.bench                JDKGDXDS_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample  481063     5231.842 ±   4.155  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             5128.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             5184.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             5224.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             5248.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             5360.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample            24288.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample            33017.190            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample            58176.000            ns/op
+JDKSetBench.bench                JDKGDXDS_HASH     STRING_UNIFORM  467505    1000        COPY  sample  613815     8264.356 ±  64.106  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000        COPY  sample             7592.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000        COPY  sample             7960.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000        COPY  sample             8168.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000        COPY  sample             8272.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000        COPY  sample             8864.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_HASH     STRING_UNIFORM  467505    1000        COPY  sample            34176.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_HASH     STRING_UNIFORM  467505    1000        COPY  sample          1205490.483            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000        COPY  sample          2170880.000            ns/op
+JDKSetBench.bench                JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample  412788       55.265 ±   1.871  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               30.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               38.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               70.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               82.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample              118.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample              859.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample            21463.075            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample            33344.000            ns/op
+JDKSetBench.bench                JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample  412910    12327.412 ±  98.217  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            11264.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            11824.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            12096.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            12208.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            15648.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            54597.696            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1263616.000            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1634304.000            ns/op
+JDKSetBench.bench                JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample  486135     5183.062 ±   5.371  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5096.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5136.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5160.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5168.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             5264.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample            23616.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample            34880.000            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample           204032.000            ns/op
+JDKSetBench.bench                JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample  694298     7283.837 ±  52.066  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample             6832.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample             7032.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample             7176.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample             7256.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample             9104.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample            29846.432            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample          1008343.347            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample          2048000.000            ns/op
+JDKSetBench.bench                JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample  559466       42.325 ±   1.253  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               29.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               33.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               49.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               57.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               74.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample              566.066            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            18817.706            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            29664.000            ns/op
+JDKSetBench.bench                JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample  309662    16487.292 ± 128.888  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            15024.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            15840.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            16288.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            16480.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            19488.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            83627.136            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample          1323146.035            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample          1542144.000            ns/op
+JDKSetBench.bench                JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample  483888     5201.135 ±   4.310  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             5096.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             5144.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             5200.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             5256.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             5312.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample            24384.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample            34819.552            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample            79104.000            ns/op
+JDKSetBench.bench                JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000        COPY  sample  645758     7827.016 ±  53.160  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000        COPY  sample             7264.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000        COPY  sample             7536.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000        COPY  sample             7744.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000        COPY  sample             7840.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000        COPY  sample             8752.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000        COPY  sample            37327.424            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000        COPY  sample          1028932.506            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000        COPY  sample          1536000.000            ns/op
+JDKSetBench.bench                JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample  466420       49.210 ±   1.332  ns/op
+JDKSetBench.bench:bench·p0.00    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               30.000            ns/op
+JDKSetBench.bench:bench·p0.50    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               38.000            ns/op
+JDKSetBench.bench:bench·p0.90    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               57.000            ns/op
+JDKSetBench.bench:bench·p0.95    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               66.000            ns/op
+JDKSetBench.bench:bench·p0.99    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               91.000            ns/op
+JDKSetBench.bench:bench·p0.999   JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample              762.000            ns/op
+JDKSetBench.bench:bench·p0.9999  JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample            18304.000            ns/op
+JDKSetBench.bench:bench·p1.00    JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample            50368.000            ns/op
+JDKSetBench.bench                   SQUID_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample  352986    28521.558 ± 135.899  ns/op
+JDKSetBench.bench:bench·p0.00       SQUID_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            26176.000            ns/op
+JDKSetBench.bench:bench·p0.50       SQUID_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            27712.000            ns/op
+JDKSetBench.bench:bench·p0.90       SQUID_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            28352.000            ns/op
+JDKSetBench.bench:bench·p0.95       SQUID_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            28640.000            ns/op
+JDKSetBench.bench:bench·p0.99       SQUID_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample            33280.000            ns/op
+JDKSetBench.bench:bench·p0.999      SQUID_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample           111878.656            ns/op
+JDKSetBench.bench:bench·p0.9999     SQUID_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample          1341440.000            ns/op
+JDKSetBench.bench:bench·p1.00       SQUID_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample          1654784.000            ns/op
+JDKSetBench.bench                   SQUID_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample  608690     4134.869 ±   2.871  ns/op
+JDKSetBench.bench:bench·p0.00       SQUID_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             4040.000            ns/op
+JDKSetBench.bench:bench·p0.50       SQUID_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             4104.000            ns/op
+JDKSetBench.bench:bench·p0.90       SQUID_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             4144.000            ns/op
+JDKSetBench.bench:bench·p0.95       SQUID_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             4160.000            ns/op
+JDKSetBench.bench:bench·p0.99       SQUID_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             4176.000            ns/op
+JDKSetBench.bench:bench·p0.999      SQUID_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample             9140.944            ns/op
+JDKSetBench.bench:bench·p0.9999     SQUID_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample            30760.378            ns/op
+JDKSetBench.bench:bench·p1.00       SQUID_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample            88320.000            ns/op
+JDKSetBench.bench                   SQUID_HASH     STRING_UNIFORM  467505    1000        COPY  sample  533971     9490.280 ±  70.116  ns/op
+JDKSetBench.bench:bench·p0.00       SQUID_HASH     STRING_UNIFORM  467505    1000        COPY  sample             8832.000            ns/op
+JDKSetBench.bench:bench·p0.50       SQUID_HASH     STRING_UNIFORM  467505    1000        COPY  sample             9152.000            ns/op
+JDKSetBench.bench:bench·p0.90       SQUID_HASH     STRING_UNIFORM  467505    1000        COPY  sample             9344.000            ns/op
+JDKSetBench.bench:bench·p0.95       SQUID_HASH     STRING_UNIFORM  467505    1000        COPY  sample             9440.000            ns/op
+JDKSetBench.bench:bench·p0.99       SQUID_HASH     STRING_UNIFORM  467505    1000        COPY  sample            10416.000            ns/op
+JDKSetBench.bench:bench·p0.999      SQUID_HASH     STRING_UNIFORM  467505    1000        COPY  sample            36096.000            ns/op
+JDKSetBench.bench:bench·p0.9999     SQUID_HASH     STRING_UNIFORM  467505    1000        COPY  sample          1137874.534            ns/op
+JDKSetBench.bench:bench·p1.00       SQUID_HASH     STRING_UNIFORM  467505    1000        COPY  sample          1912832.000            ns/op
+JDKSetBench.bench                   SQUID_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample  446472       50.263 ±   1.544  ns/op
+JDKSetBench.bench:bench·p0.00       SQUID_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               28.000            ns/op
+JDKSetBench.bench:bench·p0.50       SQUID_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               36.000            ns/op
+JDKSetBench.bench:bench·p0.90       SQUID_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               66.000            ns/op
+JDKSetBench.bench:bench·p0.95       SQUID_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample               79.000            ns/op
+JDKSetBench.bench:bench·p0.99       SQUID_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample              106.000            ns/op
+JDKSetBench.bench:bench·p0.999      SQUID_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample              818.527            ns/op
+JDKSetBench.bench:bench·p0.9999     SQUID_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample            19514.029            ns/op
+JDKSetBench.bench:bench·p1.00       SQUID_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample            47616.000            ns/op
+JDKSetBench.bench                   SQUID_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample  384910    13218.806 ± 104.168  ns/op
+JDKSetBench.bench:bench·p0.00       SQUID_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            12304.000            ns/op
+JDKSetBench.bench:bench·p0.50       SQUID_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            12720.000            ns/op
+JDKSetBench.bench:bench·p0.90       SQUID_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            12944.000            ns/op
+JDKSetBench.bench:bench·p0.95       SQUID_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            13040.000            ns/op
+JDKSetBench.bench:bench·p0.99       SQUID_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            14736.000            ns/op
+JDKSetBench.bench:bench·p0.999      SQUID_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample            58251.392            ns/op
+JDKSetBench.bench:bench·p0.9999     SQUID_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1272850.227            ns/op
+JDKSetBench.bench:bench·p1.00       SQUID_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample          1538048.000            ns/op
+JDKSetBench.bench                   SQUID_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample  615949     4084.280 ±   2.847  ns/op
+JDKSetBench.bench:bench·p0.00       SQUID_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             3996.000            ns/op
+JDKSetBench.bench:bench·p0.50       SQUID_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             4052.000            ns/op
+JDKSetBench.bench:bench·p0.90       SQUID_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             4080.000            ns/op
+JDKSetBench.bench:bench·p0.95       SQUID_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             4112.000            ns/op
+JDKSetBench.bench:bench·p0.99       SQUID_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample             4168.000            ns/op
+JDKSetBench.bench:bench·p0.999      SQUID_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample            15504.800            ns/op
+JDKSetBench.bench:bench·p0.9999     SQUID_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample            30732.960            ns/op
+JDKSetBench.bench:bench·p1.00       SQUID_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample            41536.000            ns/op
+JDKSetBench.bench                   SQUID_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample  615996     8233.218 ±  64.288  ns/op
+JDKSetBench.bench:bench·p0.00       SQUID_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample             7712.000            ns/op
+JDKSetBench.bench:bench·p0.50       SQUID_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample             7952.000            ns/op
+JDKSetBench.bench:bench·p0.90       SQUID_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample             8080.000            ns/op
+JDKSetBench.bench:bench·p0.95       SQUID_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample             8160.000            ns/op
+JDKSetBench.bench:bench·p0.99       SQUID_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample             8512.000            ns/op
+JDKSetBench.bench:bench·p0.999      SQUID_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample            30496.000            ns/op
+JDKSetBench.bench:bench·p0.9999     SQUID_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample          1178834.330            ns/op
+JDKSetBench.bench:bench·p1.00       SQUID_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample          1622016.000            ns/op
+JDKSetBench.bench                   SQUID_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample  534081       51.295 ±   1.556  ns/op
+JDKSetBench.bench:bench·p0.00       SQUID_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               29.000            ns/op
+JDKSetBench.bench:bench·p0.50       SQUID_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               43.000            ns/op
+JDKSetBench.bench:bench·p0.90       SQUID_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               56.000            ns/op
+JDKSetBench.bench:bench·p0.95       SQUID_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               66.000            ns/op
+JDKSetBench.bench:bench·p0.99       SQUID_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample               91.000            ns/op
+JDKSetBench.bench:bench·p0.999      SQUID_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample              685.918            ns/op
+JDKSetBench.bench:bench·p0.9999     SQUID_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            21184.000            ns/op
+JDKSetBench.bench:bench·p1.00       SQUID_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample            81792.000            ns/op
+JDKSetBench.bench                   SQUID_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample  513020    19587.803 ±  89.009  ns/op
+JDKSetBench.bench:bench·p0.00       SQUID_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            18240.000            ns/op
+JDKSetBench.bench:bench·p0.50       SQUID_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            19040.000            ns/op
+JDKSetBench.bench:bench·p0.90       SQUID_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            19488.000            ns/op
+JDKSetBench.bench:bench·p0.95       SQUID_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            19680.000            ns/op
+JDKSetBench.bench:bench·p0.99       SQUID_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            21952.000            ns/op
+JDKSetBench.bench:bench·p0.999      SQUID_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample            70144.000            ns/op
+JDKSetBench.bench:bench·p0.9999     SQUID_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample          1276906.496            ns/op
+JDKSetBench.bench:bench·p1.00       SQUID_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample          1560576.000            ns/op
+JDKSetBench.bench                   SQUID_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample  607132     4141.946 ±   2.856  ns/op
+JDKSetBench.bench:bench·p0.00       SQUID_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             4028.000            ns/op
+JDKSetBench.bench:bench·p0.50       SQUID_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             4120.000            ns/op
+JDKSetBench.bench:bench·p0.90       SQUID_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             4144.000            ns/op
+JDKSetBench.bench:bench·p0.95       SQUID_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             4160.000            ns/op
+JDKSetBench.bench:bench·p0.99       SQUID_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             4208.000            ns/op
+JDKSetBench.bench:bench·p0.999      SQUID_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample             8999.488            ns/op
+JDKSetBench.bench:bench·p0.9999     SQUID_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample            31296.000            ns/op
+JDKSetBench.bench:bench·p1.00       SQUID_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample           117504.000            ns/op
+JDKSetBench.bench                   SQUID_HASH  STRING_DICTIONARY  467505    1000        COPY  sample  557348     9086.993 ±  66.076  ns/op
+JDKSetBench.bench:bench·p0.00       SQUID_HASH  STRING_DICTIONARY  467505    1000        COPY  sample             8496.000            ns/op
+JDKSetBench.bench:bench·p0.50       SQUID_HASH  STRING_DICTIONARY  467505    1000        COPY  sample             8784.000            ns/op
+JDKSetBench.bench:bench·p0.90       SQUID_HASH  STRING_DICTIONARY  467505    1000        COPY  sample             8944.000            ns/op
+JDKSetBench.bench:bench·p0.95       SQUID_HASH  STRING_DICTIONARY  467505    1000        COPY  sample             9024.000            ns/op
+JDKSetBench.bench:bench·p0.99       SQUID_HASH  STRING_DICTIONARY  467505    1000        COPY  sample             9728.000            ns/op
+JDKSetBench.bench:bench·p0.999      SQUID_HASH  STRING_DICTIONARY  467505    1000        COPY  sample            33664.000            ns/op
+JDKSetBench.bench:bench·p0.9999     SQUID_HASH  STRING_DICTIONARY  467505    1000        COPY  sample          1144536.474            ns/op
+JDKSetBench.bench:bench·p1.00       SQUID_HASH  STRING_DICTIONARY  467505    1000        COPY  sample          1503232.000            ns/op
+JDKSetBench.bench                   SQUID_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample  459116       51.227 ±   1.622  ns/op
+JDKSetBench.bench:bench·p0.00       SQUID_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               28.000            ns/op
+JDKSetBench.bench:bench·p0.50       SQUID_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               37.000            ns/op
+JDKSetBench.bench:bench·p0.90       SQUID_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               61.000            ns/op
+JDKSetBench.bench:bench·p0.95       SQUID_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample               71.000            ns/op
+JDKSetBench.bench:bench·p0.99       SQUID_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample              109.000            ns/op
+JDKSetBench.bench:bench·p0.999      SQUID_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample              894.883            ns/op
+JDKSetBench.bench:bench·p0.9999     SQUID_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample            20610.826            ns/op
+JDKSetBench.bench:bench·p1.00       SQUID_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample            42368.000            ns/op

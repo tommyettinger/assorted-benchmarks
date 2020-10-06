@@ -7,11 +7,11 @@ import java.util.Map;
 /**
  * Created by Tommy Ettinger on 9/16/2020.
  */
-public class ObjectMapX<K, V> extends ObjectMap<K, V> {
+public class ObjectMapMulXor<K, V> extends ObjectMap<K, V> {
 	/**
 	 * Creates a new map with an initial capacity of 51 and a load factor of 0.8.
 	 */
-	public ObjectMapX() {
+	public ObjectMapMulXor() {
 		super();
 	}
 
@@ -20,7 +20,7 @@ public class ObjectMapX<K, V> extends ObjectMap<K, V> {
 	 *
 	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
 	 */
-	public ObjectMapX(int initialCapacity) {
+	public ObjectMapMulXor(int initialCapacity) {
 		super(initialCapacity);
 	}
 
@@ -31,7 +31,7 @@ public class ObjectMapX<K, V> extends ObjectMap<K, V> {
 	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
 	 * @param loadFactor
 	 */
-	public ObjectMapX(int initialCapacity, float loadFactor) {
+	public ObjectMapMulXor(int initialCapacity, float loadFactor) {
 		super(initialCapacity, loadFactor);
 	}
 
@@ -40,7 +40,7 @@ public class ObjectMapX<K, V> extends ObjectMap<K, V> {
 	 *
 	 * @param map
 	 */
-	public ObjectMapX(ObjectMap<? extends K, ? extends V> map) {
+	public ObjectMapMulXor(ObjectMap<? extends K, ? extends V> map) {
 		super(map);
 	}
 
@@ -49,7 +49,7 @@ public class ObjectMapX<K, V> extends ObjectMap<K, V> {
 	 *
 	 * @param map
 	 */
-	public ObjectMapX(Map<? extends K, ? extends V> map) {
+	public ObjectMapMulXor(Map<? extends K, ? extends V> map) {
 		super(map);
 	}
 
@@ -73,6 +73,7 @@ public class ObjectMapX<K, V> extends ObjectMap<K, V> {
 	 */
 	@Override
 	protected int place(Object item) {
-		return item.hashCode() & mask;
+		return (item.hashCode() * 0x9E377 ^ 0x7F4A7C15) * 0x9E377 >>> shift;
 	}
+	//0x9E3779B97F4A7C15 0x9B97F4A7 0x7F4A7C15
 }

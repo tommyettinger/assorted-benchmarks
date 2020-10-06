@@ -3,10 +3,10 @@ package de.heidelberg.pvs.container_bench.factories;
 import com.github.tommyettinger.ds.IndexedMap;
 import com.github.tommyettinger.ds.ObjectMap;
 import com.github.tommyettinger.ds.OrderedMap;
-import de.heidelberg.pvs.container_bench.ObjectMapX;
-import de.heidelberg.pvs.container_bench.ObjectMapY;
-import de.heidelberg.pvs.container_bench.OrderedMapX;
-import de.heidelberg.pvs.container_bench.OrderedMapY;
+import de.heidelberg.pvs.container_bench.ObjectMapBare;
+import de.heidelberg.pvs.container_bench.ObjectMapMulXor;
+import de.heidelberg.pvs.container_bench.OrderedMapBare;
+import de.heidelberg.pvs.container_bench.OrderedMapMulXor;
 import squidpony.squidmath.UnorderedMap;
 
 import java.util.Map;
@@ -52,11 +52,11 @@ public enum JDKMap2ObjFact {
 	JDKGDXDS_HASH(() -> new ObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_INDEXED(() -> new OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
-	JDKGDXDSX_HASH(() -> new ObjectMapX<>(16, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSX_INDEXED(() -> new OrderedMapX<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSX_HASH(() -> new ObjectMapBare<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSX_INDEXED(() -> new OrderedMapBare<>(16, LoadFactor.LOAD_FACTOR)),
 
-	JDKGDXDSY_HASH(() -> new ObjectMapY<>(16, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSY_INDEXED(() -> new OrderedMapY<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSY_HASH(() -> new ObjectMapMulXor<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSY_INDEXED(() -> new OrderedMapMulXor<>(16, LoadFactor.LOAD_FACTOR)),
 
 	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000), //
 	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000); //

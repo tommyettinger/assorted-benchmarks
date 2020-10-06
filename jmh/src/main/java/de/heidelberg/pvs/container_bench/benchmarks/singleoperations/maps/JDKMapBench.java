@@ -26,9 +26,7 @@ public class JDKMapBench extends AbstractMapBench<Object, Integer> {
 	}
 	
 	protected Map<Object, Integer> copyMap(Map<Object, Integer> fullMap2) {
-		Map<Object, Integer> map = this.getNewMap();
-		map.putAll(fullMap2);
-		return map;
+		return impl.copyMaker.apply(fullMap2);
 	}
 	
 	@Override

@@ -276,10 +276,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMapX", size,
                         measure(new Runnable() {
-                            ObjectMapX<String, String> x;
+                            ObjectMapBare<String, String> x;
 
                             @Override public void run () {
-                                x = new ObjectMapX<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new ObjectMapBare<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -314,10 +314,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMapX", size,
                         measure(new Runnable() {
-                            OrderedMapX<String, String> x;
+                            OrderedMapBare<String, String> x;
 
                             @Override public void run () {
-                                x = new OrderedMapX<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new OrderedMapBare<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -542,10 +542,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMapX", size,
                         measure(new Runnable() {
-                            ObjectMapX<CustomString, CustomString> x;
+                            ObjectMapBare<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new ObjectMapX<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new ObjectMapBare<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -580,10 +580,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMapX", size,
                         measure(new Runnable() {
-                            OrderedMapX<CustomString, CustomString> x;
+                            OrderedMapBare<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new OrderedMapX<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new OrderedMapBare<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -650,10 +650,10 @@ public class MemoryMBeanCheck {
                     }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMapX", size,
                     measure(new Runnable() {
-                        ObjectMapX<String, Integer> x;
+                        ObjectMapBare<String, Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectMapX<>(size, LoadFactor.LOAD_FACTOR);
+                            x = new ObjectMapBare<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -709,10 +709,10 @@ public class MemoryMBeanCheck {
                     }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMapX", size,
                     measure(new Runnable() {
-                        OrderedMapX<String, Integer> x;
+                        OrderedMapBare<String, Integer> x;
 
                         @Override public void run () {
-                            x = new OrderedMapX<>(size, LoadFactor.LOAD_FACTOR);
+                            x = new OrderedMapBare<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j].hashCode());
                         }
                     }));
@@ -948,10 +948,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS ObjectMapX", size,
                         measure(new Runnable() {
-                            ObjectMapX<Float, Float> x;
+                            ObjectMapBare<Float, Float> x;
 
                             @Override public void run () {
-                                x = new ObjectMapX<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new ObjectMapBare<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -986,10 +986,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS OrderedMapX", size,
                         measure(new Runnable() {
-                            OrderedMapX<Float, Float> x;
+                            OrderedMapBare<Float, Float> x;
 
                             @Override public void run () {
-                                x = new OrderedMapX<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new OrderedMapBare<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -1215,10 +1215,10 @@ public class MemoryMBeanCheck {
                     }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS ObjectMapX", size,
                     measure(new Runnable() {
-                        ObjectMapX<Integer, Integer> x;
+                        ObjectMapBare<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectMapX<>(size, LoadFactor.LOAD_FACTOR);
+                            x = new ObjectMapBare<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
@@ -1253,10 +1253,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS OrderedMapX", size,
                     measure(new Runnable() {
-                        OrderedMapX<Integer, Integer> x;
+                        OrderedMapBare<Integer, Integer> x;
 
                         @Override public void run () {
-                            x = new OrderedMapX<>(size, LoadFactor.LOAD_FACTOR);
+                            x = new OrderedMapBare<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                         }
                     }));
