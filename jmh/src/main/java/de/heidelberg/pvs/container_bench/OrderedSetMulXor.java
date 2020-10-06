@@ -7,20 +7,20 @@ import java.util.Collection;
 /**
  * Created by Tommy Ettinger on 9/16/2020.
  */
-public class OrderedSetY<T> extends OrderedSet<T> {
-	public OrderedSetY() {
+public class OrderedSetMulXor<T> extends OrderedSet<T> {
+	public OrderedSetMulXor() {
 		super();
 	}
 
-	public OrderedSetY(int initialCapacity, float loadFactor) {
+	public OrderedSetMulXor(int initialCapacity, float loadFactor) {
 		super(initialCapacity, loadFactor);
 	}
 
-	public OrderedSetY(int initialCapacity) {
+	public OrderedSetMulXor(int initialCapacity) {
 		super(initialCapacity);
 	}
 
-	public OrderedSetY(OrderedSet<? extends T> set) {
+	public OrderedSetMulXor(OrderedSet<? extends T> set) {
 		super(set);
 	}
 
@@ -29,7 +29,7 @@ public class OrderedSetY<T> extends OrderedSet<T> {
 	 *
 	 * @param coll
 	 */
-	public OrderedSetY(Collection<? extends T> coll) {
+	public OrderedSetMulXor(Collection<? extends T> coll) {
 		super(coll);
 	}
 

@@ -1,46 +1,26 @@
 package de.heidelberg.pvs.container_bench;
 
-import com.github.tommyettinger.ds.ObjectSet;
+import com.github.tommyettinger.ds.OrderedSet;
 
 import java.util.Collection;
 
 /**
  * Created by Tommy Ettinger on 9/16/2020.
  */
-public class ObjectSetY<T> extends ObjectSet<T> {
-	/**
-	 * Creates a new set with an initial capacity of 51 and a load factor of 0.8.
-	 */
-	public ObjectSetY() {
+public class OrderedSetBare<T> extends OrderedSet<T> {
+	public OrderedSetBare() {
 		super();
 	}
 
-	/**
-	 * Creates a new set with a load factor of 0.8.
-	 *
-	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
-	 */
-	public ObjectSetY(int initialCapacity) {
-		super(initialCapacity);
-	}
-
-	/**
-	 * Creates a new set with the specified initial capacity and load factor. This set will hold initialCapacity items before
-	 * growing the backing table.
-	 *
-	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
-	 * @param loadFactor
-	 */
-	public ObjectSetY(int initialCapacity, float loadFactor) {
+	public OrderedSetBare(int initialCapacity, float loadFactor) {
 		super(initialCapacity, loadFactor);
 	}
 
-	/**
-	 * Creates a new set identical to the specified set.
-	 *
-	 * @param set
-	 */
-	public ObjectSetY(ObjectSet<? extends T> set) {
+	public OrderedSetBare(int initialCapacity) {
+		super(initialCapacity);
+	}
+
+	public OrderedSetBare(OrderedSet<? extends T> set) {
 		super(set);
 	}
 
@@ -49,7 +29,7 @@ public class ObjectSetY<T> extends ObjectSet<T> {
 	 *
 	 * @param coll
 	 */
-	public ObjectSetY(Collection<? extends T> coll) {
+	public OrderedSetBare(Collection<? extends T> coll) {
 		super(coll);
 	}
 
@@ -73,6 +53,6 @@ public class ObjectSetY<T> extends ObjectSet<T> {
 	 */
 	@Override
 	protected int place(Object item) {
-		return (item.hashCode() * 0x9E377 ^ 0x7F4A7C15) * 0x9E377 >>> shift;
+		return item.hashCode() & mask;
 	}
 }

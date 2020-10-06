@@ -1,26 +1,46 @@
 package de.heidelberg.pvs.container_bench;
 
-import com.github.tommyettinger.ds.OrderedSet;
+import com.github.tommyettinger.ds.ObjectSet;
 
 import java.util.Collection;
 
 /**
  * Created by Tommy Ettinger on 9/16/2020.
  */
-public class OrderedSetX<T> extends OrderedSet<T> {
-	public OrderedSetX() {
+public class ObjectSetBare<T> extends ObjectSet<T> {
+	/**
+	 * Creates a new set with an initial capacity of 51 and a load factor of 0.8.
+	 */
+	public ObjectSetBare() {
 		super();
 	}
 
-	public OrderedSetX(int initialCapacity, float loadFactor) {
-		super(initialCapacity, loadFactor);
-	}
-
-	public OrderedSetX(int initialCapacity) {
+	/**
+	 * Creates a new set with a load factor of 0.8.
+	 *
+	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
+	 */
+	public ObjectSetBare(int initialCapacity) {
 		super(initialCapacity);
 	}
 
-	public OrderedSetX(OrderedSet<? extends T> set) {
+	/**
+	 * Creates a new set with the specified initial capacity and load factor. This set will hold initialCapacity items before
+	 * growing the backing table.
+	 *
+	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
+	 * @param loadFactor
+	 */
+	public ObjectSetBare(int initialCapacity, float loadFactor) {
+		super(initialCapacity, loadFactor);
+	}
+
+	/**
+	 * Creates a new set identical to the specified set.
+	 *
+	 * @param set
+	 */
+	public ObjectSetBare(ObjectSet<? extends T> set) {
 		super(set);
 	}
 
@@ -29,7 +49,7 @@ public class OrderedSetX<T> extends OrderedSet<T> {
 	 *
 	 * @param coll
 	 */
-	public OrderedSetX(Collection<? extends T> coll) {
+	public ObjectSetBare(Collection<? extends T> coll) {
 		super(coll);
 	}
 

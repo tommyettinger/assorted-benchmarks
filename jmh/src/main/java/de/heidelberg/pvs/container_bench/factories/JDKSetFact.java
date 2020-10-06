@@ -1,8 +1,8 @@
 package de.heidelberg.pvs.container_bench.factories;
 
 import com.github.tommyettinger.ds.*;
-import de.heidelberg.pvs.container_bench.ObjectSetX;
-import de.heidelberg.pvs.container_bench.OrderedSetX;
+import de.heidelberg.pvs.container_bench.ObjectSetBare;
+import de.heidelberg.pvs.container_bench.OrderedSetBare;
 import squidpony.squidmath.UnorderedSet;
 
 import java.util.Set;
@@ -11,8 +11,8 @@ import java.util.function.Supplier;
 public enum JDKSetFact {
 	//JDK_HASH,JDKGDXDS_HASH,SQUID_HASH,KOLOBOKE_HASH,KOLOBOKE_QHASH,FASTUTIL_HASH,ECLIPSE_HASH,AGRONA_HASH
 	//JDK_LINKEDHASH,JDKGDXDS_INDEXED,SQUID_INDEXED,ATLANTIS_INDEXED,FASTUTIL_LINKEDHASH,APACHE_LINKEDHASH
-	//JDK_HASH,JDKGDXDS_HASH,JDKGDXDSX_HASH
-	//JDK_LINKEDHASH,ATLANTIS_INDEXED,JDKGDXDS_INDEXED,JDKGDXDSX_INDEXED
+	//JDK_HASH,SQUID_HASH,JDKGDXDS_HASH,JDKGDXDSBARE_HASH
+	//JDK_LINKEDHASH,SQUID_INDEXED,JDKGDXDS_INDEXED,JDKGDXDSBARE_INDEXED
 	JDK_HASH(() -> new java.util.HashSet<>(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_LINKEDHASH(() -> new java.util.LinkedHashSet<>(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_TREE(() -> new java.util.TreeSet<>()), //
@@ -48,8 +48,8 @@ public enum JDKSetFact {
 	ATLANTIS_INDEXED(() -> new IndexedSet<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_HASH(() -> new ObjectSet<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_INDEXED(() -> new OrderedSet<>(16, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSX_HASH(() -> new ObjectSetX<>(16, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSX_INDEXED(() -> new OrderedSetX<>(16, LoadFactor.LOAD_FACTOR))
+	JDKGDXDSBARE_HASH(() -> new ObjectSetBare<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSBARE_INDEXED(() -> new OrderedSetBare<>(16, LoadFactor.LOAD_FACTOR))
 
 	;
 

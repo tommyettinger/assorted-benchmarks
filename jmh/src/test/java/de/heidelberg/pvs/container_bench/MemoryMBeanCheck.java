@@ -163,10 +163,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectSetX", size,
                         measure(new Runnable() {
-                            ObjectSetX<String> x;
+                            ObjectSetBare<String> x;
 
                             @Override public void run () {
-                                x = new ObjectSetX<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new ObjectSetBare<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -201,10 +201,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedSetX", size,
                         measure(new Runnable() {
-                            OrderedSetX<String> x;
+                            OrderedSetBare<String> x;
 
                             @Override public void run () {
-                                x = new OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new OrderedSetBare<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -429,10 +429,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS ObjectSetX", size,
                         measure(new Runnable() {
-                            ObjectSetX<CustomString> x;
+                            ObjectSetBare<CustomString> x;
 
                             @Override public void run () {
-                                x = new ObjectSetX<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new ObjectSetBare<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -467,10 +467,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS OrderedSetX", size,
                         measure(new Runnable() {
-                            OrderedSetX<CustomString> x;
+                            OrderedSetBare<CustomString> x;
 
                             @Override public void run () {
-                                x = new OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new OrderedSetBare<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -835,10 +835,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS ObjectSetX", size,
                         measure(new Runnable() {
-                            ObjectSetX<Float> x;
+                            ObjectSetBare<Float> x;
 
                             @Override public void run () {
-                                x = new ObjectSetX<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new ObjectSetBare<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -873,10 +873,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS OrderedSetX", size,
                         measure(new Runnable() {
-                            OrderedSetX<Float> x;
+                            OrderedSetBare<Float> x;
 
                             @Override public void run () {
-                                x = new OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new OrderedSetBare<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.add(items[j]);
                             }
                         }));
@@ -1102,10 +1102,10 @@ public class MemoryMBeanCheck {
                     }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS ObjectSetX", size,
                     measure(new Runnable() {
-                        ObjectSetX<Integer> x;
+                        ObjectSetBare<Integer> x;
 
                         @Override public void run () {
-                            x = new ObjectSetX<>(size, LoadFactor.LOAD_FACTOR);
+                            x = new ObjectSetBare<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));
@@ -1140,10 +1140,10 @@ public class MemoryMBeanCheck {
                     }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS OrderedSetX", size,
                     measure(new Runnable() {
-                        OrderedSetX<Integer> x;
+                        OrderedSetBare<Integer> x;
 
                         @Override public void run () {
-                            x = new OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
+                            x = new OrderedSetBare<>(size, LoadFactor.LOAD_FACTOR);
                             for (int j = 0; j < size; j++) x.add(items[j]);
                         }
                     }));

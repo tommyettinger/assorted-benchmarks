@@ -70,7 +70,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectSetX<String> set = new ObjectSetX<>(size);
+					ObjectSetBare<String> set = new ObjectSetBare<>(size);
 					set.addAll(words);
 					System.out.printf("JDKGDXDS ObjectSetX, %7d Strings:\n", size);
 					evaluate(set);
@@ -100,7 +100,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					OrderedSetX<String> set = new OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
+					OrderedSetBare<String> set = new OrderedSetBare<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(words);
 					System.out.printf("JDKGDXDS OrderedSetX, %7d Strings:\n", size);
 					evaluate(set);
@@ -168,7 +168,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectSetX<Integer> set = new ObjectSetX<>(size);
+					ObjectSetBare<Integer> set = new ObjectSetBare<>(size);
 					set.addAll(numbers);
 					System.out.printf("JDKGDXDS ObjectSetX, %7d Integers:\n", size);
 					evaluate(set);
@@ -198,7 +198,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					OrderedSetX<Integer> set = new OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
+					OrderedSetBare<Integer> set = new OrderedSetBare<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
 					System.out.printf("JDKGDXDS OrderedSetX, %7d Integers:\n", size);
 					evaluate(set);
@@ -272,7 +272,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectSetX<Long> set = new ObjectSetX<>(size);
+					ObjectSetBare<Long> set = new ObjectSetBare<>(size);
 					set.addAll(numbers);
 					System.out.printf("JDKGDXDS ObjectSetX, %7d Longs:\n", size);
 					evaluate(set);
@@ -302,7 +302,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					OrderedSetX<Long> set = new OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
+					OrderedSetBare<Long> set = new OrderedSetBare<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
 					System.out.printf("JDKGDXDS OrderedSetX, %7d Longs:\n", size);
 					evaluate(set);

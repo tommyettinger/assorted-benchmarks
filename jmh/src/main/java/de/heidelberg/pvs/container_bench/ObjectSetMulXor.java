@@ -7,11 +7,11 @@ import java.util.Collection;
 /**
  * Created by Tommy Ettinger on 9/16/2020.
  */
-public class ObjectSetX<T> extends ObjectSet<T> {
+public class ObjectSetMulXor<T> extends ObjectSet<T> {
 	/**
 	 * Creates a new set with an initial capacity of 51 and a load factor of 0.8.
 	 */
-	public ObjectSetX() {
+	public ObjectSetMulXor() {
 		super();
 	}
 
@@ -20,7 +20,7 @@ public class ObjectSetX<T> extends ObjectSet<T> {
 	 *
 	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
 	 */
-	public ObjectSetX(int initialCapacity) {
+	public ObjectSetMulXor(int initialCapacity) {
 		super(initialCapacity);
 	}
 
@@ -31,7 +31,7 @@ public class ObjectSetX<T> extends ObjectSet<T> {
 	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
 	 * @param loadFactor
 	 */
-	public ObjectSetX(int initialCapacity, float loadFactor) {
+	public ObjectSetMulXor(int initialCapacity, float loadFactor) {
 		super(initialCapacity, loadFactor);
 	}
 
@@ -40,7 +40,7 @@ public class ObjectSetX<T> extends ObjectSet<T> {
 	 *
 	 * @param set
 	 */
-	public ObjectSetX(ObjectSet<? extends T> set) {
+	public ObjectSetMulXor(ObjectSet<? extends T> set) {
 		super(set);
 	}
 
@@ -49,7 +49,7 @@ public class ObjectSetX<T> extends ObjectSet<T> {
 	 *
 	 * @param coll
 	 */
-	public ObjectSetX(Collection<? extends T> coll) {
+	public ObjectSetMulXor(Collection<? extends T> coll) {
 		super(coll);
 	}
 
@@ -73,6 +73,6 @@ public class ObjectSetX<T> extends ObjectSet<T> {
 	 */
 	@Override
 	protected int place(Object item) {
-		return item.hashCode() & mask;
+		return (item.hashCode() * 0x9E377 ^ 0x7F4A7C15) * 0x9E377 >>> shift;
 	}
 }
