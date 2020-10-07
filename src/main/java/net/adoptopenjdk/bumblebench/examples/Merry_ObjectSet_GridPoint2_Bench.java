@@ -16,7 +16,7 @@ package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.MathUtils;
-import com.github.tommyettinger.merry.ObjectSet;
+import ds.merry.ObjectSet;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 /**

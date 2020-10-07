@@ -58,12 +58,9 @@ public class ObjectSetCrash2 extends ApplicationAdapter {
     public void generate()
     {
         final long startTime = TimeUtils.nanoTime();
-        int stashCache = theSet.stashSize;
         for (int x = 0; x < problemStrings.length; x++) {
-            if (theSet.stashSize > stashCache) {
-                stashCache = theSet.stashSize;
-                System.out.println("size: " + theSet.size + ", stash size: " + stashCache + ", capacity: " + theSet.capacity);
-            }
+
+            //System.out.println("size: " + theSet.size + ", stash size: " + stashCache + ", capacity: " + theSet.capacity);
             System.out.println("attempting to add element " + (theSet.size + 1) + ", " + problemStrings[x]);
             theSet.add(problemStrings[x]);
         }

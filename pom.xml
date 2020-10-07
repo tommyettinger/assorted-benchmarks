@@ -18,7 +18,7 @@
         <maven.source.version>3.0.1</maven.source.version>
         <maven.gpg.version>1.6</maven.gpg.version>
         <jdk.version>1.8</jdk.version>
-        <gdx.version>1.9.10</gdx.version>
+        <gdx.version>1.9.11</gdx.version>
     </properties>
     <licenses>
         <license>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.squidpony</groupId>
             <artifactId>squidlib-util</artifactId>
-            <version>3.0.0</version>
+            <version>3.0.1</version>
             <scope>compile</scope>
         </dependency>
 <!--        <dependency>-->
@@ -88,13 +88,6 @@
         </dependency>
 
         <!--        Using JitPack-->
-        
-        <dependency>
-            <groupId>com.github.tommyettinger</groupId>
-            <artifactId>jaunt</artifactId>
-            <version>abe1c29244</version>
-            <scope>compile</scope>
-        </dependency>
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>merry-ds</artifactId>
@@ -107,7 +100,13 @@
             <version>155a48e25d</version>
             <scope>compile</scope>
         </dependency>
-        
+        <dependency>
+            <groupId>com.github.tommyettinger</groupId>
+            <artifactId>jdkgdxds</artifactId>
+            <version>0cccbc5680</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!--        For local installations-->
 
 <!--        <dependency>-->

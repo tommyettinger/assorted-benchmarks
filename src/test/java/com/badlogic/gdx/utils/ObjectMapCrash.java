@@ -21,14 +21,8 @@ public class ObjectMapCrash extends ApplicationAdapter {
     {
         final long startTime = TimeUtils.nanoTime();
         final int halfWidth = width / 2, halfHeight = height / 2;
-        int stashCache = theMap.stashSize;
         for (int x = -halfWidth; x < halfWidth; x++) {
             for (int y = -halfHeight; y < halfHeight; y++) {
-                if(theMap.stashSize > stashCache)
-                {
-                    stashCache = theMap.stashSize;
-                    System.out.println("size: " + theMap.size + ", stash size: " + stashCache + ", capacity: " + theMap.capacity);
-                }
                 theMap.put(new GridPoint2(x, y), x);
             }
         }

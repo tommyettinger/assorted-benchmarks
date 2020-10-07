@@ -16,7 +16,7 @@ package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.github.tommyettinger.merry.ObjectSet;
+import ds.merry.ObjectSet;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 /** Tests a custom subclass of Merry's ObjectSet that uses the "old, bad" way of placing hashes from before we settled on

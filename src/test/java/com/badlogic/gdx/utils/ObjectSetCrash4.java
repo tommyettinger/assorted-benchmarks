@@ -21,14 +21,8 @@ public class ObjectSetCrash4 extends ApplicationAdapter {
     {
         final long startTime = TimeUtils.nanoTime();
         final int halfWidth = width / 2, halfHeight = height / 2;
-        int stashCache = theSet.stashSize;
         for (int x = -halfWidth; x < halfWidth; x++) {
             for (int y = -halfHeight; y < halfHeight; y++) {
-                if(theSet.stashSize > stashCache)
-                {
-                    stashCache = theSet.stashSize;
-                    System.out.println("size: " + theSet.size + ", stash size: " + stashCache + ", capacity: " + theSet.capacity);
-                }
                 theSet.add(new Vector2(x, y));
             }
         }

@@ -15,7 +15,7 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.github.tommyettinger.merry.IntMap;
+import ds.merry.IntMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 /**
