@@ -3,7 +3,6 @@ package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.maps;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.badlogic.gdx.utils.ObjectMap;
 import de.heidelberg.pvs.container_bench.factories.GDXArrayMapFact;
-import de.heidelberg.pvs.container_bench.factories.GDXMapFact;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 
@@ -24,9 +23,10 @@ public class GDXArrayMapBench extends AbstractMapBench<Object, Integer> {
 	}
 
 	protected ArrayMap<Object, Integer> copyMap(ArrayMap<Object, Integer> fullMap2) {
-		ArrayMap<Object, Integer> map = this.getNewMap();
-		map.putAll(fullMap2);
-		return map;
+		return new ArrayMap<>(fullMap2);
+//		ArrayMap<Object, Integer> map = this.getNewMap();
+//		map.putAll(fullMap2);
+//		return map;
 	}
 
 	@Override
