@@ -14,34 +14,28 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.badlogic.gdx.math.RandomXS128;
+import com.github.tommyettinger.ds.LaserRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
-import org.javolution.util.FastTable;
 
 /**
- * FastTable is from jaunt, a fork of Javolution, and is much like ArrayList.
- * This uses the code from Javolution 7.
- * When run with JVM:
- * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
- * This gets these results (higher is better):
+ * With Java 8, HotSpot, on an 8th-gen i7 hexacore mobile processor running Manjaro Linux:
  * <br>
- * FastTableJaunt7_One_Bench score: 25759582.000000 (25.76M 1706.4%)
- *                       uncertainty:   3.0%
+ * LaserRandomBench score: 858795712.000000 (858.8M 2057.1%)
+ *              uncertainty:   0.0%
  * <br>
- * When run with JVM:
- * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
- * This gets different results:
+ * With Java 14, OpenJ9, same hardware:
  * <br>
- * FastTableJaunt7_One_Bench score: 23054432.000000 (23.05M 1695.3%)
- *                       uncertainty:   3.1%
+ * LaserRandomBench score: 3261202688.000000 (3.261G 2190.5%)
+ *              uncertainty:   0.0%
  */
-public final class FastTableJaunt7_One_Bench extends MicroBench {
+public final class LaserRandomBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		final FastTable<String> coll = new FastTable<String>();
-		for (long i = 0; i < numIterations; i++) {
-			coll.add("");
-		}
+		LaserRandom rng = new LaserRandom(0x12345678);
+		long sum = 0L;
+		for (long i = 0; i < numIterations; i++)
+			sum += rng.nextLong();
 		return numIterations;
 	}
 }
-

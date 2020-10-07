@@ -14,34 +14,27 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import javolution.util.FastTable;
+import com.badlogic.gdx.math.RandomXS128;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * FastTable is from jaunt, a fork of Javolution, and is much like ArrayList.
- * This uses the code from Javolution 6.
- * When run with JVM:
- * {@code OpenJDK 64-Bit Server VM (AdoptOpenJDK)(build 25.212-b03, mixed mode)} (HotSpot)
- * This gets these results (higher is better):
+ * With Java 8, HotSpot, on an 8th-gen i7 hexacore mobile processor running Manjaro Linux:
  * <br>
- * FastTableJaunt6_One_Bench score: 65789508.000000 (65.79M 1800.2%)
- *                       uncertainty:   1.5%
+ * RandomXS128Bench score: 709502592.000000 (709.5M 2038.0%)
+ *              uncertainty:   0.0%
  * <br>
- * When run with JVM:
- * {@code Eclipse OpenJ9 VM AdoptOpenJDK (build openj9-0.10.0, JRE 11 Windows 7 amd64-64-Bit Compressed References 20181003_41 (JIT enabled, AOT enabled)}
- * This gets different results:
+ * With Java 14, OpenJ9, same hardware:
  * <br>
- * FastTableJaunt6_One_Bench score: 50724820.000000 (50.72M 1774.2%)
- *                       uncertainty:   0.8%
+ * RandomXS128Bench score: 909541824.000000 (909.5M 2062.8%)
+ *              uncertainty:   0.2%
  */
-public final class FastTableJaunt6_One_Bench extends MicroBench {
+public final class RandomXS128Bench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		final FastTable<String> coll = new FastTable<String>();
-		for (long i = 0; i < numIterations; i++) {
-			coll.add("");
-		}
+		RandomXS128 rng = new RandomXS128(0x12345678);
+		long sum = 0L;
+		for (long i = 0; i < numIterations; i++)
+			sum += rng.nextLong();
 		return numIterations;
 	}
 }
-
