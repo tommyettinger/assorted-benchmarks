@@ -2,6 +2,7 @@ package de.heidelberg.pvs.container_bench.factories;
 
 import com.github.tommyettinger.ds.IndexedMap;
 import com.github.tommyettinger.ds.ObjectMap;
+import com.github.tommyettinger.ds.ObjectMapFib;
 import com.github.tommyettinger.ds.OrderedMap;
 import de.heidelberg.pvs.container_bench.ObjectMapBare;
 import de.heidelberg.pvs.container_bench.ObjectMapMulXor;
@@ -51,6 +52,8 @@ public enum JDKMap2ObjFact {
 
 	JDKGDXDS_HASH(() -> new ObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_INDEXED(() -> new OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
+
+	JDKGDXDSFIB_HASH(() -> new ObjectMapFib<>(16, LoadFactor.LOAD_FACTOR)),
 
 	JDKGDXDSBARE_HASH(() -> new ObjectMapBare<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSBARE_INDEXED(() -> new OrderedMapBare<>(16, LoadFactor.LOAD_FACTOR)),
