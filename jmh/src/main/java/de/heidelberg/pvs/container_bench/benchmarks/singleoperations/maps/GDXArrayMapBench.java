@@ -23,10 +23,9 @@ public class GDXArrayMapBench extends AbstractMapBench<Object, Integer> {
 	}
 
 	protected ArrayMap<Object, Integer> copyMap(ArrayMap<Object, Integer> fullMap2) {
-		return new ArrayMap<>(fullMap2);
-//		ArrayMap<Object, Integer> map = this.getNewMap();
-//		map.putAll(fullMap2);
-//		return map;
+		ArrayMap<Object, Integer> map = this.getNewMap();
+		map.putAll(fullMap2);
+		return map;
 	}
 
 	@Override

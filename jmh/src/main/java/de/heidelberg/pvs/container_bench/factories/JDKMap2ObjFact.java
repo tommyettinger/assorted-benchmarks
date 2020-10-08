@@ -52,11 +52,11 @@ public enum JDKMap2ObjFact {
 	JDKGDXDS_HASH(() -> new ObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_INDEXED(() -> new OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
-	JDKGDXDSX_HASH(() -> new ObjectMapBare<>(16, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSX_INDEXED(() -> new OrderedMapBare<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSBARE_HASH(() -> new ObjectMapBare<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSBARE_INDEXED(() -> new OrderedMapBare<>(16, LoadFactor.LOAD_FACTOR)),
 
-	JDKGDXDSY_HASH(() -> new ObjectMapMulXor<>(16, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSY_INDEXED(() -> new OrderedMapMulXor<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSMX_HASH(() -> new ObjectMapMulXor<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSMX_INDEXED(() -> new OrderedMapMulXor<>(16, LoadFactor.LOAD_FACTOR)),
 
 	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000), //
 	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000); //
