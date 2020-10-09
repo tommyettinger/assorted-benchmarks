@@ -271,6 +271,10 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 	 */
 	@Override
 	public void putAll (Map<? extends K, ? extends V> m) {
+		ensureCapacity(m.size());
+//		for (K k : m.keySet()) {
+//			put(k, m.get(k));
+//		}
 		for (Map.Entry<? extends K, ? extends V> kv : m.entrySet()) {
 			put(kv.getKey(), kv.getValue());
 		}

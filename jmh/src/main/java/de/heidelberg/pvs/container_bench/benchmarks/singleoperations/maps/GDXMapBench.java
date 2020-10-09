@@ -5,6 +5,8 @@ import de.heidelberg.pvs.container_bench.factories.GDXMapFact;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 
+import java.util.Map;
+
 public class GDXMapBench extends AbstractMapBench<Object, Integer> {
 
 	private ObjectMap<Object, Integer> fullMap;
@@ -23,7 +25,11 @@ public class GDXMapBench extends AbstractMapBench<Object, Integer> {
 
 	protected ObjectMap<Object, Integer> copyMap(ObjectMap<Object, Integer> fullMap2) {
 		ObjectMap<Object, Integer> map = this.getNewMap();
-		map.putAll(fullMap2);
+		//map.putAll(fullMap2);
+		map.ensureCapacity(fullMap2.size);
+		for (ObjectMap.Entry<Object, Integer> kv : fullMap2.entries()) {
+			map.put(kv.key, kv.value);
+		}
 		return map;
 	}
 
