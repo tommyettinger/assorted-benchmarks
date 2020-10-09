@@ -15,3 +15,9 @@ GDXMapBench.bench                GDX_O2O_HASH  STRING_UNIFORM                   
 GDXMapBench.bench                GDX_O2O_HASH  STRING_UNIFORM                    100  467505      65    CONTAINS  sample  511699       46.795 ±  1.431  ns/op
 GDXMapBench.bench                GDX_O2O_HASH  STRING_UNIFORM                    100  467505      65        COPY  sample  460584      744.317 ± 30.891  ns/op
 GDXMapBench.bench                GDX_O2O_HASH  STRING_UNIFORM                    100  467505      65     ITERATE  sample  545247      611.347 ±  2.502  ns/op
+
+Benchmark                                   (impl)   (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt        Score    Error  Units
+JDKMapBench.bench                JDKGDXDSOCTO_HASH  STRING_UNIFORM                    100  467505      65    POPULATE  sample  423649     1602.790 ± 48.513  ns/op
+JDKMapBench.bench                JDKGDXDSOCTO_HASH  STRING_UNIFORM                    100  467505      65    CONTAINS  sample  445038       59.141 ±  1.661  ns/op
+JDKMapBench.bench                JDKGDXDSOCTO_HASH  STRING_UNIFORM                    100  467505      65        COPY  sample  421633      850.382 ± 44.746  ns/op
+JDKMapBench.bench                JDKGDXDSOCTO_HASH  STRING_UNIFORM                    100  467505      65     ITERATE  sample  491427      666.528 ±  2.892  ns/op

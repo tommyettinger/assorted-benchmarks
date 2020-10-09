@@ -18,14 +18,7 @@ package com.github.tommyettinger.ds;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;
-import java.util.AbstractCollection;
-import java.util.AbstractSet;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 import static com.github.tommyettinger.ds.Utilities.neverIdentical;
 import static com.github.tommyettinger.ds.Utilities.tableSize;
@@ -49,7 +42,7 @@ import static com.github.tommyettinger.ds.Utilities.tableSize;
  * @author Nathan Sweet
  * @author Tommy Ettinger
  */
-public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>, Serializable {
+public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>, Serializable {
 	private static final long serialVersionUID = 0L;
 
 	public int size;
@@ -77,7 +70,7 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 	/**
 	 * Creates a new map with an initial capacity of 51 and a load factor of 0.8.
 	 */
-	public ObjectMapFib() {
+	public ObjectMapOcto() {
 		this(51, 0.8f);
 	}
 
@@ -86,7 +79,7 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 	 *
 	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
 	 */
-	public ObjectMapFib(int initialCapacity) {
+	public ObjectMapOcto(int initialCapacity) {
 		this(initialCapacity, 0.8f);
 	}
 
@@ -96,7 +89,7 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 	 *
 	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
 	 */
-	public ObjectMapFib(int initialCapacity, float loadFactor) {
+	public ObjectMapOcto(int initialCapacity, float loadFactor) {
 		if (loadFactor <= 0f || loadFactor > 1f)
 			throw new IllegalArgumentException("loadFactor must be > 0 and <= 1: " + loadFactor);
 		this.loadFactor = loadFactor;
@@ -113,7 +106,7 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 	/**
 	 * Creates a new map identical to the specified map.
 	 */
-	public ObjectMapFib(ObjectMapFib<? extends K, ? extends V> map) {
+	public ObjectMapOcto(ObjectMapOcto<? extends K, ? extends V> map) {
 		this.loadFactor = map.loadFactor;
 		this.threshold = map.threshold;
 		this.mask = map.mask;
@@ -126,7 +119,7 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 	/**
 	 * Creates a new map identical to the specified map.
 	 */
-	public ObjectMapFib(Map<? extends K, ? extends V> map) {
+	public ObjectMapOcto(Map<? extends K, ? extends V> map) {
 		this(map.size());
 		for (Map.Entry<? extends K, ? extends V> kv : map.entrySet()) {
 			put(kv.getKey(), kv.getValue());
@@ -139,7 +132,16 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 	 * @param item a non-null Object; its hashCode() method should be used by most implementations.
 	 */
 	protected int place (Object item) {
-		return (int)(item.hashCode() * 0x9E3779B97F4A7C15L >>> shift);
+		int x = item.hashCode();
+		x = (x << 13) - x;
+		x ^= x >> 23;
+		x = (x << 5) - x;
+		x ^= x >> 7;
+		x = (x << 7) - x;
+		x ^= x >> 3;
+		x += (x << 8);
+		x ^= x >> 16;
+		return x & mask;
 	}
 
 	/**
@@ -178,7 +180,7 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 		return null;
 	}
 
-	public void putAll (ObjectMapFib<? extends K, ? extends V> map) {
+	public void putAll (ObjectMapOcto<? extends K, ? extends V> map) {
 		ensureCapacity(map.size);
 		K[] keyTable = map.keyTable;
 		V[] valueTable = map.valueTable;
@@ -472,9 +474,9 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 	public boolean equals (Object obj) {
 		if (obj == this)
 			return true;
-		if (!(obj instanceof ObjectMapFib))
+		if (!(obj instanceof ObjectMapOcto))
 			return false;
-		ObjectMapFib other = (ObjectMapFib)obj;
+		ObjectMapOcto other = (ObjectMapOcto)obj;
 		if (other.size != size)
 			return false;
 		K[] keyTable = this.keyTable;
@@ -501,9 +503,9 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 	public boolean equalsIdentity (@Nullable Object obj) {
 		if (obj == this)
 			return true;
-		if (!(obj instanceof ObjectMapFib))
+		if (!(obj instanceof ObjectMapOcto))
 			return false;
-		ObjectMapFib other = (ObjectMapFib)obj;
+		ObjectMapOcto other = (ObjectMapOcto)obj;
 		if (other.size != size)
 			return false;
 		K[] keyTable = this.keyTable;
@@ -560,7 +562,7 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 
 	/**
 	 * Reuses the iterator of the reused {@link Entries} produced by {@link #entrySet()};
-	 * does not permit nested iteration. Iterate over {@link Entries#Entries(ObjectMapFib)} if you
+	 * does not permit nested iteration. Iterate over {@link Entries#Entries(ObjectMapOcto)} if you
 	 * need nested or multithreaded iteration. You can remove an Entry from this ObjectMap
 	 * using this Iterator.
 	 *
@@ -745,11 +747,11 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 	static protected abstract class MapIterator<K, V, I> implements Iterable<I>, Iterator<I> {
 		public boolean hasNext;
 
-		protected final ObjectMapFib<K, V> map;
+		protected final ObjectMapOcto<K, V> map;
 		protected int nextIndex, currentIndex;
 		protected boolean valid = true;
 
-		public MapIterator (ObjectMapFib<K, V> map) {
+		public MapIterator (ObjectMapOcto<K, V> map) {
 			this.map = map;
 			reset();
 		}
@@ -805,7 +807,7 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 		protected Entries () {
 		}
 
-		public Entries (ObjectMapFib<K, V> map) {
+		public Entries (ObjectMapOcto<K, V> map) {
 			iter = new MapIterator<K, V, Map.Entry<K, V>>(map) {
 				@Override
 				public Iterator<Map.Entry<K, V>> iterator () {
@@ -874,8 +876,8 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 		protected Values () {
 		}
 
-		public Values (ObjectMapFib<?, V> map) {
-			iter = new MapIterator<Object, V, V>((ObjectMapFib<Object, V>)map) {
+		public Values (ObjectMapOcto<?, V> map) {
+			iter = new MapIterator<Object, V, V>((ObjectMapOcto<Object, V>)map) {
 				@Override
 				public Iterator<V> iterator () {
 					return this;
@@ -910,8 +912,8 @@ public class ObjectMapFib<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>,
 		protected Keys () {
 		}
 
-		public Keys (ObjectMapFib<K, ?> map) {
-			iter = new MapIterator<K, Object, K>((ObjectMapFib<K, Object>)map) {
+		public Keys (ObjectMapOcto<K, ?> map) {
+			iter = new MapIterator<K, Object, K>((ObjectMapOcto<K, Object>)map) {
 				@Override
 				public Iterator<K> iterator () {
 					return this;
