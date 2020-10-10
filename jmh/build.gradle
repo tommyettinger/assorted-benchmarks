@@ -61,6 +61,7 @@ dependencies {
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
     implementation group: 'org.javolution', name: 'javolution-core-java', version: '6.0.0'
     implementation group: 'org.scala-lang', name: 'scala-library', version: '2.13.1'
+    implementation group: 'io.timeandspace', name: 'smoothie-map', version: '2.0.2'
 
     // transitively grabs libGDX 1.9.10:
     //implementation 'com.github.tommyettinger:merry-ds:dc9e1bceb6'

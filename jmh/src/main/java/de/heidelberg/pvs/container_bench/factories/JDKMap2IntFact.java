@@ -5,6 +5,9 @@ import de.heidelberg.pvs.container_bench.ObjectMapBare;
 import de.heidelberg.pvs.container_bench.ObjectMapMulXor;
 import de.heidelberg.pvs.container_bench.OrderedMapBare;
 import de.heidelberg.pvs.container_bench.OrderedMapMulXor;
+import io.timeandspace.smoothie.OptimizationObjective;
+import io.timeandspace.smoothie.SmoothieMap;
+import io.timeandspace.smoothie.SwissTable;
 import squidpony.squidmath.UnorderedMap;
 
 import java.util.Map;
@@ -50,7 +53,12 @@ public enum JDKMap2IntFact {
 	JAVOLUTION_HASH(() -> new javolution.util.FastMap<>()), //
 	JAVOLUTION_SORTED(javolution.util.FastSortedMap::new, 1000000), //
 
-	AGRONA_O2O_HASH(() -> new org.agrona.collections.Object2ObjectHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
+	AGRONA_O2O_HASH(() -> new org.agrona.collections.Object2ObjectHashMap<>(16, LoadFactor.LOAD_FACTOR)),
+
+	SMOOTHIE_LG_HASH(() -> SmoothieMap.<Object, Integer>newBuilder().optimizeFor(OptimizationObjective.LOW_GARBAGE).build()),
+	SMOOTHIE_MX_HASH(() -> SmoothieMap.<Object, Integer>newBuilder().defaultOptimizationConfiguration().build()),
+	SMOOTHIE_FP_HASH(() -> SmoothieMap.<Object, Integer>newBuilder().optimizeFor(OptimizationObjective.FOOTPRINT).build()),
+	SWISS_TABLE(() -> new SwissTable<>(16)),
 
 	SQUID_HASH(() -> new UnorderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 	SQUID_INDEXED(() -> new squidpony.squidmath.OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
