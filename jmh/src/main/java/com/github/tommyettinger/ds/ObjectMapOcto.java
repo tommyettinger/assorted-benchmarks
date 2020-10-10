@@ -127,21 +127,21 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	}
 
 	/**
-	 * Returns an index &gt;= 0 and &lt;= {@link #mask} for the specified {@code item}.
+	 * Returns an index &gt;= 0 and &lt;= {@link #mask} for the specified hash code {@code h}.
 	 *
-	 * @param item a non-null Object; its hashCode() method should be used by most implementations.
+	 * @param h a hash code, typically from {@link Object#hashCode()} but possibly from a different hashing method, like
+	 *          {@link Arrays#hashCode(int[])} or {@link System#identityHashCode(Object)}
 	 */
-	protected int place (Object item) {
-		int x = item.hashCode();
-		x = (x << 13) - x;
-		x ^= x >> 23;
-		x = (x << 5) - x;
-		x ^= x >> 7;
-		x = (x << 7) - x;
-		x ^= x >> 3;
-		x += (x << 8);
-		x ^= x >> 16;
-		return x & mask;
+	protected int place (int h) {
+		h -= h << 21;
+		h ^= h >> 11;
+		h -= h << 9;
+		h ^= h >> 8;
+		h -= h << 7;
+		h ^= h >> 5;
+		h -= h << 10;
+		h ^= h >> 19;
+		return h & mask;
 	}
 
 	/**
@@ -152,7 +152,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	 */
 	protected int locateKey (Object key) {
 		K[] keyTable = this.keyTable;
-		for (int i = place(key); ; i = i + 1 & mask) {
+		for (int i = place(key.hashCode()); ; i = i + 1 & mask) {
 			K other = keyTable[i];
 			if (other == null)
 				return ~i; // Empty space is available.
@@ -197,7 +197,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	 */
 	private void putResize (K key, @Nullable V value) {
 		K[] keyTable = this.keyTable;
-		for (int i = place(key); ; i = (i + 1) & mask) {
+		for (int i = place(key.hashCode()); ; i = (i + 1) & mask) {
 			if (keyTable[i] == null) {
 				keyTable[i] = key;
 				valueTable[i] = value;
@@ -238,7 +238,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 		V oldValue = valueTable[i];
 		int mask = this.mask, next = i + 1 & mask;
 		while ((key = keyTable[next]) != null) {
-			int placement = place(key);
+			int placement = place(key.hashCode());
 			if ((next - placement & mask) > (i - placement & mask)) {
 				keyTable[i] = (K)key;
 				valueTable[i] = valueTable[next];
@@ -783,7 +783,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 			int mask = map.mask, next = i + 1 & mask;
 			K key;
 			while ((key = keyTable[next]) != null) {
-				int placement = map.place(key);
+				int placement = map.place(key.hashCode());
 				if ((next - placement & mask) > (i - placement & mask)) {
 					keyTable[i] = key;
 					valueTable[i] = valueTable[next];
