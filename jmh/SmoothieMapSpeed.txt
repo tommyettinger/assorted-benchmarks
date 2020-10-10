@@ -48,9 +48,20 @@ JDKMapBench.bench                SMOOTHIE_FP_HASH  STRING_UNIFORM               
 JDKMapBench.bench                SMOOTHIE_FP_HASH  STRING_UNIFORM                    100  467505   10000        COPY  sample   25336   788818.006 ± 2572.324  ns/op
 JDKMapBench.bench                SMOOTHIE_FP_HASH  STRING_UNIFORM                    100  467505   10000     ITERATE  sample  177190   112773.118 ±   37.734  ns/op
 
-... SWISS_TABLE doesn't implement some critical methods that CONTAINS, COPY, and ITERATE use.
-
-JDKMapBench.bench                     SWISS_TABLE  STRING_UNIFORM                    100  467505      10    POPULATE  sample  518637      194.826 ±   20.400  ns/op
-JDKMapBench.bench                     SWISS_TABLE  STRING_UNIFORM                    100  467505     100    POPULATE  sample  451810     2902.897 ±   57.273  ns/op
-JDKMapBench.bench                     SWISS_TABLE  STRING_UNIFORM                    100  467505    1000    POPULATE  sample  373814    26906.387 ±  126.162  ns/op
-JDKMapBench.bench                     SWISS_TABLE  STRING_UNIFORM                    100  467505   10000    POPULATE  sample   64934   307699.116 ± 1025.406  ns/op
+Benchmark                             (impl)   (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt        Score      Error  Units
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505      10    POPULATE  sample  521169      187.855 ±   12.309  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505      10    CONTAINS  sample  462825       72.072 ±    7.281  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505      10        COPY  sample  583937      170.453 ±   14.395  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505      10     ITERATE  sample  479114      119.806 ±   12.749  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505     100    POPULATE  sample  448222     2916.740 ±   55.709  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505     100    CONTAINS  sample  766130      237.868 ±    6.592  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505     100        COPY  sample  442585     2953.146 ±   57.048  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505     100     ITERATE  sample  437166      751.060 ±   10.598  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505    1000    POPULATE  sample  375328    26769.776 ±  120.951  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505    1000    CONTAINS  sample  544786     2332.482 ±   15.273  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505    1000        COPY  sample  364949    27606.607 ±  133.986  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505    1000     ITERATE  sample  617779     8118.178 ±   12.788  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505   10000    POPULATE  sample   65956   302924.502 ±  993.768  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505   10000    CONTAINS  sample  328996    60705.081 ±  216.222  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505   10000        COPY  sample   50572   395177.600 ± 1351.255  ns/op
+JDKMapBench.bench                SWISS_TABLE  STRING_UNIFORM                    100  467505   10000     ITERATE  sample  190981   104619.207 ±   26.543  ns/op
