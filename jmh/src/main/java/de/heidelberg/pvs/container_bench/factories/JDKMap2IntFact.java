@@ -68,6 +68,7 @@ public enum JDKMap2IntFact {
 	JDKGDXDS_INDEXED(() -> new OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
 	JDKGDXDSFIB_HASH(() -> new ObjectMapFib<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSFIB2_HASH(() -> new ObjectMapFib2<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSFIBIN_HASH(() -> new ObjectMapFibIn<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSBIG_HASH(() -> new ObjectMapBigHash<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSSAME_HASH(() -> new ObjectMapSame<>(16, LoadFactor.LOAD_FACTOR)),
