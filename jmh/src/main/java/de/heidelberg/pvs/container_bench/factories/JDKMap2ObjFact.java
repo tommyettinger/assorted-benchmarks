@@ -60,8 +60,8 @@ public enum JDKMap2ObjFact {
 
 	JDKGDXDSFIB_HASH(() -> new ObjectMapFib<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSFIBIN_HASH(() -> new ObjectMapFibIn<>(16, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSFIBIN2_HASH(() -> new ObjectMapFibIn2<>(16, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSOCTO_HASH(() -> new ObjectMapOcto<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSBIG_HASH(() -> new ObjectMapBigHash<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSSAME_HASH(() -> new ObjectMapSame<>(16, LoadFactor.LOAD_FACTOR)),
 
 	JDKGDXDSBARE_HASH(() -> new ObjectMapBare<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSBARE_INDEXED(() -> new OrderedMapBare<>(16, LoadFactor.LOAD_FACTOR)),

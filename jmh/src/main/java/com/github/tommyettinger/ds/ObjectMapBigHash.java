@@ -42,7 +42,7 @@ import static com.github.tommyettinger.ds.Utilities.tableSize;
  * @author Nathan Sweet
  * @author Tommy Ettinger
  */
-public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>, Serializable {
+public class ObjectMapBigHash<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>, Serializable {
 	private static final long serialVersionUID = 0L;
 
 	public int size;
@@ -70,7 +70,7 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	/**
 	 * Creates a new map with an initial capacity of 51 and a load factor of 0.8.
 	 */
-	public ObjectMapFibIn2() {
+	public ObjectMapBigHash() {
 		this(51, 0.8f);
 	}
 
@@ -79,7 +79,7 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 *
 	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
 	 */
-	public ObjectMapFibIn2(int initialCapacity) {
+	public ObjectMapBigHash(int initialCapacity) {
 		this(initialCapacity, 0.8f);
 	}
 
@@ -89,7 +89,7 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 *
 	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
 	 */
-	public ObjectMapFibIn2(int initialCapacity, float loadFactor) {
+	public ObjectMapBigHash(int initialCapacity, float loadFactor) {
 		if (loadFactor <= 0f || loadFactor > 1f)
 			throw new IllegalArgumentException("loadFactor must be > 0 and <= 1: " + loadFactor);
 		this.loadFactor = loadFactor;
@@ -106,7 +106,7 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	/**
 	 * Creates a new map identical to the specified map.
 	 */
-	public ObjectMapFibIn2(ObjectMapFibIn2<? extends K, ? extends V> map) {
+	public ObjectMapBigHash(ObjectMapBigHash<? extends K, ? extends V> map) {
 		this.loadFactor = map.loadFactor;
 		this.threshold = map.threshold;
 		this.mask = map.mask;
@@ -119,15 +119,33 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	/**
 	 * Creates a new map identical to the specified map.
 	 */
-	public ObjectMapFibIn2(Map<? extends K, ? extends V> map) {
+	public ObjectMapBigHash(Map<? extends K, ? extends V> map) {
 		this(map.size());
 		for (Map.Entry<? extends K, ? extends V> kv : map.entrySet()) {
 			put(kv.getKey(), kv.getValue());
 		}
 	}
 
-	protected static final long FIBONACCI = 0xCF1BBCDCBFA53E0BL;
-//	protected static final long FIBONACCI = 0x9E3779B97F4A7C15L;
+	/**
+	 * Returns an index &gt;= 0 and &lt;= {@link #mask} for the specified hash code {@code h}.
+	 *
+	 * @param h a hash code, typically from {@link Object#hashCode()} but possibly from a different hashing method, like
+	 *          {@link Arrays#hashCode(int[])} or {@link System#identityHashCode(Object)}
+	 */
+	protected int place (int h) {
+		h -= h << 16;
+		h ^= h >> 14;
+		h -= h << 5;
+		h ^= h >> 6;
+		h -= h << 13;
+		h ^= h >> 5;
+		h -= h << 4;
+		h ^= h >> 2;
+		h -= h << 12;
+		h ^= h >> 15;
+		return h & mask;
+	}
+
 	/**
 	 * Returns the index of the key if already present, else {@code ~index} for the next empty index. This can be overridden
 	 * to compare for equality differently than {@link Object#equals(Object)}.
@@ -136,7 +154,7 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 */
 	protected int locateKey (Object key) {
 		K[] keyTable = this.keyTable;
-		for (int i = (int)(key.hashCode() * FIBONACCI >>> shift); ; i = i + 1 & mask) {
+		for (int i = place(key.hashCode()); ; i = i + 1 & mask) {
 			K other = keyTable[i];
 			if (other == null)
 				return ~i; // Empty space is available.
@@ -164,7 +182,7 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 		return null;
 	}
 
-	public void putAll (ObjectMapFibIn2<? extends K, ? extends V> map) {
+	public void putAll (ObjectMapBigHash<? extends K, ? extends V> map) {
 		ensureCapacity(map.size);
 		K[] keyTable = map.keyTable;
 		V[] valueTable = map.valueTable;
@@ -181,7 +199,7 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 */
 	private void putResize (K key, @Nullable V value) {
 		K[] keyTable = this.keyTable;
-		for (int i = (int)(key.hashCode() * FIBONACCI >>> shift); ; i = (i + 1) & mask) {
+		for (int i = place(key.hashCode()); ; i = (i + 1) & mask) {
 			if (keyTable[i] == null) {
 				keyTable[i] = key;
 				valueTable[i] = value;
@@ -222,7 +240,7 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 		V oldValue = valueTable[i];
 		int mask = this.mask, next = i + 1 & mask;
 		while ((key = keyTable[next]) != null) {
-			int placement = (int)(key.hashCode() * FIBONACCI >>> shift);
+			int placement = place(key.hashCode());
 			if ((next - placement & mask) > (i - placement & mask)) {
 				keyTable[i] = (K)key;
 				valueTable[i] = valueTable[next];
@@ -258,6 +276,9 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	@Override
 	public void putAll (Map<? extends K, ? extends V> m) {
 		ensureCapacity(m.size());
+//		for (K k : m.keySet()) {
+//			put(k, m.get(k));
+//		}
 		for (Map.Entry<? extends K, ? extends V> kv : m.entrySet()) {
 			put(kv.getKey(), kv.getValue());
 		}
@@ -455,9 +476,9 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	public boolean equals (Object obj) {
 		if (obj == this)
 			return true;
-		if (!(obj instanceof ObjectMapFibIn2))
+		if (!(obj instanceof ObjectMapBigHash))
 			return false;
-		ObjectMapFibIn2 other = (ObjectMapFibIn2)obj;
+		ObjectMapBigHash other = (ObjectMapBigHash)obj;
 		if (other.size != size)
 			return false;
 		K[] keyTable = this.keyTable;
@@ -484,9 +505,9 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	public boolean equalsIdentity (@Nullable Object obj) {
 		if (obj == this)
 			return true;
-		if (!(obj instanceof ObjectMapFibIn2))
+		if (!(obj instanceof ObjectMapBigHash))
 			return false;
-		ObjectMapFibIn2 other = (ObjectMapFibIn2)obj;
+		ObjectMapBigHash other = (ObjectMapBigHash)obj;
 		if (other.size != size)
 			return false;
 		K[] keyTable = this.keyTable;
@@ -543,7 +564,7 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 
 	/**
 	 * Reuses the iterator of the reused {@link Entries} produced by {@link #entrySet()};
-	 * does not permit nested iteration. Iterate over {@link Entries#Entries(ObjectMapFibIn2)} if you
+	 * does not permit nested iteration. Iterate over {@link Entries#Entries(ObjectMapBigHash)} if you
 	 * need nested or multithreaded iteration. You can remove an Entry from this ObjectMap
 	 * using this Iterator.
 	 *
@@ -728,11 +749,11 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	static protected abstract class MapIterator<K, V, I> implements Iterable<I>, Iterator<I> {
 		public boolean hasNext;
 
-		protected final ObjectMapFibIn2<K, V> map;
+		protected final ObjectMapBigHash<K, V> map;
 		protected int nextIndex, currentIndex;
 		protected boolean valid = true;
 
-		public MapIterator (ObjectMapFibIn2<K, V> map) {
+		public MapIterator (ObjectMapBigHash<K, V> map) {
 			this.map = map;
 			reset();
 		}
@@ -764,7 +785,7 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 			int mask = map.mask, next = i + 1 & mask;
 			K key;
 			while ((key = keyTable[next]) != null) {
-				int placement = (int)(key.hashCode() * FIBONACCI >>> map.shift);
+				int placement = map.place(key.hashCode());
 				if ((next - placement & mask) > (i - placement & mask)) {
 					keyTable[i] = key;
 					valueTable[i] = valueTable[next];
@@ -788,7 +809,7 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 		protected Entries () {
 		}
 
-		public Entries (ObjectMapFibIn2<K, V> map) {
+		public Entries (ObjectMapBigHash<K, V> map) {
 			iter = new MapIterator<K, V, Map.Entry<K, V>>(map) {
 				@Override
 				public Iterator<Map.Entry<K, V>> iterator () {
@@ -857,8 +878,8 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 		protected Values () {
 		}
 
-		public Values (ObjectMapFibIn2<?, V> map) {
-			iter = new MapIterator<Object, V, V>((ObjectMapFibIn2<Object, V>)map) {
+		public Values (ObjectMapBigHash<?, V> map) {
+			iter = new MapIterator<Object, V, V>((ObjectMapBigHash<Object, V>)map) {
 				@Override
 				public Iterator<V> iterator () {
 					return this;
@@ -893,8 +914,8 @@ public class ObjectMapFibIn2<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 		protected Keys () {
 		}
 
-		public Keys (ObjectMapFibIn2<K, ?> map) {
-			iter = new MapIterator<K, Object, K>((ObjectMapFibIn2<K, Object>)map) {
+		public Keys (ObjectMapBigHash<K, ?> map) {
+			iter = new MapIterator<K, Object, K>((ObjectMapBigHash<K, Object>)map) {
 				@Override
 				public Iterator<K> iterator () {
 					return this;

@@ -18,7 +18,14 @@ package com.github.tommyettinger.ds;
 
 import javax.annotation.Nullable;
 import java.io.Serializable;
-import java.util.*;
+import java.util.AbstractCollection;
+import java.util.AbstractSet;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 import static com.github.tommyettinger.ds.Utilities.neverIdentical;
 import static com.github.tommyettinger.ds.Utilities.tableSize;
@@ -42,7 +49,7 @@ import static com.github.tommyettinger.ds.Utilities.tableSize;
  * @author Nathan Sweet
  * @author Tommy Ettinger
  */
-public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>, Serializable {
+public class ObjectMapSame<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>, Serializable {
 	private static final long serialVersionUID = 0L;
 
 	public int size;
@@ -70,7 +77,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	/**
 	 * Creates a new map with an initial capacity of 51 and a load factor of 0.8.
 	 */
-	public ObjectMapOcto() {
+	public ObjectMapSame () {
 		this(51, 0.8f);
 	}
 
@@ -79,7 +86,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	 *
 	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
 	 */
-	public ObjectMapOcto(int initialCapacity) {
+	public ObjectMapSame (int initialCapacity) {
 		this(initialCapacity, 0.8f);
 	}
 
@@ -89,7 +96,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	 *
 	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
 	 */
-	public ObjectMapOcto(int initialCapacity, float loadFactor) {
+	public ObjectMapSame (int initialCapacity, float loadFactor) {
 		if (loadFactor <= 0f || loadFactor > 1f)
 			throw new IllegalArgumentException("loadFactor must be > 0 and <= 1: " + loadFactor);
 		this.loadFactor = loadFactor;
@@ -97,7 +104,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 		int tableSize = tableSize(initialCapacity, loadFactor);
 		threshold = (int)(tableSize * loadFactor);
 		mask = tableSize - 1;
-		shift = Long.numberOfLeadingZeros(mask);
+		shift = Integer.numberOfLeadingZeros(mask);
 
 		keyTable = (K[])new Object[tableSize];
 		valueTable = (V[])new Object[tableSize];
@@ -106,7 +113,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	/**
 	 * Creates a new map identical to the specified map.
 	 */
-	public ObjectMapOcto(ObjectMapOcto<? extends K, ? extends V> map) {
+	public ObjectMapSame (ObjectMapSame<? extends K, ? extends V> map) {
 		this.loadFactor = map.loadFactor;
 		this.threshold = map.threshold;
 		this.mask = map.mask;
@@ -119,29 +126,21 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	/**
 	 * Creates a new map identical to the specified map.
 	 */
-	public ObjectMapOcto(Map<? extends K, ? extends V> map) {
+	public ObjectMapSame (Map<? extends K, ? extends V> map) {
 		this(map.size());
-		for (Map.Entry<? extends K, ? extends V> kv : map.entrySet()) {
-			put(kv.getKey(), kv.getValue());
+		for (K k : map.keySet()) {
+			put(k, map.get(k));
 		}
 	}
 
 	/**
-	 * Returns an index &gt;= 0 and &lt;= {@link #mask} for the specified hash code {@code h}.
+	 * Returns an index &gt;= 0 and &lt;= {@link #mask} for the specified {@code item}.
 	 *
-	 * @param h a hash code, typically from {@link Object#hashCode()} but possibly from a different hashing method, like
-	 *          {@link Arrays#hashCode(int[])} or {@link System#identityHashCode(Object)}
+	 * @param item a non-null Object; its hashCode() method should be used by most implementations.
 	 */
-	protected int place (int h) {
-		h -= h << 21;
-		h ^= h >> 11;
-		h -= h << 9;
-		h ^= h >> 8;
-		h -= h << 7;
-		h ^= h >> 5;
-		h -= h << 10;
-		h ^= h >> 19;
-		return h & mask;
+	protected int place (Object item) {
+		final int h = item.hashCode() * 0x9E377;
+		return (h ^ h >>> shift) & mask;
 	}
 
 	/**
@@ -152,7 +151,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	 */
 	protected int locateKey (Object key) {
 		K[] keyTable = this.keyTable;
-		for (int i = place(key.hashCode()); ; i = i + 1 & mask) {
+		for (int i = place(key); ; i = i + 1 & mask) {
 			K other = keyTable[i];
 			if (other == null)
 				return ~i; // Empty space is available.
@@ -180,7 +179,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 		return null;
 	}
 
-	public void putAll (ObjectMapOcto<? extends K, ? extends V> map) {
+	public void putAll (ObjectMapSame<? extends K, ? extends V> map) {
 		ensureCapacity(map.size);
 		K[] keyTable = map.keyTable;
 		V[] valueTable = map.valueTable;
@@ -197,7 +196,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	 */
 	private void putResize (K key, @Nullable V value) {
 		K[] keyTable = this.keyTable;
-		for (int i = place(key.hashCode()); ; i = (i + 1) & mask) {
+		for (int i = place(key); ; i = (i + 1) & mask) {
 			if (keyTable[i] == null) {
 				keyTable[i] = key;
 				valueTable[i] = value;
@@ -221,9 +220,10 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	}
 
 	/**
-	 * Returns the value for the specified key, or the default value if the key is not in the map.
+	 * Returns the value for the specified key, or the given default value if the key is not in the map.
 	 */
-	public @Nullable V get (Object key, @Nullable V defaultValue) {
+	@Override
+	public @Nullable V getOrDefault (Object key, @Nullable V defaultValue) {
 		int i = locateKey(key);
 		return i < 0 ? defaultValue : valueTable[i];
 	}
@@ -238,7 +238,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 		V oldValue = valueTable[i];
 		int mask = this.mask, next = i + 1 & mask;
 		while ((key = keyTable[next]) != null) {
-			int placement = place(key.hashCode());
+			int placement = place(key);
 			if ((next - placement & mask) > (i - placement & mask)) {
 				keyTable[i] = (K)key;
 				valueTable[i] = valueTable[next];
@@ -256,12 +256,12 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	 * Copies all of the mappings from the specified map to this map
 	 * (optional operation).  The effect of this call is equivalent to that
 	 * of calling {@link #put(Object, Object) put(k, v)} on this map once
-	 * for each mapping from key <tt>k</tt> to value <tt>v</tt> in the
+	 * for each mapping from key {@code k} to value {@code v} in the
 	 * specified map.  The behavior of this operation is undefined if the
 	 * specified map is modified while the operation is in progress.
 	 *
 	 * @param m mappings to be stored in this map
-	 * @throws UnsupportedOperationException if the <tt>putAll</tt> operation
+	 * @throws UnsupportedOperationException if the {@code putAll} operation
 	 *                                       is not supported by this map
 	 * @throws ClassCastException            if the class of a key or value in the
 	 *                                       specified map prevents it from being stored in this map
@@ -274,12 +274,8 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	@Override
 	public void putAll (Map<? extends K, ? extends V> m) {
 		ensureCapacity(m.size());
-//		for (K k : m.keySet()) {
-//			put(k, m.get(k));
-//		}
-		for (Map.Entry<? extends K, ? extends V> kv : m.entrySet()) {
+		for (Map.Entry<? extends K, ? extends V> kv : m.entrySet())
 			put(kv.getKey(), kv.getValue());
-		}
 	}
 
 	/**
@@ -291,8 +287,8 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 
 	/**
 	 * Returns the number of key-value mappings in this map.  If the
-	 * map contains more than <tt>Integer.MAX_VALUE</tt> elements, returns
-	 * <tt>Integer.MAX_VALUE</tt>.
+	 * map contains more than {@code Integer.MAX_VALUE} elements, returns
+	 * {@code Integer.MAX_VALUE}.
 	 *
 	 * @return the number of key-value mappings in this map
 	 */
@@ -376,15 +372,15 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	}
 
 	/**
-	 * Returns <tt>true</tt> if this map maps one or more keys to the
-	 * specified value.  More formally, returns <tt>true</tt> if and only if
-	 * this map contains at least one mapping to a value <tt>v</tt> such that
-	 * <tt>(value==null ? v==null : value.equals(v))</tt>.  This operation
+	 * Returns {@code true} if this map maps one or more keys to the
+	 * specified value.  More formally, returns {@code true} if and only if
+	 * this map contains at least one mapping to a value {@code v} such that
+	 * {@code (value==null ? v==null : value.equals(v))}.  This operation
 	 * will probably require time linear in the map size for most
-	 * implementations of the <tt>Map</tt> interface.
+	 * implementations of the {@code Map} interface.
 	 *
 	 * @param value value whose presence in this map is to be tested
-	 * @return <tt>true</tt> if this map maps one or more keys to the
+	 * @return {@code true} if this map maps one or more keys to the
 	 * specified value
 	 * @throws ClassCastException   if the value is of an inappropriate type for
 	 *                              this map
@@ -427,6 +423,8 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	/**
 	 * Increases the size of the backing array to accommodate the specified number of additional items / loadFactor. Useful before
 	 * adding many items to avoid multiple backing array resizes.
+	 * 
+	 * @param additionalCapacity how many additional items this should be able to hold without resizing (probably)
 	 */
 	public void ensureCapacity (int additionalCapacity) {
 		int tableSize = tableSize(size + additionalCapacity, loadFactor);
@@ -434,11 +432,11 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 			resize(tableSize);
 	}
 
-	final void resize (int newSize) {
+	protected void resize (int newSize) {
 		int oldCapacity = keyTable.length;
 		threshold = (int)(newSize * loadFactor);
 		mask = newSize - 1;
-		shift = Long.numberOfLeadingZeros(mask);
+		shift = Integer.numberOfLeadingZeros(mask);
 
 		K[] oldKeyTable = keyTable;
 		V[] oldValueTable = valueTable;
@@ -474,9 +472,9 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	public boolean equals (Object obj) {
 		if (obj == this)
 			return true;
-		if (!(obj instanceof ObjectMapOcto))
+		if (!(obj instanceof ObjectMapSame))
 			return false;
-		ObjectMapOcto other = (ObjectMapOcto)obj;
+		ObjectMapSame other = (ObjectMapSame)obj;
 		if (other.size != size)
 			return false;
 		K[] keyTable = this.keyTable;
@@ -486,7 +484,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 			if (key != null) {
 				V value = valueTable[i];
 				if (value == null) {
-					if (other.get(key, neverIdentical) != null)
+					if (other.getOrDefault(key, neverIdentical) != null)
 						return false;
 				} else {
 					if (!value.equals(other.get(key)))
@@ -503,16 +501,16 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	public boolean equalsIdentity (@Nullable Object obj) {
 		if (obj == this)
 			return true;
-		if (!(obj instanceof ObjectMapOcto))
+		if (!(obj instanceof ObjectMapSame))
 			return false;
-		ObjectMapOcto other = (ObjectMapOcto)obj;
+		ObjectMapSame other = (ObjectMapSame)obj;
 		if (other.size != size)
 			return false;
 		K[] keyTable = this.keyTable;
 		V[] valueTable = this.valueTable;
 		for (int i = 0, n = keyTable.length; i < n; i++) {
 			K key = keyTable[i];
-			if (key != null && valueTable[i] != other.get(key, neverIdentical))
+			if (key != null && valueTable[i] != other.getOrDefault(key, neverIdentical))
 				return false;
 		}
 		return true;
@@ -562,8 +560,8 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 
 	/**
 	 * Reuses the iterator of the reused {@link Entries} produced by {@link #entrySet()};
-	 * does not permit nested iteration. Iterate over {@link Entries#Entries(ObjectMapOcto)} if you
-	 * need nested or multithreaded iteration. You can remove an Entry from this ObjectMap
+	 * does not permit nested iteration. Iterate over {@link Entries#Entries(ObjectMapSame)} if you
+	 * need nested or multithreaded iteration. You can remove an Entry from this ObjectMapSame
 	 * using this Iterator.
 	 *
 	 * @return an {@link Iterator} over {@link Map.Entry} key-value pairs; remove is supported.
@@ -578,12 +576,12 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	 * The set is backed by the map, so changes to the map are
 	 * reflected in the set, and vice-versa.  If the map is modified
 	 * while an iteration over the set is in progress (except through
-	 * the iterator's own <tt>remove</tt> operation), the results of
+	 * the iterator's own {@code remove} operation), the results of
 	 * the iteration are undefined.  The set supports element removal,
 	 * which removes the corresponding mapping from the map, via the
-	 * <tt>Iterator.remove</tt>, <tt>Set.remove</tt>,
-	 * <tt>removeAll</tt>, <tt>retainAll</tt>, and <tt>clear</tt>
-	 * operations.  It does not support the <tt>add</tt> or <tt>addAll</tt>
+	 * {@code Iterator.remove}, {@code Set.remove},
+	 * {@code removeAll}, {@code retainAll}, and {@code clear}
+	 * operations.  It does not support the {@code add} or {@code addAll}
 	 * operations.
 	 * 
 	 * <p>Note that the same Collection instance is returned each time this
@@ -683,7 +681,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 		/**
 		 * Returns the value corresponding to this entry.  If the mapping
 		 * has been removed from the backing map (by the iterator's
-		 * <tt>remove</tt> operation), the results of this call are undefined.
+		 * {@code remove} operation), the results of this call are undefined.
 		 *
 		 * @return the value corresponding to this entry
 		 * @throws IllegalStateException implementations may, but are not
@@ -699,11 +697,11 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 		 * Replaces the value corresponding to this entry with the specified
 		 * value (optional operation).  (Writes through to the map.)  The
 		 * behavior of this call is undefined if the mapping has already been
-		 * removed from the map (by the iterator's <tt>remove</tt> operation).
+		 * removed from the map (by the iterator's {@code remove} operation).
 		 *
 		 * @param value new value to be stored in this entry
 		 * @return old value corresponding to the entry
-		 * @throws UnsupportedOperationException if the <tt>put</tt> operation
+		 * @throws UnsupportedOperationException if the {@code put} operation
 		 *                                       is not supported by the backing map
 		 * @throws ClassCastException            if the class of the specified value
 		 *                                       prevents it from being stored in the backing map
@@ -747,11 +745,11 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 	static protected abstract class MapIterator<K, V, I> implements Iterable<I>, Iterator<I> {
 		public boolean hasNext;
 
-		protected final ObjectMapOcto<K, V> map;
+		protected final ObjectMapSame<K, V> map;
 		protected int nextIndex, currentIndex;
 		protected boolean valid = true;
 
-		public MapIterator (ObjectMapOcto<K, V> map) {
+		public MapIterator (ObjectMapSame<K, V> map) {
 			this.map = map;
 			reset();
 		}
@@ -783,7 +781,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 			int mask = map.mask, next = i + 1 & mask;
 			K key;
 			while ((key = keyTable[next]) != null) {
-				int placement = map.place(key.hashCode());
+				int placement = map.place(key);
 				if ((next - placement & mask) > (i - placement & mask)) {
 					keyTable[i] = key;
 					valueTable[i] = valueTable[next];
@@ -807,7 +805,7 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 		protected Entries () {
 		}
 
-		public Entries (ObjectMapOcto<K, V> map) {
+		public Entries (ObjectMapSame<K, V> map) {
 			iter = new MapIterator<K, V, Map.Entry<K, V>>(map) {
 				@Override
 				public Iterator<Map.Entry<K, V>> iterator () {
@@ -876,8 +874,8 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 		protected Values () {
 		}
 
-		public Values (ObjectMapOcto<?, V> map) {
-			iter = new MapIterator<Object, V, V>((ObjectMapOcto<Object, V>)map) {
+		public Values (ObjectMapSame<?, V> map) {
+			iter = new MapIterator<Object, V, V>((ObjectMapSame<Object, V>)map) {
 				@Override
 				public Iterator<V> iterator () {
 					return this;
@@ -912,8 +910,8 @@ public class ObjectMapOcto<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>>
 		protected Keys () {
 		}
 
-		public Keys (ObjectMapOcto<K, ?> map) {
-			iter = new MapIterator<K, Object, K>((ObjectMapOcto<K, Object>)map) {
+		public Keys (ObjectMapSame<K, ?> map) {
+			iter = new MapIterator<K, Object, K>((ObjectMapSame<K, Object>)map) {
 				@Override
 				public Iterator<K> iterator () {
 					return this;
