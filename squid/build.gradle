@@ -48,7 +48,7 @@ dependencies {
     implementation group: 'org.openjdk.jol', name: 'jol-core', version:'0.10'
 
     implementation 'com.github.SquidPony.SquidLib:squidlib:94a19dd232'
-    implementation 'space.earlygrey:simple-graphs:155a48e25d'
+    implementation 'com.github.earlygrey:simple-graphs:v1.0.1'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
     implementation 'com.github.tommyettinger:atlantis:5574642135'
     implementation 'com.github.tommyettinger:jdkgdxds:0cccbc5680'
