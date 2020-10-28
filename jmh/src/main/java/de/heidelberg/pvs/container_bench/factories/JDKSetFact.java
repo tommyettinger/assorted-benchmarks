@@ -47,7 +47,7 @@ public enum JDKSetFact {
 	SQUID_INDEXED(() -> new squidpony.squidmath.OrderedSet<>(16, LoadFactor.LOAD_FACTOR)),
 	ATLANTIS_INDEXED(() -> new IndexedSet<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_HASH(() -> new ObjectSet<>(16, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDS_INDEXED(() -> new OrderedSet<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_INDEXED(() -> new ObjectOrderedSet<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSBARE_HASH(() -> new ObjectSetBare<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSBARE_INDEXED(() -> new OrderedSetBare<>(16, LoadFactor.LOAD_FACTOR))
 

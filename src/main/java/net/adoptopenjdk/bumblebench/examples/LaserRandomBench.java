@@ -15,7 +15,7 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.RandomXS128;
-import com.github.tommyettinger.ds.LaserRandom;
+import com.github.tommyettinger.ds.support.LaserRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**

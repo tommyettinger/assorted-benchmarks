@@ -1,6 +1,6 @@
 package com.github.tommyettinger.squidlib;
 
-import com.github.tommyettinger.ds.ObjectMap;
+import com.github.tommyettinger.ds.ObjectObjectMap;
 
 import java.util.Map;
 

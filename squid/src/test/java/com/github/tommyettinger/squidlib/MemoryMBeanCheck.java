@@ -205,10 +205,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
                         measure(new Runnable() {
-                            com.github.tommyettinger.ds.ObjectMap<String, String> x;
+                            com.github.tommyettinger.ds.ObjectObjectMap<String, String> x;
 
                             @Override public void run () {
-                                x = new com.github.tommyettinger.ds.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new com.github.tommyettinger.ds.ObjectObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -436,10 +436,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
                         measure(new Runnable() {
-                            com.github.tommyettinger.ds.ObjectMap<CustomString, CustomString> x;
+                            com.github.tommyettinger.ds.ObjectObjectMap<CustomString, CustomString> x;
 
                             @Override public void run () {
-                                x = new com.github.tommyettinger.ds.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new com.github.tommyettinger.ds.ObjectObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -667,10 +667,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
                         measure(new Runnable() {
-                            com.github.tommyettinger.ds.ObjectMap<Float, Float> x;
+                            com.github.tommyettinger.ds.ObjectObjectMap<Float, Float> x;
 
                             @Override public void run () {
-                                x = new com.github.tommyettinger.ds.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new com.github.tommyettinger.ds.ObjectObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));
@@ -898,10 +898,10 @@ public class MemoryMBeanCheck {
                         }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
                         measure(new Runnable() {
-                            com.github.tommyettinger.ds.ObjectMap<Integer, Integer> x;
+                            com.github.tommyettinger.ds.ObjectObjectMap<Integer, Integer> x;
 
                             @Override public void run () {
-                                x = new com.github.tommyettinger.ds.ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
+                                x = new com.github.tommyettinger.ds.ObjectObjectMap<>(size, LoadFactor.LOAD_FACTOR);
                                 for (int j = 0; j < size; j++) x.put(items[j], items[j]);
                             }
                         }));

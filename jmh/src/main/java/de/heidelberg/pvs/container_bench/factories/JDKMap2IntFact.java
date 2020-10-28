@@ -64,8 +64,8 @@ public enum JDKMap2IntFact {
 	SQUID_INDEXED(() -> new squidpony.squidmath.OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 	ATLANTIS_INDEXED(() -> new IndexedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
-	JDKGDXDS_HASH(() -> new ObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDS_INDEXED(() -> new OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_HASH(() -> new ObjectObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_INDEXED(() -> new ObjectObjectOrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
 	JDKGDXDSFIB_HASH(() -> new ObjectMapFib<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSFIB2_HASH(() -> new ObjectMapFib2<>(16, LoadFactor.LOAD_FACTOR)),

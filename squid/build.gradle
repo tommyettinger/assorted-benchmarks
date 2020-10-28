@@ -47,11 +47,11 @@ dependencies {
     annotationProcessor group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: jmh_version
     implementation group: 'org.openjdk.jol', name: 'jol-core', version:'0.10'
 
-    implementation 'com.github.SquidPony.SquidLib:squidlib:94a19dd232'
+    implementation 'com.github.SquidPony.SquidLib:squidlib:v3.0.2'
     implementation 'com.github.earlygrey:simple-graphs:v1.0.1'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
     implementation 'com.github.tommyettinger:atlantis:5574642135'
-    implementation 'com.github.tommyettinger:jdkgdxds:0cccbc5680'
+    implementation 'com.github.tommyettinger:jdkgdxds:06d4a76a8f'
 
     testImplementation group: 'junit', name: 'junit', version:'4.12'
     testImplementation group: 'org.openjdk.jol', name: 'jol-core', version: '0.10'

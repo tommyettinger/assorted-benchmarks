@@ -1,13 +1,13 @@
 package de.heidelberg.pvs.container_bench;
 
-import com.github.tommyettinger.ds.OrderedSet;
+import com.github.tommyettinger.ds.ObjectOrderedSet;
 
 import java.util.Collection;
 
 /**
  * Created by Tommy Ettinger on 9/16/2020.
  */
-public class OrderedSetBare<T> extends OrderedSet<T> {
+public class OrderedSetBare<T> extends ObjectOrderedSet<T> {
 	public OrderedSetBare() {
 		super();
 	}
@@ -20,7 +20,7 @@ public class OrderedSetBare<T> extends OrderedSet<T> {
 		super(initialCapacity);
 	}
 
-	public OrderedSetBare(OrderedSet<? extends T> set) {
+	public OrderedSetBare(ObjectOrderedSet<? extends T> set) {
 		super(set);
 	}
 

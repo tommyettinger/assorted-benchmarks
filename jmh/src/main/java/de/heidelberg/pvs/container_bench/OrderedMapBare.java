@@ -1,13 +1,13 @@
 package de.heidelberg.pvs.container_bench;
 
-import com.github.tommyettinger.ds.OrderedMap;
+import com.github.tommyettinger.ds.ObjectObjectOrderedMap;
 
 import java.util.Map;
 
 /**
  * Created by Tommy Ettinger on 9/16/2020.
  */
-public class OrderedMapBare<K, V> extends OrderedMap<K, V> {
+public class OrderedMapBare<K, V> extends ObjectObjectOrderedMap<K, V> {
 	public OrderedMapBare() {
 		super();
 	}
@@ -20,7 +20,7 @@ public class OrderedMapBare<K, V> extends OrderedMap<K, V> {
 		super(initialCapacity, loadFactor);
 	}
 
-	public OrderedMapBare(OrderedMap<? extends K, ? extends V> map) {
+	public OrderedMapBare(ObjectObjectOrderedMap<? extends K, ? extends V> map) {
 		super(map);
 	}
 
