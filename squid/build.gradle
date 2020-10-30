@@ -53,7 +53,7 @@ dependencies {
     implementation 'com.github.tommyettinger:atlantis:5574642135'
     implementation 'com.github.tommyettinger:jdkgdxds:06d4a76a8f'
 
-    testImplementation group: 'junit', name: 'junit', version:'4.12'
+    testImplementation group: 'junit', name: 'junit', version:'4.13.1'
     testImplementation group: 'org.openjdk.jol', name: 'jol-core', version: '0.10'
 
     testImplementation 'com.badlogicgames.gdx:gdx-backend-lwjgl3:1.9.11'
