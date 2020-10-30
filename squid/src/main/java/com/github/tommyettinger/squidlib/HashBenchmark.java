@@ -138,6 +138,7 @@ import java.util.concurrent.TimeUnit;
  * the hash, but Curlup also uses much less time per input than Water and Yolk while still passing tests.
  * <br>
  * So the gist of it is, we just need to use Curlup more for int arrays, especially when the inputs may be large.
+ * It doesn't perform as well on long arrays or especially on CharSequences.
  * <br>
  * Long array results:
  * <pre>
@@ -226,6 +227,27 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doLongYolk64         40  avgt    3   41.424 ±  3.241  ns/op
  * HashBenchmark.doLongYolk64         80  avgt    3   66.346 ±  0.597  ns/op
  * HashBenchmark.doLongYolk64        160  avgt    3  131.340 ±  5.007  ns/op
+ * </pre>
+ * <br>
+ * On String or CharSequence inputs, Water and Yolk do well on quality and speed, Wisp is best on speed
+ * (but not on quality), and Curlup lags behind on speed but retains high quality. A hybrid approach may
+ * be optimal for hashing different types of array, using Yolk for Strings and Curlup for int arrays.
+ * <pre>
+ * Benchmark                   Mode  Cnt    Score   Error  Units
+ * HashBenchmark.doCurlup32    avgt    3   87.707 ± 1.047  ns/op
+ * HashBenchmark.doCurlup64    avgt    3   86.399 ± 0.598  ns/op
+ * HashBenchmark.doHive32      avgt    3  107.000 ± 1.661  ns/op
+ * HashBenchmark.doHive64      avgt    3   79.802 ± 0.997  ns/op
+ * HashBenchmark.doJDK32       avgt    3   73.314 ± 1.375  ns/op
+ * HashBenchmark.doJDK32Mixed  avgt    3   73.626 ± 1.603  ns/op
+ * HashBenchmark.doMist32      avgt    3   74.812 ± 0.596  ns/op
+ * HashBenchmark.doMist64      avgt    3   75.283 ± 0.913  ns/op
+ * HashBenchmark.doWater32     avgt    3   68.136 ± 1.300  ns/op
+ * HashBenchmark.doWater64     avgt    3   64.533 ± 0.272  ns/op
+ * HashBenchmark.doWisp32      avgt    3   57.387 ± 0.351  ns/op
+ * HashBenchmark.doWisp64      avgt    3   54.624 ± 0.675  ns/op
+ * HashBenchmark.doYolk32      avgt    3   64.287 ± 2.183  ns/op
+ * HashBenchmark.doYolk64      avgt    3   64.611 ± 0.688  ns/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
