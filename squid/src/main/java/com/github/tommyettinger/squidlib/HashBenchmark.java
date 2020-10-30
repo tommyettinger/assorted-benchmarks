@@ -338,6 +338,27 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doYolk32      avgt    3   64.287 ± 2.183  ns/op
  * HashBenchmark.doYolk64      avgt    3   64.611 ± 0.688  ns/op
  * </pre>
+ * <br>
+ * When those same Strings are converted to char arrays, Curlup does well again, comparably to
+ * Yolk or Water. Yolk has some JIT quirk with 32-bit output that slows it down
+ * significantly after a few runs. Water may have the same with 64-bit output.
+ * <pre>
+ * Benchmark                       (len)  Mode  Cnt    Score   Error  Units
+ * HashBenchmark.doCharCurlup32        5  avgt    3   63.182 ± 0.586  ns/op
+ * HashBenchmark.doCharCurlup64        5  avgt    3   61.863 ± 1.378  ns/op
+ * HashBenchmark.doCharHive32          5  avgt    3  101.530 ± 1.097  ns/op
+ * HashBenchmark.doCharHive64          5  avgt    3   67.584 ± 1.711  ns/op
+ * HashBenchmark.doCharJDK32           5  avgt    3   69.711 ± 0.038  ns/op
+ * HashBenchmark.doCharJDK32Mixed      5  avgt    3   68.932 ± 0.335  ns/op
+ * HashBenchmark.doCharMist32          5  avgt    3   74.295 ± 3.046  ns/op
+ * HashBenchmark.doCharMist64          5  avgt    3   72.579 ± 6.445  ns/op
+ * HashBenchmark.doCharWater32         5  avgt    3   60.102 ± 2.549  ns/op
+ * HashBenchmark.doCharWater64         5  avgt    3   72.465 ± 0.368  ns/op
+ * HashBenchmark.doCharWisp32          5  avgt    3   53.399 ± 1.678  ns/op
+ * HashBenchmark.doCharWisp64          5  avgt    3   50.898 ± 0.198  ns/op
+ * HashBenchmark.doCharYolk32          5  avgt    3   79.310 ± 1.171  ns/op
+ * HashBenchmark.doCharYolk64          5  avgt    3   60.510 ± 0.373  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
