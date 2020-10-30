@@ -137,7 +137,96 @@ import java.util.concurrent.TimeUnit;
  * least doesn't have visual artifacts, which the JDK hashes absolutely do. Curlup and Yolk allow 64 bits of salt for
  * the hash, but Curlup also uses much less time per input than Water and Yolk while still passing tests.
  * <br>
- * So the gist of it is, we just need to use Curlup more, especially when the inputs may be large.
+ * So the gist of it is, we just need to use Curlup more for int arrays, especially when the inputs may be large.
+ * <br>
+ * Long array results:
+ * <pre>
+ * Benchmark                       (len)  Mode  Cnt    Score    Error  Units
+ * HashBenchmark.doLongCurlup32        5  avgt    3   18.694 ±  0.222  ns/op
+ * HashBenchmark.doLongCurlup32       10  avgt    3   22.333 ±  5.216  ns/op
+ * HashBenchmark.doLongCurlup32       20  avgt    3   28.693 ±  0.300  ns/op
+ * HashBenchmark.doLongCurlup32       40  avgt    3   40.775 ±  1.826  ns/op
+ * HashBenchmark.doLongCurlup32       80  avgt    3   64.048 ±  3.346  ns/op
+ * HashBenchmark.doLongCurlup32      160  avgt    3  132.503 ±  5.074  ns/op
+ * HashBenchmark.doLongCurlup64        5  avgt    3   17.427 ±  0.213  ns/op
+ * HashBenchmark.doLongCurlup64       10  avgt    3   19.928 ±  0.264  ns/op
+ * HashBenchmark.doLongCurlup64       20  avgt    3   28.505 ±  2.483  ns/op
+ * HashBenchmark.doLongCurlup64       40  avgt    3   39.902 ±  1.801  ns/op
+ * HashBenchmark.doLongCurlup64       80  avgt    3   66.251 ±  7.010  ns/op
+ * HashBenchmark.doLongCurlup64      160  avgt    3  123.253 ±  4.363  ns/op
+ * HashBenchmark.doLongHive32          5  avgt    3   12.234 ±  0.191  ns/op
+ * HashBenchmark.doLongHive32         10  avgt    3   18.545 ±  0.084  ns/op
+ * HashBenchmark.doLongHive32         20  avgt    3   25.778 ±  2.348  ns/op
+ * HashBenchmark.doLongHive32         40  avgt    3   40.216 ±  3.080  ns/op
+ * HashBenchmark.doLongHive32         80  avgt    3   68.896 ±  0.645  ns/op
+ * HashBenchmark.doLongHive32        160  avgt    3  140.878 ±  5.307  ns/op
+ * HashBenchmark.doLongHive64          5  avgt    3   11.800 ±  0.243  ns/op
+ * HashBenchmark.doLongHive64         10  avgt    3   18.921 ±  0.500  ns/op
+ * HashBenchmark.doLongHive64         20  avgt    3   24.095 ±  1.752  ns/op
+ * HashBenchmark.doLongHive64         40  avgt    3   39.381 ±  5.871  ns/op
+ * HashBenchmark.doLongHive64         80  avgt    3   71.798 ±  0.493  ns/op
+ * HashBenchmark.doLongHive64        160  avgt    3  143.421 ±  1.469  ns/op
+ * HashBenchmark.doLongJDK32           5  avgt    3   10.380 ±  0.392  ns/op
+ * HashBenchmark.doLongJDK32          10  avgt    3   17.558 ±  0.307  ns/op
+ * HashBenchmark.doLongJDK32          20  avgt    3   24.730 ±  0.543  ns/op
+ * HashBenchmark.doLongJDK32          40  avgt    3   38.566 ±  0.336  ns/op
+ * HashBenchmark.doLongJDK32          80  avgt    3   73.082 ±  0.195  ns/op
+ * HashBenchmark.doLongJDK32         160  avgt    3  143.428 ±  2.160  ns/op
+ * HashBenchmark.doLongJDK32Mixed      5  avgt    3   10.025 ±  0.049  ns/op
+ * HashBenchmark.doLongJDK32Mixed     10  avgt    3   18.726 ±  1.232  ns/op
+ * HashBenchmark.doLongJDK32Mixed     20  avgt    3   25.842 ±  1.754  ns/op
+ * HashBenchmark.doLongJDK32Mixed     40  avgt    3   40.925 ±  2.422  ns/op
+ * HashBenchmark.doLongJDK32Mixed     80  avgt    3   75.287 ±  0.093  ns/op
+ * HashBenchmark.doLongJDK32Mixed    160  avgt    3  142.904 ±  1.688  ns/op
+ * HashBenchmark.doLongMist32          5  avgt    3   11.330 ±  0.124  ns/op
+ * HashBenchmark.doLongMist32         10  avgt    3   19.212 ±  0.270  ns/op
+ * HashBenchmark.doLongMist32         20  avgt    3   30.946 ±  3.066  ns/op
+ * HashBenchmark.doLongMist32         40  avgt    3   53.447 ±  0.521  ns/op
+ * HashBenchmark.doLongMist32         80  avgt    3   99.031 ±  7.741  ns/op
+ * HashBenchmark.doLongMist32        160  avgt    3  201.561 ±  2.213  ns/op
+ * HashBenchmark.doLongMist64          5  avgt    3   11.517 ±  0.215  ns/op
+ * HashBenchmark.doLongMist64         10  avgt    3   20.747 ±  0.272  ns/op
+ * HashBenchmark.doLongMist64         20  avgt    3   29.717 ±  0.468  ns/op
+ * HashBenchmark.doLongMist64         40  avgt    3   42.417 ±  3.498  ns/op
+ * HashBenchmark.doLongMist64         80  avgt    3   72.929 ±  1.613  ns/op
+ * HashBenchmark.doLongMist64        160  avgt    3  141.127 ±  9.716  ns/op
+ * HashBenchmark.doLongWater32         5  avgt    3   15.908 ±  0.444  ns/op
+ * HashBenchmark.doLongWater32        10  avgt    3   20.040 ±  0.568  ns/op
+ * HashBenchmark.doLongWater32        20  avgt    3   28.341 ±  0.233  ns/op
+ * HashBenchmark.doLongWater32        40  avgt    3   40.796 ±  0.409  ns/op
+ * HashBenchmark.doLongWater32        80  avgt    3   63.259 ±  1.037  ns/op
+ * HashBenchmark.doLongWater32       160  avgt    3  123.069 ±  3.251  ns/op
+ * HashBenchmark.doLongWater64         5  avgt    3   17.944 ±  0.953  ns/op
+ * HashBenchmark.doLongWater64        10  avgt    3   21.508 ±  0.335  ns/op
+ * HashBenchmark.doLongWater64        20  avgt    3   26.584 ±  1.881  ns/op
+ * HashBenchmark.doLongWater64        40  avgt    3   40.209 ±  0.656  ns/op
+ * HashBenchmark.doLongWater64        80  avgt    3   66.793 ±  1.138  ns/op
+ * HashBenchmark.doLongWater64       160  avgt    3  129.456 ±  1.458  ns/op
+ * HashBenchmark.doLongWisp32          5  avgt    3    9.418 ±  0.083  ns/op
+ * HashBenchmark.doLongWisp32         10  avgt    3   13.137 ±  0.283  ns/op
+ * HashBenchmark.doLongWisp32         20  avgt    3   21.888 ±  0.831  ns/op
+ * HashBenchmark.doLongWisp32         40  avgt    3   32.850 ±  0.649  ns/op
+ * HashBenchmark.doLongWisp32         80  avgt    3   51.705 ±  1.318  ns/op
+ * HashBenchmark.doLongWisp32        160  avgt    3  110.984 ±  2.548  ns/op
+ * HashBenchmark.doLongWisp64          5  avgt    3    9.115 ±  0.242  ns/op
+ * HashBenchmark.doLongWisp64         10  avgt    3   12.887 ±  0.981  ns/op
+ * HashBenchmark.doLongWisp64         20  avgt    3   24.156 ±  4.409  ns/op
+ * HashBenchmark.doLongWisp64         40  avgt    3   32.635 ±  0.769  ns/op
+ * HashBenchmark.doLongWisp64         80  avgt    3   53.166 ±  5.443  ns/op
+ * HashBenchmark.doLongWisp64        160  avgt    3  108.002 ±  1.669  ns/op
+ * HashBenchmark.doLongYolk32          5  avgt    3   16.814 ±  0.554  ns/op
+ * HashBenchmark.doLongYolk32         10  avgt    3   22.042 ±  0.139  ns/op
+ * HashBenchmark.doLongYolk32         20  avgt    3   25.179 ±  0.446  ns/op
+ * HashBenchmark.doLongYolk32         40  avgt    3   40.728 ±  3.335  ns/op
+ * HashBenchmark.doLongYolk32         80  avgt    3   66.073 ±  1.266  ns/op
+ * HashBenchmark.doLongYolk32        160  avgt    3  128.780 ± 16.935  ns/op
+ * HashBenchmark.doLongYolk64          5  avgt    3   18.229 ±  0.108  ns/op
+ * HashBenchmark.doLongYolk64         10  avgt    3   20.539 ±  0.651  ns/op
+ * HashBenchmark.doLongYolk64         20  avgt    3   28.568 ±  1.056  ns/op
+ * HashBenchmark.doLongYolk64         40  avgt    3   41.424 ±  3.241  ns/op
+ * HashBenchmark.doLongYolk64         80  avgt    3   66.346 ±  0.597  ns/op
+ * HashBenchmark.doLongYolk64        160  avgt    3  131.340 ±  5.007  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
