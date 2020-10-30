@@ -229,6 +229,95 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doLongYolk64        160  avgt    3  131.340 ±  5.007  ns/op
  * </pre>
  * <br>
+ * Doubles are... wild. There's a lot of unpredictable JIT behavior here.
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt    Score    Error  Units
+ * HashBenchmark.doDoubleCurlup32        5  avgt    3   17.862 ±  0.155  ns/op
+ * HashBenchmark.doDoubleCurlup32       10  avgt    3   23.878 ±  1.410  ns/op
+ * HashBenchmark.doDoubleCurlup32       20  avgt    3   40.004 ±  0.772  ns/op
+ * HashBenchmark.doDoubleCurlup32       40  avgt    3   67.521 ±  0.821  ns/op
+ * HashBenchmark.doDoubleCurlup32       80  avgt    3  127.750 ±  1.898  ns/op
+ * HashBenchmark.doDoubleCurlup32      160  avgt    3  235.422 ±  4.396  ns/op
+ * HashBenchmark.doDoubleCurlup64        5  avgt    3   18.673 ±  0.563  ns/op
+ * HashBenchmark.doDoubleCurlup64       10  avgt    3   25.145 ±  0.424  ns/op
+ * HashBenchmark.doDoubleCurlup64       20  avgt    3   38.549 ±  0.670  ns/op
+ * HashBenchmark.doDoubleCurlup64       40  avgt    3   70.016 ±  0.840  ns/op
+ * HashBenchmark.doDoubleCurlup64       80  avgt    3  126.239 ±  0.250  ns/op
+ * HashBenchmark.doDoubleCurlup64      160  avgt    3  251.886 ±  4.348  ns/op
+ * HashBenchmark.doDoubleHive32          5  avgt    3   17.560 ±  0.122  ns/op
+ * HashBenchmark.doDoubleHive32         10  avgt    3   23.555 ±  0.477  ns/op
+ * HashBenchmark.doDoubleHive32         20  avgt    3   32.617 ±  0.241  ns/op
+ * HashBenchmark.doDoubleHive32         40  avgt    3   56.100 ±  0.673  ns/op
+ * HashBenchmark.doDoubleHive32         80  avgt    3  109.511 ±  0.646  ns/op
+ * HashBenchmark.doDoubleHive32        160  avgt    3  247.982 ±  3.684  ns/op
+ * HashBenchmark.doDoubleHive64          5  avgt    3   16.740 ±  0.232  ns/op
+ * HashBenchmark.doDoubleHive64         10  avgt    3   22.964 ±  1.399  ns/op
+ * HashBenchmark.doDoubleHive64         20  avgt    3   36.947 ±  0.605  ns/op
+ * HashBenchmark.doDoubleHive64         40  avgt    3   62.399 ±  0.529  ns/op
+ * HashBenchmark.doDoubleHive64         80  avgt    3  111.120 ±  0.722  ns/op
+ * HashBenchmark.doDoubleHive64        160  avgt    3  219.099 ±  0.879  ns/op
+ * HashBenchmark.doDoubleJDK32           5  avgt    3   16.805 ±  0.135  ns/op
+ * HashBenchmark.doDoubleJDK32          10  avgt    3   22.139 ±  0.145  ns/op
+ * HashBenchmark.doDoubleJDK32          20  avgt    3   33.618 ±  0.636  ns/op
+ * HashBenchmark.doDoubleJDK32          40  avgt    3   58.112 ±  1.017  ns/op
+ * HashBenchmark.doDoubleJDK32          80  avgt    3  107.664 ± 12.333  ns/op
+ * HashBenchmark.doDoubleJDK32         160  avgt    3  234.287 ±  3.634  ns/op
+ * HashBenchmark.doDoubleJDK32Mixed      5  avgt    3   15.507 ±  0.123  ns/op
+ * HashBenchmark.doDoubleJDK32Mixed     10  avgt    3   23.212 ±  0.156  ns/op
+ * HashBenchmark.doDoubleJDK32Mixed     20  avgt    3   32.366 ±  0.209  ns/op
+ * HashBenchmark.doDoubleJDK32Mixed     40  avgt    3   55.055 ±  0.325  ns/op
+ * HashBenchmark.doDoubleJDK32Mixed     80  avgt    3  105.745 ± 17.240  ns/op
+ * HashBenchmark.doDoubleJDK32Mixed    160  avgt    3  211.812 ±  3.011  ns/op
+ * HashBenchmark.doDoubleMist32          5  avgt    3   19.798 ±  0.087  ns/op
+ * HashBenchmark.doDoubleMist32         10  avgt    3   27.990 ±  0.470  ns/op
+ * HashBenchmark.doDoubleMist32         20  avgt    3   46.865 ±  0.329  ns/op
+ * HashBenchmark.doDoubleMist32         40  avgt    3   77.725 ±  0.453  ns/op
+ * HashBenchmark.doDoubleMist32         80  avgt    3  149.085 ±  3.330  ns/op
+ * HashBenchmark.doDoubleMist32        160  avgt    3  280.914 ±  4.037  ns/op
+ * HashBenchmark.doDoubleMist64          5  avgt    3   19.685 ±  0.317  ns/op
+ * HashBenchmark.doDoubleMist64         10  avgt    3   27.463 ±  0.776  ns/op
+ * HashBenchmark.doDoubleMist64         20  avgt    3   45.702 ±  5.291  ns/op
+ * HashBenchmark.doDoubleMist64         40  avgt    3   75.578 ±  0.769  ns/op
+ * HashBenchmark.doDoubleMist64         80  avgt    3  144.378 ±  0.186  ns/op
+ * HashBenchmark.doDoubleMist64        160  avgt    3  278.566 ±  6.112  ns/op
+ * HashBenchmark.doDoubleWater32         5  avgt    3   20.581 ±  0.235  ns/op
+ * HashBenchmark.doDoubleWater32        10  avgt    3   26.075 ±  0.255  ns/op
+ * HashBenchmark.doDoubleWater32        20  avgt    3   41.856 ±  0.335  ns/op
+ * HashBenchmark.doDoubleWater32        40  avgt    3   70.633 ±  0.754  ns/op
+ * HashBenchmark.doDoubleWater32        80  avgt    3  132.384 ±  0.392  ns/op
+ * HashBenchmark.doDoubleWater32       160  avgt    3  252.140 ±  0.857  ns/op
+ * HashBenchmark.doDoubleWater64         5  avgt    3   20.103 ±  0.358  ns/op
+ * HashBenchmark.doDoubleWater64        10  avgt    3   26.784 ±  0.153  ns/op
+ * HashBenchmark.doDoubleWater64        20  avgt    3   44.208 ±  0.844  ns/op
+ * HashBenchmark.doDoubleWater64        40  avgt    3   70.892 ±  0.466  ns/op
+ * HashBenchmark.doDoubleWater64        80  avgt    3  133.423 ±  0.491  ns/op
+ * HashBenchmark.doDoubleWater64       160  avgt    3  276.185 ±  4.176  ns/op
+ * HashBenchmark.doDoubleWisp32          5  avgt    3   17.280 ±  0.406  ns/op
+ * HashBenchmark.doDoubleWisp32         10  avgt    3   23.205 ±  0.245  ns/op
+ * HashBenchmark.doDoubleWisp32         20  avgt    3   33.029 ±  0.353  ns/op
+ * HashBenchmark.doDoubleWisp32         40  avgt    3   61.604 ±  1.712  ns/op
+ * HashBenchmark.doDoubleWisp32         80  avgt    3  112.749 ±  0.677  ns/op
+ * HashBenchmark.doDoubleWisp32        160  avgt    3  213.211 ±  2.001  ns/op
+ * HashBenchmark.doDoubleWisp64          5  avgt    3   16.309 ±  0.138  ns/op
+ * HashBenchmark.doDoubleWisp64         10  avgt    3   23.518 ±  0.262  ns/op
+ * HashBenchmark.doDoubleWisp64         20  avgt    3   33.805 ±  2.741  ns/op
+ * HashBenchmark.doDoubleWisp64         40  avgt    3   61.404 ±  8.952  ns/op
+ * HashBenchmark.doDoubleWisp64         80  avgt    3  120.249 ±  0.625  ns/op
+ * HashBenchmark.doDoubleWisp64        160  avgt    3  237.270 ±  4.311  ns/op
+ * HashBenchmark.doDoubleYolk32          5  avgt    3   19.736 ±  0.306  ns/op
+ * HashBenchmark.doDoubleYolk32         10  avgt    3   26.752 ±  1.257  ns/op
+ * HashBenchmark.doDoubleYolk32         20  avgt    3   41.777 ±  0.733  ns/op
+ * HashBenchmark.doDoubleYolk32         40  avgt    3   71.514 ±  4.097  ns/op
+ * HashBenchmark.doDoubleYolk32         80  avgt    3  135.047 ±  1.478  ns/op
+ * HashBenchmark.doDoubleYolk32        160  avgt    3  251.952 ±  5.212  ns/op
+ * HashBenchmark.doDoubleYolk64          5  avgt    3   20.144 ±  0.396  ns/op
+ * HashBenchmark.doDoubleYolk64         10  avgt    3   25.593 ±  0.180  ns/op
+ * HashBenchmark.doDoubleYolk64         20  avgt    3   40.327 ±  1.947  ns/op
+ * HashBenchmark.doDoubleYolk64         40  avgt    3   65.072 ±  0.907  ns/op
+ * HashBenchmark.doDoubleYolk64         80  avgt    3  119.306 ±  0.126  ns/op
+ * HashBenchmark.doDoubleYolk64        160  avgt    3  227.780 ±  5.605  ns/op
+ * </pre>
+ * <br>
  * On String or CharSequence inputs, Water and Yolk do well on quality and speed, Wisp is best on speed
  * (but not on quality), and Curlup lags behind on speed but retains high quality. A hybrid approach may
  * be optimal for hashing different types of array, using Yolk for Strings and Curlup for int arrays.
@@ -265,6 +354,7 @@ public class HashBenchmark {
         public char[][] chars;
         public long[][] longs;
         public int[][] ints;
+        public double[][] doubles;
         public int idx;
         private final int[] intInputs = new int[65536];
         private final long[] longInputs = new long[65536];
@@ -328,6 +418,7 @@ public class HashBenchmark {
             chars = new char[4096][];
             longs = new long[4096][];
             ints = new int[4096][];
+            doubles = new double[4096][];
             for (int i = 0; i < 65536; i++) {
                 intInputs[i] = (int)(longInputs[i] = random.nextLong());
             }
@@ -338,11 +429,13 @@ public class HashBenchmark {
                 //final int len = (random.next(8)+1);
                 long[] lon = new long[len];
                 int[] inn = new int[len];
+                double[] don = new double[len];
                 for (int j = 0; j < len; j++) {
-                    inn[j] = (int)(lon[j] = random.nextLong());
+                    don[j] = inn[j] = (int)(lon[j] = random.nextLong());
                 }
                 longs[i] = lon;
                 ints[i] = inn;
+                doubles[i] = don;
             }
             idx = 0;
         }
@@ -395,6 +488,18 @@ public class HashBenchmark {
     public int doLongWisp32(BenchmarkState state)
     {
         return CrossHash.Wisp.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoubleWisp64(BenchmarkState state)
+    {
+        return CrossHash.Wisp.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleWisp32(BenchmarkState state)
+    {
+        return CrossHash.Wisp.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
 //    @Benchmark
@@ -493,6 +598,18 @@ public class HashBenchmark {
         return CrossHash.Mist.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
     }
 
+    @Benchmark
+    public long doDoubleMist64(BenchmarkState state)
+    {
+        return CrossHash.Mist.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleMist32(BenchmarkState state)
+    {
+        return CrossHash.Mist.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
 
     @Benchmark
     public long doHive64(BenchmarkState state)
@@ -543,6 +660,18 @@ public class HashBenchmark {
     }
 
     @Benchmark
+    public long doDoubleHive64(BenchmarkState state)
+    {
+        return CrossHash.Hive.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleHive32(BenchmarkState state)
+    {
+        return CrossHash.Hive.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
     public long doWater64(BenchmarkState state)
     {
         return CrossHash.Water.hash64(state.words[state.idx = state.idx + 1 & 4095]);
@@ -588,6 +717,18 @@ public class HashBenchmark {
     public int doLongWater32(BenchmarkState state)
     {
         return CrossHash.Water.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoubleWater64(BenchmarkState state)
+    {
+        return CrossHash.Water.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleWater32(BenchmarkState state)
+    {
+        return CrossHash.Water.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
 
@@ -637,6 +778,18 @@ public class HashBenchmark {
     public int doLongYolk32(BenchmarkState state)
     {
         return CrossHash.Yolk.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoubleYolk64(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleYolk32(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
 
@@ -689,6 +842,18 @@ public class HashBenchmark {
     }
 
     @Benchmark
+    public long doDoubleCurlup64(BenchmarkState state)
+    {
+        return CrossHash.Curlup.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleCurlup32(BenchmarkState state)
+    {
+        return CrossHash.Curlup.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
     public int doJDK32(BenchmarkState state)
     {
         return hashCode(state.words[state.idx = state.idx + 1 & 4095]);
@@ -733,6 +898,18 @@ public class HashBenchmark {
     public int doLongJDK32Mixed(BenchmarkState state)
     {
         return HashCommon.mix(Arrays.hashCode(state.longs[state.idx = state.idx + 1 & 4095]));
+    }
+
+    @Benchmark
+    public int doDoubleJDK32(BenchmarkState state)
+    {
+        return Arrays.hashCode(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleJDK32Mixed(BenchmarkState state)
+    {
+        return HashCommon.mix(Arrays.hashCode(state.doubles[state.idx = state.idx + 1 & 4095]));
     }
 
 
