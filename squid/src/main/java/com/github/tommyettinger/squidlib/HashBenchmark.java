@@ -359,6 +359,47 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doCharYolk32          5  avgt    3   79.310 ± 1.171  ns/op
  * HashBenchmark.doCharYolk64          5  avgt    3   60.510 ± 0.373  ns/op
  * </pre>
+ * <br>
+ * Trying out Frost, the results are quite bad...
+ * <pre>
+ * Benchmark                     (len)  Mode  Cnt    Score    Error  Units
+ * HashBenchmark.doIntCurlup32       5  avgt    3   10.601 ±  0.298  ns/op
+ * HashBenchmark.doIntCurlup32      25  avgt    3   24.212 ±  0.626  ns/op
+ * HashBenchmark.doIntCurlup32     125  avgt    3   80.642 ±  4.457  ns/op
+ * HashBenchmark.doIntCurlup64       5  avgt    3   10.888 ±  0.367  ns/op
+ * HashBenchmark.doIntCurlup64      25  avgt    3   24.435 ±  0.947  ns/op
+ * HashBenchmark.doIntCurlup64     125  avgt    3   68.260 ±  5.660  ns/op
+ * HashBenchmark.doIntFrost32        5  avgt    3   14.281 ±  0.534  ns/op
+ * HashBenchmark.doIntFrost32       25  avgt    3   43.926 ±  0.538  ns/op
+ * HashBenchmark.doIntFrost32      125  avgt    3  189.267 ± 12.588  ns/op
+ * HashBenchmark.doIntFrost64        5  avgt    3   15.897 ±  0.831  ns/op
+ * HashBenchmark.doIntFrost64       25  avgt    3   42.853 ±  2.788  ns/op
+ * HashBenchmark.doIntFrost64      125  avgt    3  193.168 ±  1.953  ns/op
+ * HashBenchmark.doIntYolk32         5  avgt    3   13.743 ±  0.089  ns/op
+ * HashBenchmark.doIntYolk32        25  avgt    3   26.972 ±  1.224  ns/op
+ * HashBenchmark.doIntYolk32       125  avgt    3   95.805 ±  7.528  ns/op
+ * HashBenchmark.doIntYolk64         5  avgt    3   14.056 ±  0.216  ns/op
+ * HashBenchmark.doIntYolk64        25  avgt    3   28.648 ±  0.744  ns/op
+ * HashBenchmark.doIntYolk64       125  avgt    3   92.012 ±  3.671  ns/op
+ * HashBenchmark.doLongCurlup32      5  avgt    3   17.275 ±  0.997  ns/op
+ * HashBenchmark.doLongCurlup32     25  avgt    3   28.826 ±  1.453  ns/op
+ * HashBenchmark.doLongCurlup32    125  avgt    3   94.744 ±  7.336  ns/op
+ * HashBenchmark.doLongCurlup64      5  avgt    3   18.412 ±  2.236  ns/op
+ * HashBenchmark.doLongCurlup64     25  avgt    3   30.625 ±  0.760  ns/op
+ * HashBenchmark.doLongCurlup64    125  avgt    3   94.464 ±  8.340  ns/op
+ * HashBenchmark.doLongFrost32       5  avgt    3   17.750 ±  0.342  ns/op
+ * HashBenchmark.doLongFrost32      25  avgt    3   51.827 ±  1.589  ns/op
+ * HashBenchmark.doLongFrost32     125  avgt    3  232.881 ± 15.873  ns/op
+ * HashBenchmark.doLongFrost64       5  avgt    3   17.941 ±  0.761  ns/op
+ * HashBenchmark.doLongFrost64      25  avgt    3   49.939 ±  1.720  ns/op
+ * HashBenchmark.doLongFrost64     125  avgt    3  232.361 ± 17.619  ns/op
+ * HashBenchmark.doLongYolk32        5  avgt    3   17.076 ±  1.345  ns/op
+ * HashBenchmark.doLongYolk32       25  avgt    3   29.851 ±  2.386  ns/op
+ * HashBenchmark.doLongYolk32      125  avgt    3   93.546 ±  2.094  ns/op
+ * HashBenchmark.doLongYolk64        5  avgt    3   17.948 ±  0.309  ns/op
+ * HashBenchmark.doLongYolk64       25  avgt    3   30.836 ±  3.374  ns/op
+ * HashBenchmark.doLongYolk64      125  avgt    3  105.815 ± 16.118  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -872,6 +913,66 @@ public class HashBenchmark {
     public int doDoubleCurlup32(BenchmarkState state)
     {
         return CrossHash.Curlup.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doFrost64(BenchmarkState state)
+    {
+        return CrossHash.Frost.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doFrost32(BenchmarkState state)
+    {
+        return CrossHash.Frost.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doCharFrost64(BenchmarkState state)
+    {
+        return CrossHash.Frost.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doCharFrost32(BenchmarkState state)
+    {
+        return CrossHash.Frost.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doIntFrost64(BenchmarkState state)
+    {
+        return CrossHash.Frost.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doIntFrost32(BenchmarkState state)
+    {
+        return CrossHash.Frost.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doLongFrost64(BenchmarkState state)
+    {
+        return CrossHash.Frost.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doLongFrost32(BenchmarkState state)
+    {
+        return CrossHash.Frost.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoubleFrost64(BenchmarkState state)
+    {
+        return CrossHash.Frost.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleFrost32(BenchmarkState state)
+    {
+        return CrossHash.Frost.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark

@@ -47,7 +47,8 @@ dependencies {
     annotationProcessor group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: jmh_version
     implementation group: 'org.openjdk.jol', name: 'jol-core', version:'0.10'
 
-    implementation 'com.github.SquidPony.SquidLib:squidlib:v3.0.2'
+    //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.2'
+    implementation 'com.github.SquidPony.SquidLib:squidlib-util:a9c96bb65f' // Oct 31 2020
     implementation 'com.github.earlygrey:simple-graphs:v1.0.1'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
     implementation 'com.github.tommyettinger:atlantis:5574642135'
@@ -56,7 +57,7 @@ dependencies {
     testImplementation group: 'junit', name: 'junit', version:'4.13.1'
     testImplementation group: 'org.openjdk.jol', name: 'jol-core', version: '0.10'
 
-    testImplementation 'com.badlogicgames.gdx:gdx-backend-lwjgl3:1.9.11'
-    testImplementation 'com.badlogicgames.gdx:gdx-platform:1.9.11:natives-desktop'
+    testImplementation 'com.badlogicgames.gdx:gdx-backend-lwjgl3:1.9.12'
+    testImplementation 'com.badlogicgames.gdx:gdx-platform:1.9.12:natives-desktop'
 }
 

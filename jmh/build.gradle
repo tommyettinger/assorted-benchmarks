@@ -69,7 +69,8 @@ dependencies {
     implementation 'com.badlogicgames.gdx:gdx:1.9.11'
 
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:913cd5921a' // Oct 4 2020
-    implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.2'
+    //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.2'
+    implementation 'com.github.SquidPony.SquidLib:squidlib-util:a9c96bb65f' // Oct 31 2020
     implementation 'com.github.tommyettinger:atlantis:5574642135' // release 0.0.1
     //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
     //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom

@@ -63,9 +63,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.squidpony</groupId>
+            <groupId>com.github.SquidPony.SquidLib</groupId>
             <artifactId>squidlib-util</artifactId>
-            <version>3.0.2</version>
+            <version>a9c96bb65f</version>
             <scope>compile</scope>
         </dependency>
 <!--        <dependency>-->
