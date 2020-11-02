@@ -38,7 +38,8 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 import squidpony.FakeLanguageGen;
-import squidpony.squidmath.*;
+import squidpony.squidmath.HashCommon;
+import squidpony.squidmath.MiniMover64RNG;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -913,66 +914,6 @@ public class HashBenchmark {
     public int doDoubleCurlup32(BenchmarkState state)
     {
         return CrossHash.Curlup.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
-    }
-
-    @Benchmark
-    public long doFrost64(BenchmarkState state)
-    {
-        return CrossHash.Frost.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
-    }
-
-    @Benchmark
-    public int doFrost32(BenchmarkState state)
-    {
-        return CrossHash.Frost.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
-    }
-
-    @Benchmark
-    public long doCharFrost64(BenchmarkState state)
-    {
-        return CrossHash.Frost.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
-    }
-
-    @Benchmark
-    public int doCharFrost32(BenchmarkState state)
-    {
-        return CrossHash.Frost.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
-    }
-
-    @Benchmark
-    public long doIntFrost64(BenchmarkState state)
-    {
-        return CrossHash.Frost.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
-    }
-
-    @Benchmark
-    public int doIntFrost32(BenchmarkState state)
-    {
-        return CrossHash.Frost.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
-    }
-
-    @Benchmark
-    public long doLongFrost64(BenchmarkState state)
-    {
-        return CrossHash.Frost.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
-    }
-
-    @Benchmark
-    public int doLongFrost32(BenchmarkState state)
-    {
-        return CrossHash.Frost.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
-    }
-
-    @Benchmark
-    public long doDoubleFrost64(BenchmarkState state)
-    {
-        return CrossHash.Frost.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
-    }
-
-    @Benchmark
-    public int doDoubleFrost32(BenchmarkState state)
-    {
-        return CrossHash.Frost.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
