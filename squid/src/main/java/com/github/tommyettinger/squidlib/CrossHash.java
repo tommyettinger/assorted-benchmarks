@@ -1,14 +1,13 @@
 package com.github.tommyettinger.squidlib;
 
 import squidpony.squidmath.*;
-
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static squidpony.squidmath.CrossHash.Water.*;
+import static com.github.tommyettinger.squidlib.CrossHash.Water.*;
 import static squidpony.squidmath.NumberTools.doubleToMixedIntBits;
 import static squidpony.squidmath.NumberTools.floatToIntBits;
 
@@ -60,7 +59,7 @@ import static squidpony.squidmath.NumberTools.floatToIntBits;
  * because at the time SquidLib preferred 64-bit math when math needed to be the same across platforms;
  * math on longs behaves the same on GWT as on desktop, despite being slower. Hive passed an older version
  * of SMHasher, a testing suite for hashes, where Wisp does not (it fails just like Arrays.hashCode()
- * does). Hive uses a cross-platform subset of the possible 32-bit math operations when producing 32-bit 
+ * does). Hive uses a cross-platform subset of the possible 32-bit math operations when producing 32-bit
  * hashes of data that doesn't involve longs or doubles, and this should speed up the CrossHash.Hive.hash()
  * methods a lot on GWT, but it slows down 32-bit output on desktop-class JVMs. Water became the default
  * when newer versions of SMHasher showed that Hive wasn't as high-quality as it had appeared, and the
@@ -233,7 +232,7 @@ public class CrossHash {
     }
 
 
-    public static int hash(final char[][] data) { 
+    public static int hash(final char[][] data) {
         return Water.hash(data);
     }
 
@@ -2465,7 +2464,7 @@ public class CrossHash {
      * better on GWT (only used on hash() overloads, and only when inputs are individually 32-bit or less), and
      * a simpler algorithm (which was called Jolt) for hash64() on boolean and byte data.
      * <br>
-     * Speed-wise, the main algorithm is about 20% slower than Wisp, but in hash tables it doesn't have clear failure 
+     * Speed-wise, the main algorithm is about 20% slower than Wisp, but in hash tables it doesn't have clear failure
      * cases like Wisp does on some inputs (such as fixed-length Strings with identical prefixes). If collisions are
      * expensive or profiling shows that Wisp's algorithm is colliding at a high rate, you should probably use the
      * normal IHasher and CrossHash.hash() methods, since those will use Hive. The modified algorithm for GWT is a
@@ -3406,7 +3405,7 @@ public class CrossHash {
 
         public static long hash64(final long[] data) {
             if (data == null) return 0;
-//          long seed = b0 ^ b0 >>> 23 ^ b0 >>> 48 ^ b0 << 7 ^ b0 << 53, 
+//          long seed = b0 ^ b0 >>> 23 ^ b0 >>> 48 ^ b0 << 7 ^ b0 << 53,
 //                    a = seed + b4, b = seed + b3,
 //                    c = seed + b2, d = seed + b1;
             long seed = 0x1E98AE18CA351B28L,
@@ -3810,7 +3809,7 @@ public class CrossHash {
 
         public static int hash(final long[] data) {
             if (data == null) return 0;
-            //long seed = 0x1E98AE18CA351B28L,// seed = b0 ^ b0 >>> 23 ^ b0 >>> 48 ^ b0 << 7 ^ b0 << 53, 
+            //long seed = 0x1E98AE18CA351B28L,// seed = b0 ^ b0 >>> 23 ^ b0 >>> 48 ^ b0 << 7 ^ b0 << 53,
 //                    a = seed ^ b4, b = (seed << 17 | seed >>> 47) ^ b3,
 //                    c = (seed << 31 | seed >>> 33) ^ b2, d = (seed << 47 | seed >>> 17) ^ b1;
             //a = 0x316E03F0E480967L, b = 0x4A8F1A6436771F2L,
@@ -5918,6 +5917,45 @@ public class CrossHash {
                 ose_, amy_, orias_, vapula_, zagan_, valac_, andras_, flauros_,
                 andrealphus_, kimaris_, amdusias_, belial_, decarabia_, seere_, dantalion_, andromalius_};
 
+        /**
+         * Big constant 0.
+         */
+        public static final long b0 = 0xA0761D6478BD642FL;
+        /**
+         * Big constant 1.
+         */
+        public static final long b1 = 0xE7037ED1A0B428DBL;
+        /**
+         * Big constant 2.
+         */
+        public static final long b2 = 0x8EBC6AF09C88C6E3L;
+        /**
+         * Big constant 3.
+         */
+        public static final long b3 = 0x589965CC75374CC3L;
+        /**
+         * Big constant 4.
+         */
+        public static final long b4 = 0x1D8E4E27C47D124FL;
+        /**
+         * Big constant 5.
+         */
+        public static final long b5 = 0xEB44ACCAB455D165L;
+
+        /**
+         * A slower but higher-quality "mum function" that can take two arbitrary longs (with any
+         * of their 64 bits containing relevant data) instead of mum's 32-bit sections of its inputs, and outputs a
+         * 64-bit result that can have any of its bits used.
+         * <br>
+         * This was changed so it distributes bits from both inputs a little better on July 6, 2019.
+         * @param a any long
+         * @param b any long
+         * @return a sort-of randomized output dependent on both inputs
+         */
+        public static long wow(final long a, final long b) {
+            final long n = (a ^ (b << 39 | b >>> 25)) * (b ^ (a << 39 | a >>> 25));
+            return n ^ (n >>> 32);
+        }
 
         public long hash64(final boolean[] data) {
             if (data == null) return 0;
@@ -8155,5 +8193,4 @@ public class CrossHash {
             return (int)((data.hashCode() + randomize(seed)) * 0x9E3779B97F4A7C15L >>> 32);
         }
     }
-
 }
