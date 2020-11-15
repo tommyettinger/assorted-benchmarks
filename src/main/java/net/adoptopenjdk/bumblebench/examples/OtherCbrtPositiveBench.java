@@ -20,28 +20,27 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
 /**
  * New laptop; Windows 10, 10th generation i7, Java 15
  * <br>
- * OtherCbrtBench score: 62016896.000000 (62.02M 1794.3%)
- *           uncertainty:   0.3%
+ * OtherCbrtPositiveBench score: 64065188.000000 (64.07M 1797.5%)
+ *                   uncertainty:   1.6%
  */
-public final class OtherCbrtBench extends MicroBench {
-	public static float cbrt(float x) {
+public final class OtherCbrtPositiveBench extends MicroBench {
+	private static final float ONE_THIRD = 1f / 3f;
+	private static float cbrtPositive(float x) {
 		int ix = Float.floatToIntBits(x);
-		final int sign = ix & 0x80000000;
-		ix &= 0x7FFFFFFF;
 		final float x0 = x;
 		ix = (ix>>>2) + (ix>>>4);
 		ix += (ix>>>4);
-		ix = ix + (ix>>>8) + 0x2a5137a0 | sign;
+		ix += (ix>>>8) + 0x2a5137a0;
 		x  = Float.intBitsToFloat(ix);
-		x  = 0.33333334f*(2f*x + x0/(x*x));
-		x  = 0.33333334f*(2f*x + x0/(x*x));
+		x  = ONE_THIRD*(2f*x + x0/(x*x));
+		x  = ONE_THIRD*(2f*x + x0/(x*x));
 		return x;
 	}
 	protected long doBatch (long numIterations) throws InterruptedException {
 		float sum = 0.1f;
 		final float shrink = 1.6180339887498949f / numIterations;
 		for (long i = 0; i < numIterations; i++)
-			sum -= cbrt(sum + i * shrink);
+			sum += cbrtPositive(sum + i * shrink);
 		return numIterations;
 	}
 
@@ -49,9 +48,9 @@ public final class OtherCbrtBench extends MicroBench {
 		LaserRandom random = new LaserRandom(12345, 6789);
 		double sumError = 0.0, relativeError = 0.0;
 		for (int i = 0; i < 0x100000; i++) {
-			float r = (random.nextFloat() - 0.5f) * random.next(10);
+			float r = (random.nextFloat()) * random.next(10);
 			float accurate = (float) Math.cbrt(r);
-			float approx = cbrt(r);
+			float approx = cbrtPositive(r);
 			float error = accurate - approx;
 			relativeError += error;
 			sumError += Math.abs(error);

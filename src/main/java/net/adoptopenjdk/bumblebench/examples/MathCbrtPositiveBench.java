@@ -19,16 +19,16 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
 /**
  * New laptop; Windows 10, 10th generation i7, Java 15
  * <br>
- *  MathCbrtBench score: 26720632.000000 (26.72M 1710.1%)
- *          uncertainty:   0.1%
+ * MathCbrtPositiveBench score: 27221158.000000 (27.22M 1712.0%)
+ *                  uncertainty:   0.2%
  */
-public final class MathCbrtBench extends MicroBench {
+public final class MathCbrtPositiveBench extends MicroBench {
 
 	 protected long doBatch (long numIterations) throws InterruptedException {
-		 float sum = 0.1f;
-		 final float shrink = 1.6180339887498949f / numIterations;
+		  float sum = 0.1f;
+		  final float shrink = 1.6180339887498949f / numIterations;
 		  for (long i = 0; i < numIterations; i++)
-				sum -= Math.cbrt(sum + i * shrink);
+			  sum += Math.cbrt(sum + i * shrink);
 		  return numIterations;
 	 }
 }
