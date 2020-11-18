@@ -17,6 +17,11 @@ package net.adoptopenjdk.bumblebench.examples;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
+ * New laptop; Windows 10, 10th generation i7, Java 8
+ * <br>
+ * MathCbrtBench score: 16701729.000000 (16.70M 1663.1%)
+ *          uncertainty:   1.3%
+ * <br>
  * New laptop; Windows 10, 10th generation i7, Java 15
  * <br>
  *  MathCbrtBench score: 26720632.000000 (26.72M 1710.1%)

@@ -18,6 +18,11 @@ import com.github.tommyettinger.ds.support.LaserRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
+ * New laptop; Windows 10, 10th generation i7, Java 8
+ * <br>
+ * OtherCbrtBench score: 63464232.000000 (63.46M 1796.6%)
+ *           uncertainty:   0.3%
+ * <br>
  * New laptop; Windows 10, 10th generation i7, Java 15
  * <br>
  * OtherCbrtBench score: 62016896.000000 (62.02M 1794.3%)
@@ -25,7 +30,7 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  */
 public final class OtherCbrtBench extends MicroBench {
 	public static float cbrt(float x) {
-		int ix = Float.floatToIntBits(x);
+		int ix = Float.floatToRawIntBits(x);
 		final int sign = ix & 0x80000000;
 		ix &= 0x7FFFFFFF;
 		final float x0 = x;
@@ -48,7 +53,7 @@ public final class OtherCbrtBench extends MicroBench {
 	public static void main(String[] args) {
 		LaserRandom random = new LaserRandom(12345, 6789);
 		double sumError = 0.0, relativeError = 0.0;
-		for (int i = 0; i < 0x100000; i++) {
+		for (int i = 0; i < 1000000; i++) {
 			float r = (random.nextFloat() - 0.5f) * random.next(10);
 			float accurate = (float) Math.cbrt(r);
 			float approx = cbrt(r);
