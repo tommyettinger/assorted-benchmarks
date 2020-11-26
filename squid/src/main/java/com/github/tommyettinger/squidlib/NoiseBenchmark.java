@@ -153,6 +153,26 @@ import java.util.concurrent.TimeUnit;
  * NoiseBenchmark.measureVastNoise5D  avgt    5   60.696 ±  1.852  ns/op
  * NoiseBenchmark.measureVastNoise6D  avgt    5  111.982 ±  2.432  ns/op
  * </pre>
+ * <br>
+ * More temporary data testing "XastNoise" to see if it improves on VastNoise...
+ * <pre> 
+ * Benchmark                          Mode  Cnt    Score    Error  Units
+ * NoiseBenchmark.measureFastNoise2D  avgt    5   23.676 ±  0.537  ns/op
+ * NoiseBenchmark.measureFastNoise3D  avgt    5   29.475 ±  0.785  ns/op
+ * NoiseBenchmark.measureFastNoise4D  avgt    5   60.617 ±  0.677  ns/op
+ * NoiseBenchmark.measureFastNoise5D  avgt    5   69.289 ±  2.344  ns/op
+ * NoiseBenchmark.measureFastNoise6D  avgt    5  129.036 ± 16.736  ns/op
+ * NoiseBenchmark.measureVastNoise2D  avgt    5   24.087 ±  0.174  ns/op
+ * NoiseBenchmark.measureVastNoise3D  avgt    5   26.678 ±  0.477  ns/op
+ * NoiseBenchmark.measureVastNoise4D  avgt    5   50.789 ±  0.164  ns/op
+ * NoiseBenchmark.measureVastNoise5D  avgt    5   62.256 ±  1.679  ns/op
+ * NoiseBenchmark.measureVastNoise6D  avgt    5  125.700 ±  1.551  ns/op
+ * NoiseBenchmark.measureXastNoise2D  avgt    5   22.598 ±  0.182  ns/op
+ * NoiseBenchmark.measureXastNoise3D  avgt    5   26.824 ±  0.395  ns/op
+ * NoiseBenchmark.measureXastNoise4D  avgt    5   50.849 ±  0.432  ns/op
+ * NoiseBenchmark.measureXastNoise5D  avgt    5   61.423 ±  1.036  ns/op
+ * NoiseBenchmark.measureXastNoise6D  avgt    5  119.064 ±  2.284  ns/op
+ * </pre>
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -168,6 +188,7 @@ public class NoiseBenchmark {
             fast5 = new FastNoise(12345),
     fastFoam = new FastNoise(12345), fastPerlin = new FastNoise(12345);
     private final VastNoise vast = new VastNoise(12345);
+    private final XastNoise xast = new XastNoise(12345);
     private final FoamNoise foam = new FoamNoise(12345);
     private final ClassicNoise perlin = new ClassicNoise(12345);
     private final OpenSimplex2F osf = new OpenSimplex2F(12345L);
@@ -187,6 +208,9 @@ public class NoiseBenchmark {
 
         vast.setFractalOctaves(1);
         vast.setNoiseType(FastNoise.SIMPLEX);
+
+        xast.setFractalOctaves(1);
+        xast.setNoiseType(FastNoise.SIMPLEX);
 
         fast3.setNoiseType(FastNoise.SIMPLEX_FRACTAL);
         fast3.setFractalOctaves(3);
@@ -453,6 +477,29 @@ public class NoiseBenchmark {
 
     @Benchmark
     public double measureVastNoise6D() { return vast.getSimplex(++x, --y, z++, w--, ++u, ++v); }
+
+
+    @Benchmark
+    public float measureXastNoise2D() { return xast.getSimplex(++x, --y); }
+
+    @Benchmark
+    public float measureXastNoise3D() {
+        return xast.getSimplex(++x, --y, z++);
+    }
+
+    @Benchmark
+    public float measureXastNoise4D() {
+        return xast.getSimplex(++x, --y, z++, w--);
+    }
+
+    @Benchmark
+    public double measureXastNoise5D() {
+        return xast.getSimplex(++x, --y, z++, w--, ++u);
+    }
+
+    @Benchmark
+    public double measureXastNoise6D() { return xast.getSimplex(++x, --y, z++, w--, ++u, ++v); }
+
 
     @Benchmark
     public float measureFastFoamNoise2D() { return fastFoam.getFoam(++x, --y); }
