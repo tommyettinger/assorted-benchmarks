@@ -134,6 +134,25 @@ import java.util.concurrent.TimeUnit;
  * </pre>
  * <br>
  * Fnospiral is fastest in almost all cases, but also doesn't allow reseeding per-call.
+ * <br>
+ * Temporary data testing VastNoise...
+ * <pre>
+ * Benchmark                          Mode  Cnt    Score    Error  Units
+ * NoiseBenchmark.measureFastNoise2D  avgt    5   24.098 ±  0.242  ns/op
+ * NoiseBenchmark.measureFastNoise3D  avgt    5   29.199 ±  0.495  ns/op
+ * NoiseBenchmark.measureFastNoise4D  avgt    5   55.786 ±  0.430  ns/op
+ * NoiseBenchmark.measureFastNoise5D  avgt    5   68.737 ±  0.652  ns/op
+ * NoiseBenchmark.measureFastNoise6D  avgt    5  128.331 ± 16.751  ns/op
+ * NoiseBenchmark.measureFnospiral2D  avgt    5   24.463 ±  0.424  ns/op
+ * NoiseBenchmark.measureFnospiral3D  avgt    5   27.527 ±  0.846  ns/op
+ * NoiseBenchmark.measureFnospiral4D  avgt    5   50.042 ±  1.071  ns/op
+ * NoiseBenchmark.measureFnospiral6D  avgt    5  126.597 ±  2.157  ns/op
+ * NoiseBenchmark.measureVastNoise2D  avgt    5   24.153 ±  0.184  ns/op
+ * NoiseBenchmark.measureVastNoise3D  avgt    5   26.709 ±  0.558  ns/op
+ * NoiseBenchmark.measureVastNoise4D  avgt    5   51.246 ±  0.994  ns/op
+ * NoiseBenchmark.measureVastNoise5D  avgt    5   60.696 ±  1.852  ns/op
+ * NoiseBenchmark.measureVastNoise6D  avgt    5  111.982 ±  2.432  ns/op
+ * </pre>
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -148,6 +167,7 @@ public class NoiseBenchmark {
             fast3 = new FastNoise(12345),
             fast5 = new FastNoise(12345),
     fastFoam = new FastNoise(12345), fastPerlin = new FastNoise(12345);
+    private final VastNoise vast = new VastNoise(12345);
     private final FoamNoise foam = new FoamNoise(12345);
     private final ClassicNoise perlin = new ClassicNoise(12345);
     private final OpenSimplex2F osf = new OpenSimplex2F(12345L);
@@ -164,6 +184,9 @@ public class NoiseBenchmark {
         fastFoam.setNoiseType(FastNoise.FOAM);
         fastPerlin.setFractalOctaves(1);
         fastPerlin.setNoiseType(FastNoise.PERLIN);
+
+        vast.setFractalOctaves(1);
+        vast.setNoiseType(FastNoise.SIMPLEX);
 
         fast3.setNoiseType(FastNoise.SIMPLEX_FRACTAL);
         fast3.setFractalOctaves(3);
@@ -409,6 +432,27 @@ public class NoiseBenchmark {
 
     @Benchmark
     public double measureFastNoise6D() { return fast.getSimplex(++x, --y, z++, w--, ++u, ++v); }
+
+    @Benchmark
+    public float measureVastNoise2D() { return vast.getSimplex(++x, --y); }
+
+    @Benchmark
+    public float measureVastNoise3D() {
+        return vast.getSimplex(++x, --y, z++);
+    }
+
+    @Benchmark
+    public float measureVastNoise4D() {
+        return vast.getSimplex(++x, --y, z++, w--);
+    }
+
+    @Benchmark
+    public double measureVastNoise5D() {
+        return vast.getSimplex(++x, --y, z++, w--, ++u);
+    }
+
+    @Benchmark
+    public double measureVastNoise6D() { return vast.getSimplex(++x, --y, z++, w--, ++u, ++v); }
 
     @Benchmark
     public float measureFastFoamNoise2D() { return fastFoam.getFoam(++x, --y); }
