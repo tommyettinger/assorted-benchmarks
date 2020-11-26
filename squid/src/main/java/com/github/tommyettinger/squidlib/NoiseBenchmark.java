@@ -157,21 +157,21 @@ import java.util.concurrent.TimeUnit;
  * More temporary data testing "XastNoise" to see if it improves on VastNoise...
  * <pre> 
  * Benchmark                          Mode  Cnt    Score    Error  Units
- * NoiseBenchmark.measureFastNoise2D  avgt    5   23.676 ±  0.537  ns/op
- * NoiseBenchmark.measureFastNoise3D  avgt    5   29.475 ±  0.785  ns/op
- * NoiseBenchmark.measureFastNoise4D  avgt    5   60.617 ±  0.677  ns/op
- * NoiseBenchmark.measureFastNoise5D  avgt    5   69.289 ±  2.344  ns/op
- * NoiseBenchmark.measureFastNoise6D  avgt    5  129.036 ± 16.736  ns/op
- * NoiseBenchmark.measureVastNoise2D  avgt    5   24.087 ±  0.174  ns/op
- * NoiseBenchmark.measureVastNoise3D  avgt    5   26.678 ±  0.477  ns/op
- * NoiseBenchmark.measureVastNoise4D  avgt    5   50.789 ±  0.164  ns/op
- * NoiseBenchmark.measureVastNoise5D  avgt    5   62.256 ±  1.679  ns/op
- * NoiseBenchmark.measureVastNoise6D  avgt    5  125.700 ±  1.551  ns/op
- * NoiseBenchmark.measureXastNoise2D  avgt    5   22.598 ±  0.182  ns/op
- * NoiseBenchmark.measureXastNoise3D  avgt    5   26.824 ±  0.395  ns/op
- * NoiseBenchmark.measureXastNoise4D  avgt    5   50.849 ±  0.432  ns/op
- * NoiseBenchmark.measureXastNoise5D  avgt    5   61.423 ±  1.036  ns/op
- * NoiseBenchmark.measureXastNoise6D  avgt    5  119.064 ±  2.284  ns/op
+ * NoiseBenchmark.measureFastNoise2D  avgt    5   23.990 ±  0.046  ns/op
+ * NoiseBenchmark.measureFastNoise3D  avgt    5   29.285 ±  0.269  ns/op
+ * NoiseBenchmark.measureFastNoise4D  avgt    5   55.672 ±  0.666  ns/op
+ * NoiseBenchmark.measureFastNoise5D  avgt    5   69.411 ±  1.510  ns/op
+ * NoiseBenchmark.measureFastNoise6D  avgt    5  129.823 ± 20.843  ns/op
+ * NoiseBenchmark.measureVastNoise2D  avgt    5   24.273 ±  0.219  ns/op
+ * NoiseBenchmark.measureVastNoise3D  avgt    5   26.912 ±  0.192  ns/op
+ * NoiseBenchmark.measureVastNoise4D  avgt    5   51.326 ±  1.190  ns/op
+ * NoiseBenchmark.measureVastNoise5D  avgt    5   67.340 ±  0.846  ns/op
+ * NoiseBenchmark.measureVastNoise6D  avgt    5  128.921 ± 23.366  ns/op
+ * NoiseBenchmark.measureXastNoise2D  avgt    5   22.726 ±  0.442  ns/op
+ * NoiseBenchmark.measureXastNoise3D  avgt    5   26.979 ±  0.523  ns/op
+ * NoiseBenchmark.measureXastNoise4D  avgt    5   52.824 ±  0.396  ns/op
+ * NoiseBenchmark.measureXastNoise5D  avgt    5   63.334 ±  0.718  ns/op
+ * NoiseBenchmark.measureXastNoise6D  avgt    5  115.846 ±  1.359  ns/op
  * </pre>
  */
 @State(Scope.Thread)

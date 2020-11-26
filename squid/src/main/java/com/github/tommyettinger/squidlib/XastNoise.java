@@ -32,7 +32,7 @@ public class XastNoise extends FastNoise {
 	 * fractal noiseType), and normal lacunarity and gain (when unspecified, they are 2f and 0.5f).
 	 */
 	public XastNoise() {
-		super();
+		super(1337 * 0xC13FB ^ 0x91E10DA5);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class XastNoise extends FastNoise {
 	 * @param seed the int seed for the noise, which should significantly affect the produced noise
 	 */
 	public XastNoise(int seed) {
-		super(seed);
+		super(seed * 0xC13FB ^ 0x91E10DA5);
 	}
 
 	/**
@@ -60,7 +60,7 @@ public class XastNoise extends FastNoise {
 	 * @param frequency the multiplier for all dimensions, which is usually fairly small (1.0f/32.0f is the default)
 	 */
 	public XastNoise(int seed, float frequency) {
-		super(seed, frequency);
+		super(seed * 0xC13FB ^ 0x91E10DA5, frequency);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class XastNoise extends FastNoise {
 	 * @param noiseType the noiseType, which should be a constant from this class (see {@link #setNoiseType(int)})
 	 */
 	public XastNoise(int seed, float frequency, int noiseType) {
-		super(seed, frequency, noiseType);
+		super(seed * 0xC13FB ^ 0x91E10DA5, frequency, noiseType);
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class XastNoise extends FastNoise {
 	 * @param octaves   how many octaves of noise to use when the noiseType is one of the _FRACTAL types
 	 */
 	public XastNoise(int seed, float frequency, int noiseType, int octaves) {
-		super(seed, frequency, noiseType, octaves);
+		super(seed * 0xC13FB ^ 0x91E10DA5, frequency, noiseType, octaves);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class XastNoise extends FastNoise {
 	 * @param gain       typically 0.5, or 2.0 to change how extra octaves work (inverse mode)
 	 */
 	public XastNoise(int seed, float frequency, int noiseType, int octaves, float lacunarity, float gain) {
-		super(seed, frequency, noiseType, octaves, lacunarity, gain);
+		super(seed * 0xC13FB ^ 0x91E10DA5, frequency, noiseType, octaves, lacunarity, gain);
 	}
 
 	/**
@@ -127,32 +127,32 @@ public class XastNoise extends FastNoise {
 	}
 	@Override
 	protected int hash32(int x, int y, int z, int s) {
-		return BUFFER[(s ^ x * 0xD1B5 + y * 0xABC9 + z * 0x8CB9) >>> 12] + s & 31;
+		return BUFFER[(s ^ x * 0xD1B55 ^ y * 0xABC99 ^ z * 0x8CB93) >>> 12] & 31;
 	}
 
 	@Override
 	protected int hash256(int x, int y, int s) {
-		return BUFFER[(s ^ x * 0xC13F + y * 0x91E1) >>> 12] + s & 255;
+		return BUFFER[(s ^ x * 0xC13FB ^ y * 0x91E11) >>> 12] & 255;
 	}
 
 	@Override
 	protected int hash256(int x, int y, int z, int s) {
-		return BUFFER[(s ^ x * 0xD1B5 + y * 0xABC9 + z * 0x8CB9) >>> 12] + s & 255;
+		return BUFFER[(s ^ x * 0xD1B55 ^ y * 0xABC99 ^ z * 0x8CB93) >>> 12] & 255;
 	}
 
 	@Override
 	protected int hash256(int x, int y, int z, int w, int s) {
-		return BUFFER[(s ^ x * 0xDB4F + y * 0xBBE0 + z * 0xA0F2 + w * 0x89E1) >>> 12] + s & 255;
+		return BUFFER[(s ^ x * 0xDB4F1 ^ y * 0xBBE05 ^ z * 0xA0F2F ^ w * 0x89E19) >>> 12] & 255;
 	}
 
 	@Override
 	protected int hash256(int x, int y, int z, int w, int u, int s) {
-		return BUFFER[(s ^ x * 0xE19B + y * 0xC6D1 + z * 0xAF36 + w * 0x9A69 + u * 0x8814) >>> 12] + s & 255;
+		return BUFFER[(s ^ x * 0xE19B1 ^ y * 0xC6D1D ^ z * 0xAF36D ^ w * 0x9A695 ^ u * 0x88141) >>> 12] & 255;
 	}
 
 	@Override
 	protected int hash256(int x, int y, int z, int w, int u, int v, int s) {
-		return BUFFER[(s ^ x * 0xE60E + y * 0xCEBD + z * 0xB9C9 + w * 0xA6F5 + u * 0x9609 + v * 0x86D5) >>> 12] + s & 255;
+		return BUFFER[(s ^ x * 0xE60E3 ^ y * 0xCEBD7 ^ z * 0xB9C9B ^ w * 0xA6F57 ^ u * 0x9609D ^ v * 0x86D51) >>> 12] & 255;
 	}
 	/*
             {0xC13FA9A902A6328FL, 0x91E10DA5C79E7B1DL},
