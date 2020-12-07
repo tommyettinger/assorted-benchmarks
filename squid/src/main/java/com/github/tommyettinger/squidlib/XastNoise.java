@@ -127,32 +127,32 @@ public class XastNoise extends FastNoise {
 	}
 	@Override
 	protected int hash32(int x, int y, int z, int s) {
-		return BUFFER[(s ^ x * 0xD1B55 ^ y * 0xABC99 ^ z * 0x8CB93) >>> 12] & 31;
+		return BUFFER[(s ^ x * 0xD1B55 ^ y * 0xABC99 ^ z * 0x8CB93) >>> 12] + s & 31;
 	}
 
 	@Override
 	protected int hash256(int x, int y, int s) {
-		return BUFFER[(s ^ x * 0xC13FB ^ y * 0x91E11) >>> 12] & 255;
+		return BUFFER[(s ^ x * 0xC13FB ^ y * 0x91E11) >>> 12] + s & 255;
 	}
 
 	@Override
 	protected int hash256(int x, int y, int z, int s) {
-		return BUFFER[(s ^ x * 0xD1B55 ^ y * 0xABC99 ^ z * 0x8CB93) >>> 12] & 255;
+		return BUFFER[(s ^ x * 0xD1B55 ^ y * 0xABC99 ^ z * 0x8CB93) >>> 12] + s & 255;
 	}
 
 	@Override
 	protected int hash256(int x, int y, int z, int w, int s) {
-		return BUFFER[(s ^ x * 0xDB4F1 ^ y * 0xBBE05 ^ z * 0xA0F2F ^ w * 0x89E19) >>> 12] & 255;
+		return BUFFER[(s ^ x * 0xDB4F1 ^ y * 0xBBE05 ^ z * 0xA0F2F ^ w * 0x89E19) >>> 12] + s & 255;
 	}
 
 	@Override
 	protected int hash256(int x, int y, int z, int w, int u, int s) {
-		return BUFFER[(s ^ x * 0xE19B1 ^ y * 0xC6D1D ^ z * 0xAF36D ^ w * 0x9A695 ^ u * 0x88141) >>> 12] & 255;
+		return BUFFER[(s ^ x * 0xE19B1 ^ y * 0xC6D1D ^ z * 0xAF36D ^ w * 0x9A695 ^ u * 0x88141) >>> 12] + s & 255;
 	}
 
 	@Override
 	protected int hash256(int x, int y, int z, int w, int u, int v, int s) {
-		return BUFFER[(s ^ x * 0xE60E3 ^ y * 0xCEBD7 ^ z * 0xB9C9B ^ w * 0xA6F57 ^ u * 0x9609D ^ v * 0x86D51) >>> 12] & 255;
+		return BUFFER[(s ^ x * 0xE60E3 ^ y * 0xCEBD7 ^ z * 0xB9C9B ^ w * 0xA6F57 ^ u * 0x9609D ^ v * 0x86D51) >>> 12] + s & 255;
 	}
 	/*
             {0xC13FA9A902A6328FL, 0x91E10DA5C79E7B1DL},
