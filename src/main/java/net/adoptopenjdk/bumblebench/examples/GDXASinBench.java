@@ -22,8 +22,8 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * GDXASinBench score: 92829664.000000 (92.83M 1834.6%)
- *          uncertainty:   2.0%
+ * GDXASinBench score: 91518944.000000 (91.52M 1833.2%)
+ *          uncertainty:   0.7%
  */
 public final class GDXASinBench extends MicroBench {
 

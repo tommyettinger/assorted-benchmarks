@@ -25,21 +25,18 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * ACos35FloatBench score: 105543544.000000 (105.5M 1847.5%)
+ * ACos35FloatBench score: 106711216.000000 (106.7M 1848.6%)
  *              uncertainty:   0.6%
  */
 public final class ACos35FloatBench extends MicroBench {
-	public static float acos(float x) {
+	public static float acos(final float x) {
+		final float x2 = x * x;
+		final float x3 = x * x2;
 		if (x >= 0f) {
-			final float x2 = x * x;
-			final float x3 = x * x2;
 			return (float) Math.sqrt(1f - x) * (1.5707288f - 0.2121144f * x + 0.0742610f * x2 - 0.0187293f * x3);
 		}
 		else {
-			x = -x;
-			final float x2 = x * x;
-			final float x3 = x * x2;
-			return 3.14159265358979323846f - (float) Math.sqrt(1f - x) * (1.5707288f - 0.2121144f * x + 0.0742610f * x2 - 0.0187293f * x3);
+			return 3.14159265358979323846f - (float) Math.sqrt(1f + x) * (1.5707288f + 0.2121144f * x + 0.0742610f * x2 + 0.0187293f * x3);
 		}
 	}
 

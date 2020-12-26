@@ -24,23 +24,20 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * ASin35AltFloatBench score: 97260952.000000 (97.26M 1839.3%)
+ * ASin35AltFloatBench score: 94179176.000000 (94.18M 1836.1%)
  *                 uncertainty:   0.6%
  */
 public final class ASin35AltFloatBench extends MicroBench {
-	public static float asin(float x) {
+	public static float asin(final float x) {
+		final float x2 = x * x;
+		final float x3 = x * x2;
 		if (x >= 0f) {
-			final float x2 = x * x;
-			final float x3 = x * x2;
 			return 1.5707963267948966f - (float) Math.sqrt(1f - x) *
 					(1.5707288f - 0.2121144f * x + 0.0742610f * x2 - 0.0187293f * x3);
 		}
 		else {
-			x = -x;
-			final float x2 = x * x;
-			final float x3 = x * x2;
-			return -1.5707963267948966f + (float) Math.sqrt(1f - x) *
-					(1.5707288f - 0.2121144f * x + 0.0742610f * x2 - 0.0187293f * x3);
+			return -1.5707963267948966f + (float) Math.sqrt(1f + x) *
+					(1.5707288f + 0.2121144f * x + 0.0742610f * x2 + 0.0187293f * x3);
 		}
 	}
 
