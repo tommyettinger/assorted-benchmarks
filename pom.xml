@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <groupId>com.github.tommyettinger</groupId>
-    <version>1.9.11-SNAPSHOT</version>
+    <version>1.9.13-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>assorted-benchmarks</artifactId>
@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.github.SquidPony.SquidLib</groupId>
             <artifactId>squidlib-util</artifactId>
-            <version>a9c96bb65f</version>
+            <version>a9c96bb65f</version><!-- want to use 12a1b3c233, but JitPack times out -->
             <scope>compile</scope>
         </dependency>
 <!--        <dependency>-->
@@ -103,7 +103,7 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>jdkgdxds</artifactId>
-            <version>06d4a76a8f</version>
+            <version>af48d61cae</version>
             <scope>compile</scope>
         </dependency>
 

@@ -18,8 +18,12 @@ import com.badlogic.gdx.math.MathUtils;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * GDXASinBench score: 60559452.000000 (60.56M 1791.9%)
- *          uncertainty:   0.3%
+ * Accuracy: absolute error 0.007147891, relative error -0.000007316, max error 0.023241536
+ * <br>
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * GDXASinBench score: 92829664.000000 (92.83M 1834.6%)
+ *          uncertainty:   2.0%
  */
 public final class GDXASinBench extends MicroBench {
 
@@ -30,4 +34,19 @@ public final class GDXASinBench extends MicroBench {
 				sum -= MathUtils.asin((sum + i) * shrink);
 		  return numIterations;
 	 }
+
+	public static void main(String[] args) {
+		double absolute = 0.0, relative = 0.0, max = 0.0;
+		float ctr = -1f;
+		for (int i = 0; i < 2048; i++) {
+			final double error = Math.asin(ctr) - MathUtils.asin(ctr);
+			relative += error;
+			max = Math.max(max, Math.abs(error));
+			absolute += Math.abs(error);
+			ctr += 0x1p-10f;
+		}
+		System.out.printf("absolute error %2.9f, relative error %2.9f, max error %2.9f",
+				absolute * 0x1p-11f, relative * 0x1p-11f, max);
+	}
+
 }

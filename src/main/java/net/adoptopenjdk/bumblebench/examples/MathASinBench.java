@@ -17,10 +17,10 @@ package net.adoptopenjdk.bumblebench.examples;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * NOTE: this uses Java 13, Hotspot; expect very different results on Java 8
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * MathASinBench score: 26235490.000000 (26.24M 1708.3%)
- *           uncertainty:   0.5%
+ * MathASinBench score: 38451616.000000 (38.45M 1746.5%)
+ *           uncertainty:   0.2%
  */
 public final class MathASinBench extends MicroBench {
 
