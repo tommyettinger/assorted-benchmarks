@@ -14,9 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.math.MathUtils;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
-import squidpony.squidmath.NumberTools;
 
 /**
  * This implements the asin() approximation from sheet 35 of RAND Corporation's 1955 research study,
@@ -26,16 +24,21 @@ import squidpony.squidmath.NumberTools;
  * <br>
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * ASin35FloatBench score: 94570584.000000 (94.57M 1836.5%)
- *              uncertainty:   1.5%
+ * ASin35FloatBench score: 94179176.000000 (94.18M 1836.1%)
+ *                 uncertainty:   0.6%
  */
 public final class ASin35FloatBench extends MicroBench {
-	public static float asin(final float v) {
-		final float x = Math.abs(v);
+	public static float asin(final float x) {
 		final float x2 = x * x;
 		final float x3 = x * x2;
-		return Math.copySign(1.5707963267948966f - (float) Math.sqrt(1f - x) *
-				(1.5707288f - 0.2121144f * x + 0.0742610f * x2 - 0.0187293f * x3), v);
+		if (x >= 0f) {
+			return 1.5707963267948966f - (float) Math.sqrt(1f - x) *
+					(1.5707288f - 0.2121144f * x + 0.0742610f * x2 - 0.0187293f * x3);
+		}
+		else {
+			return -1.5707963267948966f + (float) Math.sqrt(1f + x) *
+					(1.5707288f + 0.2121144f * x + 0.0742610f * x2 + 0.0187293f * x3);
+		}
 	}
 
 	protected long doBatch (long numIterations) throws InterruptedException {

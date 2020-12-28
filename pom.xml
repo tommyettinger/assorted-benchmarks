@@ -63,9 +63,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.SquidPony.SquidLib</groupId>
+            <groupId>com.github.yellowstonegames.SquidLib</groupId>
             <artifactId>squidlib-util</artifactId>
-            <version>a9c96bb65f</version><!-- want to use 12a1b3c233, but JitPack times out -->
+            <version>2b577109cc</version>
             <scope>compile</scope>
         </dependency>
 <!--        <dependency>-->

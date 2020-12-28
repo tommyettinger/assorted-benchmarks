@@ -18,7 +18,14 @@ import com.badlogic.gdx.math.MathUtils;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
+ * For asin():
  * Accuracy: absolute error 0.007147891, relative error -0.000007316, max error 0.023241536
+ * <br>
+ * For acos():
+ * Accuracy: absolute error 0.007147890, relative error 0.000007273, max error 0.023241493
+ * <br>
+ * This is fairly fast ({@link ASin35OtherFloatBench} tests a faster one), but extremely imprecise as approximations go.
+ * The "sheet 35" approximation from Approximations for Digital Computers is a little faster and much more precise.
  * <br>
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>

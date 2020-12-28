@@ -17,18 +17,17 @@ package net.adoptopenjdk.bumblebench.examples;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * NOTE: this uses Java 13, Hotspot; expect very different results on Java 8
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * MathSinBench score: 30795266.000000 (30.80M 1724.3%)
- *          uncertainty:   7.2%
+ * 
  */
-public final class MathSinBench extends MicroBench {
+public final class MathASinFloatBench extends MicroBench {
 
-	protected long doBatch(long numIterations) throws InterruptedException {
-		double sum = 0.1;
-		final double shrink = Math.PI * 8.0 / numIterations;
-		for (long i = 0; i < numIterations; i++)
-			sum -= Math.sin((sum + i) * shrink);
-		return numIterations;
-	}
+	 protected long doBatch (long numIterations) throws InterruptedException {
+		  float sum = 0.1f;
+		  final float shrink = 0.6180339887498949f / numIterations;
+		  for (long i = 0; i < numIterations; i++)
+				sum -= Math.asin((sum + i) * shrink);
+		  return numIterations;
+	 }
 }

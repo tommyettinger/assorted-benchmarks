@@ -48,7 +48,7 @@ dependencies {
     implementation group: 'org.openjdk.jol', name: 'jol-core', version:'0.10'
 
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.2'
-    implementation 'com.github.SquidPony.SquidLib:squidlib-util:a9c96bb65f' // Oct 31 2020
+    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:2b577109cc' // Dec 27 2020
     implementation 'com.github.earlygrey:simple-graphs:v1.0.1'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
     implementation 'com.github.tommyettinger:atlantis:5574642135'

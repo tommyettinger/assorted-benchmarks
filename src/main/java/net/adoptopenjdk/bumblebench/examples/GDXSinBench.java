@@ -28,7 +28,7 @@ public final class GDXSinBench extends MicroBench {
 //		final double shrink = 1.999 / numIterations;
 //		for (long i = 0; i < numIterations; i++)
 //			sum += Math.asin(i * shrink - 1.0);
-		final float shrink = 0.6180339887498949f / numIterations;
+		final float shrink = MathUtils.PI * 8f / numIterations;
 		for (long i = 0; i < numIterations; i++)
 			sum -= MathUtils.sin((sum + i) * shrink);
 		return numIterations;
