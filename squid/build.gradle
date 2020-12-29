@@ -52,7 +52,7 @@ dependencies {
     implementation 'com.github.earlygrey:simple-graphs:v1.0.1'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
     implementation 'com.github.tommyettinger:atlantis:5574642135'
-    implementation 'com.github.tommyettinger:jdkgdxds:14cd3e1fba'
+    implementation 'com.github.tommyettinger:jdkgdxds:8e366b0944'
 
     testImplementation group: 'junit', name: 'junit', version:'4.13.1'
     testImplementation group: 'org.openjdk.jol', name: 'jol-core', version: '0.10'
