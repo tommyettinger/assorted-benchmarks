@@ -1,2 +1,3 @@
-"C:\Program Files\AdoptOpenJDK\jdk-14-hotspot\bin\java.exe" -jar benchmarks.jar "JDKSetBench" -p impl=SQUID_ORDERED,ATLANTIS_INDEXED -p size=1000 -wi 5 -i 5 -f 1 -w 5 -r 5
-"C:\Program Files\AdoptOpenJDK\jdk-14-hotspot\bin\java.exe"  -XX:+UnlockDiagnosticVMOptions -XX:PrintAssemblyOptions=intel -jar benchmarks.jar "PathfindingBenchmark.+doPath(Simple|Squid)UD" -wi 5 -i 5 -f 1 -w 7 -r 7 -prof xperfasm > asm.txt
+java -jar benchmarks.jar "JDKSetBench" -p impl=SQUID_ORDERED,ATLANTIS_INDEXED -p size=1000 -wi 5 -i 5 -f 1 -w 5 -r 5
+java -XX:+UnlockDiagnosticVMOptions -XX:PrintAssemblyOptions=intel -jar benchmarks.jar "PathfindingBenchmark.+doPath(Simple|Squid)UD" -wi 5 -i 5 -f 1 -w 7 -r 7 -prof xperfasm > asm.txt
+java -jar benchmarks.jar "JDKSetBench" -p impl=JDK_TREE,FASTUTIL_AVL,FASTUTIL_RB,ECLIPSE_TREE -p size=1000 -wi 5 -i 5 -f 1 -w 5 -r 5

@@ -10,7 +10,7 @@ public enum GDXIntSetFact {
 
 	public final Supplier<IntSet> maker;
 	
-	private GDXIntSetFact (Supplier<IntSet> maker) {
+	GDXIntSetFact (Supplier<IntSet> maker) {
 		this.maker = maker;
 	}
 }
