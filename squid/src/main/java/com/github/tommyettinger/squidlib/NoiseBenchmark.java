@@ -173,6 +173,16 @@ import java.util.concurrent.TimeUnit;
  * NoiseBenchmark.measureXastNoise5D  avgt    5   63.334 ±  0.718  ns/op
  * NoiseBenchmark.measureXastNoise6D  avgt    5  115.846 ±  1.359  ns/op
  * </pre>
+ * <br>
+ * Just testing BookNoise, which Talos uses... Not good. Java 15 here, faster
+ * hardware, but Windows 10. Our 5D noise in FastNoise is faster than that 2D noise,
+ * plus it actually allows seeding...
+ * <pre>
+ * Benchmark                          Mode  Cnt   Score   Error  Units
+ * NoiseBenchmark.measureBookNoise2D  avgt    5  88.478 ± 2.633  ns/op
+ * NoiseBenchmark.measureFastNoise2D  avgt    5  24.159 ± 1.864  ns/op
+ * NoiseBenchmark.measureFnospiral2D  avgt    5  24.210 ± 1.068  ns/op
+ * </pre>
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -195,6 +205,7 @@ public class NoiseBenchmark {
     private final OpenSimplex2S oss = new OpenSimplex2S(12345L);
     private final OpenSimplex2H osh = new OpenSimplex2H(12345L);
     private final Fnospiral fno = new Fnospiral(12345);
+    private final BookNoise book = new BookNoise();
     
     @Setup(Level.Trial)
     public void setup() {
@@ -654,6 +665,9 @@ public class NoiseBenchmark {
     public double measureOSHNoise4D() {
         return osh.noise4_Classic(++x * 0.03125, --y * 0.03125, z++ * 0.03125, w-- * 0.03125);
     }
+
+    @Benchmark
+    public float measureBookNoise2D() { return book.query(++x, --y, 0.03125f); }
 
 
 //    @Benchmark
