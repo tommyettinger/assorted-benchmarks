@@ -31,13 +31,18 @@
 
 package com.github.tommyettinger.squidlib;
 
+import com.github.yellowstonegames.grid.Noise;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
-import squidpony.squidmath.*;
+import squidpony.squidmath.ClassicNoise;
+import squidpony.squidmath.FastNoise;
+import squidpony.squidmath.FoamNoise;
+import squidpony.squidmath.SeededNoise;
+import squidpony.squidmath.VastNoise;
 
 import java.util.concurrent.TimeUnit;
 
@@ -203,6 +208,43 @@ import java.util.concurrent.TimeUnit;
  * NoiseBenchmark.measureOSHNoise4D   avgt    4  53.050 ±  3.261  ns/op
  * NoiseBenchmark.measureOSSNoise4D   avgt    4  84.870 ± 15.040  ns/op
  * </pre>
+ * <br>
+ * Comparing SquidLib FastNoise and SquidSquad Noise:
+ * <pre>
+ * Benchmark                                 Mode  Cnt     Score     Error  Units
+ * NoiseBenchmark.measureFastFoamNoise2D     avgt    4    72.462 ±   1.733  ns/op
+ * NoiseBenchmark.measureFastFoamNoise3D     avgt    4   126.036 ±   8.649  ns/op
+ * NoiseBenchmark.measureFastFoamNoise4D     avgt    4   223.895 ±   1.349  ns/op
+ * NoiseBenchmark.measureFastFoamNoise5D     avgt    4   560.161 ±  38.470  ns/op
+ * NoiseBenchmark.measureFastFoamNoise6D     avgt    4  1731.005 ± 182.149  ns/op
+ * NoiseBenchmark.measureFastNoise2D         avgt    4    24.631 ±   2.069  ns/op
+ * NoiseBenchmark.measureFastNoise3D         avgt    4    29.945 ±   1.591  ns/op
+ * NoiseBenchmark.measureFastNoise4D         avgt    4    56.687 ±   5.469  ns/op
+ * NoiseBenchmark.measureFastNoise5D         avgt    4    67.145 ±   5.030  ns/op
+ * NoiseBenchmark.measureFastNoise6D         avgt    4   124.176 ±  13.703  ns/op
+ * NoiseBenchmark.measureFastPerlinNoise2D   avgt    4    21.925 ±   2.756  ns/op
+ * NoiseBenchmark.measureFastPerlinNoise3D   avgt    4    31.190 ±   1.038  ns/op
+ * NoiseBenchmark.measureFastPerlinNoise4D   avgt    4    61.523 ±   6.399  ns/op
+ * NoiseBenchmark.measureFastPerlinNoise5D   avgt    4   140.238 ±   9.163  ns/op
+ * NoiseBenchmark.measureFastPerlinNoise6D   avgt    4   457.842 ±  31.494  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise2D    avgt    4    72.843 ±   2.247  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise3D    avgt    4   129.210 ±   5.135  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise4D    avgt    4   229.869 ±  19.327  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise5D    avgt    4   496.394 ±  54.108  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise6D    avgt    4  1698.018 ±  63.552  ns/op
+ * NoiseBenchmark.measureSquadNoise2D        avgt    4    24.120 ±   0.625  ns/op
+ * NoiseBenchmark.measureSquadNoise3D        avgt    4    29.838 ±   1.743  ns/op
+ * NoiseBenchmark.measureSquadNoise4D        avgt    4    56.720 ±   5.021  ns/op
+ * NoiseBenchmark.measureSquadNoise5D        avgt    4    65.538 ±   3.677  ns/op
+ * NoiseBenchmark.measureSquadNoise6D        avgt    4   120.508 ±   5.988  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise2D  avgt    4    21.667 ±   0.393  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise3D  avgt    4    29.462 ±   0.877  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise4D  avgt    4    65.082 ±   3.969  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise5D  avgt    4   141.615 ±  17.138  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise6D  avgt    4   461.854 ±  34.164  ns/op
+ * </pre>
+ * About the same! Foam has a slight advantage for Squad in higher dimensions,
+ * but that could just be the very high error in the measurement.
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -217,6 +259,9 @@ public class NoiseBenchmark {
             fast3 = new FastNoise(12345),
             fast5 = new FastNoise(12345),
     fastFoam = new FastNoise(12345), fastPerlin = new FastNoise(12345);
+    private final Noise squad = new Noise(12345),
+            squad3 = new Noise(12345), squad5 = new Noise(12345),
+            squadFoam = new Noise(12345), squadPerlin = new Noise(12345);
     private final VastNoise vast = new VastNoise(12345);
     private final XastNoise xast = new XastNoise(12345);
     private final FoamNoise foam = new FoamNoise(12345);
@@ -231,11 +276,18 @@ public class NoiseBenchmark {
     public void setup() {
         fast.setFractalOctaves(1);
         fast.setNoiseType(FastNoise.SIMPLEX);
+        squad.setFractalOctaves(1);
+        squad.setNoiseType(FastNoise.SIMPLEX);
 
         fastFoam.setFractalOctaves(1);
         fastFoam.setNoiseType(FastNoise.FOAM);
         fastPerlin.setFractalOctaves(1);
         fastPerlin.setNoiseType(FastNoise.PERLIN);
+
+        squadFoam.setFractalOctaves(1);
+        squadFoam.setNoiseType(FastNoise.FOAM);
+        squadPerlin.setFractalOctaves(1);
+        squadPerlin.setNoiseType(FastNoise.PERLIN);
 
         vast.setFractalOctaves(1);
         vast.setNoiseType(FastNoise.SIMPLEX);
@@ -247,6 +299,12 @@ public class NoiseBenchmark {
         fast3.setFractalOctaves(3);
         fast5.setNoiseType(FastNoise.SIMPLEX_FRACTAL);
         fast5.setFractalOctaves(5);
+
+        squad3.setNoiseType(FastNoise.SIMPLEX_FRACTAL);
+        squad3.setFractalOctaves(3);
+        squad5.setNoiseType(FastNoise.SIMPLEX_FRACTAL);
+        squad5.setFractalOctaves(5);
+
         fno.setFractalOctaves(1);
         fno.setNoiseType(FastNoise.SIMPLEX);
 
@@ -704,6 +762,64 @@ public class NoiseBenchmark {
         return GustavsonSimplexNoise.noise(++x * 0.03125, --y * 0.03125, z++ * 0.03125, w-- * 0.03125);
     }
 
+
+    @Benchmark
+    public float measureSquadNoise2D() { return squad.getSimplex(++x, --y); }
+
+    @Benchmark
+    public float measureSquadNoise3D() {
+        return squad.getSimplex(++x, --y, z++);
+    }
+
+    @Benchmark
+    public float measureSquadNoise4D() {
+        return squad.getSimplex(++x, --y, z++, w--);
+    }
+
+    @Benchmark
+    public double measureSquadNoise5D() {
+        return squad.getSimplex(++x, --y, z++, w--, ++u);
+    }
+
+    @Benchmark
+    public double measureSquadNoise6D() { return squad.getSimplex(++x, --y, z++, w--, ++u, ++v); }
+
+    @Benchmark
+    public float measureSquadFoamNoise2D() { return squadFoam.getFoam(++x, --y); }
+
+    @Benchmark
+    public float measureSquadFoamNoise3D() { return squadFoam.getFoam(++x, --y, z++);
+    }
+
+    @Benchmark
+    public float measureSquadFoamNoise4D() { return squadFoam.getFoam(++x, --y, z++, w--);
+    }
+
+    @Benchmark
+    public float measureSquadFoamNoise5D() { return squadFoam.getFoam(++x, --y, z++, w--, ++u);
+    }
+
+    @Benchmark
+    public float measureSquadFoamNoise6D() { return squadFoam.getFoam(++x, --y, z++, w--, ++u, ++v); }
+
+
+    @Benchmark
+    public float measureSquadPerlinNoise2D() { return squadPerlin.getPerlin(++x, --y); }
+
+    @Benchmark
+    public float measureSquadPerlinNoise3D() { return squadPerlin.getPerlin(++x, --y, z++);
+    }
+
+    @Benchmark
+    public float measureSquadPerlinNoise4D() { return squadPerlin.getPerlin(++x, --y, z++, w--);
+    }
+
+    @Benchmark
+    public float measureSquadPerlinNoise5D() { return squadPerlin.getPerlin(++x, --y, z++, w--, ++u);
+    }
+
+    @Benchmark
+    public float measureSquadPerlinNoise6D() { return squadPerlin.getPerlin(++x, --y, z++, w--, ++u, ++v); }
 
 //    @Benchmark
 //    public float measureFast3Octave3D() {
