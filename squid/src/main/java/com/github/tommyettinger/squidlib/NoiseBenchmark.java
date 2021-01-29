@@ -183,6 +183,26 @@ import java.util.concurrent.TimeUnit;
  * NoiseBenchmark.measureFastNoise2D  avgt    5  24.159 ± 1.864  ns/op
  * NoiseBenchmark.measureFnospiral2D  avgt    5  24.210 ± 1.068  ns/op
  * </pre>
+ * <br>
+ * Comparing some 2D noise...
+ * <pre>
+ * Benchmark                          Mode  Cnt   Score   Error  Units
+ * NoiseBenchmark.measureFastNoise2D  avgt    4  24.726 ± 0.593  ns/op
+ * NoiseBenchmark.measureGustNoise2D  avgt    4  29.621 ± 1.872  ns/op
+ * NoiseBenchmark.measureOSFNoise2D   avgt    4  29.460 ± 1.119  ns/op
+ * NoiseBenchmark.measureOSHNoise2D   avgt    4  35.113 ± 1.625  ns/op
+ * NoiseBenchmark.measureOSSNoise2D   avgt    4  35.952 ± 4.857  ns/op
+ * </pre>
+ * <br>
+ * And comparing some 4D noise.
+ * <pre>
+ * Benchmark                          Mode  Cnt   Score    Error  Units
+ * NoiseBenchmark.measureFastNoise4D  avgt    4  56.286 ±  0.860  ns/op
+ * NoiseBenchmark.measureGustNoise4D  avgt    4  75.847 ±  3.272  ns/op
+ * NoiseBenchmark.measureOSFNoise4D   avgt    4  50.964 ±  1.110  ns/op
+ * NoiseBenchmark.measureOSHNoise4D   avgt    4  53.050 ±  3.261  ns/op
+ * NoiseBenchmark.measureOSSNoise4D   avgt    4  84.870 ± 15.040  ns/op
+ * </pre>
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -206,7 +226,7 @@ public class NoiseBenchmark {
     private final OpenSimplex2H osh = new OpenSimplex2H(12345L);
     private final Fnospiral fno = new Fnospiral(12345);
     private final BookNoise book = new BookNoise();
-    
+
     @Setup(Level.Trial)
     public void setup() {
         fast.setFractalOctaves(1);
@@ -668,6 +688,21 @@ public class NoiseBenchmark {
 
     @Benchmark
     public float measureBookNoise2D() { return book.query(++x, --y, 0.03125f); }
+
+    @Benchmark
+    public double measureGustNoise2D() {
+        return GustavsonSimplexNoise.noise(++x * 0.03125, --y * 0.03125);
+    }
+
+    @Benchmark
+    public double measureGustNoise3D() {
+        return GustavsonSimplexNoise.noise(++x * 0.03125, --y * 0.03125, z++ * 0.03125);
+    }
+
+    @Benchmark
+    public double measureGustNoise4D() {
+        return GustavsonSimplexNoise.noise(++x * 0.03125, --y * 0.03125, z++ * 0.03125, w-- * 0.03125);
+    }
 
 
 //    @Benchmark
