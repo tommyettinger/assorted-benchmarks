@@ -1,14 +1,14 @@
 package com.github.tommyettinger.squidlib;
 
-import com.github.tommyettinger.ds.OrderedSet;
-import org.jetbrains.annotations.NotNull;
+import com.github.tommyettinger.ds.ObjectOrderedSet;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 
 /**
  * Created by Tommy Ettinger on 9/16/2020.
  */
-public class OrderedSetX<T> extends OrderedSet<T> {
+public class OrderedSetX<T> extends ObjectOrderedSet<T> {
 	public OrderedSetX() {
 		super();
 	}
@@ -21,7 +21,7 @@ public class OrderedSetX<T> extends OrderedSet<T> {
 		super(initialCapacity);
 	}
 
-	public OrderedSetX(OrderedSet<? extends T> set) {
+	public OrderedSetX(ObjectOrderedSet<? extends T> set) {
 		super(set);
 	}
 
@@ -53,7 +53,7 @@ public class OrderedSetX<T> extends OrderedSet<T> {
 	 * @param item a non-null Object; its hashCode() method should be used by most implementations.
 	 */
 	@Override
-	protected int place(@NotNull Object item) {
+	protected int place(@Nonnull Object item) {
 		return item.hashCode() & mask;
 	}
 }

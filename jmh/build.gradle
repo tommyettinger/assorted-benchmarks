@@ -46,18 +46,20 @@ shadowJar {
 dependencies {
     implementation group: 'org.openjdk.jmh', name: 'jmh-core', version: jmh_version
     annotationProcessor group: 'org.openjdk.jmh', name: 'jmh-generator-annprocess', version: jmh_version
-    implementation group: 'org.openjdk.jol', name: 'jol-core', version:'0.9'
+    //jol version needs to be no later than 0.10, because Aleksey Shipilev decided to break compat.
+    //also there are no issues post-able to the jol repo, so I have to passive-aggressively report it this way.
+    implementation group: 'org.openjdk.jol', name: 'jol-core', version:'0.10'
 
-    implementation group: 'com.google.api-client', name: 'google-api-client', version: '1.30.7'
-    implementation group: 'com.google.guava', name: 'guava', version:'28.2-jre'
+    implementation group: 'com.google.api-client', name: 'google-api-client', version: '1.31.2'
+    implementation group: 'com.google.guava', name: 'guava', version:'30.1-jre'
     implementation group: 'com.koloboke', name: 'koloboke-impl-jdk8', version:'1.0.0'
     implementation group: 'net.sf.trove4j', name: 'core', version:'3.1.0'
-    implementation group: 'it.unimi.dsi', name: 'fastutil', version:'8.2.1'
-    implementation group: 'com.carrotsearch', name: 'hppc', version:'0.8.1'
-    implementation group: 'org.eclipse.collections', name: 'eclipse-collections', version: '10.1.0'
+    implementation group: 'it.unimi.dsi', name: 'fastutil', version:'8.5.0'
+    implementation group: 'com.carrotsearch', name: 'hppc', version:'0.8.2'
+    implementation group: 'org.eclipse.collections', name: 'eclipse-collections', version: '11.0.0.M1'
     implementation group: 'org.apache.mahout', name: 'mahout-math', version:'0.13.0'
-    implementation group: 'edu.stanford.nlp', name: 'stanford-corenlp', version:'3.9.2'
-    implementation group: 'org.agrona', name: 'agrona', version: '1.2.0'
+    implementation group: 'edu.stanford.nlp', name: 'stanford-corenlp', version:'4.2.0'
+    implementation group: 'org.agrona', name: 'agrona', version: '1.9.0'
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
     implementation group: 'org.javolution', name: 'javolution-core-java', version: '6.0.0'
     implementation group: 'org.scala-lang', name: 'scala-library', version: '2.13.1'
@@ -66,16 +68,17 @@ dependencies {
     // transitively grabs libGDX 1.9.10:
     //implementation 'com.github.tommyettinger:merry-ds:dc9e1bceb6'
 
-    implementation 'com.badlogicgames.gdx:gdx:1.9.12'
+    implementation 'com.badlogicgames.gdx:gdx:1.9.13'
 
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:913cd5921a' // Oct 4 2020
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.2'
-    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:2b577109cc' // Dec 27 2020
+//    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:2b577109cc' // Dec 27 2020
+    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:4a8bc7e7c8' // Jan 29 2021
     implementation 'com.github.tommyettinger:atlantis:5574642135' // release 0.0.1
     //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
     //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
 //    implementation 'com.github.tommyettinger:jdkgdxds:3a9f925cd0'
-    implementation 'com.github.tommyettinger:jdkgdxds:8e366b0944'
+    implementation 'com.github.tommyettinger:jdkgdxds:ab759481b9'
 
 
 

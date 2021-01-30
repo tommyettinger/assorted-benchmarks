@@ -1,13 +1,13 @@
 package com.github.tommyettinger.squidlib;
 
-import com.github.tommyettinger.ds.OrderedMap;
+import com.github.tommyettinger.ds.ObjectObjectOrderedMap;
 
 import java.util.Map;
 
 /**
  * Created by Tommy Ettinger on 9/16/2020.
  */
-public class OrderedMapX<K, V> extends OrderedMap<K, V> {
+public class OrderedMapX<K, V> extends ObjectObjectOrderedMap<K, V> {
 	public OrderedMapX() {
 		super();
 	}
@@ -20,7 +20,7 @@ public class OrderedMapX<K, V> extends OrderedMap<K, V> {
 		super(initialCapacity, loadFactor);
 	}
 
-	public OrderedMapX(OrderedMap<? extends K, ? extends V> map) {
+	public OrderedMapX(ObjectObjectOrderedMap<? extends K, ? extends V> map) {
 		super(map);
 	}
 

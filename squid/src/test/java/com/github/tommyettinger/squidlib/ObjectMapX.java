@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Created by Tommy Ettinger on 9/16/2020.
  */
-public class ObjectMapX<K, V> extends ObjectMap<K, V> {
+public class ObjectMapX<K, V> extends ObjectObjectMap<K, V> {
 	/**
 	 * Creates a new map with an initial capacity of 51 and a load factor of 0.8.
 	 */
@@ -40,7 +40,7 @@ public class ObjectMapX<K, V> extends ObjectMap<K, V> {
 	 *
 	 * @param map
 	 */
-	public ObjectMapX(ObjectMap<? extends K, ? extends V> map) {
+	public ObjectMapX(ObjectObjectMap<? extends K, ? extends V> map) {
 		super(map);
 	}
 

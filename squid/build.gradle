@@ -57,7 +57,6 @@ dependencies {
     implementation 'com.github.tommyettinger:jdkgdxds:ab759481b9'
 
     testImplementation group: 'junit', name: 'junit', version:'4.13.1'
-    testImplementation group: 'org.openjdk.jol', name: 'jol-core', version: '0.10'
 
     testImplementation 'com.badlogicgames.gdx:gdx-backend-lwjgl3:1.9.13'
     testImplementation 'com.badlogicgames.gdx:gdx-platform:1.9.13:natives-desktop'
