@@ -40,7 +40,6 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 import squidpony.squidmath.DiverRNG;
 import squidpony.squidmath.HashCommon;
-import squidpony.squidmath.Noise;
 import squidpony.squidmath.NumberTools;
 
 import java.util.concurrent.TimeUnit;
@@ -100,12 +99,18 @@ import java.util.concurrent.TimeUnit;
  * <br>
  * Benchmarking fastFloor() methods; the comment in GustavsonSimplexNoise:
  * {@code // This method is a *lot* faster than using (int)Math.floor(x)}
- * is flat-out wrong for this benchmark result with Java 15. The implementation
- * used by SquidLib is, by sheer dumb luck, the fastest.
+ * is incorrect for this benchmark result with Java 15. Any of these can,
+ * at most, say they are a *little* faster than casting Math.floor(), and
+ * in many of the trials I did, Gustavson's fastfloor() was the slowest.
+ * The implementations used by SquidLib (FN and Noise) are, by sheer dumb
+ * luck, the fastest, but only by about 5% on an already-fast method.
+ * <pre>
  * Benchmark                        Mode  Cnt  Score   Error  Units
- * MathBenchmark.measureFloorGust   avgt    5  3.363 ± 0.175  ns/op
- * MathBenchmark.measureFloorMath   avgt    5  3.344 ± 0.036  ns/op
- * MathBenchmark.measureFloorNoise  avgt    5  3.264 ± 0.152  ns/op
+ * MathBenchmark.measureFloorFN     avgt    6  3.207 ± 0.090  ns/op
+ * MathBenchmark.measureFloorGust   avgt    6  3.330 ± 0.154  ns/op
+ * MathBenchmark.measureFloorMath   avgt    6  3.353 ± 0.019  ns/op
+ * MathBenchmark.measureFloorNoise  avgt    6  3.226 ± 0.125  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -193,6 +198,7 @@ public class MathBenchmark {
     private int floorMath = 0;
     private int floorGust = 0;
     private int floorNoise = 0;
+    private int floorFN = 0;
 
     @Benchmark
     public double measureBaseline()
@@ -640,15 +646,33 @@ public class MathBenchmark {
     public int measureFloorMath(){
         return (int) Math.floor(floatInputs[floorMath++ & 0xFFFF]);
     }
+
+    public static int fastFloorGust(float x) {
+        int xi = (int) x;
+        return x < xi ? xi - 1 : xi;
+    }
     @Benchmark
     public int measureFloorGust(){
-        return GustavsonSimplexNoise.fastfloor(floatInputs[floorGust++ & 0xFFFF]);
+        return fastFloorGust(floatInputs[floorGust++ & 0xFFFF]);
+    }
+
+    public static int fastFloorNoise(float t) {
+        return t >= 0f ? (int) t : (int) t - 1;
     }
     @Benchmark
     public int measureFloorNoise(){
-        return Noise.fastFloor(floatInputs[floorNoise++ & 0xFFFF]);
+        return fastFloorNoise(floatInputs[floorNoise++ & 0xFFFF]);
     }
-    
+
+    public static int fastFloorFN(final float f) {
+        return (f >= 0 ? (int) f : (int) f - 1);
+    }
+
+    @Benchmark
+    public int measureFloorFN(){
+        return fastFloorFN(floatInputs[floorFN++ & 0xFFFF]);
+    }
+
     /*
 mvn clean install
 java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
