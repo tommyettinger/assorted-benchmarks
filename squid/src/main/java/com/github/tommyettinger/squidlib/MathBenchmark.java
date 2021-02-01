@@ -40,6 +40,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 import squidpony.squidmath.DiverRNG;
 import squidpony.squidmath.HashCommon;
+import squidpony.squidmath.Noise;
 import squidpony.squidmath.NumberTools;
 
 import java.util.concurrent.TimeUnit;
@@ -96,6 +97,15 @@ import java.util.concurrent.TimeUnit;
  * </pre>
  * Here, Imuli has the best speed without sacrificing quality, but Gt has slightly better
  * quality and slightly worse speed. Imuli doesn't use a LUT, Gt does.
+ * <br>
+ * Benchmarking fastFloor() methods; the comment in GustavsonSimplexNoise:
+ * {@code // This method is a *lot* faster than using (int)Math.floor(x)}
+ * is flat-out wrong for this benchmark result with Java 15. The implementation
+ * used by SquidLib is, by sheer dumb luck, the fastest.
+ * Benchmark                        Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureFloorGust   avgt    5  3.363 ± 0.175  ns/op
+ * MathBenchmark.measureFloorMath   avgt    5  3.344 ± 0.036  ns/op
+ * MathBenchmark.measureFloorNoise  avgt    5  3.264 ± 0.152  ns/op
  */
 
 @State(Scope.Thread)
@@ -123,63 +133,66 @@ public class MathBenchmark {
                 / (1.0 + a * (-0.439110389941411144 + a * -0.471306172023844527));
     }
 
-    private short mathCos = -0x8000;
-    private short mathSin = -0x8000;
-    private short mathASin = -0x8000;
-    private short asinChristensen = -0x8000;
-    private short asinSquid = -0x8000;
-    private short cosOld = -0x8000;
-    private short sinOld = -0x8000;
-    private short sinNick = -0x8000;
-    private short cosNick = -0x8000;
-    private short sinBit = -0x8000;
-    private short cosBit = -0x8000;
-    private short sinBitF = -0x8000;
-    private short cosBitF = -0x8000;
-    private short cosFloat = -0x8000;
-    private short sinFloat = -0x8000;
-    private short cosGdx = -0x8000;
-    private short sinGdx = -0x8000;
-    private short mathCosDeg = -0x8000;
-    private short mathSinDeg = -0x8000;
-    private short sinNickDeg = -0x8000;
-    private short cosNickDeg = -0x8000;
-    private short cosGdxDeg = -0x8000;
-    private short sinGdxDeg = -0x8000;
-    private short baseline = -0x8000;
-    private short mathAtan2X = -0x4000;
-    private short mathAtan2Y = -0x8000;
-    private short mathAtan2_X = -0x4000;
-    private short mathAtan2_Y = -0x8000;
-    private short atan2SquidX = -0x4000;
-    private short atan2SquidY = -0x8000;
-    private short atan2SquidXF = -0x4000;
-    private short atan2SquidYF = -0x8000;
-    private short atan2GdxX = -0x4000;
-    private short atan2GdxY = -0x8000;
-    private short atan2GtX = -0x4000;
-    private short atan2GtY = -0x8000;
-    private short atan2NtX = -0x4000;
-    private short atan2NtY = -0x8000;
-    private short atan2ImX = -0x4000;
-    private short atan2ImY = -0x8000;
-    private short atan2Im_X = -0x4000;
-    private short atan2Im_Y = -0x8000;
-    private short atan2_SquidXF = -0x4000;
-    private short atan2_SquidYF = -0x8000;
-    private short atan2DegSquidXF = -0x4000;
-    private short atan2DegSquidYF = -0x8000;
-    private short atan2DegGdxX = -0x4000;
-    private short atan2DegGdxY = -0x8000;
-    private short atan2BaselineX = -0x4000;
-    private short atan2BaselineY = -0x8000;
-    private short atan2BaselineXF = -0x4000;
-    private short atan2BaselineYF = -0x8000;
+    private int mathCos = -0x8000;
+    private int mathSin = -0x8000;
+    private int mathASin = -0x8000;
+    private int asinChristensen = -0x8000;
+    private int asinSquid = -0x8000;
+    private int cosOld = -0x8000;
+    private int sinOld = -0x8000;
+    private int sinNick = -0x8000;
+    private int cosNick = -0x8000;
+    private int sinBit = -0x8000;
+    private int cosBit = -0x8000;
+    private int sinBitF = -0x8000;
+    private int cosBitF = -0x8000;
+    private int cosFloat = -0x8000;
+    private int sinFloat = -0x8000;
+    private int cosGdx = -0x8000;
+    private int sinGdx = -0x8000;
+    private int mathCosDeg = -0x8000;
+    private int mathSinDeg = -0x8000;
+    private int sinNickDeg = -0x8000;
+    private int cosNickDeg = -0x8000;
+    private int cosGdxDeg = -0x8000;
+    private int sinGdxDeg = -0x8000;
+    private int baseline = -0x8000;
+    private int mathAtan2X = -0x4000;
+    private int mathAtan2Y = -0x8000;
+    private int mathAtan2_X = -0x4000;
+    private int mathAtan2_Y = -0x8000;
+    private int atan2SquidX = -0x4000;
+    private int atan2SquidY = -0x8000;
+    private int atan2SquidXF = -0x4000;
+    private int atan2SquidYF = -0x8000;
+    private int atan2GdxX = -0x4000;
+    private int atan2GdxY = -0x8000;
+    private int atan2GtX = -0x4000;
+    private int atan2GtY = -0x8000;
+    private int atan2NtX = -0x4000;
+    private int atan2NtY = -0x8000;
+    private int atan2ImX = -0x4000;
+    private int atan2ImY = -0x8000;
+    private int atan2Im_X = -0x4000;
+    private int atan2Im_Y = -0x8000;
+    private int atan2_SquidXF = -0x4000;
+    private int atan2_SquidYF = -0x8000;
+    private int atan2DegSquidXF = -0x4000;
+    private int atan2DegSquidYF = -0x8000;
+    private int atan2DegGdxX = -0x4000;
+    private int atan2DegGdxY = -0x8000;
+    private int atan2BaselineX = -0x4000;
+    private int atan2BaselineY = -0x8000;
+    private int atan2BaselineXF = -0x4000;
+    private int atan2BaselineYF = -0x8000;
     
     private int npotHC = 0;
     private int npotM = 0;
     private int npotCLZ = 0;
 
+    private int floorMath = 0;
+    private int floorGust = 0;
+    private int floorNoise = 0;
 
     @Benchmark
     public double measureBaseline()
@@ -622,7 +635,19 @@ public class MathBenchmark {
     public int measureNextPowerOfTwoCLZ(){
         return 1 << -Integer.numberOfLeadingZeros((npotCLZ++ & 0x3FFFFFFF) - 1);
     }
-    
+
+    @Benchmark
+    public int measureFloorMath(){
+        return (int) Math.floor(floatInputs[floorMath++ & 0xFFFF]);
+    }
+    @Benchmark
+    public int measureFloorGust(){
+        return GustavsonSimplexNoise.fastfloor(floatInputs[floorGust++ & 0xFFFF]);
+    }
+    @Benchmark
+    public int measureFloorNoise(){
+        return Noise.fastFloor(floatInputs[floorNoise++ & 0xFFFF]);
+    }
     
     /*
 mvn clean install
