@@ -401,6 +401,16 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doLongYolk64       25  avgt    3   30.836 ±  3.374  ns/op
  * HashBenchmark.doLongYolk64      125  avgt    3  105.815 ± 16.118  ns/op
  * </pre>
+ * <br>
+ * Measuring point hashes for 3D points:
+ * <pre>
+ * Benchmark                              (len)  Mode  Cnt  Score   Error  Units
+ * HashBenchmark.measurePointHashBitwise      1  avgt    6  4.280 ± 0.159  ns/op
+ * HashBenchmark.measurePointHashCantor       1  avgt    6  3.797 ± 0.062  ns/op
+ * HashBenchmark.measurePointHashObject       1  avgt    6  2.898 ± 0.048  ns/op
+ * HashBenchmark.measurePointHashPeloton      1  avgt    6  3.524 ± 0.300  ns/op
+ * </pre>
+ * Of course, the one with the fewest collisions is slowest, and the most collisions is fastest...
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -975,8 +985,64 @@ public class HashBenchmark {
         return HashCommon.mix(Arrays.hashCode(state.doubles[state.idx = state.idx + 1 & 4095]));
     }
 
+    public int ixsHash(int x, int y, int z){
+        x = (x + (x << 16)) & 0x030000FF;
+        x = (x + (x <<  8)) & 0x0300F00F;
+        x = (x + (x <<  4)) & 0x030C30C3;
+        x = (x + (x <<  2)) & 0x09249249;
+        y = (y + (y << 16)) & 0x030000FF;
+        y = (y + (y <<  8)) & 0x0300F00F;
+        y = (y + (y <<  4)) & 0x030C30C3;
+        y = (y + (y <<  2)) & 0x09249249;
+        z = (z + (z << 16)) & 0x030000FF;
+        z = (z + (z <<  8)) & 0x0300F00F;
+        z = (z + (z <<  4)) & 0x030C30C3;
+        z = (z + (z <<  2)) & 0x09249249;
+        return (x |= y << 1 | z << 2) ^ x >>> 16;
+    }
+    @Benchmark
+    public int measurePointHashBitwise(BenchmarkState state) {
+        final int x, y, z;
+        x = y = z = state.intInputs[state.idx++ & 4095];
+        return ixsHash(x, y, z);
+    }
+    public static int pelotonHash(int x, int y, int z) {
+        final int n = (29 * (x << 1 ^ x >> 31) + 463 * (y << 1 ^ y >> 31) + 5867 * (z << 1 ^ z >> 31));
+        return n ^ n >>> 14;
+    }
 
+    @Benchmark
+    public int measurePointHashPeloton(BenchmarkState state) {
+        final int x, y, z;
+        x = y = z = state.intInputs[state.idx++ & 4095];
+        return pelotonHash(x, y, z);
+    }
 
+    public static int objectHash(int x, int y, int z) {
+        return  961 * x + 31 * y + z;
+    }
+
+    @Benchmark
+    public int measurePointHashObject(BenchmarkState state) {
+        final int x, y, z;
+        x = y = z = state.intInputs[state.idx++ & 4095];
+        return objectHash(x, y, z);
+    }
+
+    public static int cantorHash(int x, int y, int z){
+        x = x << 1 ^ x >> 31;
+        y = y << 1 ^ y >> 31;
+        z = z << 1 ^ z >> 31;
+        y += ((x+y) * (x+y+1) >> 1);
+        return z + ((z+y) * (z+y+1) >> 1);
+    }
+
+    @Benchmark
+    public int measurePointHashCantor(BenchmarkState state) {
+        final int x, y, z;
+        x = y = z = state.intInputs[state.idx++ & 4095];
+        return cantorHash(x, y, z);
+    }
 
 //    @Benchmark
 //    public long doMetro64(BenchmarkState state)
