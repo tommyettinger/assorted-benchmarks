@@ -64,6 +64,7 @@ dependencies {
     implementation group: 'org.javolution', name: 'javolution-core-java', version: '6.0.0'
     implementation group: 'org.scala-lang', name: 'scala-library', version: '2.13.1'
     implementation group: 'io.timeandspace', name: 'smoothie-map', version: '2.0.2'
+    implementation group: 'com.esotericsoftware.kryo', name: 'kryo5', version: '5.0.3'
 
     // transitively grabs libGDX 1.9.10:
     //implementation 'com.github.tommyettinger:merry-ds:dc9e1bceb6'
@@ -78,7 +79,7 @@ dependencies {
     //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
     //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
 //    implementation 'com.github.tommyettinger:jdkgdxds:3a9f925cd0'
-    implementation 'com.github.tommyettinger:jdkgdxds:ab759481b9'
+    implementation 'com.github.tommyettinger:jdkgdxds:6a8fd0b37a'
 
 
 
