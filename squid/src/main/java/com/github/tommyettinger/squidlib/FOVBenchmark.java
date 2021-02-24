@@ -32,11 +32,12 @@
 package com.github.tommyettinger.squidlib;
 
 import org.openjdk.jmh.annotations.*;
+import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
-import squidpony.squidgrid.FOV;
+//import squidpony.squidgrid.FOV;
 import squidpony.squidgrid.Radius;
 import squidpony.squidgrid.mapping.DungeonGenerator;
 import squidpony.squidmath.Coord;
@@ -87,6 +88,35 @@ import java.util.concurrent.TimeUnit;
  * FOVBenchmark.doShadow6           avgt    4    3.987 ±   0.908  ms/op
  * FOVBenchmark.doShadow8           avgt    4    4.906 ±   0.309  ms/op
  * </pre>
+ * This tests each original Ripple against a variant that just expands Shadow's result.
+ * The Shadow-expander, marked with a "Y" suffix, is quite a bit faster.
+ * <pre>
+ * Benchmark                         Mode  Cnt    Score    Error  Units
+ * FOVBenchmark.doRipple4            avgt    4  175.811 ± 15.677  ms/op
+ * FOVBenchmark.doRipple4Y           avgt    4   38.799 ±  2.754  ms/op
+ * FOVBenchmark.doRipple6            avgt    4  324.880 ± 63.655  ms/op
+ * FOVBenchmark.doRipple6Y           avgt    4   43.613 ±  4.419  ms/op
+ * FOVBenchmark.doRipple8            avgt    4  450.160 ± 50.482  ms/op
+ * FOVBenchmark.doRipple8Y           avgt    4   50.016 ±  7.395  ms/op
+ * FOVBenchmark.doRippleLoose4       avgt    4  187.374 ± 34.353  ms/op
+ * FOVBenchmark.doRippleLoose4Y      avgt    4   43.441 ±  4.504  ms/op
+ * FOVBenchmark.doRippleLoose6       avgt    4  363.465 ± 99.006  ms/op
+ * FOVBenchmark.doRippleLoose6Y      avgt    4   49.819 ±  7.316  ms/op
+ * FOVBenchmark.doRippleLoose8       avgt    4  537.990 ± 35.385  ms/op
+ * FOVBenchmark.doRippleLoose8Y      avgt    4   55.037 ±  5.697  ms/op
+ * FOVBenchmark.doRippleTight4       avgt    4  153.191 ± 19.405  ms/op
+ * FOVBenchmark.doRippleTight4Y      avgt    4   35.152 ±  0.430  ms/op
+ * FOVBenchmark.doRippleTight6       avgt    4  255.776 ± 56.061  ms/op
+ * FOVBenchmark.doRippleTight6Y      avgt    4   39.363 ±  2.535  ms/op
+ * FOVBenchmark.doRippleTight8       avgt    4  323.334 ± 11.966  ms/op
+ * FOVBenchmark.doRippleTight8Y      avgt    4   42.461 ±  0.878  ms/op
+ * FOVBenchmark.doRippleVeryLoose4   avgt    4  189.464 ± 26.134  ms/op
+ * FOVBenchmark.doRippleVeryLoose4Y  avgt    4   54.201 ±  5.742  ms/op
+ * FOVBenchmark.doRippleVeryLoose6   avgt    4  372.067 ± 36.989  ms/op
+ * FOVBenchmark.doRippleVeryLoose6Y  avgt    4   64.983 ±  1.820  ms/op
+ * FOVBenchmark.doRippleVeryLoose8   avgt    4  555.674 ± 43.527  ms/op
+ * FOVBenchmark.doRippleVeryLoose8Y  avgt    4   68.154 ±  5.479  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -122,7 +152,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doShadow4(BenchmarkState state)
+    public long doShadow4(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -131,6 +161,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseFOV(res, light, x, y, 4.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -138,7 +169,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doShadow6(BenchmarkState state)
+    public long doShadow6(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -147,6 +178,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseFOV(res, light, x, y, 6.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -154,7 +186,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doShadow8(BenchmarkState state)
+    public long doShadow8(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -163,6 +195,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseFOV(res, light, x, y, 8.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -170,7 +203,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRippleTight4(BenchmarkState state)
+    public long doRippleTight4(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -179,6 +212,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseRippleFOV(res, light, 1, x, y, 4.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -186,7 +220,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRippleTight6(BenchmarkState state)
+    public long doRippleTight6(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -195,6 +229,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseRippleFOV(res, light, 1, x, y, 6.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -202,7 +237,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRippleTight8(BenchmarkState state)
+    public long doRippleTight8(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -211,6 +246,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseRippleFOV(res, light, 1, x, y, 8.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -218,7 +254,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRipple4(BenchmarkState state)
+    public long doRipple4(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -227,6 +263,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseRippleFOV(res, light, 2, x, y, 4.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -234,7 +271,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRipple6(BenchmarkState state)
+    public long doRipple6(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -243,6 +280,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseRippleFOV(res, light, 2, x, y, 6.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -250,7 +288,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRipple8(BenchmarkState state)
+    public long doRipple8(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -259,6 +297,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseRippleFOV(res, light, 2, x, y, 8.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -266,7 +305,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRippleLoose4(BenchmarkState state)
+    public long doRippleLoose4(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -275,6 +314,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseRippleFOV(res, light, 3, x, y, 4.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -282,7 +322,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRippleLoose6(BenchmarkState state)
+    public long doRippleLoose6(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -291,6 +331,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseRippleFOV(res, light, 3, x, y, 6.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -298,7 +339,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRippleLoose8(BenchmarkState state)
+    public long doRippleLoose8(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -307,6 +348,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseRippleFOV(res, light, 3, x, y, 8.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -314,7 +356,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRippleVeryLoose4(BenchmarkState state)
+    public long doRippleVeryLoose4(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -323,6 +365,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseRippleFOV(res, light, 6, x, y, 4.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -330,7 +373,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRippleVeryLoose6(BenchmarkState state)
+    public long doRippleVeryLoose6(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -339,6 +382,7 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseRippleFOV(res, light, 6, x, y, 6.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
@@ -346,7 +390,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRippleVeryLoose8(BenchmarkState state)
+    public long doRippleVeryLoose8(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -355,6 +399,266 @@ public class FOVBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 FOV.reuseRippleFOV(res, light, 6, x, y, 8.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+
+
+
+    @Benchmark
+    public long doRippleTight4X(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV2(res, light, 1, x, y, 4.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRippleTight6X(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV2(res, light, 1, x, y, 6.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRippleTight8X(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV2(res, light, 1, x, y, 8.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+
+    @Benchmark
+    public long doRippleTight4Y(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV3(res, light, 1, x, y, 4.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRippleTight6Y(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV3(res, light, 1, x, y, 6.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRippleTight8Y(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV3(res, light, 1, x, y, 8.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRipple4Y(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV3(res, light, 2, x, y, 4.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRipple6Y(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV3(res, light, 2, x, y, 6.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRipple8Y(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV3(res, light, 2, x, y, 8.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRippleLoose4Y(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV3(res, light, 3, x, y, 4.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRippleLoose6Y(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV3(res, light, 3, x, y, 6.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRippleLoose8Y(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV3(res, light, 3, x, y, 8.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRippleVeryLoose4Y(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV3(res, light, 6, x, y, 4.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRippleVeryLoose6Y(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV3(res, light, 6, x, y, 6.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doRippleVeryLoose8Y(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseRippleFOV3(res, light, 6, x, y, 8.0, Radius.CIRCLE);
+                blackhole.consume(light);
                 scanned++;
             }
         }
