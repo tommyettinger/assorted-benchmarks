@@ -68,6 +68,25 @@ import java.util.concurrent.TimeUnit;
  * FOVBenchmark.doShadow8           avgt    4    5.086 ±   0.746  ms/op
  * </pre>
  * Wow, Ripple is at least 50x slower than Shadow. And this is with the most recent GC opt...
+ * Without that opt, the results are about the same:
+ * <pre>
+ * Benchmark                        Mode  Cnt    Score     Error  Units
+ * FOVBenchmark.doRipple4           avgt    4  177.446 ±  25.251  ms/op
+ * FOVBenchmark.doRipple6           avgt    4  321.845 ±  12.472  ms/op
+ * FOVBenchmark.doRipple8           avgt    4  452.460 ±  65.996  ms/op
+ * FOVBenchmark.doRippleLoose4      avgt    4  189.676 ±  13.986  ms/op
+ * FOVBenchmark.doRippleLoose6      avgt    4  355.760 ±  32.303  ms/op
+ * FOVBenchmark.doRippleLoose8      avgt    4  529.852 ± 155.911  ms/op
+ * FOVBenchmark.doRippleTight4      avgt    4  154.605 ±   8.859  ms/op
+ * FOVBenchmark.doRippleTight6      avgt    4  253.677 ±  19.818  ms/op
+ * FOVBenchmark.doRippleTight8      avgt    4  326.990 ±   7.981  ms/op
+ * FOVBenchmark.doRippleVeryLoose4  avgt    4  193.375 ±  13.003  ms/op
+ * FOVBenchmark.doRippleVeryLoose6  avgt    4  370.524 ±  20.170  ms/op
+ * FOVBenchmark.doRippleVeryLoose8  avgt    4  563.479 ±  58.760  ms/op
+ * FOVBenchmark.doShadow4           avgt    4    3.010 ±   0.123  ms/op
+ * FOVBenchmark.doShadow6           avgt    4    3.987 ±   0.908  ms/op
+ * FOVBenchmark.doShadow8           avgt    4    4.906 ±   0.309  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)

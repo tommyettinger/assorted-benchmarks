@@ -48,8 +48,8 @@ dependencies {
     implementation group: 'org.openjdk.jol', name: 'jol-core', version:'0.10'
 
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.3'
-//    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:2ae5e83d1a' // lacks Ripple FOV opt
-    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:788d9fbb69'
+    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:2ae5e83d1a' // lacks Ripple FOV opt
+//    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:788d9fbb69'
     implementation 'com.github.YellowstoneGames.SquidSquad:squidgrid:8848c6c5a7'
 
     implementation 'com.github.earlygrey:simple-graphs:v1.0.1'
