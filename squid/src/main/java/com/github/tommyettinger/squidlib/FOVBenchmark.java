@@ -117,6 +117,18 @@ import java.util.concurrent.TimeUnit;
  * FOVBenchmark.doRippleVeryLoose8   avgt    4  555.674 ± 43.527  ms/op
  * FOVBenchmark.doRippleVeryLoose8Y  avgt    4   68.154 ±  5.479  ms/op
  * </pre>
+ * <br>
+ * Trying to keep similar or identical results to Ripple leads to Burst, which is
+ * just a tiny bit better at overhead per-call.
+ * <pre>
+ * Benchmark                    Mode  Cnt    Score    Error  Units
+ * FOVBenchmark.doBurstTight4   avgt    4  140.080 ± 14.884  ms/op
+ * FOVBenchmark.doBurstTight6   avgt    4  238.666 ± 14.375  ms/op
+ * FOVBenchmark.doBurstTight8   avgt    4  312.233 ± 21.191  ms/op
+ * FOVBenchmark.doRippleTight4  avgt    4  148.873 ± 15.901  ms/op
+ * FOVBenchmark.doRippleTight6  avgt    4  245.828 ± 28.217  ms/op
+ * FOVBenchmark.doRippleTight8  avgt    4  317.075 ± 75.613  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -410,7 +422,7 @@ public class FOVBenchmark {
 
 
     @Benchmark
-    public long doRippleTight4X(BenchmarkState state, Blackhole blackhole)
+    public long doBurstTight4(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -418,7 +430,7 @@ public class FOVBenchmark {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
-                FOV.reuseRippleFOV2(res, light, 1, x, y, 4.0, Radius.CIRCLE);
+                FOV.reuseBurstFOV(res, light, 1, x, y, 4.0, Radius.CIRCLE);
                 blackhole.consume(light);
                 scanned++;
             }
@@ -427,7 +439,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRippleTight6X(BenchmarkState state, Blackhole blackhole)
+    public long doBurstTight6(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -435,7 +447,7 @@ public class FOVBenchmark {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
-                FOV.reuseRippleFOV2(res, light, 1, x, y, 6.0, Radius.CIRCLE);
+                FOV.reuseBurstFOV(res, light, 1, x, y, 6.0, Radius.CIRCLE);
                 blackhole.consume(light);
                 scanned++;
             }
@@ -444,7 +456,7 @@ public class FOVBenchmark {
     }
 
     @Benchmark
-    public long doRippleTight8X(BenchmarkState state, Blackhole blackhole)
+    public long doBurstTight8(BenchmarkState state, Blackhole blackhole)
     {
         long scanned = 0;
         double[][] res = state.resMap, light = state.lightMap;
@@ -452,7 +464,58 @@ public class FOVBenchmark {
             for (int y = 1; y < state.DIMENSION - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
-                FOV.reuseRippleFOV2(res, light, 1, x, y, 8.0, Radius.CIRCLE);
+                FOV.reuseBurstFOV(res, light, 1, x, y, 8.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doBurst4(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseBurstFOV(res, light, 2, x, y, 4.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doBurst6(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseBurstFOV(res, light, 2, x, y, 6.0, Radius.CIRCLE);
+                blackhole.consume(light);
+                scanned++;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doBurst8(BenchmarkState state, Blackhole blackhole)
+    {
+        long scanned = 0;
+        double[][] res = state.resMap, light = state.lightMap;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                FOV.reuseBurstFOV(res, light, 2, x, y, 8.0, Radius.CIRCLE);
                 blackhole.consume(light);
                 scanned++;
             }

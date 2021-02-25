@@ -5,6 +5,7 @@ import squidpony.squidgrid.Direction;
 import squidpony.squidgrid.Radius;
 import squidpony.squidgrid.mapping.DungeonUtility;
 import squidpony.squidmath.*;
+import squidpony.squidmath.CrossHash;
 
 import java.io.Serializable;
 import java.util.ArrayDeque;
@@ -128,6 +129,7 @@ public class FOV implements Serializable {
             Direction.LEFT, Direction.DOWN_LEFT, Direction.DOWN, Direction.DOWN_RIGHT};
     private static final ArrayDeque<Coord> dq = new ArrayDeque<>();
     private static final GreasedRegion lightWorkspace = new GreasedRegion(64, 64), workspace2 = new GreasedRegion(64, 64);
+    private static final OrderedSet<Coord> workingSet = new OrderedSet<>(256, CrossHash.mildHasher);
 
     /**
      * Creates a solver which will use the default SHADOW solver.
@@ -1782,21 +1784,21 @@ public class FOV implements Serializable {
 
 
 
-
-    public static double[][] reuseRippleFOV2(double[][] resistanceMap, double[][] light, int rippleLooseness, int x, int y, double radius, Radius radiusTechnique) {
+    public static double[][] reuseBurstFOV(double[][] resistanceMap, double[][] light, int rippleLooseness, int x, int y, double radius, Radius radiusTechnique) {
         ArrayTools.fill(light, 0);
         light[x][y] = Math.min(1.0, radius);//make the starting space full power unless radius is tiny
-        doRippleFOV2(light, MathExtras.clamp(rippleLooseness, 1, 6), x, y, 1.0 / radius, radius, resistanceMap, radiusTechnique);
+        workingSet.clear();
+        doBurstFOV(light, MathExtras.clamp(rippleLooseness, 1, 6), x, y, 1.0 / radius, radius, resistanceMap, radiusTechnique);
         return light;
     }
-    private static void doRippleFOV2(double[][] lightMap, int ripple, int x, int y, double decay, double radius, double[][] map, Radius radiusStrategy) {
+    private static void doBurstFOV(double[][] lightMap, int ripple, int x, int y, double decay, double radius, double[][] map, Radius radiusStrategy) {
         dq.clear();
         int width = lightMap.length;
         int height = lightMap[0].length;
         dq.offer(Coord.get(x, y));
         while (!dq.isEmpty()) {
             Coord p = dq.removeFirst();
-            if (lightMap[p.x][p.y] <= 0) {
+            if (lightMap[p.x][p.y] <= 0 || workingSet.contains(p)) {
                 continue;//no light to spread
             }
 
@@ -1804,28 +1806,29 @@ public class FOV implements Serializable {
                 int x2 = p.x + dir.deltaX;
                 int y2 = p.y + dir.deltaY;
                 if (x2 < 0 || x2 >= width || y2 < 0 || y2 >= height //out of bounds
-                        || radiusStrategy.radius(x, y, x2, y2) >= radius + 1) {//+1 to cover starting tile
+                        || radiusStrategy.radius(x, y, x2, y2) > radius) {
                     continue;
                 }
 
-                double surroundingLight = nearRippleLight2(x2, y2, ripple, x, y, decay, lightMap, map, radiusStrategy);
+                double surroundingLight = doBurstLight(x2, y2, ripple, x, y, decay, lightMap, map, radiusStrategy);
                 if (lightMap[x2][y2] < surroundingLight) {
-                    lightMap[x2][y2] = surroundingLight;
                     if (map[x2][y2] < 1) {//make sure it's not a wall
                         dq.offer(Coord.get(x2, y2));//redo neighbors since this one's light changed
                     }
+                    lightMap[x2][y2] = surroundingLight;
+
                 }
             }
         }
     }
-    private static double nearRippleLight2(int x, int y, int rippleNeighbors, int startx, int starty, double decay, double[][] lightMap, double[][] map, Radius radiusStrategy) {
+    private static double doBurstLight(int x, int y, int rippleNeighbors, int startx, int starty, double decay, double[][] lightMap, double[][] map, Radius radiusStrategy) {
         if (x == startx && y == starty) {
             return 1;
         }
         int width = lightMap.length;
         int height = lightMap[0].length;
         neighbors.clear();
-        double tmpDistance;
+        double tmpDistance = 0, testDistance;
         Coord c;
         for (Direction di : Direction.OUTWARDS) {
             int x2 = x + di.deltaX;
@@ -1836,10 +1839,10 @@ public class FOV implements Serializable {
                 for(int i = 0; i < neighbors.size() && i <= rippleNeighbors; i++)
                 {
                     c = neighbors.get(i);
-                    if(tmpDistance < radiusStrategy.radius(startx, starty, c.x, c.y)) {
-                        continue;
+                    testDistance = radiusStrategy.radius(startx, starty, c.x, c.y);
+                    if(tmpDistance >= testDistance) {
+                        idx++;
                     }
-                    idx++;
                 }
                 neighbors.add(idx, Coord.get(x2, y2));
             }
@@ -1850,14 +1853,22 @@ public class FOV implements Serializable {
         }
         int max = Math.min(neighbors.size(), rippleNeighbors);
         double light = 0;
+        int lit = 0, indirects = 0;
         for (int i = 0; i < max; i++) {
             Coord p = neighbors.get(i);
             if (lightMap[p.x][p.y] > 0) {
-                double dist = radiusStrategy.radius(x, y, p.x, p.y);
-                light = Math.max(light, lightMap[p.x][p.y] - dist * decay - map[p.x][p.y]);
+                lit++;
+                if (workingSet.contains(p)) {
+                    indirects++;
+                }
+                light = Math.max(light, lightMap[p.x][p.y]
+                        - radiusStrategy.radius(x, y, p.x, p.y) * decay - map[p.x][p.y]);
             }
         }
 
+        if (map[x][y] >= 1 || indirects >= lit) {
+            workingSet.add(Coord.get(x, y));
+        }
         return light;
     }
 
@@ -1866,11 +1877,11 @@ public class FOV implements Serializable {
 
 
     public static double[][] reuseRippleFOV3(double[][] resistanceMap, double[][] light, int rippleLooseness, int x, int y, double radius, Radius radiusTechnique) {
-        rippleLooseness = MathExtras.clamp(rippleLooseness, 1, 6);
-        workspace2.refill(resistanceMap, 1.0).retract8way();
+        rippleLooseness = Math.max(rippleLooseness, 1);
+        workspace2.refill(resistanceMap, 1.0);
         lightWorkspace.refill(reuseFOV(resistanceMap, light, x, y, radius, radiusTechnique), 0.0001, Double.MAX_VALUE);
         for (; rippleLooseness > 0; rippleLooseness--) {
-                lightWorkspace.expand().and(workspace2);
+                lightWorkspace.and(workspace2).expand8way();
         }
         double decay = 1.0 / radius;
         ArrayTools.fill(light, 0.0);
