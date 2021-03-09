@@ -245,6 +245,25 @@ import java.util.concurrent.TimeUnit;
  * </pre>
  * About the same! Foam has a slight advantage for Squad in higher dimensions,
  * but that could just be the very high error in the measurement.
+ * <br>
+ * Comparing VastNoise with OpenSimplex2F (OSF) and OpenSimplex2S (OSS):
+ * <pre>
+ * Benchmark                          Mode  Cnt   Score   Error  Units
+ * NoiseBenchmark.measureOSFNoise2D   avgt    5  28.936 ± 0.275  ns/op
+ * NoiseBenchmark.measureOSFNoise3D   avgt    5  45.348 ± 1.833  ns/op
+ * NoiseBenchmark.measureOSFNoise4D   avgt    5  50.646 ± 1.675  ns/op
+ * NoiseBenchmark.measureOSSNoise2D   avgt    5  35.538 ± 0.472  ns/op
+ * NoiseBenchmark.measureOSSNoise3D   avgt    5  56.448 ± 5.389  ns/op
+ * NoiseBenchmark.measureOSSNoise4D   avgt    5  81.002 ± 2.330  ns/op
+ * NoiseBenchmark.measureVastNoise2D  avgt    5  23.856 ± 0.485  ns/op
+ * NoiseBenchmark.measureVastNoise3D  avgt    5  26.033 ± 0.569  ns/op
+ * NoiseBenchmark.measureVastNoise4D  avgt    5  50.313 ± 0.621  ns/op
+ * </pre>
+ * Here it should be noted that OSF in 3D and especially 4D loses quality,
+ * so it's great that VastNoise can produce high-quality 4D noise at the
+ * same speed as OSF's low-quality 4D noise. In 2D and 3D, VastNoise is
+ * quite a bit faster, and has comparable quality to OSS. This has VastNoise
+ * using the SIMPLEX noise mode.
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
@@ -871,7 +890,7 @@ public class NoiseBenchmark {
      *
      * a) Via the command line from the squidlib-performance module's root folder:
      *    $ mvn clean install
-     *    $ java -jar target/benchmarks.jar NoiseBenchmark -wi 4 -i 4 -f 1
+     *    $ java -jar benchmarks.jar NoiseBenchmark -wi 4 -i 4 -f 1
      *
      *    (we requested 5 warmup/measurement iterations, single fork)
      *
