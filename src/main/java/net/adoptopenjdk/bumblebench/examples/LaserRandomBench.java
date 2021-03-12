@@ -14,20 +14,36 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.math.RandomXS128;
 import com.github.tommyettinger.ds.support.LaserRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * With Java 8, HotSpot, on an 8th-gen i7 hexacore mobile processor running Manjaro Linux:
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8:
+ * <br>
+ * LaserRandomBench score: 954058880.000000 (954.1M 2067.6%)
+ *              uncertainty:   0.3%
+ * <br>
+ * OpenJ9 Java 15:
+ * <br>
+ * LaserRandomBench score: 4232752128.000000 (4.233G 2216.6%)
+ *              uncertainty:   3.2%
+ * <br>
+ * 8th-gen i7 hexacore mobile processor running Manjaro Linux:
+ * <br>
+ * With Java 8, HotSpot:
  * <br>
  * LaserRandomBench score: 858795712.000000 (858.8M 2057.1%)
  *              uncertainty:   0.0%
  * <br>
- * With Java 14, OpenJ9, same hardware:
+ * With Java 14, OpenJ9:
  * <br>
  * LaserRandomBench score: 3261202688.000000 (3.261G 2190.5%)
  *              uncertainty:   0.0%
+ * <br>
+ * It should be stressed that with OpenJ9, this generates 4.2 billion longs a second.
+ * On a laptop.
  */
 public final class LaserRandomBench extends MicroBench {
 

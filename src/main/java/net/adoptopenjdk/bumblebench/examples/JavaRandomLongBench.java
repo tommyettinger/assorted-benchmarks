@@ -14,36 +14,29 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.math.RandomXS128;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
+import java.util.Random;
+
 /**
+ * This tests long generation even though Random is not very fast at it.
+ * <br>
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * HotSpot Java 8:
+ * Java 8, HotSpot:
  * <br>
- * RandomXS128Bench score: 746991168.000000 (747.0M 2043.2%)
- *              uncertainty:   1.9%
+ * JavaRandomLongBench score: 58726960.000000 (58.73M 1788.8%)
+ *                 uncertainty:   0.6%
  * <br>
- * OpenJ9 Java 15:
+ * With Java 15, OpenJ9, same hardware:
  * <br>
- * RandomXS128Bench score: 978084160.000000 (978.1M 2070.1%)
- *              uncertainty:   1.2%
- * <br>
- * With Java 8, HotSpot, on an 8th-gen i7 hexacore mobile processor running Manjaro Linux:
- * <br>
- * RandomXS128Bench score: 709502592.000000 (709.5M 2038.0%)
- *              uncertainty:   0.0%
- * <br>
- * With Java 14, OpenJ9, same hardware:
- * <br>
- * RandomXS128Bench score: 909541824.000000 (909.5M 2062.8%)
- *              uncertainty:   0.2%
+ * JavaRandomLongBench score: 59852804.000000 (59.85M 1790.7%)
+ *                 uncertainty:   0.6%
  */
-public final class RandomXS128Bench extends MicroBench {
+public final class JavaRandomLongBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		RandomXS128 rng = new RandomXS128(0x12345678);
+		Random rng = new Random(0x12345678);
 		long sum = 0L;
 		for (long i = 0; i < numIterations; i++)
 			sum += rng.nextLong();
