@@ -15,26 +15,26 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import net.adoptopenjdk.bumblebench.core.MicroBench;
+import squidpony.squidmath.RandomnessSource;
 
 import java.io.Serializable;
-import java.util.Random;
 
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * HotSpot Java 8:
  * <br>
- * GrogRandomBench score: 754802432.000000 (754.8M 2044.2%)
- *            uncertainty:   2.1%
+ * GrogRandomBench score: 820658432.000000 (820.7M 2052.6%)
+ *             uncertainty:   1.7%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * GrogRandomBench score: 1892900352.000000 (1.893G 2136.1%)
- *            uncertainty:   0.4%
+ * GrogRandomBench score: 1798899584.000000 (1.799G 2131.0%)
+ *             uncertainty:   1.4%
  */
 public final class GrogRandomBench extends MicroBench {
 
-	public static class GrogRandom extends Random implements Serializable{
+	public static class GrogRandom implements Serializable, RandomnessSource {
 		private long stateA, stateB;
 
 		/**
@@ -43,9 +43,10 @@ public final class GrogRandomBench extends MicroBench {
 		 * to be distinct from any other invocation of this constructor.
 		 */
 		public GrogRandom() {
-			super();
-			stateA = super.nextLong();
-			stateB = super.nextLong();
+			this((long) ((Math.random() - 0.5) * 0x10000000000000L)
+							^ (long) (((Math.random() - 0.5) * 2.0) * 0x8000000000000000L),
+					(long) ((Math.random() - 0.5) * 0x10000000000000L)
+							^ (long) (((Math.random() - 0.5) * 2.0) * 0x8000000000000000L));
 		}
 
 		/**
@@ -58,13 +59,13 @@ public final class GrogRandomBench extends MicroBench {
 		 * Random rnd = new Random();
 		 * rnd.setSeed(seed);}</pre>
 		 *
-		 * @param seed the initial seed
+		 * @param seedA the initial seed
+		 * @param seedB the initial seed
 		 * @see #setSeed(long)
 		 */
-		public GrogRandom(long seed) {
-			super(seed);
-			stateA = seed;
-			stateB = seed;
+		public GrogRandom(long seedA, long seedB) {
+			stateA = seedA;
+			stateB = seedB;
 		}
 
 		/**
@@ -72,12 +73,7 @@ public final class GrogRandomBench extends MicroBench {
 		 * {@code long} seed. The general contract of {@code setSeed} is
 		 * that it alters the state of this random number generator object
 		 * so as to be in exactly the same state as if it had just been
-		 * created with the argument {@code seed} as a seed. The method
-		 * {@code setSeed} is implemented by class {@code Random} by
-		 * atomically updating the seed to
-		 * <pre>{@code (seed ^ 0x5DEECE66DL) & ((1L << 48) - 1)}</pre>
-		 * and clearing the {@code haveNextNextGaussian} flag used by {@link
-		 * #nextGaussian}.
+		 * created with the argument {@code seed} as a seed.
 		 *
 		 * <p>The implementation of {@code setSeed} by class {@code Random}
 		 * happens to use only 48 bits of the given seed. In general, however,
@@ -86,9 +82,7 @@ public final class GrogRandomBench extends MicroBench {
 		 *
 		 * @param seed the initial seed
 		 */
-		@Override
-		public synchronized void setSeed(long seed) {
-			super.setSeed(seed);
+		public void setSeed(long seed) {
 			stateA = seed;
 			stateB = seed;
 		}
@@ -119,7 +113,7 @@ public final class GrogRandomBench extends MicroBench {
 		 * @since 1.1
 		 */
 		@Override
-		protected int next(int bits) {
+		public int next(int bits) {
 			long s = (stateA += 0xD1342543DE82EF95L);
 			if(s != 0L) s = (s ^ s >>> 31 ^ s >>> 21) * ((stateB += 0xC6BC279692B5C323L) | 1L);
 			return (int)(s ^ s >>> 28) >>> 32 - bits;
@@ -140,9 +134,21 @@ public final class GrogRandomBench extends MicroBench {
 			if(s != 0L) s = (s ^ s >>> 31 ^ s >>> 21) * ((stateB += 0xC6BC279692B5C323L) | 1L);
 			return s ^ s >>> 28;
 		}
+
+		/**
+		 * Produces a copy of this RandomnessSource that, if next() and/or nextLong() are called on this object and the
+		 * copy, both will generate the same sequence of random numbers from the point copy() was called. This just needs to
+		 * copy the state so it isn't shared, usually, and produce a new value with the same exact state.
+		 *
+		 * @return a copy of this RandomnessSource
+		 */
+		@Override
+		public GrogRandom copy() {
+			return new GrogRandom(stateA, stateB);
+		}
 	}
 	protected long doBatch(long numIterations) throws InterruptedException {
-		GrogRandom rng = new GrogRandom(0x12345678);
+		GrogRandom rng = new GrogRandom(0x12345678, 0x87654321);
 		long sum = 0L;
 		for (long i = 0; i < numIterations; i++)
 			sum += rng.nextLong();

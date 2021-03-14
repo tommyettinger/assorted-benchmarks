@@ -20,30 +20,64 @@ import squidpony.squidmath.RandomnessSource;
 import java.io.Serializable;
 
 /**
+ * This uses pre-release code from OpenJDK 17, which is scheduled to be released in late 2021.
+ * This is one of many random number generators added in JEP 356 (<a href="https://github.com/openjdk/jdk/pull/1292">
+ * code here</a>), which claims:
+ * <br>
+ * ...a new class of splittable PRNG algorithms (LXM) has also been discovered that are almost as fast, even easier
+ * to implement...
+ * <br>
+ * So let's put that to the test.
+ * <br>
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * HotSpot Java 8:
  * <br>
- * TremorRandomBench score: 955908096.000000 (955.9M 2067.8%)
- *               uncertainty:   2.9%
+ * L64X128MixRandomBench score: 479769280.000000 (479.8M 1998.9%)
+ *                   uncertainty:   1.0%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * TremorRandomBench score: 1433952512.000000 (1.434G 2108.4%)
- *               uncertainty:   0.8%
+ * L64X128MixRandomBench score: 840015872.000000 (840.0M 2054.9%)
+ *                   uncertainty:   1.5%
+ * <br>
+ * So, this particular LXM generator is 53% slower than SplittableRandom when both are run on Hotspot Java 8, which
+ * apparently is considered almost as fast.
+ * <br>
+ * ... I give this 53% less than an A+. Its failing grade is almost an A.
+ * <br>
+ * Are we seriously in a mathematical field of study, or is this the advertising division of Oracle? It's possible JDK
+ * 17 will have some optimizations for the new random number generators, but given that in general, the benchmarks I run
+ * show a performance degradation when going from HotSpot JDK 8 to any HotSpot JDK after 8, I have my doubts. Why on
+ * Earth isn't AES-NI being considered? The dragontamer version of aesrand is incredibly fast if native code can be
+ * used, and if this is being added to the JDK then that is an option.
  */
-public final class TremorRandomBench extends MicroBench {
+public final class L64X128MixRandomBench extends MicroBench {
 
-	public static class TremorRandom implements Serializable, RandomnessSource {
-		private long stateA, stateB;
+	public static class L64X128MixRandom implements Serializable, RandomnessSource {
+
+		private final long a;
+		private long s, x0, x1;
+
+		/*
+		 * Multiplier used in the LCG portion of the algorithm.
+		 * Chosen based on research by Sebastiano Vigna and Guy Steele (2019).
+		 * The spectral scores for dimensions 2 through 8 for the multiplier 0xd1342543de82ef95
+		 * are [0.958602, 0.937479, 0.870757, 0.822326, 0.820405, 0.813065, 0.760215].
+		 */
+		private static final long M = 0xd1342543de82ef95L;
 
 		/**
 		 * Creates a new random number generator. This constructor sets
 		 * the seed of the random number generator to a value very likely
 		 * to be distinct from any other invocation of this constructor.
 		 */
-		public TremorRandom() {
+		public L64X128MixRandom() {
 			this((long) ((Math.random() - 0.5) * 0x10000000000000L)
+							^ (long) (((Math.random() - 0.5) * 2.0) * 0x8000000000000000L),
+					(long) ((Math.random() - 0.5) * 0x10000000000000L)
+							^ (long) (((Math.random() - 0.5) * 2.0) * 0x8000000000000000L),
+					(long) ((Math.random() - 0.5) * 0x10000000000000L)
 							^ (long) (((Math.random() - 0.5) * 2.0) * 0x8000000000000000L),
 					(long) ((Math.random() - 0.5) * 0x10000000000000L)
 							^ (long) (((Math.random() - 0.5) * 2.0) * 0x8000000000000000L));
@@ -63,9 +97,15 @@ public final class TremorRandomBench extends MicroBench {
 		 * @param seedB the initial seed
 		 * @see #setSeed(long)
 		 */
-		public TremorRandom(long seedA, long seedB) {
-			stateA = seedA;
-			stateB = seedB;
+		public L64X128MixRandom(long a, long s, long seedA, long seedB) {
+			this.a = a | 1L;
+			this.s = s;
+			x0 = seedA;
+			if((seedA | seedB) == 0L)
+				x1 = M;
+			else
+				x1 = seedB;
+
 		}
 
 		/**
@@ -83,8 +123,12 @@ public final class TremorRandomBench extends MicroBench {
 		 * @param seed the initial seed
 		 */
 		public void setSeed(long seed) {
-			stateA = seed;
-			stateB = seed;
+			s = seed;
+			x0 = seed;
+			if(seed == 0)
+				x1 = M;
+			else
+				x1 = seed;
 		}
 
 		/**
@@ -114,9 +158,13 @@ public final class TremorRandomBench extends MicroBench {
 		 */
 		@Override
 		public int next(int bits) {
-			final long s = (stateA += 0xC6BC279692B5C323L);
-			final long z = (s ^ s >> 31) * ((stateB += (s >= 0xC6BC279692B5C323L) ? 0L : 0x9E3779B97F4A7C15L) | 1L);
-			return (int)(z ^ z >>> 27) >>> 32 - bits;
+			return (int)(nextLong()) >>> 32 - bits;
+		}
+
+		private static long mixLea64(long z) {
+			z = (z ^ (z >>> 32)) * 0xdaba0b6eb09322e3L;
+			z = (z ^ (z >>> 32)) * 0xdaba0b6eb09322e3L;
+			return z ^ (z >>> 32);
 		}
 
 		/**
@@ -130,10 +178,24 @@ public final class TremorRandomBench extends MicroBench {
 		 */
 		@Override
 		public long nextLong() {
-			final long s = (stateA += 0xC6BC279692B5C323L);
-			final long z = (s ^ s >> 31) * ((stateB += (s >= 0xC6BC279692B5C323L) ? 0L : 0x9E3779B97F4A7C15L) | 1L);
-			return (z ^ z >>> 27);
-		}
+			// Compute the result based on current state information
+			// (this allows the computation to be overlapped with state update).
+			final long result = mixLea64(s + x0);
+
+			// Update the LCG subgenerator
+			s = M * s + a;
+
+			// Update the Xorshift subgenerator
+			long q0 = x0, q1 = x1;
+			{   // xoroshiro128v1_0
+				q1 ^= q0;
+				q0 = Long.rotateLeft(q0, 24);
+				q0 = q0 ^ q1 ^ (q1 << 16);
+				q1 = Long.rotateLeft(q1, 37);
+			}
+			x0 = q0; x1 = q1;
+
+			return result;		}
 
 		/**
 		 * Produces a copy of this RandomnessSource that, if next() and/or nextLong() are called on this object and the
@@ -143,12 +205,12 @@ public final class TremorRandomBench extends MicroBench {
 		 * @return a copy of this RandomnessSource
 		 */
 		@Override
-		public TremorRandom copy() {
-			return new TremorRandom(stateA, stateB);
+		public L64X128MixRandom copy() {
+			return new L64X128MixRandom(a, s, x0, x1);
 		}
 	}
 	protected long doBatch(long numIterations) throws InterruptedException {
-		TremorRandom rng = new TremorRandom(0x12345678, 0x87654321);
+		L64X128MixRandom rng = new L64X128MixRandom(1, 0, 0x12345678, 0x87654321);
 		long sum = 0L;
 		for (long i = 0; i < numIterations; i++)
 			sum += rng.nextLong();
