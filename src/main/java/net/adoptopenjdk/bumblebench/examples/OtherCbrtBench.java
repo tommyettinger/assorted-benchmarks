@@ -30,14 +30,14 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  */
 public final class OtherCbrtBench extends MicroBench {
 	public static float cbrt(float x) {
-		int ix = Float.floatToRawIntBits(x);
+		final float x0 = x;
+		int ix = Float.floatToRawIntBits(x0);
 		final int sign = ix & 0x80000000;
 		ix &= 0x7FFFFFFF;
-		final float x0 = x;
 		ix = (ix>>>2) + (ix>>>4);
 		ix += (ix>>>4);
-		ix = ix + (ix>>>8) + 0x2a5137a0 | sign;
-		x  = Float.intBitsToFloat(ix);
+		ix += (ix>>>8) + 0x2a5137a0;
+		x  = Float.intBitsToFloat(ix|sign);
 		x  = 0.33333334f*(2f*x + x0/(x*x));
 		x  = 0.33333334f*(2f*x + x0/(x*x));
 		return x;
@@ -69,6 +69,16 @@ public final class OtherCbrtBench extends MicroBench {
 		final float d = x*y*y;
 		return d*(1.0f+0.333333333333f*(1.0f-d*y));
 	}
+	public static float cbrtProblem(float x) {
+		final float k1 = 1.752319676f;
+		final float k2 = 1.2509524245f;
+		final float k3 = 0.5093818292f;
+		float y = Float.intBitsToFloat(0x548c2b4b-(int)(Float.floatToRawIntBits(x) * 0x55555556L >>> 32));
+		final float c = x*y*y*y;
+		y*=(k1-c*(k2-k3*c));
+		final float d = x*y*y;
+		return d*(1.0f+0.333333333333f*(1.0f-d*y));
+	}
 	protected long doBatch (long numIterations) throws InterruptedException {
 		float sum = 0.1f;
 		final float shrink = 1.6180339887498949f / numIterations;
@@ -79,22 +89,37 @@ public final class OtherCbrtBench extends MicroBench {
 
 	public static void main(String[] args) {
 		LaserRandom random = new LaserRandom(12345, 6789);
-		double sumError = 0.0, relativeError = 0.0, sumErrorH = 0.0, relativeErrorH = 0.0;
-		for (int i = 0; i < 1000000; i++) {
+		double sumError = 0.0, relativeError = 0.0;
+		double sumErrorH = 0.0, relativeErrorH = 0.0;
+		double sumErrorP = 0.0, relativeErrorP = 0.0;
+		int i = 0;
+		for (; i < 1000000; i++) {
 			float r = (random.nextFloat() - 0.5f) * random.next(10);
+//			float r = (random.nextFloat()) * random.next(9);
 			float accurate = (float) Math.cbrt(r);
 			float approx = cbrt(r);
 			float approxH = cbrtHouseholder(r);
+			float approxP = cbrtProblem(r);
+			if(!Float.isFinite(approxP))
+			{
+				System.out.println(r + " was a problem! On iteration " + i);
+				approxP = -r;
+			}
 			float error = accurate - approx;
 			relativeError += error;
 			sumError += Math.abs(error);
 			float errorH = accurate - approxH;
 			relativeErrorH += errorH;
 			sumErrorH += Math.abs(errorH);
+			float errorP = accurate - approxP;
+			relativeErrorP += errorP;
+			sumErrorP += Math.abs(errorP);
 		}
 		System.out.println("Newton-Raphson:");
-		System.out.printf("Sum Error: %5.5f (averaged, %5.5f), Rel Error: %5.5f (averaged, %5.5f)", sumError, sumError / 0x100000, relativeError, relativeError / 0x100000);
+		System.out.printf("Sum Error: %5.5f (averaged, %5.5f), Rel Error: %5.5f (averaged, %5.5f)", sumError, sumError / i, relativeError, relativeError / i);
 		System.out.println("\nHouseholder:");
-		System.out.printf("Sum Error: %5.5f (averaged, %5.5f), Rel Error: %5.5f (averaged, %5.5f)", sumErrorH, sumErrorH / 0x100000, relativeErrorH, relativeErrorH / 0x100000);
+		System.out.printf("Sum Error: %5.5f (averaged, %5.5f), Rel Error: %5.5f (averaged, %5.5f)", sumErrorH, sumErrorH / i, relativeErrorH, relativeErrorH / i);
+		System.out.println("\nProblem Householder:");
+		System.out.printf("Sum Error: %5.5f (averaged, %5.5f), Rel Error: %5.5f (averaged, %5.5f)", sumErrorP, sumErrorP / i, relativeErrorP, relativeErrorP / i);
 	}
 }
