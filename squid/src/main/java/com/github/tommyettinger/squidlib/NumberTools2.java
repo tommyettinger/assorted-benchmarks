@@ -174,4 +174,17 @@ public final class NumberTools2 {
         }
         else return Math.copySign(1.5707963267948966f, y);
     }
+
+    public static float atan2Simple(float y, float x) {
+        if(x > 0)
+            return atan(y / x);
+        else if(x < 0) {
+            if(y >= 0)
+                return atan(y / x) + 3.14159265358979323846f;
+            else
+                return atan(y / x) - 3.14159265358979323846f;
+        }
+        else return Math.copySign(1.5707963267948966f, y);
+    }
+
 }
