@@ -20,25 +20,24 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * This implements the atan() approximation from sheet 9 of RAND Corporation's 1955 research study,
  * Approximations for Digital Computers. The copy used was https://www.researchgate.net/publication/318310473_Hastings%27_Approximations_for_Digital_Computers_Hastings_1955
  * <br>
- * Accuracy: absolute error 0.000051338, relative error -0.000000040, max error 0.000081490
+ * Accuracy: absolute error 0.000382348, relative error -0.000000297, max error 0.000609356
  * <br>
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * Java 15 Hotspot:
  * <br>
- * ATan9FloatBench score: 63745312.000000 (63.75M 1797.0%)
- *             uncertainty:   2.1%
+ * ATan8FloatBench score: 68488872.000000 (68.49M 1804.2%)
+ *             uncertainty:   0.3%
  */
-public final class ATan9FloatBench extends MicroBench {
+public final class ATan8FloatBench extends MicroBench {
 	public static float atan(final float v) {
 		final float n = Math.abs(v);
 		final float x = (n - 1f) / (n + 1f);
 		final float x2 = x * x;
 		final float x3 = x * x2;
 		final float x5 = x3 * x2;
-		final float x7 = x5 * x2;
 		return Math.copySign(0.7853981633974483f +
-				(0.999215f * x - 0.3211819f * x3 + 0.1462766f * x5 - 0.0389929f * x7), v);
+				(0.995354f * x - 0.288679f * x3 + 0.079331f * x5), v);
 	}
 
 	protected long doBatch (long numIterations) throws InterruptedException {
