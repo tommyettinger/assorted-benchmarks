@@ -17,7 +17,7 @@ package net.adoptopenjdk.bumblebench.examples;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * This implements the atan() approximation from sheet 9 of RAND Corporation's 1955 research study,
+ * This implements the atan() approximation from sheet 8 of RAND Corporation's 1955 research study,
  * Approximations for Digital Computers. The copy used was https://www.researchgate.net/publication/318310473_Hastings%27_Approximations_for_Digital_Computers_Hastings_1955
  * <br>
  * Accuracy: absolute error 0.000382348, relative error -0.000000297, max error 0.000609356

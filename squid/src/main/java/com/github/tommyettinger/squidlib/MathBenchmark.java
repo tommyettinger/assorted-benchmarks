@@ -180,6 +180,8 @@ public class MathBenchmark {
     private int atan2ImY = -0x8000;
     private int atan2Im_X = -0x4000;
     private int atan2Im_Y = -0x8000;
+    private int atan2GeX = -0x4000;
+    private int atan2GeY = -0x8000;
     private int atan2_SquidXF = -0x4000;
     private int atan2_SquidYF = -0x8000;
     private int atan2DegSquidXF = -0x4000;
@@ -595,6 +597,13 @@ public class MathBenchmark {
         return NumberTools2.atan2_quartic(floatInputs[atan2ImY++ & 0xFFFF], floatInputs[atan2ImX++ & 0xFFFF]);
     }
  
+
+    @Benchmark
+    public float measureGeneralAtan2()
+    {
+        return NumberTools2.atan2General(floatInputs[atan2GeY++ & 0xFFFF], floatInputs[atan2GeX++ & 0xFFFF]);
+    }
+
     @Benchmark
     public float measureImuliAtan2_()
     {
@@ -765,6 +774,7 @@ java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
         double atan2NtError = 0;
         double atan2ImError = 0;
         double atan2_ImError = 0;
+        double atan2_GeError = 0;
         double at, at_;
         for(int r = 0; r < 0x10000; r++)
         {
@@ -788,6 +798,8 @@ java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
             u.atan2ImY = j;
             u.atan2Im_X = i;
             u.atan2Im_Y = j;
+            u.atan2GeX = i;
+            u.atan2GeY = j;
             at = u.measureMathAtan2();
             at_ = u.measureMathAtan2_();
             atan2SquidError += Math.abs(u.measureSquidAtan2Float() - at);
@@ -795,6 +807,8 @@ java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
             atan2GtError += Math.abs(u.measureGtAtan2() - at);
             atan2NtError += Math.abs(u.measureNtAtan2() - at);
             atan2ImError += Math.abs(u.measureImuliAtan2() - at);
+            atan2_GeError += Math.abs(u.measureGeneralAtan2() - at);
+
             atan2_SquidError += Math.abs(u.measureSquidAtan2_Float() - at_);
             atan2_ImError += Math.abs(u.measureImuliAtan2_() - at_);
         }
@@ -803,6 +817,8 @@ java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
         System.out.println("atan2 Gt         : " + atan2GtError);
         System.out.println("atan2 Nt         : " + atan2NtError);
         System.out.println("atan2 Imuli      : " + atan2ImError);
+        System.out.println("atan2 General    : " + atan2_GeError);
+        System.out.println();
         System.out.println("atan2_ Squid     : " + atan2_SquidError);
         System.out.println("atan2_ Imuli     : " + atan2_ImError);
     }
