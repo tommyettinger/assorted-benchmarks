@@ -17,30 +17,33 @@ package net.adoptopenjdk.bumblebench.examples;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * This implements the asin() approximation from sheet 35 of RAND Corporation's 1955 research study,
+ * This implements the atan() approximation from sheet 9 of RAND Corporation's 1955 research study,
  * Approximations for Digital Computers. The copy used was https://www.researchgate.net/publication/318310473_Hastings%27_Approximations_for_Digital_Computers_Hastings_1955
  * <br>
- * Accuracy: absolute error 0.000028447, relative error -0.000000033, max error 0.000067592
+ * Accuracy: absolute error 0.000051338, relative error -0.000000040, max error 0.000081490
  * <br>
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * ASin35OtherFloatBench score: 94570584.000000 (94.57M 1836.5%)
- *              uncertainty:   1.5%
+ * ATan9FloatBench score: 63745312.000000 (63.75M 1797.0%)
+ *             uncertainty:   2.1%
  */
-public final class ASin35OtherFloatBench extends MicroBench {
-	public static float asin(final float v) {
-		final float x = Math.abs(v);
+public final class ATan9FloatBench extends MicroBench {
+	public static float atan(final float v) {
+		final float n = Math.abs(v);
+		final float x = (n - 1f) / (n + 1f);
 		final float x2 = x * x;
 		final float x3 = x * x2;
-		return Math.copySign(1.5707963267948966f - (float) Math.sqrt(1f - x) *
-				(1.5707288f - 0.2121144f * x + 0.0742610f * x2 - 0.0187293f * x3), v);
+		final float x5 = x3 * x2;
+		final float x7 = x5 * x2;
+		return Math.copySign(0.7853981633974483f +
+				(0.999215f * x - 0.3211819f * x3 + 0.1462766f * x5 - 0.0389929f * x7), v);
 	}
 
 	protected long doBatch (long numIterations) throws InterruptedException {
 		float sum = 0.1f;
 		final float shrink = 0.6180339887498949f / numIterations;
 		for (long i = 0; i < numIterations; i++)
-			sum -= asin((sum + i) * shrink);
+			sum -= atan((sum + i) * shrink);
 		return numIterations;
 	}
 
@@ -48,7 +51,7 @@ public final class ASin35OtherFloatBench extends MicroBench {
 		double absolute = 0.0, relative = 0.0, max = 0.0;
 		float ctr = -1f;
 		for (int i = 0; i < 2048; i++) {
-			final double error = Math.asin(ctr) - asin(ctr);
+			final double error = Math.atan(ctr) - atan(ctr);
 			relative += error;
 			max = Math.max(max, Math.abs(error));
 			absolute += Math.abs(error);
