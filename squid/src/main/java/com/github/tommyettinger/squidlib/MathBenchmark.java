@@ -96,6 +96,20 @@ import java.util.concurrent.TimeUnit;
  * </pre>
  * Here, Imuli has the best speed without sacrificing quality, but Gt has slightly better
  * quality and slightly worse speed. Imuli doesn't use a LUT, Gt does.
+ * In another benchmark of atan2() methods, on newer hardware with Java 8 Hotspot:
+ * <pre>
+ * Benchmark                          Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureGdxAtan2      avgt   20  15.037 ± 0.101  ns/op
+ * MathBenchmark.measureGeneralAtan2  avgt   20  15.180 ± 0.299  ns/op
+ * MathBenchmark.measureGtAtan2       avgt   20  15.872 ± 0.136  ns/op
+ * MathBenchmark.measureImuliAtan2    avgt   20  14.231 ± 0.112  ns/op
+ * MathBenchmark.measureMathAtan2     avgt   20  61.429 ± 0.487  ns/op
+ * MathBenchmark.measureNtAtan2       avgt   20  14.250 ± 0.118  ns/op
+ * MathBenchmark.measureSquidAtan2    avgt   20  14.182 ± 0.092  ns/op
+ * </pre>
+ * Here, all but {@link Math#atan2(double, double)} are very close in speed.
+ * Gt has the lowest speed of the others, but is the most precise as an
+ * approximation. The next-best precision is also the next-slowest, General.
  * <br>
  * Benchmarking fastFloor() methods; the comment in GustavsonSimplexNoise:
  * {@code // This method is a *lot* faster than using (int)Math.floor(x)}
@@ -596,7 +610,6 @@ public class MathBenchmark {
     {
         return NumberTools2.atan2_quartic(floatInputs[atan2ImY++ & 0xFFFF], floatInputs[atan2ImX++ & 0xFFFF]);
     }
- 
 
     @Benchmark
     public float measureGeneralAtan2()
@@ -684,7 +697,7 @@ public class MathBenchmark {
 
     /*
 mvn clean install
-java -jar target/benchmarks.jar UncommonBenchmark -wi 5 -i 5 -f 1 -gc true
+java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
      */
     public static void main2(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()

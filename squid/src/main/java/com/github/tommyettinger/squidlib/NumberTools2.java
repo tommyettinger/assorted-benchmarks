@@ -120,23 +120,56 @@ public final class NumberTools2 {
 
     public static float atan(final float v) {
         final float n = Math.abs(v);
-        final float x = (n - 1f) / (n + 1f);
-        final float x2 = x * x;
-        final float x3 = x * x2;
-        final float x5 = x3 * x2;
-        final float x7 = x5 * x2;
+        final float c = (n - 1f) / (n + 1f);
+        final float c2 = c * c;
+        final float c3 = c * c2;
+        final float c5 = c3 * c2;
+        final float c7 = c5 * c2;
         return Math.copySign(0.7853981633974483f +
-                (0.999215f * x - 0.3211819f * x3 + 0.1462766f * x5 - 0.0389929f * x7), v);
+                (0.999215f * c - 0.3211819f * c3 + 0.1462766f * c5 - 0.0389929f * c7), v);
     }
 
     public static float atan2General(float y, float x) {
         if(x > 0) {
-            return atan(y / x);
+            if(y >= 0){
+                final float n = y / x;
+                final float c = (n - 1f) / (n + 1f);
+                final float c2 = c * c;
+                final float c3 = c * c2;
+                final float c5 = c3 * c2;
+                final float c7 = c5 * c2;
+                return 0.7853981633974483f +
+                        (0.999215f * c - 0.3211819f * c3 + 0.1462766f * c5 - 0.0389929f * c7);
+            }
+            else {
+                final float n = y / -x;
+                final float c = (n - 1f) / (n + 1f);
+                final float c2 = c * c;
+                final float c3 = c * c2;
+                final float c5 = c3 * c2;
+                final float c7 = c5 * c2;
+                return -0.7853981633974483f -
+                        (0.999215f * c - 0.3211819f * c3 + 0.1462766f * c5 - 0.0389929f * c7);
+            }
         } else if(x < 0) {
             if (y >= 0) {
-                return atan(y / x) + 3.14159265358979323846f;
+                final float n = y / -x;
+                final float c = (n - 1f) / (n + 1f);
+                final float c2 = c * c;
+                final float c3 = c * c2;
+                final float c5 = c3 * c2;
+                final float c7 = c5 * c2;
+                return 2.356194490192345f -
+                        (0.999215f * c - 0.3211819f * c3 + 0.1462766f * c5 - 0.0389929f * c7);
             } else {
-                return atan(y / x) - 3.14159265358979323846f;
+                final float n = y / x;
+                final float c = (n - 1f) / (n + 1f);
+                final float c2 = c * c;
+                final float c3 = c * c2;
+                final float c5 = c3 * c2;
+                final float c7 = c5 * c2;
+                return -2.356194490192345f +
+                        (0.999215f * c - 0.3211819f * c3 + 0.1462766f * c5 - 0.0389929f * c7);
             }
         }
         else return Math.copySign(1.5707963267948966f, y);
