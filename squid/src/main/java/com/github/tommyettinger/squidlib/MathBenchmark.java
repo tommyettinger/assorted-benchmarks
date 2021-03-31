@@ -117,6 +117,17 @@ import java.util.concurrent.TimeUnit;
  * works by calling an approximation of atan() as one would expect for atan2
  * from Wikipedia's description, and this turns out to optimize well.
  * <br>
+ * The "simple" atan2_(), using turns instead of radians, is also fastest.
+ * It uses a fairly strange atan_() function that doesn't use the same kind
+ * of turn measurement, but it's also the most precise approximation.
+ * <pre>
+ * Benchmark                          Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureImuliAtan2_   avgt   15  16.624 ± 0.320  ns/op
+ * MathBenchmark.measureMathAtan2_    avgt   15  64.472 ± 1.234  ns/op
+ * MathBenchmark.measureSimpleAtan2_  avgt   15  12.130 ± 0.147  ns/op
+ * MathBenchmark.measureSquidAtan2_   avgt   15  16.847 ± 0.183  ns/op
+ * </pre>
+ * <br>
  * Benchmarking fastFloor() methods; the comment in GustavsonSimplexNoise:
  * {@code // This method is a *lot* faster than using (int)Math.floor(x)}
  * is incorrect for this benchmark result with Java 15. Any of these can,
@@ -200,6 +211,8 @@ public class MathBenchmark {
     private int atan2ImY = -0x8000;
     private int atan2Im_X = -0x4000;
     private int atan2Im_Y = -0x8000;
+    private int atan2Si_X = -0x4000;
+    private int atan2Si_Y = -0x8000;
     private int atan2GeX = -0x4000;
     private int atan2GeY = -0x8000;
     private int atan2SiX = -0x4000;
@@ -638,11 +651,17 @@ public class MathBenchmark {
     }
  
     @Benchmark
-    public float measureSquidAtan2_Float()
+    public float measureSquidAtan2_()
     {
         return NumberTools.atan2_(floatInputs[atan2_SquidYF++ & 0xFFFF], floatInputs[atan2_SquidXF++ & 0xFFFF]);
     }
- 
+
+    @Benchmark
+    public float measureSimpleAtan2_()
+    {
+        return NumberTools2.atan2Simple_(floatInputs[atan2Si_Y++ & 0xFFFF], floatInputs[atan2Si_X++ & 0xFFFF]);
+    }
+
     @Benchmark
     public float measureSquidAtan2DegFloat()
     {
@@ -795,13 +814,14 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
         System.out.println("asin Chr.        : " + asinChristensenError);
         System.out.println("asin Squid       : " + asinSquidError);
         double atan2SquidError = 0;
-        double atan2_SquidError = 0;
         double atan2GDXError = 0;
         double atan2GtError = 0;
         double atan2NtError = 0;
         double atan2ImError = 0;
+        double atan2GeError = 0;
+        double atan2SiError = 0;
+        double atan2_SquidError = 0;
         double atan2_ImError = 0;
-        double atan2_GeError = 0;
         double atan2_SiError = 0;
         double at, at_;
         for(int r = 0; r < 0x10000; r++)
@@ -810,12 +830,8 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
             short j = (short) (DiverRNG.determine(-0x20000 - r - i) & 0xFFFF);
             u.mathAtan2X = i;
             u.mathAtan2Y = j;
-            u.mathAtan2_X = i;
-            u.mathAtan2_Y = j;
             u.atan2SquidXF = i;
             u.atan2SquidYF = j;
-            u.atan2_SquidXF = i;
-            u.atan2_SquidYF = j;
             u.atan2GdxX = i;
             u.atan2GdxY = j;
             u.atan2GtX = i;
@@ -824,12 +840,18 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
             u.atan2NtY = j;
             u.atan2ImX = i;
             u.atan2ImY = j;
-            u.atan2Im_X = i;
-            u.atan2Im_Y = j;
             u.atan2GeX = i;
             u.atan2GeY = j;
             u.atan2SiX = i;
             u.atan2SiY = j;
+            u.mathAtan2_X = i;
+            u.mathAtan2_Y = j;
+            u.atan2_SquidXF = i;
+            u.atan2_SquidYF = j;
+            u.atan2Im_X = i;
+            u.atan2Im_Y = j;
+            u.atan2Si_X = i;
+            u.atan2Si_Y = j;
             at = u.measureMathAtan2();
             at_ = u.measureMathAtan2_();
             atan2SquidError += Math.abs(u.measureSquidAtan2Float() - at);
@@ -837,21 +859,23 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
             atan2GtError += Math.abs(u.measureGtAtan2() - at);
             atan2NtError += Math.abs(u.measureNtAtan2() - at);
             atan2ImError += Math.abs(u.measureImuliAtan2() - at);
-            atan2_GeError += Math.abs(u.measureGeneralAtan2() - at);
-            atan2_SiError += Math.abs(u.measureSimpleAtan2() - at);
+            atan2GeError += Math.abs(u.measureGeneralAtan2() - at);
+            atan2SiError += Math.abs(u.measureSimpleAtan2() - at);
 
-            atan2_SquidError += Math.abs(u.measureSquidAtan2_Float() - at_);
+            atan2_SquidError += Math.abs(u.measureSquidAtan2_() - at_);
             atan2_ImError += Math.abs(u.measureImuliAtan2_() - at_);
+            atan2_SiError += Math.abs(u.measureSimpleAtan2_() - at_);
         }
         System.out.println("atan2 Squid      : " + atan2SquidError);
         System.out.println("atan2 GDX        : " + atan2GDXError);
         System.out.println("atan2 Gt         : " + atan2GtError);
         System.out.println("atan2 Nt         : " + atan2NtError);
         System.out.println("atan2 Imuli      : " + atan2ImError);
-        System.out.println("atan2 General    : " + atan2_GeError);
-        System.out.println("atan2 Simple     : " + atan2_SiError);
+        System.out.println("atan2 General    : " + atan2GeError);
+        System.out.println("atan2 Simple     : " + atan2SiError);
         System.out.println();
         System.out.println("atan2_ Squid     : " + atan2_SquidError);
         System.out.println("atan2_ Imuli     : " + atan2_ImError);
+        System.out.println("atan2_ Simple    : " + atan2_SiError);
     }
 }

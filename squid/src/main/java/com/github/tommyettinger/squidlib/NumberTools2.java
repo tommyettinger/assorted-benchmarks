@@ -128,6 +128,41 @@ public final class NumberTools2 {
         return Math.copySign(0.7853981633974483f +
                 (0.999215f * c - 0.3211819f * c3 + 0.1462766f * c5 - 0.0389929f * c7), v);
     }
+    public static float atan2Simple(float y, float x) {
+        if(x > 0)
+            return atan(y / x);
+        else if(x < 0) {
+            if(y >= 0)
+                return atan(y / x) + 3.14159265358979323846f;
+            else
+                return atan(y / x) - 3.14159265358979323846f;
+        }
+        else return Math.copySign(1.5707963267948966f, y);
+    }
+    public static float atan_(final float v) {
+        final float n = Math.abs(v);
+        final float c = (n - 1f) / (n + 1f);
+        final float c2 = c * c;
+        final float c3 = c * c2;
+        final float c5 = c3 * c2;
+        final float c7 = c5 * c2;
+        return Math.copySign(0.125f + 0.1590300064615682f * c - 0.051117687016646825f * c3 + 0.02328064394867594f * c5
+                - 0.006205912780487965f * c7, v);
+    }
+    public static float atan2Simple_(float y, float x) {
+        if(x > 0) {
+            if(y >= 0)
+                return atan_(y / x);
+            else
+                return atan_(y / x) + 1f;
+        }
+        else if(x < 0) {
+            return atan_(y / x) + 0.5f;
+        }
+        else if(y > 0) return 0.25f;
+        else if(y < 0) return 0.75f;
+        else return 0f;
+    }
 
     public static float atan2General(float y, float x) {
         if(x > 0) {
@@ -171,18 +206,6 @@ public final class NumberTools2 {
                 return -2.356194490192345f +
                         (0.999215f * c - 0.3211819f * c3 + 0.1462766f * c5 - 0.0389929f * c7);
             }
-        }
-        else return Math.copySign(1.5707963267948966f, y);
-    }
-
-    public static float atan2Simple(float y, float x) {
-        if(x > 0)
-            return atan(y / x);
-        else if(x < 0) {
-            if(y >= 0)
-                return atan(y / x) + 3.14159265358979323846f;
-            else
-                return atan(y / x) - 3.14159265358979323846f;
         }
         else return Math.copySign(1.5707963267948966f, y);
     }
