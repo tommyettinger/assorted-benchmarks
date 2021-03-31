@@ -40,6 +40,19 @@ public final class ATan9FloatBench extends MicroBench {
 		return Math.copySign(0.7853981633974483f +
 				(0.999215f * x - 0.3211819f * x3 + 0.1462766f * x5 - 0.0389929f * x7), v);
 	}
+	public static float atan2(float y, float x) {
+		if(x > 0)
+			return atan(y / x);
+		else if(x < 0) {
+			if(y >= 0)
+				return atan(y / x) + 3.14159265358979323846f;
+			else
+				return atan(y / x) - 3.14159265358979323846f;
+		}
+		else if(y > 0) return 1.5707963267948966f;
+		else if(y < 0) return -1.5707963267948966f;
+		else return 0.0f;
+	}
 
 	protected long doBatch (long numIterations) throws InterruptedException {
 		float sum = 0.1f;
@@ -50,16 +63,39 @@ public final class ATan9FloatBench extends MicroBench {
 	}
 
 	public static void main(String[] args) {
-		double absolute = 0.0, relative = 0.0, max = 0.0;
-		float ctr = -1f;
-		for (int i = 0; i < 2048; i++) {
-			final double error = Math.atan(ctr) - atan(ctr);
-			relative += error;
-			max = Math.max(max, Math.abs(error));
-			absolute += Math.abs(error);
-			ctr += 0x1p-10f;
+		{
+			System.out.println("atan()");
+			double absolute = 0.0, relative = 0.0, max = 0.0;
+			float ctr = -4f;
+			for (int i = 0; i < 2048; i++) {
+				final double error = Math.atan(ctr) - atan(ctr);
+				relative += error;
+				max = Math.max(max, Math.abs(error));
+				absolute += Math.abs(error);
+				ctr += 0x1p-8f;
+			}
+			System.out.printf("Accuracy: absolute error %2.9f, relative error %2.9f, max error %2.9f",
+					absolute * 0x1p-11, relative * 0x1p-11, max);
 		}
-		System.out.printf("absolute error %2.9f, relative error %2.9f, max error %2.9f",
-				absolute * 0x1p-11f, relative * 0x1p-11f, max);
+		{
+			System.out.println("\n\natan2()");
+			double absolute = 0.0, relative = 0.0, max = 0.0;
+			float xc = -4f, yc = -4f;
+			for (int i = 0; i < 256; i++) {
+				for (int j = 0; j < 256; j++) {
+					final double error = Math.atan2(yc, xc) - atan2(yc, xc);
+					relative += error;
+					max = Math.max(max, Math.abs(error));
+					if(error <= -1)
+						System.out.printf("atan2(%f, %f) has error %f\n", yc, xc, error);
+					absolute += Math.abs(error);
+					xc += 0x1p-5f;
+				}
+				yc += 0x1p-5f;
+				xc = -4f;
+			}
+			System.out.printf("Accuracy: absolute error %2.9f, relative error %2.9f, max error %2.9f",
+					absolute * 0x1p-16, relative * 0x1p-16, max);
+		}
 	}
 }

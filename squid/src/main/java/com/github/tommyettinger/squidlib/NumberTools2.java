@@ -137,7 +137,9 @@ public final class NumberTools2 {
             else
                 return atan(y / x) - 3.14159265358979323846f;
         }
-        else return Math.copySign(1.5707963267948966f, y);
+        else if(y > 0) return 1.5707963267948966f;
+        else if(y < 0) return -1.5707963267948966f;
+        else return 0.0f;
     }
     public static float atan_(final float v) {
         final float n = Math.abs(v);
