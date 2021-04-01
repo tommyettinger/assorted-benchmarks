@@ -228,16 +228,43 @@ public final class NumberTools2 {
     }
     public static float atan2Funky(final float y, final float x) {
         if(x > 0) {
-            return atan(Math.min(y, Float.MAX_VALUE) / x);
+            if (x > Math.abs(y)) {
+                return atn(y / x);
+            } else if (y > x) {
+                return 1.5707963267948966f - atn(x/y);
+            } else if (-y > x) {
+                return -1.5707963267948966f - atn(x/y);
+            } else if(x == y) {
+                return 0.7853981633974483f;
+            } else if(x == -y) {
+                return -0.7853981633974483f;
+            } else return Float.NaN;
         }
         else if(x < 0) {
-            return atan(Math.min(y, Float.MAX_VALUE) / x)
-                    + (NumberTools.floatToRawIntBits(y) >> 31 | 1) * 3.14159265358979323846f;
-        }
-        else {
-            if(y > 0) return 1.5707963267948966f;
-            else if(y < 0) return -1.5707963267948966f;
-            else return x + y;
+            if(y >= 0) {
+                if(y < -x) {
+                    return atn(y / x) + 3.14159265358979323846f;
+                } else if(y > -x) {
+                    return 1.5707963267948966f - atn(x/y);
+                } else {
+                    return 2.356194490192345f;
+                }
+            } else if(y < 0) {
+                if(y > x) {
+                    return atn(y / x) + 3.14159265358979323846f;
+                } else if(y < x) {
+                    return 1.5707963267948966f - atn(x/y);
+                } else {
+                    return 2.356194490192345f;
+                }
+            }
+            else return Float.NaN;
+        } else if(y > 0) {
+            return 1.5707963267948966f;
+        } else if(y < 0) {
+            return -1.5707963267948966f;
+        } else {
+            return x + y;
         }
     }
     /**
