@@ -30,17 +30,115 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  *             uncertainty:   2.1%
  */
 public final class ATan9FloatBench extends MicroBench {
-	public static float atan(final float v) {
-		final float n = Math.abs(v);
-		final float x = (n - 1f) / (n + 1f);
-		final float x2 = x * x;
-		final float x3 = x * x2;
-		final float x5 = x3 * x2;
-		final float x7 = x5 * x2;
-		return Math.copySign(0.7853981633974483f +
-				(0.999215f * x - 0.3211819f * x3 + 0.1462766f * x5 - 0.0389929f * x7), v);
+//	public static float atan(final float v) {
+//		final float n = Math.abs(v);
+//		final float x = (n - 1f) / (n + 1f);
+//		final float x2 = x * x;
+//		final float x3 = x * x2;
+//		final float x5 = x3 * x2;
+//		final float x7 = x5 * x2;
+//		return Math.copySign(0.7853981633974483f +
+//				(0.999215f * x - 0.3211819f * x3 + 0.1462766f * x5 - 0.0389929f * x7), v);
+//	}
+//	public static float atan2(float y, float x) {
+//		if(x > 0)
+//			return atan(y / x);
+//		else if(x < 0) {
+//			if(y >= 0)
+//				return atan(y / x) + 3.14159265358979323846f;
+//			else
+//				return atan(y / x) - 3.14159265358979323846f;
+//		}
+//		else if(y > 0) return 1.5707963267948966f;
+//		else if(y < 0) return -1.5707963267948966f;
+//		else return 0.0f;
+//	}
+
+	/**
+	 * Arc tangent approximation with very low error, using an algorithm from the 1955 research study
+	 * "Approximations for Digital Computers," by RAND Corporation (this is sheet 9's algorithm, which is the
+	 * second-fastest and second-least precise). This method is usually much faster than {@link Math#atan(double)},
+	 * but is somewhat less precise than Math's implementation.
+	 * @param i an input to the inverse tangent function; any finite double is accepted
+	 * @return an output from the inverse tangent function, from PI/-2.0 to PI/2.0 inclusive
+	 */
+	public static double atan(final double i) {
+		final double n = Math.min(Math.abs(i), Double.MAX_VALUE);
+		final double c = (n - 1.0) / (n + 1.0);
+		final double c2 = c * c;
+		final double c3 = c * c2;
+		final double c5 = c3 * c2;
+		final double c7 = c5 * c2;
+		return Math.copySign(0.7853981633974483 +
+				(0.999215 * c - 0.3211819 * c3 + 0.1462766 * c5 - 0.0389929 * c7), i);
 	}
-	public static float atan2(float y, float x) {
+
+	/**
+	 * Arc tangent approximation with very low error, using an algorithm from the 1955 research study
+	 * "Approximations for Digital Computers," by RAND Corporation (this is sheet 9's algorithm, which is the
+	 * second-fastest and second-least precise). This method is usually much faster than {@link Math#atan(double)},
+	 * but is somewhat less precise than Math's implementation.
+	 * @param i an input to the inverse tangent function; any finite float is accepted
+	 * @return an output from the inverse tangent function, from PI/-2.0 to PI/2.0 inclusive
+	 */
+	public static float atan(final float i) {
+		final float n = Math.min(Math.abs(i), Float.MAX_VALUE);
+		final float c = (n - 1f) / (n + 1f);
+		final float c2 = c * c;
+		final float c3 = c * c2;
+		final float c5 = c3 * c2;
+		final float c7 = c5 * c2;
+		return Math.copySign(0.7853981633974483f +
+				(0.999215f * c - 0.3211819f * c3 + 0.1462766f * c5 - 0.0389929f * c7), i);
+	}
+
+	/**
+	 * Close approximation of the frequently-used trigonometric method atan2, with higher precision than libGDX's atan2
+	 * approximation. Maximum error is below 0.00009 radians.
+	 * Takes y and x (in that unusual order) as doubles, and returns the angle from the origin to that point in radians.
+	 * It is about 5 times faster than {@link Math#atan2(double, double)} (roughly 12 ns instead of roughly 62 ns for
+	 * Math, on Java 8 HotSpot). It is slightly faster than libGDX' MathUtils approximation of the same method;
+	 * MathUtils seems to have worse average error, though.
+	 * <br>
+	 * Credit for this goes to the 1955 research study "Approximations for Digital Computers," by RAND Corporation. This
+	 * is sheet 9's algorithm, which is the second-fastest and second-least precise. The algorithm on sheet 8 is faster,
+	 * but only by a very small degree, and is considerably less precise. That study provides an {@link #atan(double)}
+	 * method, and the small code to make that work as atan2() was worked out from Wikipedia.
+	 * @param y y-component of the point to find the angle towards; note the parameter order is unusual by convention
+	 * @param x x-component of the point to find the angle towards; note the parameter order is unusual by convention
+	 * @return the angle to the given point, in radians as a double; ranges from -PI to PI
+	 */
+	public static double atan2(final double y, final double x) {
+		if(x > 0)
+			return atan(y / x);
+		else if(x < 0) {
+			if(y >= 0)
+				return atan(y / x) + 3.14159265358979323846;
+			else
+				return atan(y / x) - 3.14159265358979323846;
+		}
+		else if(y > 0) return x + 1.5707963267948966;
+		else if(y < 0) return x - 1.5707963267948966;
+		else return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
+	}
+
+	/**
+	 * Close approximation of the frequently-used trigonometric method atan2, with higher precision than libGDX's atan2
+	 * approximation. Maximum error is below 0.00009 radians.
+	 * Takes y and x (in that unusual order) as floats, and returns the angle from the origin to that point in radians.
+	 * It is about 5 times faster than {@link Math#atan2(double, double)} (roughly 12 ns instead of roughly 62 ns for
+	 * Math, on Java 8 HotSpot). It is slightly faster than libGDX' MathUtils approximation of the same method;
+	 * MathUtils seems to have worse average error, though.
+	 * <br>
+	 * Credit for this goes to the 1955 research study "Approximations for Digital Computers," by RAND Corporation. This
+	 * is sheet 9's algorithm, which is the second-fastest and second-least precise. The algorithm on sheet 8 is faster,
+	 * but only by a very small degree, and is considerably less precise. That study provides an {@link #atan(float)}
+	 * method, and the small code to make that work as atan2() was worked out from Wikipedia.
+	 * @param y y-component of the point to find the angle towards; note the parameter order is unusual by convention
+	 * @param x x-component of the point to find the angle towards; note the parameter order is unusual by convention
+	 * @return the angle to the given point, in radians as a float; ranges from -PI to PI
+	 */
+	public static float atan2(final float y, final float x) {
 		if(x > 0)
 			return atan(y / x);
 		else if(x < 0) {
@@ -49,9 +147,9 @@ public final class ATan9FloatBench extends MicroBench {
 			else
 				return atan(y / x) - 3.14159265358979323846f;
 		}
-		else if(y > 0) return 1.5707963267948966f;
-		else if(y < 0) return -1.5707963267948966f;
-		else return 0.0f;
+		else if(y > 0) return x + 1.5707963267948966f;
+		else if(y < 0) return x - 1.5707963267948966f;
+		else return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
 	}
 
 	protected long doBatch (long numIterations) throws InterruptedException {

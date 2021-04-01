@@ -217,6 +217,8 @@ public class MathBenchmark {
     private int atan2GeY = -0x8000;
     private int atan2SiX = -0x4000;
     private int atan2SiY = -0x8000;
+    private int atan2FnX = -0x4000;
+    private int atan2FnY = -0x8000;
     private int atan2_SquidXF = -0x4000;
     private int atan2_SquidYF = -0x8000;
     private int atan2DegSquidXF = -0x4000;
@@ -645,6 +647,12 @@ public class MathBenchmark {
     }
 
     @Benchmark
+    public float measureFunkyAtan2()
+    {
+        return NumberTools2.atan2Funky(floatInputs[atan2FnY++ & 0xFFFF], floatInputs[atan2FnX++ & 0xFFFF]);
+    }
+
+    @Benchmark
     public float measureImuliAtan2_()
     {
         return NumberTools2.atan2_imuli_(floatInputs[atan2Im_Y++ & 0xFFFF], floatInputs[atan2Im_X++ & 0xFFFF]);
@@ -820,6 +828,7 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
         double atan2ImError = 0;
         double atan2GeError = 0;
         double atan2SiError = 0;
+        double atan2FnError = 0;
         double atan2_SquidError = 0;
         double atan2_ImError = 0;
         double atan2_SiError = 0;
@@ -844,6 +853,8 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
             u.atan2GeY = j;
             u.atan2SiX = i;
             u.atan2SiY = j;
+            u.atan2FnX = i;
+            u.atan2FnY = j;
             u.mathAtan2_X = i;
             u.mathAtan2_Y = j;
             u.atan2_SquidXF = i;
@@ -861,6 +872,7 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
             atan2ImError += Math.abs(u.measureImuliAtan2() - at);
             atan2GeError += Math.abs(u.measureGeneralAtan2() - at);
             atan2SiError += Math.abs(u.measureSimpleAtan2() - at);
+            atan2FnError += Math.abs(u.measureFunkyAtan2() - at);
 
             atan2_SquidError += Math.abs(u.measureSquidAtan2_() - at_);
             atan2_ImError += Math.abs(u.measureImuliAtan2_() - at_);
@@ -873,6 +885,7 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
         System.out.println("atan2 Imuli      : " + atan2ImError);
         System.out.println("atan2 General    : " + atan2GeError);
         System.out.println("atan2 Simple     : " + atan2SiError);
+        System.out.println("atan2 Funky      : " + atan2FnError);
         System.out.println();
         System.out.println("atan2_ Squid     : " + atan2_SquidError);
         System.out.println("atan2_ Imuli     : " + atan2_ImError);
