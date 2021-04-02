@@ -99,34 +99,40 @@ import java.util.concurrent.TimeUnit;
  * <br>
  * Another benchmark of atan2() methods, on newer hardware with Java 8 Hotspot:
  * <pre>
- * Benchmark                          Mode  Cnt   Score   Error  Units
- * MathBenchmark.measureGdxAtan2      avgt   15  15.001 ± 0.213  ns/op
- * MathBenchmark.measureGeneralAtan2  avgt   15  14.904 ± 0.256  ns/op
- * MathBenchmark.measureGtAtan2       avgt   15  15.834 ± 0.190  ns/op
- * MathBenchmark.measureImuliAtan2    avgt   15  14.125 ± 0.163  ns/op
- * MathBenchmark.measureMathAtan2     avgt   15  61.216 ± 0.478  ns/op
- * MathBenchmark.measureNtAtan2       avgt   15  14.227 ± 0.129  ns/op
- * MathBenchmark.measureSimpleAtan2   avgt   15  12.157 ± 0.257  ns/op
- * MathBenchmark.measureSquidAtan2    avgt   15  14.165 ± 0.136  ns/op
+ * Benchmark                                Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureAtan2Baseline       avgt   10   3.351 ± 0.110  ns/op
+ * MathBenchmark.measureAtan2BaselineFloat  avgt   10   3.263 ± 0.051  ns/op
+ * MathBenchmark.measureFunkyAtan2          avgt   10  12.506 ± 0.371  ns/op
+ * MathBenchmark.measureFunkyAtan2_         avgt   10  12.314 ± 0.140  ns/op
+ * MathBenchmark.measureGdxAtan2            avgt   10  15.109 ± 0.400  ns/op
+ * MathBenchmark.measureGdxAtan2Deg         avgt   10  27.244 ± 0.237  ns/op
+ * MathBenchmark.measureGeneralAtan2        avgt   10  14.801 ± 0.225  ns/op
+ * MathBenchmark.measureGtAtan2             avgt   10  15.867 ± 0.172  ns/op
+ * MathBenchmark.measureImuliAtan2          avgt   10  14.259 ± 0.357  ns/op
+ * MathBenchmark.measureImuliAtan2_         avgt   10  16.900 ± 0.268  ns/op
+ * MathBenchmark.measureMathAtan2           avgt   10  61.638 ± 0.844  ns/op
+ * MathBenchmark.measureMathAtan2_          avgt   10  64.977 ± 1.369  ns/op
+ * MathBenchmark.measureNtAtan2             avgt   10  14.288 ± 0.202  ns/op
+ * MathBenchmark.measureSimpleAtan2         avgt   10  14.613 ± 0.266  ns/op
+ * MathBenchmark.measureSimpleAtan2_        avgt   10  14.207 ± 0.211  ns/op
+ * MathBenchmark.measureSquidAtan2          avgt   10  14.326 ± 0.173  ns/op
+ * MathBenchmark.measureSquidAtan2DegFloat  avgt   10  16.884 ± 0.272  ns/op
+ * MathBenchmark.measureSquidAtan2Float     avgt   10  14.845 ± 1.343  ns/op
+ * MathBenchmark.measureSquidAtan2_         avgt   10  16.842 ± 0.242  ns/op
  * </pre>
  * Here, most but {@link Math#atan2(double, double)} are very close in speed,
  * but {@link NumberTools2#atan2Simple(float, float)} is unusually fast.
  * Gt has the lowest speed of the others, but is the most precise as an
- * approximation. The next-best precision is also the fastest, "Simple,"
- * so it may be the best mix of high precision and speed. The Simple version
- * works by calling an approximation of atan() as one would expect for atan2
- * from Wikipedia's description, and this turns out to optimize well.
+ * approximation. The next-best precision is also the fastest, "Funky" (tied
+ * with "Simple" on quality, but faster), so it may be the best mix of high
+ * precision and speed. The Funky version works by calling an approximation
+ * of atan() as one would expect for atan2 from Wikipedia's description, and
+ * this turns out to optimize well. The Simple version is very similar, but
+ * does slightly more work in the atan() call, and this slows it down.
  * <br>
- * The "simple" atan2_(), using turns instead of radians, is also fastest.
- * It uses a fairly strange atan_() function that doesn't use the same kind
+ * The "Funky" atan2_(), using turns instead of radians, is also fastest.
+ * It uses a fairly strange atn_() function that doesn't use the same kind
  * of turn measurement, but it's also the most precise approximation.
- * <pre>
- * Benchmark                          Mode  Cnt   Score   Error  Units
- * MathBenchmark.measureImuliAtan2_   avgt   15  16.624 ± 0.320  ns/op
- * MathBenchmark.measureMathAtan2_    avgt   15  64.472 ± 1.234  ns/op
- * MathBenchmark.measureSimpleAtan2_  avgt   15  12.130 ± 0.147  ns/op
- * MathBenchmark.measureSquidAtan2_   avgt   15  16.847 ± 0.183  ns/op
- * </pre>
  * <br>
  * Benchmarking fastFloor() methods; the comment in GustavsonSimplexNoise:
  * {@code // This method is a *lot* faster than using (int)Math.floor(x)}
@@ -213,6 +219,8 @@ public class MathBenchmark {
     private int atan2Im_Y = -0x8000;
     private int atan2Si_X = -0x4000;
     private int atan2Si_Y = -0x8000;
+    private int atan2Fn_X = -0x4000;
+    private int atan2Fn_Y = -0x8000;
     private int atan2GeX = -0x4000;
     private int atan2GeY = -0x8000;
     private int atan2SiX = -0x4000;
@@ -671,6 +679,12 @@ public class MathBenchmark {
     }
 
     @Benchmark
+    public float measureFunkyAtan2_()
+    {
+        return NumberTools2.atan2Funky_(floatInputs[atan2Fn_Y++ & 0xFFFF], floatInputs[atan2Fn_X++ & 0xFFFF]);
+    }
+
+    @Benchmark
     public float measureSquidAtan2DegFloat()
     {
         return NumberTools.atan2Degrees360(floatInputs[atan2DegSquidYF++ & 0xFFFF], floatInputs[atan2DegSquidXF++ & 0xFFFF]);
@@ -832,6 +846,7 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
         double atan2_SquidError = 0;
         double atan2_ImError = 0;
         double atan2_SiError = 0;
+        double atan2_FnError = 0;
         double at, at_;
         for(int r = 0; r < 0x10000; r++)
         {
@@ -863,6 +878,8 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
             u.atan2Im_Y = j;
             u.atan2Si_X = i;
             u.atan2Si_Y = j;
+            u.atan2Fn_X = i;
+            u.atan2Fn_Y = j;
             at = u.measureMathAtan2();
             at_ = u.measureMathAtan2_();
             atan2SquidError += Math.abs(u.measureSquidAtan2Float() - at);
@@ -877,6 +894,7 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
             atan2_SquidError += Math.abs(u.measureSquidAtan2_() - at_);
             atan2_ImError += Math.abs(u.measureImuliAtan2_() - at_);
             atan2_SiError += Math.abs(u.measureSimpleAtan2_() - at_);
+            atan2_FnError += Math.abs(u.measureFunkyAtan2_() - at_);
         }
         System.out.println("atan2 Squid      : " + atan2SquidError);
         System.out.println("atan2 GDX        : " + atan2GDXError);
@@ -890,5 +908,6 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
         System.out.println("atan2_ Squid     : " + atan2_SquidError);
         System.out.println("atan2_ Imuli     : " + atan2_ImError);
         System.out.println("atan2_ Simple    : " + atan2_SiError);
+        System.out.println("atan2_ Funky     : " + atan2_FnError);
     }
 }
