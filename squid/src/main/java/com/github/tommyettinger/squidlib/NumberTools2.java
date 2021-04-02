@@ -240,9 +240,10 @@ public final class NumberTools2 {
         else if(y < 0) return x - 1.5707963267948966f;
         else return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
     }
-    public static double atan2Funky(final double y, final double x) {
+    public static double atan2Funky(final double y, double x) {
         double n = y / x;
         if(n != n) n = (y == x ? 1.0 : -1.0); // if both y and x are infinite, n would be NaN
+        else if(n - n != n - n) x = 0.0; // if n is infinite, y is infinitely larger than x.
         if(x > 0)
             return atn(n);
         else if(x < 0) {
@@ -255,9 +256,10 @@ public final class NumberTools2 {
         else if(y < 0) return x - 1.5707963267948966;
         else return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
     }
-    public static float atan2Funky(final float y, final float x) {
+    public static float atan2Funky(final float y, float x) {
         float n = y / x;
         if(n != n) n = (y == x ? 1f : -1f); // if both y and x are infinite, n would be NaN
+        else if(n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
         if(x > 0)
             return atn(n);
         else if(x < 0) {
@@ -381,25 +383,27 @@ public final class NumberTools2 {
         else if(y < 0) return x + 0.75f;
         else return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
     }
-    public static double atan2Funky_(final double y, final double x) {
+    public static double atan2Funky_(final double y, double x) {
         double n = y / x;
         if(n != n) n = (y == x ? 1f : -1f); // if both y and x are infinite, n would be NaN
+        else if(n - n != n - n) x = 0.0; // if n is infinite, y is infinitely larger than x.
         if(x > 0) {
             if(y >= 0)
-                return atan_(n);
+                return atn_(n);
             else
-                return atan_(n) + 1.0;
+                return atn_(n) + 1.0;
         }
         else if(x < 0) {
-            return atan_(n) + 0.5;
+            return atn_(n) + 0.5;
         }
         else if(y > 0) return x + 0.25;
         else if(y < 0) return x + 0.75;
         else return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
     }
-    public static float atan2Funky_(final float y, final float x) {
+    public static float atan2Funky_(final float y, float x) {
         float n = y / x;
         if(n != n) n = (y == x ? 1f : -1f); // if both y and x are infinite, n would be NaN
+        else if(n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
         if(x > 0) {
             if(y >= 0)
                 return atn_(n);
