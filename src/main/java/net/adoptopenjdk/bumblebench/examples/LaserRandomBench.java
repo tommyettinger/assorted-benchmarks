@@ -30,6 +30,11 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * LaserRandomBench score: 4232752128.000000 (4.233G 2216.6%)
  *              uncertainty:   3.2%
  * <br>
+ * HotSpot Java 16:
+ * <br>
+ * LaserRandomBench score: 919491520.000000 (919.5M 2063.9%)
+ *              uncertainty:   2.1%
+ * <br>
  * 8th-gen i7 hexacore mobile processor running Manjaro Linux:
  * <br>
  * With Java 8, HotSpot:

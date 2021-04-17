@@ -30,6 +30,11 @@ import java.util.SplittableRandom;
  * <br>
  * SplittableRandomBench score: 893283072.000000 (893.3M 2061.0%)
  *                   uncertainty:   1.2%
+ * <br>
+ * HotSpot Java 16:
+ * <br>
+ * SplittableRandomBench score: 1060040960.000000 (1.060G 2078.2%)
+ *                   uncertainty:   0.4%
  */
 public final class SplittableRandomBench extends MicroBench {
 

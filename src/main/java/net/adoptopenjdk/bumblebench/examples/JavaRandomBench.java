@@ -32,6 +32,11 @@ import java.util.Random;
  * <br>
  * JavaRandomBench score: 119695936.000000 (119.7M 1860.0%)
  *             uncertainty:   0.2%
+ * <br>
+ * HotSpot Java 16:
+ * <br>
+ * JavaRandomBench score: 123277880.000000 (123.3M 1863.0%)
+ *             uncertainty:   0.4%
  */
 public final class JavaRandomBench extends MicroBench {
 

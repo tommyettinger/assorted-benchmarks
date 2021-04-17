@@ -31,6 +31,11 @@ import java.util.Random;
  * <br>
  * ShinyRandomBench score: 5514396160.000000 (5.514G 2243.1%)
  *              uncertainty:   0.7%
+ * <br>
+ * HotSpot Java 16:
+ * <br>
+ * ShinyRandomBench score: 607565952.000000 (607.6M 2022.5%)
+ *              uncertainty:   2.0%
  */
 public final class ShinyRandomBench extends MicroBench {
 

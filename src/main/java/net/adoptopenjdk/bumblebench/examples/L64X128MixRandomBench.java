@@ -41,6 +41,11 @@ import java.io.Serializable;
  * L64X128MixRandomBench score: 840015872.000000 (840.0M 2054.9%)
  *                   uncertainty:   1.5%
  * <br>
+ * HotSpot Java 16:
+ * <br>
+ * L64X128MixRandomBench score: 413480256.000000 (413.5M 1984.0%)
+ *                   uncertainty:   3.1%
+ * <br>
  * So, this particular LXM generator is 53% slower than SplittableRandom when both are run on Hotspot Java 8, which
  * apparently is considered almost as fast.
  * <br>

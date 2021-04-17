@@ -31,6 +31,11 @@ import java.io.Serializable;
  * <br>
  * TremorRandomBench score: 1433952512.000000 (1.434G 2108.4%)
  *               uncertainty:   0.8%
+ * <br>
+ * HotSpot Java 16:
+ * <br>
+ * TremorRandomBench score: 867308160.000000 (867.3M 2058.1%)
+ *               uncertainty:   1.0%
  */
 public final class TremorRandomBench extends MicroBench {
 

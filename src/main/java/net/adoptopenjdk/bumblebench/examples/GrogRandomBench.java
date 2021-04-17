@@ -31,6 +31,11 @@ import java.io.Serializable;
  * <br>
  * GrogRandomBench score: 1798899584.000000 (1.799G 2131.0%)
  *             uncertainty:   1.4%
+ * <br>
+ * HotSpot Java 16:
+ * <br>
+ * GrogRandomBench score: 861449792.000000 (861.4M 2057.4%)
+ *             uncertainty:   1.5%
  */
 public final class GrogRandomBench extends MicroBench {
 
