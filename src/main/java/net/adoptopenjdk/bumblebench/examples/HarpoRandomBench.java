@@ -24,20 +24,21 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * HarpoRandomBench score: 910756992.000000 (910.8M 2063.0%)
- *              uncertainty:   0.4%
+ * HarpoRandomBench score: 817981376.000000 (818.0M 2052.2%)
+ *              uncertainty:   4.7%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * HarpoRandomBench score: 1414215936.000000 (1.414G 2107.0%)
- *              uncertainty:   3.9%
+ * HarpoRandomBench score: 1353653248.000000 (1.354G 2102.6%)
+ *              uncertainty:   2.6%
  * HotSpot Java 16:
  * <br>
- * HarpoRandomBench score: 1402201600.000000 (1.402G 2106.1%)
- *              uncertainty:   1.4%
+ * HarpoRandomBench score: 1298374912.000000 (1.298G 2098.4%)
+ *              uncertainty:   1.3%
  * <br>
  * This is one of the few times I have seen where HotSpot Java 8 is significantly slower than a later version, here, 16.
- * The performance on Java 8 is still good here.
+ * The performance on Java 8 is still good here. This is also the fastest generator currently tested here on a HotSpot
+ * JVM, although only on Java 16.
  */
 public final class HarpoRandomBench extends MicroBench {
 
@@ -134,9 +135,9 @@ public final class HarpoRandomBench extends MicroBench {
 			final long b0 = stateB;
 			final long c0 = stateC;
 			stateA = b0 + ~c0;
-			stateB = Long.rotateLeft(a0, 45) ^ c0;
+			stateB = Long.rotateLeft(a0, 46) ^ c0;
 			stateC = Long.rotateLeft(b0, 23) - a0;
-			return (int) (a0) >>> 32 - bits;
+			return (int) (a0 + b0) >>> 32 - bits;
 		}
 
 		/**
@@ -154,9 +155,9 @@ public final class HarpoRandomBench extends MicroBench {
 			final long b0 = stateB;
 			final long c0 = stateC;
 			stateA = b0 + ~c0;
-			stateB = Long.rotateLeft(a0, 45) ^ c0;
+			stateB = Long.rotateLeft(a0, 46) ^ c0;
 			stateC = Long.rotateLeft(b0, 23) - a0;
-			return a0;
+			return a0 + b0;
 		}
 	}
 	protected long doBatch(long numIterations) throws InterruptedException {
