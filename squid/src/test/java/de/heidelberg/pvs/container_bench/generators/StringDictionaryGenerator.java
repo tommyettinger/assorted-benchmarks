@@ -1,12 +1,14 @@
 package de.heidelberg.pvs.container_bench.generators;
 
+import com.github.tommyettinger.ds.ObjectOrderedSet;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 public class StringDictionaryGenerator implements ElementGenerator<String> {
 	
-	protected List<String> words;
+	protected ObjectOrderedSet<String> words;
 	
 	protected TangleRNG generator;
 	
@@ -20,7 +22,7 @@ public class StringDictionaryGenerator implements ElementGenerator<String> {
 		
 		generator = new TangleRNG(seed);
 		// Read all -> might be too expensive
-		words = Wordlist.loadWords(size, seed);
+		words = Wordlist.loadWordSet(size, seed);
 	}
 
 	@Override
@@ -31,18 +33,35 @@ public class StringDictionaryGenerator implements ElementGenerator<String> {
 	@Override
 	public String[] generateArray(int arraySize) {
 		String[] array = new String[arraySize];
-		return words.subList(0, arraySize).toArray(array);
+		return words.order().subList(0, arraySize).toArray(array);
 	}
 	
 	public List<String> generateList(int listSize) {
-		return words.subList(0, listSize);
+		return words.order().subList(0, listSize);
 	}
 
 	public CustomString[] generateCustomArray(int arraySize) {
 		CustomString[] array = new CustomString[arraySize];
 		for (int i = 0; i < arraySize; i++) {
-			array[i] = new CustomString(words.get(i));
-		} 
+			array[i] = new CustomString(words.getAt(i));
+		}
+		return array;
+	}
+
+	public String[] generateArrayAltered(int arraySize) {
+		String[] array = new String[arraySize];
+		for (int i = 0; i < arraySize; i++) {
+			array[i] = (words.getAt(i) + generator.nextInt());
+		}
+		return array;
+	}
+
+
+	public CustomString[] generateCustomArrayAltered(int arraySize) {
+		CustomString[] array = new CustomString[arraySize];
+		for (int i = 0; i < arraySize; i++) {
+			array[i] = new CustomString(words.getAt(i) + generator.nextInt());
+		}
 		return array;
 	}
 

@@ -1,5 +1,7 @@
 package de.heidelberg.pvs.container_bench.generators;
 
+import com.github.tommyettinger.ds.ObjectOrderedSet;
+
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -57,7 +59,7 @@ public class Wordlist {
 		}
 	}
 
-	public static Set<String> loadWordSet(int size, int seed) throws IOException {
+	public static ObjectOrderedSet<String> loadWordSet(int size, int seed) throws IOException {
 
 		// Load the word list
 		try (InputStream is = new FileInputStream(FILENAME);
@@ -78,9 +80,9 @@ public class Wordlist {
 					Collections.swap(words, rng.nextInt(i), i - 1);
 				}
 			}
-			HashSet<String> set = new HashSet<>(size);
-			for (int i = 0; i < size;) {
-				for (int j = 0; j < n && i < size; j++) {
+			ObjectOrderedSet<String> set = new ObjectOrderedSet<>(size);
+			for (int i = 0; set.size() < size;) {
+				for (int j = 0; j < n && set.size() < size; j++) {
 					set.add(words.get(j) + i++);
 				}
 			}

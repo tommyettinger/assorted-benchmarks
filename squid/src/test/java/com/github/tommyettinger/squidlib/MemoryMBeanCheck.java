@@ -47,7 +47,6 @@ public class MemoryMBeanCheck {
         mainString();
         mainFloat();
         mainInteger();
-//        mapStringInt();
     }
     public static void mainString () {
         StringDictionaryGenerator gen = new StringDictionaryGenerator();
@@ -67,7 +66,8 @@ public class MemoryMBeanCheck {
                     e.printStackTrace();
                 }
                 String[] items = gen.generateArray(size);
-                
+                String[] items2 = gen.generateArrayAltered(size);
+
                 
                 
                 System.out.println("UNORDERED SET");
@@ -182,7 +182,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "SquidLib UnorderedMap", size,
@@ -191,7 +191,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new UnorderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX ObjectMap", size,
@@ -200,7 +200,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
@@ -209,7 +209,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new com.github.tommyettinger.ds.ObjectObjectMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMapX", size,
@@ -218,7 +218,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new ObjectMapX<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.println("INSERTION-ORDERED MAP:");
@@ -229,7 +229,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "SquidLib OrderedMap", size,
@@ -238,7 +238,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new squidpony.squidmath.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX OrderedMap", size,
@@ -247,7 +247,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMap", size,
@@ -256,7 +256,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new com.github.tommyettinger.ds.ObjectObjectOrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMapX", size,
@@ -265,7 +265,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedMapX<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Atlantis IndexedMap", size,
@@ -274,7 +274,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
             }
@@ -298,6 +298,7 @@ public class MemoryMBeanCheck {
                     e.printStackTrace();
                 }
                 CustomString[] items = gen.generateCustomArray(size);
+                CustomString[] items2 = gen.generateCustomArrayAltered(size);
 
 
 
@@ -413,7 +414,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "SquidLib UnorderedMap", size,
@@ -422,7 +423,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new UnorderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "GDX ObjectMap", size,
@@ -431,7 +432,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
@@ -440,7 +441,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new com.github.tommyettinger.ds.ObjectObjectMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMapX", size,
@@ -449,7 +450,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new ObjectMapX<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.println("INSERTION-ORDERED MAP:");
@@ -460,7 +461,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "SquidLib OrderedMap", size,
@@ -469,7 +470,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new squidpony.squidmath.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "GDX OrderedMap", size,
@@ -478,7 +479,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMap", size,
@@ -487,7 +488,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new com.github.tommyettinger.ds.ObjectObjectOrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMapX", size,
@@ -496,7 +497,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedMapX<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d CustomStrings: %d\n----------------------------------------\n", "Atlantis IndexedMap", size,
@@ -505,7 +506,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
             }
@@ -524,10 +525,12 @@ public class MemoryMBeanCheck {
                 System.setOut(out);
             for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
                 Float[] items = new Float[size];
+                Float[] items2 = new Float[size];
                 rng.setStateA(size);
                 rng.setStateB(~size);
                 for (int j = 0; j < size; j++) {
-                    items[j] = (rng.nextInt() << 10) * 1024f;// * 0.6180339887498949f;
+                    items[j] = (rng.nextInt() >>> 10) * 1024f;// * 0.6180339887498949f;
+                    items2[j] = rng.nextInt() * 0.6180339887498949f;
                 }
 
 
@@ -644,7 +647,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "SquidLib UnorderedMap", size,
@@ -653,7 +656,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new UnorderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "GDX ObjectMap", size,
@@ -662,7 +665,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
@@ -671,7 +674,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new com.github.tommyettinger.ds.ObjectObjectMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS ObjectMapX", size,
@@ -680,7 +683,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new ObjectMapX<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.println("INSERTION-ORDERED MAP:");
@@ -691,7 +694,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "SquidLib OrderedMap", size,
@@ -700,7 +703,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new squidpony.squidmath.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "GDX OrderedMap", size,
@@ -709,7 +712,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS OrderedMap", size,
@@ -718,7 +721,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new com.github.tommyettinger.ds.ObjectObjectOrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "JDKGDXDS OrderedMapX", size,
@@ -727,7 +730,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedMapX<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Floats: %d\n----------------------------------------\n", "Atlantis IndexedMap", size,
@@ -736,7 +739,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
             }
@@ -755,10 +758,12 @@ public class MemoryMBeanCheck {
                 System.setOut(out);
             for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
                 Integer[] items = new Integer[size];
+                Integer[] items2 = new Integer[size];
                 rng.setStateA(size);
                 rng.setStateB(~size);
                 for (int j = 0; j < size; j++) {
                     items[j] = (rng.nextInt() << 10);// * 0.6180339887498949f;
+                    items2[j] = (rng.nextInt());// * 0.6180339887498949f;
                 }
 
 
@@ -875,7 +880,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "SquidLib UnorderedMap", size,
@@ -884,7 +889,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new UnorderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "GDX ObjectMap", size,
@@ -893,7 +898,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
@@ -902,7 +907,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new com.github.tommyettinger.ds.ObjectObjectMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS ObjectMapX", size,
@@ -911,7 +916,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new ObjectMapX<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.println("INSERTION-ORDERED MAP:");
@@ -922,7 +927,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "SquidLib OrderedMap", size,
@@ -931,7 +936,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new squidpony.squidmath.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "GDX OrderedMap", size,
@@ -940,7 +945,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS OrderedMap", size,
@@ -949,7 +954,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new com.github.tommyettinger.ds.ObjectObjectOrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "JDKGDXDS OrderedMapX", size,
@@ -958,7 +963,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new OrderedMapX<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
                 System.out.printf("%30s, %7d Integers: %d\n----------------------------------------\n", "Atlantis IndexedMap", size,
@@ -967,7 +972,7 @@ public class MemoryMBeanCheck {
 
                             @Override public void run () {
                                 x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items[j]);
+                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
                             }
                         }));
 
