@@ -15,7 +15,6 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import net.adoptopenjdk.bumblebench.core.MicroBench;
-import squidpony.squidmath.LightRNG;
 
 import java.io.Serializable;
 import java.util.Random;
@@ -25,27 +24,29 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * RomuTrioRandomBench score: 936142016.000000 (936.1M 2065.7%)
- *                 uncertainty:   5.1%
+ * ChicoRandomBench score: 919204416.000000 (919.2M 2063.9%)
+ *              uncertainty:   1.8%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * RomuTrioRandomBench score: 948451776.000000 (948.5M 2067.0%)
- *                 uncertainty:   1.7%
+ * ChicoRandomBench score: 843935552.000000 (843.9M 2055.4%)
+ *              uncertainty:   0.8%
  * HotSpot Java 16:
  * <br>
- * RomuTrioRandomBench score: 1272620544.000000 (1.273G 2096.4%)
- *                 uncertainty:   1.2%
+ * ChicoRandomBench score: 1466697984.000000 (1.467G 2110.6%)
+ *              uncertainty:   3.1%
  * <br>
- * RomuTrio is very fast on HotSpot, just behind Harpo here on Java 16 and ahead of it on Java 8.
- * Oddly, it doesn't seem to be optimized well on OpenJ9, and is significantly slower than Harpo there; this could have
- * to do with the one large multiplication this uses for each random number.
- * <br>
- * Credit to Mark Overton for creating the Romu generators, https://www.romu-random.org/
+ * Somewhat surprisingly, OpenJ9 15 is slowest here, and Java 16 is blazing fast.
+ * This isn't necessarily the finished version of ChicoRandom, since quality tests are still ongoing, and it might need
+ * adjustments in various places if the later parts of the test (32TB or 64TB) show any issues. It should also be noted
+ * that this type of generator, along with GrouchoRandom, HarpoRandom, and RomuTrio, doesn't do much to hash the initial
+ * state out-of-the-box, so usage that creates many generators with similar states might not see much difference until
+ * a few numbers have been generated. Still, 1.467 billion longs a second with Java 16 is as good as we've gotten, at
+ * least using HotSpot.
  */
-public final class RomuTrioRandomBench extends MicroBench {
+public final class ChicoRandomBench extends MicroBench {
 
-	public static class RomuTrioRandom extends Random implements Serializable{
+	public static class ChicoRandom extends Random implements Serializable{
 		private long stateA, stateB, stateC;
 
 		/**
@@ -53,11 +54,11 @@ public final class RomuTrioRandomBench extends MicroBench {
 		 * the seed of the random number generator to a value very likely
 		 * to be distinct from any other invocation of this constructor.
 		 */
-		public RomuTrioRandom() {
+		public ChicoRandom() {
 			super();
 			stateA = super.nextLong();
-			stateB = LightRNG.determine(stateA);
-			stateC = LightRNG.determine(stateA + 1L);
+			stateB = super.nextLong();
+			stateC = super.nextLong();
 		}
 
 		/**
@@ -73,11 +74,11 @@ public final class RomuTrioRandomBench extends MicroBench {
 		 * @param seed the initial seed
 		 * @see #setSeed(long)
 		 */
-		public RomuTrioRandom(long seed) {
+		public ChicoRandom(long seed) {
 			super(seed);
-			stateA = LightRNG.determine(seed);
-			stateB = LightRNG.determine(seed+1L);
-			stateC = LightRNG.determine(seed+2L);
+			stateA = seed ^ 0xFA346CBFD5890825L;
+			stateB = seed;
+			stateC = seed ^ 0x05CB93402A76F7DAL;
 		}
 
 		/**
@@ -102,9 +103,9 @@ public final class RomuTrioRandomBench extends MicroBench {
 		@Override
 		public synchronized void setSeed(long seed) {
 			super.setSeed(seed);
-			stateA = LightRNG.determine(seed);
-			stateB = LightRNG.determine(seed+1L);
-			stateC = LightRNG.determine(seed+2L);
+			stateA = seed ^ 0xFA346CBFD5890825L;
+			stateB = seed;
+			stateC = seed ^ 0x05CB93402A76F7DAL;
 		}
 
 		/**
@@ -134,16 +135,13 @@ public final class RomuTrioRandomBench extends MicroBench {
 		 */
 		@Override
 		protected int next(int bits) {
-
-			final long xp = this.stateA;
-			final long yp = this.stateB;
-			final long zp = this.stateC;
-			this.stateA = 0xD3833E804F4C574BL * zp;
-			this.stateB = yp - xp;
-			this.stateB = Long.rotateLeft(this.stateB, 12);
-			this.stateC = zp - yp;
-			this.stateC = Long.rotateLeft(this.stateC, 44);
-			return (int) (xp) >>> 32 - bits;
+			final long a0 = stateA;
+			final long b0 = stateB;
+			final long c0 = stateC;
+			stateA = b0 ^ c0 + 0xC6BC279692B5C323L;
+			stateB = Long.rotateLeft(a0, 46) + c0;
+			stateC = Long.rotateLeft(b0, 23) - a0;
+			return (int) a0 >>> 32 - bits;
 		}
 
 		/**
@@ -157,19 +155,17 @@ public final class RomuTrioRandomBench extends MicroBench {
 		 */
 		@Override
 		public long nextLong() {
-			final long xp = this.stateA;
-			final long yp = this.stateB;
-			final long zp = this.stateC;
-			this.stateA = 0xD3833E804F4C574BL * zp;
-			this.stateB = yp - xp;
-			this.stateB = Long.rotateLeft(this.stateB, 12);
-			this.stateC = zp - yp;
-			this.stateC = Long.rotateLeft(this.stateC, 44);
-			return xp;
+			final long a0 = stateA;
+			final long b0 = stateB;
+			final long c0 = stateC;
+			stateA = b0 ^ c0 + 0xC6BC279692B5C323L;
+			stateB = Long.rotateLeft(a0, 46) + c0;
+			stateC = Long.rotateLeft(b0, 23) - a0;
+			return a0;
 		}
 	}
 	protected long doBatch(long numIterations) throws InterruptedException {
-		RomuTrioRandom rng = new RomuTrioRandom(0x12345678);
+		ChicoRandom rng = new ChicoRandom(0x12345678);
 		long sum = 0L;
 		for (long i = 0; i < numIterations; i++)
 			sum += rng.nextLong();

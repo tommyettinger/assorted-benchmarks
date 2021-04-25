@@ -72,9 +72,9 @@ public final class HarpoRandomBench extends MicroBench {
 		 */
 		public HarpoRandom(long seed) {
 			super(seed);
-			stateA = seed - 1L;
+			stateA = seed ^ 0xFA346CBFD5890825L;
 			stateB = seed;
-			stateC = seed + 1L;
+			stateC = seed ^ 0x05CB93402A76F7DAL;
 		}
 
 		/**
@@ -99,9 +99,9 @@ public final class HarpoRandomBench extends MicroBench {
 		@Override
 		public synchronized void setSeed(long seed) {
 			super.setSeed(seed);
-			stateA = seed;
+			stateA = seed ^ 0xFA346CBFD5890825L;
 			stateB = seed;
-			stateC = seed;
+			stateC = seed ^ 0x05CB93402A76F7DAL;
 		}
 
 		/**
