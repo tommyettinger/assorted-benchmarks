@@ -2,27 +2,28 @@ buildscript {
     repositories {
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
-        jcenter()
+        gradlePluginPortal()
     }
-    ext.jmh_version = '1.25' // JMH version to use
+    ext.jmh_version = '1.29' // JMH version to use
 }
 
 plugins {
     id 'java'
-    id 'maven'
     id 'eclipse'
     id 'idea'
     // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work
     id "com.github.johnrengelman.shadow" version "5.2.0"
     id 'com.github.ben-manes.versions' version '0.27.0' // for "gradlew dependencyUpdates -Drevision=release"
 }
+sourceSets.main.resources.srcDirs = [ file('src/main/resources').path ]
+sourceSets.test.resources.srcDirs = [ file('src/main/resources').path ]
 
 repositories {
     mavenLocal()
     mavenCentral()
     maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
     maven { url 'https://jitpack.io' }
-    jcenter()
+    gradlePluginPortal()
 }
 
 group = 'com.github.tommyettinger'
@@ -38,7 +39,7 @@ compileJava.options.encoding = 'UTF-8'
 shadowJar {
     destinationDirectory = project.rootDir
     archiveFileName = 'benchmarks.jar'
-    classifier = 'benchmarks'
+    archiveClassifier.set("benchmarks")
     manifest.attributes('Main-Class': 'org.openjdk.jmh.Main')
 }
 
@@ -49,17 +50,17 @@ dependencies {
 
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.3'
 //    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:2ae5e83d1a' // lacks Ripple FOV opt
-    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:788d9fbb69'
-    implementation 'com.github.YellowstoneGames.SquidSquad:squidgrid:8848c6c5a7'
+    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:90e21440cd'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidGrid:ef02b4a9cf'
 
     implementation 'com.github.earlygrey:simple-graphs:v1.0.1'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
     implementation 'com.github.tommyettinger:atlantis:5574642135'
-    implementation 'com.github.tommyettinger:jdkgdxds:ab759481b9'
+    implementation 'com.github.tommyettinger:jdkgdxds:26dcf47fad'
 
     testImplementation group: 'junit', name: 'junit', version:'4.13.1'
 
-    testImplementation 'com.badlogicgames.gdx:gdx-backend-lwjgl3:1.9.13'
-    testImplementation 'com.badlogicgames.gdx:gdx-platform:1.9.13:natives-desktop'
+    testImplementation 'com.badlogicgames.gdx:gdx-backend-lwjgl3:1.10.0'
+    testImplementation 'com.badlogicgames.gdx:gdx-platform:1.10.0:natives-desktop'
 }
 

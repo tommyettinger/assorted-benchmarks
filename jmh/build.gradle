@@ -2,14 +2,13 @@ buildscript {
     repositories {
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
-        jcenter()
+        gradlePluginPortal()
     }
-    ext.jmh_version = '1.23' // JMH version to use
+    ext.jmh_version = '1.29' // JMH version to use
 }
 
 plugins {
     id 'java'
-    id 'maven'
     id 'eclipse'
     id 'idea'
     // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work
@@ -22,7 +21,7 @@ repositories {
     mavenCentral()
     maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
     maven { url 'https://jitpack.io' }
-    jcenter()
+    gradlePluginPortal()
 }
 
 group = 'de.heidelberg.pvs.container-bench'
@@ -33,12 +32,12 @@ description = """Benchmarks for Java containers"""
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
-sourceSets.main.resources.srcDirs += [ file('src/main/resources').path ]
-sourceSets.test.resources.srcDirs += [ file('src/main/resources').path ]
+sourceSets.main.resources.srcDirs = [ file('src/main/resources').path ]
+sourceSets.test.resources.srcDirs = [ file('src/main/resources').path ]
 
 shadowJar {
     destinationDirectory = project.rootDir
-    archiveFileName = 'benchmarks.jar'
+    archiveFileName.set("benchmarks.jar")
     classifier = 'benchmarks'
     manifest.attributes('Main-Class': 'org.openjdk.jmh.Main')
 }
@@ -64,22 +63,22 @@ dependencies {
     implementation group: 'org.javolution', name: 'javolution-core-java', version: '6.0.0'
     implementation group: 'org.scala-lang', name: 'scala-library', version: '2.13.1'
     implementation group: 'io.timeandspace', name: 'smoothie-map', version: '2.0.2'
-    implementation group: 'com.esotericsoftware.kryo', name: 'kryo5', version: '5.0.3'
+    implementation group: 'com.esotericsoftware.kryo', name: 'kryo5', version: '5.1.0'
 
     // transitively grabs libGDX 1.9.10:
     //implementation 'com.github.tommyettinger:merry-ds:dc9e1bceb6'
 
-    implementation 'com.badlogicgames.gdx:gdx:1.9.13'
+    implementation 'com.badlogicgames.gdx:gdx:1.10.0'
 
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:913cd5921a' // Oct 4 2020
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.2'
 //    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:2b577109cc' // Dec 27 2020
-    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:4a8bc7e7c8' // Jan 29 2021
+    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:90e21440cd' // Jan 29 2021
     implementation 'com.github.tommyettinger:atlantis:5574642135' // release 0.0.1
     //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
     //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
 //    implementation 'com.github.tommyettinger:jdkgdxds:3a9f925cd0'
-    implementation 'com.github.tommyettinger:jdkgdxds:6a8fd0b37a'
+    implementation 'com.github.tommyettinger:jdkgdxds:26dcf47fad'
 
 
 
