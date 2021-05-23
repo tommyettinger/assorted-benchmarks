@@ -24,18 +24,18 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * PalaceRandomBench score: 946241344.000000 (946.2M 2066.8%)
- *               uncertainty:   2.3%
+ * PalaceRandomBench score: 948795392.000000 (948.8M 2067.1%)
+ *               uncertainty:   1.6%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * PalaceRandomBench score: 866821440.000000 (866.8M 2058.0%)
- *               uncertainty:   0.6%
+ * PalaceRandomBench score: 851427520.000000 (851.4M 2056.2%)
+ *               uncertainty:   0.2%
  * <br>
  * HotSpot Java 16:
  * <br>
- * PalaceRandomBench score: 1490549376.000000 (1.491G 2112.2%)
- *               uncertainty:   1.7%
+ * PalaceRandomBench score: 1529561600.000000 (1.530G 2114.8%)
+ *               uncertainty:   1.1%
  * <br>
  *
  */
@@ -133,7 +133,7 @@ public final class PalaceRandomBench extends MicroBench {
 			final long a0 = stateA;
 			final long b0 = stateB;
 			final long c0 = stateC;
-			stateA = Long.rotateLeft(b0, 41) ^ c0;
+			stateA = c0 - Long.rotateLeft(b0, 43);
 			stateB = a0 ^ b0 ^ c0;
 			stateC = b0 + 0xC6BC279692B5C323L;
 			return (int) a0 >>> 32 - bits;
@@ -153,8 +153,8 @@ public final class PalaceRandomBench extends MicroBench {
 			final long a0 = stateA;
 			final long b0 = stateB;
 			final long c0 = stateC;
-			stateA = Long.rotateLeft(b0, 41) ^ c0;
-			stateB = a0 ^ b0 ^ c0;
+			stateA = Long.rotateLeft(b0, 20) + c0;
+			stateB = Long.rotateLeft(c0, 57) + a0;
 			stateC = b0 + 0xC6BC279692B5C323L;
 			return a0;
 		}
