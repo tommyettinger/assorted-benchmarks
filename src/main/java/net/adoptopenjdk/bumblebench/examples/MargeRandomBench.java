@@ -23,17 +23,18 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * MargeRandomBench score: 1060564288.000000 (1.061G 2078.2%)
- *              uncertainty:   1.5%
+ * MargeRandomBench score: 1066594496.000000 (1.067G 2078.8%)
+ *              uncertainty:   0.9%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * MargeRandomBench score: 860831424.000000 (860.8M 2057.3%)
- *              uncertainty:   0.3%
+ * MargeRandomBench score: 861130176.000000 (861.1M 2057.4%)
+ *              uncertainty:   0.8%
+ * <br>
  * HotSpot Java 16:
  * <br>
- * MargeRandomBench score: 1410636032.000000 (1.411G 2106.7%)
- *              uncertainty:   0.6%
+ * MargeRandomBench score: 1407030144.000000 (1.407G 2106.5%)
+ *              uncertainty:   0.8%
  * <br>
  */
 public final class MargeRandomBench extends MicroBench {
@@ -133,7 +134,7 @@ public final class MargeRandomBench extends MicroBench {
 			final long fc = this.stateC;
 			this.stateA = 0xD1342543DE82EF95L * fc;
 			this.stateB = fa ^ fb ^ fc;
-			this.stateC = Long.rotateLeft(fb, 42) + 0xC6BC279692B5C323L;
+			this.stateC = Long.rotateLeft(fb, 7) + 0xC6BC279692B5C323L;
 			return (int) fa >>> 32 - bits;
 		}
 
@@ -148,13 +149,12 @@ public final class MargeRandomBench extends MicroBench {
 		 */
 		@Override
 		public long nextLong() {
-
 			final long fa = this.stateA;
 			final long fb = this.stateB;
 			final long fc = this.stateC;
 			this.stateA = 0xD1342543DE82EF95L * fc;
 			this.stateB = fa ^ fb ^ fc;
-			this.stateC = Long.rotateLeft(fb, 42) + 0xC6BC279692B5C323L;
+			this.stateC = Long.rotateLeft(fb, 7) + 0xC6BC279692B5C323L;
 			return fa;
 		}
 	}
