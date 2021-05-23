@@ -24,23 +24,22 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * PicoRandomBench score: 961228224.000000 (961.2M 2068.4%)
- *             uncertainty:   0.3%
+ * PicoRandomBench score: 713281152.000000 (713.3M 2038.5%)
+ *             uncertainty:   1.5%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * PicoRandomBench score: 862023488.000000 (862.0M 2057.5%)
- *             uncertainty:   0.6%
+ * PicoRandomBench score: 718819584.000000 (718.8M 2039.3%)
+ *             uncertainty:   0.1%
  * <br>
  * HotSpot Java 16:
  * <br>
- * PicoRandomBench score: 1709308544.000000 (1.709G 2125.9%)
- *             uncertainty:   0.6%
+ * PicoRandomBench score: 1486562688.000000 (1.487G 2112.0%)
+ *             uncertainty:   1.7%
  * <br>
  *  Pico is a bijective form of Chico, which means it can be reversed (you can get to the only possible previous state
  *  given any full 3-long state) and also means that it's impossible for subcycles to transition into each other. As you
- *  can see, on Java 16, it is very, very fast, but there are probably quality issues because PractRand hasn't yet been
- *  used to evaluate this (nor has hwd).
+ *  can see, on Java 16, it is rather fast, but there are significant quality issues when tested with PractRand.
  *  <br>
  *  Pico means "beak" in Spanish; I started with the Chico generator, made in bijective, and was going to call
  *  it Bico or Beako, but then I realized Pico suggested both Chico and beak and went with that.
@@ -139,9 +138,9 @@ public final class PicoRandomBench extends MicroBench {
 			final long a0 = this.stateA;
 			final long b0 = this.stateB;
 			final long c0 = this.stateC;
-			this.stateA = 0xC6BC279692B5C323L + c0;
+			this.stateA = Long.rotateLeft(c0, 25) + 0xC6BC279692B5C323L;
 			this.stateB = Long.rotateLeft(a0, 47) + c0;
-			this.stateC = Long.rotateLeft(b0, 9) ^ a0;
+			this.stateC = Long.rotateLeft(b0, 55) ^ a0;
 			return (int) b0 >>> 32 - bits;
 		}
 
@@ -159,9 +158,9 @@ public final class PicoRandomBench extends MicroBench {
 			final long a0 = this.stateA;
 			final long b0 = this.stateB;
 			final long c0 = this.stateC;
-			this.stateA = 0xC6BC279692B5C323L + c0;
+			this.stateA = Long.rotateLeft(c0, 25) + 0xC6BC279692B5C323L;
 			this.stateB = Long.rotateLeft(a0, 47) + c0;
-			this.stateC = Long.rotateLeft(b0, 9) ^ a0;
+			this.stateC = Long.rotateLeft(b0, 55) ^ a0;
 			return b0;
 		}
 	}
