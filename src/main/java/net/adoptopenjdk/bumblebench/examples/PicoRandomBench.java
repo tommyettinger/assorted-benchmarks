@@ -24,30 +24,30 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * ChicoRandomBench score: 919204416.000000 (919.2M 2063.9%)
- *              uncertainty:   1.8%
+ * PicoRandomBench score: 961228224.000000 (961.2M 2068.4%)
+ *             uncertainty:   0.3%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * ChicoRandomBench score: 843935552.000000 (843.9M 2055.4%)
- *              uncertainty:   0.8%
+ * PicoRandomBench score: 862023488.000000 (862.0M 2057.5%)
+ *             uncertainty:   0.6%
  * <br>
  * HotSpot Java 16:
  * <br>
- * ChicoRandomBench score: 1466697984.000000 (1.467G 2110.6%)
- *              uncertainty:   3.1%
+ * PicoRandomBench score: 1709308544.000000 (1.709G 2125.9%)
+ *             uncertainty:   0.6%
  * <br>
- * Somewhat surprisingly, OpenJ9 15 is slowest here, and Java 16 is blazing fast.
- * This isn't necessarily the finished version of ChicoRandom, since quality tests are still ongoing, and it might need
- * adjustments in various places if the later parts of the test (32TB or 64TB) show any issues. It should also be noted
- * that this type of generator, along with GrouchoRandom, HarpoRandom, and RomuTrio, doesn't do much to hash the initial
- * state out-of-the-box, so usage that creates many generators with similar states might not see much difference until
- * a few numbers have been generated. Still, 1.467 billion longs a second with Java 16 is as good as we've gotten, at
- * least using HotSpot.
+ *  Pico is a bijective form of Chico, which means it can be reversed (you can get to the only possible previous state
+ *  given any full 3-long state) and also means that it's impossible for subcycles to transition into each other. As you
+ *  can see, on Java 16, it is very, very fast, but there are probably quality issues because PractRand hasn't yet been
+ *  used to evaluate this (nor has hwd).
+ *  <br>
+ *  Pico means "beak" in Spanish; I started with the Chico generator, made in bijective, and was going to call
+ *  it Bico or Beako, but then I realized Pico suggested both Chico and beak and went with that.
  */
-public final class ChicoRandomBench extends MicroBench {
+public final class PicoRandomBench extends MicroBench {
 
-	public static class ChicoRandom extends Random implements Serializable{
+	public static class PicoRandom extends Random implements Serializable{
 		private long stateA, stateB, stateC;
 
 		/**
@@ -55,7 +55,7 @@ public final class ChicoRandomBench extends MicroBench {
 		 * the seed of the random number generator to a value very likely
 		 * to be distinct from any other invocation of this constructor.
 		 */
-		public ChicoRandom() {
+		public PicoRandom() {
 			super();
 			stateA = super.nextLong();
 			stateB = super.nextLong();
@@ -75,7 +75,7 @@ public final class ChicoRandomBench extends MicroBench {
 		 * @param seed the initial seed
 		 * @see #setSeed(long)
 		 */
-		public ChicoRandom(long seed) {
+		public PicoRandom(long seed) {
 			super(seed);
 			stateA = seed ^ 0xFA346CBFD5890825L;
 			stateB = seed;
@@ -136,13 +136,13 @@ public final class ChicoRandomBench extends MicroBench {
 		 */
 		@Override
 		protected int next(int bits) {
-			final long a0 = stateA;
-			final long b0 = stateB;
-			final long c0 = stateC;
-			stateA = b0 ^ c0 + 0xC6BC279692B5C323L;
-			stateB = Long.rotateLeft(a0, 46) + c0;
-			stateC = Long.rotateLeft(b0, 23) - a0;
-			return (int) a0 >>> 32 - bits;
+			final long a0 = this.stateA;
+			final long b0 = this.stateB;
+			final long c0 = this.stateC;
+			this.stateA = 0xC6BC279692B5C323L + c0;
+			this.stateB = Long.rotateLeft(a0, 47) + c0;
+			this.stateC = Long.rotateLeft(b0, 9) ^ a0;
+			return (int) b0 >>> 32 - bits;
 		}
 
 		/**
@@ -156,17 +156,17 @@ public final class ChicoRandomBench extends MicroBench {
 		 */
 		@Override
 		public long nextLong() {
-			final long a0 = stateA;
-			final long b0 = stateB;
-			final long c0 = stateC;
-			stateA = b0 ^ c0 + 0xC6BC279692B5C323L;
-			stateB = Long.rotateLeft(a0, 46) + c0;
-			stateC = Long.rotateLeft(b0, 23) - a0;
-			return a0;
+			final long a0 = this.stateA;
+			final long b0 = this.stateB;
+			final long c0 = this.stateC;
+			this.stateA = 0xC6BC279692B5C323L + c0;
+			this.stateB = Long.rotateLeft(a0, 47) + c0;
+			this.stateC = Long.rotateLeft(b0, 9) ^ a0;
+			return b0;
 		}
 	}
 	protected long doBatch(long numIterations) throws InterruptedException {
-		ChicoRandom rng = new ChicoRandom(0x12345678);
+		PicoRandom rng = new PicoRandom(0x12345678);
 		long sum = 0L;
 		for (long i = 0; i < numIterations; i++)
 			sum += rng.nextLong();
