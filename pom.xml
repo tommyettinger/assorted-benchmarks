@@ -103,7 +103,7 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>jdkgdxds</artifactId>
-            <version>8e366b0944</version>
+            <version>0.1.2</version>
             <scope>compile</scope>
         </dependency>
 

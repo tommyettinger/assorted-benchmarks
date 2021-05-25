@@ -134,7 +134,7 @@ public final class MargeRandomBench extends MicroBench {
 			final long fc = this.stateC;
 			this.stateA = 0xD1342543DE82EF95L * fc;
 			this.stateB = fa ^ fb ^ fc;
-			this.stateC = Long.rotateLeft(fb, 7) + 0xC6BC279692B5C323L;
+			this.stateC = Long.rotateLeft(fb, 21) + 0xC6BC279692B5C323L;
 			return (int) fa >>> 32 - bits;
 		}
 
@@ -154,7 +154,7 @@ public final class MargeRandomBench extends MicroBench {
 			final long fc = this.stateC;
 			this.stateA = 0xD1342543DE82EF95L * fc;
 			this.stateB = fa ^ fb ^ fc;
-			this.stateC = Long.rotateLeft(fb, 7) + 0xC6BC279692B5C323L;
+			this.stateC = Long.rotateLeft(fb, 21) + 0xC6BC279692B5C323L;
 			return fa;
 		}
 	}
