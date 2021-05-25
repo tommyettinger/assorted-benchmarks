@@ -53,10 +53,10 @@ dependencies {
     implementation 'com.github.yellowstonegames.squidlib:squidlib-util:90e21440cd'
     implementation 'com.github.yellowstonegames.SquidSquad:SquidGrid:ef02b4a9cf'
 
-    implementation 'com.github.earlygrey:simple-graphs:v1.0.1'
+    implementation 'com.github.earlygrey:simple-graphs:v3.0.0'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
     implementation 'com.github.tommyettinger:atlantis:5574642135'
-    implementation 'com.github.tommyettinger:jdkgdxds:26dcf47fad'
+    implementation 'com.github.tommyettinger:jdkgdxds:v0.1.2'
 
     testImplementation group: 'junit', name: 'junit', version:'4.13.1'
 
