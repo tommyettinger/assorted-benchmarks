@@ -16,7 +16,6 @@ package net.adoptopenjdk.bumblebench.examples;
 
 import com.github.tommyettinger.ds.support.EnhancedRandom;
 import com.github.tommyettinger.ds.support.LaserRandom;
-import com.github.tommyettinger.ds.support.TricycleRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
@@ -24,15 +23,18 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- *
+ * GaussianProbitBench2 score: 131955432.000000 (132.0M 1869.8%)
+ *                  uncertainty:   1.9%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- *
+ * GaussianProbitBench2 score: 90412312.000000 (90.41M 1832.0%)
+ *                  uncertainty:   1.3%
  * <br>
  * HotSpot Java 16:
  * <br>
- *
+ * GaussianProbitBench2 score: 133813112.000000 (133.8M 1871.2%)
+ *                  uncertainty:   2.3%
  */
 public final class GaussianProbitBench2 extends MicroBench {
 

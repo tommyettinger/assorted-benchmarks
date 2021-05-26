@@ -22,21 +22,25 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- *
+ * GaussianReynoldsCountBench2 score: 483749344.000000 (483.7M 1999.7%)
+ *                         uncertainty:   2.8%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- *
+ * GaussianReynoldsCountBench2 score: 397797184.000000 (397.8M 1980.1%)
+ *                         uncertainty:   2.1%
  * <br>
  * HotSpot Java 16:
  * <br>
- *
+ * GaussianReynoldsCountBench2 score: 513567008.000000 (513.6M 2005.7%)
+ *                         uncertainty:   1.9%
  */
 public final class GaussianReynoldsCountBench2 extends MicroBench {
 
 	private double nextGaussian(final LaserRandom rng){
 		final long u1 = rng.nextLong();
-		return 0x1.fb760cp-35 * ((Long.bitCount((u1 ^ 0xD1342543DE82EF95L) * 0xC6BC279692B5C323L) - 32L << 32) + (u1 & 0xFFFFFFFFL) - (u1 >>> 32));
+		return 0x1.fb760cp-35 * ((Long.bitCount(u1 ^ 0xC6BC279692B5C323L) - 32L << 32) + (u1 & 0xFFFFFFFFL) - (u1 >>> 32));
+//		return 0x1.fb760cp-35 * ((Long.bitCount((u1 ^ 0xD1342543DE82EF95L) * 0xC6BC279692B5C323L) - 32L << 32) + (u1 & 0xFFFFFFFFL) - (u1 >>> 32));
 	}
 
 	protected long doBatch(long numIterations) throws InterruptedException {
