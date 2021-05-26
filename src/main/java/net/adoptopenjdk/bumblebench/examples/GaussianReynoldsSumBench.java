@@ -22,15 +22,18 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- *
+ * GaussianReynoldsSumBench score: 388949888.000000 (388.9M 1977.9%)
+ *                      uncertainty:   0.8%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- *
+ * GaussianReynoldsSumBench score: 325008576.000000 (325.0M 1959.9%)
+ *                      uncertainty:   1.2%
  * <br>
  * HotSpot Java 16:
  * <br>
- *
+ * GaussianReynoldsSumBench score: 378548000.000000 (378.5M 1975.2%)
+ *                      uncertainty:   0.8%
  */
 public final class GaussianReynoldsSumBench extends MicroBench {
 

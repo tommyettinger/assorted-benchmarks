@@ -22,15 +22,18 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- *
+ * GaussianReynoldsCountBench score: 384986880.000000 (385.0M 1976.9%)
+ *                        uncertainty:   0.7%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- *
+ * GaussianReynoldsCountBench score: 313583552.000000 (313.6M 1956.4%)
+ *                        uncertainty:   0.7%
  * <br>
  * HotSpot Java 16:
  * <br>
- *
+ * GaussianReynoldsCountBench score: 351991456.000000 (352.0M 1967.9%)
+ *                        uncertainty:   1.9%
  */
 public final class GaussianReynoldsCountBench extends MicroBench {
 

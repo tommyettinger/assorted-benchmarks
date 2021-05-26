@@ -22,15 +22,18 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- *
+ * GaussianProbitBench score: 50541028.000000 (50.54M 1773.8%)
+ *                 uncertainty:   0.3%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- *
+ * GaussianProbitBench score: 144691280.000000 (144.7M 1879.0%)
+ *                 uncertainty:   0.6%
  * <br>
  * HotSpot Java 16:
  * <br>
- *
+ * GaussianProbitBench score: 51540808.000000 (51.54M 1775.8%)
+ *                 uncertainty:   0.2%
  */
 public final class GaussianProbitBench extends MicroBench {
 
