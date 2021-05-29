@@ -1,5 +1,11 @@
-Note: this gdx-ai GridGraph creates garbage when its Connections are accessed, where the others do not.
-The big winner seems to be simple-graphs, especially with its undirected graphs.
+ROUND 1
+
+Notes:
+This gdx-ai GridGraph creates garbage when its Connections are accessed, where the others do not.
+DirectedGraph and UndirectedGraph are generic classes, parameterized by SquidLib's Coord class for
+simple-graphs' tests, SquidLib's tests, and SquidSquad's tests.
+
+The big winner in this round seems to be simple-graphs, especially with its undirected graphs.
 
 Floors: 0
 Percentage walkable: 0.0%
@@ -96,4 +102,121 @@ Percentage walkable: 61.0825%
                 SquidSquad DirectedGraph,     600x    600 cells: 267656896
 ----------------------------------------
               SquidSquad UndirectedGraph,     600x    600 cells: 245487696
+----------------------------------------
+
+
+ROUND 2
+
+Notes:
+There's no gdx-ai here because it isn't really comparing apples to apples.
+CostlyGraph and DefaultGraph are Coord-specialized versions of DirectedGraph
+and UndirectedGraph, but these use SquidLib's Coord for SquidLib and for
+simple-graphs, but SquidSquad's Coord for SquidSquad's tests. This only matters
+because SquidSquad can use a more-optimized hash table implementation for its
+Coord type, despite not even calling its hashCode() method (it uses a tailored
+version of the jdkgdxds data structures, a trick that worked very well in other
+cases where I tried it).
+
+The big winner in this round is SquidSquad; the tailored Map paid off. For all
+sizes above 1x1, SquidSquad's graphs used less memory than their counterparts
+in SquidLib or even simple-graphs. However, the map-tailoring only works for
+integer-grid 2D coordinates, because it needs Coord as the key type.
+
+Floors: 0
+Percentage walkable: 0.0%
+             simple-graphs DirectedGraph,       1x      1 cells: 600
+----------------------------------------
+           simple-graphs UndirectedGraph,       1x      1 cells: 600
+----------------------------------------
+                    SquidLib CostlyGraph,       1x      1 cells: 1864
+----------------------------------------
+                   SquidLib DefaultGraph,       1x      1 cells: 1840
+----------------------------------------
+                  SquidSquad CostlyGraph,       1x      1 cells: 2904
+----------------------------------------
+                 SquidSquad DefaultGraph,       1x      1 cells: 2856
+----------------------------------------
+Floors: 42
+Percentage walkable: 42.0%
+             simple-graphs DirectedGraph,      10x     10 cells: 45336
+----------------------------------------
+           simple-graphs UndirectedGraph,      10x     10 cells: 35528
+----------------------------------------
+                    SquidLib CostlyGraph,      10x     10 cells: 50440
+----------------------------------------
+                   SquidLib DefaultGraph,      10x     10 cells: 39688
+----------------------------------------
+                  SquidSquad CostlyGraph,      10x     10 cells: 38128
+----------------------------------------
+                 SquidSquad DefaultGraph,      10x     10 cells: 31536
+----------------------------------------
+Floors: 6045
+Percentage walkable: 60.45%
+             simple-graphs DirectedGraph,     100x    100 cells: 6745088
+----------------------------------------
+           simple-graphs UndirectedGraph,     100x    100 cells: 5313808
+----------------------------------------
+                    SquidLib CostlyGraph,     100x    100 cells: 9088920
+----------------------------------------
+                   SquidLib DefaultGraph,     100x    100 cells: 6713136
+----------------------------------------
+                  SquidSquad CostlyGraph,     100x    100 cells: 5595496
+----------------------------------------
+                 SquidSquad DefaultGraph,     100x    100 cells: 4678472
+----------------------------------------
+Floors: 24051
+Percentage walkable: 60.1275%
+             simple-graphs DirectedGraph,     200x    200 cells: 26867824
+----------------------------------------
+           simple-graphs UndirectedGraph,     200x    200 cells: 21164000
+----------------------------------------
+                    SquidLib CostlyGraph,     200x    200 cells: 36280760
+----------------------------------------
+                   SquidLib DefaultGraph,     200x    200 cells: 26781672
+----------------------------------------
+                  SquidSquad CostlyGraph,     200x    200 cells: 22015776
+----------------------------------------
+                 SquidSquad DefaultGraph,     200x    200 cells: 18571120
+----------------------------------------
+Floors: 98055
+Percentage walkable: 61.284375%
+             simple-graphs DirectedGraph,     400x    400 cells: 109713392
+----------------------------------------
+           simple-graphs UndirectedGraph,     400x    400 cells: 86468016
+----------------------------------------
+                    SquidLib CostlyGraph,     400x    400 cells: 146481080
+----------------------------------------
+                   SquidLib DefaultGraph,     400x    400 cells: 108492872
+----------------------------------------
+                  SquidSquad CostlyGraph,     400x    400 cells: 91439784
+----------------------------------------
+                 SquidSquad DefaultGraph,     400x    400 cells: 76412056
+----------------------------------------
+Floors: 219897
+Percentage walkable: 61.0825%
+             simple-graphs DirectedGraph,     600x    600 cells: 243113424
+----------------------------------------
+           simple-graphs UndirectedGraph,     600x    600 cells: 192073016
+----------------------------------------
+                    SquidLib CostlyGraph,     600x    600 cells: 309840120
+----------------------------------------
+                   SquidLib DefaultGraph,     600x    600 cells: 233547752
+----------------------------------------
+                  SquidSquad CostlyGraph,     600x    600 cells: 196406336
+----------------------------------------
+                 SquidSquad DefaultGraph,     600x    600 cells: 172785120
+----------------------------------------
+Floors: 390400
+Percentage walkable: 61.0%
+             simple-graphs DirectedGraph,     800x    800 cells: 436676920
+----------------------------------------
+           simple-graphs UndirectedGraph,     800x    800 cells: 344109608
+----------------------------------------
+                    SquidLib CostlyGraph,     800x    800 cells: 584580744
+----------------------------------------
+                   SquidLib DefaultGraph,     800x    800 cells: 432644056
+----------------------------------------
+                  SquidSquad CostlyGraph,     800x    800 cells: 356870376
+----------------------------------------
+                 SquidSquad DefaultGraph,     800x    800 cells: 300520104
 ----------------------------------------
