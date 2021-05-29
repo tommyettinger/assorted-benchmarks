@@ -1,0 +1,99 @@
+Note: this gdx-ai GridGraph creates garbage when its Connections are accessed, where the others do not.
+The big winner seems to be simple-graphs, especially with its undirected graphs.
+
+Floors: 0
+Percentage walkable: 0.0%
+                        gdx-ai GridGraph,       1x      1 cells: 262280
+----------------------------------------
+             simple-graphs DirectedGraph,       1x      1 cells: 600
+----------------------------------------
+           simple-graphs UndirectedGraph,       1x      1 cells: 600
+----------------------------------------
+                  SquidLib DirectedGraph,       1x      1 cells: 1808
+----------------------------------------
+                SquidLib UndirectedGraph,       1x      1 cells: 1808
+----------------------------------------
+                SquidSquad DirectedGraph,       1x      1 cells: 1784
+----------------------------------------
+              SquidSquad UndirectedGraph,       1x      1 cells: 1784
+----------------------------------------
+Floors: 42
+Percentage walkable: 42.0%
+                        gdx-ai GridGraph,      10x     10 cells: 262280
+----------------------------------------
+             simple-graphs DirectedGraph,      10x     10 cells: 45336
+----------------------------------------
+           simple-graphs UndirectedGraph,      10x     10 cells: 35528
+----------------------------------------
+                  SquidLib DirectedGraph,      10x     10 cells: 49200
+----------------------------------------
+                SquidLib UndirectedGraph,      10x     10 cells: 39440
+----------------------------------------
+                SquidSquad DirectedGraph,      10x     10 cells: 51680
+----------------------------------------
+              SquidSquad UndirectedGraph,      10x     10 cells: 45704
+----------------------------------------
+Floors: 6045
+Percentage walkable: 60.45%
+                        gdx-ai GridGraph,     100x    100 cells: 262280
+----------------------------------------
+             simple-graphs DirectedGraph,     100x    100 cells: 6745088
+----------------------------------------
+           simple-graphs UndirectedGraph,     100x    100 cells: 5313808
+----------------------------------------
+                  SquidLib DirectedGraph,     100x    100 cells: 8956864
+----------------------------------------
+                SquidLib UndirectedGraph,     100x    100 cells: 6663072
+----------------------------------------
+                SquidSquad DirectedGraph,     100x    100 cells: 7562872
+----------------------------------------
+              SquidSquad UndirectedGraph,     100x    100 cells: 6687864
+----------------------------------------
+Floors: 24051
+Percentage walkable: 60.1275%
+                        gdx-ai GridGraph,     200x    200 cells: 262280
+----------------------------------------
+             simple-graphs DirectedGraph,     200x    200 cells: 26867824
+----------------------------------------
+           simple-graphs UndirectedGraph,     200x    200 cells: 21164000
+----------------------------------------
+                  SquidLib DirectedGraph,     200x    200 cells: 35756704
+----------------------------------------
+                SquidLib UndirectedGraph,     200x    200 cells: 26581632
+----------------------------------------
+                SquidSquad DirectedGraph,     200x    200 cells: 29827112
+----------------------------------------
+              SquidSquad UndirectedGraph,     200x    200 cells: 26546472
+----------------------------------------
+Floors: 98055
+Percentage walkable: 61.284375%
+                        gdx-ai GridGraph,     400x    400 cells: 1835208
+----------------------------------------
+             simple-graphs DirectedGraph,     400x    400 cells: 109713392
+----------------------------------------
+           simple-graphs UndirectedGraph,     400x    400 cells: 86467152
+----------------------------------------
+                  SquidLib DirectedGraph,     400x    400 cells: 144393024
+----------------------------------------
+                SquidLib UndirectedGraph,     400x    400 cells: 107692832
+----------------------------------------
+                SquidSquad DirectedGraph,     400x    400 cells: 123129456
+----------------------------------------
+              SquidSquad UndirectedGraph,     400x    400 cells: 108749744
+----------------------------------------
+Floors: 219897
+Percentage walkable: 61.0825%
+                        gdx-ai GridGraph,     600x    600 cells: 8126728
+----------------------------------------
+             simple-graphs DirectedGraph,     600x    600 cells: 243113424
+----------------------------------------
+           simple-graphs UndirectedGraph,     600x    600 cells: 192073016
+----------------------------------------
+                  SquidLib DirectedGraph,     600x    600 cells: 305148064
+----------------------------------------
+                SquidLib UndirectedGraph,     600x    600 cells: 231747712
+----------------------------------------
+                SquidSquad DirectedGraph,     600x    600 cells: 267656896
+----------------------------------------
+              SquidSquad UndirectedGraph,     600x    600 cells: 245487696
+----------------------------------------

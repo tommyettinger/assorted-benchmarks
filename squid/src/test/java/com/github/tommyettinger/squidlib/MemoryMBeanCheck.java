@@ -1,14 +1,25 @@
 package com.github.tommyettinger.squidlib;
 
 import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.OrderedMap;
+import com.badlogic.gdx.utils.OrderedSet;
 import com.github.tommyettinger.ds.IndexedMap;
 import com.github.tommyettinger.ds.IndexedSet;
+import com.github.tommyettinger.ds.support.DistinctRandom;
+import com.github.tommyettinger.ds.support.LaserRandom;
+import com.github.yellowstonegames.place.DungeonProcessor;
+import com.github.yellowstonegames.place.DungeonTools;
+import com.github.yellowstonegames.place.tileset.DungeonBoneGen;
+import com.github.yellowstonegames.place.tileset.TilesetType;
 import com.sun.management.ThreadMXBean;
 import de.heidelberg.pvs.container_bench.generators.TangleRNG;
 import de.heidelberg.pvs.container_bench.generators.StringDictionaryGenerator;
 import de.heidelberg.pvs.container_bench.generators.StringDictionaryGenerator.CustomString;
-import squidpony.squidmath.UnorderedMap;
-import squidpony.squidmath.UnorderedSet;
+import space.earlygrey.simplegraphs.DirectedGraph;
+import space.earlygrey.simplegraphs.UndirectedGraph;
+import squidpony.squidgrid.Direction;
+import squidpony.squidgrid.mapping.DungeonGenerator;
+import squidpony.squidmath.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -43,10 +54,11 @@ public class MemoryMBeanCheck {
     }
     
     public static void main(String[] args) {
-        mainCharSeq();
-        mainString();
-        mainFloat();
-        mainInteger();
+//        mainCharSeq();
+//        mainString();
+//        mainFloat();
+//        mainInteger();
+        mainGraph();
     }
     public static void mainString () {
         StringDictionaryGenerator gen = new StringDictionaryGenerator();
@@ -979,4 +991,167 @@ public class MemoryMBeanCheck {
             }
         }
     }
+    public static void mainGraph () {
+        PrintStream out = System.out;
+        try {
+            System.setOut(new PrintStream(".junk.txt#"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        Coord.expandPoolTo(600, 600);
+        com.github.yellowstonegames.grid.Coord.expandPoolTo(600, 600);
+        for (int i = 0; i < 6; i++) {
+            if(i == 5)
+                System.setOut(out);
+            for (int size : new int[] {1, 10, 100, 200, 400, 600}) {
+//            for (int size : new int[] {1, 10, 100, 1000, 2000, 4000}) {
+                DungeonBoneGen boneGen = new DungeonBoneGen(new LaserRandom(0x1337BEEFDEAL));
+                char[][] map = DungeonTools.wallWrap(boneGen.generate(TilesetType.DEFAULT_DUNGEON, size, size));
+                GreasedRegion floors = new GreasedRegion(map, '.');
+                int floorCount = floors.size();
+                Coord[] floorArray = floors.asCoords();
+                System.out.println("Floors: " + floorCount);
+                System.out.println("Percentage walkable: " + floorCount * 100.0 / (size * size) + "%");
+                final Direction[] outer = Direction.CLOCKWISE;
+                System.out.printf("%40s, %7dx%<7d cells: %d\n----------------------------------------\n", "gdx-ai GridGraph", size,
+                        measure(new Runnable() {
+                            PathfindingBenchmark.GridGraph gg;
+
+                            @Override public void run () {
+                                gg = new PathfindingBenchmark.GridGraph(floors, map);
+                            }
+                        }));
+                System.out.printf("%40s, %7dx%<7d cells: %d\n----------------------------------------\n", "simple-graphs DirectedGraph", size,
+                        measure(new Runnable() {
+                            DirectedGraph<Coord> simpleDirectedGraph;
+
+                            @Override public void run () {
+                                Coord center;
+                                Direction dir;
+                                simpleDirectedGraph = new DirectedGraph<>(floors);
+                                for (int f = floorCount - 1; f >= 0; f--) {
+                                    center = floorArray[f];
+                                    for (int j = 0; j < 8; j++) {
+                                        dir = outer[j];
+                                        if(floors.contains(center.x + dir.deltaX, center.y + dir.deltaY))
+                                        {
+                                            simpleDirectedGraph.addEdge(center, center.translate(dir));
+                                        }
+                                    }
+                                }
+                            }
+                        }));
+                System.out.printf("%40s, %7dx%<7d cells: %d\n----------------------------------------\n", "simple-graphs UndirectedGraph", size,
+                        measure(new Runnable() {
+                            UndirectedGraph<Coord> simpleUndirectedGraph;
+
+                            @Override public void run () {
+                                Coord center;
+                                Direction dir;
+                                simpleUndirectedGraph = new UndirectedGraph<>(floors);
+                                for (int f = floorCount - 1; f >= 0; f--) {
+                                    center = floorArray[f];
+                                    for (int j = 0; j < 8; j++) {
+                                        dir = outer[j];
+                                        if(floors.contains(center.x + dir.deltaX, center.y + dir.deltaY))
+                                        {
+                                            if(!simpleUndirectedGraph.edgeExists(center, center.translate(dir)))
+                                            {
+                                                simpleUndirectedGraph.addEdge(center, center.translate(dir));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }));
+                System.out.printf("%40s, %7dx%<7d cells: %d\n----------------------------------------\n", "SquidLib DirectedGraph", size,
+                        measure(new Runnable() {
+                            squidpony.squidai.graph.DirectedGraph<Coord> squidDirectedGraph;
+
+                            @Override public void run () {
+                                Coord center;
+                                Direction dir;
+                                squidDirectedGraph = new squidpony.squidai.graph.DirectedGraph<>(floors);
+                                for (int f = floorCount - 1; f >= 0; f--) {
+                                    center = floorArray[f];
+                                    for (int j = 0; j < 8; j++) {
+                                        dir = outer[j];
+                                        if(floors.contains(center.x + dir.deltaX, center.y + dir.deltaY))
+                                        {
+                                            squidDirectedGraph.addEdge(center, center.translate(dir));
+                                        }
+                                    }
+                                }
+                            }
+                        }));
+                System.out.printf("%40s, %7dx%<7d cells: %d\n----------------------------------------\n", "SquidLib UndirectedGraph", size,
+                        measure(new Runnable() {
+                            squidpony.squidai.graph.UndirectedGraph<Coord> squidUndirectedGraph;
+
+                            @Override public void run () {
+                                Coord center;
+                                Direction dir;
+                                squidUndirectedGraph = new squidpony.squidai.graph.UndirectedGraph<>(floors);
+                                for (int f = floorCount - 1; f >= 0; f--) {
+                                    center = floorArray[f];
+                                    for (int j = 0; j < 8; j++) {
+                                        dir = outer[j];
+                                        if(floors.contains(center.x + dir.deltaX, center.y + dir.deltaY))
+                                        {
+                                            if(!squidUndirectedGraph.edgeExists(center, center.translate(dir)))
+                                            {
+                                                squidUndirectedGraph.addEdge(center, center.translate(dir));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }));
+                System.out.printf("%40s, %7dx%<7d cells: %d\n----------------------------------------\n", "SquidSquad DirectedGraph", size,
+                        measure(new Runnable() {
+                            com.github.yellowstonegames.path.DirectedGraph<Coord> squadDirectedGraph;
+
+                            @Override public void run () {
+                                Coord center;
+                                Direction dir;
+                                squadDirectedGraph = new com.github.yellowstonegames.path.DirectedGraph<>(floors);
+                                for (int f = floorCount - 1; f >= 0; f--) {
+                                    center = floorArray[f];
+                                    for (int j = 0; j < 8; j++) {
+                                        dir = outer[j];
+                                        if(floors.contains(center.x + dir.deltaX, center.y + dir.deltaY))
+                                        {
+                                            squadDirectedGraph.addEdge(center, center.translate(dir));
+                                        }
+                                    }
+                                }
+                            }
+                        }));
+                System.out.printf("%40s, %7dx%<7d cells: %d\n----------------------------------------\n", "SquidSquad UndirectedGraph", size,
+                        measure(new Runnable() {
+                            com.github.yellowstonegames.path.UndirectedGraph<Coord> squadUndirectedGraph;
+
+                            @Override public void run () {
+                                Coord center;
+                                Direction dir;
+                                squadUndirectedGraph = new com.github.yellowstonegames.path.UndirectedGraph<>(floors);
+                                for (int f = floorCount - 1; f >= 0; f--) {
+                                    center = floorArray[f];
+                                    for (int j = 0; j < 8; j++) {
+                                        dir = outer[j];
+                                        if(floors.contains(center.x + dir.deltaX, center.y + dir.deltaY))
+                                        {
+                                            if(!squadUndirectedGraph.edgeExists(center, center.translate(dir)))
+                                            {
+                                                squadUndirectedGraph.addEdge(center, center.translate(dir));
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }));
+            }
+        }
+    }
+
 }
