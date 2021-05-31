@@ -23,19 +23,28 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * MargeRandomBench score: 1066594496.000000 (1.067G 2078.8%)
- *              uncertainty:   0.9%
+ * MargeRandomBench score: 1053631680.000000 (1.054G 2077.6%)
+ *              uncertainty:   0.4%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * MargeRandomBench score: 861130176.000000 (861.1M 2057.4%)
- *              uncertainty:   0.8%
+ * MargeRandomBench score: 851624128.000000 (851.6M 2056.3%)
+ *              uncertainty:   0.2%
  * <br>
  * HotSpot Java 16:
  * <br>
- * MargeRandomBench score: 1407030144.000000 (1.407G 2106.5%)
- *              uncertainty:   0.8%
+ * MargeRandomBench score: 1427122688.000000 (1.427G 2107.9%)
+ *              uncertainty:   0.7%
  * <br>
+ * This RNG is an experiment still, but it passes 64TB of PractRand with no anomalies, and seems to be fine in hwd
+ * testing as well (so far). It has an interesting structure, and is reversible if you have the full 192-bit state. The
+ * fact that it changes its state reversibly means each possible state has exactly one possible prior state and exactly
+ * one possible subsequent state; this is critical to how well its subcycles work. Marge uses an LCG-like transition
+ * spread across two generated numbers; first a large odd constant is added to stateC (a number is returned at this
+ * point), then stateC is multiplied by an appropriate LCG constant and stored in stateA (and another number is returned
+ * at this point). This means it doesn't get stuck producing only 0s forever when the state is 0,0,0 .
+ * <br>
+ * Plus it's faster than RomuTrio, woo! Slower than ChicoRandom, but only slightly, and it passes more of hwd.
  */
 public final class MargeRandomBench extends MicroBench {
 
@@ -134,7 +143,7 @@ public final class MargeRandomBench extends MicroBench {
 			final long fc = this.stateC;
 			this.stateA = 0xD1342543DE82EF95L * fc;
 			this.stateB = fa ^ fb ^ fc;
-			this.stateC = Long.rotateLeft(fb, 21) + 0xC6BC279692B5C323L;
+			this.stateC = Long.rotateLeft(fb, 41) + 0xC6BC279692B5C323L;
 			return (int) fa >>> 32 - bits;
 		}
 
@@ -154,7 +163,7 @@ public final class MargeRandomBench extends MicroBench {
 			final long fc = this.stateC;
 			this.stateA = 0xD1342543DE82EF95L * fc;
 			this.stateB = fa ^ fb ^ fc;
-			this.stateC = Long.rotateLeft(fb, 21) + 0xC6BC279692B5C323L;
+			this.stateC = Long.rotateLeft(fb, 41) + 0xC6BC279692B5C323L;
 			return fa;
 		}
 	}
