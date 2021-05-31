@@ -10,23 +10,23 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- * SquadBadAtanBench score: 140382928.000000 (140.4M 1876.0%)
- *               uncertainty:   2.4%
+ * MathBadAtanBench score: 25393238.000000 (25.39M 1705.0%)
+ *              uncertainty:   0.7%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * SquadBadAtanBench score: 96825800.000000 (96.83M 1838.8%)
- *               uncertainty:   0.2%
+ * MathBadAtanBench score: 24753230.000000 (24.75M 1702.4%)
+ *              uncertainty:   0.6%
  * <br>
  * HotSpot Java 16:
  * <br>
- * SquadBadAtanBench score: 131825224.000000 (131.8M 1869.7%)
- *               uncertainty:   0.4%
+ * MathBadAtanBench score: 22913458.000000 (22.91M 1694.7%)
+ *              uncertainty:   1.7%
  * <br>
  * This is a "bad atan()" benchmark because it tests using {@code atan(y/x)} when {@code atan2(y, x)} is more
  * appropriate, especially because atan2() handles all quadrants.
  */
-public class SquadBadAtanBench extends MicroBench {
+public class MathBadAtanBench extends MicroBench {
     private final TricycleRandom rng = new TricycleRandom(0x12345678);
 
     private float nextExclusiveFloat() {
@@ -38,7 +38,7 @@ public class SquadBadAtanBench extends MicroBench {
     protected long doBatch (long numIterations) throws InterruptedException {
         float sum = 0.1f;
         for (long i = 0; i < numIterations; i++)
-            sum += TrigTools.atan(nextExclusiveFloat() / nextExclusiveFloat());
+            sum += Math.atan(nextExclusiveFloat() / nextExclusiveFloat());
         return numIterations;
     }
 }
