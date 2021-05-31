@@ -75,6 +75,12 @@
 <!--            <scope>compile</scope>-->
 <!--        </dependency>-->
         <dependency>
+            <groupId>com.github.yellowstonegames.SquidSquad</groupId>
+            <artifactId>SquidGrid</artifactId>
+            <version>79d609cc9c</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
             <version>3.2</version>
