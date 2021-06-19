@@ -24,17 +24,17 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * MarsRandomBench score: 935446464.000000 (935.4M 2065.7%)
- *            uncertainty:   5.0%
+ * MarsRandomBench score: 911689664.000000 (911.7M 2063.1%)
+ *            uncertainty:   3.0%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * MarsRandomBench score: 847418432.000000 (847.4M 2055.8%)
- *            uncertainty:   0.3%
+ * MarsRandomBench score: 850958400.000000 (851.0M 2056.2%)
+ *            uncertainty:   1.0%
  * <br>
  * HotSpot Java 16:
  * <br>
- * MarsRandomBench score: 1832131072.000000 (1.832G 2132.9%)
+ * MarsRandomBench score: 1676831744.000000 (1.677G 2124.0%)
  *            uncertainty:   0.3%
  */
 public final class MarsRandomBench extends MicroBench {
@@ -137,9 +137,9 @@ public final class MarsRandomBench extends MicroBench {
 			final long fd = this.stateD;
 			this.stateA = 0xD1342543DE82EF95L * fd;
 			this.stateB = fa + 0xC6BC279692B5C323L;
-			this.stateC = Long.rotateLeft(fb, 41);
+			this.stateC = Long.rotateLeft(fb, 47);
 			this.stateD = fa - fc;
-			return (int) fc >>> 32 - bits;
+			return (int) fd >>> 32 - bits;
 		}
 
 		/**
@@ -159,9 +159,10 @@ public final class MarsRandomBench extends MicroBench {
 			final long fd = this.stateD;
 			this.stateA = 0xD1342543DE82EF95L * fd;
 			this.stateB = fa + 0xC6BC279692B5C323L;
-			this.stateC = Long.rotateLeft(fb, 41);
+			this.stateC = Long.rotateLeft(fb, 47);
 			this.stateD = fa - fc;
-			return fc;
+			return fd;
+			// returning fc is significantly faster, but has severe BRank issues.
 		}
 	}
 	protected long doBatch(long numIterations) throws InterruptedException {
