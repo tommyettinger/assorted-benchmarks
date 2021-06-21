@@ -24,18 +24,24 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * MarsRandomBench score: 911689664.000000 (911.7M 2063.1%)
- *            uncertainty:   3.0%
+ * MarsRandomBench score: 954614976.000000 (954.6M 2067.7%)
+ *            uncertainty:   1.6%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * MarsRandomBench score: 850958400.000000 (851.0M 2056.2%)
- *            uncertainty:   1.0%
+ * MarsRandomBench score: 704013888.000000 (704.0M 2037.2%)
+ *            uncertainty:   2.4%
  * <br>
  * HotSpot Java 16:
  * <br>
- * MarsRandomBench score: 1676831744.000000 (1.677G 2124.0%)
- *            uncertainty:   0.3%
+ * MarsRandomBench score: 1996278528.000000 (1.996G 2141.5%)
+ *            uncertainty:   0.6%
+ * <br>
+ * Note that on HotSpot Java 16, this gets 1.677 billion longs per second. The previous best I had written got 1.427
+ * billion longs per second. Java's built-in java.util.Random gets 58.88 million longs per second, and the also-built-in
+ * SplittableRandom gets 1.06 billion longs per second. The period for any particular state is unknown, but because this
+ * uses a section that is LCG-like, it seems unlikely that any subcycle will have a shorter period than 2 to the 64. It
+ * is still possible, though.
  */
 public final class MarsRandomBench extends MicroBench {
 
@@ -74,6 +80,13 @@ public final class MarsRandomBench extends MicroBench {
 			stateB = seed;
 			stateC = ~seed;
 			stateD = seed ^ 0x05CB93402A76F7DAL;
+		}
+		public MarsRandom(long stateA, long stateB, long stateC, long stateD) {
+			super(stateA);
+			this.stateA = stateA;
+			this.stateB = stateB;
+			this.stateC = stateC;
+			this.stateD = stateD;
 		}
 
 		/**
@@ -137,8 +150,8 @@ public final class MarsRandomBench extends MicroBench {
 			final long fd = this.stateD;
 			this.stateA = 0xD1342543DE82EF95L * fd;
 			this.stateB = fa + 0xC6BC279692B5C323L;
-			this.stateC = Long.rotateLeft(fb, 47);
-			this.stateD = fa - fc;
+			this.stateC = Long.rotateLeft(fb, 41);
+			this.stateD = fb ^ fc;
 			return (int) fd >>> 32 - bits;
 		}
 
@@ -159,10 +172,21 @@ public final class MarsRandomBench extends MicroBench {
 			final long fd = this.stateD;
 			this.stateA = 0xD1342543DE82EF95L * fd;
 			this.stateB = fa + 0xC6BC279692B5C323L;
-			this.stateC = Long.rotateLeft(fb, 47);
-			this.stateD = fa - fc;
+			this.stateC = Long.rotateLeft(fb, 41);
+			this.stateD = fb ^ fc;
 			return fd;
 			// returning fc is significantly faster, but has severe BRank issues.
+		}
+
+		public static void main(String[] args){
+			MarsRandom rng = new MarsRandom(0L, 0L, 0L, 0L);
+			for (int i = 0; i < 256; i++) {
+				System.out.printf("%04d returned 0x%3$016X with weight %2$02d, has state 0x%4$016X 0x%5$016X 0x%6$016X 0x%7$016X\n",
+						i, Long.bitCount(rng.stateD), rng.nextLong(), rng.stateA, rng.stateB, rng.stateC, rng.stateD);
+				if(0L == (rng.stateA | rng.stateB | rng.stateC | rng.stateD)){
+					System.out.printf("UH OH at %04d\n", i);
+				}
+			}
 		}
 	}
 	protected long doBatch(long numIterations) throws InterruptedException {
