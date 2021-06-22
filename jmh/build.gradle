@@ -78,7 +78,7 @@ dependencies {
     //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
     //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
 //    implementation 'com.github.tommyettinger:jdkgdxds:3a9f925cd0'
-    implementation 'com.github.tommyettinger:jdkgdxds:26dcf47fad'
+    implementation 'com.github.tommyettinger:jdkgdxds:0.1.3'
 
 
 
