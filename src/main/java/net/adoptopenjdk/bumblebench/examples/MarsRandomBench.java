@@ -24,24 +24,28 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * MarsRandomBench score: 954614976.000000 (954.6M 2067.7%)
- *            uncertainty:   1.6%
+ * MarsRandomBench score: 949904384.000000 (949.9M 2067.2%)
+ *             uncertainty:   0.8%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * MarsRandomBench score: 704013888.000000 (704.0M 2037.2%)
- *            uncertainty:   2.4%
+ * MarsRandomBench score: 720245440.000000 (720.2M 2039.5%)
+ *             uncertainty:   1.1%
  * <br>
  * HotSpot Java 16:
  * <br>
- * MarsRandomBench score: 1996278528.000000 (1.996G 2141.5%)
- *            uncertainty:   0.6%
+ * MarsRandomBench score: 1790815104.000000 (1.791G 2130.6%)
+ *             uncertainty:   0.2%
  * <br>
- * Note that on HotSpot Java 16, this gets 1.677 billion longs per second. The previous best I had written got 1.427
+ * Note that on HotSpot Java 16, this gets 1.791 billion longs per second. The previous best I had written got 1.427
  * billion longs per second. Java's built-in java.util.Random gets 58.88 million longs per second, and the also-built-in
  * SplittableRandom gets 1.06 billion longs per second. The period for any particular state is unknown, but because this
  * uses a section that is LCG-like, it seems unlikely that any subcycle will have a shorter period than 2 to the 64. It
  * is still possible, though.
+ * <br>
+ * An earlier version seemed to get a whopping 1.996 billion longs per second, and passed early hwd testing, but
+ * immediately failed PractRand testing with its BRank test. I think the number of false negatives for binary matrix
+ * rank issues found by hwd (or not found) is somewhat startling.
  */
 public final class MarsRandomBench extends MicroBench {
 
@@ -150,7 +154,7 @@ public final class MarsRandomBench extends MicroBench {
 			final long fd = this.stateD;
 			this.stateA = 0xD1342543DE82EF95L * fd;
 			this.stateB = fa + 0xC6BC279692B5C323L;
-			this.stateC = Long.rotateLeft(fb, 41);
+			this.stateC = Long.rotateLeft(fb, 47) - fd;
 			this.stateD = fb ^ fc;
 			return (int) fd >>> 32 - bits;
 		}
@@ -172,7 +176,7 @@ public final class MarsRandomBench extends MicroBench {
 			final long fd = this.stateD;
 			this.stateA = 0xD1342543DE82EF95L * fd;
 			this.stateB = fa + 0xC6BC279692B5C323L;
-			this.stateC = Long.rotateLeft(fb, 41);
+			this.stateC = Long.rotateLeft(fb, 47) - fd;
 			this.stateD = fb ^ fc;
 			return fd;
 			// returning fc is significantly faster, but has severe BRank issues.
