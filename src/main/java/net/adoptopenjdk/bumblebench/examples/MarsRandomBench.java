@@ -179,17 +179,36 @@ public final class MarsRandomBench extends MicroBench {
 			this.stateC = Long.rotateLeft(fb, 47) - fd;
 			this.stateD = fb ^ fc;
 			return fd;
-			// returning fc is significantly faster, but has severe BRank issues.
 		}
 
-		public static void main(String[] args){
-			MarsRandom rng = new MarsRandom(0L, 0L, 0L, 0L);
-			for (int i = 0; i < 256; i++) {
-				System.out.printf("%04d returned 0x%3$016X with weight %2$02d, has state 0x%4$016X 0x%5$016X 0x%6$016X 0x%7$016X\n",
-						i, Long.bitCount(rng.stateD), rng.nextLong(), rng.stateA, rng.stateB, rng.stateC, rng.stateD);
-				if(0L == (rng.stateA | rng.stateB | rng.stateC | rng.stateD)){
-					System.out.printf("UH OH at %04d\n", i);
-				}
+//		public static void main(String[] args){
+//			MarsRandom rng = new MarsRandom(0L, 0L, 0L, 0L);
+//			for (int i = 0; i < 256; i++) {
+//				System.out.printf("%04d returned 0x%3$016X with weight %2$02d, has state 0x%4$016X 0x%5$016X 0x%6$016X 0x%7$016X\n",
+//						i, Long.bitCount(rng.stateD), rng.nextLong(), rng.stateA, rng.stateB, rng.stateC, rng.stateD);
+//				if(0L == (rng.stateA | rng.stateB | rng.stateC | rng.stateD)){
+//					System.out.printf("UH OH at %04d\n", i);
+//				}
+//			}
+//		}
+		public static void main(String[] args) {
+//			long count = 0xffffffL;
+			long count = 0xffffffffL;
+			long[] buf = new long[256];
+
+			MarsRandom rand = new MarsRandom(1234567L);
+			for (long i = 0; i <= count; i++) {
+				buf[(int)(rand.nextLong() & 255)]++;
+			}
+/*
+			long lcg = 0L;
+			for (long i = 0; i <= count; i++) {
+				buf[(int)((lcg = lcg * 0xD1342543DE82EF95L + 0xC6BC279692B5C323L) & 255)]++;
+			}
+
+ */
+			for (int i = 0; i < 0x100; i++) {
+				System.out.printf("%d\n", buf[i]);
 			}
 		}
 	}

@@ -1,0 +1,79 @@
+Benchmark                                                      (impl)  (seed)  (size)  (workload)    Mode     Cnt        Score    Error  Units
+MutableJDKGetPutString.wordcount                    FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample  558898      218.894 ± 18.574  ns/op
+MutableJDKGetPutString.wordcount:numentries         FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:tablesizemax       FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:tablesizesum       FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:totalmemory        FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:wordcount·p0.00    FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample              100.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.50    FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample              200.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.90    FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample              200.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.95    FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample              200.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.99    FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample              300.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.999   FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample              800.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.9999  FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample            22592.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p1.00    FASTUTIL_O2O_HASH      -1      16   WORDCOUNT  sample          1329152.000           ns/op
+MutableJDKGetPutString.wordcount                    FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample  692300     2313.974 ± 26.875  ns/op
+MutableJDKGetPutString.wordcount:numentries         FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:tablesizemax       FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:tablesizesum       FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:totalmemory        FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:wordcount·p0.00    FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample             1800.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.50    FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample             2300.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.90    FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample             2400.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.95    FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample             2400.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.99    FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample             2800.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.999   FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample            16480.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.9999  FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample            35554.547           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p1.00    FASTUTIL_O2O_HASH      -1     128   WORDCOUNT  sample          1304576.000           ns/op
+MutableJDKGetPutString.wordcount                    FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample  416587    30119.616 ± 80.581  ns/op
+MutableJDKGetPutString.wordcount:numentries         FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:tablesizemax       FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:tablesizesum       FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:totalmemory        FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:wordcount·p0.00    FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample            24992.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.50    FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample            30176.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.90    FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample            31392.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.95    FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample            31776.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.99    FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample            44352.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.999   FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample            81716.736           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.9999  FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample          1051322.778           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p1.00    FASTUTIL_O2O_HASH      -1    1024   WORDCOUNT  sample          1406976.000           ns/op
+MutableJDKGetPutString.wordcount                        JDKGDXDS_HASH      -1      16   WORDCOUNT  sample  795698      234.186 ±  7.840  ns/op
+MutableJDKGetPutString.wordcount:numentries             JDKGDXDS_HASH      -1      16   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:tablesizemax           JDKGDXDS_HASH      -1      16   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:tablesizesum           JDKGDXDS_HASH      -1      16   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:totalmemory            JDKGDXDS_HASH      -1      16   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:wordcount·p0.00        JDKGDXDS_HASH      -1      16   WORDCOUNT  sample              100.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.50        JDKGDXDS_HASH      -1      16   WORDCOUNT  sample              200.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.90        JDKGDXDS_HASH      -1      16   WORDCOUNT  sample              300.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.95        JDKGDXDS_HASH      -1      16   WORDCOUNT  sample              300.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.99        JDKGDXDS_HASH      -1      16   WORDCOUNT  sample              300.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.999       JDKGDXDS_HASH      -1      16   WORDCOUNT  sample              530.100           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.9999      JDKGDXDS_HASH      -1      16   WORDCOUNT  sample            20425.290           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p1.00        JDKGDXDS_HASH      -1      16   WORDCOUNT  sample          1013760.000           ns/op
+MutableJDKGetPutString.wordcount                        JDKGDXDS_HASH      -1     128   WORDCOUNT  sample  597233     3173.587 ± 20.564  ns/op
+MutableJDKGetPutString.wordcount:numentries             JDKGDXDS_HASH      -1     128   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:tablesizemax           JDKGDXDS_HASH      -1     128   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:tablesizesum           JDKGDXDS_HASH      -1     128   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:totalmemory            JDKGDXDS_HASH      -1     128   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:wordcount·p0.00        JDKGDXDS_HASH      -1     128   WORDCOUNT  sample             2400.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.50        JDKGDXDS_HASH      -1     128   WORDCOUNT  sample             3000.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.90        JDKGDXDS_HASH      -1     128   WORDCOUNT  sample             3300.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.95        JDKGDXDS_HASH      -1     128   WORDCOUNT  sample             4600.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.99        JDKGDXDS_HASH      -1     128   WORDCOUNT  sample             6000.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.999       JDKGDXDS_HASH      -1     128   WORDCOUNT  sample            18080.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.9999      JDKGDXDS_HASH      -1     128   WORDCOUNT  sample            38833.024           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p1.00        JDKGDXDS_HASH      -1     128   WORDCOUNT  sample          1157120.000           ns/op
+MutableJDKGetPutString.wordcount                        JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample  458708    27361.799 ± 74.288  ns/op
+MutableJDKGetPutString.wordcount:numentries             JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:tablesizemax           JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:tablesizesum           JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:totalmemory            JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample       5          ≈ 0               #
+MutableJDKGetPutString.wordcount:wordcount·p0.00        JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample            22400.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.50        JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample            27296.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.90        JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample            28480.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.95        JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample            28896.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.99        JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample            41792.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.999       JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample            76800.000           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p0.9999      JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample           992388.198           ns/op
+MutableJDKGetPutString.wordcount:wordcount·p1.00        JDKGDXDS_HASH      -1    1024   WORDCOUNT  sample          1726464.000           ns/op
