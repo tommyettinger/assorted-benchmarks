@@ -4,7 +4,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
         gradlePluginPortal()
     }
-    ext.jmh_version = '1.29' // JMH version to use
+    ext.jmh_version = '1.32' // JMH version to use
 }
 
 plugins {

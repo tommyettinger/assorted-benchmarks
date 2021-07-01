@@ -60,10 +60,10 @@ public class MemoryMBeanCheck {
     
     public static void main(String[] args) {
 //        mainCharSeq();
-//        mainString();
+        mainString();
 //        mainFloat();
 //        mainInteger();
-        mainGraph();
+//        mainGraph();
     }
     public static void mainString () {
         StringDictionaryGenerator gen = new StringDictionaryGenerator();

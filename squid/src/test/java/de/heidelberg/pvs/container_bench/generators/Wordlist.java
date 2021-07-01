@@ -83,7 +83,8 @@ public class Wordlist {
 			ObjectOrderedSet<String> set = new ObjectOrderedSet<>(size);
 			for (int i = 0; set.size() < size;) {
 				for (int j = 0; j < n && set.size() < size; j++) {
-					set.add(words.get(j) + i++);
+					set.add(words.get(j));
+					i++;
 				}
 			}
 			return set;

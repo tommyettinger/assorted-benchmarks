@@ -241,4 +241,4 @@ squid/benchmarks.jar
 **/out/
 **/generated/
 squid/benchmarks.jar
-squid/benchmarks.jar
+/squid/src/test/resources/word_list.txt.gz
