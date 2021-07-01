@@ -43,6 +43,17 @@ public class ResizeTest {
                     }
                 }
             }
+            {
+                ObjectMapY<String, Object> map = new ObjectMapY<>(12, 0.8f);
+                int cap = map.capacity;
+                for (int i = 0; i < size; i++) {
+                    map.put(arr[i], null);
+                    if(cap != map.capacity){
+                        cap = map.capacity;
+                        System.out.println("Resized on " + i + ": " + arr[i]);
+                    }
+                }
+            }
         }
     }
 }
