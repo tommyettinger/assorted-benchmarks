@@ -1,6 +1,7 @@
 package com.github.tommyettinger.squidlib;
 
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.utils.NumberUtils;
 
 import java.util.SplittableRandom;
 
@@ -24,10 +25,10 @@ public class ResizePointTest {
 //            return (((x + y) * (x + y + 0xA7C15) >> 1) + y);
 //            return (((x + y) * (x + y + 0x99E73) >> 1) + y);
 //            return (((x + y) * (x + y + 0xF9653) >> 1) + y);
-            final int sx = x >> 31, sy = y >> 31;
-            final int px = x ^ sx, py = y ^ sx;
-            return (((px + py) * (px + py + 1) >>> 1) + py << 2) - sx - sy - sy;
-
+//            final int sx = x >> 31, sy = y >> 31;
+//            final int px = x ^ sx, py = y ^ sx;
+//            return (((px + py) * (px + py + 1) >>> 1) + py << 2) - sx - sy - sy;
+            return (int) (x * 0xC13FA9A902A6328FL + y * 0x91E10DA5C79E7B1DL >>> 24);
         }
     }
     public static void main(String[] args) {
@@ -44,7 +45,7 @@ public class ResizePointTest {
 //                int y = i - t;
 //                arr[i] = new GridPoint2(w - y, y);
 //            }
-        final float LOAD = 0.5f;
+        final float LOAD = 0.8f;
         for(int edge : new int[]{10, 40, 90, 160, 250}) {
             final int size = edge * edge, half = edge >>> 1;
             GridPoint2[] arr = new GridPoint2[size];
