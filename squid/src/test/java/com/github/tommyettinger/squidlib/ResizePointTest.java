@@ -7,17 +7,25 @@ import java.util.SplittableRandom;
 public class ResizePointTest {
     public static void main(String[] args) {
 //        SplittableRandom random = new SplittableRandom(0xB0BAFE77);
-        for(int size : new int[]{100, 1000, 10000, 100000}) {
+//        for(int size : new int[]{100, 1000, 10000, 100000}) {
+//            GridPoint2[] arr = new GridPoint2[size];
+//            for (int i = 0; i < size; i++) {
+////                long n = random.nextLong();
+////                arr[i] = new GridPoint2((int)n, (int) (n >>> 32));
+//
+//                // cantor unpairing function
+//                int w = (int)((Math.sqrt(8 * i + 1) - 1) * 0.5f);
+//                int t = w * w + w >> 1;
+//                int y = i - t;
+//                arr[i] = new GridPoint2(w - y, y);
+//            }
+        for(int edge : new int[]{10, 40, 90, 160, 250}) {
+            final int size = edge * edge, half = edge >>> 1;
             GridPoint2[] arr = new GridPoint2[size];
-            for (int i = 0; i < size; i++) {
-//                long n = random.nextLong();
-//                arr[i] = new GridPoint2((int)n, (int) (n >>> 32));
-
-                // cantor unpairing function
-                int w = (int)((Math.sqrt(8 * i + 1) - 1) * 0.5f);
-                int t = w * w + w >> 1;
-                int y = i - t;
-                arr[i] = new GridPoint2(w - y, y);
+            for (int i = 0, c = 0; i < edge; i++) {
+                for (int j = 0; j < edge; j++) {
+                    arr[c++] = new GridPoint2(i - half, j - half);
+                }
             }
             {
                 FastUtilMap<GridPoint2, Object> map = new FastUtilMap<>(16, 0.8f);
