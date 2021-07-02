@@ -257,7 +257,7 @@ public class CuckooObjectMap<K, V> {
         int n = isBigTable ? 4 : 3;
         do {
             // Replace the key and value for one of the hashes.
-            switch (((random = random * (0x4F1BB) ^ 0x7F4A7C15) >>> 30) % n) {
+            switch (((random = random * (0x4F1BB) ^ 0x7F4A7C15) >>> 1) % n) {
                 case 0:
                     evictedKey = key1;
                     evictedValue = valueTable[index1];
@@ -608,17 +608,32 @@ public class CuckooObjectMap<K, V> {
     }
 
     private int hash2 (int h) {
-        return (int)((h & 0x33333333) * 0x9E3779B97F4A7C15L >>> hashShift);
+        h *= PRIME2;
+        return (h ^ h >>> hashShift) & mask;
     }
 
     private int hash3 (int h) {
-        return (int)((h & 0xCCCCCCCC) * 0x9E3779B97F4A7C15L >>> hashShift);
+        h *= PRIME3;
+        return (h ^ h >>> hashShift) & mask;
     }
 
     private int hash4 (int h) {
-        return (int)((h & 0x66666666) * 0x9E3779B97F4A7C15L >>> hashShift);
+        h *= PRIME4;
+        return (h ^ h >>> hashShift) & mask;
     }
 
+//    private int hash2 (int h) {
+//        return (int)((h) * 0x9E3779B97F4A7C15L >>> hashShift);
+//    }
+//
+//    private int hash3 (int h) {
+//        return (int)((h) * 0xC13FA9A902A6328FL >>> hashShift);
+//    }
+//
+//    private int hash4 (int h) {
+//        return (int)((h) * 0xD1B54A32D192ED03L >>> hashShift);
+//    }
+//
     public String toString () {
         if (size == 0) return "{}";
         StringBuilder buffer = new StringBuilder(32);
