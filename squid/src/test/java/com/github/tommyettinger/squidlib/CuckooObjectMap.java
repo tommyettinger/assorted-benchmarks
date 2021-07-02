@@ -79,7 +79,8 @@ public class CuckooObjectMap<K, V> {
 
         threshold = (int)(capacity * loadFactor);
         mask = capacity - 1;
-        hashShift = 31 - Integer.numberOfTrailingZeros(capacity);
+//        hashShift = 31 - Integer.numberOfTrailingZeros(capacity);
+        hashShift = Long.numberOfLeadingZeros(mask);
         stashCapacity = Math.max(3, (int)Math.ceil(Math.log(capacity)) * 2);
         pushIterations = Math.max(Math.min(capacity, 8), (int)Math.sqrt(capacity) / 8);
 
@@ -581,7 +582,7 @@ public class CuckooObjectMap<K, V> {
         capacity = newSize;
         threshold = (int)(newSize * loadFactor);
         mask = newSize - 1;
-        hashShift = 31 - Integer.numberOfTrailingZeros(newSize);
+        hashShift = Long.numberOfLeadingZeros(mask);
         stashCapacity = Math.max(3, (int)Math.ceil(Math.log(newSize)) * 2);
         pushIterations = Math.max(Math.min(newSize, 8), (int)Math.sqrt(newSize) / 8);
 
@@ -607,18 +608,15 @@ public class CuckooObjectMap<K, V> {
     }
 
     private int hash2 (int h) {
-        h *= PRIME2;
-        return (h ^ h >>> hashShift) & mask;
+        return (int)((h & 0x33333333) * 0x9E3779B97F4A7C15L >>> hashShift);
     }
 
     private int hash3 (int h) {
-        h *= PRIME3;
-        return (h ^ h >>> hashShift) & mask;
+        return (int)((h & 0xCCCCCCCC) * 0x9E3779B97F4A7C15L >>> hashShift);
     }
 
     private int hash4 (int h) {
-        h *= PRIME4;
-        return (h ^ h >>> hashShift) & mask;
+        return (int)((h & 0x66666666) * 0x9E3779B97F4A7C15L >>> hashShift);
     }
 
     public String toString () {
