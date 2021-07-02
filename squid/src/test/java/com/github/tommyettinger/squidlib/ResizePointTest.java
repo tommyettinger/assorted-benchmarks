@@ -21,7 +21,13 @@ public class ResizePointTest {
         @Override
         public int hashCode() {
             //Cantor pairing function, but... with a little more meat on its bones.
-            return (((x + y) * (x + y + 0xA7C15) >> 1) + y);
+//            return (((x + y) * (x + y + 0xA7C15) >> 1) + y);
+//            return (((x + y) * (x + y + 0x99E73) >> 1) + y);
+//            return (((x + y) * (x + y + 0xF9653) >> 1) + y);
+            final int sx = x >> 31, sy = y >> 31;
+            final int px = x ^ sx, py = y ^ sx;
+            return (((px + py) * (px + py + 1) >>> 1) + py << 2) - sx - sy - sy;
+
         }
     }
     public static void main(String[] args) {
@@ -38,6 +44,7 @@ public class ResizePointTest {
 //                int y = i - t;
 //                arr[i] = new GridPoint2(w - y, y);
 //            }
+        final float LOAD = 0.5f;
         for(int edge : new int[]{10, 40, 90, 160, 250}) {
             final int size = edge * edge, half = edge >>> 1;
             GridPoint2[] arr = new GridPoint2[size];
@@ -47,7 +54,7 @@ public class ResizePointTest {
                 }
             }
             {
-                FastUtilMap<GridPoint2, Object> map = new FastUtilMap<>(16, 0.8f);
+                FastUtilMap<GridPoint2, Object> map = new FastUtilMap<>(16, LOAD);
                 int cap = map.getCapacity();
                 for (int i = 0; i < size; i++) {
                     map.put(arr[i], null);
@@ -58,7 +65,7 @@ public class ResizePointTest {
                 }
             }
             {
-                ObjectMapWatched<GridPoint2, Object> map = new ObjectMapWatched<>(12, 0.8f);
+                ObjectMapWatched<GridPoint2, Object> map = new ObjectMapWatched<>(12, LOAD);
                 int cap = map.capacity;
                 for (int i = 0; i < size; i++) {
                     map.put(arr[i], null);
@@ -69,7 +76,7 @@ public class ResizePointTest {
                 }
             }
             {
-                ObjectMapX<GridPoint2, Object> map = new ObjectMapX<>(12, 0.8f);
+                ObjectMapX<GridPoint2, Object> map = new ObjectMapX<>(12, LOAD);
                 int cap = map.capacity;
                 for (int i = 0; i < size; i++) {
                     map.put(arr[i], null);
@@ -80,7 +87,7 @@ public class ResizePointTest {
                 }
             }
             {
-                ObjectMapY<GridPoint2, Object> map = new ObjectMapY<>(12, 0.8f);
+                ObjectMapY<GridPoint2, Object> map = new ObjectMapY<>(12, LOAD);
                 int cap = map.capacity;
                 for (int i = 0; i < size; i++) {
                     map.put(arr[i], null);
@@ -91,7 +98,7 @@ public class ResizePointTest {
                 }
             }
             {
-                CuckooObjectMap<GridPoint2, Object> map = new CuckooObjectMap<>(16, 0.8f);
+                CuckooObjectMap<GridPoint2, Object> map = new CuckooObjectMap<>(16, LOAD);
                 int cap = map.capacity;
                 for (int i = 0; i < size; i++) {
                     map.put(arr[i], null);
