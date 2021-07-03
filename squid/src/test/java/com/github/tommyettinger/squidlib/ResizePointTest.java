@@ -28,7 +28,8 @@ public class ResizePointTest {
 //            final int sx = x >> 31, sy = y >> 31;
 //            final int px = x ^ sx, py = y ^ sx;
 //            return (((px + py) * (px + py + 1) >>> 1) + py << 2) - sx - sy - sy;
-            return (int) (x * 0xC13FA9A902A6328FL + y * 0x91E10DA5C79E7B1DL >>> 24);
+            return (int) ((x * 0xC13FA9A902A6328FL + y * 0x91E10DA5C79E7B1DL) >>> 8);
+//            return (int) ((x * 0xC13FA9A902A6328FL + y * 0x91E10DA5C79E7B1DL) >>> 24);
         }
     }
     public static void main(String[] args) {
@@ -45,8 +46,8 @@ public class ResizePointTest {
 //                int y = i - t;
 //                arr[i] = new GridPoint2(w - y, y);
 //            }
-        final float LOAD = 0.8f;
-        for(int edge : new int[]{10, 40, 90, 160, 250}) {
+        final float LOAD = 0.9f;
+        for(int edge : new int[]{10, 40, 90, 160, 250, 360, 490, 640}) {
             final int size = edge * edge, half = edge >>> 1;
             GridPoint2[] arr = new GridPoint2[size];
             for (int i = 0, c = 0; i < edge; i++) {
