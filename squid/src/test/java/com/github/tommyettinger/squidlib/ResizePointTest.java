@@ -7,18 +7,9 @@ import java.util.SplittableRandom;
 
 public class ResizePointTest {
     private static class GridPoint2 extends com.badlogic.gdx.math.GridPoint2{
-        public GridPoint2() {
-            super();
-        }
-
         public GridPoint2(int x, int y) {
             super(x, y);
         }
-
-        public GridPoint2(com.badlogic.gdx.math.GridPoint2 point) {
-            super(point);
-        }
-
         @Override
         public int hashCode() {
             //Cantor pairing function, but... with a little more meat on its bones.
@@ -28,7 +19,11 @@ public class ResizePointTest {
 //            final int sx = x >> 31, sy = y >> 31;
 //            final int px = x ^ sx, py = y ^ sx;
 //            return (((px + py) * (px + py + 1) >>> 1) + py << 2) - sx - sy - sy;
-            return (int) ((x * 0xC13FA9A902A6328FL + y * 0x91E10DA5C79E7B1DL) >>> 8);
+
+//            final int px = x << 1 ^ x >> 31, py = y << 1 ^ y >> 31;
+//            return (((px + py) * (px + py + 1) >>> 1) + py);
+            return (int) ((x * 0xC13FA9A902A6328FL + y * 0x91E10DA5C79E7B1DL) >>> 9);
+//            return (int) ((x * 0xC13FA9A902A6328FL + y * 0x91E10DA5C79E7B1DL) >>> 8);
 //            return (int) ((x * 0xC13FA9A902A6328FL + y * 0x91E10DA5C79E7B1DL) >>> 24);
         }
     }
