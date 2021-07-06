@@ -17,18 +17,30 @@ package net.adoptopenjdk.bumblebench.examples;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * New laptop; Windows 10, 10th generation i7, Java 15
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * MathCbrtPositiveBench score: 27221158.000000 (27.22M 1712.0%)
- *                  uncertainty:   0.2%
+ * HotSpot Java 8:
+ * <br>
+ * MathCbrtPositiveBench score: 17459108.000000 (17.46M 1667.5%)
+ *                  uncertainty:   0.6%
+ * <br>
+ * OpenJ9 Java 15:
+ * <br>
+ * MathCbrtPositiveBench score: 27614680.000000 (27.61M 1713.4%)
+ *                  uncertainty:   0.5%
+ * <br>
+ * HotSpot Java 16:
+ * <br>
+ * MathCbrtPositiveBench score: 29357254.000000 (29.36M 1719.5%)
+ *                  uncertainty:   1.5%
  */
 public final class MathCbrtPositiveBench extends MicroBench {
 
 	 protected long doBatch (long numIterations) throws InterruptedException {
-		  float sum = 0.1f;
-		  final float shrink = 1.6180339887498949f / numIterations;
+		  double sum = 0.01, inc = 0.01;
+		  final double shrink = 1.6180339887498949 / numIterations;
 		  for (long i = 0; i < numIterations; i++)
-			  sum += Math.cbrt(sum + i * shrink);
+			  sum = Math.cbrt(sum + sum + (inc += shrink));
 		  return numIterations;
 	 }
 }

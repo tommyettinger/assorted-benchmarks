@@ -18,15 +18,22 @@ import com.github.tommyettinger.ds.support.LaserRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * New laptop; Windows 10, 10th generation i7, Java 8
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * OtherCbrtBench score: 63464232.000000 (63.46M 1796.6%)
- *           uncertainty:   0.3%
+ * HotSpot Java 8:
  * <br>
- * New laptop; Windows 10, 10th generation i7, Java 15
+ * OtherCbrtBench score: 63768328.000000 (63.77M 1797.1%)
+ *           uncertainty:   0.6%
  * <br>
- * OtherCbrtBench score: 62016896.000000 (62.02M 1794.3%)
- *           uncertainty:   0.3%
+ * OpenJ9 Java 15:
+ * <br>
+ * OtherCbrtBench score: 61440084.000000 (61.44M 1793.4%)
+ *           uncertainty:   0.7%
+ * <br>
+ * HotSpot Java 16:
+ * <br>
+ * OtherCbrtBench score: 64276212.000000 (64.28M 1797.9%)
+ *           uncertainty:   0.7%
  */
 public final class OtherCbrtBench extends MicroBench {
 	public static float cbrt(float x) {
@@ -80,10 +87,10 @@ public final class OtherCbrtBench extends MicroBench {
 		return d*(1.0f+0.333333333333f*(1.0f-d*y));
 	}
 	protected long doBatch (long numIterations) throws InterruptedException {
-		float sum = 0.1f;
+		float sum = 0.01f, inc = -0.5f;
 		final float shrink = 1.6180339887498949f / numIterations;
 		for (long i = 0; i < numIterations; i++)
-			sum -= cbrt(sum + i * shrink);
+			  sum = cbrt(sum + sum + (inc += shrink));
 		return numIterations;
 	}
 
