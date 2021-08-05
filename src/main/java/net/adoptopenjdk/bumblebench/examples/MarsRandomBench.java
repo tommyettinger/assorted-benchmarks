@@ -24,24 +24,24 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * MarsRandomBench score: 949904384.000000 (949.9M 2067.2%)
- *             uncertainty:   0.8%
+ * MarsRandomBench score: 958421696.000000 (958.4M 2068.1%)
+ *            uncertainty:   1.5%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * MarsRandomBench score: 720245440.000000 (720.2M 2039.5%)
- *             uncertainty:   1.1%
+ * MarsRandomBench score: 862226048.000000 (862.2M 2057.5%)
+ *            uncertainty:   0.8%
  * <br>
  * HotSpot Java 16:
  * <br>
- * MarsRandomBench score: 1790815104.000000 (1.791G 2130.6%)
- *             uncertainty:   0.2%
+ * MarsRandomBench score: 1679774720.000000 (1.680G 2124.2%)
+ *            uncertainty:   4.6%
  * <br>
- * Note that on HotSpot Java 16, this gets 1.791 billion longs per second. The previous best I had written got 1.427
- * billion longs per second. Java's built-in java.util.Random gets 58.88 million longs per second, and the also-built-in
- * SplittableRandom gets 1.06 billion longs per second. The period for any particular state is unknown, but because this
- * uses a section that is LCG-like, it seems unlikely that any subcycle will have a shorter period than 2 to the 64. It
- * is still possible, though.
+ * Note that on HotSpot Java 16, this gets 1.68 billion longs per second (was 1.791, but this varies day-to-day). The
+ * previous best I had written got 1.427 billion longs per second. Java's built-in java.util.Random gets 58.88 million
+ * longs per second, and the also-built-in SplittableRandom gets 1.06 billion longs per second. The period for any
+ * particular state is unknown, but because this uses a section that is LCG-like, it seems unlikely that any subcycle
+ * will have a shorter period than 2 to the 64. It is still possible, though.
  * <br>
  * An earlier version seemed to get a whopping 1.996 billion longs per second, and passed early hwd testing, but
  * immediately failed PractRand testing with its BRank test. I think the number of false negatives for binary matrix
