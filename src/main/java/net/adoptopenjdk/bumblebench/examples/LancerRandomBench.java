@@ -1,4 +1,3 @@
-
 /*******************************************************************************
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -24,32 +23,19 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * MarsRandomBench score: 958421696.000000 (958.4M 2068.1%)
- *            uncertainty:   1.5%
+ *
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * MarsRandomBench score: 862226048.000000 (862.2M 2057.5%)
- *            uncertainty:   0.8%
+ *
  * <br>
  * HotSpot Java 16:
  * <br>
- * MarsRandomBench score: 1679774720.000000 (1.680G 2124.2%)
- *            uncertainty:   4.6%
- * <br>
- * Note that on HotSpot Java 16, this gets 1.68 billion longs per second (was 1.791, but this varies day-to-day). The
- * previous best I had written got 1.427 billion longs per second. Java's built-in java.util.Random gets 58.88 million
- * longs per second, and the also-built-in SplittableRandom gets 1.06 billion longs per second. The period for any
- * particular state is unknown, but because this uses a section that is LCG-like, it seems unlikely that any subcycle
- * will have a shorter period than 2 to the 64. It is still possible, though.
- * <br>
- * An earlier version seemed to get a whopping 1.996 billion longs per second, and passed early hwd testing, but
- * immediately failed PractRand testing with its BRank test. I think the number of false negatives for binary matrix
- * rank issues found by hwd (or not found) is somewhat startling.
+ *
  */
-public final class MarsRandomBench extends MicroBench {
+public final class LancerRandomBench extends MicroBench {
 
-	public static class MarsRandom extends Random {
+	public static class LancerRandom extends Random {
 		private long stateA, stateB, stateC, stateD;
 
 		/**
@@ -57,12 +43,12 @@ public final class MarsRandomBench extends MicroBench {
 		 * the seed of the random number generator to a value very likely
 		 * to be distinct from any other invocation of this constructor.
 		 */
-		public MarsRandom() {
+		public LancerRandom() {
 			super();
 			stateA = super.nextLong();
 			stateB = super.nextLong();
 			stateC = super.nextLong();
-			stateD = super.nextLong();
+			stateD = super.nextLong() | 1L;
 		}
 
 		/**
@@ -78,19 +64,19 @@ public final class MarsRandomBench extends MicroBench {
 		 * @param seed the initial seed
 		 * @see #setSeed(long)
 		 */
-		public MarsRandom(long seed) {
+		public LancerRandom(long seed) {
 			super(seed);
 			stateA = seed ^ 0xFA346CBFD5890825L;
 			stateB = seed;
-			stateC = ~seed;
-			stateD = seed ^ 0x05CB93402A76F7DAL;
+			stateC = seed ^ 0x05CB93402A76F7DAL;
+			stateD = ~seed | 1L;
 		}
-		public MarsRandom(long stateA, long stateB, long stateC, long stateD) {
+		public LancerRandom(long stateA, long stateB, long stateC, long stateD) {
 			super(stateA);
 			this.stateA = stateA;
 			this.stateB = stateB;
 			this.stateC = stateC;
-			this.stateD = stateD;
+			this.stateD = stateD | 1L;
 		}
 
 		/**
@@ -117,8 +103,8 @@ public final class MarsRandomBench extends MicroBench {
 			super.setSeed(seed);
 			stateA = seed ^ 0xFA346CBFD5890825L;
 			stateB = seed;
-			stateC = ~seed;
-			stateD = seed ^ 0x05CB93402A76F7DAL;
+			stateC = seed ^ 0x05CB93402A76F7DAL;
+			stateD = ~seed | 1L;
 		}
 
 		/**
@@ -152,11 +138,11 @@ public final class MarsRandomBench extends MicroBench {
 			final long fb = this.stateB;
 			final long fc = this.stateC;
 			final long fd = this.stateD;
-			this.stateA = fd * 0xD1342543DE82EF95L;
-			this.stateB = fa + 0xC6BC279692B5C323L;
-			this.stateC = Long.rotateLeft(fb, 47) - fd;
-			this.stateD = fb ^ fc;
-			return (int) fd >>> 32 - bits;
+			this.stateA = fc * fd;
+			this.stateB = fa ^ fa >>> 31;
+			this.stateC = fb ^ fd;
+			this.stateD = fd + 0x9E3779B97F4A7C16L;
+			return (int) fc >>> 32 - bits;
 		}
 
 		/**
@@ -174,11 +160,19 @@ public final class MarsRandomBench extends MicroBench {
 			final long fb = this.stateB;
 			final long fc = this.stateC;
 			final long fd = this.stateD;
-			this.stateA = 0xD1342543DE82EF95L * fd;
-			this.stateB = fa + 0xC6BC279692B5C323L;
-			this.stateC = Long.rotateLeft(fb, 47) - fd;
-			this.stateD = fb ^ fc;
-			return fd;
+			this.stateA = fc * fd;
+			this.stateB = fa ^ Long.rotateLeft(fc, 25) ^ 0xC6BC279692B5C323L;
+			this.stateC = fb + Long.rotateLeft(fa, 44);
+			this.stateD = fd + 0x9E3779B97F4A7C16L;
+			return fc;
+//			this.stateA = fc * fd;
+//			this.stateB = Long.rotateLeft(fa, 39) - fc;
+//			this.stateC = fb ^ fd;
+//			this.stateD = fd + 0x9E3779B97F4A7C16L;
+
+//		final long s = stateA += 0xC6BC279692B5C323L;
+//		final long z = (s ^ s >>> 31) * (stateB += 0x9E3779B97F4A7C16L);
+//		return z ^ z >>> 26 ^ z >>> 6;
 		}
 
 //		public static void main(String[] args){
@@ -196,7 +190,7 @@ public final class MarsRandomBench extends MicroBench {
 			long count = 0xffffffffL;
 			long[] buf = new long[256];
 
-			MarsRandom rand = new MarsRandom(1234567L);
+			LancerRandom rand = new LancerRandom(1234567L);
 			for (long i = 0; i <= count; i++) {
 				buf[(int)(rand.nextLong() & 255)]++;
 			}
@@ -213,7 +207,7 @@ public final class MarsRandomBench extends MicroBench {
 		}
 	}
 	protected long doBatch(long numIterations) throws InterruptedException {
-		MarsRandom rng = new MarsRandom(0x12345678);
+		LancerRandom rng = new LancerRandom(0x12345678);
 		long sum = 0L;
 		for (long i = 0; i < numIterations; i++)
 			sum += rng.nextLong();
