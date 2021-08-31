@@ -15,6 +15,7 @@ import com.koloboke.collect.map.hash.HashObjIntMap;
 import com.koloboke.collect.set.hash.HashObjSet;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+import org.apache.commons.collections4.map.HashedMap;
 import org.eclipse.collections.api.factory.Sets;
 import org.eclipse.collections.api.map.primitive.MutableObjectIntMap;
 import org.eclipse.collections.api.set.MutableSet;
@@ -142,21 +143,30 @@ public final class LZSEncoding {
         return _compress(uncompressed, 16, 0);
     }
 
+//    private static final com.koloboke.collect.map.hash.HashObjIntMapFactory<String> MAP_FACTORY = new com.koloboke.collect.impl.hash.QHashSeparateKVObjIntMapFactoryImpl<>();
+//    private static final com.koloboke.collect.set.hash.HashObjSetFactory<String> SET_FACTORY = new com.koloboke.collect.impl.hash.QHashObjSetFactoryImpl<>();
+
+
     private static String _compress(String uncompressedStr, int bitsPerChar, char[] getCharFromInt) {
         if (uncompressedStr == null) return null;
         if (uncompressedStr.isEmpty()) return "";
         int i, value;
-//        ObjectIntMap<String> context_dictionary = new ObjectIntMap<>(uncompressedStr.length() >>> 4);
+//        ObjectIntMap<String> context_dictionary = new ObjectIntMap<>(uncompressedStr.length() >>> 3, 0.5f);
 //        ObjectSet<String> context_dictionaryToCreate = new ObjectSet<>(uncompressedStr.length() >>> 4);
         //// evaluating if what SquidLib uses is much faster... It does autobox a lot.
 //        HashMap<String, Integer> context_dictionary = new HashMap<>(uncompressedStr.length() >>> 4);
 //        HashSet<String> context_dictionaryToCreate = new HashSet<>(uncompressedStr.length() >>> 4);
 //        Object2IntOpenHashMap<String> context_dictionary = new Object2IntOpenHashMap<>(uncompressedStr.length() >>> 4);
 //        ObjectOpenHashSet<String> context_dictionaryToCreate = new ObjectOpenHashSet<>(uncompressedStr.length() >>> 4);
-        HashObjIntMap<String> context_dictionary = com.koloboke.collect.map.hash.HashObjIntMaps.newMutableMap(uncompressedStr.length() >>> 4);
-        HashObjSet<String> context_dictionaryToCreate = com.koloboke.collect.set.hash.HashObjSets.newMutableSet(uncompressedStr.length() >>> 4);
+//        HashObjIntMap<String> context_dictionary = com.koloboke.collect.map.hash.HashObjIntMaps.newMutableMap(uncompressedStr.length() >>> 4);
+//        HashObjSet<String> context_dictionaryToCreate = com.koloboke.collect.set.hash.HashObjSets.newMutableSet(uncompressedStr.length() >>> 4);
+//        HashObjIntMap<String> context_dictionary = MAP_FACTORY.newMutableMap(uncompressedStr.length() >>> 4);
+//        HashObjSet<String> context_dictionaryToCreate = SET_FACTORY.newMutableSet(uncompressedStr.length() >>> 4);
 //        MutableObjectIntMap<String> context_dictionary = ObjectIntMaps.mutable.withInitialCapacity(uncompressedStr.length() >>> 4);
 //        MutableSet<String> context_dictionaryToCreate = Sets.mutable.withInitialCapacity(uncompressedStr.length() >>> 4);
+//        HashedMap<String, Integer> context_dictionary = new org.apache.commons.collections4.map.HashedMap<>(16);
+        HashMap<String, Integer> context_dictionary = new HashMap<>(uncompressedStr.length() >>> 3, 0.5f);
+        HashSet<String> context_dictionaryToCreate = new HashSet<>(uncompressedStr.length() >>> 3, 0.5f);
 
         String context_c;
         String context_wc;
@@ -360,17 +370,22 @@ public final class LZSEncoding {
         if (uncompressedStr == null) return null;
         if (uncompressedStr.isEmpty()) return "";
         int i, value;
-//        ObjectIntMap<String> context_dictionary = new ObjectIntMap<>(uncompressedStr.length() >>> 4);
+//        ObjectIntMap<String> context_dictionary = new ObjectIntMap<>(uncompressedStr.length() >>> 3, 0.5f);
 //        ObjectSet<String> context_dictionaryToCreate = new ObjectSet<>(uncompressedStr.length() >>> 4);
         //// evaluating if what SquidLib uses is much faster... It does autobox a lot.
 //        HashMap<String, Integer> context_dictionary = new HashMap<>(uncompressedStr.length() >>> 4);
 //        HashSet<String> context_dictionaryToCreate = new HashSet<>(uncompressedStr.length() >>> 4);
 //        Object2IntOpenHashMap<String> context_dictionary = new Object2IntOpenHashMap<>(uncompressedStr.length() >>> 4);
 //        ObjectOpenHashSet<String> context_dictionaryToCreate = new ObjectOpenHashSet<>(uncompressedStr.length() >>> 4);
-        HashObjIntMap<String> context_dictionary = com.koloboke.collect.map.hash.HashObjIntMaps.newMutableMap(uncompressedStr.length() >>> 4);
-        HashObjSet<String> context_dictionaryToCreate = com.koloboke.collect.set.hash.HashObjSets.newMutableSet(uncompressedStr.length() >>> 4);
+//        HashObjIntMap<String> context_dictionary = com.koloboke.collect.map.hash.HashObjIntMaps.newMutableMap(uncompressedStr.length() >>> 4);
+//        HashObjSet<String> context_dictionaryToCreate = com.koloboke.collect.set.hash.HashObjSets.newMutableSet(uncompressedStr.length() >>> 4);
+//        HashObjIntMap<String> context_dictionary = MAP_FACTORY.newMutableMap(uncompressedStr.length() >>> 4);
+//        HashObjSet<String> context_dictionaryToCreate = SET_FACTORY.newMutableSet(uncompressedStr.length() >>> 4);
 //        MutableObjectIntMap<String> context_dictionary = ObjectIntMaps.mutable.withInitialCapacity(uncompressedStr.length() >>> 4);
 //        MutableSet<String> context_dictionaryToCreate = Sets.mutable.withInitialCapacity(uncompressedStr.length() >>> 4);
+//        HashedMap<String, Integer> context_dictionary = new org.apache.commons.collections4.map.HashedMap<>(16);
+        HashMap<String, Integer> context_dictionary = new HashMap<>(256, 0.5f);
+        HashSet<String> context_dictionaryToCreate = new HashSet<>(256, 0.5f);
 
         String context_c;
         String context_wc;
