@@ -2,7 +2,6 @@ package com.github.tommyettinger.squidlib;
 
 import com.github.yellowstonegames.text.Language;
 import org.openjdk.jmh.annotations.*;
-import squidpony.LZSEncoding;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,16 +25,33 @@ import java.util.concurrent.TimeUnit;
  * CompressionBenchmark.doSquidSquadLZSUTF     4096  thrpt    5    296.431 ±    1.967  ops/s
  * CompressionBenchmark.doSquidSquadLZSUTF    65536  thrpt    5     13.382 ±    1.259  ops/s
  * </pre>
+ * Trying to verify that all the implementations are now the same and have comparable speed:
+ * <pre>
+ * Benchmark                                  (len)   Mode  Cnt      Score       Error  Units
+ * CompressionBenchmark.doBlazingChainLZSUTF     16  thrpt    5  94120.125 ±  1240.833  ops/s
+ * CompressionBenchmark.doBlazingChainLZSUTF    256  thrpt    5   7621.959 ±    83.592  ops/s
+ * CompressionBenchmark.doBlazingChainLZSUTF   4096  thrpt    5    461.459 ±     5.373  ops/s
+ * CompressionBenchmark.doFastLZSUTF             16  thrpt    5  90312.565 ± 22619.370  ops/s
+ * CompressionBenchmark.doFastLZSUTF            256  thrpt    5   7529.014 ±   106.222  ops/s
+ * CompressionBenchmark.doFastLZSUTF           4096  thrpt    5    460.864 ±    16.174  ops/s
+ * CompressionBenchmark.doSquidLibLZSUTF         16  thrpt    5  92841.255 ±  1772.350  ops/s
+ * CompressionBenchmark.doSquidLibLZSUTF        256  thrpt    5   7403.885 ±   162.004  ops/s
+ * CompressionBenchmark.doSquidLibLZSUTF       4096  thrpt    5    453.121 ±     5.156  ops/s
+ * CompressionBenchmark.doSquidSquadLZSUTF       16  thrpt    5  91092.692 ±  1802.423  ops/s
+ * CompressionBenchmark.doSquidSquadLZSUTF      256  thrpt    5   7265.979 ±   147.258  ops/s
+ * CompressionBenchmark.doSquidSquadLZSUTF     4096  thrpt    5    452.311 ±     8.338  ops/s
+ * </pre>
+ * The big important gain is that SquidSquad isn't so much slower anymore.
  */
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(1)
-@Warmup(iterations = 5)
-@Measurement(iterations = 5)
+@Warmup(iterations = 6)
+@Measurement(iterations = 6)
 public class CompressionBenchmark {
     @State(Scope.Thread)
     public static class BenchmarkState {
-        @Param({"16", "256", "4096", "65536"})
+        @Param({"16", "256", "4096"})
         public int len;
         public String[] texts;
         public int idx;
@@ -57,12 +73,12 @@ public class CompressionBenchmark {
     @Benchmark
     public int doSquidLibLZSUTF(BenchmarkState state)
     {
-        return LZSEncoding.compressToUTF16(state.texts[state.idx = (state.idx + 1) % state.texts.length]).length();
+        return squid.lib.LZSEncoding.compressToUTF16(state.texts[state.idx = (state.idx + 1) % state.texts.length]).length();
     }
     @Benchmark
     public int doSquidSquadLZSUTF(BenchmarkState state)
     {
-        return com.github.yellowstonegames.core.LZSEncoding.compressToUTF16(state.texts[state.idx = (state.idx + 1) % state.texts.length]).length();
+        return squid.squad.LZSEncoding.compressToUTF16(state.texts[state.idx = (state.idx + 1) % state.texts.length]).length();
     }
     @Benchmark
     public int doFastLZSUTF(BenchmarkState state)

@@ -50,16 +50,17 @@ dependencies {
 
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.3'
 //    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:2ae5e83d1a' // lacks Ripple FOV opt
-    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:v3.0.4'
-    implementation 'com.github.yellowstonegames.SquidSquad:SquidGrid:1d8565e8df'
-    implementation 'com.github.yellowstonegames.SquidSquad:SquidPlace:1d8565e8df'
-    implementation 'com.github.yellowstonegames.SquidSquad:SquidPath:1d8565e8df'
-    implementation 'com.github.yellowstonegames.SquidSquad:SquidText:1d8565e8df'
-    implementation "com.github.tommyettinger:blazingchain:1.4.4.3"
+    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:ad5bbb9cb8'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidGrid:76bfb0f28d'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidPlace:76bfb0f28d'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidPath:76bfb0f28d'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidText:76bfb0f28d'
+//    implementation "com.github.tommyettinger:blazingchain:1.4.4.3"
+//    implementation 'com.github.tommyettinger:BlazingChain:dfddeb3dda'
     implementation 'com.github.earlygrey:simple-graphs:v3.0.0'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
     implementation 'com.github.tommyettinger:atlantis:5574642135'
-    implementation 'com.github.tommyettinger:jdkgdxds:v0.1.3'
+    implementation 'com.github.tommyettinger:jdkgdxds:v0.2.0'
 
     implementation group: 'it.unimi.dsi', name: 'fastutil', version:'8.5.0'
     implementation group: 'org.eclipse.collections', name: 'eclipse-collections', version: '11.0.0.M1'

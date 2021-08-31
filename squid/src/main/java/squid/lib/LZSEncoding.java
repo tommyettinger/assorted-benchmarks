@@ -7,30 +7,19 @@
  * https://github.com/pieroxy/lz-string
  */
 
-package com.github.tommyettinger.squidlib;
+package squid.lib;
 
-import com.github.tommyettinger.ds.ObjectIntMap;
-import com.github.tommyettinger.ds.ObjectSet;
-import com.koloboke.collect.map.hash.HashObjIntMap;
-import com.koloboke.collect.set.hash.HashObjSet;
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import org.apache.commons.collections4.map.HashedMap;
-import org.eclipse.collections.api.factory.Sets;
-import org.eclipse.collections.api.map.primitive.MutableObjectIntMap;
-import org.eclipse.collections.api.set.MutableSet;
-import org.eclipse.collections.impl.factory.primitive.ObjectIntMaps;
+import squidpony.LZSPlus;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
 /**
- * Implements LZ-String compression, for taking a large String and compressing it to a (usually) smaller one.
+ * LZ-String compression; wrapped by {@link LZSPlus} for convenience, but extended functionality is available here.
  * You can compress a String to a smaller, technically-invalid UTF-16 String with {@link #compress(String)}, and undo
  * that with {@link #decompress(String)}. Compress to a valid UTF-16 String with {@link #compressToUTF16(String)},
- * decompress such a String with {@link #decompressFromUTF16(String)} (these are recommended). Compress to Base64 with
+ * decompress such a String with {@link #decompressFromUTF16(String)} (LZSPlus uses these). Compress to Base64 with
  * {@link #compressToBase64(String)}, decompress Base64 with {@link #decompressFromBase64(String)}. Compress to
  * URI-encoded Strings with {@link #compressToEncodedURIComponent(String)}, decompress those with
  * {@link #decompressFromEncodedURIComponent(String)}. This class is super-sourced with a compatible alternative
@@ -40,7 +29,7 @@ import java.util.HashSet;
  */
 public final class LZSEncoding {
 
-    private LZSEncoding () {};
+    private LZSEncoding() {}
     private static final char[] keyStrBase64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".toCharArray(),
             keyStrUriSafe = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$".toCharArray(),
             valStrBase64 = new char[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -142,25 +131,6 @@ public final class LZSEncoding {
     public static String compress(String uncompressed) {
         return _compress(uncompressed, 16, 0);
     }
-
-//    private static final com.koloboke.collect.map.hash.HashObjIntMapFactory<String> MAP_FACTORY = new com.koloboke.collect.impl.hash.QHashSeparateKVObjIntMapFactoryImpl<>();
-//    private static final com.koloboke.collect.set.hash.HashObjSetFactory<String> SET_FACTORY = new com.koloboke.collect.impl.hash.QHashObjSetFactoryImpl<>();
-
-//        ObjectIntMap<String> context_dictionary = new ObjectIntMap<>(uncompressedStr.length() >>> 3, 0.5f);
-//        ObjectSet<String> context_dictionaryToCreate = new ObjectSet<>(uncompressedStr.length() >>> 4);
-    //// evaluating if what SquidLib uses is much faster... It does autobox a lot.
-//        HashMap<String, Integer> context_dictionary = new HashMap<>(uncompressedStr.length() >>> 4);
-//        HashSet<String> context_dictionaryToCreate = new HashSet<>(uncompressedStr.length() >>> 4);
-//        Object2IntOpenHashMap<String> context_dictionary = new Object2IntOpenHashMap<>(uncompressedStr.length() >>> 4);
-//        ObjectOpenHashSet<String> context_dictionaryToCreate = new ObjectOpenHashSet<>(uncompressedStr.length() >>> 4);
-//        HashObjIntMap<String> context_dictionary = com.koloboke.collect.map.hash.HashObjIntMaps.newMutableMap(uncompressedStr.length() >>> 4);
-//        HashObjSet<String> context_dictionaryToCreate = com.koloboke.collect.set.hash.HashObjSets.newMutableSet(uncompressedStr.length() >>> 4);
-//        HashObjIntMap<String> context_dictionary = MAP_FACTORY.newMutableMap(uncompressedStr.length() >>> 4);
-//        HashObjSet<String> context_dictionaryToCreate = SET_FACTORY.newMutableSet(uncompressedStr.length() >>> 4);
-//        MutableObjectIntMap<String> context_dictionary = ObjectIntMaps.mutable.withInitialCapacity(uncompressedStr.length() >>> 4);
-//        MutableSet<String> context_dictionaryToCreate = Sets.mutable.withInitialCapacity(uncompressedStr.length() >>> 4);
-//        HashedMap<String, Integer> context_dictionary = new org.apache.commons.collections4.map.HashedMap<>(16);
-
 
     private static String _compress(String uncompressedStr, int bitsPerChar, char[] getCharFromInt) {
         if (uncompressedStr == null) return null;
@@ -571,24 +541,6 @@ public final class LZSEncoding {
         }
         return context_data.toString();
     }
-
-
-//        ObjectIntMap<String> context_dictionary = new ObjectIntMap<>(uncompressedStr.length() >>> 3, 0.5f);
-//        ObjectSet<String> context_dictionaryToCreate = new ObjectSet<>(uncompressedStr.length() >>> 4);
-    //// evaluating if what SquidLib uses is much faster... It does autobox a lot.
-//        HashMap<String, Integer> context_dictionary = new HashMap<>(uncompressedStr.length() >>> 4);
-//        HashSet<String> context_dictionaryToCreate = new HashSet<>(uncompressedStr.length() >>> 4);
-//        Object2IntOpenHashMap<String> context_dictionary = new Object2IntOpenHashMap<>(uncompressedStr.length() >>> 4);
-//        ObjectOpenHashSet<String> context_dictionaryToCreate = new ObjectOpenHashSet<>(uncompressedStr.length() >>> 4);
-//        HashObjIntMap<String> context_dictionary = com.koloboke.collect.map.hash.HashObjIntMaps.newMutableMap(uncompressedStr.length() >>> 4);
-//        HashObjSet<String> context_dictionaryToCreate = com.koloboke.collect.set.hash.HashObjSets.newMutableSet(uncompressedStr.length() >>> 4);
-//        HashObjIntMap<String> context_dictionary = MAP_FACTORY.newMutableMap(uncompressedStr.length() >>> 4);
-//        HashObjSet<String> context_dictionaryToCreate = SET_FACTORY.newMutableSet(uncompressedStr.length() >>> 4);
-//        MutableObjectIntMap<String> context_dictionary = ObjectIntMaps.mutable.withInitialCapacity(uncompressedStr.length() >>> 4);
-//        MutableSet<String> context_dictionaryToCreate = Sets.mutable.withInitialCapacity(uncompressedStr.length() >>> 4);
-//        HashedMap<String, Integer> context_dictionary = new org.apache.commons.collections4.map.HashedMap<>(16);
-
-
     /**
      * Decompresses a String that had been compressed with {@link #compress(String)}.
      * @param compressed a compressed String using the default encoding from {@link #compress(String)}
@@ -597,7 +549,7 @@ public final class LZSEncoding {
     public static String decompress(final String compressed) {
         if (compressed == null)
             return null;
-        if (compressed.isEmpty())
+        if (compressed.length() == 0)
             return "";
         return _decompress(compressed.length(), 32768, compressed, 0);
     }
@@ -610,7 +562,7 @@ public final class LZSEncoding {
         ArrayList<String> dictionary = new ArrayList<>();
         int enlargeIn = 4, dictSize = 4, numBits = 3, position = 32, index = 1, resb, maxpower, power;
         String entry, w, c;
-        ArrayList<String> result = new ArrayList<>();
+        StringBuilder sb = new StringBuilder(getNextValue.length());
         char bits, val = modify[getNextValue.charAt(0)];
 
         for (char i = 0; i < 3; i++) {
@@ -665,7 +617,7 @@ public final class LZSEncoding {
         }
         dictionary.add(c);
         w = c;
-        result.add(w);
+        sb.append(w);
         while (true) {
             if (index > length) {
                 return "";
@@ -719,9 +671,6 @@ public final class LZSEncoding {
                     enlargeIn--;
                     break;
                 case 2:
-                    StringBuilder sb = new StringBuilder(result.size());
-                    for (String s : result)
-                        sb.append(s);
                     return sb.toString();
             }
 
@@ -739,7 +688,7 @@ public final class LZSEncoding {
                     return "";
                 }
             }
-            result.add(entry);
+            sb.append(entry);
 
             // Add w+entry[0] to the dictionary.
             dictionary.add(w + entry.charAt(0));
@@ -764,7 +713,7 @@ public final class LZSEncoding {
         ArrayList<String> dictionary = new ArrayList<>();
         int enlargeIn = 4, dictSize = 4, numBits = 3, position = resetValue, index = 1, resb, maxpower, power;
         String entry, w, c;
-        ArrayList<String> result = new ArrayList<>();
+        StringBuilder sb = new StringBuilder(getNextValue.length());
         char bits, val = (char) (getNextValue.charAt(0) + offset);
 
         for (char i = 0; i < 3; i++) {
@@ -819,7 +768,7 @@ public final class LZSEncoding {
         }
         dictionary.add(c);
         w = c;
-        result.add(w);
+        sb.append(w);
         while (true) {
             if (index > length) {
                 return "";
@@ -873,9 +822,6 @@ public final class LZSEncoding {
                     enlargeIn--;
                     break;
                 case 2:
-                    StringBuilder sb = new StringBuilder(result.size());
-                    for (String s : result)
-                        sb.append(s);
                     return sb.toString();
             }
 
@@ -893,7 +839,7 @@ public final class LZSEncoding {
                     return "";
                 }
             }
-            result.add(entry);
+            sb.append(entry);
 
             // Add w+entry[0] to the dictionary.
             dictionary.add(w + entry.charAt(0));
