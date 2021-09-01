@@ -7,7 +7,7 @@
  * https://github.com/pieroxy/lz-string
  */
 
-package blazing.chain;
+package blazing.chain.redux;
 
 import java.util.ArrayList;
 import java.util.HashMap;

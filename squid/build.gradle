@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.github.yellowstonegames.SquidSquad:SquidPlace:76bfb0f28d'
     implementation 'com.github.yellowstonegames.SquidSquad:SquidPath:76bfb0f28d'
     implementation 'com.github.yellowstonegames.SquidSquad:SquidText:76bfb0f28d'
-//    implementation "com.github.tommyettinger:blazingchain:1.4.4.3"
+    implementation "com.github.tommyettinger:blazingchain:1.4.4.3"
 //    implementation 'com.github.tommyettinger:BlazingChain:dfddeb3dda'
     implementation 'com.github.earlygrey:simple-graphs:v3.0.0'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'

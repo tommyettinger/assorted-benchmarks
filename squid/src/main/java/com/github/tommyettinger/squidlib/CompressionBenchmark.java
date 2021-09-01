@@ -42,6 +42,16 @@ import java.util.concurrent.TimeUnit;
  * CompressionBenchmark.doSquidSquadLZSUTF     4096  thrpt    5    452.311 ±     8.338  ops/s
  * </pre>
  * The big important gain is that SquidSquad isn't so much slower anymore.
+ * <br>
+ * Testing LZByteEncoding:
+ * <pre>
+ * Benchmark                               (len)   Mode  Cnt      Score      Error  Units
+ * CompressionBenchmark.doBlazingChainLZB     16  thrpt    8  94862.587 ± 1532.027  ops/s
+ * CompressionBenchmark.doBlazingChainLZB    256  thrpt    8   7447.933 ±  246.443  ops/s
+ * CompressionBenchmark.doSquidSquadLZB       16  thrpt    8  63811.520 ±  798.487  ops/s
+ * CompressionBenchmark.doSquidSquadLZB      256  thrpt    8   4409.747 ±   40.498  ops/s
+ * </pre>
+ * Again, using HashMap and HashSet with String keys is a win here.
  */
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
@@ -84,6 +94,18 @@ public class CompressionBenchmark {
     public int doFastLZSUTF(BenchmarkState state)
     {
         return com.github.tommyettinger.squidlib.LZSEncoding.compressToUTF16(state.texts[state.idx = (state.idx + 1) % state.texts.length]).length();
+    }
+
+    @Benchmark
+    public int doBlazingChainLZB(BenchmarkState state)
+    {
+        return blazing.chain.redux.LZByteEncoding.compressToBytes(state.texts[state.idx = (state.idx + 1) % state.texts.length]).length;
+    }
+
+    @Benchmark
+    public int doSquidSquadLZB(BenchmarkState state)
+    {
+        return com.github.yellowstonegames.core.LZByteEncoding.compressToBytes(state.texts[state.idx = (state.idx + 1) % state.texts.length]).length;
     }
 
 }
