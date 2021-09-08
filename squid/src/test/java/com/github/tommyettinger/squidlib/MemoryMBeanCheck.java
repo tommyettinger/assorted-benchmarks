@@ -76,225 +76,237 @@ public class MemoryMBeanCheck {
         for (int i = 0; i < 6; i++) {
             if(i == 5)
                 System.setOut(out);
-            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
-                try {
-                    gen.init(size, i);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                String[] items = gen.generateArray(size);
-                String[] items2 = gen.generateArrayAltered(size);
 
-                
-                
-                System.out.println("UNORDERED SET");
-                System.out.println("----------------------------------------");
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK HashSet", size,
+            int size = 1000;
+            System.out.printf("%30s, %7d Enums: %d\n----------------------------------------\n", "JDK HashMap", size,
                         measure(new Runnable() {
-                            HashSet<String> x;
+                            HashMap<Direction, Object> x;
 
                             @Override public void run () {
-                                x = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.add(items[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "SquidLib UnorderedSet", size,
-                        measure(new Runnable() {
-                            UnorderedSet<String> x;
-
-                            @Override public void run () {
-                                x = new UnorderedSet<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.add(items[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX ObjectSet", size,
-                        measure(new Runnable() {
-                            ObjectSet<String> x;
-
-                            @Override public void run () {
-                                x = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.add(items[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectSet", size,
-                        measure(new Runnable() {
-                            com.github.tommyettinger.ds.ObjectSet<String> x;
-
-                            @Override public void run () {
-                                x = new com.github.tommyettinger.ds.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.add(items[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectSetX", size,
-                        measure(new Runnable() {
-                            ObjectSetX<String> x;
-
-                            @Override public void run () {
-                                x = new ObjectSetX<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.add(items[j]);
-                            }
-                        }));
-                System.out.println("INSERTION-ORDERED SET:");
-                System.out.println("----------------------------------------");
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
-                        measure(new Runnable() {
-                            LinkedHashSet<String> x;
-
-                            @Override public void run () {
-                                x = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.add(items[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "SquidLib OrderedSet", size,
-                        measure(new Runnable() {
-                            squidpony.squidmath.OrderedSet<String> x;
-
-                            @Override public void run () {
-                                x = new squidpony.squidmath.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.add(items[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX OrderedSet", size,
-                        measure(new Runnable() {
-                            OrderedSet<String> x;
-
-                            @Override public void run () {
-                                x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.add(items[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedSet", size,
-                        measure(new Runnable() {
-                            com.github.tommyettinger.ds.ObjectOrderedSet<String> x;
-
-                            @Override public void run () {
-                                x = new com.github.tommyettinger.ds.ObjectOrderedSet<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.add(items[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedSetX", size,
-                        measure(new Runnable() {
-                            OrderedSetX<String> x;
-
-                            @Override public void run () {
-                                x = new OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.add(items[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Atlantis IndexedSet", size,
-                        measure(new Runnable() {
-                            IndexedSet<String> x;
-
-                            @Override public void run () {
-                                x = new IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.add(items[j]);
+                                x = new HashMap<>();
+                                for (int j = 0; j < 4; j++) x.put(Direction.CLOCKWISE[j], Direction.COUNTERCLOCKWISE[j]);
                             }
                         }));
 
-                System.out.println("UNORDERED MAP");
-                System.out.println("----------------------------------------");
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK HashMap", size,
-                        measure(new Runnable() {
-                            HashMap<String, String> x;
-
-                            @Override public void run () {
-                                x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "SquidLib UnorderedMap", size,
-                        measure(new Runnable() {
-                            UnorderedMap<String, String> x;
-
-                            @Override public void run () {
-                                x = new UnorderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX ObjectMap", size,
-                        measure(new Runnable() {
-                            ObjectMap<String, String> x;
-
-                            @Override public void run () {
-                                x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
-                        measure(new Runnable() {
-                            com.github.tommyettinger.ds.ObjectObjectMap<String, String> x;
-
-                            @Override public void run () {
-                                x = new com.github.tommyettinger.ds.ObjectObjectMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMapX", size,
-                        measure(new Runnable() {
-                            ObjectMapX<String, String> x;
-
-                            @Override public void run () {
-                                x = new ObjectMapX<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
-                            }
-                        }));
-                System.out.println("INSERTION-ORDERED MAP:");
-                System.out.println("----------------------------------------");
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK LinkedHashMap", size,
-                        measure(new Runnable() {
-                            LinkedHashMap<String, String> x;
-
-                            @Override public void run () {
-                                x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "SquidLib OrderedMap", size,
-                        measure(new Runnable() {
-                            squidpony.squidmath.OrderedMap<String, String> x;
-
-                            @Override public void run () {
-                                x = new squidpony.squidmath.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX OrderedMap", size,
-                        measure(new Runnable() {
-                            OrderedMap<String, String> x;
-
-                            @Override public void run () {
-                                x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMap", size,
-                        measure(new Runnable() {
-                            com.github.tommyettinger.ds.ObjectObjectOrderedMap<String, String> x;
-
-                            @Override public void run () {
-                                x = new com.github.tommyettinger.ds.ObjectObjectOrderedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMapX", size,
-                        measure(new Runnable() {
-                            OrderedMapX<String, String> x;
-
-                            @Override public void run () {
-                                x = new OrderedMapX<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
-                            }
-                        }));
-                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Atlantis IndexedMap", size,
-                        measure(new Runnable() {
-                            IndexedMap<String, String> x;
-
-                            @Override public void run () {
-                                x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
-                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
-                            }
-                        }));
-            }
+//            for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
+//                try {
+//                    gen.init(size, i);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                String[] items = gen.generateArray(size);
+//                String[] items2 = gen.generateArrayAltered(size);
+//
+//
+//
+//                System.out.println("UNORDERED SET");
+//                System.out.println("----------------------------------------");
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK HashSet", size,
+//                        measure(new Runnable() {
+//                            HashSet<String> x;
+//
+//                            @Override public void run () {
+//                                x = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.add(items[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "SquidLib UnorderedSet", size,
+//                        measure(new Runnable() {
+//                            UnorderedSet<String> x;
+//
+//                            @Override public void run () {
+//                                x = new UnorderedSet<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.add(items[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX ObjectSet", size,
+//                        measure(new Runnable() {
+//                            ObjectSet<String> x;
+//
+//                            @Override public void run () {
+//                                x = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.add(items[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectSet", size,
+//                        measure(new Runnable() {
+//                            com.github.tommyettinger.ds.ObjectSet<String> x;
+//
+//                            @Override public void run () {
+//                                x = new com.github.tommyettinger.ds.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.add(items[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectSetX", size,
+//                        measure(new Runnable() {
+//                            ObjectSetX<String> x;
+//
+//                            @Override public void run () {
+//                                x = new ObjectSetX<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.add(items[j]);
+//                            }
+//                        }));
+//                System.out.println("INSERTION-ORDERED SET:");
+//                System.out.println("----------------------------------------");
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK LinkedHashSet", size,
+//                        measure(new Runnable() {
+//                            LinkedHashSet<String> x;
+//
+//                            @Override public void run () {
+//                                x = new LinkedHashSet<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.add(items[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "SquidLib OrderedSet", size,
+//                        measure(new Runnable() {
+//                            squidpony.squidmath.OrderedSet<String> x;
+//
+//                            @Override public void run () {
+//                                x = new squidpony.squidmath.OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.add(items[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX OrderedSet", size,
+//                        measure(new Runnable() {
+//                            OrderedSet<String> x;
+//
+//                            @Override public void run () {
+//                                x = new OrderedSet<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.add(items[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedSet", size,
+//                        measure(new Runnable() {
+//                            com.github.tommyettinger.ds.ObjectOrderedSet<String> x;
+//
+//                            @Override public void run () {
+//                                x = new com.github.tommyettinger.ds.ObjectOrderedSet<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.add(items[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedSetX", size,
+//                        measure(new Runnable() {
+//                            OrderedSetX<String> x;
+//
+//                            @Override public void run () {
+//                                x = new OrderedSetX<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.add(items[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Atlantis IndexedSet", size,
+//                        measure(new Runnable() {
+//                            IndexedSet<String> x;
+//
+//                            @Override public void run () {
+//                                x = new IndexedSet<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.add(items[j]);
+//                            }
+//                        }));
+//
+//                System.out.println("UNORDERED MAP");
+//                System.out.println("----------------------------------------");
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK HashMap", size,
+//                        measure(new Runnable() {
+//                            HashMap<String, String> x;
+//
+//                            @Override public void run () {
+//                                x = new HashMap<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "SquidLib UnorderedMap", size,
+//                        measure(new Runnable() {
+//                            UnorderedMap<String, String> x;
+//
+//                            @Override public void run () {
+//                                x = new UnorderedMap<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX ObjectMap", size,
+//                        measure(new Runnable() {
+//                            ObjectMap<String, String> x;
+//
+//                            @Override public void run () {
+//                                x = new ObjectMap<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMap", size,
+//                        measure(new Runnable() {
+//                            com.github.tommyettinger.ds.ObjectObjectMap<String, String> x;
+//
+//                            @Override public void run () {
+//                                x = new com.github.tommyettinger.ds.ObjectObjectMap<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS ObjectMapX", size,
+//                        measure(new Runnable() {
+//                            ObjectMapX<String, String> x;
+//
+//                            @Override public void run () {
+//                                x = new ObjectMapX<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
+//                            }
+//                        }));
+//                System.out.println("INSERTION-ORDERED MAP:");
+//                System.out.println("----------------------------------------");
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDK LinkedHashMap", size,
+//                        measure(new Runnable() {
+//                            LinkedHashMap<String, String> x;
+//
+//                            @Override public void run () {
+//                                x = new LinkedHashMap<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "SquidLib OrderedMap", size,
+//                        measure(new Runnable() {
+//                            squidpony.squidmath.OrderedMap<String, String> x;
+//
+//                            @Override public void run () {
+//                                x = new squidpony.squidmath.OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "GDX OrderedMap", size,
+//                        measure(new Runnable() {
+//                            OrderedMap<String, String> x;
+//
+//                            @Override public void run () {
+//                                x = new OrderedMap<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMap", size,
+//                        measure(new Runnable() {
+//                            com.github.tommyettinger.ds.ObjectObjectOrderedMap<String, String> x;
+//
+//                            @Override public void run () {
+//                                x = new com.github.tommyettinger.ds.ObjectObjectOrderedMap<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "JDKGDXDS OrderedMapX", size,
+//                        measure(new Runnable() {
+//                            OrderedMapX<String, String> x;
+//
+//                            @Override public void run () {
+//                                x = new OrderedMapX<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
+//                            }
+//                        }));
+//                System.out.printf("%30s, %7d Strings: %d\n----------------------------------------\n", "Atlantis IndexedMap", size,
+//                        measure(new Runnable() {
+//                            IndexedMap<String, String> x;
+//
+//                            @Override public void run () {
+//                                x = new IndexedMap<>(size, LoadFactor.LOAD_FACTOR);
+//                                for (int j = 0; j < size; j++) x.put(items[j], items2[j]);
+//                            }
+//                        }));
+//            }
         }
     }
     public static void mainCharSeq () {
