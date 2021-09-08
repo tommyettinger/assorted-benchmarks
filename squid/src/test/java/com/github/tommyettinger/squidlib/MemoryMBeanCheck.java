@@ -10,6 +10,7 @@ import com.github.tommyettinger.ds.support.LaserRandom;
 import com.github.yellowstonegames.grid.Region;
 import com.github.yellowstonegames.place.DungeonTools;
 import com.github.yellowstonegames.place.tileset.DungeonBoneGen;
+import com.github.yellowstonegames.place.tileset.Tileset;
 import com.github.yellowstonegames.place.tileset.TilesetType;
 import com.sun.management.ThreadMXBean;
 import de.heidelberg.pvs.container_bench.generators.StringDictionaryGenerator;
@@ -27,10 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.management.ManagementFactory;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 public class MemoryMBeanCheck {
 
@@ -83,7 +81,35 @@ public class MemoryMBeanCheck {
                             HashMap<Direction, Object> x;
 
                             @Override public void run () {
-                                x = new HashMap<>();
+                                x = new HashMap<>(6, 0.8f);
+                                for (int j = 0; j < 4; j++) x.put(Direction.CLOCKWISE[j], Direction.COUNTERCLOCKWISE[j]);
+                            }
+                        }));
+            System.out.printf("%30s, %7d Enums (%d constants): %d\n----------------------------------------\n", "JDK EnumMap", size, 9,
+                        measure(new Runnable() {
+                            EnumMap<Direction, Object> x;
+
+                            @Override public void run () {
+                                x = new EnumMap<>(Direction.class);
+                                for (int j = 0; j < 4; j++) x.put(Direction.CLOCKWISE[j], Direction.COUNTERCLOCKWISE[j]);
+                            }
+                        }));
+            final TilesetType[] tilesetTypes = TilesetType.values();
+            System.out.printf("%30s, %7d Enums (%d constants): %d\n----------------------------------------\n", "JDK EnumMap", size, tilesetTypes.length,
+                        measure(new Runnable() {
+                            EnumMap<TilesetType, Object> x;
+
+                            @Override public void run () {
+                                x = new EnumMap<>(TilesetType.class);
+                                for (int j = 0; j < 4; j++) x.put(tilesetTypes[j], tilesetTypes[j + 5]);
+                            }
+                        }));
+            System.out.printf("%30s, %7d Enums: %d\n----------------------------------------\n", "GDX ObjectMap", size,
+                        measure(new Runnable() {
+                            ObjectMap<Direction, Object> x;
+
+                            @Override public void run () {
+                                x = new ObjectMap<>(6, 0.8f);
                                 for (int j = 0; j < 4; j++) x.put(Direction.CLOCKWISE[j], Direction.COUNTERCLOCKWISE[j]);
                             }
                         }));
@@ -114,7 +140,7 @@ public class MemoryMBeanCheck {
 //                        measure(new Runnable() {
 //                            UnorderedSet<String> x;
 //
-//                            @Override public void run () {
+//                          /  @Override public void run () {
 //                                x = new UnorderedSet<>(size, LoadFactor.LOAD_FACTOR);
 //                                for (int j = 0; j < size; j++) x.add(items[j]);
 //                            }
