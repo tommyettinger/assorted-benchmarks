@@ -160,6 +160,14 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathSimpleUD  avgt    4    2.863 ± 0.527  ms/op
  * </pre>
  *
+ *
+ * Quick comparison of single-path times from random point to random point on a 200x200 map:
+ * <pre>
+ * Benchmark                           Mode  Cnt  Score   Error  Units
+ * PathfindingBenchmark.doOneDijkstra  avgt    3  1.166 ± 0.059  ms/op
+ * PathfindingBenchmark.doOneGDXAStar  avgt    3  0.921 ± 2.716  ms/op
+ * PathfindingBenchmark.doOneSquidUD   avgt    3  0.418 ± 0.077  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -170,13 +178,14 @@ public class PathfindingBenchmark {
 
     @State(Scope.Thread)
     public static class BenchmarkState {
-        public int DIMENSION = 64;
+        public int DIMENSION = 200;
         public DungeonGenerator dungeonGen = new DungeonGenerator(DIMENSION, DIMENSION, new StatefulRNG(0x1337BEEFDEAL));
         public char[][] map;
         public double[][] astarMap;
         public GreasedRegion floors;
         public int floorCount;
         public Coord[] floorArray;
+        public int coordIndex;
         public Coord[][] nearbyMap;
         public int[] customNearbyMap;
         public Adjacency adj;
@@ -207,6 +216,7 @@ public class PathfindingBenchmark {
             floors = new GreasedRegion(map, '.');
             floorCount = floors.size();
             floorArray = floors.asCoords();
+            coordIndex = 1;
             System.out.println("Floors: " + floorCount);
             System.out.println("Percentage walkable: " + floorCount * 100.0 / (DIMENSION * DIMENSION) + "%");
             astarMap = DungeonUtility.generateAStarCostMap(map, Collections.<Character, Double>emptyMap(), 1);
@@ -925,6 +935,42 @@ public class PathfindingBenchmark {
         }
         return scanned;
     }
+
+    @Benchmark
+    public long doOneDijkstra(BenchmarkState state) {
+        final DijkstraMap dijkstra = state.dijkstra;
+        final int PATH_LENGTH = state.DIMENSION * state.DIMENSION;
+        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
+        state.srng.setState(state.coordIndex);
+        Coord r = state.srng.getRandomElement(state.floorArray);
+        state.path.clear();
+        dijkstra.findPath(state.path, PATH_LENGTH, -1, null, null, r, tgt);
+        dijkstra.clearGoals();
+        dijkstra.resetMap();
+        return state.path.size();
+    }
+
+    @Benchmark
+    public long doOneGDXAStar(BenchmarkState state) {
+        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
+        state.srng.setState(state.coordIndex);
+        Coord r = state.srng.getRandomElement(state.floorArray);
+        state.dgp.clear();
+        state.astar.searchNodePath(r, tgt, state.gg.heu, state.dgp);
+        return state.dgp.getCount();
+    }
+
+    @Benchmark
+    public long doOneSquidUD(BenchmarkState state) {
+        final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
+        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
+        state.srng.setState(state.coordIndex);
+        Coord r = state.srng.getRandomElement(state.floorArray);
+        state.path.clear();
+        algo.findShortestPath(r, tgt, state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV);
+        return state.path.size();
+    }
+
 
     /*
      * ============================== HOW TO RUN THIS TEST: ====================================
