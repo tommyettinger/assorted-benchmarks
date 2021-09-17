@@ -21,29 +21,11 @@ import java.util.random.RandomGeneratorFactory;
 
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * HotSpot Java 17 (SAP Machine JDK):
  * <br>
- * Java 8, HotSpot:
- * <br>
- *
- * <br>
- * With Java 15, OpenJ9, same hardware:
- * <br>
- *
- * <br>
- * HotSpot Java 16:
- * <br>
- *
+ *   JavaL64X128StarStarRandomBench score: 707815424.000000 (707.8M 2037.8%)
+ *                            uncertainty:   0.1%
  */
-/*
-L128X1024MixRandom
-L128X128MixRandom
-L128X256MixRandom
-L32X64MixRandom
-L64X1024MixRandom
-L64X128MixRandom
-L64X128StarStarRandom
-L64X256MixRandom
-*/
 public final class JavaL64X128StarStarRandomBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
