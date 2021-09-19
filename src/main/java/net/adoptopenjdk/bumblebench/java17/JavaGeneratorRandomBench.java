@@ -12,7 +12,7 @@
 * limitations under the License.
 *******************************************************************************/
 
-package net.adoptopenjdk.bumblebench.examples;
+package net.adoptopenjdk.bumblebench.java17;
 
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
@@ -23,13 +23,13 @@ import java.util.random.RandomGeneratorFactory;
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * HotSpot Java 17 (SAP Machine JDK):
  * <br>
- *   JavaXoroshiro128PlusPlusBench score: 918806592.000000 (918.8M 2063.9%)
- *                           uncertainty:   0.6%
+ *   JavaGeneratorRandomBench score: 61428652.000000 (61.43M 1793.3%)
+ *                      uncertainty:   0.3%
  */
-public final class JavaXoroshiro128PlusPlusBench extends MicroBench {
+public final class JavaGeneratorRandomBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		RandomGeneratorFactory<RandomGenerator> factory = RandomGeneratorFactory.of("Xoroshiro128PlusPlus");
+		RandomGeneratorFactory<RandomGenerator> factory = RandomGeneratorFactory.of("Random");
 		RandomGenerator rng = factory.create(0x12345678);
 		long sum = 0L;
 		for (long i = 0; i < numIterations; i++)

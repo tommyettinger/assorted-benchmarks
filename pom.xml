@@ -18,9 +18,8 @@
         <maven.source.version>3.0.1</maven.source.version>
         <maven.gpg.version>1.6</maven.gpg.version>
 
-        <java.version>17</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
 
         <gdx.version>1.10.0</gdx.version>
     </properties>
@@ -143,7 +142,31 @@
 <!--            <scope>compile</scope>-->
 <!--        </dependency>-->
     </dependencies>
-    
+    <profiles>
+        <profile>
+            <id>enable-17</id>
+            <activation>
+                <jdk>[17,)</jdk>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven.compiler.version}</version>
+                        <configuration>
+                            <target>17</target>
+                            <source>17</source>
+                            <includes>
+                                <include>net/adoptopenjdk/bumblebench/java17/*.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
     <build>
         <plugins>
             <plugin>
@@ -151,8 +174,11 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <excludes>
+                        <exclude>net/adoptopenjdk/bumblebench/java17/*.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
             <plugin>

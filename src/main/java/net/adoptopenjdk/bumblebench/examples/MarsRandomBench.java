@@ -32,10 +32,15 @@ import java.util.Random;
  * MarsRandomBench score: 862226048.000000 (862.2M 2057.5%)
  *            uncertainty:   0.8%
  * <br>
- * HotSpot Java 16:
+ * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
  * MarsRandomBench score: 1679774720.000000 (1.680G 2124.2%)
  *            uncertainty:   4.6%
+ * <br>
+ * HotSpot Java 17 (SAP Machine):
+ * <br>
+ * MarsRandomBench score: 1459173888.000000 (1.459G 2110.1%)
+ *             uncertainty:   1.2%
  * <br>
  * Note that on HotSpot Java 16, this gets 1.68 billion longs per second (was 1.791, but this varies day-to-day). The
  * previous best I had written got 1.427 billion longs per second. Java's built-in java.util.Random gets 58.88 million

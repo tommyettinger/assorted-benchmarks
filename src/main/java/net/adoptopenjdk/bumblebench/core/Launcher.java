@@ -67,6 +67,7 @@ public class Launcher extends Util {
 
 	static final String defaultPackagePath = ":"
 		+ ":net.adoptopenjdk.bumblebench.examples"
+		+ ":net.adoptopenjdk.bumblebench.java17"
 		;
 
 	public static Class loadTestClass(String[] packageNames, String name) throws ClassNotFoundException, IOException {
