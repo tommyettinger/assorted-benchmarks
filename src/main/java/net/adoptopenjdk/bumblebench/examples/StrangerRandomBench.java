@@ -46,6 +46,26 @@ public final class StrangerRandomBench extends MicroBench {
 		private long stateA, stateB, stateC, stateD;
 
 		/**
+		 * Jumps {@code state} ahead by 0x9E3779B97F4A7C15 steps of the generator StrangerRandom uses for its stateA
+		 * and stateB. When used how it is here, it ensures stateB is 11.4 quintillion steps ahead of stateA in their
+		 * shared sequence, or 7 quintillion behind if you look at it another way. It would typically take decades of
+		 * continuously running this generator at 100GB/s to have stateA become any state that stateB has already been.
+		 * <br>
+		 * Massive credit to Spencer Fleming for writing essentially all of this function over several days.
+		 * @param state the initial state of a 7-9 xorshift generator
+		 * @return state jumped ahead 0x9E3779B97F4A7C15 times (unsigned)
+		 */
+		private static long jump(long state){
+			final long poly = 0x5556837749D9A17FL;
+			long val = 0L, b = 1L;
+			for (int i = 0; i < 63; i++, b <<= 1) {
+				if((poly & b) != 0L) val ^= state;
+				state ^= state << 7;
+				state ^= state >>> 9;
+			}
+			return val;
+		}
+		/**
 		 * Creates a new random number generator. This constructor sets
 		 * the seed of the random number generator to a value very likely
 		 * to be distinct from any other invocation of this constructor.
@@ -53,11 +73,10 @@ public final class StrangerRandomBench extends MicroBench {
 		public StrangerRandom() {
 			super();
 			stateA = super.nextLong();
-			stateB = super.nextLong();
+			if(stateA == 0L) stateA = 0xD3833E804F4C574BL;
+			stateB = jump(stateA);
 			stateC = super.nextLong();
 			stateD = super.nextLong();
-			if(stateA == 0L) stateA = 0xD3833E804F4C574BL;
-			if(stateB == 0L) stateB = 0xD1342543DE82EF95L;
 		}
 
 		/**
@@ -76,16 +95,15 @@ public final class StrangerRandomBench extends MicroBench {
 		public StrangerRandom(long seed) {
 			super(seed);
 			stateA = seed ^ 0xFA346CBFD5890825L;
-			stateB = seed;
-			stateC = ~seed;
-			stateD = seed ^ 0x05CB93402A76F7DAL;
 			if(stateA == 0L) stateA = 0xD3833E804F4C574BL;
-			if(stateB == 0L) stateB = 0xD1342543DE82EF95L;
+			stateB = jump(stateA);
+			stateC = seed ^ 0x05CB93402A76F7DAL;
+			stateD = ~seed;
 		}
 		public StrangerRandom(long stateA, long stateB, long stateC, long stateD) {
 			super(stateA);
 			this.stateA = (stateA == 0L) ? 0xD3833E804F4C574BL : stateA;
-			this.stateB = (stateB == 0L) ? 0xD1342543DE82EF95L : stateB;
+			this.stateB = (stateB == 0L) ? 0x790B300BF9FE738FL : stateB;
 			this.stateC = stateC;
 			this.stateD = stateD;
 		}
@@ -112,12 +130,11 @@ public final class StrangerRandomBench extends MicroBench {
 		@Override
 		public synchronized void setSeed(long seed) {
 			super.setSeed(seed);
-			stateA = ~seed;
-			stateB = seed;
-			stateC = seed ^ 0xFA346CBFD5890825L;
-			stateD = seed ^ 0x05CB93402A76F7DAL;
+			stateA = seed ^ 0xFA346CBFD5890825L;
 			if(stateA == 0L) stateA = 0xD3833E804F4C574BL;
-			if(stateB == 0L) stateB = 0xD1342543DE82EF95L;
+			stateB = jump(stateA);
+			stateC = seed ^ 0x05CB93402A76F7DAL;
+			stateD = ~seed;
 		}
 
 		/**
@@ -209,6 +226,12 @@ public final class StrangerRandomBench extends MicroBench {
 			for (int i = 0; i < 0x100; i++) {
 				System.out.printf("%d\n", buf[i]);
 			}
+
+			long original = 0x4AD46E4797DADE53L;
+			long jumped = 0xB69A5C2F5FBC9EC6L;
+			System.out.printf("0x%016X == 0x%016X\n", jumped, jump(original));
+//			System.out.printf("0x%016X\n", jump(0xD3833E804F4C574BL));
+
 		}
 	}
 	protected long doBatch(long numIterations) throws InterruptedException {
@@ -217,5 +240,9 @@ public final class StrangerRandomBench extends MicroBench {
 		for (long i = 0; i < numIterations; i++)
 			sum += rng.nextLong();
 		return numIterations;
+	}
+
+	public static void main(String[] args) {
+
 	}
 }
