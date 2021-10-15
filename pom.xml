@@ -112,7 +112,7 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>jdkgdxds</artifactId>
-            <version>0.1.2</version>
+            <version>0.2.0</version>
             <scope>compile</scope>
         </dependency>
 

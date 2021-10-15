@@ -55,7 +55,7 @@ public final class StrangerRandomBench extends MicroBench {
 		 * @param state the initial state of a 7-9 xorshift generator
 		 * @return state jumped ahead 0x9E3779B97F4A7C15 times (unsigned)
 		 */
-		private static long jump(long state){
+		public static long jump(long state){
 			final long poly = 0x5556837749D9A17FL;
 			long val = 0L, b = 1L;
 			for (int i = 0; i < 63; i++, b <<= 1) {
