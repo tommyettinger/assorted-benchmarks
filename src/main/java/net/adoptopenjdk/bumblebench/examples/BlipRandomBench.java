@@ -20,29 +20,31 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
 import java.util.Random;
 
 /**
- * This is not expected to be a high-quality generator, but instead to see how fast we can go.
+ * This was not expected to be a high-quality generator, but instead to see how fast we can go.
+ * Some small tweaks seem to have both sped it up and improved quality, so it passes at least 256GB
+ * of PractRand without anomalies.
  * <br>
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * HotSpot Java 8:
  * <br>
- * BlipRandomBench score: 885808448.000000 (885.8M 2060.2%)
- *             uncertainty:   4.6%
+ * BlipRandomBench score: 939625664.000000 (939.6M 2066.1%)
+ *             uncertainty:   3.5%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * BlipRandomBench score: 695316736.000000 (695.3M 2036.0%)
- *             uncertainty:   1.0%
+ * BlipRandomBench score: 692315392.000000 (692.3M 2035.6%)
+ *             uncertainty:   1.5%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * BlipRandomBench score: 1816723584.000000 (1.817G 2132.0%)
- *             uncertainty:   1.3%
+ * BlipRandomBench score: 1940002304.000000 (1.940G 2138.6%)
+ *             uncertainty:   6.1%
  * <br>
  * HotSpot Java 17 (SAP Machine):
  * <br>
- * BlipRandomBench score: 1842557440.000000 (1.843G 2133.4%)
- *             uncertainty:   0.9%
+ * BlipRandomBench score: 1570536704.000000 (1.571G 2117.5%)
+ *             uncertainty:  10.6%
  */
 public final class BlipRandomBench extends MicroBench {
 
@@ -149,11 +151,11 @@ public final class BlipRandomBench extends MicroBench {
 			final long fb = this.stateB;
 			final long fc = this.stateC;
 			final long fd = this.stateD;
-			stateA = fd - fc;
-			stateB = (fa << 44 | fa >>> 64 - 44);
+			stateA = fd ^ fc;
+			stateB = (fa << 41 | fa >>> 64 - 41);
 			stateC = fa - fb;
 			stateD = fc + 0xC6BC279692B5C323L;
-			return (int) fa >>> 32 - bits;
+			return (int) fc >>> 32 - bits;
 		}
 
 		/**
@@ -171,11 +173,11 @@ public final class BlipRandomBench extends MicroBench {
 			final long fb = this.stateB;
 			final long fc = this.stateC;
 			final long fd = this.stateD;
-			stateA = fd - fc;
-			stateB = (fa << 44 | fa >>> 64 - 44);
+			stateA = fd ^ fc;
+			stateB = (fa << 41 | fa >>> 64 - 41);
 			stateC = fa - fb;
 			stateD = fc + 0xC6BC279692B5C323L;
-			return fa;
+			return fc;
 		}
 
 		public static void main(String[] args) {
