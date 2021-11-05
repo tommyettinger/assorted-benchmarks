@@ -16,6 +16,7 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import net.adoptopenjdk.bumblebench.core.MicroBench;
+import squidpony.squidmath.RandomnessSource;
 
 import java.util.Random;
 
@@ -24,27 +25,27 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * SlideRandomBench score: 866153344.000000 (866.2M 2058.0%)
- *              uncertainty:   1.4%
+ * SlideRandomBench score: 1106750464.000000 (1.107G 2082.5%)
+ *              uncertainty:   8.7%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * SlideRandomBench score: 810181440.000000 (810.2M 2051.3%)
- *              uncertainty:   3.1%
+ * SlideRandomBench score: 721886592.000000 (721.9M 2039.7%)
+ *              uncertainty:   1.5%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * SlideRandomBench score: 1732098176.000000 (1.732G 2127.3%)
- *              uncertainty:   0.4%
+ * SlideRandomBench score: 1753669376.000000 (1.754G 2128.5%)
+ *              uncertainty:   3.0%
  * <br>
  * HotSpot Java 17 (SAP Machine):
  * <br>
- * SlideRandomBench score: 1667949824.000000 (1.668G 2123.5%)
- *              uncertainty:   0.9%
+ * SlideRandomBench score: 1728498560.000000 (1.728G 2127.1%)
+ *              uncertainty:   3.8%
  */
 public final class SlideRandomBench extends MicroBench {
 
-	public static class SlideRandom extends Random {
+	public static class SlideRandom implements RandomnessSource {
 		private long stateA, stateB, stateC, stateD;
 
 		/**
@@ -53,11 +54,10 @@ public final class SlideRandomBench extends MicroBench {
 		 * to be distinct from any other invocation of this constructor.
 		 */
 		public SlideRandom() {
-			super();
-			stateA = super.nextLong();
-			stateB = super.nextLong();
-			stateC = super.nextLong();
-			stateD = super.nextLong();
+			stateA = (long) ((Math.random() - 0.5) * 0x10000000000000L) ^ (long) (((Math.random() - 0.5) * 2.0) * 0x8000000000000000L);
+			stateB = (long) ((Math.random() - 0.5) * 0x10000000000000L) ^ (long) (((Math.random() - 0.5) * 2.0) * 0x8000000000000000L);
+			stateC = (long) ((Math.random() - 0.5) * 0x10000000000000L) ^ (long) (((Math.random() - 0.5) * 2.0) * 0x8000000000000000L);
+			stateD = (long) ((Math.random() - 0.5) * 0x10000000000000L) ^ (long) (((Math.random() - 0.5) * 2.0) * 0x8000000000000000L);
 		}
 
 		/**
@@ -74,14 +74,12 @@ public final class SlideRandomBench extends MicroBench {
 		 * @see #setSeed(long)
 		 */
 		public SlideRandom(long seed) {
-			super(seed);
 			stateA = seed ^ 0xFA346CBFD5890825L;
 			stateB = seed;
 			stateC = ~seed;
 			stateD = seed ^ 0x05CB93402A76F7DAL;
 		}
 		public SlideRandom(long stateA, long stateB, long stateC, long stateD) {
-			super(stateA);
 			this.stateA = stateA;
 			this.stateB = stateB;
 			this.stateC = stateC;
@@ -90,26 +88,10 @@ public final class SlideRandomBench extends MicroBench {
 
 		/**
 		 * Sets the seed of this random number generator using a single
-		 * {@code long} seed. The general contract of {@code setSeed} is
-		 * that it alters the state of this random number generator object
-		 * so as to be in exactly the same state as if it had just been
-		 * created with the argument {@code seed} as a seed. The method
-		 * {@code setSeed} is implemented by class {@code Random} by
-		 * atomically updating the seed to
-		 * <pre>{@code (seed ^ 0x5DEECE66DL) & ((1L << 48) - 1)}</pre>
-		 * and clearing the {@code haveNextNextGaussian} flag used by {@link
-		 * #nextGaussian}.
-		 *
-		 * <p>The implementation of {@code setSeed} by class {@code Random}
-		 * happens to use only 48 bits of the given seed. In general, however,
-		 * an overriding method may use all 64 bits of the {@code long}
-		 * argument as a seed value.
-		 *
+		 * {@code long} seed.
 		 * @param seed the initial seed
 		 */
-		@Override
-		public synchronized void setSeed(long seed) {
-			super.setSeed(seed);
+		public void setSeed(long seed) {
 			stateA = seed ^ 0xFA346CBFD5890825L;
 			stateB = seed;
 			stateC = ~seed;
@@ -142,7 +124,7 @@ public final class SlideRandomBench extends MicroBench {
 		 * @since 1.1
 		 */
 		@Override
-		protected int next(int bits) {
+		public int next(int bits) {
 			final long fa = this.stateA;
 			final long fb = this.stateB;
 			final long fc = this.stateC;
@@ -176,12 +158,17 @@ public final class SlideRandomBench extends MicroBench {
 			return fc;
 		}
 
+		@Override
+		public SlideRandom copy() {
+			return new SlideRandom(stateA, stateB, stateC, stateD);
+		}
+
 		public static void main(String[] args) {
 //			long count = 0xffffffL;
 			long count = 0xffffffffL;
 			long[] buf = new long[256];
 
-			SlideRandom rand = new SlideRandom(1234567L);
+			SlideRandom rand = new SlideRandom(0L);
 			for (long i = 0; i <= count; i++) {
 				buf[(int)(rand.nextLong() & 255)]++;
 			}
@@ -192,7 +179,7 @@ public final class SlideRandomBench extends MicroBench {
 			}
 
  */
-			for (int i = 0; i < 0x100; i++) {
+			for (int i = 0; i < 256; i++) {
 				System.out.printf("%d\n", buf[i]);
 			}
 		}
