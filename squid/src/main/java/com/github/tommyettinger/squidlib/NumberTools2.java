@@ -463,5 +463,63 @@ public final class NumberTools2 {
         }
         else return Math.copySign(1.5707963267948966f, y);
     }
+    /**
+     * A variant on {@link #atan(float)} that does not tolerate infinite inputs, and is much more precise
+     * because it does its internal processing with double-precision and does more steps of the approximation
+     * than atan().
+     * @param i any finite float
+     * @return an output from the inverse tangent function, from PI/-2.0 to PI/2.0 inclusive
+     */
+    private static float atnHP (final double i) {
+        final double n = Math.abs(i);
+        final double c = (n - 1.0) / (n + 1.0);
+        final double c2 = c * c;
+        final double c3 = c * c2;
+        final double c5 = c3 * c2;
+        final double c7 = c5 * c2;
+        final double c9 = c7 * c2;
+        final double c11 = c9 * c2;
+        return (float)Math.copySign((Math.PI * 0.25) +
+                (0.99997726 * c - 0.33262347 * c3 + 0.19354346 * c5 - 0.11643287 * c7 + 0.05265332 * c9 - 0.0117212 * c11), i);
+        //intermediate, -4.99936
+//		return Math.copySign(0.7853981633974483f +
+//			(0.999866f * c - 0.3302995f * c3 + 0.180141f * c5 - 0.085133f * c7 + 0.0208351f * c9), i);
+        //old, -5.00103
+//		return Math.copySign(0.7853981633974483f +
+//			(0.999215f * c - 0.3211819f * c3 + 0.1462766f * c5 - 0.0389929f * c7), i);
+    }
+
+    /**
+     * Close approximation of the frequently-used trigonometric method atan2, with higher precision than libGDX's atan2
+     * approximation. Maximum error should be below 0.000002 radians.
+     * Takes y and x (in that unusual order) as floats, and returns the angle from the origin to that point in radians.
+     * It is about 4 times faster than {@link Math#atan2(double, double)} (roughly 14.6 ns instead of roughly 60.4 ns
+     * for Math, on Java 16 HotSpot).
+     * <br>
+     * Credit for this goes to the 1955 research study "Approximations for Digital Computers," by RAND Corporation. This
+     * is sheet 11's algorithm, which is the fourth-fastest and fourth-least precise. Other algorithms provided in that
+     * study are faster, but none much more so; this algorithm was chosen both because it has low enough error to
+     * compete with {@link Math#atan2(double, double)} in some usages, and because it's almost exactly the same speed as
+     * the atan2() approximation previously used by libGDX (which was much less precise).
+     * @param y y-component of the point to find the angle towards; note the parameter order is unusual by convention
+     * @param x x-component of the point to find the angle towards; note the parameter order is unusual by convention
+     * @return the angle to the given point, in radians as a float; ranges from -PI to PI
+     */
+    public static float atan2HP (final float y, float x) {
+        float n = y / x;
+        if(n != n) n = (y == x ? 1f : -1f); // if both y and x are infinite, n would be NaN
+        else if(n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
+        if(x > 0)
+            return atnHP(n);
+        else if(x < 0) {
+            if(y >= 0)
+                return atnHP(n) + PI;
+            else
+                return atnHP(n) - PI;
+        }
+        else if(y > 0) return x + (PI * 0.5f);
+        else if(y < 0) return x - (PI * 0.5f);
+        else return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
+    }
 
 }

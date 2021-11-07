@@ -148,6 +148,16 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureFloorMath   avgt    6  3.353 ± 0.019  ns/op
  * MathBenchmark.measureFloorNoise  avgt    6  3.226 ± 0.125  ns/op
  * </pre>
+ * <br>
+ * Benchmarking just some competitive atan2() approximations, plus Math's
+ * non-approximate version to compare.
+ * <pre>
+ * Benchmark                                Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureGdxAtan2            avgt    5  14.689 ± 0.686  ns/op
+ * MathBenchmark.measureHighPrecisionAtan2  avgt    5  14.673 ± 0.030  ns/op
+ * MathBenchmark.measureMathAtan2           avgt    5  60.481 ± 1.998  ns/op
+ * MathBenchmark.measureSquidAtan2          avgt    5  12.423 ± 0.973  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -215,6 +225,8 @@ public class MathBenchmark {
     private int atan2NtY = -0x8000;
     private int atan2ImX = -0x4000;
     private int atan2ImY = -0x8000;
+    private int atan2HPX = -0x4000;
+    private int atan2HPY = -0x8000;
     private int atan2Im_X = -0x4000;
     private int atan2Im_Y = -0x8000;
     private int atan2Si_X = -0x4000;
@@ -643,6 +655,12 @@ public class MathBenchmark {
     }
 
     @Benchmark
+    public float measureHighPrecisionAtan2()
+    {
+        return NumberTools2.atan2HP(floatInputs[atan2HPY++ & 0xFFFF], floatInputs[atan2HPX++ & 0xFFFF]);
+    }
+
+    @Benchmark
     public float measureGeneralAtan2()
     {
         return NumberTools2.atan2General(floatInputs[atan2GeY++ & 0xFFFF], floatInputs[atan2GeX++ & 0xFFFF]);
@@ -752,7 +770,7 @@ public class MathBenchmark {
 
     /*
 mvn clean install
-java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
+java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
      */
     public static void main2(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
@@ -843,6 +861,7 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
         double atan2GeError = 0;
         double atan2SiError = 0;
         double atan2FnError = 0;
+        double atan2HPError = 0;
         double atan2_SquidError = 0;
         double atan2_ImError = 0;
         double atan2_SiError = 0;
@@ -870,6 +889,8 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
             u.atan2SiY = j;
             u.atan2FnX = i;
             u.atan2FnY = j;
+            u.atan2HPX = i;
+            u.atan2HPY = j;
             u.mathAtan2_X = i;
             u.mathAtan2_Y = j;
             u.atan2_SquidXF = i;
@@ -890,6 +911,7 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
             atan2GeError += Math.abs(u.measureGeneralAtan2() - at);
             atan2SiError += Math.abs(u.measureSimpleAtan2() - at);
             atan2FnError += Math.abs(u.measureFunkyAtan2() - at);
+            atan2HPError += Math.abs(u.measureHighPrecisionAtan2() - at);
 
             atan2_SquidError += Math.abs(u.measureSquidAtan2_() - at_);
             atan2_ImError += Math.abs(u.measureImuliAtan2_() - at_);
@@ -904,6 +926,7 @@ java -jar target/benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1 -gc true
         System.out.println("atan2 General    : " + atan2GeError);
         System.out.println("atan2 Simple     : " + atan2SiError);
         System.out.println("atan2 Funky      : " + atan2FnError);
+        System.out.println("atan2 HP         : " + atan2HPError);
         System.out.println();
         System.out.println("atan2_ Squid     : " + atan2_SquidError);
         System.out.println("atan2_ Imuli     : " + atan2_ImError);
