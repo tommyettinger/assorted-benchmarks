@@ -150,13 +150,22 @@ import java.util.concurrent.TimeUnit;
  * </pre>
  * <br>
  * Benchmarking just some competitive atan2() approximations, plus Math's
- * non-approximate version to compare.
+ * non-approximate version to compare. On Java 8, HotSpot:
  * <pre>
  * Benchmark                                Mode  Cnt   Score   Error  Units
  * MathBenchmark.measureGdxAtan2            avgt    5  14.689 ± 0.686  ns/op
  * MathBenchmark.measureHighPrecisionAtan2  avgt    5  14.673 ± 0.030  ns/op
  * MathBenchmark.measureMathAtan2           avgt    5  60.481 ± 1.998  ns/op
  * MathBenchmark.measureSquidAtan2          avgt    5  12.423 ± 0.973  ns/op
+ * </pre>
+ * <br>
+ * And on Java 16, HotSpot (load may be a little higher this time):
+ * <pre>
+ * Benchmark                                Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureGdxAtan2            avgt    5  15.715 ± 0.656  ns/op
+ * MathBenchmark.measureHighPrecisionAtan2  avgt    5  14.843 ± 0.426  ns/op
+ * MathBenchmark.measureMathAtan2           avgt    5  63.574 ± 2.227  ns/op
+ * MathBenchmark.measureSquidAtan2          avgt    5  12.395 ± 0.453  ns/op
  * </pre>
  */
 
