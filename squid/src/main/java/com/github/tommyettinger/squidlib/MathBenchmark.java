@@ -845,23 +845,23 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
             asinChristensenError += Math.abs(u.measureChristensenASin() - as);
             asinSquidError += Math.abs(u.measureSquidASin() - as);
         }
-        System.out.println("base float error : " + precisionError);
-        System.out.println("cos GDX          : " + cosGdxError);
-        System.out.println("sin GDX          : " + sinGdxError);
-        System.out.println("cos Squid float  : " + cosFError);
-        System.out.println("sin Squid float  : " + sinFError);
-        System.out.println("sin Squid        : " + sinNickError);
-        System.out.println("cos Squid        : " + cosNickError);
-        System.out.println("sin Bit          : " + sinBitError);
-        System.out.println("cos Bit          : " + cosBitError);
-        System.out.println("sin BitF         : " + sinBitFError);
-        System.out.println("cos BitF         : " + cosBitFError);
-        System.out.println("sin Nick deg     : " + sinDegNickError);
-        System.out.println("cos Nick deg     : " + cosDegNickError);
-        System.out.println("sin GDX deg      : " + sinDegGdxError);
-        System.out.println("cos GDX deg      : " + cosDegGdxError);
-        System.out.println("asin Chr.        : " + asinChristensenError);
-        System.out.println("asin Squid       : " + asinSquidError);
+        System.out.println("base float error : " + precisionError * 0x1p-16);
+        System.out.println("cos GDX          : " + cosGdxError * 0x1p-16);
+        System.out.println("sin GDX          : " + sinGdxError * 0x1p-16);
+        System.out.println("cos Squid float  : " + cosFError * 0x1p-16);
+        System.out.println("sin Squid float  : " + sinFError * 0x1p-16);
+        System.out.println("sin Squid        : " + sinNickError * 0x1p-16);
+        System.out.println("cos Squid        : " + cosNickError * 0x1p-16);
+        System.out.println("sin Bit          : " + sinBitError * 0x1p-16);
+        System.out.println("cos Bit          : " + cosBitError * 0x1p-16);
+        System.out.println("sin BitF         : " + sinBitFError * 0x1p-16);
+        System.out.println("cos BitF         : " + cosBitFError * 0x1p-16);
+        System.out.println("sin Nick deg     : " + sinDegNickError * 0x1p-16);
+        System.out.println("cos Nick deg     : " + cosDegNickError * 0x1p-16);
+        System.out.println("sin GDX deg      : " + sinDegGdxError * 0x1p-16);
+        System.out.println("cos GDX deg      : " + cosDegGdxError * 0x1p-16);
+        System.out.println("asin Chr.        : " + asinChristensenError * 0x1p-16);
+        System.out.println("asin Squid       : " + asinSquidError * 0x1p-16);
         double atan2SquidError = 0;
         double atan2GDXError = 0;
         double atan2GtError = 0;
@@ -871,11 +871,17 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
         double atan2SiError = 0;
         double atan2FnError = 0;
         double atan2HPError = 0;
+
+        double maxSquidError = 0.0;
+        double maxGDXError = 0.0;
+        double maxHPError = 0.0;
+
         double atan2_SquidError = 0;
         double atan2_ImError = 0;
         double atan2_SiError = 0;
         double atan2_FnError = 0;
         double at, at_;
+        double temp = 0.0;
         for(int r = 0; r < 0x10000; r++)
         {
             short i = (short) (DiverRNG.determine(r) & 0xFFFF);
@@ -912,34 +918,42 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
             u.atan2Fn_Y = j;
             at = u.measureMathAtan2();
             at_ = u.measureMathAtan2_();
-            atan2SquidError += Math.abs(u.measureSquidAtan2Float() - at);
-            atan2GDXError += Math.abs(u.measureGdxAtan2() - at);
+            atan2SquidError += temp = Math.abs(u.measureSquidAtan2Float() - at);
+            maxSquidError = Math.max(maxSquidError, temp);
+            atan2GDXError += temp = Math.abs(u.measureGdxAtan2() - at);
+            maxGDXError = Math.max(maxGDXError, temp);
             atan2GtError += Math.abs(u.measureGtAtan2() - at);
             atan2NtError += Math.abs(u.measureNtAtan2() - at);
             atan2ImError += Math.abs(u.measureImuliAtan2() - at);
             atan2GeError += Math.abs(u.measureGeneralAtan2() - at);
             atan2SiError += Math.abs(u.measureSimpleAtan2() - at);
             atan2FnError += Math.abs(u.measureFunkyAtan2() - at);
-            atan2HPError += Math.abs(u.measureHighPrecisionAtan2() - at);
+            atan2HPError += temp = Math.abs(u.measureHighPrecisionAtan2() - at);
+            maxHPError = Math.max(maxHPError, temp);
 
             atan2_SquidError += Math.abs(u.measureSquidAtan2_() - at_);
             atan2_ImError += Math.abs(u.measureImuliAtan2_() - at_);
             atan2_SiError += Math.abs(u.measureSimpleAtan2_() - at_);
             atan2_FnError += Math.abs(u.measureFunkyAtan2_() - at_);
         }
-        System.out.println("atan2 Squid      : " + atan2SquidError);
-        System.out.println("atan2 GDX        : " + atan2GDXError);
-        System.out.println("atan2 Gt         : " + atan2GtError);
-        System.out.println("atan2 Nt         : " + atan2NtError);
-        System.out.println("atan2 Imuli      : " + atan2ImError);
-        System.out.println("atan2 General    : " + atan2GeError);
-        System.out.println("atan2 Simple     : " + atan2SiError);
-        System.out.println("atan2 Funky      : " + atan2FnError);
-        System.out.println("atan2 HP         : " + atan2HPError);
+        System.out.println("atan2 Squid      : " + atan2SquidError * 0x1p-16);
+        System.out.println("atan2 Squid Max  : " + maxSquidError);
         System.out.println();
-        System.out.println("atan2_ Squid     : " + atan2_SquidError);
-        System.out.println("atan2_ Imuli     : " + atan2_ImError);
-        System.out.println("atan2_ Simple    : " + atan2_SiError);
-        System.out.println("atan2_ Funky     : " + atan2_FnError);
+        System.out.println("atan2 GDX        : " + atan2GDXError * 0x1p-16);
+        System.out.println("atan2 GDX Max    : " + maxGDXError);
+        System.out.println();
+        System.out.println("atan2 Gt         : " + atan2GtError * 0x1p-16);
+        System.out.println("atan2 Nt         : " + atan2NtError * 0x1p-16);
+        System.out.println("atan2 Imuli      : " + atan2ImError * 0x1p-16);
+        System.out.println("atan2 General    : " + atan2GeError * 0x1p-16);
+        System.out.println("atan2 Simple     : " + atan2SiError * 0x1p-16);
+        System.out.println("atan2 Funky      : " + atan2FnError * 0x1p-16);
+        System.out.println("atan2 HP         : " + atan2HPError * 0x1p-16);
+        System.out.println("atan2 HP Max     : " + maxHPError);
+        System.out.println();
+        System.out.println("atan2_ Squid     : " + atan2_SquidError * 0x1p-16);
+        System.out.println("atan2_ Imuli     : " + atan2_ImError * 0x1p-16);
+        System.out.println("atan2_ Simple    : " + atan2_SiError * 0x1p-16);
+        System.out.println("atan2_ Funky     : " + atan2_FnError * 0x1p-16);
     }
 }

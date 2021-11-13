@@ -130,7 +130,7 @@ public final class SlideRandomBench extends MicroBench {
 			final long fc = this.stateC;
 			final long fd = this.stateD;
 			this.stateA = fb ^ fc ^ fd;
-			this.stateB = Long.rotateLeft(fa, 41);
+			this.stateB = Long.rotateLeft(fa, 42);
 			this.stateC = fa + fb;
 			this.stateD = fc + 0xC6BC279692B5C323L;
 			return (int) fc >>> 32 - bits;
@@ -152,7 +152,7 @@ public final class SlideRandomBench extends MicroBench {
 			final long fc = this.stateC;
 			final long fd = this.stateD;
 			this.stateA = fb ^ fc ^ fd;
-			this.stateB = Long.rotateLeft(fa, 41);
+			this.stateB = Long.rotateLeft(fa, 42);
 			this.stateC = fa + fb;
 			this.stateD = fc + 0xC6BC279692B5C323L;
 			return fc;
