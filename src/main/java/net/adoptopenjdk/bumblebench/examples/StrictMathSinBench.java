@@ -21,36 +21,36 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8 (AdoptOpenJDK):
  * <br>
- * MathSinBench score: 32765174.000000 (32.77M 1730.5%)
- *          uncertainty:   2.3%
+ * StrictMathSinBench score: 34722412.000000 (34.72M 1736.3%)
+ *                uncertainty:   3.1%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * MathSinBench score: 33481438.000000 (33.48M 1732.7%)
- *          uncertainty:   1.0%
+ * StrictMathSinBench score: 32636938.000000 (32.64M 1730.1%)
+ *                uncertainty:   2.8%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * MathSinBench score: 45923824.000000 (45.92M 1764.2%)
- *          uncertainty:   3.7%
+ * StrictMathSinBench score: 33137208.000000 (33.14M 1731.6%)
+ *                uncertainty:   2.3%
  * <br>
  * GraalVM CE Java 16:
  * <br>
- * MathSinBench score: 49647548.000000 (49.65M 1772.0%)
- *          uncertainty:   0.5%
+ * StrictMathSinBench score: 33357860.000000 (33.36M 1732.3%)
+ *                uncertainty:   2.2%
  * <br>
  * HotSpot Java 17 (SAP Machine):
  * <br>
- * MathSinBench score: 44931508.000000 (44.93M 1762.1%)
- *          uncertainty:   4.7%
+ * StrictMathSinBench score: 31586566.000000 (31.59M 1726.8%)
+ *                uncertainty:   4.5%
  */
-public final class MathSinBench extends MicroBench {
+public final class StrictMathSinBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
 		double sum = 0.1;
 		final double shrink = Math.PI * 8.0 / numIterations;
 		for (long i = 0; i < numIterations; i++)
-			sum -= Math.sin((sum + i) * shrink);
+			sum -= StrictMath.sin((sum + i) * shrink);
 		return numIterations;
 	}
 }
