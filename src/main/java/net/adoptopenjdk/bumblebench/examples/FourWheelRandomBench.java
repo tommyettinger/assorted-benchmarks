@@ -34,6 +34,12 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * FourWheelRandomBench score: 1618691712.000000 (1.619G 2120.5%)
  *                  uncertainty:   2.3%
+ * <br>
+ * GraalVM CE Java 16:
+ * <br>
+ * FourWheelRandomBench score: 1630737408.000000 (1.631G 2121.2%)
+ *                  uncertainty:   0.7%
+ * <br>
  */
 public final class FourWheelRandomBench extends MicroBench {
 
