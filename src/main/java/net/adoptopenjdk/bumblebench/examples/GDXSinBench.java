@@ -18,16 +18,37 @@ import com.badlogic.gdx.math.MathUtils;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * GDXSinBench score: 97255424.000000 (97.26M 1839.3%)
- *         uncertainty:   1.1%
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8 (AdoptOpenJDK):
+ * <br>
+ * GDXSinBench score: 150555696.000000 (150.6M 1883.0%)
+ *         uncertainty:   0.9%
+ * <br>
+ * OpenJ9 Java 15:
+ * <br>
+ * GDXSinBench score: 151019840.000000 (151.0M 1883.3%)
+ *         uncertainty:   0.3%
+ * <br>
+ * HotSpot Java 16 (AdoptOpenJDK):
+ * <br>
+ * GDXSinBench score: 150672832.000000 (150.7M 1883.1%)
+ *         uncertainty:   1.2%
+ * <br>
+ * GraalVM CE Java 16:
+ * <br>
+ * GDXSinBench score: 149349824.000000 (149.3M 1882.2%)
+ *         uncertainty:   0.2%
+ * <br>
+ * HotSpot Java 17 (SAP Machine):
+ * <br>
+ * GDXSinBench score: 148779184.000000 (148.8M 1881.8%)
+ *         uncertainty:   0.6%
  */
 public final class GDXSinBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
 		float sum = 0.1f;
-//		final double shrink = 1.999 / numIterations;
-//		for (long i = 0; i < numIterations; i++)
-//			sum += Math.asin(i * shrink - 1.0);
 		final float shrink = MathUtils.PI * 8f / numIterations;
 		for (long i = 0; i < numIterations; i++)
 			sum -= MathUtils.sin((sum + i) * shrink);
