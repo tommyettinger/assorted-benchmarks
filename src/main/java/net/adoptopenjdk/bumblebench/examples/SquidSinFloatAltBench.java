@@ -23,36 +23,44 @@ import squidpony.squidmath.NumberTools;
  * <br>
  * HotSpot Java 8 (AdoptOpenJDK):
  * <br>
- * SquidSinFloatBench score: 75530640.000000 (75.53M 1814.0%)
- *                uncertainty:   0.8%
+ * SquidSinFloatAltBench score: 73303128.000000 (73.30M 1811.0%)
+ *                   uncertainty:   0.5%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * SquidSinFloatBench score: 75560160.000000 (75.56M 1814.0%)
- *                uncertainty:   0.6%
+ * SquidSinFloatAltBench score: 66262600.000000 (66.26M 1800.9%)
+ *                   uncertainty:   0.6%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * SquidSinFloatBench score: 75913640.000000 (75.91M 1814.5%)
- *                uncertainty:   0.8%
+ * SquidSinFloatAltBench score: 71553392.000000 (71.55M 1808.6%)
+ *                   uncertainty:   0.5%
  * <br>
  * GraalVM CE Java 16:
  * <br>
- * SquidSinFloatBench score: 75309200.000000 (75.31M 1813.7%)
- *                uncertainty:   0.6%
+ *
  * <br>
  * HotSpot Java 17 (SAP Machine):
  * <br>
- * SquidSinFloatBench score: 75510208.000000 (75.51M 1814.0%)
- *                uncertainty:   2.9%
+ *
+ * <br>
+ * It just isn't as fast as the regular NumberTools.sin(float).
  */
-public final class SquidSinFloatBench extends MicroBench {
+public final class SquidSinFloatAltBench extends MicroBench {
+	public static float sin(float radians)
+	{
+		radians *= 0.6366197723675814f;
+		final int floor = (radians >= 0 ? (int) radians : (int) radians - 1) & -2;
+		radians -= floor;
+		radians *= 2f - radians;
+		return Math.copySign(radians * (-0.775f - 0.225f * radians), ((floor & 2) - 1));
+	}
 
 	protected long doBatch(long numIterations) throws InterruptedException {
 		float sum = 0.1f;
 		final float shrink = MathUtils.PI * 8f / numIterations;
 		for (long i = 0; i < numIterations; i++)
-			sum -= NumberTools.sin((sum + i) * shrink);
+			sum -= sin((sum + i) * shrink);
 		return numIterations;
 	}
 }
