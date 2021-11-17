@@ -51,15 +51,28 @@ public final class ASin35FloatBench extends MicroBench {
 
 	public static void main(String[] args) {
 		double absolute = 0.0, relative = 0.0, max = 0.0;
-		float ctr = -1f;
-		for (int i = 0; i < 2048; i++) {
-			final double error = Math.asin(ctr) - asin(ctr);
-			relative += error;
+		for (float f : new float[]{-1f, -0.9999f, -0.999f, -0.99f, -0.5f -0.01f, -0.001f, -0.0001f, 0f, 0.0001f, 0.001f, 0.01f, 0.5f, 0.99f, 0.999f, 0.9999f, 1f}) {
+			float math = (float) Math.asin(f);
+			float mu = asin(f);
+			float error = mu - math;
+			relative = error;
 			max = Math.max(max, Math.abs(error));
-			absolute += Math.abs(error);
-			ctr += 0x1p-10f;
+			absolute = Math.abs(error);
+			System.out.printf("% 2.9f: Math gives % 2.9f, MathUtils gives % 2.9f ; off by % 2.9f\n",
+					f, math, mu, relative);
 		}
-		System.out.printf("absolute error %2.9f, relative error %2.9f, max error %2.9f",
-				absolute * 0x1p-11f, relative * 0x1p-11f, max);
 	}
+//	public static void main(String[] args) {
+//		double absolute = 0.0, relative = 0.0, max = 0.0;
+//		float ctr = -1f;
+//		for (int i = 0; i < 2048; i++) {
+//			final double error = Math.asin(ctr) - asin(ctr);
+//			relative += error;
+//			max = Math.max(max, Math.abs(error));
+//			absolute += Math.abs(error);
+//			ctr += 0x1p-10f;
+//		}
+//		System.out.printf("absolute error %2.9f, relative error %2.9f, max error %2.9f",
+//				absolute * 0x1p-11f, relative * 0x1p-11f, max);
+//	}
 }
