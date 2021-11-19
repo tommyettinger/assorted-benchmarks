@@ -44,8 +44,7 @@ public final class RandomExclusiveDoubleUniformBench extends MicroBench {
 
 	private double nextExclusiveDouble() {
 		final long bits = rng.nextLong();
-		return BitConversion.longBitsToDouble(1022L - Long.numberOfTrailingZeros(bits) << 52
-				| bits >>> 12);
+		return BitConversion.longBitsToDouble(1022L - Long.numberOfTrailingZeros(bits) << 52 | bits >>> 12);
 	}
 
 	protected long doBatch(long numIterations) throws InterruptedException {
