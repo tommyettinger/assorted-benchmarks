@@ -236,6 +236,8 @@ public class MathBenchmark {
     private int atan2ImY = -0x8000;
     private int atan2HPX = -0x4000;
     private int atan2HPY = -0x8000;
+    private int atan2RmX = -0x4000;
+    private int atan2RmY = -0x8000;
     private int atan2Im_X = -0x4000;
     private int atan2Im_Y = -0x8000;
     private int atan2Si_X = -0x4000;
@@ -670,6 +672,12 @@ public class MathBenchmark {
     }
 
     @Benchmark
+    public float measureRemezAtan2()
+    {
+        return NumberTools2.atan2Remez(floatInputs[atan2RmY++ & 0xFFFF], floatInputs[atan2RmX++ & 0xFFFF]);
+    }
+
+    @Benchmark
     public float measureGeneralAtan2()
     {
         return NumberTools2.atan2General(floatInputs[atan2GeY++ & 0xFFFF], floatInputs[atan2GeX++ & 0xFFFF]);
@@ -871,10 +879,12 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
         double atan2SiError = 0;
         double atan2FnError = 0;
         double atan2HPError = 0;
+        double atan2RmError = 0;
 
         double maxSquidError = 0.0;
         double maxGDXError = 0.0;
         double maxHPError = 0.0;
+        double maxRmError = 0.0;
 
         double atan2_SquidError = 0;
         double atan2_ImError = 0;
@@ -906,6 +916,8 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
             u.atan2FnY = j;
             u.atan2HPX = i;
             u.atan2HPY = j;
+            u.atan2RmX = i;
+            u.atan2RmY = j;
             u.mathAtan2_X = i;
             u.mathAtan2_Y = j;
             u.atan2_SquidXF = i;
@@ -930,6 +942,8 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
             atan2FnError += Math.abs(u.measureFunkyAtan2() - at);
             atan2HPError += temp = Math.abs(u.measureHighPrecisionAtan2() - at);
             maxHPError = Math.max(maxHPError, temp);
+            atan2RmError += temp = Math.abs(u.measureRemezAtan2() - at);
+            maxRmError = Math.max(maxRmError, temp);
 
             atan2_SquidError += Math.abs(u.measureSquidAtan2_() - at_);
             atan2_ImError += Math.abs(u.measureImuliAtan2_() - at_);
@@ -950,6 +964,9 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
         System.out.println("atan2 Funky      : " + atan2FnError * 0x1p-16);
         System.out.println("atan2 HP         : " + atan2HPError * 0x1p-16);
         System.out.println("atan2 HP Max     : " + maxHPError);
+        System.out.println();
+        System.out.println("atan2 Remez      : " + atan2RmError * 0x1p-16);
+        System.out.println("atan2 Remez Max  : " + maxRmError);
         System.out.println();
         System.out.println("atan2_ Squid     : " + atan2_SquidError * 0x1p-16);
         System.out.println("atan2_ Imuli     : " + atan2_ImError * 0x1p-16);

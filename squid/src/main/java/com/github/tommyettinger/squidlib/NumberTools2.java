@@ -15,8 +15,6 @@
  ******************************************************************************/
 package com.github.tommyettinger.squidlib;
 
-import squidpony.squidmath.NumberTools;
-
 import static com.badlogic.gdx.math.MathUtils.PI;
 
 /**
@@ -522,4 +520,50 @@ public final class NumberTools2 {
         else return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
     }
 
+    public static float atan2Remez (final float y, float x) {
+        float n = y / x;
+        if(n != n) n = (y == x ? 1f : -1f); // if both y and x are infinite, n would be NaN
+        else if(n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
+        if(x > 0)
+            return atanRemez(n);
+        else if(x < 0) {
+            if(y >= 0)
+                return atanRemez(n) + PI;
+            else
+                return atanRemez(n) - PI;
+        }
+        else if(y > 0) return x + (PI * 0.5f);
+        else if(y < 0) return x - (PI * 0.5f);
+        else return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
+    }
+
+    private static float atanRemez(float n)
+    {
+        float u = 5.1222859e-2f, a, x;
+        if(n > 1) {
+            x = 1f/n;
+            a = (PI * 0.5f);
+            n = -1f;
+        }
+        else if(n < -1) {
+            x = -1f/n;
+            a = (PI * -0.5f);
+            n = 1f;
+        }
+        else if(n < 0f){
+            x = -n;
+            a = 0f;
+        }
+        else{
+            x = n;
+            a = 0f;
+        }
+        u = u * x + -2.1796094e-1f;
+        u = u * x + 3.0998923e-1f;
+        u = u * x + -2.7039137e-2f;
+        u = u * x + -3.3092569e-1f;
+        u = u * x + 1.3779105e-4f;
+        u = u * x + 9.9997404e-1f;
+        return a + Math.copySign(u * x + 4.0811908e-7f, n);
+    }
 }
