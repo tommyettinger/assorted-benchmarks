@@ -178,6 +178,19 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathGDXAStar2  avgt    5    10.910 �  0.225  ms/op
  * PathfindingBenchmark.doTinyPathSimpleUD   avgt    5     6.914 �  0.221  ms/op
  * </pre>
+ * <br>
+ * With gdx-ai 1.8.3-SNAPSHOT and its StopCondition, there's no measurable difference.
+ * All differences are inside the margin of error between the gdx-ai tests here and above.
+ * <pre>
+ * Benchmark                                 Mode  Cnt     Score    Error  Units
+ * PathfindingBenchmark.doPathGDXAStar       avgt    5  1082.626 � 21.162  ms/op
+ * PathfindingBenchmark.doPathGDXAStar2      avgt    5   937.659 � 19.265  ms/op
+ * PathfindingBenchmark.doPathSimpleUD       avgt    5   494.665 � 22.942  ms/op
+ * PathfindingBenchmark.doTinyPathGDXAStar   avgt    5    12.829 �  0.294  ms/op
+ * PathfindingBenchmark.doTinyPathGDXAStar2  avgt    5    10.865 �  0.160  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleUD   avgt    5     6.397 �  0.072  ms/op
+ * </pre>
+ *
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
