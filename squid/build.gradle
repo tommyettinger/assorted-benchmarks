@@ -11,7 +11,6 @@ plugins {
     id 'java'
     id 'eclipse'
     id 'idea'
-    // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work
     id "com.github.johnrengelman.shadow" version "5.2.0"
     id 'com.github.ben-manes.versions' version '0.27.0' // for "gradlew dependencyUpdates -Drevision=release"
 }
@@ -50,17 +49,18 @@ dependencies {
 
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.3'
 //    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:2ae5e83d1a' // lacks Ripple FOV opt
-    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:ad5bbb9cb8'
-    implementation 'com.github.yellowstonegames.SquidSquad:SquidGrid:76bfb0f28d'
-    implementation 'com.github.yellowstonegames.SquidSquad:SquidPlace:76bfb0f28d'
-    implementation 'com.github.yellowstonegames.SquidSquad:SquidPath:76bfb0f28d'
-    implementation 'com.github.yellowstonegames.SquidSquad:SquidText:76bfb0f28d'
+    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:27ef390d16'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidGrid:862f74aa45'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidPlace:862f74aa45'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidPath:862f74aa45'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidText:862f74aa45'
     implementation "com.github.tommyettinger:blazingchain:1.4.4.3"
 //    implementation 'com.github.tommyettinger:BlazingChain:dfddeb3dda'
     implementation 'com.github.earlygrey:simple-graphs:v3.0.0'
     implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
+//    implementation 'com.badlogicgames.gdx:gdx-ai:1.8.3-SNAPSHOT'
     implementation 'com.github.tommyettinger:atlantis:5574642135'
-    implementation 'com.github.tommyettinger:jdkgdxds:v0.2.0'
+    implementation 'com.github.tommyettinger:jdkgdxds:v0.2.2'
 
     implementation group: 'it.unimi.dsi', name: 'fastutil', version:'8.5.0'
     implementation group: 'org.eclipse.collections', name: 'eclipse-collections', version: '11.0.0.M1'

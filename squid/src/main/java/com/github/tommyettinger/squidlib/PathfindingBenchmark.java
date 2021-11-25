@@ -159,14 +159,24 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathSimpleD   avgt    4    2.728 ± 0.354  ms/op
  * PathfindingBenchmark.doTinyPathSimpleUD  avgt    4    2.863 ± 0.527  ms/op
  * </pre>
- *
- *
+ * <br>
  * Quick comparison of single-path times from random point to random point on a 200x200 map:
  * <pre>
  * Benchmark                           Mode  Cnt  Score   Error  Units
  * PathfindingBenchmark.doOneDijkstra  avgt    3  1.166 ± 0.059  ms/op
  * PathfindingBenchmark.doOneGDXAStar  avgt    3  0.921 ± 2.716  ms/op
  * PathfindingBenchmark.doOneSquidUD   avgt    3  0.418 ± 0.077  ms/op
+ * </pre>
+ * <br>
+ * On a 100x100 map, Simple-Graphs is close to twice as fast as gdx-ai 1.8.2.
+ * <pre>
+ * Benchmark                                 Mode  Cnt     Score    Error  Units
+ * PathfindingBenchmark.doPathGDXAStar       avgt    5  1083.838 � 28.082  ms/op
+ * PathfindingBenchmark.doPathGDXAStar2      avgt    5   928.181 � 21.481  ms/op
+ * PathfindingBenchmark.doPathSimpleUD       avgt    5   504.841 �  5.979  ms/op
+ * PathfindingBenchmark.doTinyPathGDXAStar   avgt    5    12.620 �  0.296  ms/op
+ * PathfindingBenchmark.doTinyPathGDXAStar2  avgt    5    10.910 �  0.225  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleUD   avgt    5     6.914 �  0.221  ms/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
@@ -178,7 +188,7 @@ public class PathfindingBenchmark {
 
     @State(Scope.Thread)
     public static class BenchmarkState {
-        public int DIMENSION = 200;
+        public int DIMENSION = 100;
         public DungeonGenerator dungeonGen = new DungeonGenerator(DIMENSION, DIMENSION, new StatefulRNG(0x1337BEEFDEAL));
         public char[][] map;
         public double[][] astarMap;
@@ -193,7 +203,9 @@ public class PathfindingBenchmark {
         public CustomDijkstraMap customDijkstra;
         public StatefulRNG srng;
         public GridGraph gg;
+        public GridGraph2 gg2;
         public IndexedAStarPathFinder<Coord> astar;
+        public IndexedAStarPathFinder<Coord> astar2;
         public AStarSearch as;
         public DefaultGraphPath<Coord> dgp;
         public ArrayList<Coord> path;
@@ -241,7 +253,9 @@ public class PathfindingBenchmark {
             dijkstra.setBlockingRequirement(0);
             customDijkstra = new CustomDijkstraMap(map, adj, new StatefulRNG(0x1337BEEF));
             gg = new GridGraph(floors, map);
+            gg2 = new GridGraph2(floors, map);
             astar = new IndexedAStarPathFinder<>(gg, false);
+            astar2 = new IndexedAStarPathFinder<>(gg2, false);
             dgp = new DefaultGraphPath<>(DIMENSION << 2);
             path = new ArrayList<>(DIMENSION << 2);
             simplePath = new Path<>(DIMENSION << 2);
@@ -391,6 +405,20 @@ public class PathfindingBenchmark {
         return scanned;
     }
     
+    @Benchmark
+    public long doOneDijkstra(BenchmarkState state) {
+        final DijkstraMap dijkstra = state.dijkstra;
+        final int PATH_LENGTH = state.DIMENSION * state.DIMENSION;
+        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
+        state.srng.setState(state.coordIndex);
+        Coord r = state.srng.getRandomElement(state.floorArray);
+        state.path.clear();
+        dijkstra.findPath(state.path, PATH_LENGTH, -1, null, null, r, tgt);
+        dijkstra.clearGoals();
+        dijkstra.resetMap();
+        return state.path.size();
+    }
+
     @Benchmark
     public long doPathCustomDijkstra(BenchmarkState state)
     {
@@ -639,6 +667,64 @@ public class PathfindingBenchmark {
         }
     }
 
+
+    static class GridGraph2 implements IndexedGraph<Coord>
+    {
+        public int[][] grid;
+        public int size;
+//        public Heuristic<Coord> heu = new Heuristic<Coord>() {
+//            @Override
+//            public float estimate(Coord node, Coord endNode) {
+//                return (Math.abs(node.x - endNode.x) + Math.abs(node.y - endNode.y));
+//            }
+//        };
+        public Heuristic<Coord> heu = new Heuristic<Coord>() {
+            @Override
+            public float estimate(Coord node, Coord endNode) {
+                return Math.max(Math.abs(node.x - endNode.x), Math.abs(node.y - endNode.y));
+            }
+        };
+//        public Heuristic<Coord> heu = new Heuristic<Coord>() {
+//            @Override
+//            public float estimate(Coord node, Coord endNode) {
+//                return (float)node.distance(endNode);
+//            }
+//        };
+
+        public GridGraph2(GreasedRegion floors, char[][] map)
+        {
+            grid = new int[map.length][map[0].length];
+            size = floors.size();
+            int i = 0;
+            for(Coord floor : floors){
+                grid[floor.x][floor.y] = ++i;
+            }
+        }
+        @Override
+        public int getIndex(Coord node) {
+            return grid[node.x][node.y] - 1;
+        }
+
+        @Override
+        public int getNodeCount() {
+            return size;
+        }
+
+        @Override
+        public Array<Connection<Coord>> getConnections(Coord fromNode) {
+            Array<Connection<Coord>> conn = new Array<>(false, 8);
+            if(grid[fromNode.x][fromNode.y] == 0)
+                return conn;
+            Coord t;
+            for (int i = 0; i < 8; i++) {
+                t = fromNode.translate(Direction.OUTWARDS[i]);
+                if (t.isWithin(grid.length, grid[0].length) && grid[t.x][t.y] != 0)
+                    conn.add(new DefaultConnection<>(fromNode, t));
+            }
+            return conn;
+        }
+    }
+
     @Benchmark
     public long doPathGDXAStar(BenchmarkState state)
     {
@@ -677,6 +763,66 @@ public class PathfindingBenchmark {
             }
         }
         return scanned;
+    }
+
+    @Benchmark
+    public long doOneGDXAStar(BenchmarkState state) {
+        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
+        state.srng.setState(state.coordIndex);
+        Coord r = state.srng.getRandomElement(state.floorArray);
+        state.dgp.clear();
+        state.astar.searchNodePath(r, tgt, state.gg.heu, state.dgp);
+        return state.dgp.getCount();
+    }
+
+    @Benchmark
+    public long doPathGDXAStar2(BenchmarkState state)
+    {
+        Coord r;
+        long scanned = 0;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                r = state.srng.getRandomElement(state.floorArray);
+                state.dgp.clear();
+                if(state.astar2.searchNodePath(r, Coord.get(x, y), state.gg2.heu, state.dgp))
+                    scanned+= state.dgp.getCount();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathGDXAStar2(BenchmarkState state)
+    {
+        Coord r;
+        long scanned = 0;
+        for (int x = 1; x < state.DIMENSION - 1; x++) {
+            for (int y = 1; y < state.DIMENSION - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                r = state.nearbyMap[x][y];
+                state.dgp.clear();
+                if(state.astar2.searchNodePath(r, Coord.get(x, y), state.gg2.heu, state.dgp))
+                    scanned += state.dgp.getCount();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doOneGDXAStar2(BenchmarkState state) {
+        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
+        state.srng.setState(state.coordIndex);
+        Coord r = state.srng.getRandomElement(state.floorArray);
+        state.dgp.clear();
+        state.astar2.searchNodePath(r, tgt, state.gg2.heu, state.dgp);
+        return state.dgp.getCount();
     }
 
     @Benchmark
@@ -849,6 +995,16 @@ public class PathfindingBenchmark {
         return scanned;
     }
 
+    @Benchmark
+    public long doOneSquidUD(BenchmarkState state) {
+        final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
+        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
+        state.srng.setState(state.coordIndex);
+        Coord r = state.srng.getRandomElement(state.floorArray);
+        state.path.clear();
+        algo.findShortestPath(r, tgt, state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV);
+        return state.path.size();
+    }
 
 
     @Benchmark
@@ -935,42 +1091,6 @@ public class PathfindingBenchmark {
         }
         return scanned;
     }
-
-    @Benchmark
-    public long doOneDijkstra(BenchmarkState state) {
-        final DijkstraMap dijkstra = state.dijkstra;
-        final int PATH_LENGTH = state.DIMENSION * state.DIMENSION;
-        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
-        state.srng.setState(state.coordIndex);
-        Coord r = state.srng.getRandomElement(state.floorArray);
-        state.path.clear();
-        dijkstra.findPath(state.path, PATH_LENGTH, -1, null, null, r, tgt);
-        dijkstra.clearGoals();
-        dijkstra.resetMap();
-        return state.path.size();
-    }
-
-    @Benchmark
-    public long doOneGDXAStar(BenchmarkState state) {
-        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
-        state.srng.setState(state.coordIndex);
-        Coord r = state.srng.getRandomElement(state.floorArray);
-        state.dgp.clear();
-        state.astar.searchNodePath(r, tgt, state.gg.heu, state.dgp);
-        return state.dgp.getCount();
-    }
-
-    @Benchmark
-    public long doOneSquidUD(BenchmarkState state) {
-        final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
-        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
-        state.srng.setState(state.coordIndex);
-        Coord r = state.srng.getRandomElement(state.floorArray);
-        state.path.clear();
-        algo.findShortestPath(r, tgt, state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV);
-        return state.path.size();
-    }
-
 
     /*
      * ============================== HOW TO RUN THIS TEST: ====================================
