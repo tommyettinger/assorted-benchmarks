@@ -268,7 +268,7 @@ public class MathBenchmark {
     private int floorMath = 0;
     private int floorGust = 0;
     private int floorNoise = 0;
-    private int floorFN = 0;
+    private int floorGdx = 0;
 
     @Benchmark
     public double measureBaseline()
@@ -776,13 +776,9 @@ public class MathBenchmark {
         return fastFloorNoise(floatInputs[floorNoise++ & 0xFFFF]);
     }
 
-    public static int fastFloorFN(final float f) {
-        return (f >= 0 ? (int) f : (int) f - 1);
-    }
-
     @Benchmark
-    public int measureFloorFN(){
-        return fastFloorFN(floatInputs[floorFN++ & 0xFFFF]);
+    public int measureFloorGdx(){
+        return MathUtils.floor(floatInputs[floorGdx++ & 0xFFFF]);
     }
 
     /*

@@ -57,8 +57,8 @@ dependencies {
     implementation "com.github.tommyettinger:blazingchain:1.4.4.3"
 //    implementation 'com.github.tommyettinger:BlazingChain:dfddeb3dda'
     implementation 'com.github.earlygrey:simple-graphs:v3.0.0'
-    implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
-//    implementation 'com.badlogicgames.gdx:gdx-ai:1.8.3-SNAPSHOT'
+//    implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
+    implementation 'com.github.libgdx:gdx-ai:5358c19780' // 1.8.3-SNAPSHOT
     implementation 'com.github.tommyettinger:atlantis:5574642135'
     implementation 'com.github.tommyettinger:jdkgdxds:v0.2.2'
 
