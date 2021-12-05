@@ -152,10 +152,10 @@ public final class PlumRandomBench extends MicroBench {
 			final long fb = this.stateB;
 			final long fc = this.stateC;
 			final long fd = this.stateD;
-			this.stateA = fb * 0xD1342543DE82EF95L;
-			this.stateB = fa + 0xC6BC279692B5C323L;
-			this.stateC = Long.rotateLeft(fb, 47) - fd;
-			this.stateD = fa ^ fc;
+			this.stateA = fd * 0xD1342543DE82EF95L;
+			this.stateB = fb + 0xC6BC279692B5C323L;
+			this.stateC = Long.rotateLeft(fa, 43) - fd;
+			this.stateD = fa ^ fb ^ fc;
 			return (int) fd >>> 32 - bits;
 		}
 
@@ -174,10 +174,10 @@ public final class PlumRandomBench extends MicroBench {
 			final long fb = this.stateB;
 			final long fc = this.stateC;
 			final long fd = this.stateD;
-			this.stateA = 0xD1342543DE82EF95L * fb;
-			this.stateB = fa + 0xC6BC279692B5C323L;
-			this.stateC = Long.rotateLeft(fb, 47) - fd;
-			this.stateD = fa ^ fc;
+			this.stateA = fd * 0xD1342543DE82EF95L;
+			this.stateB = fb + 0xC6BC279692B5C323L;
+			this.stateC = Long.rotateLeft(fa, 43) - fd;
+			this.stateD = fa ^ fb ^ fc;
 			return fd;
 		}
 
