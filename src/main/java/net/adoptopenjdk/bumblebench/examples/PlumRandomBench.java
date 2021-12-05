@@ -24,28 +24,28 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * PlumRandomBench score: 858757056.000000 (858.8M 2057.1%)
- *             uncertainty:   2.6%
+ * PlumRandomBench score: 933276352.000000 (933.3M 2065.4%)
+ *             uncertainty:   1.4%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * PlumRandomBench score: 821637696.000000 (821.6M 2052.7%)
- *             uncertainty:   2.7%
+ * PlumRandomBench score: 823133184.000000 (823.1M 2052.9%)
+ *             uncertainty:   1.9%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * PlumRandomBench score: 1531257856.000000 (1.531G 2114.9%)
- *             uncertainty:   0.9%
+ * PlumRandomBench score: 1496799232.000000 (1.497G 2112.7%)
+ *             uncertainty:   1.0%
  * <br>
  * GraalVM Java 16:
  * <br>
- * PlumRandomBench score: 1541433856.000000 (1.541G 2115.6%)
- *             uncertainty:   1.1%
+ * PlumRandomBench score: 1707994624.000000 (1.708G 2125.9%)
+ *             uncertainty:   1.4%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * PlumRandomBench score: 1320333056.000000 (1.320G 2100.1%)
- *             uncertainty:   0.5%
+ * PlumRandomBench score: 1456429312.000000 (1.456G 2109.9%)
+ *             uncertainty:   0.8%
  */
 public final class PlumRandomBench extends MicroBench {
 
@@ -175,9 +175,9 @@ public final class PlumRandomBench extends MicroBench {
 			final long fc = this.stateC;
 			final long fd = this.stateD;
 			this.stateA = fd * 0xD1342543DE82EF95L;
-			this.stateB = Long.rotateLeft(fd, 43) + fc;
+			this.stateB = Long.rotateLeft(fa, 43) + fd;
 			this.stateC = fc + 0xC6BC279692B5C323L;
-			this.stateD = fa ^ fb;
+			this.stateD = fb ^ fc;
 			return fd;
 		}
 
