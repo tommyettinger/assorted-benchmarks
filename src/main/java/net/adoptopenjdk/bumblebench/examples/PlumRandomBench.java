@@ -24,28 +24,28 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * PlumRandomBench score: 933276352.000000 (933.3M 2065.4%)
- *             uncertainty:   1.4%
+ * PlumRandomBench score: 926441280.000000 (926.4M 2064.7%)
+ *             uncertainty:   4.0%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * PlumRandomBench score: 823133184.000000 (823.1M 2052.9%)
- *             uncertainty:   1.9%
+ * PlumRandomBench score: 802936768.000000 (802.9M 2050.4%)
+ *             uncertainty:   1.6%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * PlumRandomBench score: 1496799232.000000 (1.497G 2112.7%)
- *             uncertainty:   1.0%
+ * PlumRandomBench score: 1681222656.000000 (1.681G 2124.3%)
+ *             uncertainty:   3.0%
  * <br>
  * GraalVM Java 16:
- * <br>
- * PlumRandomBench score: 1707994624.000000 (1.708G 2125.9%)
- *             uncertainty:   1.4%
+ * <br> 
+ * PlumRandomBench score: 1666661248.000000 (1.667G 2123.4%)
+ *             uncertainty:   4.4%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * PlumRandomBench score: 1456429312.000000 (1.456G 2109.9%)
- *             uncertainty:   0.8%
+ * PlumRandomBench score: 1531501184.000000 (1.532G 2115.0%)
+ *             uncertainty:   4.3%
  */
 public final class PlumRandomBench extends MicroBench {
 
@@ -153,9 +153,9 @@ public final class PlumRandomBench extends MicroBench {
 			final long fc = this.stateC;
 			final long fd = this.stateD;
 			this.stateA = fd * 0xD1342543DE82EF95L;
-			this.stateB = Long.rotateLeft(fd, 43) + fc;
+			this.stateB = Long.rotateLeft(fa + fd, 44);
 			this.stateC = fc + 0xC6BC279692B5C323L;
-			this.stateD = fa ^ fb;
+			this.stateD = fb ^ fc;
 			return (int) fd >>> 32 - bits;
 		}
 
@@ -175,7 +175,7 @@ public final class PlumRandomBench extends MicroBench {
 			final long fc = this.stateC;
 			final long fd = this.stateD;
 			this.stateA = fd * 0xD1342543DE82EF95L;
-			this.stateB = Long.rotateLeft(fa, 43) + fd;
+			this.stateB = Long.rotateLeft(fa + fd, 44);
 			this.stateC = fc + 0xC6BC279692B5C323L;
 			this.stateD = fb ^ fc;
 			return fd;
