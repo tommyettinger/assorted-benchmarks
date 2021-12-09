@@ -24,28 +24,28 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * PlumRandomBench score: 926441280.000000 (926.4M 2064.7%)
- *             uncertainty:   4.0%
+ * PlumRandomBench score: 838909504.000000 (838.9M 2054.8%)
+ *            uncertainty:   0.3%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * PlumRandomBench score: 802936768.000000 (802.9M 2050.4%)
- *             uncertainty:   1.6%
+ * PlumRandomBench score: 830725888.000000 (830.7M 2053.8%)
+ *            uncertainty:   2.1%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * PlumRandomBench score: 1681222656.000000 (1.681G 2124.3%)
- *             uncertainty:   3.0%
+ * PlumRandomBench score: 1786980736.000000 (1.787G 2130.4%)
+ *            uncertainty:   1.0%
  * <br>
  * GraalVM Java 16:
  * <br> 
- * PlumRandomBench score: 1666661248.000000 (1.667G 2123.4%)
- *             uncertainty:   4.4%
+ * PlumRandomBench score: 1921265920.000000 (1.921G 2137.6%)
+ *            uncertainty:   1.3%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * PlumRandomBench score: 1531501184.000000 (1.532G 2115.0%)
- *             uncertainty:   4.3%
+ * PlumRandomBench score: 1439246720.000000 (1.439G 2108.7%)
+ *            uncertainty:   1.1%
  */
 public final class PlumRandomBench extends MicroBench {
 
@@ -170,15 +170,23 @@ public final class PlumRandomBench extends MicroBench {
 		 */
 		@Override
 		public long nextLong() {
-			final long fa = this.stateA;
-			final long fb = this.stateB;
-			final long fc = this.stateC;
-			final long fd = this.stateD;
-			this.stateA = fd * 0xD1342543DE82EF95L;
-			this.stateB = Long.rotateLeft(fa + fd, 44);
-			this.stateC = fc + 0xC6BC279692B5C323L;
-			this.stateD = fb ^ fc;
-			return fd;
+//			final long fa = this.stateA;
+//			final long fb = this.stateB;
+//			final long fc = this.stateC;
+//			final long fd = this.stateD;
+//			this.stateA = fd * 0xD1342543DE82EF95L;
+//			this.stateB = Long.rotateLeft(fa + fd, 44);
+//			this.stateC = fc + 0xC6BC279692B5C323L;
+//			this.stateD = fb ^ fc;
+			final long fa = stateA;
+			final long fb = stateB;
+			final long fc = stateC;
+			final long fd = stateD;
+			stateA = Long.rotateLeft(fc + fb, 23);
+			stateB = fc ^ fd;
+			stateC = fa + fb;
+			stateD = fd + 0x9E3779B97F4A7C15L;
+			return fc;
 		}
 
 //		public static void main(String[] args){
