@@ -24,28 +24,28 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * TrimRandomBench score: 871028032.000000 (871.0M 2058.5%)
- *             uncertainty:   3.7%
+ * TrimRandomBench score: 854207872.000000 (854.2M 2056.6%)
+ *             uncertainty:   1.4%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * TrimRandomBench score: 790727360.000000 (790.7M 2048.8%)
- *             uncertainty:   2.7%
+ * TrimRandomBench score: 815006848.000000 (815.0M 2051.9%)
+ *             uncertainty:   2.1%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * TrimRandomBench score: 1610339328.000000 (1.610G 2120.0%)
- *             uncertainty:   0.9%
+ * TrimRandomBench score: 1644389504.000000 (1.644G 2122.1%)
+ *             uncertainty:   0.2%
  * <br>
  * GraalVM Java 16:
  * <br> 
- * TrimRandomBench score: 1726774528.000000 (1.727G 2127.0%)
- *             uncertainty:   0.2%
+ * TrimRandomBench score: 1618518656.000000 (1.619G 2120.5%)
+ *             uncertainty:   1.1%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * TrimRandomBench score: 1624523520.000000 (1.625G 2120.8%)
- *             uncertainty:   0.2%
+ * TrimRandomBench score: 1387681152.000000 (1.388G 2105.1%)
+ *             uncertainty:   1.0%
  */
 public final class TrimRandomBench extends MicroBench {
 
@@ -178,7 +178,7 @@ public final class TrimRandomBench extends MicroBench {
 			stateB = fc ^ fd;
 			stateC = fa + fb;
 			stateD = fd + 0x9E3779B97F4A7C15L;
-			return fb;
+			return fc;
 		}
 
 //		public static void main(String[] args){
