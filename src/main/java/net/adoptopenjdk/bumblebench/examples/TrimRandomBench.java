@@ -24,27 +24,27 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * TrimRandomBench score: 854207872.000000 (854.2M 2056.6%)
+ * TrimRandomBench score: 829012224.000000 (829.0M 2053.6%)
  *             uncertainty:   1.4%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * TrimRandomBench score: 815006848.000000 (815.0M 2051.9%)
- *             uncertainty:   2.1%
+ * TrimRandomBench score: 908078592.000000 (908.1M 2062.7%)
+ *             uncertainty:   1.5%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * TrimRandomBench score: 1644389504.000000 (1.644G 2122.1%)
- *             uncertainty:   0.2%
+ * TrimRandomBench score: 1508083584.000000 (1.508G 2113.4%)
+ *             uncertainty:   2.0%
  * <br>
  * GraalVM Java 16:
  * <br> 
- * TrimRandomBench score: 1618518656.000000 (1.619G 2120.5%)
- *             uncertainty:   1.1%
+ * TrimRandomBench score: 1604491136.000000 (1.604G 2119.6%)
+ *             uncertainty:   1.7%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * TrimRandomBench score: 1387681152.000000 (1.388G 2105.1%)
+ * TrimRandomBench score: 1327486336.000000 (1.327G 2100.7%)
  *             uncertainty:   1.0%
  */
 public final class TrimRandomBench extends MicroBench {
@@ -174,11 +174,11 @@ public final class TrimRandomBench extends MicroBench {
 			final long fb = this.stateB;
 			final long fc = this.stateC;
 			final long fd = this.stateD;
-			stateA = Long.rotateLeft(fb, 41) * 0xD1342543DE82EF95L;
-			stateB = fc ^ fd;
-			stateC = fa + fb;
-			stateD = fd + 0x9E3779B97F4A7C15L;
-			return fc;
+			this.stateA = Long.rotateLeft(fc + fb, 20);
+			this.stateB = Long.rotateLeft(fc ^ fd, 43);
+			this.stateC = (fa + fb);
+			this.stateD = fd + 0x9E3779B97F4A7C15L;
+			return fa;
 		}
 
 //		public static void main(String[] args){
