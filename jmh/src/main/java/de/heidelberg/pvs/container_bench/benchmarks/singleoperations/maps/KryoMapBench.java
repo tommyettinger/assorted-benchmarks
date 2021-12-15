@@ -1,31 +1,31 @@
 package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.maps;
 
-import com.badlogic.gdx.utils.ObjectMap;
-import de.heidelberg.pvs.container_bench.factories.GDXMapFact;
+import com.esotericsoftware.kryo.kryo5.util.CuckooObjectMap;
+import de.heidelberg.pvs.container_bench.factories.KryoMapFact;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 
-public class GDXMapBench extends AbstractMapBench<Object, Integer> {
+public class KryoMapBench extends AbstractMapBench<Object, Integer> {
 
-	private ObjectMap<Object, Integer> fullMap;
+	private CuckooObjectMap<Object, Integer> fullMap;
 	private Object[] keys;
 	private Integer[] values;
 
 	@Param
-	public GDXMapFact impl;
+	public KryoMapFact impl;
 
 	@Param
-	public GDXMapWorkload workload;
+	public KryoMapWorkload workload;
 
-	protected ObjectMap<Object, Integer> getNewMap() {
+	protected CuckooObjectMap<Object, Integer> getNewMap() {
 		return impl.maker.get();
 	}
 
-	protected ObjectMap<Object, Integer> copyMap(ObjectMap<Object, Integer> fullMap2) {
-		ObjectMap<Object, Integer> map = this.getNewMap();
+	protected CuckooObjectMap<Object, Integer> copyMap(CuckooObjectMap<Object, Integer> fullMap2) {
+		CuckooObjectMap<Object, Integer> map = this.getNewMap();
 		//map.putAll(fullMap2);
 		map.ensureCapacity(fullMap2.size);
-		for (ObjectMap.Entry<Object, Integer> kv : fullMap2.entries()) {
+		for (CuckooObjectMap.Entry<Object, Integer> kv : fullMap2.entries()) {
 			map.put(kv.key, kv.value);
 		}
 		return map;
@@ -50,12 +50,12 @@ public class GDXMapBench extends AbstractMapBench<Object, Integer> {
 		blackhole.consume(fullMap);
 	}
 
-	public enum GDXMapWorkload {
+	public enum KryoMapWorkload {
 
 		POPULATE {
 			@Override
-			void run(GDXMapBench self) {
-				ObjectMap<Object, Integer> newMap = self.getNewMap();
+			void run(KryoMapBench self) {
+				CuckooObjectMap<Object, Integer> newMap = self.getNewMap();
 				for (int i = 0; i < self.size; i++) {
 					newMap.put(self.keys[i], self.values[i]);
 				}
@@ -65,7 +65,7 @@ public class GDXMapBench extends AbstractMapBench<Object, Integer> {
 
 		CONTAINS {
 			@Override
-			void run(GDXMapBench self) {
+			void run(KryoMapBench self) {
 				int index = self.keyGenerator.generateIndex(self.size);
 				self.blackhole.consume(self.fullMap.containsKey(self.keys[index]));
 			}
@@ -73,23 +73,23 @@ public class GDXMapBench extends AbstractMapBench<Object, Integer> {
 		
 		COPY {
 			@Override
-			void run(GDXMapBench self) {
-				ObjectMap<Object, Integer> newMap = self.copyMap(self.fullMap);
+			void run(KryoMapBench self) {
+				CuckooObjectMap<Object, Integer> newMap = self.copyMap(self.fullMap);
 				self.blackhole.consume(newMap);
 			}
 		}, 
 		
 		ITERATE {
 			@Override
-			void run(GDXMapBench self) {
-				for (ObjectMap.Entry<Object, Integer> c : self.fullMap) {
+			void run(KryoMapBench self) {
+				for (CuckooObjectMap.Entry<Object, Integer> c : self.fullMap.entries()) {
 					self.blackhole.consume(c.key);
 					self.blackhole.consume(c.value);
 				}
 			}
 		};
 
-		abstract void run(GDXMapBench self);
+		abstract void run(KryoMapBench self);
 
 	}
 
