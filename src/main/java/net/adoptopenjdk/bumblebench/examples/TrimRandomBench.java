@@ -20,6 +20,7 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
 import java.util.Random;
 
 /**
+ * Results here are unreliable; machine was very hot at the time and cooling settings were reducing clock speed.
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * HotSpot Java 8:
