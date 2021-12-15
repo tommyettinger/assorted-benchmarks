@@ -55,7 +55,7 @@ dependencies {
     implementation group: 'net.sf.trove4j', name: 'core', version:'3.1.0'
     implementation group: 'it.unimi.dsi', name: 'fastutil', version:'8.5.0'
     implementation group: 'com.carrotsearch', name: 'hppc', version:'0.8.2'
-    implementation group: 'org.eclipse.collections', name: 'eclipse-collections', version: '11.0.0.M1'
+    implementation group: 'org.eclipse.collections', name: 'eclipse-collections', version: '11.0.0'
     implementation group: 'org.apache.mahout', name: 'mahout-math', version:'0.13.0'
     implementation group: 'edu.stanford.nlp', name: 'stanford-corenlp', version:'4.2.0'
     implementation group: 'org.agrona', name: 'agrona', version: '1.9.0'
@@ -78,7 +78,7 @@ dependencies {
     //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
     //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
 //    implementation 'com.github.tommyettinger:jdkgdxds:3a9f925cd0'
-    implementation 'com.github.tommyettinger:jdkgdxds:0.2.0'
+    implementation 'com.github.tommyettinger:jdkgdxds:9c7d7b92af'
 
 
 

@@ -50,23 +50,24 @@ public enum JDKMapString2ObjFact {
 	SQUID_INDEXED(() -> new squidpony.squidmath.OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 	ATLANTIS_INDEXED(() -> new IndexedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
-	JDKGDXDS_HASH(() -> new ObjectObjectMap<>(12, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDS_INDEXED(() -> new ObjectObjectOrderedMap<>(12, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_HASH(() -> new ObjectObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
+	CUCKOO_HASH(() -> new ObjectObjectCuckooMap<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_INDEXED(() -> new ObjectObjectOrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
-	JDKGDXDSSTRING_HASH(() -> new StringObjectMap<>(12, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSSTRING_INDEXED(() -> new StringObjectOrderedMap<>(12, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSSTRING_HASH(() -> new StringObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSSTRING_INDEXED(() -> new StringObjectOrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
-	JDKGDXDSFIB_HASH(() -> new ObjectMapFib<>(12, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSFIB2_HASH(() -> new ObjectMapFib2<>(12, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSFIBIN_HASH(() -> new ObjectMapFibIn<>(12, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSBIG_HASH(() -> new ObjectMapBigHash<>(12, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSSAME_HASH(() -> new ObjectMapSame<>(12, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSFIB_HASH(() -> new ObjectMapFib<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSFIB2_HASH(() -> new ObjectMapFib2<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSFIBIN_HASH(() -> new ObjectMapFibIn<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSBIG_HASH(() -> new ObjectMapBigHash<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSSAME_HASH(() -> new ObjectMapSame<>(16, LoadFactor.LOAD_FACTOR)),
 
-	JDKGDXDSBARE_HASH(() -> new ObjectMapBare<>(12, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSBARE_INDEXED(() -> new OrderedMapBare<>(12, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSBARE_HASH(() -> new ObjectMapBare<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSBARE_INDEXED(() -> new OrderedMapBare<>(16, LoadFactor.LOAD_FACTOR)),
 
-	JDKGDXDSMX_HASH(() -> new ObjectMapMulXor<>(12, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSMX_INDEXED(() -> new OrderedMapMulXor<>(12, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSMX_HASH(() -> new ObjectMapMulXor<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSMX_INDEXED(() -> new OrderedMapMulXor<>(16, LoadFactor.LOAD_FACTOR)),
 
 	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000), //
 	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000); //

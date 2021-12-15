@@ -3,3 +3,5 @@ java -XX:+UnlockDiagnosticVMOptions -XX:PrintAssemblyOptions=intel -jar benchmar
 java -jar benchmarks.jar "JDKSetBench" -p impl=JDK_TREE,FASTUTIL_AVL,FASTUTIL_RB,ECLIPSE_TREE -p size=1000 -wi 5 -i 5 -f 1 -w 5 -r 5
 java -jar benchmarks.jar "MutableJDKGetPutString" -p impl=JDK_O2O_HASH,JDKGDXDS_HASH,JDKGDXDSSTRING_HASH -p size=10,100,1000 -wi 5 -i 5 -f 1 -w 5 -r 5
 java -jar benchmarks.jar "MutableJDKGetPutString" -p impl=JDK_O2O_LINKEDHASH,JDKGDXDS_INDEXED,JDKGDXDSSTRING_INDEXED -p size=10,100,1000 -wi 5 -i 5 -f 1 -w 5 -r 5
+
+java -jar benchmarks.jar "MutableJDKGetPutString" -p impl=JDK_O2O_HASH,FASTUTIL_O2O_HASH,ECLIPSE_O2O_HASH,JDKGDXDS_HASH,CUCKOO_HASH -p size=10,100,1000 -wi 5 -i 5 -f 1 -w 5 -r 5

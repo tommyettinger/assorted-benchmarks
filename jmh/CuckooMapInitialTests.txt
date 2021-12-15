@@ -1,0 +1,145 @@
+Benchmark                                   (impl)   (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt        Score    Error  Units
+JDKMapBench.bench                     JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample  739262     2176.989 ± 32.023  ns/op
+JDKMapBench.bench:bench·p0.00         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             1600.000           ns/op
+JDKMapBench.bench:bench·p0.50         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2100.000           ns/op
+JDKMapBench.bench:bench·p0.90         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2200.000           ns/op
+JDKMapBench.bench:bench·p0.95         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2300.000           ns/op
+JDKMapBench.bench:bench·p0.99         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2800.000           ns/op
+JDKMapBench.bench:bench·p0.999        JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            14400.000           ns/op
+JDKMapBench.bench:bench·p0.9999       JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            32049.526           ns/op
+JDKMapBench.bench:bench·p1.00         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample          1718272.000           ns/op
+JDKMapBench.bench                     JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample  679038       37.291 ±  0.976  ns/op
+JDKMapBench.bench:bench·p0.00         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+JDKMapBench.bench:bench·p0.50         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+JDKMapBench.bench:bench·p0.90         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.95         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.99         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.999        JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.9999       JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            14496.000           ns/op
+JDKMapBench.bench:bench·p1.00         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            42368.000           ns/op
+JDKMapBench.bench                     JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample  634979     1282.219 ± 26.037  ns/op
+JDKMapBench.bench:bench·p0.00         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample              900.000           ns/op
+JDKMapBench.bench:bench·p0.50         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1200.000           ns/op
+JDKMapBench.bench:bench·p0.90         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1300.000           ns/op
+JDKMapBench.bench:bench·p0.95         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1400.000           ns/op
+JDKMapBench.bench:bench·p0.99         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1700.000           ns/op
+JDKMapBench.bench:bench·p0.999        JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             5400.000           ns/op
+JDKMapBench.bench:bench·p0.9999       JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            27872.000           ns/op
+JDKMapBench.bench:bench·p1.00         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample          1243136.000           ns/op
+JDKMapBench.bench                     JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample  702515     1139.260 ± 13.212  ns/op
+JDKMapBench.bench:bench·p0.00         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              900.000           ns/op
+JDKMapBench.bench:bench·p0.50         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1100.000           ns/op
+JDKMapBench.bench:bench·p0.90         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1200.000           ns/op
+JDKMapBench.bench:bench·p0.95         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1200.000           ns/op
+JDKMapBench.bench:bench·p0.99         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1300.000           ns/op
+JDKMapBench.bench:bench·p0.999        JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             2400.000           ns/op
+JDKMapBench.bench:bench·p0.9999       JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample            22592.000           ns/op
+JDKMapBench.bench:bench·p1.00         JDK_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample          2052096.000           ns/op
+JDKMapBench.bench                      CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample  792276     3987.176 ± 21.127  ns/op
+JDKMapBench.bench:bench·p0.00          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             3000.000           ns/op
+JDKMapBench.bench:bench·p0.50          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             3800.000           ns/op
+JDKMapBench.bench:bench·p0.90          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             4200.000           ns/op
+JDKMapBench.bench:bench·p0.95          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             4896.000           ns/op
+JDKMapBench.bench:bench·p0.99          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             7600.000           ns/op
+JDKMapBench.bench:bench·p0.999         CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            18592.000           ns/op
+JDKMapBench.bench:bench·p0.9999        CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            36352.000           ns/op
+JDKMapBench.bench:bench·p1.00          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample          1263616.000           ns/op
+JDKMapBench.bench                      CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample  922781       44.972 ±  0.688  ns/op
+JDKMapBench.bench:bench·p0.00          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+JDKMapBench.bench:bench·p0.50          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+JDKMapBench.bench:bench·p0.90          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.95          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.99          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.999         CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.9999        CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            13669.293           ns/op
+JDKMapBench.bench:bench·p1.00          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            38144.000           ns/op
+JDKMapBench.bench                      CUCKOO_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample  670471     2368.594 ± 19.075  ns/op
+JDKMapBench.bench:bench·p0.00          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1800.000           ns/op
+JDKMapBench.bench:bench·p0.50          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2300.000           ns/op
+JDKMapBench.bench:bench·p0.90          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2500.000           ns/op
+JDKMapBench.bench:bench·p0.95          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2500.000           ns/op
+JDKMapBench.bench:bench·p0.99          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             3000.000           ns/op
+JDKMapBench.bench:bench·p0.999         CUCKOO_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            16288.000           ns/op
+JDKMapBench.bench:bench·p0.9999        CUCKOO_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            30875.469           ns/op
+JDKMapBench.bench:bench·p1.00          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample          1140736.000           ns/op
+JDKMapBench.bench                      CUCKOO_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample  752338     1063.802 ± 10.719  ns/op
+JDKMapBench.bench:bench·p0.00          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              800.000           ns/op
+JDKMapBench.bench:bench·p0.50          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
+JDKMapBench.bench:bench·p0.90          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1100.000           ns/op
+JDKMapBench.bench:bench·p0.95          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1200.000           ns/op
+JDKMapBench.bench:bench·p0.99          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1300.000           ns/op
+JDKMapBench.bench:bench·p0.999         CUCKOO_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             2200.000           ns/op
+JDKMapBench.bench:bench·p0.9999        CUCKOO_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample            22880.000           ns/op
+JDKMapBench.bench:bench·p1.00          CUCKOO_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample          1736704.000           ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample  618236     2600.261 ± 34.423  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             1900.000           ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2500.000           ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2700.000           ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2700.000           ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             3800.000           ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            19200.000           ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            42627.514           ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample          1314816.000           ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample  971331       45.035 ±  0.771  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              200.000           ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            14000.000           ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            59584.000           ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample  523471     1557.081 ± 32.576  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1100.000           ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1500.000           ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1600.000           ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1700.000           ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2000.000           ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            15488.000           ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            36026.675           ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample          1234944.000           ns/op
+JDKMapBench.bench                FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample  760843     1072.640 ± 23.597  ns/op
+JDKMapBench.bench:bench·p0.00    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              800.000           ns/op
+JDKMapBench.bench:bench·p0.50    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
+JDKMapBench.bench:bench·p0.90    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1100.000           ns/op
+JDKMapBench.bench:bench·p0.95    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1100.000           ns/op
+JDKMapBench.bench:bench·p0.99    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1300.000           ns/op
+JDKMapBench.bench:bench·p0.999   FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             3200.000           ns/op
+JDKMapBench.bench:bench·p0.9999  FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample            28175.795           ns/op
+JDKMapBench.bench:bench·p1.00    FASTUTIL_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample          1398784.000           ns/op
+JDKMapBench.bench                    JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample  607362     2640.943 ± 34.093  ns/op
+JDKMapBench.bench:bench·p0.00        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2000.000           ns/op
+JDKMapBench.bench:bench·p0.50        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2600.000           ns/op
+JDKMapBench.bench:bench·p0.90        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2700.000           ns/op
+JDKMapBench.bench:bench·p0.95        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2800.000           ns/op
+JDKMapBench.bench:bench·p0.99        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             3800.000           ns/op
+JDKMapBench.bench:bench·p0.999       JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            18080.000           ns/op
+JDKMapBench.bench:bench·p0.9999      JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            48801.754           ns/op
+JDKMapBench.bench:bench·p1.00        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample          2078720.000           ns/op
+JDKMapBench.bench                    JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample  908325       48.984 ±  1.244  ns/op
+JDKMapBench.bench:bench·p0.00        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+JDKMapBench.bench:bench·p0.50        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+JDKMapBench.bench:bench·p0.90        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.95        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.99        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+JDKMapBench.bench:bench·p0.999       JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              200.000           ns/op
+JDKMapBench.bench:bench·p0.9999      JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            14096.000           ns/op
+JDKMapBench.bench:bench·p1.00        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample           270848.000           ns/op
+JDKMapBench.bench                    JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample  841842     1884.999 ± 15.457  ns/op
+JDKMapBench.bench:bench·p0.00        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1400.000           ns/op
+JDKMapBench.bench:bench·p0.50        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1900.000           ns/op
+JDKMapBench.bench:bench·p0.90        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2000.000           ns/op
+JDKMapBench.bench:bench·p0.95        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2100.000           ns/op
+JDKMapBench.bench:bench·p0.99        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2400.000           ns/op
+JDKMapBench.bench:bench·p0.999       JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            15392.000           ns/op
+JDKMapBench.bench:bench·p0.9999      JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            29436.614           ns/op
+JDKMapBench.bench:bench·p1.00        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample          1198080.000           ns/op
+JDKMapBench.bench                    JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample  823850      962.273 ±  2.263  ns/op
+JDKMapBench.bench:bench·p0.00        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              700.000           ns/op
+JDKMapBench.bench:bench·p0.50        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
+JDKMapBench.bench:bench·p0.90        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
+JDKMapBench.bench:bench·p0.95        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
+JDKMapBench.bench:bench·p0.99        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1100.000           ns/op
+JDKMapBench.bench:bench·p0.999       JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1800.000           ns/op
+JDKMapBench.bench:bench·p0.9999      JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample            21472.000           ns/op
+JDKMapBench.bench:bench·p1.00        JDKGDXDS_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample           397824.000           ns/op
