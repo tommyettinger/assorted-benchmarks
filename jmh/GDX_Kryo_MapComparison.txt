@@ -1,73 +1,109 @@
-Benchmark                                (impl)   (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt        Score    Error  Units
-GDXMapBench.bench                  GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample  778635     2050.191 ± 21.007  ns/op
-GDXMapBench.bench:bench·p0.00      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             1600.000           ns/op
-GDXMapBench.bench:bench·p0.50      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2000.000           ns/op
-GDXMapBench.bench:bench·p0.90      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2100.000           ns/op
-GDXMapBench.bench:bench·p0.95      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2200.000           ns/op
-GDXMapBench.bench:bench·p0.99      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2500.000           ns/op
-GDXMapBench.bench:bench·p0.999     GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            16096.000           ns/op
-GDXMapBench.bench:bench·p0.9999    GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            31226.189           ns/op
-GDXMapBench.bench:bench·p1.00      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample          1216512.000           ns/op
-GDXMapBench.bench                  GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample  980618       45.893 ±  0.856  ns/op
-GDXMapBench.bench:bench·p0.00      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
-GDXMapBench.bench:bench·p0.50      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
-GDXMapBench.bench:bench·p0.90      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
-GDXMapBench.bench:bench·p0.95      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
-GDXMapBench.bench:bench·p0.99      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
-GDXMapBench.bench:bench·p0.999     GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              200.000           ns/op
-GDXMapBench.bench:bench·p0.9999    GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            16276.115           ns/op
-GDXMapBench.bench:bench·p1.00      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            49280.000           ns/op
-GDXMapBench.bench                  GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample  954686     1655.833 ±  9.884  ns/op
-GDXMapBench.bench:bench·p0.00      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1200.000           ns/op
-GDXMapBench.bench:bench·p0.50      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1600.000           ns/op
-GDXMapBench.bench:bench·p0.90      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1700.000           ns/op
-GDXMapBench.bench:bench·p0.95      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1800.000           ns/op
-GDXMapBench.bench:bench·p0.99      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2300.000           ns/op
-GDXMapBench.bench:bench·p0.999     GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            10096.000           ns/op
-GDXMapBench.bench:bench·p0.9999    GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            26340.006           ns/op
-GDXMapBench.bench:bench·p1.00      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample          1132544.000           ns/op
-GDXMapBench.bench                  GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample  847234      938.369 ±  1.427  ns/op
-GDXMapBench.bench:bench·p0.00      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              700.000           ns/op
-GDXMapBench.bench:bench·p0.50      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              900.000           ns/op
-GDXMapBench.bench:bench·p0.90      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
-GDXMapBench.bench:bench·p0.95      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
-GDXMapBench.bench:bench·p0.99      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
-GDXMapBench.bench:bench·p0.999     GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1700.000           ns/op
-GDXMapBench.bench:bench·p0.9999    GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample            21237.088           ns/op
-GDXMapBench.bench:bench·p1.00      GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample            47360.000           ns/op
-KryoMapBench.bench                KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample  572285     5513.104 ± 26.468  ns/op
-KryoMapBench.bench:bench·p0.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             3400.000           ns/op
-KryoMapBench.bench:bench·p0.50    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             5296.000           ns/op
-KryoMapBench.bench:bench·p0.90    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             6200.000           ns/op
-KryoMapBench.bench:bench·p0.95    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             6896.000           ns/op
-KryoMapBench.bench:bench·p0.99    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             9392.000           ns/op
-KryoMapBench.bench:bench·p0.999   KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            22496.000           ns/op
-KryoMapBench.bench:bench·p0.9999  KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            50004.109           ns/op
-KryoMapBench.bench:bench·p1.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample          1308672.000           ns/op
-KryoMapBench.bench                KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample  546238       43.891 ±  1.264  ns/op
-KryoMapBench.bench:bench·p0.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
-KryoMapBench.bench:bench·p0.50    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
-KryoMapBench.bench:bench·p0.90    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
-KryoMapBench.bench:bench·p0.95    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
-KryoMapBench.bench:bench·p0.99    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
-KryoMapBench.bench:bench·p0.999   KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
-KryoMapBench.bench:bench·p0.9999  KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            16204.317           ns/op
-KryoMapBench.bench:bench·p1.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            83584.000           ns/op
-KryoMapBench.bench                KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample  599954     2651.938 ± 23.202  ns/op
-KryoMapBench.bench:bench·p0.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1800.000           ns/op
-KryoMapBench.bench:bench·p0.50    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2600.000           ns/op
-KryoMapBench.bench:bench·p0.90    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             3000.000           ns/op
-KryoMapBench.bench:bench·p0.95    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             3100.000           ns/op
-KryoMapBench.bench:bench·p0.99    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             3500.000           ns/op
-KryoMapBench.bench:bench·p0.999   KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            16800.000           ns/op
-KryoMapBench.bench:bench·p0.9999  KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            34048.864           ns/op
-KryoMapBench.bench:bench·p1.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample          1191936.000           ns/op
-KryoMapBench.bench                KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample  871625      922.726 ±  5.149  ns/op
-KryoMapBench.bench:bench·p0.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              700.000           ns/op
-KryoMapBench.bench:bench·p0.50    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              900.000           ns/op
-KryoMapBench.bench:bench·p0.90    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
-KryoMapBench.bench:bench·p0.95    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
-KryoMapBench.bench:bench·p0.99    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1100.000           ns/op
-KryoMapBench.bench:bench·p0.999   KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1800.000           ns/op
-KryoMapBench.bench:bench·p0.9999  KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample            21600.000           ns/op
-KryoMapBench.bench:bench·p1.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample          1302528.000           ns/op
+Benchmark                                     (impl)   (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt        Score    Error  Units
+GDXMapBench.bench                       GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample  774692     2056.213 ± 20.180  ns/op
+GDXMapBench.bench:bench·p0.00           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             1600.000           ns/op
+GDXMapBench.bench:bench·p0.50           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2000.000           ns/op
+GDXMapBench.bench:bench·p0.90           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2200.000           ns/op
+GDXMapBench.bench:bench·p0.95           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2200.000           ns/op
+GDXMapBench.bench:bench·p0.99           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             2500.000           ns/op
+GDXMapBench.bench:bench·p0.999          GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            16288.000           ns/op
+GDXMapBench.bench:bench·p0.9999         GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            32146.947           ns/op
+GDXMapBench.bench:bench·p1.00           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample          1325056.000           ns/op
+GDXMapBench.bench                       GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample  953474       46.185 ±  0.700  ns/op
+GDXMapBench.bench:bench·p0.00           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+GDXMapBench.bench:bench·p0.50           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+GDXMapBench.bench:bench·p0.90           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+GDXMapBench.bench:bench·p0.95           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+GDXMapBench.bench:bench·p0.99           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+GDXMapBench.bench:bench·p0.999          GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              200.000           ns/op
+GDXMapBench.bench:bench·p0.9999         GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            14096.000           ns/op
+GDXMapBench.bench:bench·p1.00           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            31872.000           ns/op
+GDXMapBench.bench                       GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample  863997     1647.968 ± 12.295  ns/op
+GDXMapBench.bench:bench·p0.00           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1300.000           ns/op
+GDXMapBench.bench:bench·p0.50           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1600.000           ns/op
+GDXMapBench.bench:bench·p0.90           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1700.000           ns/op
+GDXMapBench.bench:bench·p0.95           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1800.000           ns/op
+GDXMapBench.bench:bench·p0.99           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2100.000           ns/op
+GDXMapBench.bench:bench·p0.999          GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             5096.000           ns/op
+GDXMapBench.bench:bench·p0.9999         GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            25145.619           ns/op
+GDXMapBench.bench:bench·p1.00           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample          1191936.000           ns/op
+GDXMapBench.bench                       GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample  852827      933.222 ±  5.301  ns/op
+GDXMapBench.bench:bench·p0.00           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              700.000           ns/op
+GDXMapBench.bench:bench·p0.50           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              900.000           ns/op
+GDXMapBench.bench:bench·p0.90           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
+GDXMapBench.bench:bench·p0.95           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
+GDXMapBench.bench:bench·p0.99           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
+GDXMapBench.bench:bench·p0.999          GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1700.000           ns/op
+GDXMapBench.bench:bench·p0.9999         GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample            21280.000           ns/op
+GDXMapBench.bench:bench·p1.00           GDX_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample          1236992.000           ns/op
+KryoFixedMapBench.bench                KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample  584681     5392.849 ± 26.992  ns/op
+KryoFixedMapBench.bench:bench·p0.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             3100.000           ns/op
+KryoFixedMapBench.bench:bench·p0.50    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             5200.000           ns/op
+KryoFixedMapBench.bench:bench·p0.90    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             6200.000           ns/op
+KryoFixedMapBench.bench:bench·p0.95    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             6800.000           ns/op
+KryoFixedMapBench.bench:bench·p0.99    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             9296.000           ns/op
+KryoFixedMapBench.bench:bench·p0.999   KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            23488.000           ns/op
+KryoFixedMapBench.bench:bench·p0.9999  KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            59524.070           ns/op
+KryoFixedMapBench.bench:bench·p1.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample          1476608.000           ns/op
+KryoFixedMapBench.bench                KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample  983103       42.204 ±  0.616  ns/op
+KryoFixedMapBench.bench:bench·p0.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+KryoFixedMapBench.bench:bench·p0.50    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+KryoFixedMapBench.bench:bench·p0.90    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+KryoFixedMapBench.bench:bench·p0.95    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+KryoFixedMapBench.bench:bench·p0.99    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+KryoFixedMapBench.bench:bench·p0.999   KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+KryoFixedMapBench.bench:bench·p0.9999  KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            13666.202           ns/op
+KryoFixedMapBench.bench:bench·p1.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            26176.000           ns/op
+KryoFixedMapBench.bench                KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample  530867     3003.451 ± 27.610  ns/op
+KryoFixedMapBench.bench:bench·p0.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1900.000           ns/op
+KryoFixedMapBench.bench:bench·p0.50    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2900.000           ns/op
+KryoFixedMapBench.bench:bench·p0.90    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             3400.000           ns/op
+KryoFixedMapBench.bench:bench·p0.95    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             3600.000           ns/op
+KryoFixedMapBench.bench:bench·p0.99    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             4296.000           ns/op
+KryoFixedMapBench.bench:bench·p0.999   KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            17376.000           ns/op
+KryoFixedMapBench.bench:bench·p0.9999  KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            37440.000           ns/op
+KryoFixedMapBench.bench:bench·p1.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample          1216512.000           ns/op
+KryoFixedMapBench.bench                KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample  878686      918.946 ±  9.375  ns/op
+KryoFixedMapBench.bench:bench·p0.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              700.000           ns/op
+KryoFixedMapBench.bench:bench·p0.50    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              900.000           ns/op
+KryoFixedMapBench.bench:bench·p0.90    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
+KryoFixedMapBench.bench:bench·p0.95    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
+KryoFixedMapBench.bench:bench·p0.99    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1100.000           ns/op
+KryoFixedMapBench.bench:bench·p0.999   KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1800.000           ns/op
+KryoFixedMapBench.bench:bench·p0.9999  KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample            21708.605           ns/op
+KryoFixedMapBench.bench:bench·p1.00    KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample          1937408.000           ns/op
+KryoMapBench.bench                     KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample  590675     5344.836 ± 26.217  ns/op
+KryoMapBench.bench:bench·p0.00         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             3500.000           ns/op
+KryoMapBench.bench:bench·p0.50         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             5200.000           ns/op
+KryoMapBench.bench:bench·p0.90         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             5896.000           ns/op
+KryoMapBench.bench:bench·p0.95         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             6200.000           ns/op
+KryoMapBench.bench:bench·p0.99         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample             6896.000           ns/op
+KryoMapBench.bench:bench·p0.999        KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            22688.000           ns/op
+KryoMapBench.bench:bench·p0.9999       KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample            44526.694           ns/op
+KryoMapBench.bench:bench·p1.00         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample          1261568.000           ns/op
+KryoMapBench.bench                     KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample  536548       45.697 ±  2.135  ns/op
+KryoMapBench.bench:bench·p0.00         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+KryoMapBench.bench:bench·p0.50         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample                  ≈ 0           ns/op
+KryoMapBench.bench:bench·p0.90         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+KryoMapBench.bench:bench·p0.95         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+KryoMapBench.bench:bench·p0.99         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+KryoMapBench.bench:bench·p0.999        KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample              100.000           ns/op
+KryoMapBench.bench:bench·p0.9999       KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample            20384.000           ns/op
+KryoMapBench.bench:bench·p1.00         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample           256256.000           ns/op
+KryoMapBench.bench                     KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample  650160     2456.216 ± 24.690  ns/op
+KryoMapBench.bench:bench·p0.00         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             1700.000           ns/op
+KryoMapBench.bench:bench·p0.50         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2400.000           ns/op
+KryoMapBench.bench:bench·p0.90         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2700.000           ns/op
+KryoMapBench.bench:bench·p0.95         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             2900.000           ns/op
+KryoMapBench.bench:bench·p0.99         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample             3300.000           ns/op
+KryoMapBench.bench:bench·p0.999        KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            16576.000           ns/op
+KryoMapBench.bench:bench·p0.9999       KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample            34176.000           ns/op
+KryoMapBench.bench:bench·p1.00         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100        COPY  sample          1333248.000           ns/op
+KryoMapBench.bench                     KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample  877873      914.918 ±  4.744  ns/op
+KryoMapBench.bench:bench·p0.00         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              700.000           ns/op
+KryoMapBench.bench:bench·p0.50         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample              900.000           ns/op
+KryoMapBench.bench:bench·p0.90         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
+KryoMapBench.bench:bench·p0.95         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1000.000           ns/op
+KryoMapBench.bench:bench·p0.99         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1100.000           ns/op
+KryoMapBench.bench:bench·p0.999        KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample             1800.000           ns/op
+KryoMapBench.bench:bench·p0.9999       KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample            21108.410           ns/op
+KryoMapBench.bench:bench·p1.00         KRYO_O2O_HASH  STRING_UNIFORM                    100  467505     100     ITERATE  sample          1198080.000           ns/op
