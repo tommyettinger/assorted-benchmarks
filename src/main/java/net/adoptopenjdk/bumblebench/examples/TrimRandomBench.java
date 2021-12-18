@@ -20,33 +20,32 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
 import java.util.Random;
 
 /**
- * Results here are unreliable; machine was very hot at the time and cooling settings were reducing clock speed.
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * HotSpot Java 8:
  * <br>
- * TrimRandomBench score: 725946048.000000 (725.9M 2040.3%)
- *             uncertainty:   2.0%
+ * TrimRandomBench score: 791450560.000000 (791.5M 2048.9%)
+ *             uncertainty:   3.7%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * TrimRandomBench score: 811089856.000000 (811.1M 2051.4%)
- *             uncertainty:   3.8%
+ * TrimRandomBench score: 947973824.000000 (948.0M 2067.0%)
+ *             uncertainty:   0.9%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * TrimRandomBench score: 1563040640.000000 (1.563G 2117.0%)
- *             uncertainty:   1.0%
+ * TrimRandomBench score: 1616763904.000000 (1.617G 2120.4%)
+ *             uncertainty:   1.5%
  * <br>
  * GraalVM Java 16:
  * <br> 
- * TrimRandomBench score: 1504694528.000000 (1.505G 2113.2%)
- *             uncertainty:   1.5%
+ * TrimRandomBench score: 1646932352.000000 (1.647G 2122.2%)
+ *             uncertainty:   5.5%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * TrimRandomBench score: 1204001664.000000 (1.204G 2090.9%)
- *             uncertainty:   4.8%
+ * TrimRandomBench score: 1307109504.000000 (1.307G 2099.1%)
+ *             uncertainty:   1.2%
  */
 public final class TrimRandomBench extends MicroBench {
 
