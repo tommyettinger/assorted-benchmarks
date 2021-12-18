@@ -22,24 +22,28 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- * FourWheelRandomBench score: 919712256.000000 (919.7M 2064.0%)
- *                  uncertainty:   1.8%
+ * FourWheelRandomBench score: 903197952.000000 (903.2M 2062.1%)
+                 uncertainty:   2.4%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * FourWheelRandomBench score: 1646497664.000000 (1.646G 2122.2%)
- *                  uncertainty:   2.1%
+ * FourWheelRandomBench score: 1241804288.000000 (1.242G 2094.0%)
+                 uncertainty:   1.0%
  * <br>
  * HotSpot Java 16:
  * <br>
- * FourWheelRandomBench score: 1618691712.000000 (1.619G 2120.5%)
- *                  uncertainty:   2.3%
+ * FourWheelRandomBench score: 1607683840.000000 (1.608G 2119.8%)
+ *                  uncertainty:   0.9%
  * <br>
  * GraalVM CE Java 16:
  * <br>
- * FourWheelRandomBench score: 1630737408.000000 (1.631G 2121.2%)
- *                  uncertainty:   0.7%
+ * FourWheelRandomBench score: 1646670080.000000 (1.647G 2122.2%)
+ *                  uncertainty:   1.6%
  * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ * FourWheelRandomBench score: 1642684544.000000 (1.643G 2122.0%)
+ *                  uncertainty:   0.6%
  */
 public final class FourWheelRandomBench extends MicroBench {
 

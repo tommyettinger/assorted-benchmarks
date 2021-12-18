@@ -86,7 +86,7 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>
-            <version>3.2</version>
+            <version>3.6.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -112,7 +112,7 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>jdkgdxds</artifactId>
-            <version>0.2.0</version>
+            <version>0.2.3</version>
             <scope>compile</scope>
         </dependency>
 
