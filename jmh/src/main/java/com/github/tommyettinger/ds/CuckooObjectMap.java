@@ -334,7 +334,8 @@ public class CuckooObjectMap<K, V> {
 	private void putStash (K key, V value) {
 		if (stashSize == stashCapacity) {
 			// Too many pushes occurred and the stash is full, increase the table size.
-			resizeStash(stashSize << 1);
+			stashCapacity += 4;
+			resize(capacity << 1);
 			put_internal(key, value);
 			return;
 		}
@@ -522,6 +523,7 @@ public class CuckooObjectMap<K, V> {
 
 	public boolean containsKey (K key) {
 		int hashCode = key.hashCode();
+//		System.out.println("Checking for key with hashCode=" + hashCode + ", capacity=" + capacity + ", stashSize=" + stashSize);
 		int index = hashCode & mask;
 		if (!key.equals(keyTable[index])) {
 			index = hash2(hashCode);
@@ -542,6 +544,7 @@ public class CuckooObjectMap<K, V> {
 
 	private boolean containsKeyStash (K key) {
 		K[] keyTable = this.keyTable;
+//		System.out.println("Checking stash for key with hashCode=" + key.hashCode() + ", stashCapacity=" + stashCapacity);
 		for (int i = capacity, n = i + stashSize; i < n; i++)
 			if (key.equals(keyTable[i])) return true;
 		return false;
@@ -578,9 +581,11 @@ public class CuckooObjectMap<K, V> {
 		int oldEndIndex = capacity + stashSize;
 
 		capacity = newSize;
-		threshold = (int)(newSize * loadFactor);
+		threshold = (int) (newSize * loadFactor);
 		mask = newSize - 1;
-		pushIterations = Math.max(Math.min(newSize, 8), (int)Math.sqrt(newSize) / 8);
+		hashShift = 31 - Integer.numberOfTrailingZeros(newSize);
+//	stashCapacity = Math.max(3, (int)Math.ceil(Math.log(newSize)) * 2);
+		pushIterations = Math.max(Math.min(newSize, 8), (int) Math.sqrt(newSize) / 8);
 
 		// big table is when capacity >= 2^16
 		isBigTable = (capacity >>> 16) != 0;
@@ -588,8 +593,8 @@ public class CuckooObjectMap<K, V> {
 		K[] oldKeyTable = keyTable;
 		V[] oldValueTable = valueTable;
 
-		keyTable = (K[])new Object[newSize + stashCapacity];
-		valueTable = (V[])new Object[newSize + stashCapacity];
+		keyTable = (K[]) new Object[newSize + stashCapacity];
+		valueTable = (V[]) new Object[newSize + stashCapacity];
 
 		int oldSize = size;
 		size = 0;
@@ -600,15 +605,6 @@ public class CuckooObjectMap<K, V> {
 				if (key != null) putResize(key, oldValueTable[i]);
 			}
 		}
-	}
-
-	private void resizeStash (int newStashSize) {
-		int oldStashSize = stashSize;
-
-		stashCapacity = Math.max(oldStashSize, newStashSize);
-
-		keyTable = Arrays.copyOf(keyTable, capacity + stashCapacity);
-		valueTable = Arrays.copyOf(valueTable, capacity + stashCapacity);
 	}
 
 	private int hash2 (int h) {
