@@ -32,12 +32,10 @@ import java.util.*;
  * next higher POT size.
  * @author Nathan Sweet */
 public class CuckooObjectMap<K, V> {
-	// primes for hash functions 2, 3, and 4
-	private static final int PRIME2 = 0xbe1f14b1;
-	private static final int PRIME3 = 0xb4b82e39;
-	private static final int PRIME4 = 0xced1c241;
-
-	static TangleRNG random = new TangleRNG(43210L, 98765L);
+	// primes for hash functions 2, 3, and 4; 20-bit for GWT reasons.
+	private static final int PRIME2 = 0xf48c5;
+	private static final int PRIME3 = 0x8aee1;
+	private static final int PRIME4 = 0xcb91d;
 
 	public int size;
 
@@ -74,7 +72,7 @@ public class CuckooObjectMap<K, V> {
 		this.loadFactor = loadFactor;
 
 		// big table is when capacity >= 2^16
-		isBigTable = (capacity >>> 16) != 0 ? true : false;
+		isBigTable = (capacity >>> 16) != 0;
 
 		threshold = (int)(capacity * loadFactor);
 		mask = capacity - 1;
@@ -251,11 +249,12 @@ public class CuckooObjectMap<K, V> {
 		// Push keys until an empty bucket is found.
 		K evictedKey;
 		V evictedValue;
-		int i = 0, pushIterations = this.pushIterations;
+		int i = 0, pushIterations = this.pushIterations, random = 0xb4b82e39;
 		int n = isBigTable ? 4 : 3;
 		do {
+			random = random * 0x4F1BB ^ 0x7F4A7C15;
 			// Replace the key and value for one of the hashes.
-			switch (random.nextInt(n)) {
+			switch ((random >>> 16) * n >>> 16) {
 			case 0:
 				evictedKey = key1;
 				evictedValue = valueTable[index1];
@@ -584,7 +583,6 @@ public class CuckooObjectMap<K, V> {
 		threshold = (int) (newSize * loadFactor);
 		mask = newSize - 1;
 		hashShift = 31 - Integer.numberOfTrailingZeros(newSize);
-//	stashCapacity = Math.max(3, (int)Math.ceil(Math.log(newSize)) * 2);
 		pushIterations = Math.max(Math.min(newSize, 8), (int) Math.sqrt(newSize) / 8);
 
 		// big table is when capacity >= 2^16

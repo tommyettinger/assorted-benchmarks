@@ -301,7 +301,7 @@ public class ObjectObjectCuckooMap<K, V> implements Map<K, V> {
 		do {
 			random = random * 0x4F1BB ^ 0x7F4A7C15;
 			// Replace the key and value for one of the hashes.
-			switch ((random >>> 16) % n) {
+			switch ((random >>> 16) * n >>> 16) {
 			case 0:
 				evictedKey = key1;
 				evictedValue = valueTable[index1];
