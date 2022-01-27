@@ -208,7 +208,7 @@ public class PathfindingBenchmark {
         public GreasedRegion floors;
         public int floorCount;
         public Coord[] floorArray;
-        public int coordIndex;
+        public Coord lowest, highest;
         public Coord[][] nearbyMap;
         public int[] customNearbyMap;
         public Adjacency adj;
@@ -478,13 +478,15 @@ public class PathfindingBenchmark {
                     "#.......#####.........######........##........##........###.......##...........####.............#####################################.......#######......###############..........###.............##.........##############......###########......###########......#############################......#######################.......##.......##############################.......##.......#####################".toCharArray(),
                     "################################################################################################################################################################################################################################################################################################################################################################################################################".toCharArray(),
             };
-            WIDTH = map[0].length;
-            HEIGHT = map.length;
+            WIDTH = map.length;
+            HEIGHT = map[0].length;
             Coord.expandPoolTo(WIDTH, HEIGHT);
             floors = new GreasedRegion(map, '.');
             floorCount = floors.size();
             floorArray = floors.asCoords();
-            coordIndex = 1;
+
+            lowest = floors.first();
+            highest = floors.last();
             System.out.println("Floors: " + floorCount);
             System.out.println("Percentage walkable: " + floorCount * 100.0 / (WIDTH * HEIGHT) + "%");
             astarMap = DungeonUtility.generateAStarCostMap(map, Collections.<Character, Double>emptyMap(), 1);
@@ -665,9 +667,9 @@ public class PathfindingBenchmark {
     public long doOneDijkstra(BenchmarkState state) {
         final DijkstraMap dijkstra = state.dijkstra;
         final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
-        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
-        state.srng.setState(state.coordIndex);
-        Coord r = state.srng.getRandomElement(state.floorArray);
+        Coord tgt = state.highest;
+        state.srng.setState(state.highest.hashCode());
+        Coord r = state.lowest;
         state.path.clear();
         dijkstra.findPath(state.path, PATH_LENGTH, -1, null, null, r, tgt);
         dijkstra.clearGoals();
@@ -1023,9 +1025,9 @@ public class PathfindingBenchmark {
 
     @Benchmark
     public long doOneGDXAStar(BenchmarkState state) {
-        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
-        state.srng.setState(state.coordIndex);
-        Coord r = state.srng.getRandomElement(state.floorArray);
+        Coord tgt = state.highest;
+        state.srng.setState(state.highest.hashCode());
+        Coord r = state.lowest;
         state.dgp.clear();
         state.astar.searchNodePath(r, tgt, state.gg.heu, state.dgp);
         return state.dgp.getCount();
@@ -1073,9 +1075,9 @@ public class PathfindingBenchmark {
 
     @Benchmark
     public long doOneGDXAStar2(BenchmarkState state) {
-        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
-        state.srng.setState(state.coordIndex);
-        Coord r = state.srng.getRandomElement(state.floorArray);
+        Coord tgt = state.highest;
+        state.srng.setState(state.highest.hashCode());
+        Coord r = state.lowest;
         state.dgp.clear();
         state.astar2.searchNodePath(r, tgt, state.gg2.heu, state.dgp);
         return state.dgp.getCount();
@@ -1254,9 +1256,9 @@ public class PathfindingBenchmark {
     @Benchmark
     public long doOneSquidUD(BenchmarkState state) {
         final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
-        Coord tgt = state.floorArray[((state.coordIndex += 2) >>> 1) % state.floorArray.length];
-        state.srng.setState(state.coordIndex);
-        Coord r = state.srng.getRandomElement(state.floorArray);
+        Coord tgt = state.highest;
+        state.srng.setState(state.highest.hashCode());
+        Coord r = state.lowest;
         state.path.clear();
         algo.findShortestPath(r, tgt, state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV);
         return state.path.size();
