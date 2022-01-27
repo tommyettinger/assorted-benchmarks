@@ -48,8 +48,9 @@ import space.earlygrey.simplegraphs.DirectedGraph;
 import space.earlygrey.simplegraphs.DirectedGraphAlgorithms;
 import space.earlygrey.simplegraphs.UndirectedGraph;
 import space.earlygrey.simplegraphs.UndirectedGraphAlgorithms;
+import squidpony.ArrayTools;
 import squidpony.squidai.CustomDijkstraMap;
-import squidpony.squidai.DijkstraMap;
+import squid.lib.DijkstraMap;
 import squidpony.squidgrid.Adjacency;
 import squidpony.squidgrid.Direction;
 import squidpony.squidgrid.mapping.DungeonUtility;
@@ -201,6 +202,15 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * </pre>
  * I have no idea why DijkstraMap performs so well here, though SquidLib and simple-graphs' UndirectedGraph is faster
  * by a small margin.
+ * <br>
+ * On a different path through the same BSP dungeon map:
+ * <pre>
+ * Benchmark                            Mode  Cnt   Score   Error  Units
+ * PathfindingBenchmark.doOneDijkstra   avgt    5   2.744 ± 0.120  ms/op
+ * PathfindingBenchmark.doOneGDXAStar   avgt    5  16.792 ± 0.864  ms/op
+ * PathfindingBenchmark.doOneGDXAStar2  avgt    5  10.715 ± 0.164  ms/op
+ * PathfindingBenchmark.doOneSquidUD    avgt    5  12.694 ± 0.133  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -489,6 +499,7 @@ public class PathfindingBenchmark {
                     "#.......#####.........######........##........##........###.......##...........####.............#####################################.......#######......###############..........###.............##.........##############......###########......###########......#############################......#######################.......##.......##############################.......##.......#####################".toCharArray(),
                     "################################################################################################################################################################################################################################################################################################################################################################################################################".toCharArray(),
             };
+            ArrayTools.reverse(map);
             WIDTH = map.length;
             HEIGHT = map[0].length;
             Coord.expandPoolTo(WIDTH, HEIGHT);
