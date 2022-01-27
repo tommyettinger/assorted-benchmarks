@@ -189,7 +189,18 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathGDXAStar2  avgt    5    10.865 �  0.160  ms/op
  * PathfindingBenchmark.doTinyPathSimpleUD   avgt    5     6.397 �  0.072  ms/op
  * </pre>
- *
+ * <br>
+ * Testing on a 240x400 BSP dungeon map provided by FudgeFiddle for comparison purposes, with one path from the lowest
+ * x and lowest y to approximately the highest x and highest y:
+ * <pre>
+ * Benchmark                            Mode  Cnt  Score   Error  Units
+ * PathfindingBenchmark.doOneDijkstra   avgt    5  4.501 ± 0.052  ms/op
+ * PathfindingBenchmark.doOneGDXAStar   avgt    5  7.574 ± 0.054  ms/op
+ * PathfindingBenchmark.doOneGDXAStar2  avgt    5  5.625 ± 0.089  ms/op
+ * PathfindingBenchmark.doOneSquidUD    avgt    5  4.364 ± 0.075  ms/op
+ * </pre>
+ * I have no idea why DijkstraMap performs so well here, though SquidLib and simple-graphs' UndirectedGraph is faster
+ * by a small margin.
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
