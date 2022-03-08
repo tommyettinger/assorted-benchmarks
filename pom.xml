@@ -106,13 +106,13 @@
         <dependency>
             <groupId>space.earlygrey</groupId>
             <artifactId>simple-graphs</artifactId>
-            <version>155a48e25d</version>
+            <version>5faf60ebd9</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>jdkgdxds</artifactId>
-            <version>2f1af39863</version>
+            <version>c4d04c6f28</version>
             <scope>compile</scope>
         </dependency>
 
