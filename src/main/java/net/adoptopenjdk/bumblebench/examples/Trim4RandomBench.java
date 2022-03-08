@@ -46,7 +46,7 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * TrimRandomBench score: 1307109504.000000 (1.307G 2099.1%)
  *             uncertainty:   1.2%
  */
-public final class Trim3RandomBench extends MicroBench {
+public final class Trim4RandomBench extends MicroBench {
 
 	public static class TrimRandom {
 		private long stateA, stateB, stateC, stateD;
@@ -110,10 +110,10 @@ public final class Trim3RandomBench extends MicroBench {
 			final long fb = this.stateB;
 			final long fc = this.stateC;
 			final long fd = this.stateD;
-			stateA = Long.rotateLeft(fb ^ fc, 57);
-			stateB = Long.rotateLeft(fc ^ fd, 11);
-			stateC = fa + fb;
-			stateD = fd + 0xADB5B12149E93C39L;
+			stateA = Long.rotateLeft(fb ^ fc, 37);
+			stateB = Long.rotateLeft(fc ^ fd, 57);
+			stateC = fa + fb ^ fc;
+			stateD = fd + 0xA6766DC536E4D933L;
 			return (int) fc >>> 32 - bits;
 		}
 
@@ -131,10 +131,10 @@ public final class Trim3RandomBench extends MicroBench {
 			final long fb = stateB;
 			final long fc = stateC;
 			final long fd = stateD;
-			stateA = Long.rotateLeft(fb ^ fc, 57);
-			stateB = Long.rotateLeft(fc ^ fd, 11);
-			stateC = fa + fb;
-			stateD = fd + 0xADB5B12149E93C39L;
+			stateA = Long.rotateLeft(fb ^ fc, 37);
+			stateB = Long.rotateLeft(fc ^ fd, 57);
+			stateC = fa + fb ^ fc;
+			stateD = fd + 0xA6766DC536E4D933L;
 			return fc;
 		}
 	}

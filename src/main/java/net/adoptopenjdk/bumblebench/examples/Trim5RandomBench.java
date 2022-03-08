@@ -46,7 +46,7 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * TrimRandomBench score: 1307109504.000000 (1.307G 2099.1%)
  *             uncertainty:   1.2%
  */
-public final class Trim3RandomBench extends MicroBench {
+public final class Trim5RandomBench extends MicroBench {
 
 	public static class TrimRandom {
 		private long stateA, stateB, stateC, stateD;
@@ -106,14 +106,14 @@ public final class Trim3RandomBench extends MicroBench {
 		 * @since 1.1
 		 */
 		protected int next(int bits) {
-			final long fa = this.stateA;
-			final long fb = this.stateB;
-			final long fc = this.stateC;
-			final long fd = this.stateD;
-			stateA = Long.rotateLeft(fb ^ fc, 57);
-			stateB = Long.rotateLeft(fc ^ fd, 11);
-			stateC = fa + fb;
-			stateD = fd + 0xADB5B12149E93C39L;
+			final long fa = stateA;
+			final long fb = stateB;
+			final long fc = stateC;
+			final long fd = stateD;
+			stateA = Long.rotateLeft(fb ^ fc, 6);
+			stateB = Long.rotateLeft(fc ^ fd, 6);
+			stateC = fa * 0xD1342543DE82EF95L;
+			stateD = fd + 0xD9501E54E3CE92E1L;
 			return (int) fc >>> 32 - bits;
 		}
 
@@ -131,10 +131,10 @@ public final class Trim3RandomBench extends MicroBench {
 			final long fb = stateB;
 			final long fc = stateC;
 			final long fd = stateD;
-			stateA = Long.rotateLeft(fb ^ fc, 57);
-			stateB = Long.rotateLeft(fc ^ fd, 11);
-			stateC = fa + fb;
-			stateD = fd + 0xADB5B12149E93C39L;
+			stateA = Long.rotateLeft(fb ^ fc, 4);
+			stateB = fc ^ fd;
+			stateC = fa * 0x397EAD00E4621995L;
+			stateD = fd + 0xB16D1031B9120BFDL;
 			return fc;
 		}
 	}
