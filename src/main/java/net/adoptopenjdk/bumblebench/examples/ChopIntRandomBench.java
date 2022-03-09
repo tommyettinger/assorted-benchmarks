@@ -14,8 +14,8 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.github.tommyettinger.ds.support.ChopRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
-import squidpony.squidmath.RandomnessSource;
 
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
@@ -47,92 +47,93 @@ import squidpony.squidmath.RandomnessSource;
  */
 public final class ChopIntRandomBench extends MicroBench {
 
-	public static class ChopRandom implements RandomnessSource {
-		private int stateA, stateB, stateC, stateD;
-		public ChopRandom (long seed) {
-			setSeed(seed);
-		}
-		public void setSeed(long seed) {
-			long x = (seed += 0x9E3779B97F4A7C15L);
-			x ^= x >>> 27;
-			x *= 0x3C79AC492BA7B653L;
-			x ^= x >>> 33;
-			x *= 0x1C69B3F74AC4AE35L;
-			stateA = (int)(x ^ x >>> 27);
-			x = (seed += 0x9E3779B97F4A7C15L);
-			x ^= x >>> 27;
-			x *= 0x3C79AC492BA7B653L;
-			x ^= x >>> 33;
-			x *= 0x1C69B3F74AC4AE35L;
-			stateB = (int)(x ^ x >>> 27);
-			x = (seed += 0x9E3779B97F4A7C15L);
-			x ^= x >>> 27;
-			x *= 0x3C79AC492BA7B653L;
-			x ^= x >>> 33;
-			x *= 0x1C69B3F74AC4AE35L;
-			stateC = (int)(x ^ x >>> 27);
-			x = (seed + 0x9E3779B97F4A7C15L);
-			x ^= x >>> 27;
-			x *= 0x3C79AC492BA7B653L;
-			x ^= x >>> 33;
-			x *= 0x1C69B3F74AC4AE35L;
-			stateD = (int)(x ^ x >>> 27);
-		}
-		public ChopRandom (int stateA, int stateB, int stateC, int stateD) {
-			this.stateA = stateA;
-			this.stateB = stateB;
-			this.stateC = stateC;
-			this.stateD = stateD;
-		}
+//	public static class ChopRandom implements RandomnessSource {
+//		private int stateA, stateB, stateC, stateD;
+//		public ChopRandom (long seed) {
+//			setSeed(seed);
+//		}
+//		public void setSeed(long seed) {
+//			long x = (seed += 0x9E3779B97F4A7C15L);
+//			x ^= x >>> 27;
+//			x *= 0x3C79AC492BA7B653L;
+//			x ^= x >>> 33;
+//			x *= 0x1C69B3F74AC4AE35L;
+//			stateA = (int)(x ^ x >>> 27);
+//			x = (seed += 0x9E3779B97F4A7C15L);
+//			x ^= x >>> 27;
+//			x *= 0x3C79AC492BA7B653L;
+//			x ^= x >>> 33;
+//			x *= 0x1C69B3F74AC4AE35L;
+//			stateB = (int)(x ^ x >>> 27);
+//			x = (seed += 0x9E3779B97F4A7C15L);
+//			x ^= x >>> 27;
+//			x *= 0x3C79AC492BA7B653L;
+//			x ^= x >>> 33;
+//			x *= 0x1C69B3F74AC4AE35L;
+//			stateC = (int)(x ^ x >>> 27);
+//			x = (seed + 0x9E3779B97F4A7C15L);
+//			x ^= x >>> 27;
+//			x *= 0x3C79AC492BA7B653L;
+//			x ^= x >>> 33;
+//			x *= 0x1C69B3F74AC4AE35L;
+//			stateD = (int)(x ^ x >>> 27);
+//		}
+//		public ChopRandom (int stateA, int stateB, int stateC, int stateD) {
+//			this.stateA = stateA;
+//			this.stateB = stateB;
+//			this.stateC = stateC;
+//			this.stateD = stateD;
+//		}
+//
+//		@Override
+//		public long nextLong() {
+//			final int fa = stateA;
+//			final int fb = stateB;
+//			final int fc = stateC;
+//			final int fd = stateD;
+//			int ga = fb ^ fc; ga = (ga << 26 | ga >>>  6);
+//			int gb = fc ^ fd; gb = (gb << 11 | gb >>> 21);
+//			final int gc = fa ^ fb + fc;
+//			final int gd = fd + 0xADB5B165;
+//			int sa = gb ^ gc; stateA = (sa << 26 | sa >>>  6);
+//			int sb = gc ^ gd; stateB = (sb << 11 | sb >>> 21);
+//			stateC = ga ^ gb + gc;
+//			stateD = gd + 0xADB5B165;
+//			return (long)fc << 32 ^ gc;
+//		}
+//
+//		@Override
+//		public int next(int bits) {
+//			final int fa = stateA;
+//			final int fb = stateB;
+//			final int fc = stateC;
+//			final int fd = stateD;
+//			final int sa = fb ^ fc; stateA = (sa << 26 | sa >>>  6);
+//			final int sb = fc ^ fd; stateB = (sb << 11 | sb >>> 21);
+//			stateC = fa ^ fb + fc;
+//			stateD = fd + 0xADB5B165;
+//			return fc >>> (32 - bits);
+//		}
+//
+//		public int nextInt () {
+//			final int fa = stateA;
+//			final int fb = stateB;
+//			final int fc = stateC;
+//			final int fd = stateD;
+//			final int sa = fb ^ fc; stateA = (sa << 26 | sa >>>  6);
+//			final int sb = fc ^ fd; stateB = (sb << 11 | sb >>> 21);
+//			stateC = fa ^ fb + fc;
+//			stateD = fd + 0xADB5B165;
+//			return fc;
+//		}
+//
+//    @Override
+//    public ChopRandom copy() {
+//        return new ChopRandom(stateA, stateB, stateC, stateD);
+//    }
+//
+//	}
 
-		@Override
-		public long nextLong() {
-			final int fa = stateA;
-			final int fb = stateB;
-			final int fc = stateC;
-			final int fd = stateD;
-			int ga = fb ^ fc; ga = (ga << 26 | ga >>>  6);
-			int gb = fc ^ fd; gb = (gb << 11 | gb >>> 21);
-			final int gc = fa ^ fb + fc;
-			final int gd = fd + 0xADB5B165;
-			int sa = gb ^ gc; stateA = (sa << 26 | sa >>>  6);
-			int sb = gc ^ gd; stateB = (sb << 11 | sb >>> 21);
-			stateC = ga ^ gb + gc;
-			stateD = gd + 0xADB5B165;
-			return (long)fc << 32 ^ gc;
-		}
-
-		@Override
-		public int next(int bits) {
-			final int fa = stateA;
-			final int fb = stateB;
-			final int fc = stateC;
-			final int fd = stateD;
-			final int sa = fb ^ fc; stateA = (sa << 26 | sa >>>  6);
-			final int sb = fc ^ fd; stateB = (sb << 11 | sb >>> 21);
-			stateC = fa ^ fb + fc;
-			stateD = fd + 0xADB5B165;
-			return fc >>> (32 - bits);
-		}
-
-		public int nextInt () {
-			final int fa = stateA;
-			final int fb = stateB;
-			final int fc = stateC;
-			final int fd = stateD;
-			final int sa = fb ^ fc; stateA = (sa << 26 | sa >>>  6);
-			final int sb = fc ^ fd; stateB = (sb << 11 | sb >>> 21);
-			stateC = fa ^ fb + fc;
-			stateD = fd + 0xADB5B165;
-			return fc;
-		}
-
-    @Override
-    public ChopRandom copy() {
-        return new ChopRandom(stateA, stateB, stateC, stateD);
-    }
-
-	}
 	protected long doBatch(long numIterations) throws InterruptedException {
 		ChopRandom rng = new ChopRandom(0x12345678);
 		int sum = 0;

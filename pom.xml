@@ -68,7 +68,7 @@
         <dependency>
             <groupId>com.github.yellowstonegames.SquidLib</groupId>
             <artifactId>squidlib-util</artifactId>
-            <version>2b577109cc</version>
+            <version>4a82fcb733</version>
             <scope>compile</scope>
         </dependency>
 <!--        <dependency>-->
@@ -80,7 +80,7 @@
         <dependency>
             <groupId>com.github.yellowstonegames.SquidSquad</groupId>
             <artifactId>SquidGrid</artifactId>
-            <version>436073ef31</version>
+            <version>7fe41d7c1e</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -112,7 +112,7 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>jdkgdxds</artifactId>
-            <version>c4d04c6f28</version>
+            <version>2d67dfe839</version>
             <scope>compile</scope>
         </dependency>
 
