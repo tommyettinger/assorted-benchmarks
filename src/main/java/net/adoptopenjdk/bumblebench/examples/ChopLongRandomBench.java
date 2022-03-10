@@ -14,11 +14,12 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.ds.support.ChopRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
+import net.adoptopenjdk.bumblebench.examples.ChopIntRandomBench.ChopRandom;
 
-/**
+/*
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * (Generating two ints and combining them, this we know works.)
  * <br>
  * HotSpot Java 8:
  * <br>
@@ -44,6 +45,36 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * ChopLongRandomBench score: 508210464.000000 (508.2M 2004.6%)
  *                uncertainty:   1.2%
+ */
+
+/**
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * (With single-generation optimization, this could pass tests?)
+ * <br>
+ * HotSpot Java 8:
+ * <br>
+ * ChopLongRandomBench score: 724925760.000000 (724.9M 2040.2%)
+ *                uncertainty:   9.7%
+ * <br>
+ * OpenJ9 Java 15:
+ * <br>
+ * ChopLongRandomBench score: 1131402240.000000 (1.131G 2084.7%)
+                uncertainty:   2.2%
+ * <br>
+ * HotSpot Java 16:
+ * <br>
+ * ChopLongRandomBench score: 726020992.000000 (726.0M 2040.3%)
+ *                uncertainty:   1.4%
+ * <br>
+ * GraalVM CE Java 16:
+ * <br>
+ * ChopLongRandomBench score: 850065920.000000 (850.1M 2056.1%)
+ *                uncertainty:   0.8% 
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ * ChopLongRandomBench score: 732182016.000000 (732.2M 2041.2%)
+ *                uncertainty:   0.3%
  */
 public final class ChopLongRandomBench extends MicroBench {
 
