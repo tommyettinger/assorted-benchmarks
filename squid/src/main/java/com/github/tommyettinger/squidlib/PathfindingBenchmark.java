@@ -45,9 +45,10 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import space.earlygrey.simplegraphs.*;
 import space.earlygrey.simplegraphs.DirectedGraph;
-import space.earlygrey.simplegraphs.DirectedGraphAlgorithms;
 import space.earlygrey.simplegraphs.UndirectedGraph;
-import space.earlygrey.simplegraphs.UndirectedGraphAlgorithms;
+import space.earlygrey.simplegraphs.algorithms.DirectedGraphAlgorithms;
+import space.earlygrey.simplegraphs.algorithms.SearchStep;
+import space.earlygrey.simplegraphs.algorithms.UndirectedGraphAlgorithms;
 import squidpony.ArrayTools;
 import squidpony.squidai.CustomDijkstraMap;
 import squid.lib.DijkstraMap;
@@ -1136,7 +1137,7 @@ public class PathfindingBenchmark {
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, state.simplePath).size != 0)
+                if(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex).size != 0)
                     scanned += state.path.size();
             }
         }
@@ -1157,7 +1158,7 @@ public class PathfindingBenchmark {
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.nearbyMap[x][y];
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, state.simplePath).size != 0)
+                if(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex).size != 0)
                     scanned += state.path.size();
             }
         }
@@ -1179,7 +1180,7 @@ public class PathfindingBenchmark {
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, state.simplePath).size != 0)
+                if(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex).size != 0)
                     scanned += state.path.size();
             }
         }
@@ -1200,7 +1201,7 @@ public class PathfindingBenchmark {
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.nearbyMap[x][y];
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, state.simplePath).size != 0)
+                if(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex).size != 0)
                     scanned += state.path.size();
             }
         }
