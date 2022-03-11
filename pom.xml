@@ -68,7 +68,7 @@
         <dependency>
             <groupId>com.github.yellowstonegames.SquidLib</groupId>
             <artifactId>squidlib-util</artifactId>
-            <version>4a82fcb733</version>
+            <version>5b60190b11</version>
             <scope>compile</scope>
         </dependency>
 <!--        <dependency>-->

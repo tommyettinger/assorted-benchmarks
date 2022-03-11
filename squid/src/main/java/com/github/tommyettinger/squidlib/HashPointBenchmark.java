@@ -67,20 +67,22 @@ import java.util.concurrent.TimeUnit;
  * HashPointBenchmark.measurePointHash5D       avgt    5  7.447 ± 0.147  ns/op
  * HashPointBenchmark.measurePointHash6D       avgt    5  8.194 ± 0.081  ns/op
  * </pre>
- * Happy is not so great! Actually the worst! Hush is better, and Hasty is best
- * of the long-based hashes. IntPointHash is very good but of course uses ints.
+ * Happy is now excellent! Earlier versions were quite slow, but the current version
+ * uses the same algorithm as IntPointHash (just scaled up to long, with only minor
+ * changes), and now it is quite fast. Happy is faster than Hasty now, making it the
+ * fastest long-based point hash here.
  * <pre>
  * Benchmark                                   Mode  Cnt  Score   Error  Units
- * HashPointBenchmark.measureHappyPointHash2D  avgt    5  5.217 ± 0.147  ns/op
- * HashPointBenchmark.measureHappyPointHash3D  avgt    5  5.803 ± 0.118  ns/op
- * HashPointBenchmark.measureHappyPointHash4D  avgt    5  6.483 ± 0.268  ns/op
- * HashPointBenchmark.measureHappyPointHash5D  avgt    5  7.284 ± 0.160  ns/op
- * HashPointBenchmark.measureHappyPointHash6D  avgt    5  8.621 ± 0.266  ns/op
- * HashPointBenchmark.measureHastyPointHash2D  avgt    5  4.664 ± 0.196  ns/op
- * HashPointBenchmark.measureHastyPointHash3D  avgt    5  5.327 ± 0.048  ns/op
- * HashPointBenchmark.measureHastyPointHash4D  avgt    5  5.894 ± 0.086  ns/op
- * HashPointBenchmark.measureHastyPointHash5D  avgt    5  6.395 ± 0.665  ns/op
- * HashPointBenchmark.measureHastyPointHash6D  avgt    5  6.549 ± 0.292  ns/op
+ * HashPointBenchmark.measureHappyPointHash2D  avgt    5  4.388 ± 0.080  ns/op
+ * HashPointBenchmark.measureHappyPointHash3D  avgt    5  4.659 ± 0.191  ns/op
+ * HashPointBenchmark.measureHappyPointHash4D  avgt    5  4.983 ± 0.072  ns/op
+ * HashPointBenchmark.measureHappyPointHash5D  avgt    5  5.427 ± 0.197  ns/op
+ * HashPointBenchmark.measureHappyPointHash6D  avgt    5  6.021 ± 0.106  ns/op
+ * HashPointBenchmark.measureHastyPointHash2D  avgt    5  4.703 ± 0.172  ns/op
+ * HashPointBenchmark.measureHastyPointHash3D  avgt    5  4.922 ± 0.077  ns/op
+ * HashPointBenchmark.measureHastyPointHash4D  avgt    5  5.475 ± 0.063  ns/op
+ * HashPointBenchmark.measureHastyPointHash5D  avgt    5  5.915 ± 0.278  ns/op
+ * HashPointBenchmark.measureHastyPointHash6D  avgt    5  6.254 ± 0.096  ns/op
  * </pre>
  *
  */
