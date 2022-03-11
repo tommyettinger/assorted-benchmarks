@@ -38,10 +38,7 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
-import squidpony.squidmath.HastyPointHash;
-import squidpony.squidmath.HushPointHash;
-import squidpony.squidmath.IntPointHash;
-import squidpony.squidmath.PointHash;
+import squidpony.squidmath.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -70,6 +67,22 @@ import java.util.concurrent.TimeUnit;
  * HashPointBenchmark.measurePointHash5D       avgt    5  7.447 ± 0.147  ns/op
  * HashPointBenchmark.measurePointHash6D       avgt    5  8.194 ± 0.081  ns/op
  * </pre>
+ * Happy is not so great! Actually the worst! Hush is better, and Hasty is best
+ * of the long-based hashes. IntPointHash is very good but of course uses ints.
+ * <pre>
+ * Benchmark                                   Mode  Cnt  Score   Error  Units
+ * HashPointBenchmark.measureHappyPointHash2D  avgt    5  5.217 ± 0.147  ns/op
+ * HashPointBenchmark.measureHappyPointHash3D  avgt    5  5.803 ± 0.118  ns/op
+ * HashPointBenchmark.measureHappyPointHash4D  avgt    5  6.483 ± 0.268  ns/op
+ * HashPointBenchmark.measureHappyPointHash5D  avgt    5  7.284 ± 0.160  ns/op
+ * HashPointBenchmark.measureHappyPointHash6D  avgt    5  8.621 ± 0.266  ns/op
+ * HashPointBenchmark.measureHastyPointHash2D  avgt    5  4.664 ± 0.196  ns/op
+ * HashPointBenchmark.measureHastyPointHash3D  avgt    5  5.327 ± 0.048  ns/op
+ * HashPointBenchmark.measureHastyPointHash4D  avgt    5  5.894 ± 0.086  ns/op
+ * HashPointBenchmark.measureHastyPointHash5D  avgt    5  6.395 ± 0.665  ns/op
+ * HashPointBenchmark.measureHastyPointHash6D  avgt    5  6.549 ± 0.292  ns/op
+ * </pre>
+ *
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -265,6 +278,49 @@ public class HashPointBenchmark {
         int[] intInputs = s.intInputs;
         return IntPointHash.hashAll(intInputs[idx], intInputs[idx + 1], intInputs[idx + 2], intInputs[idx + 3],
                 intInputs[idx + 4], intInputs[idx + 5], intInputs[idx + 6]);
+    }
+
+    @Benchmark
+    public long measureHappyPointHash2D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HappyPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2]);
+    }
+
+    @Benchmark
+    public long measureHappyPointHash3D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HappyPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3]);
+    }
+
+    @Benchmark
+    public long measureHappyPointHash4D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HappyPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3],
+                longInputs[idx + 4]);
+    }
+
+    @Benchmark
+    public long measureHappyPointHash5D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HappyPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3],
+                longInputs[idx + 4], longInputs[idx + 5]);
+    }
+
+    @Benchmark
+    public long measureHappyPointHash6D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HappyPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3],
+                longInputs[idx + 4], longInputs[idx + 5], longInputs[idx + 6]);
     }
 
     /*
