@@ -49,7 +49,7 @@ dependencies {
 
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.3'
 //    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:2ae5e83d1a' // lacks Ripple FOV opt
-    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:27ef390d16'
+    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:4a82fcb733'
     implementation 'com.github.yellowstonegames.SquidSquad:SquidGrid:436073ef31'
     implementation 'com.github.yellowstonegames.SquidSquad:SquidPlace:436073ef31'
     implementation 'com.github.yellowstonegames.SquidSquad:SquidPath:436073ef31'

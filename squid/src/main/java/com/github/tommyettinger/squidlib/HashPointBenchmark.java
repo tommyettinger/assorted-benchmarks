@@ -38,6 +38,9 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
+import squidpony.squidmath.HastyPointHash;
+import squidpony.squidmath.HushPointHash;
+import squidpony.squidmath.IntPointHash;
 import squidpony.squidmath.PointHash;
 
 import java.util.concurrent.TimeUnit;
@@ -113,6 +116,135 @@ public class HashPointBenchmark {
         long[] longInputs = s.longInputs;
         return PointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3],
                 longInputs[idx + 4], longInputs[idx + 5], longInputs[idx + 6]);
+    }
+
+    @Benchmark
+    public long measureHastyPointHash2D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HastyPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2]);
+    }
+
+    @Benchmark
+    public long measureHastyPointHash3D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HastyPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3]);
+    }
+
+    @Benchmark
+    public long measureHastyPointHash4D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HastyPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3],
+                longInputs[idx + 4]);
+    }
+
+    @Benchmark
+    public long measureHastyPointHash5D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HastyPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3],
+                longInputs[idx + 4], longInputs[idx + 5]);
+    }
+
+    @Benchmark
+    public long measureHastyPointHash6D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HastyPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3],
+                longInputs[idx + 4], longInputs[idx + 5], longInputs[idx + 6]);
+    }
+
+    @Benchmark
+    public long measureHushPointHash2D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HushPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2]);
+    }
+
+    @Benchmark
+    public long measureHushPointHash3D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HushPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3]);
+    }
+
+    @Benchmark
+    public long measureHushPointHash4D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HushPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3],
+                longInputs[idx + 4]);
+    }
+
+    @Benchmark
+    public long measureHushPointHash5D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HushPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3],
+                longInputs[idx + 4], longInputs[idx + 5]);
+    }
+
+    @Benchmark
+    public long measureHushPointHash6D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        long[] longInputs = s.longInputs;
+        return HushPointHash.hashAll(longInputs[idx], longInputs[idx + 1], longInputs[idx + 2], longInputs[idx + 3],
+                longInputs[idx + 4], longInputs[idx + 5], longInputs[idx + 6]);
+    }
+
+    @Benchmark
+    public int measureIntPointHash2D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        int[] intInputs = s.intInputs;
+        return IntPointHash.hashAll(intInputs[idx], intInputs[idx + 1], intInputs[idx + 2]);
+    }
+
+    @Benchmark
+    public int measureIntPointHash3D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        int[] intInputs = s.intInputs;
+        return IntPointHash.hashAll(intInputs[idx], intInputs[idx + 1], intInputs[idx + 2], intInputs[idx + 3]);
+    }
+
+    @Benchmark
+    public int measureIntPointHash4D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        int[] intInputs = s.intInputs;
+        return IntPointHash.hashAll(intInputs[idx], intInputs[idx + 1], intInputs[idx + 2], intInputs[idx + 3],
+                intInputs[idx + 4]);
+    }
+
+    @Benchmark
+    public int measureIntPointHash5D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        int[] intInputs = s.intInputs;
+        return IntPointHash.hashAll(intInputs[idx], intInputs[idx + 1], intInputs[idx + 2], intInputs[idx + 3],
+                intInputs[idx + 4], intInputs[idx + 5]);
+    }
+
+    @Benchmark
+    public int measureIntPointHash6D(BenchmarkState s)
+    {
+        int idx = s.idx = s.idx + 8 & 0x7FFF8;
+        int[] intInputs = s.intInputs;
+        return IntPointHash.hashAll(intInputs[idx], intInputs[idx + 1], intInputs[idx + 2], intInputs[idx + 3],
+                intInputs[idx + 4], intInputs[idx + 5], intInputs[idx + 6]);
     }
 
     /*
