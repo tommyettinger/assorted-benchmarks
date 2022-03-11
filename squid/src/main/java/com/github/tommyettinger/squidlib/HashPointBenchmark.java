@@ -46,9 +46,29 @@ import squidpony.squidmath.PointHash;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Measuring point hashes for 3D points:
+ * Measuring point hashes:
  * <pre>
- *
+ * Benchmark                                   Mode  Cnt  Score   Error  Units
+ * HashPointBenchmark.measureHastyPointHash2D  avgt    5  4.511 ± 0.075  ns/op
+ * HashPointBenchmark.measureHastyPointHash3D  avgt    5  4.868 ± 0.151  ns/op
+ * HashPointBenchmark.measureHastyPointHash4D  avgt    5  5.659 ± 0.106  ns/op
+ * HashPointBenchmark.measureHastyPointHash5D  avgt    5  5.937 ± 0.135  ns/op
+ * HashPointBenchmark.measureHastyPointHash6D  avgt    5  6.327 ± 0.200  ns/op
+ * HashPointBenchmark.measureHushPointHash2D   avgt    5  4.691 ± 0.126  ns/op
+ * HashPointBenchmark.measureHushPointHash3D   avgt    5  5.004 ± 0.093  ns/op
+ * HashPointBenchmark.measureHushPointHash4D   avgt    5  5.584 ± 0.265  ns/op
+ * HashPointBenchmark.measureHushPointHash5D   avgt    5  6.223 ± 0.044  ns/op
+ * HashPointBenchmark.measureHushPointHash6D   avgt    5  7.300 ± 0.050  ns/op
+ * HashPointBenchmark.measureIntPointHash2D    avgt    5  4.044 ± 0.097  ns/op
+ * HashPointBenchmark.measureIntPointHash3D    avgt    5  4.342 ± 0.217  ns/op
+ * HashPointBenchmark.measureIntPointHash4D    avgt    5  4.670 ± 0.121  ns/op
+ * HashPointBenchmark.measureIntPointHash5D    avgt    5  5.038 ± 0.034  ns/op
+ * HashPointBenchmark.measureIntPointHash6D    avgt    5  5.492 ± 0.259  ns/op
+ * HashPointBenchmark.measurePointHash2D       avgt    5  5.204 ± 0.109  ns/op
+ * HashPointBenchmark.measurePointHash3D       avgt    5  5.957 ± 0.095  ns/op
+ * HashPointBenchmark.measurePointHash4D       avgt    5  6.576 ± 0.229  ns/op
+ * HashPointBenchmark.measurePointHash5D       avgt    5  7.447 ± 0.147  ns/op
+ * HashPointBenchmark.measurePointHash6D       avgt    5  8.194 ± 0.081  ns/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
