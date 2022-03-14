@@ -23,28 +23,28 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- * TrimRandomBench score: 791450560.000000 (791.5M 2048.9%)
- *             uncertainty:   3.7%
+ * Trim5RandomBench score: 1125434112.000000 (1.125G 2084.1%)
+ *              uncertainty:   0.9%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * TrimRandomBench score: 947973824.000000 (948.0M 2067.0%)
- *             uncertainty:   0.9%
+ * Trim5RandomBench score: 837190400.000000 (837.2M 2054.6%)
+ *              uncertainty:   0.9%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * TrimRandomBench score: 1616763904.000000 (1.617G 2120.4%)
- *             uncertainty:   1.5%
+ * Trim5RandomBench score: 1510010496.000000 (1.510G 2113.5%)
+ *              uncertainty:   1.4%
  * <br>
  * GraalVM Java 16:
  * <br> 
- * TrimRandomBench score: 1646932352.000000 (1.647G 2122.2%)
- *             uncertainty:   5.5%
+ * Trim5RandomBench score: 1412518272.000000 (1.413G 2106.9%)
+ *              uncertainty:   0.4%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * TrimRandomBench score: 1307109504.000000 (1.307G 2099.1%)
- *             uncertainty:   1.2%
+ * Trim5RandomBench score: 1505737088.000000 (1.506G 2113.3%)
+ *              uncertainty:   1.1%
  */
 public final class Trim5RandomBench extends MicroBench {
 
@@ -131,11 +131,13 @@ public final class Trim5RandomBench extends MicroBench {
 			final long fb = stateB;
 			final long fc = stateC;
 			final long fd = stateD;
-			stateA = Long.rotateLeft(fb ^ fc, 4);
-			stateB = fc ^ fd;
-			stateC = fa * 0x397EAD00E4621995L;
-			stateD = fd + 0xB16D1031B9120BFDL;
-			return fc;
+			final long bc = fb + fc;
+			final long cd = fc ^ fd;
+			stateA = (bc << 57 | bc >>> 7);
+			stateB = (cd << 18 | cd >>> 46);
+			stateC = fa ^ bc;
+			stateD = fd + 0xA2623BAB769C24A7L;//0x8E44608B6A0EC52DL;
+			return fa;
 		}
 	}
 	protected long doBatch(long numIterations) throws InterruptedException {
