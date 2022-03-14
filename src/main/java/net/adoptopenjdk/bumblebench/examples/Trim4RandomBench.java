@@ -23,28 +23,28 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- * TrimRandomBench score: 791450560.000000 (791.5M 2048.9%)
- *             uncertainty:   3.7%
+ * Trim4RandomBench score: 1092523008.000000 (1.093G 2081.2%)
+ *              uncertainty:   2.1%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * TrimRandomBench score: 947973824.000000 (948.0M 2067.0%)
- *             uncertainty:   0.9%
+ * Trim4RandomBench score: 810780864.000000 (810.8M 2051.4%)
+ *              uncertainty:   2.3%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * TrimRandomBench score: 1616763904.000000 (1.617G 2120.4%)
- *             uncertainty:   1.5%
+ * Trim4RandomBench score: 1484576512.000000 (1.485G 2111.8%)
+ *              uncertainty:   1.3%
  * <br>
  * GraalVM Java 16:
  * <br> 
- * TrimRandomBench score: 1646932352.000000 (1.647G 2122.2%)
- *             uncertainty:   5.5%
+ * Trim4RandomBench score: 1420749440.000000 (1.421G 2107.4%)
+ *              uncertainty:   0.6%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * TrimRandomBench score: 1307109504.000000 (1.307G 2099.1%)
- *             uncertainty:   1.2%
+ * Trim4RandomBench score: 1494746752.000000 (1.495G 2112.5%)
+ *              uncertainty:   0.4%
  */
 public final class Trim4RandomBench extends MicroBench {
 
@@ -112,7 +112,7 @@ public final class Trim4RandomBench extends MicroBench {
 			final long fd = this.stateD;
 			stateA = Long.rotateLeft(fb ^ fc, 37);
 			stateB = Long.rotateLeft(fc ^ fd, 57);
-			stateC = fa + fb ^ fc;
+			stateC = fa ^ fb + fc;
 			stateD = fd + 0xA6766DC536E4D933L;
 			return (int) fc >>> 32 - bits;
 		}
@@ -131,10 +131,12 @@ public final class Trim4RandomBench extends MicroBench {
 			final long fb = stateB;
 			final long fc = stateC;
 			final long fd = stateD;
-			stateA = Long.rotateLeft(fb ^ fc, 37);
-			stateB = Long.rotateLeft(fc ^ fd, 57);
-			stateC = fa + fb ^ fc;
-			stateD = fd + 0xA6766DC536E4D933L;
+			final long bc = fb ^ fc;
+			final long cd = fc ^ fd;
+			stateA = (bc << 57 | bc >>> 7);
+			stateB = (cd << 18 | cd >>> 46);
+			stateC = fa + bc;
+			stateD = fd + 0xDE916ABCC965815BL;
 			return fc;
 		}
 	}
