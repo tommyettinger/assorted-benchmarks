@@ -411,6 +411,44 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.measurePointHashPeloton      1  avgt    6  3.524 ± 0.300  ns/op
  * </pre>
  * Of course, the one with the fewest collisions is slowest, and the most collisions is fastest...
+ * <br>
+ * Quickly comparing Crease (using a poor approximation of AHash's folded multiplication) with Yolk...
+ * <br>
+ * Strings or CharSequences:
+ * <pre>
+ * Benchmark                 (len)  Mode  Cnt    Score   Error  Units
+ * HashBenchmark.doCrease32      5  avgt    5  112.920 ± 3.535  ns/op
+ * HashBenchmark.doCrease64      5  avgt    5  114.416 ± 0.346  ns/op
+ * HashBenchmark.doYolk32        5  avgt    5   59.264 ± 1.346  ns/op
+ * HashBenchmark.doYolk64        5  avgt    5   59.485 ± 2.426  ns/op
+ * </pre>
+ * <br>
+ * Low-length int arrays:
+ * <pre>
+ * Benchmark                    (len)  Mode  Cnt   Score   Error  Units
+ * HashBenchmark.doIntCrease32      5  avgt    5  11.529 ± 1.199  ns/op
+ * HashBenchmark.doIntCrease32     10  avgt    5  15.718 ± 0.465  ns/op
+ * HashBenchmark.doIntCrease32     20  avgt    5  26.772 ± 0.826  ns/op
+ * HashBenchmark.doIntCrease64      5  avgt    5  10.961 ± 0.281  ns/op
+ * HashBenchmark.doIntCrease64     10  avgt    5  16.070 ± 6.156  ns/op
+ * HashBenchmark.doIntCrease64     20  avgt    5  26.014 ± 0.466  ns/op
+ * HashBenchmark.doIntYolk32        5  avgt    5   9.930 ± 0.285  ns/op
+ * HashBenchmark.doIntYolk32       10  avgt    5  11.690 ± 0.208  ns/op
+ * HashBenchmark.doIntYolk32       20  avgt    5  17.404 ± 0.600  ns/op
+ * HashBenchmark.doIntYolk64        5  avgt    5   9.965 ± 0.246  ns/op
+ * HashBenchmark.doIntYolk64       10  avgt    5  12.140 ± 0.224  ns/op
+ * HashBenchmark.doIntYolk64       20  avgt    5  17.515 ± 0.362  ns/op
+ * </pre>
+ * <br>
+ * 1024-length int arrays:
+ * <pre>
+ * Benchmark                    (len)  Mode  Cnt     Score    Error  Units
+ * HashBenchmark.doIntCrease32   1024  avgt    5  1535.474 ± 46.971  ns/op
+ * HashBenchmark.doIntCrease64   1024  avgt    5  1539.585 ± 10.398  ns/op
+ * HashBenchmark.doIntYolk32     1024  avgt    5   632.176 ± 12.081  ns/op
+ * HashBenchmark.doIntYolk64     1024  avgt    5   679.969 ± 14.169  ns/op
+ * </pre>
+ * No need to keep testing Crease, it's so much slower... and we have no idea on its quality.
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -926,6 +964,68 @@ public class HashBenchmark {
         return CrossHash.Curlup.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
+
+
+    @Benchmark
+    public long doCrease64(BenchmarkState state)
+    {
+        return CrossHash.Crease.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doCrease32(BenchmarkState state)
+    {
+        return CrossHash.Crease.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doCharCrease64(BenchmarkState state)
+    {
+        return CrossHash.Crease.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doCharCrease32(BenchmarkState state)
+    {
+        return CrossHash.Crease.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doIntCrease64(BenchmarkState state)
+    {
+        return CrossHash.Crease.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doIntCrease32(BenchmarkState state)
+    {
+        return CrossHash.Crease.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doLongCrease64(BenchmarkState state)
+    {
+        return CrossHash.Crease.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doLongCrease32(BenchmarkState state)
+    {
+        return CrossHash.Crease.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoubleCrease64(BenchmarkState state)
+    {
+        return CrossHash.Crease.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleCrease32(BenchmarkState state)
+    {
+        return CrossHash.Crease.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
     @Benchmark
     public int doJDK32(BenchmarkState state)
     {
@@ -1070,7 +1170,7 @@ public class HashBenchmark {
      *
      * a) Via the command line from the squidlib-performance module's root folder:
      *    $ mvn clean install
-     *    $ java -jar target/benchmarks.jar HashBenchmark -wi 5 -i 4 -f 1
+     *    $ java -jar benchmarks.jar HashBenchmark -wi 5 -i 5 -f 1
      *
      *    (we requested 8 warmup/measurement iterations, single fork)
      *
