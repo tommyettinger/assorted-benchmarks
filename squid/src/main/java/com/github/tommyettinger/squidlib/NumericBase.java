@@ -29,7 +29,12 @@ import java.util.Random;
  * decimal ({@link #BASE10}, 0 through 9), hexadecimal ({@link #BASE16}, 0-9 then A-F), and the even larger
  * hexatrigesimal ({@link #BASE36}, 0 through 9 then A-Z). Of special note are the two different approaches to encoding
  * base-64 data: {@link #BASE64} is the standard format, and {@link #URI_SAFE} is the different format used when
- * encoding data for a URI (typically meant for the Internet). Each of these base systems provides a way to write bytes,
+ * encoding data for a URI (typically meant for the Internet). The newest is {@link #BASE87}, which is also the largest
+ * base, and uses 0-9, A-Z, a-z, and then many punctuation characters. Even more bases can be created with
+ * {@link #scrambledBase(Random)}, which when called creates a base-72 NumericBase with randomized choices for digits;
+ * this could be useful for obfuscating plain-text saved data so the average player can't read it.
+ * <br>
+ * Each of these base systems provides a way to write bytes,
  * shorts, ints, and longs as variable-character-count signed numbers or as fixed-character-count unsigned numbers,
  * using {@link #signed(long)} and {@link #unsigned(long)} respectively. There is only one reading method for each size
  * of number, but it is capable of reading both the signed and unsigned results, and never throws an Exception (it just
@@ -66,6 +71,14 @@ public class NumericBase {
 	 * 0-9, then + and - (case-sensitive). This uses * in place of + to indicate a positive sign, and ~ in place of - .
 	 */
 	public static final NumericBase URI_SAFE = new NumericBase("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-", false, '$', '*', '~');
+	/**
+	 * The largest base here, this uses digits 0-9 first, then A-Z, then a-z, them many punctuation characters:
+	 * {@code `~!@#$%^&*()[]{}<>.?;'|_=} . This uses + to indicate a positive sign, and - for negative.
+	 * This can encode a 32-bit number with 5 chars (unsigned); none of the other bases can. As a drawback, if a BASE87
+	 * encoded number is stored in libGDX's "minimal JSON" format, it will often need quoting, which of the other bases,
+	 * only {@link #BASE64} requires sometimes.
+	 */
+	public static final NumericBase BASE87 = new NumericBase("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`~!@#$%^&*()[]{}<>.?;'|_=", false, ' ', '+', '-');
 
 	/**
 	 * All NumericBase instances this knows about from its own constants.
@@ -1119,7 +1132,7 @@ public class NumericBase {
 	 * @return a new String containing the bits of {@code number} in the radix this specifies.
 	 */
 	public String unsigned (double number) {
-		return unsigned(NumberUtils.doubleToLongBits(number));
+		return unsigned(Long.reverseBytes(NumberUtils.doubleToLongBits(number)));
 	}
 
 	/**
@@ -1131,7 +1144,7 @@ public class NumericBase {
 	 * @return {@code builder}, with the bits of {@code number} appended in the radix this specifies
 	 */
 	public StringBuilder appendUnsigned (StringBuilder builder, double number) {
-		return appendUnsigned(builder, NumberUtils.doubleToLongBits(number));
+		return appendUnsigned(builder, Long.reverseBytes(NumberUtils.doubleToLongBits(number)));
 	}
 
 	/**
@@ -1142,7 +1155,7 @@ public class NumericBase {
 	 * @return a new String containing {@code number} in the radix this specifies.
 	 */
 	public String signed (double number) {
-		return signed(NumberUtils.doubleToLongBits(number));
+		return signed(Long.reverseBytes(NumberUtils.doubleToLongBits(number)));
 	}
 
 	/**
@@ -1155,7 +1168,7 @@ public class NumericBase {
 	 * @return {@code builder}, with the encoded {@code number} appended
 	 */
 	public StringBuilder appendSigned (StringBuilder builder, double number) {
-		return appendSigned(builder, NumberUtils.doubleToLongBits(number));
+		return appendSigned(builder, Long.reverseBytes(NumberUtils.doubleToLongBits(number)));
 	}
 
 	/**
@@ -1173,7 +1186,7 @@ public class NumericBase {
 	 * @return the double that cs represents
 	 */
 	public double readDouble (final CharSequence cs) {
-		return NumberUtils.longBitsToDouble(readLong(cs, 0, cs.length()));
+		return NumberUtils.longBitsToDouble(Long.reverseBytes(readLong(cs, 0, cs.length())));
 	}
 
 	/**
@@ -1193,7 +1206,7 @@ public class NumericBase {
 	 * @return the double that cs represents
 	 */
 	public double readDouble (final CharSequence cs, final int start, int end) {
-		return NumberUtils.longBitsToDouble(readLong(cs, start, end));
+		return NumberUtils.longBitsToDouble(Long.reverseBytes(readLong(cs, start, end)));
 	}
 
 	/**
@@ -1213,7 +1226,7 @@ public class NumericBase {
 	 * @return the double that cs represents
 	 */
 	public double readDouble (final char[] cs, final int start, int end) {
-		return NumberUtils.longBitsToDouble(readLong(cs, start, end));
+		return NumberUtils.longBitsToDouble(Long.reverseBytes(readLong(cs, start, end)));
 	}
 
 	/**
