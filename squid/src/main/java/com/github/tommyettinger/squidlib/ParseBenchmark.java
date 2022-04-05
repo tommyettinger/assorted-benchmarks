@@ -20,6 +20,19 @@ import java.util.concurrent.TimeUnit;
  * ParseBenchmark.doRevBase64       thrpt    5  47778204.747 ±  628849.316  ops/s
  * ParseBenchmark.doRevHex          thrpt    5  39542626.086 ±  715652.111  ops/s
  * </pre>
+ * And without reversing the bytes in NumericBase:
+ * <pre>
+ * Benchmark                         Mode  Cnt         Score         Error  Units
+ * ParseBenchmark.doBase64          thrpt    6  52924384.667 ±  591774.325  ops/s
+ * ParseBenchmark.doCustom64        thrpt    6  52768262.268 ± 1284668.357  ops/s
+ * ParseBenchmark.doHex             thrpt    6  40775066.539 ±  296950.173  ops/s
+ * ParseBenchmark.doNormal          thrpt    6  11277459.587 ±  318875.778  ops/s
+ * ParseBenchmark.doNumericBase87   thrpt    6  55891644.057 ±  926604.962  ops/s
+ * ParseBenchmark.doNumericBaseURI  thrpt    6  52942334.141 ±  615677.929  ops/s
+ * ParseBenchmark.doRevBase64       thrpt    6  49159453.065 ±  390308.681  ops/s
+ * ParseBenchmark.doRevHex          thrpt    6  40487363.630 ±  613115.909  ops/s
+ * </pre>
+ *
  */
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)

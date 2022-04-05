@@ -1132,7 +1132,7 @@ public class NumericBase {
 	 * @return a new String containing the bits of {@code number} in the radix this specifies.
 	 */
 	public String unsigned (double number) {
-		return unsigned(Long.reverseBytes(NumberUtils.doubleToLongBits(number)));
+		return unsigned((NumberUtils.doubleToLongBits(number)));
 	}
 
 	/**
@@ -1144,7 +1144,7 @@ public class NumericBase {
 	 * @return {@code builder}, with the bits of {@code number} appended in the radix this specifies
 	 */
 	public StringBuilder appendUnsigned (StringBuilder builder, double number) {
-		return appendUnsigned(builder, Long.reverseBytes(NumberUtils.doubleToLongBits(number)));
+		return appendUnsigned(builder, (NumberUtils.doubleToLongBits(number)));
 	}
 
 	/**
@@ -1155,7 +1155,7 @@ public class NumericBase {
 	 * @return a new String containing {@code number} in the radix this specifies.
 	 */
 	public String signed (double number) {
-		return signed(Long.reverseBytes(NumberUtils.doubleToLongBits(number)));
+		return signed((NumberUtils.doubleToLongBits(number)));
 	}
 
 	/**
@@ -1168,7 +1168,7 @@ public class NumericBase {
 	 * @return {@code builder}, with the encoded {@code number} appended
 	 */
 	public StringBuilder appendSigned (StringBuilder builder, double number) {
-		return appendSigned(builder, Long.reverseBytes(NumberUtils.doubleToLongBits(number)));
+		return appendSigned(builder, (NumberUtils.doubleToLongBits(number)));
 	}
 
 	/**
@@ -1186,7 +1186,7 @@ public class NumericBase {
 	 * @return the double that cs represents
 	 */
 	public double readDouble (final CharSequence cs) {
-		return NumberUtils.longBitsToDouble(Long.reverseBytes(readLong(cs, 0, cs.length())));
+		return NumberUtils.longBitsToDouble((readLong(cs, 0, cs.length())));
 	}
 
 	/**
@@ -1206,7 +1206,7 @@ public class NumericBase {
 	 * @return the double that cs represents
 	 */
 	public double readDouble (final CharSequence cs, final int start, int end) {
-		return NumberUtils.longBitsToDouble(Long.reverseBytes(readLong(cs, start, end)));
+		return NumberUtils.longBitsToDouble((readLong(cs, start, end)));
 	}
 
 	/**
@@ -1226,60 +1226,54 @@ public class NumericBase {
 	 * @return the double that cs represents
 	 */
 	public double readDouble (final char[] cs, final int start, int end) {
-		return NumberUtils.longBitsToDouble(Long.reverseBytes(readLong(cs, start, end)));
+		return NumberUtils.longBitsToDouble((readLong(cs, start, end)));
 	}
 
 	/**
 	 * Converts the bits of the given {@code number} to this NumericBase as unsigned, returning a new String.
 	 * This always uses the same number of chars in any String it returns, as long as the NumericBase is the same.
-	 * This stores the bytes that represent {@code number} in reverse order as an optimization for the
-	 * common case where the less-significant bits of the float are all 0.
 	 *
 	 * @param number any float
 	 * @return a new String containing the bits of {@code number} in the radix this specifies.
 	 */
 	public String unsigned (float number) {
-		return unsigned(Integer.reverseBytes(NumberUtils.floatToIntBits(number)));
+		return unsigned((NumberUtils.floatToIntBits(number)));
 	}
 
 	/**
 	 * Converts the bits of the given {@code number} to this NumericBase as unsigned, appending the result to
-	 * {@code builder}. This stores the bytes that represent {@code number} in reverse order as an optimization for the
-	 * common case where the less-significant bits of the float are all 0.
+	 * {@code builder}.
 	 *
 	 * @param builder a non-null StringBuilder that will be modified (appended to)
 	 * @param number  any float
 	 * @return {@code builder}, with the bits of {@code number} appended in the radix this specifies
 	 */
 	public StringBuilder appendUnsigned (StringBuilder builder, float number) {
-		return appendUnsigned(builder, Integer.reverseBytes(NumberUtils.floatToIntBits(number)));
+		return appendUnsigned(builder, (NumberUtils.floatToIntBits(number)));
 	}
 
 	/**
 	 * Converts the bits of the given {@code number} to this NumericBase as signed, returning a new String.
 	 * This can vary in how many chars it uses, since it does not show leading zeroes and may use a {@code -} sign.
-	 * This stores the bytes that represent {@code number} in reverse order as an optimization for the
-	 * common case where the less-significant bits of the float are all 0.
 	 *
 	 * @param number any float
 	 * @return a new String containing {@code number} in the radix this specifies.
 	 */
 	public String signed (float number) {
-		return signed(Integer.reverseBytes(NumberUtils.floatToIntBits(number)));
+		return signed((NumberUtils.floatToIntBits(number)));
 	}
 
 	/**
 	 * Converts the bits of the given {@code number} to this NumericBase as signed, appending the result to
 	 * {@code builder}. This can vary in how many chars it uses, since it does not show leading zeroes and may use a
-	 * {@code -} sign. This stores the bytes that represent {@code number} in reverse order as an optimization for the
-	 * common case where the less-significant bits of the float are all 0.
+	 * {@code -} sign.
 	 *
 	 * @param builder a non-null StringBuilder that will be modified (appended to)
 	 * @param number  any float
 	 * @return {@code builder}, with the encoded {@code number} appended
 	 */
 	public StringBuilder appendSigned (StringBuilder builder, float number) {
-		return appendSigned(builder, Integer.reverseBytes(NumberUtils.floatToIntBits(number)));
+		return appendSigned(builder, (NumberUtils.floatToIntBits(number)));
 	}
 
 	/**
@@ -1288,8 +1282,6 @@ public class NumericBase {
 	 * {@link #positiveSign} or {@link #negativeSign} if present, and is almost always '+' or '-'.
 	 * This is meant entirely for non-human-editable content, and the digit strings this can read
 	 * will almost always be produced by {@link #signed(float)}, {@link #unsigned(float)}, or their append versions.
-	 * This assumes the input was produced by NumericBase, and so uses reversed byte order (see {@link #signed(float)}
-	 * for more information).
 	 * <br>
 	 * This doesn't throw on invalid input, instead returning 0 if the first char is not a valid digit, or
 	 * stopping the parse process early if an invalid digit is read before end is reached. If the parse is stopped
@@ -1299,7 +1291,7 @@ public class NumericBase {
 	 * @return the float that cs represents
 	 */
 	public float readFloat (final CharSequence cs) {
-		return NumberUtils.intBitsToFloat(Integer.reverseBytes(readInt(cs, 0, cs.length())));
+		return NumberUtils.intBitsToFloat((readInt(cs, 0, cs.length())));
 	}
 
 	/**
@@ -1308,8 +1300,6 @@ public class NumericBase {
 	 * {@link #positiveSign} or {@link #negativeSign} if present, and is almost always '+' or '-'.
 	 * This is meant entirely for non-human-editable content, and the digit strings this can read
 	 * will almost always be produced by {@link #signed(float)}, {@link #unsigned(float)}, or their append versions.
-	 * This assumes the input was produced by NumericBase, and so uses reversed byte order (see {@link #signed(float)}
-	 * for more information).
 	 * <br>
 	 * This doesn't throw on invalid input, instead returning 0 if the first char is not a valid digit, or
 	 * stopping the parse process early if an invalid digit is read before end is reached. If the parse is stopped
@@ -1321,7 +1311,7 @@ public class NumericBase {
 	 * @return the float that cs represents
 	 */
 	public float readFloat (final CharSequence cs, final int start, int end) {
-		return NumberUtils.intBitsToFloat(Integer.reverseBytes(readInt(cs, start, end)));
+		return NumberUtils.intBitsToFloat((readInt(cs, start, end)));
 	}
 
 	/**
@@ -1330,8 +1320,6 @@ public class NumericBase {
 	 * {@link #positiveSign} or {@link #negativeSign} if present, and is almost always '+' or '-'.
 	 * This is meant entirely for non-human-editable content, and the digit strings this can read
 	 * will almost always be produced by {@link #signed(float)}, {@link #unsigned(float)}, or their append versions.
-	 * This assumes the input was produced by NumericBase, and so uses reversed byte order (see {@link #signed(float)}
-	 * for more information).
 	 * <br>
 	 * This doesn't throw on invalid input, instead returning 0 if the first char is not a valid digit, or
 	 * stopping the parse process early if an invalid digit is read before end is reached. If the parse is stopped
@@ -1343,7 +1331,7 @@ public class NumericBase {
 	 * @return the float that cs represents
 	 */
 	public float readFloat (final char[] cs, final int start, int end) {
-		return NumberUtils.intBitsToFloat(Integer.reverseBytes(readInt(cs, start, end)));
+		return NumberUtils.intBitsToFloat((readInt(cs, start, end)));
 	}
 
 	/**
