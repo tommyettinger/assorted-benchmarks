@@ -29,7 +29,7 @@ import java.util.Random;
  * decimal ({@link #BASE10}, 0 through 9), hexadecimal ({@link #BASE16}, 0-9 then A-F), and the even larger
  * hexatrigesimal ({@link #BASE36}, 0 through 9 then A-Z). Of special note are the two different approaches to encoding
  * base-64 data: {@link #BASE64} is the standard format, and {@link #URI_SAFE} is the different format used when
- * encoding data for a URI (typically meant for the Internet). The newest is {@link #BASE87}, which is also the largest
+ * encoding data for a URI (typically meant for the Internet). The newest is {@link #BASE86}, which is also the largest
  * base, and uses 0-9, A-Z, a-z, and then many punctuation characters. Even more bases can be created with
  * {@link #scrambledBase(Random)}, which when called creates a base-72 NumericBase with randomized choices for digits;
  * this could be useful for obfuscating plain-text saved data so the average player can't read it.
@@ -73,12 +73,12 @@ public class NumericBase {
 	public static final NumericBase URI_SAFE = new NumericBase("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-", false, '$', '*', '~');
 	/**
 	 * The largest base here, this uses digits 0-9 first, then A-Z, then a-z, them many punctuation characters:
-	 * {@code `~!@#$%^&*()[]{}<>.?;'|_=} . This uses + to indicate a positive sign, and - for negative.
-	 * This can encode a 32-bit number with 5 chars (unsigned); none of the other bases can. As a drawback, if a BASE87
+	 * {@code `~!@#$%^&*()[]{}<>.?;|_=} . This uses + to indicate a positive sign, and - for negative.
+	 * This can encode a 32-bit number with 5 chars (unsigned); none of the other bases can. As a drawback, if a BASE86
 	 * encoded number is stored in libGDX's "minimal JSON" format, it will often need quoting, which of the other bases,
 	 * only {@link #BASE64} requires sometimes.
 	 */
-	public static final NumericBase BASE87 = new NumericBase("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`~!@#$%^&*()[]{}<>.?;'|_=", false, ' ', '+', '-');
+	public static final NumericBase BASE86 = new NumericBase("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'~!@#$%^&*()[]{}<>.?;|_=", false, ' ', '+', '-');
 
 	/**
 	 * All NumericBase instances this knows about from its own constants.

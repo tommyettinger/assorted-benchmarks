@@ -75,7 +75,7 @@ public class ParseBenchmark {
                 int64[i] = b64.signed(Float.floatToRawIntBits(f));
                 rev64[i] = b64.signed(Integer.reverseBytes(Float.floatToRawIntBits(f)));
                 uri64[i] = NumericBase.URI_SAFE.signed(f);
-                int87[i] = NumericBase.BASE87.signed(f);
+                int87[i] = NumericBase.BASE86.signed(f);
             }
         }
         private final int[] fromEncoded = new int[128];
