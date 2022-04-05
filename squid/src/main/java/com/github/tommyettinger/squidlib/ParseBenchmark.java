@@ -10,13 +10,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * Higher is better, Java 17:
  * <pre>
- * Benchmark                    Mode  Cnt         Score         Error  Units
- * ParseBenchmark.doBase64     thrpt    6  53782906.266 ±  934617.042  ops/s
- * ParseBenchmark.doCustom64   thrpt    6  53418210.551 ± 1283889.402  ops/s
- * ParseBenchmark.doHex        thrpt    6  40573393.167 ±  983321.576  ops/s
- * ParseBenchmark.doNormal     thrpt    6  11403888.154 ±  722514.532  ops/s
- * ParseBenchmark.doRevBase64  thrpt    6  69207389.430 ±  932878.227  ops/s
- * ParseBenchmark.doRevHex     thrpt    6  43033811.978 ± 1138302.846  ops/s
+ * Benchmark                         Mode  Cnt         Score         Error  Units
+ * ParseBenchmark.doBase64          thrpt    5  53426908.429 ± 2018618.898  ops/s
+ * ParseBenchmark.doCustom64        thrpt    5  52057837.495 ± 1371258.539  ops/s
+ * ParseBenchmark.doHex             thrpt    5  40035210.134 ±  816840.522  ops/s
+ * ParseBenchmark.doNormal          thrpt    5  11591452.124 ±  368493.139  ops/s
+ * ParseBenchmark.doNumericBase87   thrpt    5  53513220.845 ± 9145363.847  ops/s
+ * ParseBenchmark.doNumericBaseURI  thrpt    5  48378738.615 ± 1636725.214  ops/s
+ * ParseBenchmark.doRevBase64       thrpt    5  47778204.747 ±  628849.316  ops/s
+ * ParseBenchmark.doRevHex          thrpt    5  39542626.086 ±  715652.111  ops/s
  * </pre>
  */
 @BenchmarkMode(Mode.Throughput)
@@ -27,6 +29,8 @@ import java.util.concurrent.TimeUnit;
 public class ParseBenchmark {
     private static final String digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_$";
     private static final Base b64 = new Base(digits, false, ' ', '+', '-');
+    private static final NumericBase b87 = new NumericBase("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`~!@#$%^&*()[]{}<>.?;'|_=", false, ' ', '+', '-');
+
     @State(Scope.Thread)
     public static class BenchmarkState {
         public String[] normal;
@@ -34,6 +38,8 @@ public class ParseBenchmark {
         public String[] revHex;
         public String[] int64;
         public String[] rev64;
+        public String[] uri64;
+        public String[] int87;
         public int idx;
 
         @Setup(Level.Trial)
@@ -45,6 +51,8 @@ public class ParseBenchmark {
             revHex = new String[4096];
             int64 = new String[4096];
             rev64 = new String[4096];
+            uri64 = new String[4096];
+            int87 = new String[4096];
             for (int i = 0; i < normal.length; i++) {
                 float f = (random.nextExclusiveFloat() - 0.5f) * 2000f;
                 if((i & 7) == 0) f = Math.round(f);
@@ -53,6 +61,8 @@ public class ParseBenchmark {
                 revHex[i] = Integer.toHexString(Integer.reverseBytes(Float.floatToRawIntBits(f)));
                 int64[i] = b64.signed(Float.floatToRawIntBits(f));
                 rev64[i] = b64.signed(Integer.reverseBytes(Float.floatToRawIntBits(f)));
+                uri64[i] = NumericBase.URI_SAFE.signed(f);
+                int87[i] = NumericBase.BASE87.signed(f);
             }
         }
         private final int[] fromEncoded = new int[128];
@@ -116,13 +126,25 @@ public class ParseBenchmark {
     @Benchmark
     public float doRevBase64(BenchmarkState state)
     {
-        return Float.intBitsToFloat(Integer.reverseBytes(b64.readInt(state.revHex[state.idx = state.idx + 1 & 4095])));
+        return Float.intBitsToFloat(Integer.reverseBytes(b64.readInt(state.rev64[state.idx = state.idx + 1 & 4095])));
     }
 
     @Benchmark
     public float doCustom64(BenchmarkState state)
     {
         return Float.intBitsToFloat(state.readInt(state.int64[state.idx = state.idx + 1 & 4095]));
+    }
+
+    @Benchmark
+    public float doNumericBase87(BenchmarkState state)
+    {
+        return b87.readFloat(state.int87[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public float doNumericBaseURI(BenchmarkState state)
+    {
+        return NumericBase.URI_SAFE.readFloat(state.uri64[state.idx = state.idx + 1 & 4095]);
     }
 
 }
