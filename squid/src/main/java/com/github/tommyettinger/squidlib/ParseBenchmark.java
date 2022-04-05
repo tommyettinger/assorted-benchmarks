@@ -8,6 +8,16 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Higher is better, Java 17:
+ * <pre>
+ * Benchmark                    Mode  Cnt         Score         Error  Units
+ * ParseBenchmark.doBase64     thrpt    6  53782906.266 ±  934617.042  ops/s
+ * ParseBenchmark.doCustom64   thrpt    6  53418210.551 ± 1283889.402  ops/s
+ * ParseBenchmark.doHex        thrpt    6  40573393.167 ±  983321.576  ops/s
+ * ParseBenchmark.doNormal     thrpt    6  11403888.154 ±  722514.532  ops/s
+ * ParseBenchmark.doRevBase64  thrpt    6  69207389.430 ±  932878.227  ops/s
+ * ParseBenchmark.doRevHex     thrpt    6  43033811.978 ± 1138302.846  ops/s
+ * </pre>
  */
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
@@ -17,63 +27,6 @@ import java.util.concurrent.TimeUnit;
 public class ParseBenchmark {
     private static final String digits = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_$";
     private static final Base b64 = new Base(digits, false, ' ', '+', '-');
-    private static final int[] fromEncoded = new int[128];
-    static {
-        Arrays.fill(fromEncoded, -1);
-        char[] toEncoded = digits.toCharArray();
-        for(int i = 0; i < 64; ++i) {
-            char to = toEncoded[i];
-            fromEncoded[to & 127] = i;
-        }
-
-    }
-    public static int readInt (final CharSequence cs) {
-        int sign, h, end;
-        if ((end = cs.length()) <= 0)
-            return 0;
-        char c = cs.charAt(0);
-        if (c == '-') {
-            sign = -1;
-            h = 0;
-        } else if ((h = fromEncoded[c & 127]) < 0)
-            return 0;
-        else {
-            sign = 1;
-        }
-        int data = h;
-        for (int i = 1; i < end; i++) {
-            if ((h = fromEncoded[cs.charAt(i) & 127]) < 0)
-                return data * sign;
-            data <<= 6;
-            data += h;
-        }
-        return data * sign;
-    }
-
-    public static int readReversedInt (final CharSequence cs) {
-        int sign, h, end;
-        if ((end = cs.length()) <= 0)
-            return 0;
-        char c = cs.charAt(end-1);
-        if (c == '-') {
-            sign = -1;
-            h = 0;
-        } else if ((h = fromEncoded[c & 127]) < 0)
-            return 0;
-        else {
-            sign = 1;
-        }
-        int data = h;
-        for (int i = end - 2; i >= 0; i--) {
-            if ((h = fromEncoded[cs.charAt(i) & 127]) < 0)
-                return data * sign;
-            data <<= 6;
-            data += h;
-        }
-        return data * sign;
-    }
-
-
     @State(Scope.Thread)
     public static class BenchmarkState {
         public String[] normal;
@@ -102,6 +55,39 @@ public class ParseBenchmark {
                 rev64[i] = b64.signed(Integer.reverseBytes(Float.floatToRawIntBits(f)));
             }
         }
+        private final int[] fromEncoded = new int[128];
+        {
+            Arrays.fill(fromEncoded, -1);
+            char[] toEncoded = digits.toCharArray();
+            for(int i = 0; i < 64; ++i) {
+                char to = toEncoded[i];
+                fromEncoded[to & 127] = i;
+            }
+
+        }
+        public int readInt (final CharSequence cs) {
+            int sign, h, end;
+            if ((end = cs.length()) <= 0)
+                return 0;
+            char c = cs.charAt(0);
+            if (c == '-') {
+                sign = -1;
+                h = 0;
+            } else if ((h = fromEncoded[c & 127]) < 0)
+                return 0;
+            else {
+                sign = 1;
+            }
+            int data = h;
+            for (int i = 1; i < end; i++) {
+                if ((h = fromEncoded[cs.charAt(i) & 127]) < 0)
+                    return data * sign;
+                data <<= 6;
+                data += h;
+            }
+            return data * sign;
+        }
+
     }
     @Benchmark
     public float doNormal(BenchmarkState state)
@@ -136,13 +122,7 @@ public class ParseBenchmark {
     @Benchmark
     public float doCustom64(BenchmarkState state)
     {
-        return Float.intBitsToFloat(readInt(state.int64[state.idx = state.idx + 1 & 4095]));
-    }
-
-    @Benchmark
-    public float doRevCustom64(BenchmarkState state)
-    {
-        return Float.intBitsToFloat((readReversedInt(state.revHex[state.idx = state.idx + 1 & 4095])));
+        return Float.intBitsToFloat(state.readInt(state.int64[state.idx = state.idx + 1 & 4095]));
     }
 
 }
