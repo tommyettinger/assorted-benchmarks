@@ -1,0 +1,64 @@
+    (impl) (size)  (workload)    Score Units
+ GDX_ARRAY     10     ITERATE   71.403 ns/op
+ GDX_ARRAY     10   GET_INDEX   35.219 ns/op
+ GDX_ARRAY     10    CONTAINS   52.583 ns/op
+ GDX_ARRAY     10    POPULATE   66.448 ns/op
+ GDX_ARRAY     10        COPY   70.024 ns/op
+ GDX_ARRAY    100     ITERATE  417.072 ns/op
+ GDX_ARRAY    100   GET_INDEX   31.861 ns/op
+ GDX_ARRAY    100    CONTAINS  129.187 ns/op
+ GDX_ARRAY    100    POPULATE  803.661 ns/op
+ GDX_ARRAY    100        COPY   98.174 ns/op
+ GDX_ARRAY   1000     ITERATE 4196.516 ns/op
+ GDX_ARRAY   1000   GET_INDEX   35.905 ns/op
+ GDX_ARRAY   1000    CONTAINS 1032.686 ns/op
+ GDX_ARRAY   1000    POPULATE 5872.294 ns/op
+ GDX_ARRAY   1000        COPY  391.400 ns/op
+
+          (impl) (size)  (workload)     Score Units
+       JDK_ARRAY     10     ITERATE    73.295 ns/op
+       JDK_ARRAY     10   GET_INDEX    36.074 ns/op
+       JDK_ARRAY     10    CONTAINS    58.584 ns/op
+       JDK_ARRAY     10    POPULATE    86.081 ns/op
+       JDK_ARRAY     10        COPY    81.948 ns/op
+       JDK_ARRAY    100     ITERATE   408.469 ns/op
+       JDK_ARRAY    100   GET_INDEX    32.468 ns/op
+       JDK_ARRAY    100    CONTAINS   158.430 ns/op
+       JDK_ARRAY    100    POPULATE   503.081 ns/op
+       JDK_ARRAY    100        COPY   121.047 ns/op
+       JDK_ARRAY   1000     ITERATE  3607.972 ns/op
+       JDK_ARRAY   1000   GET_INDEX    36.222 ns/op
+       JDK_ARRAY   1000    CONTAINS  1301.739 ns/op
+       JDK_ARRAY   1000    POPULATE  6142.834 ns/op
+       JDK_ARRAY   1000        COPY   793.961 ns/op
+FASTUTIL_O_ARRAY     10     ITERATE    77.026 ns/op
+FASTUTIL_O_ARRAY     10   GET_INDEX    33.750 ns/op
+FASTUTIL_O_ARRAY     10    CONTAINS    53.572 ns/op
+FASTUTIL_O_ARRAY     10    POPULATE    91.277 ns/op
+FASTUTIL_O_ARRAY     10        COPY    69.612 ns/op
+FASTUTIL_O_ARRAY    100     ITERATE   434.412 ns/op
+FASTUTIL_O_ARRAY    100   GET_INDEX    34.707 ns/op
+FASTUTIL_O_ARRAY    100    CONTAINS   143.699 ns/op
+FASTUTIL_O_ARRAY    100    POPULATE   644.555 ns/op
+FASTUTIL_O_ARRAY    100        COPY    95.532 ns/op
+FASTUTIL_O_ARRAY   1000     ITERATE  2972.910 ns/op
+FASTUTIL_O_ARRAY   1000   GET_INDEX    34.796 ns/op
+FASTUTIL_O_ARRAY   1000    CONTAINS  1218.409 ns/op
+FASTUTIL_O_ARRAY   1000    POPULATE  6185.468 ns/op
+FASTUTIL_O_ARRAY   1000        COPY   434.632 ns/op
+ ECLIPSE_O_ARRAY     10     ITERATE    73.055 ns/op
+ ECLIPSE_O_ARRAY     10   GET_INDEX    34.571 ns/op
+ ECLIPSE_O_ARRAY     10    CONTAINS    62.038 ns/op
+ ECLIPSE_O_ARRAY     10    POPULATE    78.368 ns/op
+ ECLIPSE_O_ARRAY     10        COPY    67.067 ns/op
+ ECLIPSE_O_ARRAY    100     ITERATE   490.531 ns/op
+ ECLIPSE_O_ARRAY    100   GET_INDEX    34.815 ns/op
+ ECLIPSE_O_ARRAY    100    CONTAINS   174.424 ns/op
+ ECLIPSE_O_ARRAY    100    POPULATE   594.302 ns/op
+ ECLIPSE_O_ARRAY    100        COPY    97.132 ns/op
+ ECLIPSE_O_ARRAY   1000     ITERATE  4107.375 ns/op
+ ECLIPSE_O_ARRAY   1000   GET_INDEX    34.219 ns/op
+ ECLIPSE_O_ARRAY   1000    CONTAINS  1626.796 ns/op
+ ECLIPSE_O_ARRAY   1000    POPULATE  5784.086 ns/op
+ ECLIPSE_O_ARRAY   1000        COPY   447.468 ns/op
+
