@@ -28,8 +28,8 @@ public class SquadAtan2Bench extends MicroBench {
 
     private float nextExclusiveFloat() {
         final long bits = rng.nextLong();
-        return BitConversion.intBitsToFloat(126 - Long.numberOfTrailingZeros(bits) << 23
-                | (int)(bits >> 41 & 0x807FFFFF));
+        return Float.intBitsToFloat(126 - Long.numberOfTrailingZeros(bits) << 23
+                | (int)(bits >> 40 & 0x807FFFFF));
     }
 
     protected long doBatch (long numIterations) throws InterruptedException {

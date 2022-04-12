@@ -68,7 +68,7 @@ dependencies {
     // transitively grabs libGDX 1.9.10:
     //implementation 'com.github.tommyettinger:merry-ds:dc9e1bceb6'
 
-    implementation 'com.badlogicgames.gdx:gdx:1.10.0'
+    implementation 'com.badlogicgames.gdx:gdx:1.10.1-SNAPSHOT'
 
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:913cd5921a' // Oct 4 2020
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.2'
@@ -78,7 +78,7 @@ dependencies {
     //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
     //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
 //    implementation 'com.github.tommyettinger:jdkgdxds:3a9f925cd0'
-    implementation 'com.github.tommyettinger:jdkgdxds:9c7d7b92af'
+    implementation 'com.github.tommyettinger:jdkgdxds:0.2.8'
 
 
 

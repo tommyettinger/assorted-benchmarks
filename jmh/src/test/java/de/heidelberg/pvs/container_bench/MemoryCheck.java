@@ -355,6 +355,5 @@ public class MemoryCheck {
 	public static void evaluate(Object o)
 	{
 		System.out.println(org.openjdk.jol.info.GraphLayout.parseInstance(o).totalSize());
-//		System.out.println(org.openjdk.jol.info.ClassLayout.parseInstance(o).instanceSize());
 	}
 }
