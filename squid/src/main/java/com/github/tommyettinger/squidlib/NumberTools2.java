@@ -16,6 +16,7 @@
 package com.github.tommyettinger.squidlib;
 
 import static com.badlogic.gdx.math.MathUtils.PI;
+import static com.github.yellowstonegames.core.TrigTools.HALF_PI;
 
 /**
  * Math helper functions.
@@ -565,5 +566,79 @@ public final class NumberTools2 {
         u = u * x + 1.3779105e-4f;
         u = u * x + 9.9997404e-1f;
         return a + Math.copySign(u * x + 4.0811908e-7f, n);
+    }
+
+    static public float atan2OldGDX (float y, float x) {
+        if (x == 0f) {
+            if (y > 0f) return PI / 2;
+            if (y == 0f) return 0f;
+            return -PI / 2;
+        }
+        final float atan, z = y / x;
+        if (Math.abs(z) < 1f) {
+            atan = z / (1f + 0.28f * z * z);
+            if (x < 0f) return atan + (y < 0f ? -PI : PI);
+            return atan;
+        }
+        atan = PI / 2 - z / (z * z + 0.28f);
+        return y < 0f ? atan - PI : atan;
+    }
+    /** A variant on {@link #atan(float)} that does not tolerate infinite inputs for speed reasons. This can be given a double
+     * parameter, but is otherwise the same as atan(float), and returns a float like that method. It uses the same approximation,
+     * from sheet 11 of "Approximations for Digital Computers." This is mostly meant to be used inside
+     * {@link #atan2NewGDX(float, float)}, but it may be a tiny bit faster than atan(float) in other code.
+     * @param i any finite double or float, but more commonly a float
+     * @return an output from the inverse tangent function, from {@code -HALF_PI} to {@code HALF_PI} inclusive */
+    public static float atanUnchecked (double i) {
+        // We use double precision internally, because some constants need double precision.
+        double n = Math.abs(i);
+        // c uses the "equally-good" formulation that permits n to be from 0 to almost infinity.
+        double c = (n - 1.0) / (n + 1.0);
+        // The approximation needs 6 odd powers of c.
+        double c2 = c * c;
+        double c3 = c * c2;
+        double c5 = c3 * c2;
+        double c7 = c5 * c2;
+        double c9 = c7 * c2;
+        double c11 = c9 * c2;
+        return (float)(Math.signum(i) * ((Math.PI * 0.25)
+                + (0.99997726 * c - 0.33262347 * c3 + 0.19354346 * c5 - 0.11643287 * c7 + 0.05265332 * c9 - 0.0117212 * c11)));
+    }
+
+    /** Close approximation of the frequently-used trigonometric method atan2, with higher precision than libGDX's atan2
+     * approximation. Average error is 1.057E-6 radians; maximum error is 1.922E-6. Takes y and x (in that unusual order) as
+     * floats, and returns the angle from the origin to that point in radians. It is about 4 times faster than
+     * {@link Math#atan2(double, double)} (roughly 15 ns instead of roughly 60 ns for Math, on Java 8 HotSpot). <br>
+     * Credit for this goes to the 1955 research study "Approximations for Digital Computers," by RAND Corporation. This is sheet
+     * 11's algorithm, which is the fourth-fastest and fourth-least precise. The algorithms on sheets 8-10 are faster, but only by
+     * a very small degree, and are considerably less precise. That study provides an {@link #atan(float)} method, and that cleanly
+     * translates to atan2().
+     * @param y y-component of the point to find the angle towards; note the parameter order is unusual by convention
+     * @param x x-component of the point to find the angle towards; note the parameter order is unusual by convention
+     * @return the angle to the given point, in radians as a float; ranges from {@code -PI} to {@code PI} */
+    public static float atan2NewGDX (final float y, float x) {
+        float n = y / x;
+        if (n != n)
+            n = (y == x ? 1f : -1f); // if both y and x are infinite, n would be NaN
+        else if (n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
+        if (x > 0)
+            return atanUnchecked(n);
+        else if (x < 0) {
+            if (y >= 0) return atanUnchecked(n) + PI;
+            return atanUnchecked(n) - PI;
+        } else if (y > 0)
+            return x + HALF_PI;
+        else if (y < 0) return x - HALF_PI;
+        return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 360; i++) {
+            double r = Math.toRadians(i);
+            double x = Math.cos(r);
+            double y = Math.sin(r);
+            System.out.printf("(%1.6f,%1.6f): degrees=%d, radians=%1.6f, Math=%1.6f, Old=%1.9f, New=%1.9f", x, y, i, r,
+                    Math.atan2(y, x), atan2OldGDX((float) y, (float) x), atan2NewGDX((float) y, (float) x));
+        }
     }
 }
