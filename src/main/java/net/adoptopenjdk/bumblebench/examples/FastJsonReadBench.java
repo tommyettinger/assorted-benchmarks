@@ -14,21 +14,22 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.ParserConfig;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter;
-import com.badlogic.gdx.utils.ObjectMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Java 17:
  * <br>
- * JsonReadBench score: 8.233253 (8.233 210.8%)
- *           uncertainty:   3.7%
+ * FastJsonReadBench score: 57.170677 (57.17 404.6%)
+ *               uncertainty:   2.6%
  */
-public final class JsonReadBench extends MiniBench {
+public final class FastJsonReadBench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -36,17 +37,16 @@ public final class JsonReadBench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		String data = new Lwjgl3Files().local("json.json").readString();
-		ObjectMap<String, Array<Vector2>> big;
-
-		Json json = new Json(JsonWriter.OutputType.minimal);
+		String data = new Lwjgl3Files().local("fastjson.json").readString();
+		HashMap<String, ArrayList<Vector2>> big;
+		ParserConfig config = new ParserConfig(true);
 
 		int counter = 0;
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				big = json.fromJson(ObjectMap.class, Array.class, data);
-				counter += big.size;
+				big = JSON.parseObject(data, HashMap.class, config);
+				counter += big.size();
 				pauseTimer();
 			}
 		}

@@ -17,8 +17,6 @@ package net.adoptopenjdk.bumblebench.examples;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.github.tommyettinger.flopon.Flopon;
 import com.github.tommyettinger.flopon.FloponWriter;

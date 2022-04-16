@@ -14,9 +14,11 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.github.tommyettinger.ds.support.FourWheelRandom;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 import squidpony.StringKit;
@@ -24,14 +26,17 @@ import squidpony.StringKit;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Java 17:
  * <br>
- * JsonWriteBench score: 19.107616 (19.11 295.0%)
- *            uncertainty:   1.5%
+ * FastJsonWriteBench score: 47.425140 (47.43 385.9%)
+ *                uncertainty:   3.8%
  */
-public final class JsonWriteBench extends MiniBench {
+public final class FastJsonWriteBench extends MiniBench {
 	@Override
 	protected int maxIterationsPerLoop() {
 		return 1000007;
@@ -47,23 +52,22 @@ public final class JsonWriteBench extends MiniBench {
 		}
 		final String[] words = StringKit.split(book, " ");
 		ObjectSet<String> unique = ObjectSet.with(words);
-		ObjectMap<String, Array<Vector2>> big = new ObjectMap<>(unique.size);
+		HashMap<String, ArrayList<Vector2>> big = new HashMap<>(unique.size);
 		FourWheelRandom random = new FourWheelRandom(12345);
 		for(String u : unique){
-			big.put(u, Array.with(
+			big.put(u, new ArrayList<>(Arrays.asList(
 					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f),
 					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f),
 					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f)
-			));
+			)));
 		}
 
-		Json json = new Json(JsonWriter.OutputType.minimal);
-
+		SerializeConfig config = new SerializeConfig(true);
 		int counter = 0;
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				counter += json.toJson(big).length();
+				counter += JSON.toJSONString(big, config).length();
 				pauseTimer();
 			}
 		}
@@ -78,17 +82,17 @@ public final class JsonWriteBench extends MiniBench {
 		}
 		final String[] words = StringKit.split(book, " ");
 		ObjectSet<String> unique = ObjectSet.with(words);
-		ObjectMap<String, Array<Vector2>> big = new ObjectMap<>(unique.size);
+		HashMap<String, ArrayList<Vector2>> big = new HashMap<>(unique.size);
 		FourWheelRandom random = new FourWheelRandom(12345);
 		for(String u : unique){
-			big.put(u, Array.with(
+			big.put(u, new ArrayList<>(Arrays.asList(
 					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f),
 					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f),
 					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f)
-			));
+			)));
 		}
 
-		new Lwjgl3Files().local("json.json").writeString(new Json(JsonWriter.OutputType.minimal).toJson(big), false);
+		new Lwjgl3Files().local("fastjson.json").writeString(JSON.toJSONString(big, new SerializeConfig(true)), false);
 	}
 
 }

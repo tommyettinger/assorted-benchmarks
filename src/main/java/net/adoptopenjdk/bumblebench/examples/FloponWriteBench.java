@@ -14,10 +14,11 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.*;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectSet;
 import com.github.tommyettinger.ds.support.FourWheelRandom;
 import com.github.tommyettinger.flopon.Flopon;
 import com.github.tommyettinger.flopon.FloponWriter;
@@ -27,7 +28,6 @@ import squidpony.StringKit;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashSet;
 
 /**
  * Java 17:
