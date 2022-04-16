@@ -62,15 +62,21 @@ public class NumericBase {
 	 */
 	public static final NumericBase BASE36 = new NumericBase("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 	/**
-	 * One of two base-64 schemes available here, this is the more-standard one, using the digits A-Z, then a-z, then
+	 * One of the base-64 schemes available here, this is the more-standard one, using the digits A-Z, then a-z, then
 	 * 0-9, then + and / (case-sensitive). This uses * in place of + to indicate a positive sign, and ~ in place of - .
 	 */
 	public static final NumericBase BASE64 = new NumericBase("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", false, '=', '*', '~');
 	/**
-	 * One of two base-64 schemes available here, this is meant for URI-encoding, using the digits A-Z, then a-z, then
+	 * One of the base-64 schemes available here, this is meant for URI-encoding, using the digits A-Z, then a-z, then
 	 * 0-9, then + and - (case-sensitive). This uses * in place of + to indicate a positive sign, and ~ in place of - .
 	 */
 	public static final NumericBase URI_SAFE = new NumericBase("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-", false, '$', '*', '~');
+	/**
+	 * One of the base-64 schemes available here, this is not a standard base64 system but is meant to be more
+	 * compatible with libGDX Json. It uses the digits 0-9, then A-Z, then a-z, then $ and _ (case-sensitive). This uses
+	 * + and - normally.
+	 */
+	public static final NumericBase JSON_SAFE = new NumericBase("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz$_", false, '#', '+', '-');
 	/**
 	 * The largest base here, this uses digits 0-9 first, then A-Z, then a-z, them many punctuation characters:
 	 * {@code `~!@#$%^&*()[]{}<>.?;|_=} . This uses + to indicate a positive sign, and - for negative.
@@ -84,7 +90,7 @@ public class NumericBase {
 	 * All NumericBase instances this knows about from its own constants.
 	 * We use Arrays.asList() here to ensure the returned List is immutable.
 	 */
-	private static final List<NumericBase> BASES = Arrays.asList(BASE2, BASE8, BASE10, BASE16, BASE36, BASE64, URI_SAFE);
+	private static final List<NumericBase> BASES = Arrays.asList(BASE2, BASE8, BASE10, BASE16, BASE36, BASE64, URI_SAFE, JSON_SAFE, BASE86);
 
 	/**
 	 * Returns an immutable List of the NumericBase instances this knows about from the start. Mostly useful for testing.

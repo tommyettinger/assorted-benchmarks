@@ -115,7 +115,11 @@
             <version>0.2.8</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.tommyettinger</groupId>
+            <artifactId>flopon</artifactId>
+            <version>6ceb4ab88a</version>
+        </dependency>
         <!--        For local installations-->
 
 <!--        <dependency>-->
