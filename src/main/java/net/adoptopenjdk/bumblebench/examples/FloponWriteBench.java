@@ -69,6 +69,27 @@ public final class FloponWriteBench extends MiniBench {
 				startTimer();
 				counter += flopon.toFlopon(big).length();
 				pauseTimer();
+			}
+		}
+		return numLoops * numIterationsPerLoop;
+	}
+	public static void main(String[] args) {
+		String book = "";
+		try {
+			book = new String(Files.readAllBytes(Paths.get("res/bible_only_words.txt")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		final String[] words = StringKit.split(book, " ");
+		ObjectSet<String> unique = ObjectSet.with(words);
+		ObjectMap<String, Array<Vector2>> big = new ObjectMap<>(unique.size);
+		FourWheelRandom random = new FourWheelRandom(12345);
+		for(String u : unique){
+			big.put(u, Array.with(
+					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f),
+					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f),
+					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f)
+			));
 		}
 
 		new Lwjgl3Files().local("flopon.json").writeString(new Flopon(FloponWriter.OutputType.minimal).toFlopon(big), false);
