@@ -18,8 +18,6 @@ package net.adoptopenjdk.bumblebench.examples;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 import squidpony.squidmath.RandomnessSource;
 
-import java.util.Random;
-
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>

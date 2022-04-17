@@ -14,8 +14,6 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.parser.ParserConfig;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
 import com.badlogic.gdx.math.Vector2;
 import com.jsoniter.JsonIterator;
@@ -24,7 +22,6 @@ import com.jsoniter.spi.DecodingMode;
 import com.jsoniter.spi.TypeLiteral;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 

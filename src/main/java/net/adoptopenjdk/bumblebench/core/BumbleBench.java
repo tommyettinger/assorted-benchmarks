@@ -14,14 +14,9 @@
 
 package net.adoptopenjdk.bumblebench.core;
 
-import java.io.BufferedReader;
-import java.io.PrintStream;
 import java.lang.Math;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.net.MalformedURLException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Random;

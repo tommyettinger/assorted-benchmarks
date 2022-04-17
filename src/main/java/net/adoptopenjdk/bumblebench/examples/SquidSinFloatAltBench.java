@@ -16,7 +16,6 @@ package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.MathUtils;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
-import squidpony.squidmath.NumberTools;
 
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:

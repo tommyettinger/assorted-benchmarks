@@ -14,7 +14,6 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.ds.support.LaserRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 import java.util.concurrent.ThreadLocalRandom;

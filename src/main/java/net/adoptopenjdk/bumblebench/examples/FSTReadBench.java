@@ -14,8 +14,6 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.parser.ParserConfig;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
 import com.badlogic.gdx.math.Vector2;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
