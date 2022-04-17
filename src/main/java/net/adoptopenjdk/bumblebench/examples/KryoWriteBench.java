@@ -34,7 +34,8 @@ import java.util.HashMap;
 /**
  * Java 17:
  * <br>
- *
+ * KryoWriteBench score: 450.081726 (450.1 610.9%)
+ *            uncertainty:   1.2%
  */
 public final class KryoWriteBench extends MiniBench {
 	@Override
@@ -70,7 +71,7 @@ public final class KryoWriteBench extends MiniBench {
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				Output output = new com.esotericsoftware.kryo.io.ByteBufferOutput();
+				Output output = new Output(65536, -1);
 				kryo.writeObject(output, big);
 				counter += output.total();
 				pauseTimer();
@@ -78,6 +79,7 @@ public final class KryoWriteBench extends MiniBench {
 		}
 		return numLoops * numIterationsPerLoop;
 	}
+
 	public static void main(String[] args) {
 		String book = "";
 		try {
