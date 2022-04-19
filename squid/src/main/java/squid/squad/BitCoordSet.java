@@ -4,10 +4,7 @@ import com.github.tommyettinger.ds.ObjectDeque;
 import com.github.yellowstonegames.grid.Coord;
 
 import javax.annotation.Nullable;
-import java.util.AbstractCollection;
-import java.util.BitSet;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class BitCoordSet extends AbstractCollection<Coord> {
     public BitSet bits;
@@ -43,6 +40,32 @@ public class BitCoordSet extends AbstractCollection<Coord> {
     @Override
     public int size() {
         return bits.cardinality();
+    }
+
+    @Override
+    public boolean contains(Object o) {
+        Coord c = (Coord) o;
+        if(c.x < 0 || c.y < 0 || c.x >= width || c.y >= height) return false;
+        return bits.get(c.y * width + c.x);
+    }
+
+    @Override
+    public boolean add(Coord coord) {
+        if(coord.x < 0 || coord.y < 0 || coord.x >= width || coord.y >= height) return false;
+        final int i = coord.y * width + coord.x;
+        final boolean r = !bits.get(i);
+        bits.set(i);
+        return r;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        Coord coord = (Coord) o;
+        if(coord.x < 0 || coord.y < 0 || coord.x >= width || coord.y >= height) return false;
+        final int i = coord.y * width + coord.x;
+        final boolean r = bits.get(i);
+        bits.clear(i);
+        return r;
     }
 
     public static class CoordIterator implements Iterator<Coord> {
