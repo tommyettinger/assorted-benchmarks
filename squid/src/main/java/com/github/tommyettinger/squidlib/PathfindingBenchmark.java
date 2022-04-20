@@ -250,21 +250,21 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathDijkstra       avgt    3    46.594 ±   0.725  ms/op
  * PathfindingBenchmark.doTinyPathSquadDijkstra  avgt    3    37.817 ±   2.320  ms/op
  * </pre>
- * With CoordSet from SquidSquad used in CDijkstra:
+ * With CoordSet from SquidSquad used in CDijkstra, this seems to be fastest:
  * <pre>
- * Benchmark                                     Mode  Cnt     Score     Error  Units
- * PathfindingBenchmark.doOneBitDijkstra         avgt    3     0.566 ±   0.095  ms/op
- * PathfindingBenchmark.doOneCDijkstra           avgt    3     0.553 ±   0.305  ms/op
- * PathfindingBenchmark.doOneDijkstra            avgt    3     0.560 ±   0.099  ms/op
- * PathfindingBenchmark.doOneSquadDijkstra       avgt    3     0.474 ±   0.024  ms/op
- * PathfindingBenchmark.doPathBitDijkstra        avgt    3  1465.420 ± 147.708  ms/op
- * PathfindingBenchmark.doPathCDijkstra          avgt    3  1438.549 ± 474.318  ms/op
- * PathfindingBenchmark.doPathDijkstra           avgt    3  1709.795 ± 465.221  ms/op
- * PathfindingBenchmark.doPathSquadDijkstra      avgt    3  1596.848 ± 181.505  ms/op
- * PathfindingBenchmark.doTinyPathBitDijkstra    avgt    3    39.015 ±   2.025  ms/op
- * PathfindingBenchmark.doTinyPathCDijkstra      avgt    3    40.166 ±   9.417  ms/op
- * PathfindingBenchmark.doTinyPathDijkstra       avgt    3    51.463 ±  13.754  ms/op
- * PathfindingBenchmark.doTinyPathSquadDijkstra  avgt    3    39.337 ±   8.417  ms/op
+ * Benchmark                                     Mode  Cnt     Score    Error  Units
+ * PathfindingBenchmark.doOneBitDijkstra         avgt    5     0.478 ±  0.013  ms/op
+ * PathfindingBenchmark.doOneCDijkstra           avgt    5     0.494 ±  0.029  ms/op
+ * PathfindingBenchmark.doOneDijkstra            avgt    5     0.606 ±  0.032  ms/op
+ * PathfindingBenchmark.doOneSquadDijkstra       avgt    5     0.495 ±  0.021  ms/op
+ * PathfindingBenchmark.doPathBitDijkstra        avgt    5  1467.971 ± 37.951  ms/op
+ * PathfindingBenchmark.doPathCDijkstra          avgt    5  1454.166 ± 57.630  ms/op
+ * PathfindingBenchmark.doPathDijkstra           avgt    5  1641.669 ± 36.791  ms/op
+ * PathfindingBenchmark.doPathSquadDijkstra      avgt    5  1462.148 ± 33.725  ms/op
+ * PathfindingBenchmark.doTinyPathBitDijkstra    avgt    5    38.642 ±  2.567  ms/op
+ * PathfindingBenchmark.doTinyPathCDijkstra      avgt    5    35.342 ±  2.372  ms/op
+ * PathfindingBenchmark.doTinyPathDijkstra       avgt    5    48.323 ±  2.193  ms/op
+ * PathfindingBenchmark.doTinyPathSquadDijkstra  avgt    5    36.847 ±  1.245  ms/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
