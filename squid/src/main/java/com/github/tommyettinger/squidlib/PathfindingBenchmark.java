@@ -52,6 +52,7 @@ import space.earlygrey.simplegraphs.algorithms.DirectedGraphAlgorithms;
 import space.earlygrey.simplegraphs.algorithms.SearchStep;
 import space.earlygrey.simplegraphs.algorithms.UndirectedGraphAlgorithms;
 import squid.squad.BitDijkstraMap;
+import squid.squad.CDijkstraMap;
 import squidpony.ArrayTools;
 import squidpony.squidai.CustomDijkstraMap;
 import squid.lib.DijkstraMap;
@@ -247,7 +248,24 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doPathSquadDijkstra      avgt    3  1475.510 ± 237.581  ms/op
  * PathfindingBenchmark.doTinyPathBitDijkstra    avgt    3    36.850 ±   5.918  ms/op
  * PathfindingBenchmark.doTinyPathDijkstra       avgt    3    46.594 ±   0.725  ms/op
- * PathfindingBenchmark.doTinyPathSquadDijkstra  avgt    3    37.817 ±   2.320  ms/op * </pre>
+ * PathfindingBenchmark.doTinyPathSquadDijkstra  avgt    3    37.817 ±   2.320  ms/op
+ * </pre>
+ * With CoordSet from SquidSquad used in CDijkstra:
+ * <pre>
+ * Benchmark                                     Mode  Cnt     Score     Error  Units
+ * PathfindingBenchmark.doOneBitDijkstra         avgt    3     0.566 ±   0.095  ms/op
+ * PathfindingBenchmark.doOneCDijkstra           avgt    3     0.553 ±   0.305  ms/op
+ * PathfindingBenchmark.doOneDijkstra            avgt    3     0.560 ±   0.099  ms/op
+ * PathfindingBenchmark.doOneSquadDijkstra       avgt    3     0.474 ±   0.024  ms/op
+ * PathfindingBenchmark.doPathBitDijkstra        avgt    3  1465.420 ± 147.708  ms/op
+ * PathfindingBenchmark.doPathCDijkstra          avgt    3  1438.549 ± 474.318  ms/op
+ * PathfindingBenchmark.doPathDijkstra           avgt    3  1709.795 ± 465.221  ms/op
+ * PathfindingBenchmark.doPathSquadDijkstra      avgt    3  1596.848 ± 181.505  ms/op
+ * PathfindingBenchmark.doTinyPathBitDijkstra    avgt    3    39.015 ±   2.025  ms/op
+ * PathfindingBenchmark.doTinyPathCDijkstra      avgt    3    40.166 ±   9.417  ms/op
+ * PathfindingBenchmark.doTinyPathDijkstra       avgt    3    51.463 ±  13.754  ms/op
+ * PathfindingBenchmark.doTinyPathSquadDijkstra  avgt    3    39.337 ±   8.417  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -277,6 +295,7 @@ public class PathfindingBenchmark {
         public CustomDijkstraMap customDijkstra;
         public squid.squad.DijkstraMap squadDijkstra;
         public BitDijkstraMap bitDijkstra;
+        public CDijkstraMap cDijkstra;
         public StatefulRNG srng;
         public GridGraph gg;
         public GridGraph2 gg2;
@@ -341,6 +360,8 @@ public class PathfindingBenchmark {
             squadDijkstra.setBlockingRequirement(0);
             bitDijkstra = new BitDijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
             bitDijkstra.setBlockingRequirement(0);
+            cDijkstra = new CDijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
+            cDijkstra.setBlockingRequirement(0);
             customDijkstra = new CustomDijkstraMap(map, adj, new StatefulRNG(0x1337BEEF));
             gg = new GridGraph(floors, map);
             gg2 = new GridGraph2(floors, map);
@@ -619,6 +640,75 @@ public class PathfindingBenchmark {
     @Benchmark
     public long doOneBitDijkstra(BenchmarkState state) {
             final BitDijkstraMap dijkstra = state.bitDijkstra;
+        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
+        com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
+        state.srng.setState(state.highest.hashCode());
+        com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
+        state.path.clear();
+        dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgt);
+        dijkstra.clearGoals();
+        dijkstra.resetMap();
+        return state.path.size();
+    }
+
+
+    @Benchmark
+    public long doPathCDijkstra(BenchmarkState state)
+    {
+        com.github.yellowstonegames.grid.Coord r;
+        final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
+        long scanned = 0;
+        final CDijkstraMap dijkstra = state.cDijkstra;
+        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
+        for (int x = 1; x < state.WIDTH - 1; x++) {
+            for (int y = 1; y < state.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
+                r = state.srng.getRandomElement(state.squadFloorArray);
+                tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
+                state.path.clear();
+                dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgts);
+                dijkstra.clearGoals();
+                dijkstra.resetMap();
+                scanned += state.path.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathCDijkstra(BenchmarkState state)
+    {
+            com.github.yellowstonegames.grid.Coord r;
+            final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
+            long scanned = 0;
+            final CDijkstraMap dijkstra = state.cDijkstra;
+        for (int x = 1; x < state.WIDTH - 1; x++) {
+            for (int y = 1; y < state.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
+                r = state.squadNearbyMap[x][y];
+                tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
+                //dijkstra.partialScan(r,9, null);
+                state.path.clear();
+                dijkstra.findPath(state.squadPath, 9, 9, null, null, r, tgts);
+                dijkstra.clearGoals();
+                dijkstra.resetMap();
+                scanned += state.path.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doOneCDijkstra(BenchmarkState state) {
+            final CDijkstraMap dijkstra = state.cDijkstra;
         final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
         com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
         state.srng.setState(state.highest.hashCode());
