@@ -126,7 +126,7 @@ public class CDijkstraMap {
 
     private CoordOrderedSet impassable2;
 
-    private CoordSet tempSet;
+    private CoordOrderedSet tempSet;
 
     public boolean cutShort;
 
@@ -268,7 +268,7 @@ public class CDijkstraMap {
         }
         standardCosts = true;
         impassable2 = new CoordOrderedSet(32);
-        tempSet = new CoordSet(32);
+        tempSet = new CoordOrderedSet(32);
         initialized = true;
         return this;
     }
@@ -298,7 +298,7 @@ public class CDijkstraMap {
         }
         standardCosts = true;
         impassable2 = new CoordOrderedSet(32);
-        tempSet = new CoordSet(32);
+        tempSet = new CoordOrderedSet(32);
         initialized = true;
         return this;
     }
@@ -330,7 +330,7 @@ public class CDijkstraMap {
         }
         standardCosts = true;
         impassable2 = new CoordOrderedSet(32);
-        tempSet = new CoordSet(32);
+        tempSet = new CoordOrderedSet(32);
         initialized = true;
         return this;
     }

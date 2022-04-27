@@ -88,6 +88,8 @@ public final class JsonWriteBench extends MiniBench {
 			));
 		}
 
+		System.out.println("There are " + big.size + " keys in the Map.");
+
 		new Lwjgl3Files().local("json.json").writeString(new Json(JsonWriter.OutputType.minimal).toJson(big), false);
 	}
 
