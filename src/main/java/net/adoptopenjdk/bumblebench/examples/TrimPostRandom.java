@@ -147,8 +147,7 @@ public class TrimPostRandom implements EnhancedRandom {
 		stateC = seed ^ ~0xC6BC279692B5C323L;
 		stateD = seed;
 	}
-	{
-}
+
 	public long getStateA () {
 		return stateA;
 	}

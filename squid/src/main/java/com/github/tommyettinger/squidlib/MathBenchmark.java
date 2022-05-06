@@ -211,6 +211,8 @@ public class MathBenchmark {
     private int sinFloat = -0x8000;
     private int cosGdx = -0x8000;
     private int sinGdx = -0x8000;
+    private int cosWallace = -0x8000;
+    private int sinWallace = -0x8000;
     private int mathCosDeg = -0x8000;
     private int mathSinDeg = -0x8000;
     private int sinNickDeg = -0x8000;
@@ -586,6 +588,12 @@ public class MathBenchmark {
     }
 
     @Benchmark
+    public float measureWallaceSin()
+    {
+        return NumberTools2.sinWallaceN(floatInputs[sinWallace++ & 0xFFFF]);
+    }
+
+    @Benchmark
     public double measureMathCosDeg()
     {
         return Math.cos(inputs[mathCosDeg++ & 0xFFFF] * 0.017453292519943295);
@@ -801,6 +809,7 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
         MathBenchmark u = new MathBenchmark();
         double  cosFError = 0.0, cosNickError = 0.0, cosBitError = 0.0, cosBitFError = 0.0, cosGdxError = 0.0,
                 sinFError = 0.0, sinNickError = 0.0, sinBitError = 0.0, sinBitFError = 0.0, sinGdxError = 0.0,
+                sinWallaceError = 0.0,
                 precisionError = 0.0, cosDegNickError = 0.0, sinDegNickError = 0.0, cosDegGdxError = 0.0, sinDegGdxError = 0.0,
                 asinChristensenError = 0.0, asinSquidError = 0.0;
         ;
@@ -824,6 +833,8 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
             u.sinFloat = i;
             u.cosGdx = i;
             u.sinGdx = i;
+            u.sinWallace = i;
+
             u.mathCosDeg = i;
             u.mathSinDeg = i;
             u.cosNickDeg = i;
@@ -835,6 +846,7 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
             cosFError += Math.abs(u.measureSquidCosF() - c);
             cosGdxError += Math.abs(u.measureGdxCos() - c);
             sinGdxError += Math.abs(u.measureGdxSin() - s);
+            sinWallaceError += Math.abs(u.measureWallaceSin() - s);
             cosNickError += Math.abs(u.measureSquidCos() - c);
             sinNickError += Math.abs(u.measureSquidSin() - s);
             sinFError += Math.abs(u.measureSquidSinF() - s);
@@ -852,6 +864,7 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
         System.out.println("base float error : " + precisionError * 0x1p-16);
         System.out.println("cos GDX          : " + cosGdxError * 0x1p-16);
         System.out.println("sin GDX          : " + sinGdxError * 0x1p-16);
+        System.out.println("sin Wallace      : " + sinWallaceError * 0x1p-16);
         System.out.println("cos Squid float  : " + cosFError * 0x1p-16);
         System.out.println("sin Squid float  : " + sinFError * 0x1p-16);
         System.out.println("sin Squid        : " + sinNickError * 0x1p-16);

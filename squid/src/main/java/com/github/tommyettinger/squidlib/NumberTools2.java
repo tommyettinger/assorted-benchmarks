@@ -632,6 +632,78 @@ public final class NumberTools2 {
         return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
     }
 
+    /*
+    fn sine(x: f32) -> f32 {
+    let coeffs = [
+        -0.10132118f32,          // x
+         0.0066208798f32,        // x^3
+        -0.00017350505f32,       // x^5
+         0.0000025222919f32,     // x^7
+        -0.000000023317787f32,   // x^9
+         0.00000000013291342f32, // x^11
+    ];
+    let pi_major = 3.1415927f32;
+    let pi_minor = -0.00000008742278f32;
+    let x2 = x*x;
+    let p11 = coeffs[5];
+    let p9  = p11*x2 + coeffs[4];
+    let p7  = p9*x2  + coeffs[3];
+    let p5  = p7*x2  + coeffs[2];
+    let p3  = p5*x2  + coeffs[1];
+    let p1  = p3*x2  + coeffs[0];
+    (x - pi_major - pi_minor) *
+    (x + pi_major + pi_minor) * p1 * x
+}
+
+
+
+    -3.1415926444234477f;
+     2.0261194642649887f;
+    -0.5240361513980939f;
+     0.0751872634325299f;
+    -0.006860187425683514f;
+     0.000385937753182769f;
+     */
+
+    /**
+     * Sine approximation by Colin Wallace. It is only defined over -pi to pi.
+     * From <a href="https://web.archive.org/web/20200628195036/http://mooooo.ooo/chebyshev-sine-approximation/">Colin Wallace's blog</a>.
+     * @param x
+     * @return
+     */
+    public static float sinWallace(float x) {
+        final float m = -0.00000008742278f;
+        final float c0 = -0.10132118f;          // x
+        final float c1 =  0.0066208798f;        // x^3
+        final float c2 = -0.00017350505f;       // x^5
+        final float c3 =  0.0000025222919f;     // x^7
+        final float c4 = -0.000000023317787f;   // x^9
+        final float c5 =  0.00000000013291342f; // x^11
+        final float x2 = x * x;
+        return (x - PI - m) * (x + PI + m) * (((((c5 * x2 + c4) * x2 + c3) * x2 + c2) * x2 + c1) * x2 + c0) * x;
+    }
+
+    /**
+     * Sine approximation by Colin Wallace. It is defined everywhere, but its reduction likely has issues.
+     * From <a href="https://web.archive.org/web/20200628195036/http://mooooo.ooo/chebyshev-sine-approximation/">Colin Wallace's blog</a>.
+     * @param x
+     * @return
+     */
+    public static float sinWallaceN(float x) {
+        x /= PI;
+        int floor = (x >= 0f ? (int)x : (int)x - 1) & -2;
+        x -= floor;
+
+        final float c0 = -3.1415926444234477f;
+        final float c1 =  2.0261194642649887f;
+        final float c2 = -0.5240361513980939f;
+        final float c3 =  0.0751872634325299f;
+        final float c4 = -0.006860187425683514f;
+        final float c5 =  0.000385937753182769f;
+        final float x2 = x * x;
+        return ((x - 1f) * (x + 1f) * (((((c5 * x2 + c4) * x2 + c3) * x2 + c2) * x2 + c1) * x2 + c0) * x) * ((floor & 2) - 1f);
+    }
+
     public static void main(String[] args) {
         for (int i = 0; i < 360; i++) {
             double r = Math.toRadians(i);
