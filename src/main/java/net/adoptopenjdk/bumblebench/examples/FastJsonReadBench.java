@@ -16,11 +16,14 @@ package net.adoptopenjdk.bumblebench.examples;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
 import com.badlogic.gdx.math.Vector2;
+import com.github.tommyettinger.ds.ObjectObjectMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -51,6 +54,22 @@ public final class FastJsonReadBench extends MiniBench {
 			}
 		}
 		return numLoops * numIterationsPerLoop;
+	}
+
+	public static void main(String[] args) {
+		ArrayList<ArrayList<HashMap<Vector2, String>>> deep = new ArrayList<>(8), after;
+		HashMap<Vector2, String> hm0 = new HashMap<>(1);
+		HashMap<Vector2, String> hm1 = new HashMap<>(ObjectObjectMap.with(new Vector2(1, 2), "1 2"));
+		HashMap<Vector2, String> hm2 = new HashMap<>(ObjectObjectMap.with(new Vector2(3, 4), "3 4", new Vector2(5, 6), "5 6"));
+		HashMap<Vector2, String> hm3 = new HashMap<>(ObjectObjectMap.with(new Vector2(7, 8), "7 8", new Vector2(9, 0), "9 0"));
+		deep.add(new ArrayList<>(Arrays.asList(hm0, hm1)));
+		deep.add(new ArrayList<>(Arrays.asList(hm2, hm3)));
+		deep.add(new ArrayList<>(Arrays.asList(hm0, hm1, hm2, hm3)));
+
+		String data = JSON.toJSONString(deep, new SerializeConfig(true));
+		System.out.println(data);
+		after = JSON.parseObject(data, ArrayList.class, new ParserConfig(true));
+		System.out.println(after);
 	}
 }
 
