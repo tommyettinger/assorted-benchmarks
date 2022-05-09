@@ -448,7 +448,54 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doIntYolk32     1024  avgt    5   632.176 ± 12.081  ns/op
  * HashBenchmark.doIntYolk64     1024  avgt    5   679.969 ± 14.169  ns/op
  * </pre>
- * No need to keep testing Crease, it's so much slower... and we have no idea on its quality.
+ * After this, Crease changed to be more like Curlup.
+ * <br>
+ * Testing all 64-bit int hashes:
+ * <pre>
+ * Benchmark                    (len)  Mode  Cnt    Score    Error  Units
+ * HashBenchmark.doIntCrease64      5  avgt    5    9.329 ±  0.099  ns/op
+ * HashBenchmark.doIntCrease64     10  avgt    5   11.462 ±  0.619  ns/op
+ * HashBenchmark.doIntCrease64     20  avgt    5   15.756 ±  0.290  ns/op
+ * HashBenchmark.doIntCrease64     40  avgt    5   22.974 ±  0.982  ns/op
+ * HashBenchmark.doIntCrease64     80  avgt    5   41.785 ±  0.894  ns/op
+ * HashBenchmark.doIntCrease64    160  avgt    5   81.165 ± 12.493  ns/op
+ * HashBenchmark.doIntCurlup64      5  avgt    5    9.358 ±  0.090  ns/op
+ * HashBenchmark.doIntCurlup64     10  avgt    5   11.745 ±  0.337  ns/op
+ * HashBenchmark.doIntCurlup64     20  avgt    5   16.996 ±  1.042  ns/op
+ * HashBenchmark.doIntCurlup64     40  avgt    5   24.843 ±  1.067  ns/op
+ * HashBenchmark.doIntCurlup64     80  avgt    5   42.271 ±  1.402  ns/op
+ * HashBenchmark.doIntCurlup64    160  avgt    5   76.630 ±  3.170  ns/op
+ * HashBenchmark.doIntHive64        5  avgt    5   10.071 ±  0.368  ns/op
+ * HashBenchmark.doIntHive64       10  avgt    5   12.967 ±  0.137  ns/op
+ * HashBenchmark.doIntHive64       20  avgt    5   19.342 ±  0.271  ns/op
+ * HashBenchmark.doIntHive64       40  avgt    5   31.414 ±  0.422  ns/op
+ * HashBenchmark.doIntHive64       80  avgt    5   54.334 ±  0.970  ns/op
+ * HashBenchmark.doIntHive64      160  avgt    5  100.937 ±  1.811  ns/op
+ * HashBenchmark.doIntMist64        5  avgt    5   10.944 ±  0.374  ns/op
+ * HashBenchmark.doIntMist64       10  avgt    5   15.388 ±  0.192  ns/op
+ * HashBenchmark.doIntMist64       20  avgt    5   21.810 ±  0.460  ns/op
+ * HashBenchmark.doIntMist64       40  avgt    5   34.516 ±  0.945  ns/op
+ * HashBenchmark.doIntMist64       80  avgt    5   58.437 ±  0.586  ns/op
+ * HashBenchmark.doIntMist64      160  avgt    5  109.873 ±  1.362  ns/op
+ * HashBenchmark.doIntWater64       5  avgt    5   10.421 ±  0.344  ns/op
+ * HashBenchmark.doIntWater64      10  avgt    5   12.005 ±  0.296  ns/op
+ * HashBenchmark.doIntWater64      20  avgt    5   17.640 ±  0.652  ns/op
+ * HashBenchmark.doIntWater64      40  avgt    5   27.280 ±  0.205  ns/op
+ * HashBenchmark.doIntWater64      80  avgt    5   50.075 ±  1.305  ns/op
+ * HashBenchmark.doIntWater64     160  avgt    5   99.524 ±  1.029  ns/op
+ * HashBenchmark.doIntWisp64        5  avgt    5    7.843 ±  0.052  ns/op
+ * HashBenchmark.doIntWisp64       10  avgt    5   11.702 ±  0.194  ns/op
+ * HashBenchmark.doIntWisp64       20  avgt    5   16.439 ±  0.071  ns/op
+ * HashBenchmark.doIntWisp64       40  avgt    5   24.404 ±  0.395  ns/op
+ * HashBenchmark.doIntWisp64       80  avgt    5   39.105 ±  1.247  ns/op
+ * HashBenchmark.doIntWisp64      160  avgt    5   68.759 ±  1.622  ns/op
+ * HashBenchmark.doIntYolk64        5  avgt    5   10.157 ±  0.212  ns/op
+ * HashBenchmark.doIntYolk64       10  avgt    5   11.658 ±  0.289  ns/op
+ * HashBenchmark.doIntYolk64       20  avgt    5   17.697 ±  0.158  ns/op
+ * HashBenchmark.doIntYolk64       40  avgt    5   27.905 ±  0.574  ns/op
+ * HashBenchmark.doIntYolk64       80  avgt    5   47.435 ±  1.533  ns/op
+ * HashBenchmark.doIntYolk64      160  avgt    5   91.696 ±  1.629  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -1085,64 +1132,64 @@ public class HashBenchmark {
         return HashCommon.mix(Arrays.hashCode(state.doubles[state.idx = state.idx + 1 & 4095]));
     }
 
-    public int ixsHash(int x, int y, int z){
-        x = (x + (x << 16)) & 0x030000FF;
-        x = (x + (x <<  8)) & 0x0300F00F;
-        x = (x + (x <<  4)) & 0x030C30C3;
-        x = (x + (x <<  2)) & 0x09249249;
-        y = (y + (y << 16)) & 0x030000FF;
-        y = (y + (y <<  8)) & 0x0300F00F;
-        y = (y + (y <<  4)) & 0x030C30C3;
-        y = (y + (y <<  2)) & 0x09249249;
-        z = (z + (z << 16)) & 0x030000FF;
-        z = (z + (z <<  8)) & 0x0300F00F;
-        z = (z + (z <<  4)) & 0x030C30C3;
-        z = (z + (z <<  2)) & 0x09249249;
-        return (x |= y << 1 | z << 2) ^ x >>> 16;
-    }
-    @Benchmark
-    public int measurePointHashBitwise(BenchmarkState state) {
-        final int x, y, z;
-        x = y = z = state.intInputs[state.idx++ & 4095];
-        return ixsHash(x, y, z);
-    }
-    public static int pelotonHash(int x, int y, int z) {
-        final int n = (29 * (x << 1 ^ x >> 31) + 463 * (y << 1 ^ y >> 31) + 5867 * (z << 1 ^ z >> 31));
-        return n ^ n >>> 14;
-    }
-
-    @Benchmark
-    public int measurePointHashPeloton(BenchmarkState state) {
-        final int x, y, z;
-        x = y = z = state.intInputs[state.idx++ & 4095];
-        return pelotonHash(x, y, z);
-    }
-
-    public static int objectHash(int x, int y, int z) {
-        return  961 * x + 31 * y + z;
-    }
-
-    @Benchmark
-    public int measurePointHashObject(BenchmarkState state) {
-        final int x, y, z;
-        x = y = z = state.intInputs[state.idx++ & 4095];
-        return objectHash(x, y, z);
-    }
-
-    public static int cantorHash(int x, int y, int z){
-        x = x << 1 ^ x >> 31;
-        y = y << 1 ^ y >> 31;
-        z = z << 1 ^ z >> 31;
-        y += ((x+y) * (x+y+1) >> 1);
-        return z + ((z+y) * (z+y+1) >> 1);
-    }
-
-    @Benchmark
-    public int measurePointHashCantor(BenchmarkState state) {
-        final int x, y, z;
-        x = y = z = state.intInputs[state.idx++ & 4095];
-        return cantorHash(x, y, z);
-    }
+//    public int ixsHash(int x, int y, int z){
+//        x = (x + (x << 16)) & 0x030000FF;
+//        x = (x + (x <<  8)) & 0x0300F00F;
+//        x = (x + (x <<  4)) & 0x030C30C3;
+//        x = (x + (x <<  2)) & 0x09249249;
+//        y = (y + (y << 16)) & 0x030000FF;
+//        y = (y + (y <<  8)) & 0x0300F00F;
+//        y = (y + (y <<  4)) & 0x030C30C3;
+//        y = (y + (y <<  2)) & 0x09249249;
+//        z = (z + (z << 16)) & 0x030000FF;
+//        z = (z + (z <<  8)) & 0x0300F00F;
+//        z = (z + (z <<  4)) & 0x030C30C3;
+//        z = (z + (z <<  2)) & 0x09249249;
+//        return (x |= y << 1 | z << 2) ^ x >>> 16;
+//    }
+//    @Benchmark
+//    public int measurePointHashBitwise(BenchmarkState state) {
+//        final int x, y, z;
+//        x = y = z = state.intInputs[state.idx++ & 4095];
+//        return ixsHash(x, y, z);
+//    }
+//    public static int pelotonHash(int x, int y, int z) {
+//        final int n = (29 * (x << 1 ^ x >> 31) + 463 * (y << 1 ^ y >> 31) + 5867 * (z << 1 ^ z >> 31));
+//        return n ^ n >>> 14;
+//    }
+//
+//    @Benchmark
+//    public int measurePointHashPeloton(BenchmarkState state) {
+//        final int x, y, z;
+//        x = y = z = state.intInputs[state.idx++ & 4095];
+//        return pelotonHash(x, y, z);
+//    }
+//
+//    public static int objectHash(int x, int y, int z) {
+//        return  961 * x + 31 * y + z;
+//    }
+//
+//    @Benchmark
+//    public int measurePointHashObject(BenchmarkState state) {
+//        final int x, y, z;
+//        x = y = z = state.intInputs[state.idx++ & 4095];
+//        return objectHash(x, y, z);
+//    }
+//
+//    public static int cantorHash(int x, int y, int z){
+//        x = x << 1 ^ x >> 31;
+//        y = y << 1 ^ y >> 31;
+//        z = z << 1 ^ z >> 31;
+//        y += ((x+y) * (x+y+1) >> 1);
+//        return z + ((z+y) * (z+y+1) >> 1);
+//    }
+//
+//    @Benchmark
+//    public int measurePointHashCantor(BenchmarkState state) {
+//        final int x, y, z;
+//        x = y = z = state.intInputs[state.idx++ & 4095];
+//        return cantorHash(x, y, z);
+//    }
 
 //    @Benchmark
 //    public long doMetro64(BenchmarkState state)
