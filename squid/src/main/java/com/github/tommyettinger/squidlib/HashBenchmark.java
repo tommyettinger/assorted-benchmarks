@@ -496,6 +496,37 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doIntYolk64       80  avgt    5   47.435 ±  1.533  ns/op
  * HashBenchmark.doIntYolk64      160  avgt    5   91.696 ±  1.629  ns/op
  * </pre>
+ * <br>
+ * With a Trim-inspired version of Crease, it does much better on speed
+ * for large inputs:
+ * <pre>
+ * Benchmark                    (len)  Mode  Cnt   Score    Error  Units
+ * HashBenchmark.doIntCrease64      5  avgt    5  11.995 ±  0.397  ns/op
+ * HashBenchmark.doIntCrease64     10  avgt    5  14.091 ±  0.233  ns/op
+ * HashBenchmark.doIntCrease64     20  avgt    5  17.320 ±  0.374  ns/op
+ * HashBenchmark.doIntCrease64     40  avgt    5  24.602 ±  0.381  ns/op
+ * HashBenchmark.doIntCrease64     80  avgt    5  40.198 ±  0.513  ns/op
+ * HashBenchmark.doIntCrease64    160  avgt    5  74.267 ± 24.697  ns/op
+ * HashBenchmark.doIntCurlup64      5  avgt    5   9.432 ±  0.249  ns/op
+ * HashBenchmark.doIntCurlup64     10  avgt    5  11.352 ±  1.061  ns/op
+ * HashBenchmark.doIntCurlup64     20  avgt    5  16.538 ±  0.558  ns/op
+ * HashBenchmark.doIntCurlup64     40  avgt    5  24.143 ±  0.652  ns/op
+ * HashBenchmark.doIntCurlup64     80  avgt    5  41.796 ±  0.939  ns/op
+ * HashBenchmark.doIntCurlup64    160  avgt    5  74.678 ±  2.471  ns/op
+ * HashBenchmark.doIntWisp64        5  avgt    5   7.783 ±  0.295  ns/op
+ * HashBenchmark.doIntWisp64       10  avgt    5  11.058 ±  0.615  ns/op
+ * HashBenchmark.doIntWisp64       20  avgt    5  16.208 ±  0.579  ns/op
+ * HashBenchmark.doIntWisp64       40  avgt    5  24.422 ±  0.209  ns/op
+ * HashBenchmark.doIntWisp64       80  avgt    5  39.137 ±  0.327  ns/op
+ * HashBenchmark.doIntWisp64      160  avgt    5  68.757 ±  0.918  ns/op
+ * HashBenchmark.doIntYolk64        5  avgt    5   9.929 ±  0.136  ns/op
+ * HashBenchmark.doIntYolk64       10  avgt    5  11.982 ±  1.230  ns/op
+ * HashBenchmark.doIntYolk64       20  avgt    5  17.072 ±  0.257  ns/op
+ * HashBenchmark.doIntYolk64       40  avgt    5  28.090 ±  0.240  ns/op
+ * HashBenchmark.doIntYolk64       80  avgt    5  46.720 ±  0.642  ns/op
+ * HashBenchmark.doIntYolk64      160  avgt    5  91.580 ±  1.723  ns/op
+ * </pre>
+ *
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
