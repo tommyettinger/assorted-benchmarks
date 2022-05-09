@@ -526,7 +526,51 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doIntYolk64       80  avgt    5  46.720 ±  0.642  ns/op
  * HashBenchmark.doIntYolk64      160  avgt    5  91.580 ±  1.723  ns/op
  * </pre>
- *
+ * <br>
+ * Using the same Crease as above (Trim-based) does well for large inputs
+ * with 32-bit output:
+ * <pre>
+ * Benchmark                      (len)  Mode  Cnt    Score    Error  Units
+ * HashBenchmark.doIntCrease32        5  avgt    5   12.402 ±  0.383  ns/op
+ * HashBenchmark.doIntCrease32       10  avgt    5   14.435 ±  0.229  ns/op
+ * HashBenchmark.doIntCrease32       20  avgt    5   17.758 ±  0.163  ns/op
+ * HashBenchmark.doIntCrease32       40  avgt    5   25.079 ±  0.527  ns/op
+ * HashBenchmark.doIntCrease32       80  avgt    5   40.912 ±  0.301  ns/op
+ * HashBenchmark.doIntCrease32      160  avgt    5   74.710 ± 10.448  ns/op
+ * HashBenchmark.doIntCurlup32        5  avgt    5    9.161 ±  0.362  ns/op
+ * HashBenchmark.doIntCurlup32       10  avgt    5   11.440 ±  0.316  ns/op
+ * HashBenchmark.doIntCurlup32       20  avgt    5   17.334 ±  0.569  ns/op
+ * HashBenchmark.doIntCurlup32       40  avgt    5   24.875 ±  0.454  ns/op
+ * HashBenchmark.doIntCurlup32       80  avgt    5   44.724 ±  1.112  ns/op
+ * HashBenchmark.doIntCurlup32      160  avgt    5   86.016 ±  2.150  ns/op
+ * HashBenchmark.doIntJDK32           5  avgt    5    6.695 ±  0.114  ns/op
+ * HashBenchmark.doIntJDK32          10  avgt    5    9.321 ±  0.168  ns/op
+ * HashBenchmark.doIntJDK32          20  avgt    5   14.589 ±  0.526  ns/op
+ * HashBenchmark.doIntJDK32          40  avgt    5   29.128 ±  0.314  ns/op
+ * HashBenchmark.doIntJDK32          80  avgt    5   58.201 ±  0.852  ns/op
+ * HashBenchmark.doIntJDK32         160  avgt    5  117.358 ±  2.208  ns/op
+ * HashBenchmark.doIntJDK32Mixed      5  avgt    5    7.176 ±  0.112  ns/op
+ * HashBenchmark.doIntJDK32Mixed     10  avgt    5   10.102 ±  0.123  ns/op
+ * HashBenchmark.doIntJDK32Mixed     20  avgt    5   15.283 ±  0.229  ns/op
+ * HashBenchmark.doIntJDK32Mixed     40  avgt    5   29.323 ±  0.265  ns/op
+ * HashBenchmark.doIntJDK32Mixed     80  avgt    5   59.234 ±  0.845  ns/op
+ * HashBenchmark.doIntJDK32Mixed    160  avgt    5  117.147 ±  1.460  ns/op
+ * HashBenchmark.doIntWisp32          5  avgt    5    7.822 ±  0.110  ns/op
+ * HashBenchmark.doIntWisp32         10  avgt    5   11.591 ±  0.116  ns/op
+ * HashBenchmark.doIntWisp32         20  avgt    5   15.445 ±  0.124  ns/op
+ * HashBenchmark.doIntWisp32         40  avgt    5   24.411 ±  0.745  ns/op
+ * HashBenchmark.doIntWisp32         80  avgt    5   38.421 ±  0.285  ns/op
+ * HashBenchmark.doIntWisp32        160  avgt    5   68.980 ±  0.491  ns/op
+ * HashBenchmark.doIntYolk32          5  avgt    5   10.173 ±  0.102  ns/op
+ * HashBenchmark.doIntYolk32         10  avgt    5   11.809 ±  0.213  ns/op
+ * HashBenchmark.doIntYolk32         20  avgt    5   16.848 ±  0.190  ns/op
+ * HashBenchmark.doIntYolk32         40  avgt    5   26.170 ±  0.656  ns/op
+ * HashBenchmark.doIntYolk32         80  avgt    5   46.361 ±  1.255  ns/op
+ * HashBenchmark.doIntYolk32        160  avgt    5   91.341 ±  1.210  ns/op
+ * </pre>
+ * <br>
+ * Notably, all hashes here outperform the JDK version (Arrays.hashCode())
+ * when inputs are 80 items or larger.
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)

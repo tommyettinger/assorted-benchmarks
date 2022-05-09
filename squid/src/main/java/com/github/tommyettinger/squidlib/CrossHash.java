@@ -8470,7 +8470,6 @@ public class CrossHash {
                 c = fa + bc;
                 d = cd + 0xDE916ABCC965815BL;
                 result += c;
-//                result ^= a ^ a >>> 29 ^ b ^ b >>> 31 ^ c ^ c >>> 30 ^ d ^ d >>> 28;
             }
             result ^= a ^ b ^ c ^ d;
             for (; i < len; i++) {
@@ -8903,21 +8902,29 @@ public class CrossHash {
 
         public int hash(final int[] data) {
             if (data == null) return 0;
-            long result = seed ^ data.length;
+            final int len = data.length, shortLen = len - 3;
+            long result = seed ^ len,
+                    a = (result << 11 | result >>> 53) + len,
+                    b = (a << 13 | a >>> 51) - len,
+                    c = (b << 17 | b >>> 47) + len,
+                    d = (c << 19 | c >>> 45) - len;
             int i = 0;
-            for (; i + 7 < data.length; i += 8) {
-                result += 0xD96EB1A810CAAF5FL * data[i]
-                        + 0xC862B36DAF790DD5L * data[i + 1]
-                        + 0xB8ACD90C142FE10BL * data[i + 2]
-                        + 0xAA324F90DED86B69L * data[i + 3]
-                        + 0x9CDA5E693FEA10AFL * data[i + 4]
-                        + 0x908E3D2C82567A73L * data[i + 5]
-                        + 0x8538ECB5BD456EA3L * data[i + 6]
-                        + 0xD1B54A32D192ED03L * data[i + 7]
-                ;
+            for (; i < shortLen; i += 4) {
+                final long fa = a + data[i];
+                final long fb = b + data[i + 1];
+                final long fc = c + data[i + 2];
+                final long fd = d + data[i + 3];
+                final long bc = fb ^ fc;
+                final long cd = fc ^ fd;
+                a = (bc << 57 | bc >>> 7);
+                b = (cd << 18 | cd >>> 46);
+                c = fa + bc;
+                d = cd + 0xDE916ABCC965815BL;
+                result += c;
             }
-            for (; i < data.length; i++) {
-                result = 0x9E3779B97F4A7C15L * result + data[i];
+            result ^= a ^ b ^ c ^ d;
+            for (; i < len; i++) {
+                result = 0xF7C2EBC08F67F2B5L * result + data[i];
             }
             return (int)randomize(result);
         }
