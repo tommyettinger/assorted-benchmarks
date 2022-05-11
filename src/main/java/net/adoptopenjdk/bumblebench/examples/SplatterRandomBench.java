@@ -22,8 +22,8 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- * SplatterRandomBench score: 845915136.000000 (845.9M 2055.6%)
- *                 uncertainty:   1.2%
+ * SplatterRandomBench score: 841989824.000000 (842.0M 2055.1%)
+ *                 uncertainty:   0.6%
  * <br>
  * OpenJ9 Java 15:
  * <br>
@@ -39,13 +39,13 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * SplatterRandomBench score: 1311018240.000000 (1.311G 2099.4%)
- *                 uncertainty:   0.7%
+ * SplatterRandomBench score: 1229051008.000000 (1.229G 2093.0%)
+ *                 uncertainty:   0.4%
  * <br>
  * GraalVM Java 17:
  * <br>
- * SplatterRandomBench score: 1389131776.000000 (1.389G 2105.2%)
- *                 uncertainty:   1.2%
+ * SplatterRandomBench score: 1566795264.000000 (1.567G 2117.2%)
+ *                 uncertainty:   0.8%
  */
 public final class SplatterRandomBench extends MicroBench {
 

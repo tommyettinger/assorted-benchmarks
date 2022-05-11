@@ -275,10 +275,10 @@ public class SplatterRandom implements EnhancedRandom {
 		stateB = (fg << 57 | fg >>> 7);
 		stateC = (fe << 18 | fe >>> 46);
 		stateD = (ff << 43 | ff >>> 21);
-		stateE = fb ^ fa;
-		stateF = fc + ff;
-		stateG = fd ^ fe;
-		return stateG;
+		stateE = fb + fa;
+		stateF = fc + fg;
+		stateG = fd + fe;
+		return stateF;
 	}
 
 	@Override
@@ -308,10 +308,10 @@ public class SplatterRandom implements EnhancedRandom {
 		stateB = (fg << 57 | fg >>> 7);
 		stateC = (fe << 18 | fe >>> 46);
 		stateD = (ff << 43 | ff >>> 21);
-		stateE = fb ^ fa;
-		stateF = fc + ff;
-		stateG = fd ^ fe;
-		return (int)stateG >>> (32 - bits);
+		stateE = fb + fa;
+		stateF = fc + fg;
+		stateG = fd + fe;
+		return (int)stateF >>> (32 - bits);
 	}
 
 	@Override
