@@ -98,6 +98,9 @@ public final class KryoWriteBench extends MiniBench {
 					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f)
 			)));
 		}
+
+		System.out.println("There are " + big.size() + " keys in the Map.");
+
 		Kryo kryo = new Kryo();
 		kryo.register(HashMap.class);
 		kryo.register(ArrayList.class);

@@ -62,12 +62,11 @@ public final class FastJsonWriteBench extends MiniBench {
 			)));
 		}
 
-		SerializeConfig config = new SerializeConfig(true);
 		int counter = 0;
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				counter += JSON.toJSONString(big, config).length();
+				counter += JSON.toJSONString(big).length();
 				pauseTimer();
 			}
 		}
@@ -91,8 +90,9 @@ public final class FastJsonWriteBench extends MiniBench {
 					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f)
 			)));
 		}
+		System.out.println("There are " + big.size() + " keys in the Map.");
 
-		new Lwjgl3Files().local("fastjson.json").writeString(JSON.toJSONString(big, new SerializeConfig(true)), false);
+		new Lwjgl3Files().local("fastjson.json").writeString(JSON.toJSONString(big), false);
 	}
 
 }

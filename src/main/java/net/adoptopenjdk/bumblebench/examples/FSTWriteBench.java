@@ -91,6 +91,7 @@ public final class FSTWriteBench extends MiniBench {
 			)));
 		}
 		FSTConfiguration conf = FSTConfiguration.createDefaultConfiguration();
+		System.out.println("There are " + big.size() + " keys in the Map.");
 
 		new Lwjgl3Files().local("fst.dat").writeBytes(conf.asByteArray(big), false);
 	}

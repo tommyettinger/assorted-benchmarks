@@ -42,13 +42,13 @@ public final class FastJsonReadBench extends MiniBench {
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
 		String data = new Lwjgl3Files().local("fastjson.json").readString();
 		HashMap<String, ArrayList<Vector2>> big;
-		ParserConfig config = new ParserConfig(true);
+		ParserConfig config = new ParserConfig();
 
 		int counter = 0;
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				big = JSON.parseObject(data, HashMap.class, config);
+				big = JSON.parseObject(data, HashMap.class);
 				counter += big.size();
 				pauseTimer();
 			}
@@ -66,9 +66,9 @@ public final class FastJsonReadBench extends MiniBench {
 		deep.add(new ArrayList<>(Arrays.asList(hm2, hm3)));
 		deep.add(new ArrayList<>(Arrays.asList(hm0, hm1, hm2, hm3)));
 
-		String data = JSON.toJSONString(deep, new SerializeConfig(true));
+		String data = JSON.toJSONString(deep);
 		System.out.println(data);
-		after = JSON.parseObject(data, ArrayList.class, new ParserConfig(true));
+		after = JSON.parseObject(data, ArrayList.class);
 		System.out.println(after);
 	}
 }

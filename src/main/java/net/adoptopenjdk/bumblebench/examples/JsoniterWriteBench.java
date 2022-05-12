@@ -97,6 +97,9 @@ public final class JsoniterWriteBench extends MiniBench {
 				.omitDefaultValue(true)
 				.build();
 		JsonStream.setMode(EncodingMode.DYNAMIC_MODE);
+
+		System.out.println("There are " + big.size() + " keys in the Map.");
+
 		new Lwjgl3Files().local("jsoniter.json").writeString(JsonStream.serialize(config, big), false);
 	}
 
