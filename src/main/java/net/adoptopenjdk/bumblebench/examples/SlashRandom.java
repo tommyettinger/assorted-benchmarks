@@ -21,7 +21,7 @@ import com.github.tommyettinger.ds.support.EnhancedRandom;
 
 /**
  */
-public class SplatterRandom implements EnhancedRandom {
+public class SlashRandom implements EnhancedRandom {
 
 	/**
 	 * The first state; can be any long.
@@ -39,21 +39,15 @@ public class SplatterRandom implements EnhancedRandom {
 	 * The fourth state; can be any long.
 	 */
 	protected long stateD;
-	protected long stateE;
-	protected long stateF;
-	protected long stateG;
 
 	/**
 	 * Creates a new TrimPostRandom with a random state.
 	 */
-	public SplatterRandom() {
+	public SlashRandom() {
 		stateA = EnhancedRandom.seedFromMath();
 		stateB = EnhancedRandom.seedFromMath();
 		stateC = EnhancedRandom.seedFromMath();
 		stateD = EnhancedRandom.seedFromMath();
-		stateE = EnhancedRandom.seedFromMath();
-		stateF = EnhancedRandom.seedFromMath();
-		stateG = EnhancedRandom.seedFromMath();
 	}
 
 	/**
@@ -62,7 +56,7 @@ public class SplatterRandom implements EnhancedRandom {
 	 *
 	 * @param seed any {@code long} value
 	 */
-	public SplatterRandom(long seed) {
+	public SlashRandom(long seed) {
 		setSeed(seed);
 	}
 
@@ -75,24 +69,21 @@ public class SplatterRandom implements EnhancedRandom {
 	 * @param stateC any {@code long} value
 	 * @param stateD any {@code long} value
 	 */
-	public SplatterRandom(long stateA, long stateB, long stateC, long stateD, long stateE, long stateF, long stateG) {
+	public SlashRandom(long stateA, long stateB, long stateC, long stateD) {
 		this.stateA = stateA;
 		this.stateB = stateB;
 		this.stateC = stateC;
 		this.stateD = stateD;
-		this.stateE = stateE;
-		this.stateF = stateF;
-		this.stateG = stateG;
 	}
 
 	/**
-	 * This generator has 7 {@code long} states, so this returns 7.
+	 * This generator has 4 {@code long} states, so this returns 4.
 	 *
-	 * @return 7 (seven)
+	 * @return 4 (four)
 	 */
 	@Override
 	public int getStateCount () {
-		return 7;
+		return 4;
 	}
 
 	/**
@@ -111,14 +102,8 @@ public class SplatterRandom implements EnhancedRandom {
 			return stateB;
 		case 2:
 			return stateC;
-		case 3:
-			return stateD;
-		case 4:
-			return stateE;
-		case 5:
-			return stateF;
 		default:
-			return stateG;
+			return stateD;
 		}
 	}
 
@@ -142,17 +127,8 @@ public class SplatterRandom implements EnhancedRandom {
 		case 2:
 			stateC = value;
 			break;
-		case 3:
-			stateD = value;
-			break;
-		case 4:
-			stateE = value;
-			break;
-		case 5:
-			stateF = value;
-			break;
 		default:
-			stateG = value;
+			stateD = value;
 			break;
 		}
 	}
@@ -166,27 +142,10 @@ public class SplatterRandom implements EnhancedRandom {
 	 */
 	@Override
 	public void setSeed (long seed) {
-		seed ^= seed >>> 32;
-		seed *= 0xbea225f9eb34556dL;
-		seed ^= seed >>> 29;
-		seed *= 0xbea225f9eb34556dL;
-		seed ^= seed >>> 32;
-		seed *= 0xbea225f9eb34556dL;
-		seed ^= seed >>> 29;
 		stateA = seed ^ 0xC6BC279692B5C323L;
 		stateB = ~seed;
 		stateC = seed ^ ~0xC6BC279692B5C323L;
 		stateD = seed;
-		seed ^= seed >>> 32;
-		seed *= 0xbea225f9eb34556dL;
-		seed ^= seed >>> 29;
-		seed *= 0xbea225f9eb34556dL;
-		seed ^= seed >>> 32;
-		seed *= 0xbea225f9eb34556dL;
-		seed ^= seed >>> 29;
-		stateE = seed ^ 0xD1342543DE82EF95L;
-		stateF = ~seed;
-		stateG = seed ^ ~0xD1342543DE82EF95L;
 	}
 
 	public long getStateA () {
@@ -257,9 +216,6 @@ public class SplatterRandom implements EnhancedRandom {
 		this.stateB = stateB;
 		this.stateC = stateC;
 		this.stateD = stateD;
-		this.stateE = ~stateB;
-		this.stateF = ~stateC;
-		this.stateG = ~stateD;
 	}
 
 	@Override
@@ -268,17 +224,11 @@ public class SplatterRandom implements EnhancedRandom {
 		final long fb = stateB;
 		final long fc = stateC;
 		final long fd = stateD;
-		final long fe = stateE;
-		final long ff = stateF;
-		final long fg = stateG;
-		stateA = fa + 0xDE916ABCC965815BL;
-		stateB = (fg << 57 | fg >>> 7);
-		stateC = (fe << 18 | fe >>> 46);
-		stateD = (ff << 43 | ff >>> 21);
-		stateE = fb + fa;
-		stateF = fc + fg;
-		stateG = fd + fe;
-		return ff;
+		stateA = (fc << 44 | fc >>> 20);
+		stateB = fa + fc;
+		stateC = fb ^ fd;
+		stateD = fd + 0xDE916ABCC965815BL;
+		return stateB;
 	}
 
 	@Override
@@ -301,42 +251,33 @@ public class SplatterRandom implements EnhancedRandom {
 		final long fb = stateB;
 		final long fc = stateC;
 		final long fd = stateD;
-		final long fe = stateE;
-		final long ff = stateF;
-		final long fg = stateG;
-		stateA = fa + 0xDE916ABCC965815BL;
-		stateB = (fg << 57 | fg >>> 7);
-		stateC = (fe << 18 | fe >>> 46);
-		stateD = (ff << 43 | ff >>> 21);
-		stateE = fb + fa;
-		stateF = fc + fg;
-		stateG = fd + fe;
-		return (int)ff >>> (32 - bits);
+		final long bc = fb ^ fc;
+		final long cd = fc ^ fd;
+		stateA = (bc << 57 | bc >>> 7);
+		stateB = (cd << 18 | cd >>> 46);
+		stateC = fa + bc;
+		stateD = fd + 0xDE916ABCC965815BL;
+		return (int)stateC >>> (32 - bits);
 	}
 
 	@Override
-	public SplatterRandom copy () {
-		return new SplatterRandom(stateA, stateB, stateC, stateD, stateE, stateF, stateG);
+	public SlashRandom copy () {
+		return new SlashRandom(stateA, stateB, stateC, stateD);
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+	public boolean equals (Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 
-		SplatterRandom that = (SplatterRandom) o;
+		SlashRandom that = (SlashRandom)o;
 
-		if (stateA != that.stateA) return false;
-		if (stateB != that.stateB) return false;
-		if (stateC != that.stateC) return false;
-		if (stateD != that.stateD) return false;
-		if (stateE != that.stateE) return false;
-		if (stateF != that.stateF) return false;
-		return stateG == that.stateG;
+		return stateA == that.stateA && stateB == that.stateB && stateC == that.stateC && stateD == that.stateD;
 	}
 
 	public String toString () {
-		return "SplatterRandom{" + "stateA=" + (stateA) + "L, stateB=" + (stateB) + "L, stateC=" + (stateC) +
-				"L, stateD=" + (stateD) + "L, stateE=" + (stateE) + "L, stateF=" + (stateF) + "L, stateG=" + (stateG) +  "L}";
+		return "TrimPostRandom{" + "stateA=" + (stateA) + "L, stateB=" + (stateB) + "L, stateC=" + (stateC) + "L, stateD=" + (stateD) + "L}";
 	}
 }
