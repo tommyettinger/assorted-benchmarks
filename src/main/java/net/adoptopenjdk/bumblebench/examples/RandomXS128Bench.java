@@ -22,6 +22,55 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
+ * RandomXS128Bench score: 773990272.000000 (774.0M 2046.7%)
+ *              uncertainty:   3.6%
+ * <br>
+ * OpenJ9 Java 15:
+ * <br>
+ * RandomXS128Bench score: 990374400.000000 (990.4M 2071.4%)
+ *              uncertainty:   0.3%
+ * <br>
+ * HotSpot Java 16 (AdoptOpenJDK):
+ * <br>
+ * RandomXS128Bench score: 963110592.000000 (963.1M 2068.6%)
+ *              uncertainty:   1.4%
+ * <br>
+ * GraalVM Java 16:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ * RandomXS128Bench score: 965328832.000000 (965.3M 2068.8%)
+ *              uncertainty:   2.3%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ * RandomXS128Bench score: 976815360.000000 (976.8M 2070.0%)
+ *              uncertainty:   2.2%
+ * <br>
+ * OpenJ9 Java 17 (Semeru):
+ * <br>
+ * RandomXS128Bench score: 685345984.000000 (685.3M 2034.5%)
+ *              uncertainty:   0.4%
+ */
+public final class RandomXS128Bench extends MicroBench {
+
+	protected long doBatch(long numIterations) throws InterruptedException {
+		RandomXS128 rng = new RandomXS128(0x12345678);
+		long sum = 0L;
+		for (long i = 0; i < numIterations; i++)
+			sum += rng.nextLong();
+		return numIterations;
+	}
+}
+
+// old benchmarks
+/*
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8:
+ * <br>
  * RandomXS128Bench score: 746991168.000000 (747.0M 2043.2%)
  *              uncertainty:   1.9%
  * <br>
@@ -45,13 +94,3 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * RandomXS128Bench score: 909541824.000000 (909.5M 2062.8%)
  *              uncertainty:   0.2%
  */
-public final class RandomXS128Bench extends MicroBench {
-
-	protected long doBatch(long numIterations) throws InterruptedException {
-		RandomXS128 rng = new RandomXS128(0x12345678);
-		long sum = 0L;
-		for (long i = 0; i < numIterations; i++)
-			sum += rng.nextLong();
-		return numIterations;
-	}
-}
