@@ -35,10 +35,6 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * RandomXS128Bench score: 963110592.000000 (963.1M 2068.6%)
  *              uncertainty:   1.4%
  * <br>
- * GraalVM Java 16:
- * <br>
- *
- * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
  * RandomXS128Bench score: 965328832.000000 (965.3M 2068.8%)
