@@ -142,6 +142,13 @@ public class SlashRandom implements EnhancedRandom {
 	 */
 	@Override
 	public void setSeed (long seed) {
+		seed ^= seed >>> 32;
+		seed *= 0xbea225f9eb34556dL;
+		seed ^= seed >>> 29;
+		seed *= 0xbea225f9eb34556dL;
+		seed ^= seed >>> 32;
+		seed *= 0xbea225f9eb34556dL;
+		seed ^= seed >>> 29;
 		stateA = seed ^ 0xC6BC279692B5C323L;
 		stateB = ~seed;
 		stateC = seed ^ ~0xC6BC279692B5C323L;
@@ -227,7 +234,7 @@ public class SlashRandom implements EnhancedRandom {
 		stateA = (fc << 44 | fc >>> 20);
 		stateB = fa + fc;
 		stateC = fb ^ fd;
-		stateD = fd + 0xDE916ABCC965815BL;
+		stateD = fb + 0xDE916ABCC965815BL;
 		return stateB;
 	}
 
@@ -236,13 +243,11 @@ public class SlashRandom implements EnhancedRandom {
 		final long fa = stateA;
 		final long fb = stateB;
 		final long fc = stateC;
-		stateD -= 0xDE916ABCC965815BL;
-		long t = (fb >>> 18 | fb << 46);
-		stateC = t ^ stateD;
-		t = (fa >>> 57 | fa << 7);
-		stateB = t ^ stateC;
-		stateA = fc - t;
-		return stateC;
+		stateB = stateD - 0xDE916ABCC965815BL;
+		stateC = (fa >>> 44 | fa << 20);
+		stateA = fb - stateC;
+		stateD = fc ^ stateB;
+		return stateB;
 	}
 
 	@Override
@@ -251,13 +256,11 @@ public class SlashRandom implements EnhancedRandom {
 		final long fb = stateB;
 		final long fc = stateC;
 		final long fd = stateD;
-		final long bc = fb ^ fc;
-		final long cd = fc ^ fd;
-		stateA = (bc << 57 | bc >>> 7);
-		stateB = (cd << 18 | cd >>> 46);
-		stateC = fa + bc;
-		stateD = fd + 0xDE916ABCC965815BL;
-		return (int)stateC >>> (32 - bits);
+		stateA = (fc << 44 | fc >>> 20);
+		stateB = fa + fc;
+		stateC = fb ^ fd;
+		stateD = fb + 0xDE916ABCC965815BL;
+		return (int)stateB >>> (32 - bits);
 	}
 
 	@Override
@@ -278,6 +281,20 @@ public class SlashRandom implements EnhancedRandom {
 	}
 
 	public String toString () {
-		return "TrimPostRandom{" + "stateA=" + (stateA) + "L, stateB=" + (stateB) + "L, stateC=" + (stateC) + "L, stateD=" + (stateD) + "L}";
+		return "SlashRandom{" + "stateA=" + (stateA) + "L, stateB=" + (stateB) + "L, stateC=" + (stateC) + "L, stateD=" + (stateD) + "L}";
 	}
+
+//	public static void main(String[] args) {
+//		SlashRandom random = new SlashRandom(0L);
+//		long n0 = random.nextLong();
+//		long n1 = random.nextLong();
+//		long n2 = random.nextLong();
+//		long n3 = random.nextLong();
+//		long p2 = random.previousLong();
+//		long p1 = random.previousLong();
+//		long p0 = random.previousLong();
+//		System.out.println(n0 == p0);
+//		System.out.println(n1 == p1);
+//		System.out.println(n2 == p2);
+//	}
 }
