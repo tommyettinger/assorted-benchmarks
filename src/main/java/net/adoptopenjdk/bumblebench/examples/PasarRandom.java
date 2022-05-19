@@ -36,7 +36,8 @@ public class PasarRandom implements EnhancedRandom {
 	 */
 	protected long stateC;
 	/**
-	 * The fourth state; can be any long.
+	 * The fourth state; can be any long. The first call to {@link #nextLong()} will return this verbatim, if no other
+	 * methods have been called.
 	 */
 	protected long stateD;
 	/**
@@ -235,12 +236,13 @@ public class PasarRandom implements EnhancedRandom {
 	/**
 	 * Sets the state completely to the given four state variables.
 	 * This is the same as calling {@link #setStateA(long)}, {@link #setStateB(long)},
-	 * {@link #setStateC(long)}, and {@link #setStateD(long)} as a group.
+	 * {@link #setStateC(long)}, {@link #setStateD(long)}, and {@link #setStateE(long)} as a group.
 	 *
 	 * @param stateA the first state; can be any long
 	 * @param stateB the second state; can be any long
 	 * @param stateC the third state; can be any long
 	 * @param stateD the fourth state; can be any long
+	 * @param stateE the fifth state; can be any long
 	 */
 	public void setState (long stateA, long stateB, long stateC, long stateD, long stateE) {
 		this.stateA = stateA;
@@ -270,11 +272,13 @@ public class PasarRandom implements EnhancedRandom {
 		final long fa = stateA;
 		final long fb = stateB;
 		final long fc = stateC;
-		stateB = stateD - 0xDE916ABCC965815BL;
-		stateC = (fa >>> 44 | fa << 20);
-		stateA = fb - stateC;
-		stateD = fc ^ stateB;
-		return stateB;
+		final long fd = stateD;
+		stateE = stateE - 0xDE916ABCC965815BL;
+		stateC = (fa >>> 41 | fa << 23);
+		stateA = fd - stateC;
+		stateD = fb + stateC;
+		stateB = fc ^ stateE;
+		return stateB + (stateA >>> 41 | stateA << 23);
 	}
 
 	@Override
@@ -315,7 +319,7 @@ public class PasarRandom implements EnhancedRandom {
 	}
 
 //	public static void main(String[] args) {
-//		SlashRandom random = new SlashRandom(0L);
+//		PasarRandom random = new PasarRandom(0L);
 //		long n0 = random.nextLong();
 //		long n1 = random.nextLong();
 //		long n2 = random.nextLong();
