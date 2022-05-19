@@ -1,11 +1,11 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.MathUtils;
-import com.github.tommyettinger.ds.support.TricycleRandom;
+import com.github.tommyettinger.random.TricycleRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 import static com.badlogic.gdx.math.MathUtils.PI;
-import static com.github.yellowstonegames.core.TrigTools.HALF_PI;
+import static com.github.tommyettinger.digital.TrigTools.HALF_PI;
 
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:

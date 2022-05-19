@@ -80,7 +80,7 @@
         <dependency>
             <groupId>com.github.yellowstonegames.SquidSquad</groupId>
             <artifactId>SquidGrid</artifactId>
-            <version>7fe41d7c1e</version>
+            <version>b7ba51e11e</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -140,8 +140,20 @@
         </dependency>
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
+            <artifactId>digital</artifactId>
+            <version>0.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tommyettinger</groupId>
+            <artifactId>juniper</artifactId>
+            <version>0.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tommyettinger</groupId>
             <artifactId>jdkgdxds</artifactId>
-            <version>0.2.8</version>
+            <version>1.0.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

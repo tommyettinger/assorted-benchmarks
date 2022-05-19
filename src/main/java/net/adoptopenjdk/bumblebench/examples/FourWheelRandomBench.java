@@ -14,7 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.ds.support.FourWheelRandom;
+import com.github.tommyettinger.random.FourWheelRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**

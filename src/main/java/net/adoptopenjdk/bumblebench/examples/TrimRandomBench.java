@@ -15,7 +15,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.ds.support.TrimRandom;
+import com.github.tommyettinger.random.TrimRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**

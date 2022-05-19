@@ -1,6 +1,6 @@
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.ds.support.TricycleRandom;
+import com.github.tommyettinger.random.TricycleRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**

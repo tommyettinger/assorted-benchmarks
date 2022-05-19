@@ -14,7 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.ds.support.Xoshiro256StarStarRandom;
+import com.github.tommyettinger.random.Xoshiro256StarStarRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**

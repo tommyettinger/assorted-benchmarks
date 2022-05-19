@@ -17,7 +17,7 @@ package net.adoptopenjdk.bumblebench.examples;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectSet;
-import com.github.tommyettinger.ds.support.FourWheelRandom;
+import com.github.tommyettinger.random.FourWheelRandom;
 import com.jsoniter.output.EncodingMode;
 import com.jsoniter.output.JsonStream;
 import com.jsoniter.spi.Config;

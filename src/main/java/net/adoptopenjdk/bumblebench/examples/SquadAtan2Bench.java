@@ -1,7 +1,7 @@
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.ds.support.TricycleRandom;
-import com.github.yellowstonegames.core.TrigTools;
+import com.github.tommyettinger.random.TricycleRandom;
+import com.github.tommyettinger.digital.TrigTools;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**

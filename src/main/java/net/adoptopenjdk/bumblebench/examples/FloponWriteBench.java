@@ -19,7 +19,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectSet;
-import com.github.tommyettinger.ds.support.FourWheelRandom;
+import com.github.tommyettinger.random.FourWheelRandom;
 import com.github.tommyettinger.flopon.Flopon;
 import com.github.tommyettinger.flopon.FloponWriter;
 import net.adoptopenjdk.bumblebench.core.MiniBench;

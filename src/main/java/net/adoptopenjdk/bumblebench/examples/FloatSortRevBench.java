@@ -15,7 +15,7 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.github.tommyettinger.ds.FloatList;
-import com.github.tommyettinger.ds.support.LaserRandom;
+import com.github.tommyettinger.random.LaserRandom;
 import com.github.tommyettinger.ds.support.sort.FloatComparators;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 

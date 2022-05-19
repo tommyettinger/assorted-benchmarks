@@ -17,12 +17,16 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.ds.support.EnhancedRandom;
+import com.github.tommyettinger.random.EnhancedRandom;
 
 /**
  * Don't use this; quality is unclear and speed is poor.
  */
-public class TroubleRandom implements EnhancedRandom {
+public class TroubleRandom extends EnhancedRandom {
+	@Override
+	public String getTag() {
+		return "TroR";
+	}
 
 	/**
 	 * The first state, also called the changing state; can be any long.

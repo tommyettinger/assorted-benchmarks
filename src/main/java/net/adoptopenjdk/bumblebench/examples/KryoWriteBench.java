@@ -18,7 +18,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Output;
-import com.github.tommyettinger.ds.support.FourWheelRandom;
+import com.github.tommyettinger.random.FourWheelRandom;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 import squidpony.StringKit;
 

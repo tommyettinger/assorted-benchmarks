@@ -17,11 +17,15 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.ds.support.EnhancedRandom;
+import com.github.tommyettinger.random.EnhancedRandom;
 
 /**
  */
-public class SlashRandom implements EnhancedRandom {
+public class SlashRandom extends EnhancedRandom {
+	@Override
+	public String getTag() {
+		return "SlaR";
+	}
 
 	/**
 	 * The first state; can be any long.

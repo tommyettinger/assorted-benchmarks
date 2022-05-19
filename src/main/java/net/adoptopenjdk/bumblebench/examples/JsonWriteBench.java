@@ -17,7 +17,7 @@ package net.adoptopenjdk.bumblebench.examples;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.*;
-import com.github.tommyettinger.ds.support.FourWheelRandom;
+import com.github.tommyettinger.random.FourWheelRandom;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 import squidpony.StringKit;
 
