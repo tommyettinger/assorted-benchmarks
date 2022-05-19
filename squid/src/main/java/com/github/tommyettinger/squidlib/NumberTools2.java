@@ -16,7 +16,7 @@
 package com.github.tommyettinger.squidlib;
 
 import static com.badlogic.gdx.math.MathUtils.PI;
-import static com.github.yellowstonegames.core.TrigTools.HALF_PI;
+import static com.github.tommyettinger.digital.TrigTools.HALF_PI;
 
 /**
  * Math helper functions.
@@ -31,7 +31,7 @@ public final class NumberTools2 {
         boolean invert = ay > ax;
         float z = invert ? ax/ay : ay/ax;                                                  // [0,1]
         float th = (0.97239411f - 0.19194795f * z * z) * z;                                // [0,π/4]
-        if(invert) th = 1.5707963267948966f - th;                                           // [0,π/2]
+        if(invert) th = 1.5707963267948966f - th;                                          // [0,π/2]
         if(x < 0) th = 3.141592653589793f - th;                                            // [0,π]
         return Math.copySign(th, y);                                                       // [-π,π]
     }

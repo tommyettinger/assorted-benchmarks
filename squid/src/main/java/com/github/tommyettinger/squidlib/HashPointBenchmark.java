@@ -31,7 +31,7 @@
 
 package com.github.tommyettinger.squidlib;
 
-import com.github.tommyettinger.ds.support.TrimRandom;
+import com.github.tommyettinger.random.TrimRandom;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;

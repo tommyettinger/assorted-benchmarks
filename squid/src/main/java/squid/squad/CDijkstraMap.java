@@ -17,10 +17,10 @@
 package squid.squad;
 
 import com.github.tommyettinger.ds.*;
-import com.github.tommyettinger.ds.support.EnhancedRandom;
-import com.github.tommyettinger.ds.support.LaserRandom;
-import com.github.tommyettinger.ds.support.MizuchiRandom;
-import com.github.yellowstonegames.core.ArrayTools;
+import com.github.tommyettinger.random.EnhancedRandom;
+import com.github.tommyettinger.random.LaserRandom;
+import com.github.tommyettinger.random.MizuchiRandom;
+import com.github.tommyettinger.digital.ArrayTools;
 import com.github.yellowstonegames.grid.*;
 import com.github.yellowstonegames.path.CostlyGraph;
 import com.github.yellowstonegames.path.DefaultGraph;

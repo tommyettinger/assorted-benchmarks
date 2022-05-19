@@ -1,7 +1,7 @@
 package com.github.tommyettinger.squidlib;
 
-import com.github.tommyettinger.ds.support.Base;
-import com.github.tommyettinger.ds.support.FourWheelRandom;
+import com.github.tommyettinger.digital.Base;
+import com.github.tommyettinger.random.FourWheelRandom;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.Arrays;

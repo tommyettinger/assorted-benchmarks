@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.OrderedSet;
 import com.github.tommyettinger.ds.IndexedMap;
 import com.github.tommyettinger.ds.IndexedSet;
-import com.github.tommyettinger.ds.support.LaserRandom;
+import com.github.tommyettinger.random.LaserRandom;
 import com.github.yellowstonegames.grid.Region;
 import com.github.yellowstonegames.place.DungeonTools;
 import com.github.yellowstonegames.place.tileset.DungeonBoneGen;

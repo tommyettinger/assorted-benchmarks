@@ -19,8 +19,6 @@
 
 package com.github.tommyettinger.ds;
 
-import de.heidelberg.pvs.container_bench.generators.TangleRNG;
-
 import java.util.*;
 
 /** An unordered map. This implementation is a cuckoo hash map using 3 hashes (if table size is less than 2^16) or 4 hashes (if
