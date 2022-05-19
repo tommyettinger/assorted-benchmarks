@@ -18,9 +18,7 @@ package net.adoptopenjdk.bumblebench.examples;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.Provider;
 import java.security.SecureRandom;
-import java.security.Security;
 
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
@@ -58,13 +56,55 @@ import java.security.Security;
  * <br>
  * SecureRandomBench score: 6016135.000000 (6.016M 1561.0%)
  *               uncertainty:   0.5%
+ * <br>
+ * "NativePRNGBlocking" is not available on any of these.
+ * <br>
+ * "NativePRNGNonBlocking" is not available on any of these.
+ * <br>
+ * "PKCS11" is not available on any of these.
+ * <br>
+ * "Windows-PRNG":
+ * <br>
+ * HotSpot Java 8:
+ * <br>
+ * SecureRandomBench score: 10399.057617 (10.40K 924.9%)
+ *               uncertainty:   3.5%
+ * <br>
+ * OpenJ9 Java 15:
+ * <br>
+ * SecureRandomBench score: 6091362.000000 (6.091M 1562.2%)
+ *               uncertainty:   0.6%
+ * <br>
+ * HotSpot Java 16 (AdoptOpenJDK):
+ * <br>
+ * SecureRandomBench score: 2387416.250000 (2.387M 1468.6%)
+ *               uncertainty:   1.8%
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ * SecureRandomBench score: 2660124.000000 (2.660M 1479.4%)
+ *               uncertainty:   0.8%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ * SecureRandomBench score: 2825773.750000 (2.826M 1485.4%)
+ *               uncertainty:   2.2%
+ * <br>
+ * OpenJ9 Java 17 (Semeru):
+ * <br>
+ * SecureRandomBench score: 5732210.000000 (5.732M 1556.2%)
+ *               uncertainty:   0.1%
  */
 public final class SecureRandomBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
 		SecureRandom rng = null;
 		try {
-			rng = SecureRandom.getInstance("SHA1PRNG");
+//			rng = SecureRandom.getInstance("SHA1PRNG");
+//			rng = SecureRandom.getInstance("NativePRNGNonBlocking");
+//			rng = SecureRandom.getInstance("NativePRNGBlocking");
+//			rng = SecureRandom.getInstance("PKCS11");
+			rng = SecureRandom.getInstance("Windows-PRNG");
 		} catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
 		}
