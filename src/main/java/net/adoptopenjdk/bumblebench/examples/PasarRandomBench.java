@@ -22,6 +22,50 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
+ * PasarRandomBench score: 1051410816.000000 (1.051G 2077.3%)
+ *              uncertainty:   0.4%
+ * <br>
+ * OpenJ9 Java 15:
+ * <br>
+ * PasarRandomBench score: 1224720640.000000 (1.225G 2092.6%)
+ *              uncertainty:   0.4%
+ * <br>
+ * HotSpot Java 16 (AdoptOpenJDK):
+ * <br>
+ * PasarRandomBench score: 1726400384.000000 (1.726G 2126.9%)
+ *              uncertainty:   0.8%
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ * PasarRandomBench score: 1740050560.000000 (1.740G 2127.7%)
+ *              uncertainty:   1.1%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ * PasarRandomBench score: 1915578240.000000 (1.916G 2137.3%)
+ *              uncertainty:   1.3%
+ * <br>
+ * OpenJ9 Java 17 (Semeru):
+ * <br>
+ * PasarRandomBench score: 590155648.000000 (590.2M 2019.6%)
+ *              uncertainty:   1.4%
+ */
+public final class PasarRandomBench extends MicroBench {
+
+	protected long doBatch(long numIterations) throws InterruptedException {
+		PasarRandom rng = new PasarRandom(0x12345678);
+		long sum = 0L;
+		for (long i = 0; i < numIterations; i++)
+			sum += rng.nextLong();
+		return numIterations;
+	}
+}
+// old benchmarks
+/*
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8:
+ * <br>
  * PassRandomBench score: 1058537216.000000 (1.059G 2078.0%)
  *             uncertainty:   1.8%
  * <br>
@@ -50,13 +94,3 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * PassRandomBench score: 551812288.000000 (551.8M 2012.9%)
  *             uncertainty:   3.2%
  */
-public final class PassRandomBench extends MicroBench {
-
-	protected long doBatch(long numIterations) throws InterruptedException {
-		PassRandom rng = new PassRandom(0x12345678);
-		long sum = 0L;
-		for (long i = 0; i < numIterations; i++)
-			sum += rng.nextLong();
-		return numIterations;
-	}
-}

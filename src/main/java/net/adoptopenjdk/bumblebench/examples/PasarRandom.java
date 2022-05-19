@@ -21,7 +21,7 @@ import com.github.tommyettinger.ds.support.EnhancedRandom;
 
 /**
  */
-public class PassRandom implements EnhancedRandom {
+public class PasarRandom implements EnhancedRandom {
 
 	/**
 	 * The first state; can be any long.
@@ -45,9 +45,9 @@ public class PassRandom implements EnhancedRandom {
 	protected long stateE;
 
 	/**
-	 * Creates a new PassRandom with a random state.
+	 * Creates a new PasarRandom with a random state.
 	 */
-	public PassRandom() {
+	public PasarRandom() {
 		stateA = EnhancedRandom.seedFromMath();
 		stateB = EnhancedRandom.seedFromMath();
 		stateC = EnhancedRandom.seedFromMath();
@@ -56,17 +56,17 @@ public class PassRandom implements EnhancedRandom {
 	}
 
 	/**
-	 * Creates a new PassRandom with the given seed; all {@code long} values are permitted.
+	 * Creates a new PasarRandom with the given seed; all {@code long} values are permitted.
 	 * The seed will be passed to {@link #setSeed(long)} to attempt to adequately distribute the seed randomly.
 	 *
 	 * @param seed any {@code long} value
 	 */
-	public PassRandom(long seed) {
+	public PasarRandom(long seed) {
 		setSeed(seed);
 	}
 
 	/**
-	 * Creates a new PassRandom with the given four states; all {@code long} values are permitted.
+	 * Creates a new PasarRandom with the given four states; all {@code long} values are permitted.
 	 * These states will be used verbatim.
 	 *
 	 * @param stateA any {@code long} value
@@ -75,7 +75,7 @@ public class PassRandom implements EnhancedRandom {
 	 * @param stateD any {@code long} value
 	 * @param stateE any {@code long} value
 	 */
-	public PassRandom(long stateA, long stateB, long stateC, long stateD, long stateE) {
+	public PasarRandom(long stateA, long stateB, long stateC, long stateD, long stateE) {
 		this.stateA = stateA;
 		this.stateB = stateB;
 		this.stateC = stateC;
@@ -258,11 +258,11 @@ public class PassRandom implements EnhancedRandom {
 		final long fd = stateD;
 		final long fe = stateE;
 		stateA = (fc << 41 | fc >>> 23);
-		stateB = fd ^ fc;
+		stateB = fd - fc;
 		stateC = fb ^ fe;
 		stateD = fa + fc;
 		stateE = fe + 0xDE916ABCC965815BL;
-		return stateD;
+		return fd;
 	}
 
 	@Override
@@ -285,16 +285,16 @@ public class PassRandom implements EnhancedRandom {
 		final long fd = stateD;
 		final long fe = stateE;
 		stateA = (fc << 41 | fc >>> 23);
-		stateB = fd ^ fc;
+		stateB = fd - fc;
 		stateC = fb ^ fe;
 		stateD = fa + fc;
 		stateE = fe + 0xDE916ABCC965815BL;
-		return (int)stateD >>> (32 - bits);
+		return (int)fd >>> (32 - bits);
 	}
 
 	@Override
-	public PassRandom copy () {
-		return new PassRandom(stateA, stateB, stateC, stateD, stateE);
+	public PasarRandom copy () {
+		return new PasarRandom(stateA, stateB, stateC, stateD, stateE);
 	}
 
 	@Override
@@ -304,7 +304,7 @@ public class PassRandom implements EnhancedRandom {
 		if (o == null || getClass() != o.getClass())
 			return false;
 
-		PassRandom that = (PassRandom)o;
+		PasarRandom that = (PasarRandom)o;
 
 		return stateA == that.stateA && stateB == that.stateB && stateC == that.stateC && stateD == that.stateD &&
 				stateE == that.stateE;
