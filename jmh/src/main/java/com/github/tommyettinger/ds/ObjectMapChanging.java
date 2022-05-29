@@ -17,6 +17,8 @@
 
 package com.github.tommyettinger.ds;
 
+import com.github.tommyettinger.digital.MathTools;
+
 import javax.annotation.Nullable;
 import java.util.*;
 
@@ -57,8 +59,10 @@ public class ObjectMapChanging<K, V> implements Map<K, V>, Iterable<Map.Entry<K,
 
 	protected int shift;
 
-	protected long randomMultiplier = 0xF1357AEA2E62A9C5L;
-	protected long randomAddend = 0x9E3779B97F4A7C15L;
+	protected long randomMultiplier = 0x9E3779B97F4A7C15L;
+
+//	protected long randomMultiplier = 0xF1357AEA2E62A9C5L;
+//	protected long randomAddend = 0x9E3779B97F4A7C15L;
 
 	private int collisionTotal = 0;
 	private int longestPileup = 0;
@@ -211,7 +215,9 @@ public class ObjectMapChanging<K, V> implements Map<K, V>, Iterable<Map.Entry<K,
 	 * @return an index between 0 and {@link #mask} (both inclusive)
 	 */
 	protected int place (Object item) {
-		return (int)(item.hashCode() * randomMultiplier + randomAddend >>> shift);
+//		return (int)(item.hashCode() * randomMultiplier >>> 32) & mask;
+		return (int)(item.hashCode() * randomMultiplier >>> shift);
+//		return (int)(item.hashCode() * randomMultiplier + randomAddend >>> 32) & mask;
 		// This can be used if you know hashCode() has few collisions normally, and won't be maliciously manipulated.
 //		return item.hashCode() & mask;
 	}
@@ -600,13 +606,7 @@ public class ObjectMapChanging<K, V> implements Map<K, V>, Iterable<Map.Entry<K,
 		mask = newSize - 1;
 		shift = Long.numberOfLeadingZeros(mask);
 
-		randomMultiplier -= 0x9E3779B97F4A7C15L + randomAddend;
-		randomMultiplier ^= randomMultiplier << 9;
-		randomMultiplier ^= randomMultiplier >>> 7;
-		randomMultiplier |= 1L;
-		randomAddend *= randomMultiplier;
-		randomAddend ^= randomAddend >>> 9;
-		randomAddend ^= randomAddend << 7;
+		randomMultiplier = MathTools.GOLDEN_LONGS[(int) (randomMultiplier * size >>> 54)];
 
 		K[] oldKeyTable = keyTable;
 		V[] oldValueTable = valueTable;

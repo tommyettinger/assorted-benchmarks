@@ -15,7 +15,7 @@ public class MapCollisionTest {
             final int LEN = 100000;
             gen.init(LEN, 1);
             String[] strings = gen.generateArray(LEN);;
-            ObjectMapDebug<String, String> dict = new ObjectMapDebug<>();
+            ObjectMapDebug<String, String> dict = new ObjectMapDebug<>(51, 0.95f);
             for (int i = 0; i < LEN; i++) {
                 dict.put(strings[i], null);
             }
@@ -29,7 +29,7 @@ public class MapCollisionTest {
             final int LEN = 100000;
             gen.init(LEN, 1);
             String[] strings = gen.generateArray(LEN);;
-            ObjectMapChanging<String, String> dict = new ObjectMapChanging<>();
+            ObjectMapChanging<String, String> dict = new ObjectMapChanging<>(51, 0.95f);
             for (int i = 0; i < LEN; i++) {
                 dict.put(strings[i], null);
             }
