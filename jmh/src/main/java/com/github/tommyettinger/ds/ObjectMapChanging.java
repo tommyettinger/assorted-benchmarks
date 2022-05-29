@@ -211,7 +211,7 @@ public class ObjectMapChanging<K, V> implements Map<K, V>, Iterable<Map.Entry<K,
 	 * @return an index between 0 and {@link #mask} (both inclusive)
 	 */
 	protected int place (Object item) {
-		return (int)(item.hashCode() * randomMultiplier + randomAddend >>> 32) & mask;
+		return (int)(item.hashCode() * randomMultiplier + randomAddend >>> shift);
 		// This can be used if you know hashCode() has few collisions normally, and won't be maliciously manipulated.
 //		return item.hashCode() & mask;
 	}
@@ -600,13 +600,13 @@ public class ObjectMapChanging<K, V> implements Map<K, V>, Iterable<Map.Entry<K,
 		mask = newSize - 1;
 		shift = Long.numberOfLeadingZeros(mask);
 
-		randomMultiplier -= randomAddend;
+		randomMultiplier -= 0x9E3779B97F4A7C15L + randomAddend;
 		randomMultiplier ^= randomMultiplier << 9;
 		randomMultiplier ^= randomMultiplier >>> 7;
 		randomMultiplier |= 1L;
-		randomAddend -= randomMultiplier;
+		randomAddend *= randomMultiplier;
 		randomAddend ^= randomAddend >>> 9;
-		randomAddend ^= randomMultiplier << 7;
+		randomAddend ^= randomAddend << 7;
 
 		K[] oldKeyTable = keyTable;
 		V[] oldValueTable = valueTable;

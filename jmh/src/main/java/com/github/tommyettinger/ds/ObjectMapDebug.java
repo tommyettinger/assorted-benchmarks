@@ -45,7 +45,7 @@ import static com.github.tommyettinger.ds.Utilities.tableSize;
  * @author Nathan Sweet
  * @author Tommy Ettinger
  */
-public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>> {
+public class ObjectMapDebug<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>> {
 
 	protected int size;
 
@@ -75,7 +75,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	/**
 	 * Creates a new map with an initial capacity of 51 and a load factor of {@link Utilities#getDefaultLoadFactor()}.
 	 */
-	public ObjectObjectMap() {
+	public ObjectMapDebug() {
 		this(51, Utilities.getDefaultLoadFactor());
 	}
 
@@ -84,7 +84,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 *
 	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
 	 */
-	public ObjectObjectMap(int initialCapacity) {
+	public ObjectMapDebug(int initialCapacity) {
 		this(initialCapacity, Utilities.getDefaultLoadFactor());
 	}
 
@@ -95,7 +95,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 * @param initialCapacity If not a power of two, it is increased to the next nearest power of two.
 	 * @param loadFactor      what fraction of the capacity can be filled before this has to resize; 0 &lt; loadFactor &lt;= 1
 	 */
-	public ObjectObjectMap(int initialCapacity, float loadFactor) {
+	public ObjectMapDebug(int initialCapacity, float loadFactor) {
 		if (loadFactor <= 0f || loadFactor > 1f) {throw new IllegalArgumentException("loadFactor must be > 0 and <= 1: " + loadFactor);}
 		this.loadFactor = loadFactor;
 
@@ -111,9 +111,9 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	/**
 	 * Creates a new map identical to the specified map.
 	 *
-	 * @param map an ObjectObjectMap to copy
+	 * @param map an ObjectMapDebug to copy
 	 */
-	public ObjectObjectMap(ObjectObjectMap<? extends K, ? extends V> map) {
+	public ObjectMapDebug(ObjectMapDebug<? extends K, ? extends V> map) {
 		this.loadFactor = map.loadFactor;
 		this.threshold = map.threshold;
 		this.mask = map.mask;
@@ -126,9 +126,9 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	/**
 	 * Creates a new map identical to the specified map.
 	 *
-	 * @param map a Map to copy; ObjectObjectMap or its subclasses will be faster
+	 * @param map a Map to copy; ObjectMapDebug or its subclasses will be faster
 	 */
-	public ObjectObjectMap(Map<? extends K, ? extends V> map) {
+	public ObjectMapDebug(Map<? extends K, ? extends V> map) {
 		this(map.size());
 		for (K k : map.keySet()) {
 			put(k, map.get(k));
@@ -142,7 +142,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 * @param keys   an array of keys
 	 * @param values an array of values
 	 */
-	public ObjectObjectMap(K[] keys, V[] values) {
+	public ObjectMapDebug(K[] keys, V[] values) {
 		this(Math.min(keys.length, values.length));
 		putAll(keys, values);
 	}
@@ -154,7 +154,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 * @param keys   a Collection of keys
 	 * @param values a Collection of values
 	 */
-	public ObjectObjectMap(Collection<? extends K> keys, Collection<? extends V> values) {
+	public ObjectMapDebug(Collection<? extends K> keys, Collection<? extends V> values) {
 		this(Math.min(keys.size(), values.size()));
 		putAll(keys, values);
 	}
@@ -286,7 +286,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 *
 	 * @param map a map with compatible key and value types; will not be modified
 	 */
-	public void putAll (ObjectObjectMap<? extends K, ? extends V> map) {
+	public void putAll (ObjectMapDebug<? extends K, ? extends V> map) {
 		ensureCapacity(map.size);
 		K[] keyTable = map.keyTable;
 		V[] valueTable = map.valueTable;
@@ -426,7 +426,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 * specified map.  The behavior of this operation is undefined if the
 	 * specified map is modified while the operation is in progress.
 	 * <br>
-	 * Note that {@link #putAll(ObjectObjectMap)} is more specific and can be
+	 * Note that {@link #putAll(ObjectMapDebug)} is more specific and can be
 	 * more efficient by using the internal details of this class.
 	 *
 	 * @param m mappings to be stored in this map
@@ -649,8 +649,8 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	@Override
 	public boolean equals (Object obj) {
 		if (obj == this) {return true;}
-		if (!(obj instanceof ObjectObjectMap)) {return false;}
-		ObjectObjectMap other = (ObjectObjectMap)obj;
+		if (!(obj instanceof ObjectMapDebug)) {return false;}
+		ObjectMapDebug other = (ObjectMapDebug)obj;
 		if (other.size != size) {return false;}
 		K[] keyTable = this.keyTable;
 		V[] valueTable = this.valueTable;
@@ -673,8 +673,8 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 */
 	public boolean equalsIdentity (@Nullable Object obj) {
 		if (obj == this) {return true;}
-		if (!(obj instanceof ObjectObjectMap)) {return false;}
-		ObjectObjectMap other = (ObjectObjectMap)obj;
+		if (!(obj instanceof ObjectMapDebug)) {return false;}
+		ObjectMapDebug other = (ObjectMapDebug)obj;
 		if (other.size != size) {return false;}
 		K[] keyTable = this.keyTable;
 		V[] valueTable = this.valueTable;
@@ -744,8 +744,8 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 
 	/**
 	 * Reuses the iterator of the reused {@link Entries} produced by {@link #entrySet()};
-	 * does not permit nested iteration. Iterate over {@link Entries#Entries(ObjectObjectMap)} if you
-	 * need nested or multithreaded iteration. You can remove an Entry from this ObjectObjectMap
+	 * does not permit nested iteration. Iterate over {@link Entries#Entries(ObjectMapDebug)} if you
+	 * need nested or multithreaded iteration. You can remove an Entry from this ObjectMapDebug
 	 * using this Iterator.
 	 *
 	 * @return an {@link Iterator} over {@link Map.Entry} key-value pairs; remove is supported.
@@ -931,11 +931,11 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	static protected abstract class MapIterator<K, V, I> implements Iterable<I>, Iterator<I> {
 		public boolean hasNext;
 
-		protected final ObjectObjectMap<K, V> map;
+		protected final ObjectMapDebug<K, V> map;
 		protected int nextIndex, currentIndex;
 		protected boolean valid = true;
 
-		public MapIterator (ObjectObjectMap<K, V> map) {
+		public MapIterator (ObjectMapDebug<K, V> map) {
 			this.map = map;
 			reset();
 		}
@@ -986,7 +986,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 		protected Entry<K, V> entry = new Entry<>();
 		protected MapIterator<K, V, Map.Entry<K, V>> iter;
 
-		public Entries (ObjectObjectMap<K, V> map) {
+		public Entries (ObjectMapDebug<K, V> map) {
 			iter = new MapIterator<K, V, Map.Entry<K, V>>(map) {
 				@Override
 				public Iterator<Map.Entry<K, V>> iterator () {
@@ -1038,7 +1038,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	public static class Values<K, V> extends AbstractCollection<V> {
 		protected MapIterator<K, V, V> iter;
 
-		public Values (ObjectObjectMap<K, V> map) {
+		public Values (ObjectMapDebug<K, V> map) {
 			iter = new MapIterator<K, V, V>(map) {
 				@Override
 				public Iterator<V> iterator () {
@@ -1084,7 +1084,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	public static class Keys<K, V> extends AbstractSet<K> {
 		protected MapIterator<K, V, K> iter;
 
-		public Keys (ObjectObjectMap<K, V> map) {
+		public Keys (ObjectMapDebug<K, V> map) {
 			iter = new MapIterator<K, V, K>(map) {
 				@Override
 				public Iterator<K> iterator () {
@@ -1153,8 +1153,8 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 * @param <V>    the type of value0
 	 * @return a new map containing just the entry mapping key0 to value0
 	 */
-	public static <K, V> ObjectObjectMap<K, V> with (K key0, V value0) {
-		ObjectObjectMap<K, V> map = new ObjectObjectMap<>(1);
+	public static <K, V> ObjectMapDebug<K, V> with (K key0, V value0) {
+		ObjectMapDebug<K, V> map = new ObjectMapDebug<>(1);
 		map.put(key0, value0);
 		return map;
 	}
@@ -1163,7 +1163,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 * Constructs a map given alternating keys and values.
 	 * This can be useful in some code-generation scenarios, or when you want to make a
 	 * map conveniently by-hand and have it populated at the start. You can also use
-	 * {@link #ObjectObjectMap(Object[], Object[])}, which takes all keys and then all values.
+	 * {@link #ObjectMapDebug(Object[], Object[])}, which takes all keys and then all values.
 	 * This needs all keys to have the same type and all values to have the same type, because
 	 * it gets those types from the first key parameter and first value parameter. Any keys that don't
 	 * have K as their type or values that don't have V as their type have that entry skipped.
@@ -1176,8 +1176,8 @@ public class ObjectObjectMap<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V
 	 * @return a new map containing the given keys and values
 	 */
 	@SuppressWarnings("unchecked")
-	public static <K, V> ObjectObjectMap<K, V> with (K key0, V value0, Object... rest) {
-		ObjectObjectMap<K, V> map = new ObjectObjectMap<>(1 + (rest.length >>> 1));
+	public static <K, V> ObjectMapDebug<K, V> with (K key0, V value0, Object... rest) {
+		ObjectMapDebug<K, V> map = new ObjectMapDebug<>(1 + (rest.length >>> 1));
 		map.put(key0, value0);
 		for (int i = 1; i < rest.length; i += 2) {
 			try {
