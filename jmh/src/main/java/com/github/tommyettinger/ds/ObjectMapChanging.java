@@ -606,7 +606,8 @@ public class ObjectMapChanging<K, V> implements Map<K, V>, Iterable<Map.Entry<K,
 		mask = newSize - 1;
 		shift = Long.numberOfLeadingZeros(mask);
 
-		randomMultiplier = MathTools.GOLDEN_LONGS[(int) (randomMultiplier * size >>> 54)];
+		randomMultiplier *= 0xF1357AEA2E62A9C5L;
+//		randomMultiplier = MathTools.GOLDEN_LONGS[(int) (randomMultiplier * size >>> 54)];
 
 		K[] oldKeyTable = keyTable;
 		V[] oldValueTable = valueTable;

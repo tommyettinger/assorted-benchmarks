@@ -1,6 +1,8 @@
 package de.heidelberg.pvs.container_bench.generators;
 
+import com.github.tommyettinger.ds.ObjectList;
 import com.github.tommyettinger.ds.ObjectOrderedSet;
+import com.github.tommyettinger.random.TrimRandom;
 
 import java.io.*;
 import java.util.*;
@@ -48,7 +50,7 @@ public class Wordlist {
 			}
 
 			if (seed != DEFAULT_SEED) {
-				final TangleRNG rng = new TangleRNG(seed);
+				final TrimRandom rng = new TrimRandom(seed);
 				final int n = words.size();
 				for (int i = n; i > 1; i--) {
 					Collections.swap(words, rng.nextInt(i), i - 1);
@@ -75,7 +77,7 @@ public class Wordlist {
 			}
 			final int n = words.size();
 			if (seed != DEFAULT_SEED) {
-				final TangleRNG rng = new TangleRNG(seed);
+				final TrimRandom rng = new TrimRandom(seed);
 				for (int i = n; i > 1; i--) {
 					Collections.swap(words, rng.nextInt(i), i - 1);
 				}
@@ -85,6 +87,35 @@ public class Wordlist {
 				for (int j = 0; j < n && set.size() < size; j++) {
 					set.add(words.get(j));
 					i++;
+				}
+			}
+			return set;
+		}
+	}
+
+	public static ObjectOrderedSet<String> loadUniqueWords(int size, int seed) throws IOException {
+
+		// Load the word list
+		try (InputStream is = new FileInputStream(FILENAME);
+			InputStream gi = new GZIPInputStream(is);
+			Reader r = new InputStreamReader(gi);
+			BufferedReader reader = new BufferedReader(r)) {
+
+			ObjectList<String> words = new ObjectList<>(size);
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				words.add(line);
+			}
+			final int n = words.size();
+			if (seed != DEFAULT_SEED) {
+				final TrimRandom rng = new TrimRandom(seed);
+				words.shuffle(rng);
+			}
+			ObjectOrderedSet<String> set = new ObjectOrderedSet<>(size);
+			for (int i = 0; set.size() < size;) {
+				for (int j = 0; j < n && set.size() < size; j++) {
+					set.add(words.get(j) + (i++));
 				}
 			}
 			return set;
