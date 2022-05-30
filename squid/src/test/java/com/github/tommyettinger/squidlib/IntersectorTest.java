@@ -20,6 +20,7 @@ public class IntersectorTest {
     private final static Vector3 v1 = new Vector3();
     private final static Vector3 v2 = new Vector3();
 
+    // This is a non-allocating version of tylerhasman's code; it uses the same algorithm.
     public static boolean isPointInTriangleTH(Vector3 point, Vector3 t1, Vector3 t2, Vector3 t3){
         v0.set(t1).sub(point);
         v1.set(t2).sub(point);

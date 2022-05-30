@@ -3,18 +3,20 @@ package de.heidelberg.pvs.container_bench;
 import com.github.tommyettinger.ds.ObjectMapChanging;
 import com.github.tommyettinger.ds.ObjectMapDebug;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
 
 public class MapCollisionTest {
+    public static final int LEN = 2000000;
+
     @Test
     public void testObjectMapDebug() {
         try {
-            final int LEN = 5000000;
             String[] strings = Wordlist.loadUniqueWords(LEN, 1).toArray(new String[0]);
             long start = System.nanoTime();
-            ObjectMapDebug<String, String> dict = new ObjectMapDebug<>(51, 0.95f);
+            ObjectMapDebug<String, String> dict = new ObjectMapDebug<>(51, 0.75f);
             for (int i = 0; i < LEN; i++) {
                 dict.put(strings[i], null);
             }
@@ -24,23 +26,32 @@ public class MapCollisionTest {
             //103901600
             //144629900
 
-            // with LEN=5000000
+            // with LEN=5000000, load factor 0.95f
             // over 77 minutes without finishing.
             // Longest pileup was 578509, total collisions overflowed an int many times.
+
+            // with LEN=2000000, load factor 0.6f, 0.75f, or 0.95f
+            // none of these were going to finish any time soon.
+            // impossible-to-count collisions because they overflowed. very long pileups (> 80000).
+
         } catch (IOException ignored) {
         }
     }
     @Test
     public void testObjectMapChanging() {
         try {
-            final int LEN = 5000000;
             String[] strings = Wordlist.loadUniqueWords(LEN, 1).toArray(new String[0]);
             long start = System.nanoTime();
-            ObjectMapChanging<String, String> dict = new ObjectMapChanging<>(51, 0.95f);
+            ObjectMapChanging<String, Integer> dict = new ObjectMapChanging<>(51, 0.6f);
             for (int i = 0; i < LEN; i++) {
-                dict.put(strings[i], null);
+                dict.put(strings[i], i);
             }
             System.out.println(System.nanoTime() - start);
+
+            // verifying that the Map still behaves as intended.
+            for (int i = 0; i < LEN; i++) {
+                Assert.assertEquals((int) dict.get(strings[i]), i);
+            }
             // with LEN=100000, load factor 0.95f
             //131243800
             //109143700
@@ -72,6 +83,19 @@ public class MapCollisionTest {
             // with LEN=5000000, load factor 0.6f
             //1872310600
             // Longest pileup was 16, total collisions 540405.
+
+            // with LEN=2000000, load factor 0.95f
+            //1451849500
+            // Longest pileup was 35, total collisions 899322.
+
+            // with LEN=2000000, load factor 0.75f
+            //763809100
+            // Longest pileup was 29, total collisions 472681.
+
+            // with LEN=2000000, load factor 0.6f
+            //622316200
+            // Longest pileup was 16, total collisions 269722.
+
         } catch (IOException ignored) {
         }
     }
