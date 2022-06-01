@@ -161,4 +161,22 @@ public class Wordlist {
 			return set;
 		}
 	}
+	public static ObjectSet<String> generateUniqueWords(int size) {
+		final int numLetters = 3;
+		ObjectSet<String> set = new ObjectSet<>(size, 0.8f);
+		char[] maker = new char[numLetters];
+		for (int i = 0; set.size() < size; ) {
+			for (int x = 0; x < 26 && set.size() < size; x++) {
+				maker[0] = (char) ('a' + x);
+				for (int y = 0; y < 26 && set.size() < size; y++) {
+					maker[1] = (char) ('a' + y);
+					for (int z = 0; z < 26 && set.size() < size; z++) {
+						maker[2] = (char) ('a' + z);
+						set.add(String.valueOf(maker) + (i++));
+					}
+				}
+			}
+		}
+		return set;
+	}
 }

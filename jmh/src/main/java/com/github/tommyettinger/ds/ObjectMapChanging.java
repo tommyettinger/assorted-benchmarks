@@ -17,8 +17,6 @@
 
 package com.github.tommyettinger.ds;
 
-import com.github.tommyettinger.digital.MathTools;
-
 import javax.annotation.Nullable;
 import java.util.*;
 
@@ -59,12 +57,12 @@ public class ObjectMapChanging<K, V> implements Map<K, V>, Iterable<Map.Entry<K,
 
 	protected int shift;
 
-	protected long randomMultiplier = 0x9E3779B97F4A7C15L;
+	protected long hashMultiplier = 0x9E3779B97F4A7C15L;
 
 //	protected long randomMultiplier = 0xF1357AEA2E62A9C5L;
 //	protected long randomAddend = 0x9E3779B97F4A7C15L;
 
-	private int collisionTotal = 0;
+	private long collisionTotal = 0;
 	private int longestPileup = 0;
 
 	/**
@@ -216,7 +214,7 @@ public class ObjectMapChanging<K, V> implements Map<K, V>, Iterable<Map.Entry<K,
 	 */
 	protected int place (Object item) {
 //		return (int)(item.hashCode() * randomMultiplier >>> 32) & mask;
-		return (int)(item.hashCode() * randomMultiplier >>> shift);
+		return (int)(item.hashCode() * hashMultiplier >>> shift);
 //		return (int)(item.hashCode() * randomMultiplier + randomAddend >>> 32) & mask;
 		// This can be used if you know hashCode() has few collisions normally, and won't be maliciously manipulated.
 //		return item.hashCode() & mask;
@@ -600,14 +598,19 @@ public class ObjectMapChanging<K, V> implements Map<K, V>, Iterable<Map.Entry<K,
 		if (keyTable.length < tableSize) {resize(tableSize);}
 	}
 
+//		randomMultiplier = MathTools.GOLDEN_LONGS[(int) (randomMultiplier * size >>> 54)];
+
 	protected void resize (int newSize) {
 		int oldCapacity = keyTable.length;
 		threshold = (int)(newSize * loadFactor);
 		mask = newSize - 1;
 		shift = Long.numberOfLeadingZeros(mask);
 
-		randomMultiplier *= 0xF1357AEA2E62A9C5L;
-//		randomMultiplier = MathTools.GOLDEN_LONGS[(int) (randomMultiplier * size >>> 54)];
+		// multiplier from Steele and Vigna, Computationally Easy, Spectrally Good Multipliers for Congruential
+		// Pseudorandom Number Generators
+		hashMultiplier *= 0xF1357AEA2E62A9C5L;
+		// ensures the number is never too small, and is always odd.
+		hashMultiplier |= 0x0000001000000001L;
 
 		K[] oldKeyTable = keyTable;
 		V[] oldValueTable = valueTable;

@@ -1,5 +1,6 @@
 package de.heidelberg.pvs.container_bench;
 
+import com.badlogic.gdx.math.Vector2;
 import com.github.tommyettinger.ds.ObjectMapChanging;
 import com.github.tommyettinger.ds.ObjectMapDebug;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
@@ -16,9 +17,9 @@ public class MapCollisionTest {
         try {
             String[] strings = Wordlist.loadUniqueWords(LEN, 1).toArray(new String[0]);
             long start = System.nanoTime();
-            ObjectMapDebug<String, String> dict = new ObjectMapDebug<>(51, 0.75f);
+            ObjectMapDebug<String, Integer> dict = new ObjectMapDebug<>(51, 0.75f);
             for (int i = 0; i < LEN; i++) {
-                dict.put(strings[i], null);
+                dict.put(strings[i], i);
             }
             System.out.println(System.nanoTime() - start);
             // with LEN=100000
@@ -37,12 +38,38 @@ public class MapCollisionTest {
         } catch (IOException ignored) {
         }
     }
+
+    @Test
+    public void testObjectMapDebugGenerated(){
+        String[] strings = Wordlist.generateUniqueWords(LEN).toArray(new String[0]);
+        long start = System.nanoTime();
+        ObjectMapDebug<String, Integer> dict = new ObjectMapDebug<>(51, 0.75f);
+        for (int i = 0; i < LEN; i++) {
+            dict.put(strings[i], i);
+        }
+        System.out.println(System.nanoTime() - start);
+    }
+
+    @Test
+    public void testObjectMapDebugVector2() {
+        long start = System.nanoTime();
+        ObjectMapDebug<Vector2, Integer> dict = new ObjectMapDebug<>(51, 0.75f);
+        final int limit = (int)(Math.sqrt(LEN));
+        for (int x = -limit; x < limit; x+=2) {
+            for (int y = -limit; y < limit; y+=2) {
+                dict.put(new Vector2(x, y), x);
+            }
+        }
+        System.out.println(System.nanoTime() - start);
+
+    }
+
     @Test
     public void testObjectMapChanging() {
         try {
             String[] strings = Wordlist.loadUniqueWords(LEN, 1).toArray(new String[0]);
             long start = System.nanoTime();
-            ObjectMapChanging<String, Integer> dict = new ObjectMapChanging<>(51, 0.6f);
+            ObjectMapChanging<String, Integer> dict = new ObjectMapChanging<>(51, 0.75f);
             for (int i = 0; i < LEN; i++) {
                 dict.put(strings[i], i);
             }
@@ -99,4 +126,16 @@ public class MapCollisionTest {
         } catch (IOException ignored) {
         }
     }
+
+    @Test
+    public void testObjectMapChangingGenerated(){
+        String[] strings = Wordlist.generateUniqueWords(LEN).toArray(new String[0]);
+        long start = System.nanoTime();
+        ObjectMapChanging<String, Integer> dict = new ObjectMapChanging<>(51, 0.75f);
+        for (int i = 0; i < LEN; i++) {
+            dict.put(strings[i], i);
+        }
+        System.out.println(System.nanoTime() - start);
+    }
+
 }

@@ -57,7 +57,7 @@ public class ObjectMapDebug<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>
 
 	protected int shift;
 
-	private int collisionTotal = 0;
+	private long collisionTotal = 0;
 	private int longestPileup = 0;
 
 	/**
@@ -352,7 +352,6 @@ public class ObjectMapDebug<K, V> implements Map<K, V>, Iterable<Map.Entry<K, V>
 				collisionTotal++;
 				longestPileup = Math.max(longestPileup, ++p);
 			}
-
 		}
 	}
 
