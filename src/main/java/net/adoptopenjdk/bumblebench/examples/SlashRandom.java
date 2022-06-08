@@ -235,11 +235,17 @@ public class SlashRandom extends EnhancedRandom {
 		final long fb = stateB;
 		final long fc = stateC;
 		final long fd = stateD;
-		stateA = (fc << 44 | fc >>> 20);
-		stateB = fa + fc;
+		stateA = fb + (fc << 44 | fc >>> 20);
+		stateB = fa ^ fd;
 		stateC = fb ^ fd;
-		stateD = fb + 0xDE916ABCC965815BL;
-		return stateB;
+		stateD = fd + 0xDE916ABCC965815BL;
+		return stateC;
+
+//		stateA += (fc << 44 | fc >>> 20);
+//		stateB ^= fa ^ fc;
+//		stateC ^= fb ^ fd;
+//		stateD += 0xDE916ABCC965815BL;
+//		return stateB;
 	}
 
 	@Override
