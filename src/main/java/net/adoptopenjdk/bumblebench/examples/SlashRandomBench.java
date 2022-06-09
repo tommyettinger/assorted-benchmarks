@@ -22,33 +22,33 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- * SlashRandomBench score: 1150456704.000000 (1.150G 2086.3%)
- *              uncertainty:   0.3%
+ * SlashRandomBench score: 941464896.000000 (941.5M 2066.3%)
+ *              uncertainty:   1.5%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * SlashRandomBench score: 1317703040.000000 (1.318G 2099.9%)
- *              uncertainty:   0.3%
+ * SlashRandomBench score: 1120781056.000000 (1.121G 2083.7%)
+ *              uncertainty:   0.6%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * SlashRandomBench score: 2234084864.000000 (2.234G 2152.7%)
- *              uncertainty:   0.2%
+ * SlashRandomBench score: 1714335104.000000 (1.714G 2126.2%)
+ *              uncertainty:   0.8%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * SlashRandomBench score: 2191282688.000000 (2.191G 2150.8%)
- *              uncertainty:   0.4%
+ * SlashRandomBench score: 1659698688.000000 (1.660G 2123.0%)
+ *              uncertainty:   1.2%
  * <br>
  * GraalVM Java 17:
  * <br>
- * SlashRandomBench score: 2287980800.000000 (2.288G 2155.1%)
- *              uncertainty:   0.4%
+ * SlashRandomBench score: 1937868288.000000 (1.938G 2138.5%)
+ *              uncertainty:   1.3%
  * <br>
  * OpenJ9 Java 17 (Semeru):
  * <br>
- * SlashRandomBench score: 689904064.000000 (689.9M 2035.2%)
- *              uncertainty:   0.5%
+ * SlashRandomBench score: 674274624.000000 (674.3M 2032.9%)
+ *              uncertainty:   0.8%
  */
 public final class SlashRandomBench extends MicroBench {
 

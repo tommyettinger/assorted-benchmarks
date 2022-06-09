@@ -236,10 +236,10 @@ public class SlashRandom extends EnhancedRandom {
 		final long fc = stateC;
 		final long fd = stateD;
 		stateA = fb + (fc << 44 | fc >>> 20);
-		stateB = fa ^ fd;
-		stateC = fb ^ fd;
+		stateB = fa ^ fc;
+		stateC = fa ^ fd;
 		stateD = fd + 0xDE916ABCC965815BL;
-		return stateC;
+		return stateA;
 
 //		stateA += (fc << 44 | fc >>> 20);
 //		stateB ^= fa ^ fc;
