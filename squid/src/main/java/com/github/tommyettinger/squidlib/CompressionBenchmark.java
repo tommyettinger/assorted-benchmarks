@@ -1,8 +1,10 @@
 package com.github.tommyettinger.squidlib;
 
+import com.github.yellowstonegames.core.ByteStringEncoding;
 import com.github.yellowstonegames.text.Language;
 import org.openjdk.jmh.annotations.*;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -52,6 +54,18 @@ import java.util.concurrent.TimeUnit;
  * CompressionBenchmark.doSquidSquadLZB      256  thrpt    8   4409.747 ±   40.498  ops/s
  * </pre>
  * Again, using HashMap and HashSet with String keys is a win here.
+ * <br>
+ * <pre>
+ * Benchmark                               (len)   Mode  Cnt       Score     Error  Units
+ * CompressionBenchmark.doByteCompress        16  thrpt    6   77381.815 ± 892.987  ops/s
+ * CompressionBenchmark.doByteCompress       256  thrpt    6    7452.812 ± 441.111  ops/s
+ * CompressionBenchmark.doByteCompress      4096  thrpt    6     509.880 ±  48.081  ops/s
+ * CompressionBenchmark.doByteCompressOpt     16  thrpt    6  110121.018 ± 961.789  ops/s
+ * CompressionBenchmark.doByteCompressOpt    256  thrpt    6    7432.277 ±  39.430  ops/s
+ * CompressionBenchmark.doByteCompressOpt   4096  thrpt    6     456.446 ±   5.607  ops/s
+ * </pre>
+ * Opt doesn't use HashMap or HashSet in this version, but does avoid some allocation at startup, which might explain
+ * why it's so much faster on small inputs.
  */
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
@@ -64,14 +78,16 @@ public class CompressionBenchmark {
         @Param({"16", "256", "4096"})
         public int len;
         public String[] texts;
+        public byte[][] bytes;
         public int idx;
 
         @Setup(Level.Trial)
         public void setup() {
             idx = 0;
             texts = new String[Language.registered.length];
+            bytes = new byte[Language.registered.length][];
             for (int i = 0; i < texts.length; i++) {
-                texts[i] = Language.registered[i].sentence(i, len, len);
+                bytes[i] = (texts[i] = Language.registered[i].sentence(i, len, len)).getBytes(StandardCharsets.UTF_8);
             }
         }
     }
@@ -106,6 +122,18 @@ public class CompressionBenchmark {
     public int doSquidSquadLZB(BenchmarkState state)
     {
         return com.github.yellowstonegames.core.LZByteEncoding.compressToBytes(state.texts[state.idx = (state.idx + 1) % state.texts.length]).length;
+    }
+
+    @Benchmark
+    public int doByteCompress(BenchmarkState state)
+    {
+        return com.github.yellowstonegames.core.ByteStringEncoding.compress(state.bytes[state.idx = (state.idx + 1) % state.bytes.length]).length();
+    }
+
+    @Benchmark
+    public int doByteCompressOpt(BenchmarkState state)
+    {
+        return ByteStringEncoding.Opt.compress(state.bytes[state.idx = (state.idx + 1) % state.bytes.length]).length();
     }
 
 }
