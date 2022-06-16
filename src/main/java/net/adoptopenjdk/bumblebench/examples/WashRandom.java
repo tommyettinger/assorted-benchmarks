@@ -236,10 +236,16 @@ public class WashRandom extends EnhancedRandom {
 		final long fc = stateC;
 		final long fd = stateD;
 		stateA = (fc << 44 | fc >>> 20);
-		stateB = (fd << 23 | fd >>> 41);
-		stateC = fd + fa;
-		stateD = fc ^ fb;
+		stateB = (fd << 21 | fd >>> 43);
+		stateC = fd ^ fa + 0xDE916ABCC965815BL;
+		stateD = fb + fc ^ 0xF1357AEA2E62A9C5L;
 		return stateA;
+		
+//		s->a = rotl64(fc, 44);
+//		s->b = rotl64(fd, 21);
+//		s->c = fd ^ fa + 0xDE916ABCC965815BUL;
+//		s->d = fb + fc ^ 0xF1357AEA2E62A9C5UL;
+//		return s->a;
 
 //		stateA += (fc << 44 | fc >>> 20);
 //		stateB ^= fa ^ fc;
