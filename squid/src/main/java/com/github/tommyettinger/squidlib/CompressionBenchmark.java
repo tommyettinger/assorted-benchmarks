@@ -79,6 +79,36 @@ import java.util.concurrent.TimeUnit;
  * CompressionBenchmark.doByteCompressOpt2   4096  thrpt    6     522.932 ±    5.352  ops/s
  * </pre>
  * Opt2 seems like a winner here, though there might be some tricks Opt can still do with ObjectIntMap to gain speed.
+ * <br>
+ * <pre>
+ * Benchmark                                (len)   Mode  Cnt       Score      Error  Units
+ * CompressionBenchmark.doByteCompress         16  thrpt    6   84571.417 ±  803.815  ops/s
+ * CompressionBenchmark.doByteCompress        256  thrpt    6    8223.614 ±   71.457  ops/s
+ * CompressionBenchmark.doByteCompress       4096  thrpt    6     535.110 ±    2.914  ops/s
+ * CompressionBenchmark.doByteCompressOpt      16  thrpt    6  101101.452 ±  888.442  ops/s
+ * CompressionBenchmark.doByteCompressOpt     256  thrpt    6    6174.722 ±   48.094  ops/s
+ * CompressionBenchmark.doByteCompressOpt    4096  thrpt    6     404.296 ±    4.377  ops/s
+ * CompressionBenchmark.doByteCompressOpt2     16  thrpt    6  102308.207 ± 1212.622  ops/s
+ * CompressionBenchmark.doByteCompressOpt2    256  thrpt    6    8664.567 ±  113.650  ops/s
+ * CompressionBenchmark.doByteCompressOpt2   4096  thrpt    6     538.306 ±    4.288  ops/s
+ * </pre>
+ * Using String-specialized Map and Set didn't really help Opt here. It looks like we will go with the boxed HashMap and
+ * HashSet...
+ * <br>
+ * <pre>
+ * Benchmark                                (len)   Mode  Cnt       Score      Error  Units
+ * CompressionBenchmark.doByteCompress         16  thrpt    6   83946.658 ±  652.978  ops/s
+ * CompressionBenchmark.doByteCompress        256  thrpt    6    6308.446 ±   85.102  ops/s
+ * CompressionBenchmark.doByteCompress       4096  thrpt    6     522.166 ±    6.510  ops/s
+ * CompressionBenchmark.doByteCompressOpt      16  thrpt    6  102603.753 ± 1070.536  ops/s
+ * CompressionBenchmark.doByteCompressOpt     256  thrpt    6    8281.024 ±   97.827  ops/s
+ * CompressionBenchmark.doByteCompressOpt    4096  thrpt    6     524.618 ±    7.416  ops/s
+ * CompressionBenchmark.doByteCompressOpt2     16  thrpt    6  110666.286 ± 1604.567  ops/s
+ * CompressionBenchmark.doByteCompressOpt2    256  thrpt    6   10224.805 ±   94.131  ops/s
+ * CompressionBenchmark.doByteCompressOpt2   4096  thrpt    6     610.817 ±    9.558  ops/s
+ * </pre>
+ * By avoiding frequent recreation of temporary collections, Opt2 gets a very significant speed boost (about 35% faster
+ * than the non-Opt version for mid-size inputs, and faster all around by some factor).
  */
 @BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.SECONDS)
