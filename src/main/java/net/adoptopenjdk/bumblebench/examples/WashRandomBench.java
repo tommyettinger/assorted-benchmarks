@@ -22,6 +22,51 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
+ * WashRandomBench score: 918924032.000000 (918.9M 2063.9%)
+ *             uncertainty:   3.2%
+ * <br>
+ * OpenJ9 Java 15:
+ * <br>
+ * WashRandomBench score: 1293100544.000000 (1.293G 2098.0%)
+ *             uncertainty:   1.5%
+ * <br>
+ * HotSpot Java 16 (AdoptOpenJDK):
+ * <br>
+ * WashRandomBench score: 1854028544.000000 (1.854G 2134.1%)
+ *             uncertainty:   1.5%
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ * WashRandomBench score: 1865833856.000000 (1.866G 2134.7%)
+ *             uncertainty:   2.8%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ * WashRandomBench score: 2042918912.000000 (2.043G 2143.8%)
+ *             uncertainty:   1.9%
+ * <br>
+ * OpenJ9 Java 17 (Semeru):
+ * <br>
+ * WashRandomBench score: 669540480.000000 (669.5M 2032.2%)
+ *             uncertainty:   1.4%
+ */
+public final class WashRandomBench extends MicroBench {
+
+	protected long doBatch(long numIterations) throws InterruptedException {
+		WashRandom rng = new WashRandom(0x12345678);
+		long sum = 0L;
+		for (long i = 0; i < numIterations; i++)
+			sum += rng.nextLong();
+		return numIterations;
+	}
+}
+
+// older results
+/*
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8:
+ * <br>
  * WashRandomBench score: 945059200.000000 (945.1M 2066.7%)
  *             uncertainty:   1.0%
  * <br>
@@ -50,13 +95,3 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * WashRandomBench score: 694221312.000000 (694.2M 2035.8%)
  *             uncertainty:   2.7%
  */
-public final class WashRandomBench extends MicroBench {
-
-	protected long doBatch(long numIterations) throws InterruptedException {
-		WashRandom rng = new WashRandom(0x12345678);
-		long sum = 0L;
-		for (long i = 0; i < numIterations; i++)
-			sum += rng.nextLong();
-		return numIterations;
-	}
-}
