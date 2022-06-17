@@ -22,33 +22,33 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- * WashRandomBench score: 918924032.000000 (918.9M 2063.9%)
- *             uncertainty:   3.2%
+ * WashRandomBench score: 836856640.000000 (836.9M 2054.5%)
+ *             uncertainty:   1.1%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * WashRandomBench score: 1293100544.000000 (1.293G 2098.0%)
- *             uncertainty:   1.5%
+ * WashRandomBench score: 1396819456.000000 (1.397G 2105.7%)
+ *             uncertainty:   0.6%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * WashRandomBench score: 1854028544.000000 (1.854G 2134.1%)
- *             uncertainty:   1.5%
+ * WashRandomBench score: 1406542208.000000 (1.407G 2106.4%)
+ *             uncertainty:   1.4%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * WashRandomBench score: 1865833856.000000 (1.866G 2134.7%)
- *             uncertainty:   2.8%
+ * WashRandomBench score: 1475117056.000000 (1.475G 2111.2%)
+ *             uncertainty:   0.8%
  * <br>
  * GraalVM Java 17:
  * <br>
- * WashRandomBench score: 2042918912.000000 (2.043G 2143.8%)
- *             uncertainty:   1.9%
+ * WashRandomBench score: 1821445504.000000 (1.821G 2132.3%)
+ *             uncertainty:   1.3%
  * <br>
  * OpenJ9 Java 17 (Semeru):
  * <br>
- * WashRandomBench score: 669540480.000000 (669.5M 2032.2%)
- *             uncertainty:   1.4%
+ * WashRandomBench score: 675350528.000000 (675.4M 2033.1%)
+ *             uncertainty:  10.2%
  */
 public final class WashRandomBench extends MicroBench {
 
