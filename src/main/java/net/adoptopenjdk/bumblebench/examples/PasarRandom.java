@@ -263,8 +263,8 @@ public class PasarRandom extends EnhancedRandom {
 		final long fc = stateC;
 		final long fd = stateD;
 		final long fe = stateE;
-		stateA = (fc << 41 | fc >>> 23);
-		stateB = fd - fc;
+		stateA = fd * 0xF1357AEA2E62A9C5L;
+		stateB = (fa << 42 | fa >>> 22);
 		stateC = fb ^ fe;
 		stateD = fa + fc;
 		stateE = fe + 0xDE916ABCC965815BL;
