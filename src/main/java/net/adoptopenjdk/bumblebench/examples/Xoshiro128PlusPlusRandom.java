@@ -25,13 +25,16 @@ import com.github.tommyettinger.random.EnhancedRandom;
  * generating {@code long} values, it is a little different. The trick this uses for generating 64-bit values is to
  * separately scramble states A and D to get the uppermost bits (this is what generating an int normally does), then to
  * scramble states B and C differently to get the lowermost bits. This means a call to {@link #nextLong()} advances the
- * state exactly as much as {@link #nextInt()}, which is an uncommon trait.
+ * state exactly as much as {@link #nextInt()}, which is an uncommon trait for mostly-32-bit-math generators.
  * <br>
  * The actual speed of this is going to vary wildly depending on the platform being benchmarked.
  * Xoshiro128PlusPlusRandom has a guaranteed period of {@code pow(2, 128) - 1}. For {@code int} outputs only, it is
- * 3-dimensionally equidistributed. For {@code long} outputs, equidistribution is unknown.
+ * 3-dimensionally equidistributed. For {@code long} outputs, equidistribution is unknown. It passes 64TB of PractRand
+ * testing without anomalies (generating 64-bit numbers), and passes 2 to the 57.32 bytes of ReMort testing without
+ * suspect results. ReMort is a very challenging test to pass for long sequences, so this result is encouraging, even if
+ * the p-values dipped low in the middle of testing (they got better).
  * <br>
- * This implements all optional methods in EnhancedRandom except {@link #skip(long)} or {@link #previousLong()}.
+ * This implements all optional methods in EnhancedRandom except {@link #skip(long)}.
  * <br>
  * Based on <a href="https://prng.di.unimi.it/xoshiro128plusplus.c">this public-domain code</a> by Vigna and Blackman.
  */
@@ -266,7 +269,37 @@ public class Xoshiro128PlusPlusRandom extends EnhancedRandom {
 		stateA ^= stateD;
 		stateC ^= t;
 		stateD = (stateD << 11 | stateD >>> 21);
-		return (long) h << 32 ^ l;
+		return (long) h << 32 ^ (l & 0xFFFFFFFFL);
+	}
+
+	@Override
+	public long previousLong () {
+		stateD = (stateD << 21 | stateD >>> 11); // stateD has d ^ b
+		int pa = stateA ^= stateD; // StateA has a
+		stateC ^= stateB; // StateC has b ^ b << 9
+		stateC ^= stateC << 9;
+		stateC ^= stateC << 18; // StateC has b
+		stateB ^= stateA; // StateB has b ^ c
+		int pc = stateC ^= stateB; // StateC has c
+		int pb = stateB ^= stateC; // StateB has b
+		int pd = stateD ^= stateB; // StateD has d
+
+		pd = (pd << 21 | pd >>> 11); // pd has d ^ b
+		pa ^= pd; // pa has a
+		pc ^= pb; // pc has b ^ b << 9
+		pc ^= pc << 9;
+		pc ^= pc << 18; // pc has b
+		pb ^= pa; // pb has b ^ c
+		pc ^= pb; // pc has c
+		pb ^= pc; // pb has b
+		pd ^= pb; // pd has d
+
+		pd = pa + pd;
+		pd = (pd << 7 | pd >>> 25) + pa;
+		pb = pc - pb;
+		pb = (pb << 13 | pb >>> 19) + pc;
+		return (long) pd << 32 ^ (pb & 0xFFFFFFFFL);
+
 	}
 
 	@Override
