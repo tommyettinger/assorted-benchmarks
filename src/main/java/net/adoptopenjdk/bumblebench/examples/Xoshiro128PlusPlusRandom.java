@@ -22,10 +22,14 @@ import com.github.tommyettinger.random.EnhancedRandom;
 /**
  * A random number generator that is optimized for performance on 32-bit machines and with Google Web Toolkit, this uses
  * no multiplication and is identical to the published xoshiro128++ algorithm when generating {@code int} values. When
- * generating {@code long} values, it is a little different.
+ * generating {@code long} values, it is a little different. The trick this uses for generating 64-bit values is to
+ * separately scramble states A and D to get the uppermost bits (this is what generating an int normally does), then to
+ * scramble states B and C differently to get the lowermost bits. This means a call to {@link #nextLong()} advances the
+ * state exactly as much as {@link #nextInt()}, which is an uncommon trait.
  * <br>
  * The actual speed of this is going to vary wildly depending on the platform being benchmarked.
- * Xoshiro128PlusPlusRandom has a guaranteed period of {@code pow(2, 128) - 1}.
+ * Xoshiro128PlusPlusRandom has a guaranteed period of {@code pow(2, 128) - 1}. For {@code int} outputs only, it is
+ * 3-dimensionally equidistributed. For {@code long} outputs, equidistribution is unknown.
  * <br>
  * This implements all optional methods in EnhancedRandom except {@link #skip(long)} or {@link #previousLong()}.
  * <br>
@@ -42,8 +46,7 @@ public class Xoshiro128PlusPlusRandom extends EnhancedRandom {
 	 */
 	protected int stateB;
 	/**
-	 * The third state; can be any int. If this has just been set to some value, then the next call to
-	 * {@link #nextInt()} will return that value as-is. Later calls will be more random.
+	 * The third state; can be any int.
 	 */
 	protected int stateC;
 	/**
@@ -71,11 +74,11 @@ public class Xoshiro128PlusPlusRandom extends EnhancedRandom {
 
 	/**
 	 * Creates a new Xoshiro128PlusPlusRandom with the given four states; all {@code int} values are permitted.
-	 * These states will be used verbatim.
+	 * These states will be used verbatim, unless all are 0 -- if they are all 0, then stateD is replaced with 1.
 	 *
 	 * @param stateA any {@code int} value
 	 * @param stateB any {@code int} value
-	 * @param stateC any {@code int} value; will be returned exactly on the first call to {@link #nextInt()}
+	 * @param stateC any {@code int} value
 	 * @param stateD any {@code int} value
 	 */
 	public Xoshiro128PlusPlusRandom(int stateA, int stateB, int stateC, int stateD) {
@@ -88,7 +91,7 @@ public class Xoshiro128PlusPlusRandom extends EnhancedRandom {
 
 	@Override
 	public String getTag() {
-		return "xppR";
+		return "XPPR";
 	}
 
 	/**
@@ -126,6 +129,8 @@ public class Xoshiro128PlusPlusRandom extends EnhancedRandom {
 	 * Sets one of the states, determined by {@code selection}, to the lower 32 bits of {@code value}, as-is.
 	 * Selections 0, 1, 2, and 3 refer to states A, B, C, and D,  and if the selection is anything
 	 * else, this treats it as 3 and sets stateD. This always casts {@code value} to an int before using it.
+	 * If all four states would be 0 as a result of this call, it instead sets
+	 * the fourth part of the state to 1.
 	 *
 	 * @param selection used to select which state variable to set; generally 0, 1, 2, or 3
 	 * @param value     the exact value to use for the selected state, if valid
@@ -151,37 +156,27 @@ public class Xoshiro128PlusPlusRandom extends EnhancedRandom {
 
 	/**
 	 * This initializes all 4 states of the generator to random values based on the given seed.
-	 * (2 to the 64) possible initial generator states can be produced here.
+	 * (2 to the 64) possible initial generator states can be produced here. This is not capable
+	 * of setting the full state to the only invalid value (all zeros).
 	 *
 	 * @param seed the initial seed; may be any long
 	 */
 	@Override
 	public void setSeed (long seed) {
-		long x = (seed += 0x9E3779B97F4A7C15L);
+		long x = seed;
 		x ^= x >>> 27;
 		x *= 0x3C79AC492BA7B653L;
 		x ^= x >>> 33;
 		x *= 0x1C69B3F74AC4AE35L;
-		stateA = (int)(x ^ x >>> 27);
-		x = (seed += 0x9E3779B97F4A7C15L);
-		x ^= x >>> 27;
-		x *= 0x3C79AC492BA7B653L;
-		x ^= x >>> 33;
-		x *= 0x1C69B3F74AC4AE35L;
-		stateB = (int)(x ^ x >>> 27);
-		x = (seed += 0x9E3779B97F4A7C15L);
-		x ^= x >>> 27;
-		x *= 0x3C79AC492BA7B653L;
-		x ^= x >>> 33;
-		x *= 0x1C69B3F74AC4AE35L;
-		stateC = (int)(x ^ x >>> 27);
+		stateA = (int)(x ^= x >>> 27);
+		stateB = (int)(x >>> 32);
 		x = (seed + 0x9E3779B97F4A7C15L);
 		x ^= x >>> 27;
 		x *= 0x3C79AC492BA7B653L;
 		x ^= x >>> 33;
 		x *= 0x1C69B3F74AC4AE35L;
-		stateD = (int)(x ^ x >>> 27);
-		if((stateA|stateB|stateC|stateD) == 0) stateD = 1;
+		stateC = (int)(x ^= x >>> 27);
+		stateD = (int)(x >>> 32);
 	}
 
 	public long getStateA () {
@@ -229,6 +224,8 @@ public class Xoshiro128PlusPlusRandom extends EnhancedRandom {
 
 	/**
 	 * Sets the fourth part of the state by casting the parameter to an int.
+	 * If all four states would be 0 as a result of this call, it instead sets
+	 * the fourth part of the state to 1.
 	 *
 	 * @param stateD can be any long, but will be cast to an int before use
 	 */
@@ -240,6 +237,8 @@ public class Xoshiro128PlusPlusRandom extends EnhancedRandom {
 	 * Sets the state completely to the given four state variables, casting each to an int.
 	 * This is the same as calling {@link #setStateA(long)}, {@link #setStateB(long)},
 	 * {@link #setStateC(long)}, and {@link #setStateD(long)} as a group.
+	 * If all four states would be 0 as a result of this call, it instead sets
+	 * the fourth part of the state to 1.
 	 *
 	 * @param stateA the first state; can be any long, but will be cast to an int before use
 	 * @param stateB the second state; can be any long, but will be cast to an int before use
@@ -287,7 +286,8 @@ public class Xoshiro128PlusPlusRandom extends EnhancedRandom {
 	@Override
 	public int nextInt () {
 		int result = (stateA + stateD);
-		result = (result << 7 | result >>> 25) + stateA | 0;
+		//noinspection PointlessBitwiseExpression
+		result = (result << 7 | result >>> 25) + stateA | 0; // this isn't pointless on GWT!
 		int t = stateB << 9;
 		stateC ^= stateA;
 		stateD ^= stateB;
@@ -316,10 +316,11 @@ public class Xoshiro128PlusPlusRandom extends EnhancedRandom {
 
 	@Override
 	public long nextLong (long inner, long outer) {
-		final long randLow = nextInt() & 0xFFFFFFFFL;
-		final long randHigh = nextInt() & 0xFFFFFFFFL;
+		final long rand = nextLong();
 		if (inner >= outer)
 			return inner;
+		final long randLow = rand & 0xFFFFFFFFL;
+		final long randHigh = rand >>> 32;
 		final long bound = outer - inner;
 		final long boundLow = bound & 0xFFFFFFFFL;
 		final long boundHigh = (bound >>> 32);
@@ -334,8 +335,9 @@ public class Xoshiro128PlusPlusRandom extends EnhancedRandom {
 			inner = t + 1L;
 		}
 		final long bound = outer - inner;
-		final long randLow = nextInt() & 0xFFFFFFFFL;
-		final long randHigh = nextInt() & 0xFFFFFFFFL;
+		final long rand = nextLong();
+		final long randLow = rand & 0xFFFFFFFFL;
+		final long randHigh = rand >>> 32;
 		final long boundLow = bound & 0xFFFFFFFFL;
 		final long boundHigh = (bound >>> 32);
 		return inner + (randHigh * boundLow >>> 32) + (randLow * boundHigh >>> 32) + randHigh * boundHigh;
