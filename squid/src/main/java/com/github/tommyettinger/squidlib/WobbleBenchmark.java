@@ -126,6 +126,28 @@ public class WobbleBenchmark {
         return LineWobble.wobble(index ^ 0x2345678923456789L, floatInputs[index++ & 0xFFFF]);
     }
 
+
+    @Benchmark
+    public double measureWiggleIntDouble()
+    {
+        return LineWobble.wiggle(index ^ 0x23456789, inputs[index++ & 0xFFFF]);
+    }
+    @Benchmark
+    public float measureWiggleIntFloat()
+    {
+        return LineWobble.wiggle(index ^ 0x23456789, floatInputs[index++ & 0xFFFF]);
+    }
+    @Benchmark
+    public double measureWiggleLongDouble()
+    {
+        return LineWobble.wiggle(index ^ 0x2345678923456789L, inputs[index++ & 0xFFFF]);
+    }
+    @Benchmark
+    public float measureWiggleLongFloat()
+    {
+        return LineWobble.wiggle(index ^ 0x2345678923456789L, floatInputs[index++ & 0xFFFF]);
+    }
+
     /*
 mvn clean install
 java -jar benchmarks.jar WobbleBenchmark -f 1
