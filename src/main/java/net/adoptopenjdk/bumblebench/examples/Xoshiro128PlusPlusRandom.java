@@ -27,7 +27,12 @@ import com.github.tommyettinger.random.EnhancedRandom;
  * scramble states B and C differently to get the lowermost bits. This means a call to {@link #nextLong()} advances the
  * state exactly as much as {@link #nextInt()}, which is an uncommon trait for mostly-32-bit-math generators.
  * <br>
- * The actual speed of this is going to vary wildly depending on the platform being benchmarked.
+ * The actual speed of this is going to vary wildly depending on the platform being benchmarked. On GWT, which is the
+ * main place where the performance of a random number generator might actually be a bottleneck in a game, this performs
+ * very well, especially when producing {@code long} values. On desktop platforms, it is faster at generating
+ * {@code int} values than {@code long}, which is to be expected for a 32-bit generator, but not as fast as some other
+ * generators, like {@link com.github.tommyettinger.random.ChopRandom}.
+ * <br>
  * Xoshiro128PlusPlusRandom has a guaranteed period of {@code pow(2, 128) - 1}. For {@code int} outputs only, it is
  * 3-dimensionally equidistributed. For {@code long} outputs, equidistribution is unknown. It passes 64TB of PractRand
  * testing without anomalies (generating 64-bit numbers), and passes 2 to the 57.32 bytes of ReMort testing without
