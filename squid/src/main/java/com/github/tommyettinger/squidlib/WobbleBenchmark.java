@@ -46,15 +46,19 @@ import java.util.concurrent.TimeUnit;
  * Using Java 17, HotSpot:
  * <pre>
  * Benchmark                                 Mode  Cnt   Score   Error  Units
- * WobbleBenchmark.measureBaseline           avgt    5   2.779 ± 0.132  ns/op
- * WobbleBenchmark.measureJuniperIntDouble   avgt    5   9.443 ± 0.514  ns/op
- * WobbleBenchmark.measureJuniperIntFloat    avgt    5  10.870 ± 0.794  ns/op
- * WobbleBenchmark.measureJuniperLongDouble  avgt    5   8.445 ± 0.420  ns/op
- * WobbleBenchmark.measureJuniperLongFloat   avgt    5   9.275 ± 0.344  ns/op
- * WobbleBenchmark.measureSquidIntDouble     avgt    5   8.899 ± 0.219  ns/op
- * WobbleBenchmark.measureSquidIntFloat      avgt    5  10.143 ± 0.185  ns/op
- * WobbleBenchmark.measureSquidLongDouble    avgt    5   7.694 ± 0.590  ns/op
- * WobbleBenchmark.measureSquidLongFloat     avgt    5   8.226 ± 0.392  ns/op
+ * WobbleBenchmark.measureBaseline           avgt    5   2.694 ± 0.021  ns/op
+ * WobbleBenchmark.measureJuniperIntDouble   avgt    5   9.246 ± 0.270  ns/op
+ * WobbleBenchmark.measureJuniperIntFloat    avgt    5  10.678 ± 0.101  ns/op
+ * WobbleBenchmark.measureJuniperLongDouble  avgt    5   8.619 ± 0.238  ns/op
+ * WobbleBenchmark.measureJuniperLongFloat   avgt    5   9.399 ± 0.322  ns/op
+ * WobbleBenchmark.measureSquidIntDouble     avgt    5   9.061 ± 0.892  ns/op
+ * WobbleBenchmark.measureSquidIntFloat      avgt    5  10.037 ± 0.730  ns/op
+ * WobbleBenchmark.measureSquidLongDouble    avgt    5   7.484 ± 0.355  ns/op
+ * WobbleBenchmark.measureSquidLongFloat     avgt    5   8.177 ± 0.364  ns/op
+ * WobbleBenchmark.measureWiggleIntDouble    avgt    5   8.040 ± 0.416  ns/op
+ * WobbleBenchmark.measureWiggleIntFloat     avgt    5   8.239 ± 0.450  ns/op
+ * WobbleBenchmark.measureWiggleLongDouble   avgt    5   7.404 ± 0.220  ns/op
+ * WobbleBenchmark.measureWiggleLongFloat    avgt    5   8.281 ± 0.189  ns/op
  * </pre>
  */
 
