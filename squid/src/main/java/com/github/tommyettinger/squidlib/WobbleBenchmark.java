@@ -46,19 +46,19 @@ import java.util.concurrent.TimeUnit;
  * Using Java 17, HotSpot:
  * <pre>
  * Benchmark                                 Mode  Cnt   Score   Error  Units
- * WobbleBenchmark.measureBaseline           avgt    5   2.671 ± 0.071  ns/op
- * WobbleBenchmark.measureJuniperIntDouble   avgt    5   9.338 ± 0.280  ns/op
- * WobbleBenchmark.measureJuniperIntFloat    avgt    5  10.631 ± 0.194  ns/op
- * WobbleBenchmark.measureJuniperLongDouble  avgt    5   8.333 ± 0.739  ns/op
- * WobbleBenchmark.measureJuniperLongFloat   avgt    5   9.194 ± 0.433  ns/op
- * WobbleBenchmark.measureSquidIntDouble     avgt    5   8.854 ± 0.503  ns/op
- * WobbleBenchmark.measureSquidIntFloat      avgt    5  10.094 ± 0.407  ns/op
- * WobbleBenchmark.measureSquidLongDouble    avgt    5   7.679 ± 0.521  ns/op
- * WobbleBenchmark.measureSquidLongFloat     avgt    5   8.557 ± 2.030  ns/op
- * WobbleBenchmark.measureWiggleIntDouble    avgt    5   7.180 ± 0.469  ns/op
- * WobbleBenchmark.measureWiggleIntFloat     avgt    5   7.206 ± 0.063  ns/op
- * WobbleBenchmark.measureWiggleLongDouble   avgt    5   7.350 ± 0.328  ns/op
- * WobbleBenchmark.measureWiggleLongFloat    avgt    5   8.316 ± 0.315  ns/op
+ * WobbleBenchmark.measureBaseline           avgt    5   2.777 ± 0.213  ns/op
+ * WobbleBenchmark.measureJuniperIntDouble   avgt    5   9.259 ± 0.159  ns/op
+ * WobbleBenchmark.measureJuniperIntFloat    avgt    5  10.668 ± 0.249  ns/op
+ * WobbleBenchmark.measureJuniperLongDouble  avgt    5   8.327 ± 0.281  ns/op
+ * WobbleBenchmark.measureJuniperLongFloat   avgt    5   9.005 ± 0.291  ns/op
+ * WobbleBenchmark.measureSquidIntDouble     avgt    5   8.911 ± 0.423  ns/op
+ * WobbleBenchmark.measureSquidIntFloat      avgt    5  10.007 ± 0.438  ns/op
+ * WobbleBenchmark.measureSquidLongDouble    avgt    5   7.633 ± 0.426  ns/op
+ * WobbleBenchmark.measureSquidLongFloat     avgt    5   8.194 ± 0.072  ns/op
+ * WobbleBenchmark.measureWiggleIntDouble    avgt    5   7.111 ± 0.307  ns/op
+ * WobbleBenchmark.measureWiggleIntFloat     avgt    5   7.195 ± 0.403  ns/op
+ * WobbleBenchmark.measureWiggleLongDouble   avgt    5   7.217 ± 0.353  ns/op
+ * WobbleBenchmark.measureWiggleLongFloat    avgt    5   7.789 ± 0.328  ns/op
  * </pre>
  */
 
