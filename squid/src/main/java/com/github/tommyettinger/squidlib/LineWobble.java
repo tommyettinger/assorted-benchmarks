@@ -183,8 +183,8 @@ public class LineWobble {
         // gets a random start and endpoint. there's a sequence of start and end values for each seed, and changing the
         // seed changes the start and end values unpredictably (so use the same seed for one curving line).
         final long z = seed + floor * 0x6C8E9CF570932BD5L;
-        final double start = (z * 0xF1357AEA2E62A9C5L + 0x9E3779B97F4A7C15L) * 0x0.fffffffffffffbp-31,
-                end = ((z + 0x6C8E9CF570932BD5L) * 0xF1357AEA2E62A9C5L + 0x9E3779B97F4A7C15L) * 0x0.fffffffffffffbp-31;
+        final double start = ((z ^ 0x9E3779B97F4A7C15L) * 0xC6BC279692B5C323L ^ 0x9E3779B97F4A7C15L) * 0x0.fffffffffffffbp-31,
+                end = ((z + 0x6C8E9CF570932BD5L ^ 0x9E3779B97F4A7C15L) * 0xC6BC279692B5C323L ^ 0x9E3779B97F4A7C15L) * 0x0.fffffffffffffbp-31;
         // gets the fractional part of value
         value -= floor;
         // cubic interpolation to smooth the curve
@@ -207,8 +207,8 @@ public class LineWobble {
     {
         final long floor = value >= 0f ? (long) value : (long) value - 1L;
         final long z = seed + floor * 0x6C8E9CF570932BD5L;
-        final float start = (z * 0xF1357AEA2E62A9C5L + 0x9E3779B97F4A7C15L) * 0x0.ffffffp-63f,
-                end = ((z + 0x6C8E9CF570932BD5L) * 0xF1357AEA2E62A9C5L + 0x9E3779B97F4A7C15L) * 0x0.ffffffp-63f;
+        final float start = ((z ^ 0x9E3779B97F4A7C15L) * 0xC6BC279692B5C323L ^ 0x9E3779B97F4A7C15L) * 0x0.ffffffp-63f,
+                end = ((z + 0x6C8E9CF570932BD5L ^ 0x9E3779B97F4A7C15L) * 0xC6BC279692B5C323L ^ 0x9E3779B97F4A7C15L) * 0x0.ffffffp-63f;
         value -= floor;
         value *= value * (3f - 2f * value);
         return (1f - value) * start + value * end;
