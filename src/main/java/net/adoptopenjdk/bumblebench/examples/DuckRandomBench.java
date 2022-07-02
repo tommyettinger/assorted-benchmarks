@@ -22,32 +22,32 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- * DuckRandomBench score: 1059840640.000000 (1.060G 2078.1%)
- *             uncertainty:   1.0%
+ * DuckRandomBench score: 1114239744.000000 (1.114G 2083.1%)
+ *             uncertainty:   0.4%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * DuckRandomBench score: 1297522048.000000 (1.298G 2098.4%)
- *             uncertainty:   2.0%
+ * DuckRandomBench score: 1146913536.000000 (1.147G 2086.0%)
+ *             uncertainty:   0.2%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * DuckRandomBench score: 1629735296.000000 (1.630G 2121.2%)
- *             uncertainty:   1.8%
+ * DuckRandomBench score: 1608280576.000000 (1.608G 2119.8%)
+ *             uncertainty:   0.6%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * DuckRandomBench score: 1676132480.000000 (1.676G 2124.0%)
- *             uncertainty:   2.0%
+ * DuckRandomBench score: 1668125312.000000 (1.668G 2123.5%)
+ *             uncertainty:   0.3%
  * <br>
  * GraalVM Java 17:
  * <br>
- * DuckRandomBench score: 1635419136.000000 (1.635G 2121.5%)
- *             uncertainty:   0.3%
+ * DuckRandomBench score: 1644705024.000000 (1.645G 2122.1%)
+ *             uncertainty:   1.1%
  * <br>
  * OpenJ9 Java 17 (Semeru):
  * <br>
- * DuckRandomBench score: 640765568.000000 (640.8M 2027.8%)
+ * DuckRandomBench score: 602653248.000000 (602.7M 2021.7%)
  *             uncertainty:   1.1%
  */
 public final class DuckRandomBench extends MicroBench {
