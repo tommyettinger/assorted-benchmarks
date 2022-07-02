@@ -206,9 +206,9 @@ public class DuckRandom extends EnhancedRandom {
 		final long fa = stateA;
 		final long fb = stateB;
 		final long fc = stateC;
-		stateA = fc * 0xF1357AEA2E62A9C5L;
-		stateB = (fa << 44 | fa >>> 20) ^ fc;
-		return stateC = fb + 0x9E3779B97F4A7C15L;
+		stateA = fb * 0xF1357AEA2E62A9C5L;
+		stateB = (fc << 44 | fc >>> 20);
+		return stateC = fb ^ fa + 0x9E3779B97F4A7C15L;
 	}
 
 	@Override
