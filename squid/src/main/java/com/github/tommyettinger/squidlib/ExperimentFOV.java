@@ -4,8 +4,13 @@ import squidpony.ArrayTools;
 import squidpony.squidgrid.Direction;
 import squidpony.squidgrid.Radius;
 import squidpony.squidgrid.mapping.DungeonUtility;
-import squidpony.squidmath.*;
+import squidpony.squidmath.Coord;
 import squidpony.squidmath.CrossHash;
+import squidpony.squidmath.GreasedRegion;
+import squidpony.squidmath.MathExtras;
+import squidpony.squidmath.Noise;
+import squidpony.squidmath.NumberTools;
+import squidpony.squidmath.OrderedSet;
 
 import java.io.Serializable;
 import java.util.ArrayDeque;
@@ -14,7 +19,7 @@ import java.util.Iterator;
 
 /**
  * This class provides methods for calculating Field of View in grids. Field of
- * View (FOV) algorithms determine how much area surrounding a point can be
+ * View (ExperimentFOV) algorithms determine how much area surrounding a point can be
  * seen. They return a 2D array of doubles, representing the amount of view
  * (typically sight, but perhaps sound, smell, etc.) which the origin has of
  * each cell. In the returned 2D array, 1.0 is always "fully seen," while 0.0
@@ -41,52 +46,52 @@ import java.util.Iterator;
  * <br>
  * The returned light map is considered the percent of light in the cells.
  * <br>
- * All implementations for FOV here (that is, Ripple FOV and Shadow FOV) provide
+ * All implementations for ExperimentFOV here (that is, Ripple ExperimentFOV and Shadow ExperimentFOV) provide
  * percentage levels for partially-lit or partially-seen cells. This leads to a
- * straightforward implementation of soft lighting using an FOV result -- just
+ * straightforward implementation of soft lighting using an ExperimentFOV result -- just
  * mix the background or floor color of a cell, however you represent it, with
  * a very light color (like pastel yellow), with the percentage of the light
- * color to mix in equal to the percent of light in the FOV map.
+ * color to mix in equal to the percent of light in the ExperimentFOV map.
  * <br>
  * All solvers perform bounds checking so solid borders in the map are not
  * required.
  * <br>
- * For calculating FOV maps, this class provides both instance methods, which
+ * For calculating ExperimentFOV maps, this class provides both instance methods, which
  * attempt to reuse the same 2D array for light stored in the object, and static
  * methods, which take a light 2D array as an argument and edit it in-place.
  * In older versions of SquidLib, constantly allocating and returning 2D double
  * arrays on each call dragged performance down, but both of the new methods
  * should perform well.
  * <br>
- * Static methods are provided to add together FOV maps in the simple way
- * (disregarding visibility of distant FOV from a given cell), or the more
+ * Static methods are provided to add together ExperimentFOV maps in the simple way
+ * (disregarding visibility of distant ExperimentFOV from a given cell), or the more
  * practical way for roguelikes (where a cell needs to be within line-of-sight
  * in the first place for a distant light to illuminate it). The second method
  * relies on an LOS map, which is essentially the same as a very-high-radius
- * FOV map and can be easily obtained with calculateLOSMap().
+ * ExperimentFOV map and can be easily obtained with calculateLOSMap().
  * <br>
  * If you want to iterate through cells that are visible in a double[][] returned
- * by FOV, you can pass that double[][] to the constructor for GreasedRegion, and
+ * by ExperimentFOV, you can pass that double[][] to the constructor for GreasedRegion, and
  * you can use the GreasedRegion as a reliably-ordered Collection of Coord (among
  * other things). The order GreasedRegion iterates in is somewhat strange, and
- * doesn't, for example, start at the center of an FOV map, but it will be the
- * same every time you create a GreasedRegion with the same FOV map (or the same
+ * doesn't, for example, start at the center of an ExperimentFOV map, but it will be the
+ * same every time you create a GreasedRegion with the same ExperimentFOV map (or the same
  * visible Coords).
  * <br>
  * This class is not thread-safe. This is generally true for most of SquidLib.
  *
  * @author Eben Howard - http://squidpony.com - howard@squidpony.com
  */
-public class FOV implements Serializable {
+public class ExperimentFOV implements Serializable {
     private static final long serialVersionUID = 3258723684733275798L;
     /**
-     * Performs FOV by pushing values outwards from the source location.
+     * Performs ExperimentFOV by pushing values outwards from the source location.
      * It will go around corners a bit. This corresponds to a
      * {@code rippleLooseness} of 2 in {@link #reuseRippleFOV(double[][], double[][], int, int, int, double, Radius)}.
      */
     public static final int RIPPLE = 1;
     /**
-     * Performs FOV by pushing values outwards from the source location.
+     * Performs ExperimentFOV by pushing values outwards from the source location.
      * It will spread around edges like smoke or water, but maintain a
      * tendency to curl towards the start position when going around
      * edges. This corresponds to a {@code rippleLooseness} of 3
@@ -94,20 +99,20 @@ public class FOV implements Serializable {
      */
     public static final int RIPPLE_LOOSE = 2;
     /**
-     * Performs FOV by pushing values outwards from the source location.
+     * Performs ExperimentFOV by pushing values outwards from the source location.
      * It will only go around corners slightly. This corresponds to a
      * {@code rippleLooseness} of 1 in {@link #reuseRippleFOV(double[][], double[][], int, int, int, double, Radius)}.
      */
     public static final int RIPPLE_TIGHT = 3;
     /**
-     * Performs FOV by pushing values outwards from the source location.
+     * Performs ExperimentFOV by pushing values outwards from the source location.
      * It will go around corners massively. This corresponds to a
      * {@code rippleLooseness} of 6 in {@link #reuseRippleFOV(double[][], double[][], int, int, int, double, Radius)}.
      */
     public static final int RIPPLE_VERY_LOOSE = 4;
     /**
-     * Uses Shadow Casting FOV algorithm. Returns a percentage from 1.0 (center of
-     * FOV) to 0.0 (outside of FOV).
+     * Uses Shadow Casting ExperimentFOV algorithm. Returns a percentage from 1.0 (center of
+     * ExperimentFOV) to 0.0 (outside of ExperimentFOV).
      */
     public static final int SHADOW = 5;
     private int type = SHADOW;
@@ -134,15 +139,15 @@ public class FOV implements Serializable {
     /**
      * Creates a solver which will use the default SHADOW solver.
      */
-    public FOV() {
+    public ExperimentFOV() {
     }
 
     /**
-     * Creates a solver which will use the provided FOV solver type, typically one of {@link #SHADOW} (the default),
+     * Creates a solver which will use the provided ExperimentFOV solver type, typically one of {@link #SHADOW} (the default),
      * {@link #RIPPLE}, {@link #RIPPLE_TIGHT}, {@link #RIPPLE_LOOSE}, or {@link #RIPPLE_VERY_LOOSE}.
      * @param type
      */
-    public FOV(int type) {
+    public ExperimentFOV(int type) {
         this.type = type;
     }
 
@@ -234,7 +239,7 @@ public class FOV implements Serializable {
      *
      * The starting point for the calculation is considered to be at the center
      * of the origin cell. Radius determinations are determined by the provided
-     * RadiusStrategy. A conical section of FOV is lit by this method if
+     * RadiusStrategy. A conical section of ExperimentFOV is lit by this method if
      * span is greater than 0.
      *
      * @param resistanceMap the grid of cells to calculate on; the kind made by {@link #generateResistances(char[][])}
@@ -242,8 +247,8 @@ public class FOV implements Serializable {
      * @param startY the vertical component of the starting location
      * @param radius the distance the light will extend to
      * @param radiusTechnique provides a means to calculate the radius as desired
-     * @param angle the angle in degrees that will be the center of the FOV cone, 0 points right
-     * @param span the angle in degrees that measures the full arc contained in the FOV cone
+     * @param angle the angle in degrees that will be the center of the ExperimentFOV cone, 0 points right
+     * @param span the angle in degrees that measures the full arc contained in the ExperimentFOV cone
      * @return the computed light grid
      */
     public double[][] calculateFOV(double[][] resistanceMap, int startX, int startY, double radius,
@@ -288,7 +293,7 @@ public class FOV implements Serializable {
     /**
      * Calculates the Field Of View for the provided map from the given x, y
      * coordinates. Assigns to, and returns, a light map where the values
-     * represent a percentage of fully lit. Always uses shadowcasting FOV,
+     * represent a percentage of fully lit. Always uses shadowcasting ExperimentFOV,
      * which allows this method to be static since it doesn't need to keep any
      * state around, and can reuse the state the user gives it via the
      * {@code light} parameter.  The values in light are always cleared before
@@ -316,7 +321,7 @@ public class FOV implements Serializable {
     /**
      * Calculates the Field Of View for the provided map from the given x, y
      * coordinates. Assigns to, and returns, a light map where the values
-     * represent a percentage of fully lit. Always uses shadowcasting FOV,
+     * represent a percentage of fully lit. Always uses shadowcasting ExperimentFOV,
      * which allows this method to be static since it doesn't need to keep any
      * state around, and can reuse the state the user gives it via the
      * {@code light} parameter.  The values in light are always cleared before
@@ -344,7 +349,7 @@ public class FOV implements Serializable {
     /**
      * Calculates the Field Of View for the provided map from the given x, y
      * coordinates. Assigns to, and returns, a light map where the values
-     * represent a percentage of fully lit. Always uses shadowcasting FOV,
+     * represent a percentage of fully lit. Always uses shadowcasting ExperimentFOV,
      * which allows this method to be static since it doesn't need to keep any
      * state around, and can reuse the state the user gives it via the
      * {@code light} parameter. The values in light are always cleared before
@@ -368,7 +373,7 @@ public class FOV implements Serializable {
     /**
      * Calculates the Field Of View for the provided map from the given x, y
      * coordinates. Assigns to, and returns, a light map where the values
-     * represent a percentage of fully lit. Always uses shadowcasting FOV,
+     * represent a percentage of fully lit. Always uses shadowcasting ExperimentFOV,
      * which allows this method to be static since it doesn't need to keep any
      * state around, and can reuse the state the user gives it via the
      * {@code light} parameter. The values in light are always cleared before
@@ -408,7 +413,7 @@ public class FOV implements Serializable {
     /**
      * Calculates the Field Of View for the provided map from the given x, y
      * coordinates. Assigns to, and returns, a light map where the values
-     * represent a percentage of fully lit. Always uses shadowcasting FOV,
+     * represent a percentage of fully lit. Always uses shadowcasting ExperimentFOV,
      * which allows this method to be static since it doesn't need to keep any
      * state around, and can reuse the state the user gives it via the
      * {@code light} parameter. The values in light are always cleared before
@@ -506,7 +511,7 @@ public class FOV implements Serializable {
      * Assigns to, and returns, a light map where the values
      * are always either 0.0 for "not in line of sight" or 1.0 for "in line of
      * sight," which doesn't mean a cell is actually visible if there's no light
-     * in that cell. Always uses shadowcasting FOV, which allows this method to
+     * in that cell. Always uses shadowcasting ExperimentFOV, which allows this method to
      * be static since it doesn't need to keep any state around, and can reuse the
      * state the user gives it via the {@code light} parameter. The values in light
      * are always cleared before this is run, because prior state can make this give
@@ -531,7 +536,7 @@ public class FOV implements Serializable {
      * Assigns to, and returns, a light map where the values
      * are always either 0.0 for "not in line of sight" or 1.0 for "in line of
      * sight," which doesn't mean a cell is actually visible if there's no light
-     * in that cell. Always uses shadowcasting FOV, which allows this method to
+     * in that cell. Always uses shadowcasting ExperimentFOV, which allows this method to
      * be static since it doesn't need to keep any state around, and can reuse the
      * state the user gives it via the {@code light} parameter. The values in light
      * are always cleared before this is run, because prior state can make this give
@@ -571,14 +576,14 @@ public class FOV implements Serializable {
      * coordinates, lighting at the given angle in  degrees and covering a span
      * centered on that angle, also in degrees. Assigns to, and returns, a light
      * map where the values represent a percentage of fully lit. Always uses
-     * shadowcasting FOV, which allows this method to be static since it doesn't
+     * shadowcasting ExperimentFOV, which allows this method to be static since it doesn't
      * need to keep any state around, and can reuse the state the user gives it
      * via the {@code light} parameter. The values in light are cleared before
      * this is run, because prior state can make this give incorrect results.
      * <br>
      * The starting point for the calculation is considered to be at the center
      * of the origin cell. Radius determinations are determined by the provided
-     * RadiusStrategy.  A conical section of FOV is lit by this method if
+     * RadiusStrategy.  A conical section of ExperimentFOV is lit by this method if
      * span is greater than 0.
      *
      * @param resistanceMap the grid of cells to calculate on; the kind made by {@link #generateResistances(char[][])}
@@ -586,9 +591,9 @@ public class FOV implements Serializable {
      * @param startX the horizontal component of the starting location
      * @param startY the vertical component of the starting location
      * @param radius the distance the light will extend to
-     * @param radiusTechnique provides a means to shape the FOV by changing distance calculation (circle, square, etc.)
-     * @param angle the angle in degrees that will be the center of the FOV cone, 0 points right
-     * @param span the angle in degrees that measures the full arc contained in the FOV cone
+     * @param radiusTechnique provides a means to shape the ExperimentFOV by changing distance calculation (circle, square, etc.)
+     * @param angle the angle in degrees that will be the center of the ExperimentFOV cone, 0 points right
+     * @param span the angle in degrees that measures the full arc contained in the ExperimentFOV cone
      * @return the computed light grid
      */
     public static double[][] reuseFOV(double[][] resistanceMap, double[][] light, int startX, int startY,
@@ -616,7 +621,7 @@ public class FOV implements Serializable {
     }
 
     /**
-     * Like the {@link #reuseFOV(double[][], double[][], int, int, double, Radius)} method, but this uses Ripple FOV
+     * Like the {@link #reuseFOV(double[][], double[][], int, int, double, Radius)} method, but this uses Ripple ExperimentFOV
      * with a configurable tightness/looseness (between 1, tightest, and 6, loosest). Other parameters are similar; you
      * can get a resistance map from {@link #generateResistances(char[][])}, {@code light} will be modified and returned
      * (it will be overwritten, but its size should be the same as the resistance map), there's a starting x,y position,
@@ -628,7 +633,7 @@ public class FOV implements Serializable {
      * @param y starting y position to look from
      * @param radius the distance to extend from the starting x,y position
      * @param radiusTechnique how to measure distance; typically {@link Radius#CIRCLE}.
-     * @return {@code light}, after writing the FOV map into it; 1.0 is fully lit and 0.0 is unseen
+     * @return {@code light}, after writing the ExperimentFOV map into it; 1.0 is fully lit and 0.0 is unseen
      */
     public static double[][] reuseRippleFOV(double[][] resistanceMap, double[][] light, int rippleLooseness, int x, int y, double radius, Radius radiusTechnique) {
         ArrayTools.fill(light, 0);
@@ -640,11 +645,11 @@ public class FOV implements Serializable {
 
     /**
      * Like the {@link #reuseFOV(double[][], double[][], int, int, double, Radius, double, double)} method, but this
-     * uses Ripple FOV with a configurable tightness/looseness (between 1, tightest, and 6, loosest). Other parameters
+     * uses Ripple ExperimentFOV with a configurable tightness/looseness (between 1, tightest, and 6, loosest). Other parameters
      * are similar; you can get a resistance map from {@link #generateResistances(char[][])}, {@code light} will be
      * modified and returned (it will be overwritten, but its size should be the same as the resistance map), there's 
      * starting x,y position, a radius in cells, a {@link Radius} enum constant to choose the distance measurement, and
-     * the angle/span combination to specify a conical section of FOV (span is the total in degrees, centered on angle).
+     * the angle/span combination to specify a conical section of ExperimentFOV (span is the total in degrees, centered on angle).
      * @param resistanceMap probably calculated with {@link #generateResistances(char[][])}; 1.0 blocks light, 0.0 allows it
      * @param light will be overwritten! Should be initialized with the same size as {@code resistanceMap}
      * @param rippleLooseness affects spread; between 1 and 6, inclusive; 1 is tightest, 2 is normal, and 6 is loosest
@@ -652,9 +657,9 @@ public class FOV implements Serializable {
      * @param y starting y position to look from
      * @param radius the distance to extend from the starting x,y position
      * @param radiusTechnique how to measure distance; typically {@link Radius#CIRCLE}.
-     * @param angle the angle to center the conical FOV on
-     * @param span the total span in degrees for the conical FOV to cover
-     * @return {@code light}, after writing the FOV map into it; 1.0 is fully lit and 0.0 is unseen
+     * @param angle the angle to center the conical ExperimentFOV on
+     * @param span the total span in degrees for the conical ExperimentFOV to cover
+     * @return {@code light}, after writing the ExperimentFOV map into it; 1.0 is fully lit and 0.0 is unseen
      */
     public static double[][] reuseRippleFOV(double[][] resistanceMap, double[][] light, int rippleLooseness, int x, int y, double radius, Radius radiusTechnique, double angle, double span) {
         ArrayTools.fill(light, 0);
@@ -1121,7 +1126,7 @@ public class FOV implements Serializable {
      * Assigns to, and returns, a light map where the values represent a percentage of fully
      * lit. The values in light are cleared before this is run, because prior state can make
      * this give incorrect results. You can use {@link #addFOVsInto(double[][], double[][]...)}
-     * if you want to mix FOV results, which works as an alternative to using the prior light state.
+     * if you want to mix ExperimentFOV results, which works as an alternative to using the prior light state.
      * <br>
      * The starting point for the calculation is considered to be at the center
      * of the origin cell. Radius determinations are determined by the provided
@@ -1134,8 +1139,8 @@ public class FOV implements Serializable {
      * @param startX the horizontal component of the starting location
      * @param startY the vertical component of the starting location
      * @param radius the distance the light will extend to (roughly); direction ranges will be multiplied by this
-     * @param radiusTechnique provides a means to shape the FOV by changing distance calculation (circle, square, etc.)
-     * @param angle the angle in degrees that will be the center of the FOV cone, 0 points right
+     * @param radiusTechnique provides a means to shape the ExperimentFOV by changing distance calculation (circle, square, etc.)
+     * @param angle the angle in degrees that will be the center of the ExperimentFOV cone, 0 points right
      * @param forward the range to extend when the light is within 22.5 degrees of angle; will be interpolated with sideForward
      * @param sideForward the range to extend when the light is between 22.5 and 67.5 degrees of angle; will be interpolated with forward or side
      * @param side the range to extend when the light is between 67.5 and 112.5 degrees of angle; will be interpolated with sideForward or sideBack
@@ -1223,7 +1228,7 @@ public class FOV implements Serializable {
     }
 
     /**
-     * Adds an FOV map to another in the simplest way possible; does not check line-of-sight between FOV maps.
+     * Adds an ExperimentFOV map to another in the simplest way possible; does not check line-of-sight between ExperimentFOV maps.
      * Clamps the highest value for any single position at 1.0. Modifies the basis parameter in-place and makes no
      * allocations; this is different from {@link #addFOVs(double[][][])}, which creates a new 2D array.
      * @param basis a 2D double array, which can be empty or returned by calculateFOV() or reuseFOV(); modified!
@@ -1240,7 +1245,7 @@ public class FOV implements Serializable {
         return basis;
     }
     /**
-     * Adds multiple FOV maps together in the simplest way possible; does not check line-of-sight between FOV maps.
+     * Adds multiple ExperimentFOV maps together in the simplest way possible; does not check line-of-sight between ExperimentFOV maps.
      * Clamps the highest value for any single position at 1.0. Allocates a new 2D double array and returns it.
      * @param maps an array or vararg of 2D double arrays, each usually returned by calculateFOV()
      * @return the sum of all the 2D double arrays passed, using the dimensions of the first if they don't all match
@@ -1266,7 +1271,7 @@ public class FOV implements Serializable {
         return map;
     }
     /**
-     * Adds multiple FOV maps to basis cell-by-cell, modifying basis; does not check line-of-sight between FOV maps.
+     * Adds multiple ExperimentFOV maps to basis cell-by-cell, modifying basis; does not check line-of-sight between ExperimentFOV maps.
      * Clamps the highest value for any single position at 1.0. Returns basis without allocating new objects.
      * @param basis a 2D double array that will be modified by adding values in maps to it and clamping to 1.0 or less 
      * @param maps an array or vararg of 2D double arrays, each usually returned by calculateFOV()
@@ -1291,7 +1296,7 @@ public class FOV implements Serializable {
     }
 
     /**
-     * Adds multiple FOV maps together in the simplest way possible; does not check line-of-sight between FOV maps.
+     * Adds multiple ExperimentFOV maps together in the simplest way possible; does not check line-of-sight between ExperimentFOV maps.
      * Clamps the highest value for any single position at 1.0. Allocates a new 2D double array and returns it.
      * @param maps an Iterable of 2D double arrays (most collections implement Iterable),
      *             each usually returned by calculateFOV()
@@ -1323,10 +1328,10 @@ public class FOV implements Serializable {
     }
 
     /**
-     * Adds together multiple FOV maps, but only adds to a position if it is visible in the given LOS map. Useful if
+     * Adds together multiple ExperimentFOV maps, but only adds to a position if it is visible in the given LOS map. Useful if
      * you want distant lighting to be visible only if the player has line-of-sight to a lit cell. Typically the LOS map
      * is calculated by {@link #reuseLOS(double[][], double[][], int, int)}, using the same resistance map used to
-     * calculate the FOV maps. Clamps the highest value for any single position at 1.0.
+     * calculate the ExperimentFOV maps. Clamps the highest value for any single position at 1.0.
      * @param losMap an LOS map such as one generated by {@link #reuseLOS(double[][], double[][], int, int)}
      * @param maps an array or vararg of 2D double arrays, each usually returned by calculateFOV()
      * @return the sum of all the 2D double arrays in maps where a cell was visible in losMap
@@ -1358,10 +1363,10 @@ public class FOV implements Serializable {
         return map;
     }
     /**
-     * Adds together multiple FOV maps, but only adds to a position if it is visible in the given LOS map. Useful if
+     * Adds together multiple ExperimentFOV maps, but only adds to a position if it is visible in the given LOS map. Useful if
      * you want distant lighting to be visible only if the player has line-of-sight to a lit cell. Typically the LOS map
      * is calculated by {@link #reuseLOS(double[][], double[][], int, int)}, using the same resistance map used to
-     * calculate the FOV maps. Clamps the highest value for any single position at 1.0.
+     * calculate the ExperimentFOV maps. Clamps the highest value for any single position at 1.0.
      * @param losMap an LOS map such as one generated by {@link #reuseLOS(double[][], double[][], int, int)}
      * @param basis an existing 2D double array that should have matching width and height to losMap; will be modified
      * @param maps an array or vararg of 2D double arrays, each usually returned by calculateFOV()
@@ -1395,10 +1400,10 @@ public class FOV implements Serializable {
     }
 
     /**
-     * Adds together multiple FOV maps, but only adds to a position if it is visible in the given LOS map. Useful if
+     * Adds together multiple ExperimentFOV maps, but only adds to a position if it is visible in the given LOS map. Useful if
      * you want distant lighting to be visible only if the player has line-of-sight to a lit cell. Typically the LOS map
      * is calculated by {@link #reuseLOS(double[][], double[][], int, int)}, using the same resistance map used to
-     * calculate the FOV maps. Clamps the highest value for any single position at 1.0.
+     * calculate the ExperimentFOV maps. Clamps the highest value for any single position at 1.0.
      * @param losMap an LOS map such as one generated by {@link #reuseLOS(double[][], double[][], int, int)}
      * @param maps an Iterable of 2D double arrays, each usually returned by calculateFOV()
      * @return the sum of all the 2D double arrays in maps where a cell was visible in losMap
@@ -1427,7 +1432,7 @@ public class FOV implements Serializable {
     /**
      * Calculates what cells are visible from (startX,startY) using the given resistanceMap; this can be given to
      * mixVisibleFOVs() to limit extra light sources to those visible from the starting point. Just like calling
-     * calculateFOV(), this creates a new double[][]; there doesn't appear to be a way to work with Ripple FOV and avoid
+     * calculateFOV(), this creates a new double[][]; there doesn't appear to be a way to work with Ripple ExperimentFOV and avoid
      * needing an empty double[][] every time, since it uses previously-placed light to determine how it should spread.
      * @param resistanceMap the grid of cells to calculate on; the kind made by {@link #generateResistances(char[][])}
      * @param startX the center of the LOS map; typically the player's x-position
@@ -1474,14 +1479,14 @@ public class FOV implements Serializable {
 
 
     /**
-     * Given a char[][] for the map, produces a double[][] that can be used with most of the methods in FOV, like
+     * Given a char[][] for the map, produces a double[][] that can be used with most of the methods in ExperimentFOV, like
      * {@link #reuseFOV(double[][], double[][], int, int, double)}. It expects any doors to be represented by '+' if
      * closed or '/' if open (which can be caused by calling {@link DungeonUtility#closeDoors(char[][])}), any walls to
      * be '#' or box drawing characters, and it doesn't care what other chars are used (only doors, including open ones,
      * and walls obscure light and thus have a resistance by default).
      *
      * @param map a dungeon, width by height, with any closed doors as '+' and open doors as '/' as per closeDoors()
-     * @return a resistance map suitable for use with the FOV class, with clear cells assigned 0.0 and blocked ones 1.0
+     * @return a resistance map suitable for use with the ExperimentFOV class, with clear cells assigned 0.0 and blocked ones 1.0
      */
     public static double[][] generateResistances(char[][] map) {
         int width = map.length;
@@ -1527,7 +1532,7 @@ public class FOV implements Serializable {
     /**
      * Given a char[][] for the map that should use box drawing characters (as produced by
      * {@link DungeonUtility#hashesToLines(char[][], boolean)}), produces a double[][] with triple width and triple
-     * height that can be used with FOV methods like {@link #reuseFOV(double[][], double[][], int, int, double)} in
+     * height that can be used with ExperimentFOV methods like {@link #reuseFOV(double[][], double[][], int, int, double)} in
      * classes that use subcell lighting. Importantly, this only considers a "thin line" of wall to be blocking
      * (matching the box drawing character), instead of the whole 3x3 area. This expects any doors to be represented by
      * '+' if closed or '/' if open (which can be caused by calling {@link DungeonUtility#closeDoors(char[][])}), thick
@@ -1536,7 +1541,7 @@ public class FOV implements Serializable {
      * ones, vegetation, and walls obscure light and thus have a resistance normally).
      *
      * @param map a dungeon, width by height, with any closed doors as '+' and open doors as '/' as per closeDoors()
-     * @return a resistance map suitable for use with the FOV class and subcell lighting, with triple width/height
+     * @return a resistance map suitable for use with the ExperimentFOV class and subcell lighting, with triple width/height
      */
     public static double[][] generateResistances3x3(char[][] map) {
         int width = map.length;
@@ -1636,17 +1641,17 @@ public class FOV implements Serializable {
     }
 
     /**
-     * Given a char[][] for the map, produces a double[][] that can be used with any FOV methods that expect a
+     * Given a char[][] for the map, produces a double[][] that can be used with any ExperimentFOV methods that expect a
      * resistance map (like {@link #reuseFOV(double[][], double[][], int, int, double)}), but does not treat
      * any cells as partly transparent, only fully-blocking or fully-permitting light. This is mainly useful if you
-     * expect the FOV radius to be very high or (effectively) infinite, since anything less than complete blockage would
-     * be passed through by infinite-radius FOV. This expects any doors to be represented by '+' if closed or '/' if
+     * expect the ExperimentFOV radius to be very high or (effectively) infinite, since anything less than complete blockage would
+     * be passed through by infinite-radius ExperimentFOV. This expects any doors to be represented by '+' if closed or '/' if
      * open (most door placement defaults to a mix of '+' and '/', so by calling
      * {@link DungeonUtility#closeDoors(char[][])} you can close all doors at the start), and any walls to be '#' or
      * box drawing characters. This will assign 1.0 resistance to walls and closed doors or 0.0 for any other cell.
      *
      * @param map a dungeon, width by height, with any closed doors as '+' and open doors as '/' as per closeDoors()
-     * @return a resistance map suitable for use with the FOV class, but with no partially transparent cells
+     * @return a resistance map suitable for use with the ExperimentFOV class, but with no partially transparent cells
      */
     public static double[][] generateSimpleResistances(char[][] map) {
         int width = map.length;
@@ -1682,7 +1687,7 @@ public class FOV implements Serializable {
     /**
      * Given a char[][] for the map that should use box drawing characters (as produced by
      * {@link DungeonUtility#hashesToLines(char[][], boolean)}), produces a double[][] with triple width and triple
-     * height that can be used with FOV's methods that expect a resistance map (like
+     * height that can be used with ExperimentFOV's methods that expect a resistance map (like
      * {@link #reuseFOV(double[][], double[][], int, int, double)}) in classes that use subcell lighting. This expects
      * any doors to be represented by '+' if closed or '/' if open (most door placement defaults to a mix of '+' and
      * '/', so by calling {@link DungeonUtility#closeDoors(char[][])} you can close all doors at the start), any walls
@@ -1691,7 +1696,7 @@ public class FOV implements Serializable {
      * other subcell.
      *
      * @param map a dungeon, width by height, with any closed doors as '+' and open doors as '/' as per closeDoors()
-     * @return a resistance map suitable for use with the FOV class and subcell lighting, with triple width/height
+     * @return a resistance map suitable for use with the ExperimentFOV class and subcell lighting, with triple width/height
      */
     public static double[][] generateSimpleResistances3x3(char[][] map) {
         int width = map.length;
