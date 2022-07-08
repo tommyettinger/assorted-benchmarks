@@ -134,7 +134,7 @@ import java.util.concurrent.TimeUnit;
 @Fork(1)
 @Warmup(iterations = 3)
 @Measurement(iterations = 4)
-public class ExperimentFOVBenchmark {
+public class FOVExperimentBenchmark {
 
     @State(Scope.Thread)
     public static class BenchmarkState {
@@ -748,7 +748,7 @@ public class ExperimentFOVBenchmark {
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
-                .include(ExperimentFOVBenchmark.class.getSimpleName())
+                .include(FOVExperimentBenchmark.class.getSimpleName())
                 .warmupIterations(3)
                 .measurementIterations(3)
                 .forks(1)

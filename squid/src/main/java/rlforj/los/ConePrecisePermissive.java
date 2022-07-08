@@ -1,7 +1,5 @@
 package rlforj.los;
 
-import java.util.LinkedList;
-
 import rlforj.math.Point2I;
 
 /**
@@ -10,7 +8,7 @@ import rlforj.math.Point2I;
  * @author sdatta
  *
  */
-public class ConePrecisePremisive extends PrecisePermissive implements
+public class ConePrecisePermissive extends PrecisePermissive implements
 		IConeFovAlgorithm
 {
 
@@ -45,20 +43,20 @@ public class ConePrecisePremisive extends PrecisePermissive implements
 	{
 //		 System.out.println("calcfovq called " + state.quadrantIndex + " "
 //				+ startAngle + " " + finishAngle);
-		LinkedList<bumpT> steepBumps = new LinkedList<bumpT>();
-		LinkedList<bumpT> shallowBumps = new LinkedList<bumpT>();
-		// activeFields is sorted from shallow-to-steep.
-		LinkedList<fieldT> activeFields = new LinkedList<fieldT>();
-		activeFields.addLast(new fieldT());
+		state.steepBumps.clear();
+		state.shallowBumps.clear();
+		state.activeFields.clear();
+
+		fieldT active = new fieldT();
 		
 		// We decide the farthest cells that can be seen by the cone ( using 
 		// trigonometry.), then we set the active field to be in between them.
 		if(startAngle==0) {
-			activeFields.getLast().shallow.near = new Point2I(0, 1);
-			activeFields.getLast().shallow.far = new Point2I(state.extent.x, 0);
+			active.shallow.near = new Point2I(0, 1);
+			active.shallow.far = new Point2I(state.extent.x, 0);
 		} else {
-			activeFields.getLast().shallow.near = new Point2I(0, 1);
-			activeFields.getLast().shallow.far = new Point2I(
+			active.shallow.near = new Point2I(0, 1);
+			active.shallow.far = new Point2I(
 					(int) Math.ceil(Math.cos(Math.toRadians(startAngle))
 							* state.extent.x), 
 					(int) Math.floor(Math.sin(Math.toRadians(startAngle))
@@ -66,17 +64,21 @@ public class ConePrecisePremisive extends PrecisePermissive implements
 //			System.out.println(activeFields.getLast().shallow.isAboveOrContains(new offsetT(0, 10)));
 		}
 		if(finishAngle==90) {
-			activeFields.getLast().steep.near = new Point2I(1, 0);
-			activeFields.getLast().steep.far = new Point2I(0, state.extent.y);
+			active.steep.near = new Point2I(1, 0);
+			active.steep.far = new Point2I(0, state.extent.y);
 		} else {
-			activeFields.getLast().steep.near = new Point2I(1, 0);
-			activeFields.getLast().steep.far = new Point2I(
+			active.steep.near = new Point2I(1, 0);
+			active.steep.far = new Point2I(
 					(int) Math.floor(Math.cos(Math.toRadians(finishAngle))
 							* state.extent.x), 
 					(int) Math.ceil(Math.sin(Math.toRadians(finishAngle))
 					* state.extent.y));
 		}
-		Point2I dest = new Point2I(0, 0);
+		state.activeFields.add(active);
+
+		Point2I dest = state.dest;
+		dest.x = 0;
+		dest.y = 0;
 
 //		// Visit the source square exactly once (in quadrant 1).
 //		if (state.quadrant.x == 1 && state.quadrant.y == 1)
@@ -85,12 +87,12 @@ public class ConePrecisePremisive extends PrecisePermissive implements
 //		}
 
 		CLikeIterator<fieldT> currentField = new CLikeIterator<fieldT>(
-				activeFields.listIterator());
+				state.activeFields.listIterator());
 		int i = 0;
 		int j = 0;
 		int maxI = state.extent.x + state.extent.y;
 		// For each square outline
-		for (i = 1; i <= maxI && !activeFields.isEmpty(); ++i)
+		for (i = 1; i <= maxI && !state.activeFields.isEmpty(); ++i)
 		{
 			int startJ = max(0, i - state.extent.x);
 			int maxJ = min(i, state.extent.y);
@@ -101,11 +103,10 @@ public class ConePrecisePremisive extends PrecisePermissive implements
 				// System.out.println("i j "+i+" "+j);
 				dest.x = i - j;
 				dest.y = j;
-				visitConeSquare(state, dest, currentField, steepBumps,
-						shallowBumps, activeFields);
+				visitConeSquare(state, dest, currentField);
 			}
 			// System.out.println("Activefields size "+activeFields.size());
-			currentField = new CLikeIterator<fieldT>(activeFields
+			currentField = new CLikeIterator<fieldT>(state.activeFields
 					.listIterator());
 		}
 	}
@@ -230,13 +231,9 @@ public class ConePrecisePremisive extends PrecisePermissive implements
 	 * @param state
 	 * @param dest
 	 * @param currentField
-	 * @param steepBumps
-	 * @param shallowBumps
-	 * @param activeFields
 	 */
 	void visitConeSquare(final coneFovState state, final Point2I dest,
-			CLikeIterator<fieldT> currentField, LinkedList<bumpT> steepBumps,
-			LinkedList<bumpT> shallowBumps, LinkedList<fieldT> activeFields)
+			CLikeIterator<fieldT> currentField)
 	{
 		// System.out.println("visitsq called "+dest);
 		// The top-left and bottom-right corners of the destination square.
@@ -315,15 +312,14 @@ public class ConePrecisePremisive extends PrecisePermissive implements
 		{
 			// case SHALLOW BUMP
 			// The square intersects only the shallow line.
-			addShallowBump(topLeft, currentField.getCurrent(), steepBumps,
-					shallowBumps);
+			addShallowBump(topLeft, currentField.getCurrent(),
+					state.shallowBumps);
 			checkField(currentField);
 		} else if (currentField.getCurrent().steep.isBelow(topLeft))
 		{
 			// case STEEP BUMP
 			// The square intersects only the steep line.
-			addSteepBump(bottomRight, currentField.getCurrent(), steepBumps,
-					shallowBumps);
+			addSteepBump(bottomRight, currentField.getCurrent(), state.steepBumps);
 			checkField(currentField);
 		} else
 		{
@@ -334,13 +330,13 @@ public class ConePrecisePremisive extends PrecisePermissive implements
 			fieldT shallowerField = currentField.getCurrent();
 			currentField.insertBeforeCurrent(steeperField);
 			// System.out.println("activeFields "+activeFields);
-			addSteepBump(bottomRight, shallowerField, steepBumps, shallowBumps);
+			addSteepBump(bottomRight, shallowerField, state.steepBumps);
 			currentField.gotoPrevious();
 			if (!checkField(currentField)) // did not remove
 				currentField.gotoNext();// point to the original element
 //			System.out.println("B4 addShallowBumps "
 //					+ currentField.getCurrent());
-			addShallowBump(topLeft, steeperField, steepBumps, shallowBumps);
+			addShallowBump(topLeft, steeperField, state.shallowBumps);
 			checkField(currentField);
 		}
 	}

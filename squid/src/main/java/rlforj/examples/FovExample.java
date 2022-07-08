@@ -24,14 +24,24 @@ public class FovExample
 		}
 		
 		System.out.println("ShadowCasting");
-		IFovAlgorithm a=new ShadowCasting();
-		a.visitFieldOfView(b, 10, 10, 9);
+		ShadowCasting sc =new ShadowCasting();
+		sc.visitFieldOfView(b, 10, 10, 9);
 		b.print(10, 10);
 		
 		b.resetVisited();
+
 		System.out.println("Precise Permissive");
-		a=new PrecisePermissive();
-		a.visitFieldOfView(b, 10, 10, 9);
+		PrecisePermissive pp =new PrecisePermissive();
+		pp.visitFieldOfView(b, 10, 10, 9);
+		b.print(10, 10);
+
+		b.resetVisited();
+		for(int i=0; i<30; i++) {
+			b.setObstacle(rand.nextInt(21), rand.nextInt(21));
+		}
+
+		System.out.println("Precise Permissive");
+		pp.visitFieldOfView(b, 10, 10, 9);
 		b.print(10, 10);
 	}
 }

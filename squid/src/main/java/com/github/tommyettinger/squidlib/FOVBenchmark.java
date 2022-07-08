@@ -87,6 +87,16 @@ import java.util.concurrent.TimeUnit;
  * FOVBenchmark.doRlPrecise5    avgt    4     15.586 ±     2.216  us/op
  * FOVBenchmark.doRlPreciseMax  avgt    4  26211.230 ± 11283.769  us/op
  * </pre>
+ *
+ * With some more attempts at optimization, it does... worse. There may be environmental differences.
+ * <pre>
+ * Benchmark                    Mode  Cnt      Score       Error  Units
+ * FOVBenchmark.doRlPrecise10   avgt    4     22.755 ±     1.189  us/op
+ * FOVBenchmark.doRlPrecise20   avgt    4     33.906 ±     0.430  us/op
+ * FOVBenchmark.doRlPrecise30   avgt    4     54.040 ±     0.417  us/op
+ * FOVBenchmark.doRlPrecise5    avgt    4     19.835 ±     1.780  us/op
+ * FOVBenchmark.doRlPreciseMax  avgt    4  29181.089 ± 10391.568  us/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
@@ -138,7 +148,7 @@ public class FOVBenchmark {
         }
 
     }
-
+/*
     @Benchmark
     public void doIdShadow5(BenchmarkState state, Blackhole blackhole)
     {
@@ -234,7 +244,7 @@ public class FOVBenchmark {
         com.github.yellowstonegames.grid.FOV.reuseLOS(state.blockingR, state.litR, point.x, point.y);
         blackhole.consume(state.litR);
     }
-
+*/
 
 
     @Benchmark
@@ -304,13 +314,21 @@ public class FOVBenchmark {
      */
 
     public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(FOVBenchmark.class.getSimpleName())
-                .warmupIterations(3)
-                .measurementIterations(3)
-                .forks(1)
-                .shouldDoGC(true)
-                .build();
-        new Runner(opt).run();
+        BenchmarkState state = new BenchmarkState();
+        state.setup();
+        for (int i = 0; i < 10; i++) {
+            Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+            state.board.resetVisited();
+            state.pp.visitFieldOfView(state.board, point.x, point.y, 5);
+        }
+
+//        Options opt = new OptionsBuilder()
+//                .include(FOVBenchmark.class.getSimpleName())
+//                .warmupIterations(3)
+//                .measurementIterations(3)
+//                .forks(1)
+//                .shouldDoGC(true)
+//                .build();
+//        new Runner(opt).run();
     }
 }

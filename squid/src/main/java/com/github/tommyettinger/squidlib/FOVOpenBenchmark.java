@@ -51,18 +51,18 @@ import java.util.concurrent.TimeUnit;
  * <br>
  * <pre>
  * Benchmark                       Mode  Cnt     Score      Error  Units
- * OpenFOVBenchmark.doAdLOS        avgt    4  5004.657 ±  370.676  us/op
- * OpenFOVBenchmark.doAdShadow10   avgt    4    27.176 ±    0.703  us/op
- * OpenFOVBenchmark.doAdShadow20   avgt    4    32.150 ±    1.698  us/op
- * OpenFOVBenchmark.doAdShadow30   avgt    4    37.783 ±    3.024  us/op
- * OpenFOVBenchmark.doAdShadow5    avgt    4    25.263 ±    1.326  us/op
- * OpenFOVBenchmark.doAdShadowMax  avgt    4  6884.749 ±  572.145  us/op
- * OpenFOVBenchmark.doIdLOS        avgt    4  5019.592 ±  271.441  us/op
- * OpenFOVBenchmark.doIdShadow10   avgt    4    52.497 ±    3.665  us/op
- * OpenFOVBenchmark.doIdShadow20   avgt    4    58.472 ±    5.449  us/op
- * OpenFOVBenchmark.doIdShadow30   avgt    4    69.051 ±    2.480  us/op
- * OpenFOVBenchmark.doIdShadow5    avgt    4    49.885 ±    2.765  us/op
- * OpenFOVBenchmark.doIdShadowMax  avgt    4  7672.567 ± 1481.262  us/op
+ * FOVOpenBenchmark.doAdLOS        avgt    4  5004.657 ±  370.676  us/op
+ * FOVOpenBenchmark.doAdShadow10   avgt    4    27.176 ±    0.703  us/op
+ * FOVOpenBenchmark.doAdShadow20   avgt    4    32.150 ±    1.698  us/op
+ * FOVOpenBenchmark.doAdShadow30   avgt    4    37.783 ±    3.024  us/op
+ * FOVOpenBenchmark.doAdShadow5    avgt    4    25.263 ±    1.326  us/op
+ * FOVOpenBenchmark.doAdShadowMax  avgt    4  6884.749 ±  572.145  us/op
+ * FOVOpenBenchmark.doIdLOS        avgt    4  5019.592 ±  271.441  us/op
+ * FOVOpenBenchmark.doIdShadow10   avgt    4    52.497 ±    3.665  us/op
+ * FOVOpenBenchmark.doIdShadow20   avgt    4    58.472 ±    5.449  us/op
+ * FOVOpenBenchmark.doIdShadow30   avgt    4    69.051 ±    2.480  us/op
+ * FOVOpenBenchmark.doIdShadow5    avgt    4    49.885 ±    2.765  us/op
+ * FOVOpenBenchmark.doIdShadowMax  avgt    4  7672.567 ± 1481.262  us/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
@@ -70,7 +70,7 @@ import java.util.concurrent.TimeUnit;
 @Fork(1)
 @Warmup(iterations = 3)
 @Measurement(iterations = 4)
-public class OpenFOVBenchmark {
+public class FOVOpenBenchmark {
 
     @State(Scope.Thread)
     public static class BenchmarkState {
@@ -228,7 +228,7 @@ public class OpenFOVBenchmark {
 
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
-                .include(OpenFOVBenchmark.class.getSimpleName())
+                .include(FOVOpenBenchmark.class.getSimpleName())
                 .warmupIterations(3)
                 .measurementIterations(3)
                 .forks(1)

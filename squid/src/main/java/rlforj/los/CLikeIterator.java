@@ -13,8 +13,8 @@ public class CLikeIterator<T>
 
 	ListIterator<T> it;
 	T curr;
-	boolean atEnd=false, atBegin=false;
-	
+	boolean atEnd=false;
+
 	public CLikeIterator(ListIterator<T> it)
 	{
 		super();
@@ -82,7 +82,8 @@ public class CLikeIterator<T>
 	}
 	
 	public void insertBeforeCurrent(T t) {
-		it.previous();
+		if(it.hasPrevious())
+			it.previous();
 		it.add(t);
 //		checkPrevNext();
 	}
