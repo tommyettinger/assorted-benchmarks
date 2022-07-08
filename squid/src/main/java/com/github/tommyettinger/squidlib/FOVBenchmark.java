@@ -77,6 +77,16 @@ import java.util.concurrent.TimeUnit;
  * FOVBenchmark.doRlPrecise5    avgt    4     59.704 ±    5.301  us/op
  * FOVBenchmark.doRlPreciseMax  avgt    4  37562.747 ± 4087.306  us/op
  * </pre>
+ * With some simple optimizations on RL4J, mostly reducing allocations, it does much better; it's still making an on/off
+ * LOS map rather than a graded FOV one, but it should be possible to make it work with a float[][].
+ * <pre>
+ * Benchmark                    Mode  Cnt      Score       Error  Units
+ * FOVBenchmark.doRlPrecise10   avgt    4     21.265 ±     0.257  us/op
+ * FOVBenchmark.doRlPrecise20   avgt    4     35.882 ±     1.751  us/op
+ * FOVBenchmark.doRlPrecise30   avgt    4     53.633 ±     0.975  us/op
+ * FOVBenchmark.doRlPrecise5    avgt    4     15.586 ±     2.216  us/op
+ * FOVBenchmark.doRlPreciseMax  avgt    4  26211.230 ± 11283.769  us/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)

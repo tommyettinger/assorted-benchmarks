@@ -26,13 +26,12 @@ public class Point2I implements Serializable
 		this.x=x; this.y=y;
 	}
 
-	//TODO: This is only kept how it is for evaluation purposes; the existing code is extremely bad.
 	/**
-	 * Uses x+y as hash
+	 * Uses x*127+y as hash; different from what was originally here.
 	 */
 	public int hashCode()
 	{
-		return x<<7-x+y;//x*prime+y
+		return (x<<7)-x+y;//x*prime+y
 	}
 	
 	public String toString()

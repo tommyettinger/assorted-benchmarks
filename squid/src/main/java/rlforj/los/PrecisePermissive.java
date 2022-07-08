@@ -24,7 +24,7 @@ import rlforj.math.Point2I;
 public class PrecisePermissive implements IFovAlgorithm, ILosAlgorithm
 {
 
-	class permissiveMaskT
+	static class permissiveMaskT
 	{
 		/*
 		 * Do not interact with the members directly. Use the provided
@@ -49,35 +49,15 @@ public class PrecisePermissive implements IFovAlgorithm, ILosAlgorithm
 		ILosBoard board;
 	}
 
-//	class offsetT
-//	{
-//		public offsetT(int newX, int newY)
-//		{
-//			x = newX;
-//			y = newY;
-//		}
-//
-//		public int x;
-//
-//		public int y;
-//
-//		public String toString()
-//		{
-//			return "(" + x + ", " + y + ")";
-//		}
-//	}
-
-	class fovStateT
+	static class fovStateT
 	{
-		Point2I source;
+		Point2I source = new Point2I(0, 0);
 
-		permissiveMaskT mask;
+		permissiveMaskT mask = new permissiveMaskT();
 
-		Object context;
+		Point2I quadrant = new Point2I(0, 0);
 
-		Point2I quadrant;
-
-		Point2I extent;
+		Point2I extent = new Point2I(0, 0);
 
 		public int quadrantIndex;
 
@@ -86,7 +66,7 @@ public class PrecisePermissive implements IFovAlgorithm, ILosAlgorithm
 		public boolean isLos = false;
 	};
 
-	class bumpT
+	static class bumpT
 	{
 		public bumpT()
 		{
@@ -101,7 +81,7 @@ public class PrecisePermissive implements IFovAlgorithm, ILosAlgorithm
 		}
 	}
 
-	class fieldT
+	static class fieldT
 	{
 		public fieldT(fieldT f)
 		{
@@ -134,6 +114,11 @@ public class PrecisePermissive implements IFovAlgorithm, ILosAlgorithm
 
 	private Vector<Point2I> path;
 	private ILosAlgorithm fallBackLos=new BresLos(true);
+	private final fovStateT state = new fovStateT();
+
+	final Point2I quadrants[] = { new Point2I(1, 1), new Point2I(-1, 1),
+			new Point2I(-1, -1), new Point2I(1, -1) };
+
 
 	void calculateFovQuadrant(final fovStateT state)
 	{
@@ -397,25 +382,25 @@ public class PrecisePermissive implements IFovAlgorithm, ILosAlgorithm
 		return state.board.isObstacle(adjustedPos.x, adjustedPos.y);
 	}
 
-	void permissiveFov(int sourceX, int sourceY, permissiveMaskT mask)
+	void permissiveFov(int sourceX, int sourceY)
 	{
-		fovStateT state = new fovStateT();
-		state.source = new Point2I(sourceX, sourceY);
-		state.mask = mask;
+		state.source.x = sourceX;
+		state.source.y = sourceY;
+		permissiveMaskT mask = state.mask;
 		state.board = mask.board;
+		state.isLos = false;
 		// state.isBlocked = isBlocked;
 		// state.visit = visit;
 		// state.context = context;
 
 		final int quadrantCount = 4;
-		final Point2I quadrants[] = { new Point2I(1, 1), new Point2I(-1, 1),
-				new Point2I(-1, -1), new Point2I(1, -1) };
+		int quadrantIndex = 0;
 
-		Point2I extents[] = { new Point2I(mask.east, mask.north),
+		final Point2I extents[] = { new Point2I(mask.east, mask.north),
 				new Point2I(mask.west, mask.north),
 				new Point2I(mask.west, mask.south),
 				new Point2I(mask.east, mask.south) };
-		int quadrantIndex = 0;
+
 		for (; quadrantIndex < quadrantCount; ++quadrantIndex)
 		{
 			state.quadrant = quadrants[quadrantIndex];
@@ -441,13 +426,13 @@ public class PrecisePermissive implements IFovAlgorithm, ILosAlgorithm
 
 	public void visitFieldOfView(ILosBoard b, int x, int y, int distance)
 	{
-		permissiveMaskT mask = new permissiveMaskT();
+		permissiveMaskT mask = state.mask;
 		mask.east = mask.north = mask.south = mask.west = distance;
 		mask.mask = null;
 		mask.fovType = FovType.CIRCLE;
 		mask.distPlusOneSq = (distance+1) * (distance+1);
 		mask.board = b;
-		permissiveFov(x, y, mask);
+		permissiveFov(x, y);
 	}
 
 	/**

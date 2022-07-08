@@ -32,8 +32,8 @@ public class ExampleBoard implements ILosBoard  {
 
 	public void resetVisited()
 	{
-		visited = new boolean[w][h];
-//		ArrayTools.fill(visited, false);
+//		visited = new boolean[w][h];
+		ArrayTools.fill(visited, false);
 	}
 
 	public void setObstacle(int x, int y) {
