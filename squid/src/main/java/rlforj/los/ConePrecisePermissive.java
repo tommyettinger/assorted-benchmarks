@@ -1,5 +1,6 @@
 package rlforj.los;
 
+import com.github.yellowstonegames.grid.Radius;
 import rlforj.math.Point2I;
 
 /**
@@ -24,7 +25,7 @@ public class ConePrecisePermissive extends PrecisePermissive implements
 		if(startAngle>360) startAngle%=360;
 		if(finishAngle>360) finishAngle%=360;
 		
-		permissiveMaskT mask = new permissiveMaskT();
+		PermissiveMask mask = new PermissiveMask();
 		mask.east = mask.north = mask.south = mask.west = distance;
 		mask.mask = null;
 		mask.fovType = FovType.CIRCLE;
@@ -47,7 +48,7 @@ public class ConePrecisePermissive extends PrecisePermissive implements
 		state.shallowBumps.clear();
 		state.activeFields.clear();
 
-		fieldT active = new fieldT();
+		Field active = new Field();
 		
 		// We decide the farthest cells that can be seen by the cone ( using 
 		// trigonometry.), then we set the active field to be in between them.
@@ -86,7 +87,7 @@ public class ConePrecisePermissive extends PrecisePermissive implements
 //			actIsBlockedCone(state, dest);
 //		}
 
-		CLikeIterator<fieldT> currentField = new CLikeIterator<fieldT>(
+		CLikeIterator<Field> currentField = new CLikeIterator<Field>(
 				state.activeFields.listIterator());
 		int i = 0;
 		int j = 0;
@@ -106,7 +107,7 @@ public class ConePrecisePermissive extends PrecisePermissive implements
 				visitConeSquare(state, dest, currentField);
 			}
 			// System.out.println("Activefields size "+activeFields.size());
-			currentField = new CLikeIterator<fieldT>(state.activeFields
+			currentField = new CLikeIterator<Field>(state.activeFields
 					.listIterator());
 		}
 	}
@@ -120,10 +121,10 @@ public class ConePrecisePermissive extends PrecisePermissive implements
 	{
 		return i < j ? i : j;
 	}
-	public class coneFovState extends fovStateT {
+	public class coneFovState extends FovState {
 		public boolean axisDone[]={false, false, false, false};
 	}
-	void permissiveConeFov(int sourceX, int sourceY, permissiveMaskT mask,
+	void permissiveConeFov(int sourceX, int sourceY, PermissiveMask mask,
 			int startAngle, int finishAngle)
 	{
 		coneFovState state = new coneFovState();
@@ -135,7 +136,7 @@ public class ConePrecisePermissive extends PrecisePermissive implements
 		// state.context = context;
 
 		//visit origin once
-		state.board.visit(sourceX, sourceY);
+		state.board.visit(sourceX, sourceY, 1f);
 		
 		final int quadrantCount = 4;
 		final Point2I quadrants[] = { new Point2I(1, 1), new Point2I(-1, 1),
@@ -233,14 +234,14 @@ public class ConePrecisePermissive extends PrecisePermissive implements
 	 * @param currentField
 	 */
 	void visitConeSquare(final coneFovState state, final Point2I dest,
-			CLikeIterator<fieldT> currentField)
+			CLikeIterator<Field> currentField)
 	{
 		// System.out.println("visitsq called "+dest);
 		// The top-left and bottom-right corners of the destination square.
 		Point2I topLeft = new Point2I(dest.x, dest.y + 1);
 		Point2I bottomRight = new Point2I(dest.x + 1, dest.y);
 //		System.out.println(dest);
-		// fieldT currFld=null;
+		// Field currFld=null;
 
 		boolean specialCase=false;
 		
@@ -326,8 +327,8 @@ public class ConePrecisePermissive extends PrecisePermissive implements
 			// case BETWEEN
 			// The square intersects neither line. We need to split into two
 			// fields.
-			fieldT steeperField = new fieldT(currentField.getCurrent());
-			fieldT shallowerField = currentField.getCurrent();
+			Field steeperField = new Field(currentField.getCurrent());
+			Field shallowerField = currentField.getCurrent();
 			currentField.insertBeforeCurrent(steeperField);
 			// System.out.println("activeFields "+activeFields);
 			addSteepBump(bottomRight, shallowerField, state.steepBumps);
@@ -364,7 +365,8 @@ public class ConePrecisePermissive extends PrecisePermissive implements
 			if (doesPermissiveVisit(state.mask, pos.x * stateQuadrant.x, pos.y
 					* stateQuadrant.y) == 1)
 			{
-				state.board.visit(adjustedPos.x, adjustedPos.y);
+				state.board.visit(adjustedPos.x, adjustedPos.y,
+						Radius.CIRCLE.radius(state.source.x, state.source.y, adjustedPos.x, adjustedPos.y));
 			}
 		return state.board.isObstacle(adjustedPos.x, adjustedPos.y);
 	}

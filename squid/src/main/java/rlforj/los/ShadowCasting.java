@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+import com.github.yellowstonegames.grid.Radius;
 import rlforj.math.Point2I;
 
 /**
@@ -55,7 +56,7 @@ public class ShadowCasting implements IConeFovAlgorithm, ILosAlgorithm
 		// RLPoint p = RLPoint.point(r.x + i, r.y + j);
 		// points.add(p);
 		Point2I p = new Point2I(x, y);
-		b.visit(x, y);
+		b.visit(x, y, 1f);
 		go(b, p, 1, distance, 0.0, 359.9);
 		// }
 		// }
@@ -107,7 +108,7 @@ public class ShadowCasting implements IConeFovAlgorithm, ILosAlgorithm
 
 			// Accept this point
 			// pointSet.add(point);
-			board.visit(px, py);
+			board.visit(px, py, Radius.CIRCLE.radius(ctr.x, ctr.y, px, py));
 
 			// Check to see if we have an obstacle here
 			boolean isObstacle = board.isObstacle(px, py);
@@ -276,7 +277,7 @@ public class ShadowCasting implements IConeFovAlgorithm, ILosAlgorithm
 			throw new IllegalArgumentException();
 
 		Point2I p = new Point2I(x, y);
-		b.visit(x, y);
+		b.visit(x, y, 1f);
 		if(startAngle>finishAngle) {
 			go(b, p, 1, distance, startAngle, 359.999);
 			go(b, p, 1, distance, 0.0, finishAngle);

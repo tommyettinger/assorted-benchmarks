@@ -5,35 +5,35 @@ import rlforj.math.Point2I;
 import squidpony.ArrayTools;
 import squidpony.squidmath.GreasedRegion;
 
-public class ExampleBoard implements ILosBoard  {
+public class DistanceBoard implements ILosBoard  {
 
 	public int w, h;
-	
+
 	public boolean[][] obstacles;
-	public boolean[][] visited;
+	public float[][] visited;
 
 	public char visibleFloor='.', invisibleFloor=' ', invisibleWall=' ';
-	
-	public ExampleBoard(int w, int h) {
+
+	public DistanceBoard(int w, int h) {
 		this.w=w;
 		this.h=h;
-		
+
 		obstacles = new boolean[w][h];
-		visited = new boolean[w][h];
+		visited = new float[w][h];
 	}
 
-	public ExampleBoard(GreasedRegion region) {
+	public DistanceBoard(GreasedRegion region) {
 		this.w=region.width;
 		this.h=region.height;
 
 		obstacles = region.decode();
-		visited = new boolean[w][h];
+		visited = new float[w][h];
 	}
 
 	public void resetVisited()
 	{
 //		visited = new boolean[w][h];
-		ArrayTools.fill(visited, false);
+		ArrayTools.fill(visited, 0f);
 	}
 
 	public void setObstacle(int x, int y) {
@@ -52,7 +52,7 @@ public class ExampleBoard implements ILosBoard  {
 
 	public void visit(int x, int y, float value)
 	{
-		visited[x][y]=true;
+		visited[x][y]=value;
 	}
 	
 	public void print(int ox, int oy) {
@@ -64,7 +64,7 @@ public class ExampleBoard implements ILosBoard  {
 				if (i == ox && j == oy)
 					System.out.print('@');
 				else
-					System.out.print(visited[i][j] ? (obstacles[i][j] ? '#'
+					System.out.print(visited[i][j] != 0f ? (obstacles[i][j] ? '#'
 							: visibleFloor) : (obstacles[i][j] ? invisibleWall
 							: invisibleFloor));
 			}
@@ -74,7 +74,7 @@ public class ExampleBoard implements ILosBoard  {
 
 	public boolean wasVisited(int i, int j)
 	{
-		return visited[i][j];
+		return visited[i][j] != 0f;
 	}
 	
 }

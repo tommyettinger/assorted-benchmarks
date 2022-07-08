@@ -33,13 +33,14 @@ public interface ILosBoard
 	/**
 	 * Location (x,y) is visible
 	 * Visit the location (x,y)
-	 * 
+	 * <p>
 	 * This can involve saving the points in a collection,
 	 * setting flags on a 2D map etc.
-	 * 
+	 *
 	 * @param x
 	 * @param y
+	 * @param value
 	 */
-	public void visit(int x, int y);
+	void visit(int x, int y, float value);
 	
 }

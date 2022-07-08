@@ -1,14 +1,11 @@
 package rlforj.los.raymulticast;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Set;
 
+import com.github.yellowstonegames.grid.Radius;
 import rlforj.los.IFovAlgorithm;
 import rlforj.los.ILosBoard;
-import rlforj.los.PrecisePermissive;
-import rlforj.los.ShadowCasting;
 import rlforj.math.Point2I;
 
 /**
@@ -46,7 +43,7 @@ public class MultiRaysCaster implements IFovAlgorithm {
 		
 		offset = new Point2I(distance, distance);
 		dsq=distance*distance;
-		b.visit(x, y);
+		b.visit(x, y, 1f);
 		castRays();
 //		printResults();
 	}
@@ -85,7 +82,8 @@ public class MultiRaysCaster implements IFovAlgorithm {
 			mergeInputs(currentData);
 
 			if(!currentData.obscure())
-				world.visit(origin.x+currentData.xLoc, origin.y+currentData.yLoc);
+				world.visit(origin.x+currentData.xLoc, origin.y+currentData.yLoc,
+						Radius.CIRCLE.radius(0, 0, currentData.xLoc, currentData.yLoc));
 			
 			if(!currentData.ignore) expandPerimeterFrom(currentData);
 		}

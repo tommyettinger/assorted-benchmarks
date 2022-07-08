@@ -52,7 +52,7 @@ public class RecordQuadrantVisitBoard implements ILosBoard,
 		return b.isObstacle(x, y);
 	}
 
-	public void visit(int x, int y)
+	public void visit(int x, int y, float value)
 	{
 		//			System.out.println("visited "+x+" "+y);
 		if (x == targetX && y == targetY)

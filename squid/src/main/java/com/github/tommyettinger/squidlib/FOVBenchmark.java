@@ -38,6 +38,7 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+import rlforj.examples.DistanceBoard;
 import rlforj.examples.ExampleBoard;
 import rlforj.los.PrecisePermissive;
 import squidpony.squidgrid.FOV;
@@ -97,6 +98,29 @@ import java.util.concurrent.TimeUnit;
  * FOVBenchmark.doRlPrecise5    avgt    4     19.835 ±     1.780  us/op
  * FOVBenchmark.doRlPreciseMax  avgt    4  29181.089 ± 10391.568  us/op
  * </pre>
+ *
+ * With distances assigned as floats to a DistanceBoard, precise permissive is generally slower, sometimes by
+ * a massive degree.
+ * <pre>
+ * Benchmark                    Mode  Cnt      Score       Error  Units
+ * FOVBenchmark.doAdLOS         avgt    4     25.575 ±     3.954  us/op
+ * FOVBenchmark.doAdShadow10    avgt    4     27.106 ±     2.292  us/op
+ * FOVBenchmark.doAdShadow20    avgt    4     27.628 ±     1.665  us/op
+ * FOVBenchmark.doAdShadow30    avgt    4     28.661 ±    10.455  us/op
+ * FOVBenchmark.doAdShadow5     avgt    4     30.053 ±     4.181  us/op
+ * FOVBenchmark.doAdShadowMax   avgt    4     51.394 ±    19.166  us/op
+ * FOVBenchmark.doIdLOS         avgt    4     25.535 ±     3.246  us/op
+ * FOVBenchmark.doIdShadow10    avgt    4     50.993 ±     5.999  us/op
+ * FOVBenchmark.doIdShadow20    avgt    4     50.912 ±     5.573  us/op
+ * FOVBenchmark.doIdShadow30    avgt    4     52.692 ±     6.532  us/op
+ * FOVBenchmark.doIdShadow5     avgt    4     50.305 ±    10.544  us/op
+ * FOVBenchmark.doIdShadowMax   avgt    4     73.795 ±    13.444  us/op
+ * FOVBenchmark.doRlPrecise10   avgt    4     36.464 ±     0.247  us/op
+ * FOVBenchmark.doRlPrecise20   avgt    4     50.357 ±     5.017  us/op
+ * FOVBenchmark.doRlPrecise30   avgt    4     69.362 ±     0.983  us/op
+ * FOVBenchmark.doRlPrecise5    avgt    4     31.279 ±     0.165  us/op
+ * FOVBenchmark.doRlPreciseMax  avgt    4  28238.068 ± 10737.640  us/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
@@ -117,7 +141,7 @@ public class FOVBenchmark {
         public GreasedRegion floors;
         public GreasedRegion blocking;
         public GreasedRegion lit;
-        public ExampleBoard board;
+        public DistanceBoard board;
         public PrecisePermissive pp;
         public Region blockingR;
         public Region litR;
@@ -143,12 +167,12 @@ public class FOVBenchmark {
             lightD = new double[DIMENSION][DIMENSION];
             lightF = new float[DIMENSION][DIMENSION];
             pp = new PrecisePermissive();
-            board = new ExampleBoard(blocking);
+            board = new DistanceBoard(blocking);
             idx = 0;
         }
 
     }
-/*
+
     @Benchmark
     public void doIdShadow5(BenchmarkState state, Blackhole blackhole)
     {
@@ -244,7 +268,6 @@ public class FOVBenchmark {
         com.github.yellowstonegames.grid.FOV.reuseLOS(state.blockingR, state.litR, point.x, point.y);
         blackhole.consume(state.litR);
     }
-*/
 
 
     @Benchmark
