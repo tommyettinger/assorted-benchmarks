@@ -38,6 +38,8 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+import rlforj.examples.ExampleBoard;
+import rlforj.los.PrecisePermissive;
 import squidpony.squidgrid.FOV;
 import squidpony.squidgrid.Radius;
 import squidpony.squidgrid.mapping.DungeonGenerator;
@@ -65,6 +67,16 @@ import java.util.concurrent.TimeUnit;
  * FOVBenchmark.doIdShadow5    avgt    4  50.219 ± 5.368  us/op
  * FOVBenchmark.doIdShadowMax  avgt    4  73.290 ± 5.870  us/op
  * </pre>
+ * Testing RL4J's precise permissive FOV without optimizing it at all; it seems to slow down as the view radius
+ * increases even if it has encountered obstacles in all directions before it reaches that radius.
+ * <pre>
+ * Benchmark                    Mode  Cnt      Score      Error  Units
+ * FOVBenchmark.doRlPrecise10   avgt    4     65.303 ±    0.461  us/op
+ * FOVBenchmark.doRlPrecise20   avgt    4     78.083 ±    0.846  us/op
+ * FOVBenchmark.doRlPrecise30   avgt    4     97.025 ±    0.593  us/op
+ * FOVBenchmark.doRlPrecise5    avgt    4     59.704 ±    5.301  us/op
+ * FOVBenchmark.doRlPreciseMax  avgt    4  37562.747 ± 4087.306  us/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
@@ -85,6 +97,8 @@ public class FOVBenchmark {
         public GreasedRegion floors;
         public GreasedRegion blocking;
         public GreasedRegion lit;
+        public ExampleBoard board;
+        public PrecisePermissive pp;
         public Region blockingR;
         public Region litR;
         public int floorCount;
@@ -108,6 +122,8 @@ public class FOVBenchmark {
             resF = com.github.yellowstonegames.grid.FOV.generateSimpleResistances(map);
             lightD = new double[DIMENSION][DIMENSION];
             lightF = new float[DIMENSION][DIMENSION];
+            pp = new PrecisePermissive();
+            board = new ExampleBoard(blocking);
             idx = 0;
         }
 
@@ -208,6 +224,55 @@ public class FOVBenchmark {
         com.github.yellowstonegames.grid.FOV.reuseLOS(state.blockingR, state.litR, point.x, point.y);
         blackhole.consume(state.litR);
     }
+
+
+
+    @Benchmark
+    public void doRlPrecise5(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        state.board.resetVisited();
+        state.pp.visitFieldOfView(state.board, point.x, point.y, 5);
+        blackhole.consume(state.board);
+    }
+
+    @Benchmark
+    public void doRlPrecise10(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        state.board.resetVisited();
+        state.pp.visitFieldOfView(state.board, point.x, point.y, 10);
+        blackhole.consume(state.board);
+    }
+
+    @Benchmark
+    public void doRlPrecise20(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        state.board.resetVisited();
+        state.pp.visitFieldOfView(state.board, point.x, point.y, 20);
+        blackhole.consume(state.board);
+    }
+
+    @Benchmark
+    public void doRlPrecise30(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        state.board.resetVisited();
+        state.pp.visitFieldOfView(state.board, point.x, point.y, 30);
+        blackhole.consume(state.board);
+    }
+
+    @Benchmark
+    public void doRlPreciseMax(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        state.board.resetVisited();
+        state.pp.visitFieldOfView(state.board, point.x, point.y, state.DIMENSION << 1);
+        blackhole.consume(state.board);
+    }
+
+
 
     /*
      * ============================== HOW TO RUN THIS TEST: ====================================
