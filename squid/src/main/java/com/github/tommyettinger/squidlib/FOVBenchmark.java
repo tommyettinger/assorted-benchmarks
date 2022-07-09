@@ -121,6 +121,16 @@ import java.util.concurrent.TimeUnit;
  * FOVBenchmark.doRlPrecise5    avgt    4     31.279 ±     0.165  us/op
  * FOVBenchmark.doRlPreciseMax  avgt    4  28238.068 ± 10737.640  us/op
  * </pre>
+ *
+ * OK, symmetrical FOV likely needs to be reworked...
+ * <pre>
+ * Benchmark                        Mode  Cnt       Score        Error  Units
+ * FOVBenchmark.doAdSymmetrical10   avgt    4      82.382 ±      5.428  us/op
+ * FOVBenchmark.doAdSymmetrical20   avgt    4     292.131 ±     73.724  us/op
+ * FOVBenchmark.doAdSymmetrical30   avgt    4     698.022 ±    145.319  us/op
+ * FOVBenchmark.doAdSymmetrical5    avgt    4      37.656 ±      2.870  us/op
+ * FOVBenchmark.doAdSymmetricalMax  avgt    4  489955.736 ± 206642.742  us/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
@@ -313,6 +323,49 @@ public class FOVBenchmark {
         state.board.resetVisited();
         state.pp.visitFieldOfView(state.board, point.x, point.y, state.DIMENSION << 1);
         blackhole.consume(state.board);
+    }
+
+
+
+
+    @Benchmark
+    public void doAdSymmetrical5(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        com.github.yellowstonegames.grid.FOV.reuseFOVSymmetrical(state.resF, state.lightF, point.x, point.y, 5f, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+    @Benchmark
+    public void doAdSymmetrical10(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        com.github.yellowstonegames.grid.FOV.reuseFOVSymmetrical(state.resF, state.lightF, point.x, point.y, 10f, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+    @Benchmark
+    public void doAdSymmetrical20(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        com.github.yellowstonegames.grid.FOV.reuseFOVSymmetrical(state.resF, state.lightF, point.x, point.y, 20f, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+    @Benchmark
+    public void doAdSymmetrical30(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        com.github.yellowstonegames.grid.FOV.reuseFOVSymmetrical(state.resF, state.lightF, point.x, point.y, 30f, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+    @Benchmark
+    public void doAdSymmetricalMax(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        com.github.yellowstonegames.grid.FOV.reuseFOVSymmetrical(state.resF, state.lightF, point.x, point.y, state.DIMENSION << 1, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
     }
 
 
