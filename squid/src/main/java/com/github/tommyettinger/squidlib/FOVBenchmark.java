@@ -132,15 +132,16 @@ import java.util.concurrent.TimeUnit;
  * FOVBenchmark.doAdSymmetricalMax  avgt    4  489955.736 ± 206642.742  us/op
  * </pre>
  *
- * Drawing an OrthoLine (which is naturally symmetrical) to any point before we add light to it, now. This is actually
- * quite fast, and might be symmetrical enough, we'll see.
+ * Drawing an OrthoLine (which is naturally symmetrical) to any point before we add light to it, and back to the start
+ * to ensure symmetry. This is actually quite fast! It's assigning float distances and is faster than RL4J's PPFOV when
+ * it does the same. Five hundred times faster, in the case of radius 1000.
  * <pre>
  * Benchmark                  Mode  Cnt   Score   Error  Units
- * FOVBenchmark.doAdOrtho10   avgt    4  29.999 ± 2.470  us/op
- * FOVBenchmark.doAdOrtho20   avgt    4  31.271 ± 4.303  us/op
- * FOVBenchmark.doAdOrtho30   avgt    4  31.591 ± 4.922  us/op
- * FOVBenchmark.doAdOrtho5    avgt    4  27.570 ± 2.468  us/op
- * FOVBenchmark.doAdOrthoMax  avgt    4  48.429 ± 2.549  us/op
+ * FOVBenchmark.doAdOrtho10   avgt    4  31.989 ± 2.739  us/op
+ * FOVBenchmark.doAdOrtho20   avgt    4  37.189 ± 1.888  us/op
+ * FOVBenchmark.doAdOrtho30   avgt    4  37.107 ± 3.812  us/op
+ * FOVBenchmark.doAdOrtho5    avgt    4  28.302 ± 3.634  us/op
+ * FOVBenchmark.doAdOrthoMax  avgt    4  55.788 ± 7.116  us/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
