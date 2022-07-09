@@ -131,6 +131,17 @@ import java.util.concurrent.TimeUnit;
  * FOVBenchmark.doAdSymmetrical5    avgt    4      37.656 ±      2.870  us/op
  * FOVBenchmark.doAdSymmetricalMax  avgt    4  489955.736 ± 206642.742  us/op
  * </pre>
+ *
+ * Drawing an OrthoLine (which is naturally symmetrical) to any point before we add light to it, now. This is actually
+ * quite fast, and might be symmetrical enough, we'll see.
+ * <pre>
+ * Benchmark                  Mode  Cnt   Score   Error  Units
+ * FOVBenchmark.doAdOrtho10   avgt    4  29.999 ± 2.470  us/op
+ * FOVBenchmark.doAdOrtho20   avgt    4  31.271 ± 4.303  us/op
+ * FOVBenchmark.doAdOrtho30   avgt    4  31.591 ± 4.922  us/op
+ * FOVBenchmark.doAdOrtho5    avgt    4  27.570 ± 2.468  us/op
+ * FOVBenchmark.doAdOrthoMax  avgt    4  48.429 ± 2.549  us/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
@@ -365,6 +376,49 @@ public class FOVBenchmark {
     {
         Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
         com.github.yellowstonegames.grid.FOV.reuseFOVSymmetrical(state.resF, state.lightF, point.x, point.y, state.DIMENSION << 1, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+
+
+
+    @Benchmark
+    public void doAdOrtho5(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        FOV2.reuseFOVOrtho(state.resF, state.lightF, point.x, point.y, 5f, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+    @Benchmark
+    public void doAdOrtho10(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        FOV2.reuseFOVOrtho(state.resF, state.lightF, point.x, point.y, 10f, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+    @Benchmark
+    public void doAdOrtho20(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        FOV2.reuseFOVOrtho(state.resF, state.lightF, point.x, point.y, 20f, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+    @Benchmark
+    public void doAdOrtho30(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        FOV2.reuseFOVOrtho(state.resF, state.lightF, point.x, point.y, 30f, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+    @Benchmark
+    public void doAdOrthoMax(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        FOV2.reuseFOVOrtho(state.resF, state.lightF, point.x, point.y, state.DIMENSION << 1, com.github.yellowstonegames.grid.Radius.CIRCLE);
         blackhole.consume(state.lightF);
     }
 
