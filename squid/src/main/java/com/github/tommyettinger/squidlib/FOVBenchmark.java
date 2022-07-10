@@ -134,7 +134,7 @@ import java.util.concurrent.TimeUnit;
  *
  * Drawing an OrthoLine (which is naturally symmetrical) to any point before we add light to it, and back to the start
  * to ensure symmetry. This is actually quite fast! It's assigning float distances and is faster than RL4J's PPFOV when
- * it does the same. Five hundred times faster, in the case of radius 1000.
+ * it does the same. Five hundred times faster, in the case of radius 1000. Unfortunately, it has many visual artifacts.
  * <pre>
  * Benchmark                  Mode  Cnt   Score   Error  Units
  * FOVBenchmark.doAdOrtho10   avgt    4  31.989 ± 2.739  us/op
@@ -142,6 +142,21 @@ import java.util.concurrent.TimeUnit;
  * FOVBenchmark.doAdOrtho30   avgt    4  37.107 ± 3.812  us/op
  * FOVBenchmark.doAdOrtho5    avgt    4  28.302 ± 3.634  us/op
  * FOVBenchmark.doAdOrthoMax  avgt    4  55.788 ± 7.116  us/op
+ * </pre>
+ *
+ * Comparing two different Symmetrical FOV options, the 2Symmetrical methods seem much faster with large radii.
+ * <pre>
+ * Benchmark                         Mode  Cnt       Score        Error  Units
+ * FOVBenchmark.doAd2Symmetrical10   avgt    4      40.417 ±      3.631  us/op
+ * FOVBenchmark.doAd2Symmetrical20   avgt    4      55.089 ±      3.692  us/op
+ * FOVBenchmark.doAd2Symmetrical30   avgt    4      60.006 ±      1.985  us/op
+ * FOVBenchmark.doAd2Symmetrical5    avgt    4      30.000 ±      5.531  us/op
+ * FOVBenchmark.doAd2SymmetricalMax  avgt    4    1390.654 ±    476.750  us/op
+ * FOVBenchmark.doAdSymmetrical10    avgt    4      81.413 ±      2.087  us/op
+ * FOVBenchmark.doAdSymmetrical20    avgt    4     298.270 ±     92.780  us/op
+ * FOVBenchmark.doAdSymmetrical30    avgt    4     647.953 ±     73.989  us/op
+ * FOVBenchmark.doAdSymmetrical5     avgt    4      36.867 ±      3.495  us/op
+ * FOVBenchmark.doAdSymmetricalMax   avgt    4  488830.869 ± 214074.002  us/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
@@ -420,6 +435,47 @@ public class FOVBenchmark {
     {
         Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
         FOV2.reuseFOVOrtho(state.resF, state.lightF, point.x, point.y, state.DIMENSION << 1, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+
+    @Benchmark
+    public void doAd2Symmetrical5(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        FOV2.reuseFOVSymmetrical2(state.resF, state.lightF, point.x, point.y, 5f, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+    @Benchmark
+    public void doAd2Symmetrical10(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        FOV2.reuseFOVSymmetrical2(state.resF, state.lightF, point.x, point.y, 10f, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+    @Benchmark
+    public void doAd2Symmetrical20(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        FOV2.reuseFOVSymmetrical2(state.resF, state.lightF, point.x, point.y, 20f, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+    @Benchmark
+    public void doAd2Symmetrical30(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        FOV2.reuseFOVSymmetrical2(state.resF, state.lightF, point.x, point.y, 30f, com.github.yellowstonegames.grid.Radius.CIRCLE);
+        blackhole.consume(state.lightF);
+    }
+
+    @Benchmark
+    public void doAd2SymmetricalMax(BenchmarkState state, Blackhole blackhole)
+    {
+        Coord point = state.floorArray[state.idx = (state.idx + 1) % state.floorCount];
+        FOV2.reuseFOVSymmetrical2(state.resF, state.lightF, point.x, point.y, state.DIMENSION << 1, com.github.yellowstonegames.grid.Radius.CIRCLE);
         blackhole.consume(state.lightF);
     }
 

@@ -220,7 +220,7 @@ public class FOV2 {
      * @param radiusTechnique provides a means to calculate the radius as desired
      * @return the computed light grid, which is the same 2D array as the value assigned to {@code light}
      */
-    public static float[][] reuseFOVSymmetrical(float[][] resistanceMap, float[][] light, int startX, int startY, float radius, Radius radiusTechnique)
+    public static float[][] reuseFOVSymmetrical2(float[][] resistanceMap, float[][] light, int startX, int startY, float radius, Radius radiusTechnique)
     {
         float decay = 1.0f / radius;
         ArrayTools.fill(light, 0);
@@ -228,74 +228,64 @@ public class FOV2 {
 
 
         final int width = light.length, height = light[0].length;
-        shadowCast(1, 1f, 0f, 0, 1, 1, 0, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
-        for (int row = 0; row <= radius + 1.0f; row++) {
-            for (int col = Math.max(1,row); col <= radius + 1.0f; col++) {
-                if(startX - col >= 0 && startY - row >= 0 && resistanceMap[startX - col][startY - row] < 1.0f &&
-                        !shadowCastCheck(1, 1.0f, 0.0f, 0, -1, -1, 0, radius, startX - col, startY - row, resistanceMap, 0, 0, light.length, light[0].length, startX, startY))
-                    light[startX - col][startY - row] = 0.0f;
-            }
-        }
-        shadowCast(1, 1f, 0f, 1, 0, 0, 1, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
-        for (int col = 0; col <= radius + 1.0f; col++) {
-            for (int row = Math.max(1,col); row <= radius + 1.0f; row++) {
-                if(startX - col >= 0 && startY - row >= 0 && resistanceMap[startX - col][startY - row] < 1.0f &&
-                        !shadowCastCheck(1, 1.0f, 0.0f, -1, 0, 0, -1, radius, startX - col, startY - row, resistanceMap, 0, 0, light.length, light[0].length, startX, startY))
-                    light[startX - col][startY - row] = 0.0f;
-            }
-        }
-
-        shadowCast(1, 1f, 0f, 0, 1, -1, 0, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
-        for (int row = 0; row <= radius + 1.0f; row++) {
-            for (int col = Math.max(1,row); col <= radius + 1.0f; col++) {
-                if(startX - col >= 0 && startY + row < light[0].length &&  resistanceMap[startX - col][startY + row] < 1.0f &&
-                        !shadowCastCheck(1, 1.0f, 0.0f, 0, -1, 1, 0, radius, startX - col, startY + row, resistanceMap, 0, 0, light.length, light[0].length, startX, startY))
-                    light[startX - col][startY + row] = 0.0f;
-            }
-        }
-        shadowCast(1, 1f, 0f, 1, 0, 0, -1, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
-        for (int col = 0; col <= radius + 1.0f; col++) {
-            for (int row = Math.max(1,col); row <= radius + 1.0f; row++) {
-                if(startX - col >= 0 && startY + row < light[0].length && resistanceMap[startX - col][startY + row] < 1.0f &&
-                        !shadowCastCheck(1, 1.0f, 0.0f, -1, 0, 0, 1, radius, startX - col, startY + row, resistanceMap, 0, 0, light.length, light[0].length, startX, startY))
-                    light[startX - col][startY + row] = 0.0f;
-            }
-        }
-
-        shadowCast(1, 1f, 0f, 0, -1, -1, 0, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
-        for (int row = 0; row <= radius + 1.0f; row++) {
-            for (int col = Math.max(1,row); col <= radius + 1.0f; col++) {
-                if(startX + col < light.length && startY + row < light[0].length && resistanceMap[startX + col][startY + row] < 1.0f &&
-                        !shadowCastCheck(1, 1.0f, 0.0f, 0, 1, 1, 0, radius, startX + col, startY + row, resistanceMap, 0, 0, light.length, light[0].length, startX, startY))
-                    light[startX + col][startY + row] = 0.0f;
-            }
-        }
-        shadowCast(1, 1f, 0f, -1, 0, 0, -1, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
-        for (int col = 0; col <= radius + 1.0f; col++) {
-            for (int row = Math.max(1,col); row <= radius + 1.0f; row++) {
-                if(startX + col < light.length && startY + row < light[0].length && resistanceMap[startX + col][startY + row] < 1.0f &&
-                        !shadowCastCheck(1, 1.0f, 0.0f, 1, 0, 0, 1, radius, startX + col, startY + row, resistanceMap, 0, 0, light.length, light[0].length, startX, startY))
-                    light[startX + col][startY + row] = 0.0f;
-            }
-        }
-
-        shadowCast(1, 1f, 0f, 0, -1, 1, 0, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
-        for (int row = 0; row <= radius + 1.0f && startY + row < light[0].length; row++) {
-            for (int col = Math.max(1,row); col <= radius + 1.0f; col++) {
-                if(startX + col < light.length && startY - row >= 0 && resistanceMap[startX + col][startY - row] < 1.0f &&
-                        !shadowCastCheck(1, 1.0f, 0.0f, 0, 1, -1, 0, radius, startX + col, startY - row, resistanceMap, 0, 0, light.length, light[0].length, startX, startY))
-                    light[startX + col][startY - row] = 0.0f;
-            }
-        }
-        shadowCast(1, 1f, 0f, -1, 0, 0, 1, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
-        for (int col = 0; col <= radius + 1.0f; col++) {
-            for (int row = Math.max(1,col); row <= radius + 1.0f; row++) {
-                if(startX + col < light.length && startY - row >= 0 && resistanceMap[startX + col][startY - row] < 1.0f &&
-                        !shadowCastCheck(1, 1.0f, 0.0f, 1, 0, 0, -1, radius, startX + col, startY - row, resistanceMap, 0, 0, light.length, light[0].length, startX, startY))
-                    light[startX + col][startY - row] = 0.0f;
-            }
-        }
+        shadowCastSymmetrical(1, 1f, 0f,  0,  1,  1,  0, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
+        shadowCastSymmetrical(1, 1f, 0f,  1,  0,  0,  1, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
+        shadowCastSymmetrical(1, 1f, 0f,  0,  1, -1,  0, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
+        shadowCastSymmetrical(1, 1f, 0f,  1,  0,  0, -1, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
+        shadowCastSymmetrical(1, 1f, 0f,  0, -1, -1,  0, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
+        shadowCastSymmetrical(1, 1f, 0f, -1,  0,  0, -1, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
+        shadowCastSymmetrical(1, 1f, 0f,  0, -1,  1,  0, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
+        shadowCastSymmetrical(1, 1f, 0f, -1,  0,  0,  1, radius, startX, startY, decay, light, resistanceMap, radiusTechnique, 0, 0, width, height);
         return light;
+    }
+
+    private static void shadowCastSymmetrical(int row, float start, float end, int xx, int xy, int yx, int yy,
+                                              float radius, int startX, int startY, float decay, float[][] lightMap,
+                                              float[][] map, Radius radiusStrategy,
+                                              int minX, int minY, int maxX, int maxY) {
+        float newStart = 0;
+        if (start < end) {
+            return;
+        }
+
+        boolean blocked = false;
+        for (int distance = row; distance <= radius && distance < maxX - minX + maxY - minY && !blocked; distance++) {
+            int deltaY = -distance;
+            for (int deltaX = -distance; deltaX <= 0; deltaX++) {
+                int currentX = startX + deltaX * xx + deltaY * xy;
+                int currentY = startY + deltaX * yx + deltaY * yy;
+                float leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
+                float rightSlope = (deltaX + 0.5f) / (deltaY - 0.5f);
+
+                if (!(currentX >= minX && currentY >= minY && currentX < maxX && currentY < maxY) || start < rightSlope) {
+                    continue;
+                } else if (end > leftSlope) {
+                    break;
+                }
+                float deltaRadius = radiusStrategy.radius(deltaX, deltaY);
+                //check if it's within the light-able area and light if needed and mutually reachable
+                if (deltaRadius <= radius &&
+                        shadowCastCheck(1, 1f, 0f, -xx, -xy, -yx, -yy, radius, currentX, currentY,
+                                map, minX, minY, maxX, maxY, startX, startY))
+                    lightMap[currentX][currentY] = 1.0f - decay * deltaRadius;
+
+                if (blocked) { //previous cell was a blocking one
+                    if (map[currentX][currentY] >= 1) {//hit a wall
+                        newStart = rightSlope;
+                    } else {
+                        blocked = false;
+                        start = newStart;
+                    }
+                } else {
+                    if (map[currentX][currentY] >= 1 && distance < radius) {//hit a wall within sight line
+                        blocked = true;
+                        shadowCastSymmetrical(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay,
+                                lightMap, map, radiusStrategy, minX, minY, maxX, maxY);
+                        newStart = rightSlope;
+                    }
+                }
+            }
+        }
     }
     /**
      * Calculates which cells have line of sight from the given x, y coordinates.
