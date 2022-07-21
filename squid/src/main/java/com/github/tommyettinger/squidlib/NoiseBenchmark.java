@@ -264,13 +264,59 @@ import java.util.concurrent.TimeUnit;
  * same speed as OSF's low-quality 4D noise. In 2D and 3D, VastNoise is
  * quite a bit faster, and has comparable quality to OSS. This has VastNoise
  * using the SIMPLEX noise mode.
+ *
+ * <pre>
+ * Benchmark                                 Mode  Cnt     Score    Error  Units
+ * NoiseBenchmark.measureFastNoise2D         avgt    5    23.840 ±  0.613  ns/op
+ * NoiseBenchmark.measureFastNoise3D         avgt    5    30.107 ±  0.458  ns/op
+ * NoiseBenchmark.measureFastNoise4D         avgt    5    56.201 ±  0.968  ns/op
+ * NoiseBenchmark.measureFastNoise5D         avgt    5    67.865 ±  1.033  ns/op
+ * NoiseBenchmark.measureFastNoise6D         avgt    5    88.664 ±  5.168  ns/op
+ * NoiseBenchmark.measureOSFNoise2D          avgt    5    29.653 ±  0.922  ns/op
+ * NoiseBenchmark.measureOSFNoise3D          avgt    5    46.563 ±  0.634  ns/op
+ * NoiseBenchmark.measureOSFNoise4D          avgt    5    51.756 ±  1.247  ns/op
+ * NoiseBenchmark.measureOSHNoise2D          avgt    5    38.163 ±  4.114  ns/op
+ * NoiseBenchmark.measureOSHNoise3D          avgt    5    53.993 ±  4.381  ns/op
+ * NoiseBenchmark.measureOSHNoise4D          avgt    5    52.967 ±  1.327  ns/op
+ * NoiseBenchmark.measureOSN2F2D             avgt    5    31.819 ±  5.080  ns/op
+ * NoiseBenchmark.measureOSN2F3D             avgt    5    42.753 ±  9.842  ns/op
+ * NoiseBenchmark.measureOSN2F4D             avgt    5    61.373 ±  0.979  ns/op
+ * NoiseBenchmark.measureOSN2S2D             avgt    5    28.354 ±  0.351  ns/op
+ * NoiseBenchmark.measureOSN2S3D             avgt    5    50.334 ±  1.086  ns/op
+ * NoiseBenchmark.measureOSN2S4D             avgt    5    77.143 ±  1.349  ns/op
+ * NoiseBenchmark.measureOSSNoise2D          avgt    5    36.348 ±  1.162  ns/op
+ * NoiseBenchmark.measureOSSNoise3D          avgt    5    57.927 ±  7.773  ns/op
+ * NoiseBenchmark.measureOSSNoise4D          avgt    5    82.572 ±  1.258  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise2D    avgt    5    67.636 ±  0.193  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise3D    avgt    5   128.329 ±  0.341  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise4D    avgt    5   211.229 ±  0.869  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise5D    avgt    5   545.180 ±  6.835  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise6D    avgt    5  1159.013 ± 15.768  ns/op
+ * NoiseBenchmark.measureSquadNoise2D        avgt    5    29.576 ±  0.300  ns/op
+ * NoiseBenchmark.measureSquadNoise3D        avgt    5    31.008 ±  0.301  ns/op
+ * NoiseBenchmark.measureSquadNoise4D        avgt    5    51.327 ±  0.744  ns/op
+ * NoiseBenchmark.measureSquadNoise5D        avgt    5    68.544 ±  0.554  ns/op
+ * NoiseBenchmark.measureSquadNoise6D        avgt    5    85.151 ±  3.020  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise2D  avgt    5    19.908 ±  0.085  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise3D  avgt    5    24.361 ±  0.759  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise4D  avgt    5    63.485 ±  0.969  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise5D  avgt    5   119.337 ±  1.809  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise6D  avgt    5   377.451 ± 11.406  ns/op
+ * NoiseBenchmark.measureVastNoise2D         avgt    5    22.558 ±  0.049  ns/op
+ * NoiseBenchmark.measureVastNoise3D         avgt    5    26.817 ±  0.564  ns/op
+ * NoiseBenchmark.measureVastNoise4D         avgt    5    47.651 ±  0.789  ns/op
+ * NoiseBenchmark.measureVastNoise5D         avgt    5    64.988 ±  1.078  ns/op
+ * NoiseBenchmark.measureVastNoise6D         avgt    5    84.217 ±  1.114  ns/op
+ * </pre>
+ * OSN2F is an improved version of OSFNoise, OSN2S is an improved version of OSSNoise.
+ * They are from OpenSimplex2, and are in the public domain.
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Fork(1)
-@Warmup(iterations = 5)
-@Measurement(iterations = 5)
+@Warmup(iterations = 5, time = 5)
+@Measurement(iterations = 5, time = 5)
 public class NoiseBenchmark {
 
     private short x, y, z, w, u, v;
@@ -781,6 +827,35 @@ public class NoiseBenchmark {
         return GustavsonSimplexNoise.noise(++x * 0.03125, --y * 0.03125, z++ * 0.03125, w-- * 0.03125);
     }
 
+    @Benchmark
+    public double measureOSN2F2D() {
+        return OSN2F.noise2(12345L, ++x * 0.03125, --y * 0.03125);
+    }
+
+    @Benchmark
+    public double measureOSN2F3D() {
+        return OSN2F.noise3_ImproveXY(12345L, ++x * 0.03125, --y * 0.03125, z++ * 0.03125);
+    }
+
+    @Benchmark
+    public double measureOSN2F4D() {
+        return OSN2F.noise4_ImproveXY_ImproveZW(12345L, ++x * 0.03125, --y * 0.03125, z++ * 0.03125, w-- * 0.03125);
+    }
+
+    @Benchmark
+    public double measureOSN2S2D() {
+        return OSN2S.noise2(12345L, ++x * 0.03125, --y * 0.03125);
+    }
+
+    @Benchmark
+    public double measureOSN2S3D() {
+        return OSN2S.noise3_ImproveXY(12345L, ++x * 0.03125, --y * 0.03125, z++ * 0.03125);
+    }
+
+    @Benchmark
+    public double measureOSN2S4D() {
+        return OSN2S.noise4_ImproveXY_ImproveZW(12345L, ++x * 0.03125, --y * 0.03125, z++ * 0.03125, w-- * 0.03125);
+    }
 
     @Benchmark
     public float measureSquadNoise2D() { return squad.getSimplex(++x, --y); }
