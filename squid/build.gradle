@@ -50,10 +50,10 @@ dependencies {
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.3'
 //    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:2ae5e83d1a' // lacks Ripple FOV opt
     implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:958ccf8909'
-    implementation 'com.github.yellowstonegames.SquidSquad:SquidGrid:9e8507725e'
-    implementation 'com.github.yellowstonegames.SquidSquad:SquidPlace:9e8507725e'
-    implementation 'com.github.yellowstonegames.SquidSquad:SquidPath:9e8507725e'
-    implementation 'com.github.yellowstonegames.SquidSquad:SquidText:9e8507725e'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidGrid:8e0d7dcda8'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidPlace:8e0d7dcda8'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidPath:8e0d7dcda8'
+    implementation 'com.github.yellowstonegames.SquidSquad:SquidText:8e0d7dcda8'
     implementation "com.github.tommyettinger:blazingchain:1.4.4.4"
 //    implementation 'com.github.tommyettinger:BlazingChain:dfddeb3dda'
     implementation 'com.github.earlygrey:simple-graphs:5faf60ebd9'
@@ -71,7 +71,7 @@ dependencies {
 
     testImplementation group: 'junit', name: 'junit', version:'4.13.2'
 
-    testImplementation 'com.badlogicgames.gdx:gdx-backend-lwjgl3:1.10.0'
-    testImplementation 'com.badlogicgames.gdx:gdx-platform:1.10.0:natives-desktop'
+    testImplementation 'com.badlogicgames.gdx:gdx-backend-lwjgl3:1.11.0'
+    testImplementation 'com.badlogicgames.gdx:gdx-platform:1.11.0:natives-desktop'
 }
 
