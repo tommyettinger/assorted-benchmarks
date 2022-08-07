@@ -73,14 +73,15 @@ dependencies {
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:913cd5921a' // Oct 4 2020
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.2'
 //    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:2b577109cc' // Dec 27 2020
-    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:90e21440cd' // Jan 29 2021
+//    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:90e21440cd' // Jan 29 2021
+    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:3ac1efdf84' // Aug 6 2022
     implementation 'com.github.tommyettinger:atlantis:5574642135' // release 0.0.1
     //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
     //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
 //    implementation 'com.github.tommyettinger:jdkgdxds:3a9f925cd0'
-    implementation 'com.github.tommyettinger:digital:0.0.2'
-    implementation 'com.github.tommyettinger:juniper:0.0.2'
-    implementation 'com.github.tommyettinger:jdkgdxds:1.0.1'
+    implementation 'com.github.tommyettinger:digital:0.0.4'
+    implementation 'com.github.tommyettinger:juniper:0.1.0'
+    implementation 'com.github.tommyettinger:jdkgdxds:1.0.3'
 
 
 

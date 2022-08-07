@@ -345,6 +345,41 @@ import java.util.concurrent.TimeUnit;
  * NoiseBenchmark.measureSquadTaffyNoise6D   avgt    5   236.699 ± 15.247  ns/op
  * </pre>
  * Flan does seem to scale about linearly with dimension. Taffy's results don't make any sense. Foam is still slow.
+ * <br>
+ * Trying the new and improved Flan, it really does well compared to the similar Taffy or Foam.
+ * <pre>
+ * Benchmark                                 Mode  Cnt     Score    Error  Units
+ * NoiseBenchmark.measureFastNoise2D         avgt    5    26.555 ±  0.557  ns/op
+ * NoiseBenchmark.measureFastNoise3D         avgt    5    30.157 ±  1.470  ns/op
+ * NoiseBenchmark.measureFastNoise4D         avgt    5    56.956 ±  1.933  ns/op
+ * NoiseBenchmark.measureFastNoise5D         avgt    5    68.155 ±  3.825  ns/op
+ * NoiseBenchmark.measureFastNoise6D         avgt    5    97.186 ±  9.296  ns/op
+ * NoiseBenchmark.measureSquadFlanNoise2D    avgt    5    58.561 ±  5.025  ns/op
+ * NoiseBenchmark.measureSquadFlanNoise3D    avgt    5    68.766 ±  1.818  ns/op
+ * NoiseBenchmark.measureSquadFlanNoise4D    avgt    5   109.089 ±  1.846  ns/op
+ * NoiseBenchmark.measureSquadFlanNoise5D    avgt    5   137.515 ±  1.562  ns/op
+ * NoiseBenchmark.measureSquadFlanNoise6D    avgt    5   170.066 ±  1.898  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise2D    avgt    5    69.718 ±  2.410  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise3D    avgt    5   132.367 ±  1.633  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise4D    avgt    5   214.160 ±  8.997  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise5D    avgt    5   559.390 ±  6.754  ns/op
+ * NoiseBenchmark.measureSquadFoamNoise6D    avgt    5  1164.401 ± 40.330  ns/op
+ * NoiseBenchmark.measureSquadNoise2D        avgt    5    28.046 ±  1.083  ns/op
+ * NoiseBenchmark.measureSquadNoise3D        avgt    5    31.337 ±  1.258  ns/op
+ * NoiseBenchmark.measureSquadNoise4D        avgt    5    62.138 ±  1.282  ns/op
+ * NoiseBenchmark.measureSquadNoise5D        avgt    5    68.058 ±  3.838  ns/op
+ * NoiseBenchmark.measureSquadNoise6D        avgt    5    96.758 ±  1.209  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise2D  avgt    5    21.841 ±  0.888  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise3D  avgt    5    27.819 ±  1.936  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise4D  avgt    5    70.197 ±  3.314  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise5D  avgt    5   125.411 ±  8.564  ns/op
+ * NoiseBenchmark.measureSquadPerlinNoise6D  avgt    5   372.430 ± 22.836  ns/op
+ * NoiseBenchmark.measureSquadTaffyNoise2D   avgt    5    68.992 ±  1.215  ns/op
+ * NoiseBenchmark.measureSquadTaffyNoise3D   avgt    5   106.786 ±  6.722  ns/op
+ * NoiseBenchmark.measureSquadTaffyNoise4D   avgt    5   119.707 ±  6.737  ns/op
+ * NoiseBenchmark.measureSquadTaffyNoise5D   avgt    5   169.887 ±  7.254  ns/op
+ * NoiseBenchmark.measureSquadTaffyNoise6D   avgt    5   240.895 ± 15.128  ns/op
+ * </pre>
  */
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
