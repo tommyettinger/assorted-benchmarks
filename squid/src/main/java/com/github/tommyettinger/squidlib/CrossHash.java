@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.github.tommyettinger.squidlib.CrossHash.Water.*;
-import static squidpony.squidmath.NumberTools.doubleToMixedIntBits;
-import static squidpony.squidmath.NumberTools.floatToIntBits;
+import static squidpony.squidmath.NumberTools.*;
 
 /**
  * 64-bit and 32-bit hashing functions that we can rely on staying the same cross-platform.
@@ -8193,96 +8192,123 @@ public class CrossHash {
             return (int)((data.hashCode() + randomize(seed)) * 0x9E3779B97F4A7C15L >>> 32);
         }
     }
-    public static final class Crease {
+    public static final class Mx {
+
+        public static final long C = 0xBEA225F9EB34556DL;
         private final long seed;
 
-        public Crease(){
+        public Mx(){
             this.seed = 0xC4CEB9FE1A85EC53L;
         }
-        public Crease(long seed)
+        public Mx(long seed)
         {
-            this.seed = randomize(seed);
+            this.seed = mix(~seed);
         }
 
         /**
-         * This is Jon Kagstrom's <a href="http://jonkagstrom.com/mx3/mx3_rev2.html">Revised MX3 Mixer</a>.
-         * One change was made; to avoid a fix point at 0, the first step XORs with 0xFFFFFFFFL as well as its
-         * other XOR step.
-         * @param state any long; there is no fix point at 0
+         * This is Jon Kagstrom's <a href="https://github.com/jonmaiga/mx3/blob/master/mx3.h">MX3 Mixer v3</a>.
+         * @param state any long
          * @return any long
          */
-        public static long randomize(long state) {
-            state ^= ~state >>> 32;
-            state *= 0xBEA225F9EB34556DL;
-            state ^= state >>> 29;
-            state *= 0xBEA225F9EB34556DL;
+        public static long mix(long state) {
             state ^= state >>> 32;
-            state *= 0xBEA225F9EB34556DL;
+            state *= C;
+            state ^= state >>> 29;
+            state *= C;
+            state ^= state >>> 32;
+            state *= C;
             return state ^ state >>> 29;
         }
 
-        public Crease(final CharSequence seed)
+        public static long mixStream(long h, long x) {
+            x *= C;
+            x ^= x >>> 39;
+            h += x * C;
+            h *= C;
+            return h;
+        }
+
+        public static long mixStream(long h, long a, long b, long c, long d) {
+            a *= C;
+            b *= C;
+            c *= C;
+            d *= C;
+            a ^= a >>> 39;
+            b ^= b >>> 39;
+            c ^= c >>> 39;
+            d ^= d >>> 39;
+            h += a * C;
+            h *= C;
+            h += b * C;
+            h *= C;
+            h += c * C;
+            h *= C;
+            h += d * C;
+            h *= C;
+            return h;
+        }
+        public Mx(final CharSequence seed)
         {
             this(Water.hash64(seed));
         }
 
-        public static final Crease alpha = new Crease("alpha"), beta = new Crease("beta"), gamma = new Crease("gamma"),
-                delta = new Crease("delta"), epsilon = new Crease("epsilon"), zeta = new Crease("zeta"),
-                eta = new Crease("eta"), theta = new Crease("theta"), iota = new Crease("iota"),
-                kappa = new Crease("kappa"), lambda = new Crease("lambda"), mu = new Crease("mu"),
-                nu = new Crease("nu"), xi = new Crease("xi"), omicron = new Crease("omicron"), pi = new Crease("pi"),
-                rho = new Crease("rho"), sigma = new Crease("sigma"), tau = new Crease("tau"),
-                upsilon = new Crease("upsilon"), phi = new Crease("phi"), chi = new Crease("chi"), psi = new Crease("psi"),
-                omega = new Crease("omega"),
-                alpha_ = new Crease("ALPHA"), beta_ = new Crease("BETA"), gamma_ = new Crease("GAMMA"),
-                delta_ = new Crease("DELTA"), epsilon_ = new Crease("EPSILON"), zeta_ = new Crease("ZETA"),
-                eta_ = new Crease("ETA"), theta_ = new Crease("THETA"), iota_ = new Crease("IOTA"),
-                kappa_ = new Crease("KAPPA"), lambda_ = new Crease("LAMBDA"), mu_ = new Crease("MU"),
-                nu_ = new Crease("NU"), xi_ = new Crease("XI"), omicron_ = new Crease("OMICRON"), pi_ = new Crease("PI"),
-                rho_ = new Crease("RHO"), sigma_ = new Crease("SIGMA"), tau_ = new Crease("TAU"),
-                upsilon_ = new Crease("UPSILON"), phi_ = new Crease("PHI"), chi_ = new Crease("CHI"), psi_ = new Crease("PSI"),
-                omega_ = new Crease("OMEGA"),
-                baal = new Crease("baal"), agares = new Crease("agares"), vassago = new Crease("vassago"), samigina = new Crease("samigina"),
-                marbas = new Crease("marbas"), valefor = new Crease("valefor"), amon = new Crease("amon"), barbatos = new Crease("barbatos"),
-                paimon = new Crease("paimon"), buer = new Crease("buer"), gusion = new Crease("gusion"), sitri = new Crease("sitri"),
-                beleth = new Crease("beleth"), leraje = new Crease("leraje"), eligos = new Crease("eligos"), zepar = new Crease("zepar"),
-                botis = new Crease("botis"), bathin = new Crease("bathin"), sallos = new Crease("sallos"), purson = new Crease("purson"),
-                marax = new Crease("marax"), ipos = new Crease("ipos"), aim = new Crease("aim"), naberius = new Crease("naberius"),
-                glasya_labolas = new Crease("glasya_labolas"), bune = new Crease("bune"), ronove = new Crease("ronove"), berith = new Crease("berith"),
-                astaroth = new Crease("astaroth"), forneus = new Crease("forneus"), foras = new Crease("foras"), asmoday = new Crease("asmoday"),
-                gaap = new Crease("gaap"), furfur = new Crease("furfur"), marchosias = new Crease("marchosias"), stolas = new Crease("stolas"),
-                phenex = new Crease("phenex"), halphas = new Crease("halphas"), malphas = new Crease("malphas"), raum = new Crease("raum"),
-                focalor = new Crease("focalor"), vepar = new Crease("vepar"), sabnock = new Crease("sabnock"), shax = new Crease("shax"),
-                vine = new Crease("vine"), bifrons = new Crease("bifrons"), vual = new Crease("vual"), haagenti = new Crease("haagenti"),
-                crocell = new Crease("crocell"), furcas = new Crease("furcas"), balam = new Crease("balam"), alloces = new Crease("alloces"),
-                caim = new Crease("caim"), murmur = new Crease("murmur"), orobas = new Crease("orobas"), gremory = new Crease("gremory"),
-                ose = new Crease("ose"), amy = new Crease("amy"), orias = new Crease("orias"), vapula = new Crease("vapula"),
-                zagan = new Crease("zagan"), valac = new Crease("valac"), andras = new Crease("andras"), flauros = new Crease("flauros"),
-                andrealphus = new Crease("andrealphus"), kimaris = new Crease("kimaris"), amdusias = new Crease("amdusias"), belial = new Crease("belial"),
-                decarabia = new Crease("decarabia"), seere = new Crease("seere"), dantalion = new Crease("dantalion"), andromalius = new Crease("andromalius"),
-                baal_ = new Crease("BAAL"), agares_ = new Crease("AGARES"), vassago_ = new Crease("VASSAGO"), samigina_ = new Crease("SAMIGINA"),
-                marbas_ = new Crease("MARBAS"), valefor_ = new Crease("VALEFOR"), amon_ = new Crease("AMON"), barbatos_ = new Crease("BARBATOS"),
-                paimon_ = new Crease("PAIMON"), buer_ = new Crease("BUER"), gusion_ = new Crease("GUSION"), sitri_ = new Crease("SITRI"),
-                beleth_ = new Crease("BELETH"), leraje_ = new Crease("LERAJE"), eligos_ = new Crease("ELIGOS"), zepar_ = new Crease("ZEPAR"),
-                botis_ = new Crease("BOTIS"), bathin_ = new Crease("BATHIN"), sallos_ = new Crease("SALLOS"), purson_ = new Crease("PURSON"),
-                marax_ = new Crease("MARAX"), ipos_ = new Crease("IPOS"), aim_ = new Crease("AIM"), naberius_ = new Crease("NABERIUS"),
-                glasya_labolas_ = new Crease("GLASYA_LABOLAS"), bune_ = new Crease("BUNE"), ronove_ = new Crease("RONOVE"), berith_ = new Crease("BERITH"),
-                astaroth_ = new Crease("ASTAROTH"), forneus_ = new Crease("FORNEUS"), foras_ = new Crease("FORAS"), asmoday_ = new Crease("ASMODAY"),
-                gaap_ = new Crease("GAAP"), furfur_ = new Crease("FURFUR"), marchosias_ = new Crease("MARCHOSIAS"), stolas_ = new Crease("STOLAS"),
-                phenex_ = new Crease("PHENEX"), halphas_ = new Crease("HALPHAS"), malphas_ = new Crease("MALPHAS"), raum_ = new Crease("RAUM"),
-                focalor_ = new Crease("FOCALOR"), vepar_ = new Crease("VEPAR"), sabnock_ = new Crease("SABNOCK"), shax_ = new Crease("SHAX"),
-                vine_ = new Crease("VINE"), bifrons_ = new Crease("BIFRONS"), vual_ = new Crease("VUAL"), haagenti_ = new Crease("HAAGENTI"),
-                crocell_ = new Crease("CROCELL"), furcas_ = new Crease("FURCAS"), balam_ = new Crease("BALAM"), alloces_ = new Crease("ALLOCES"),
-                caim_ = new Crease("CAIM"), murmur_ = new Crease("MURMUR"), orobas_ = new Crease("OROBAS"), gremory_ = new Crease("GREMORY"),
-                ose_ = new Crease("OSE"), amy_ = new Crease("AMY"), orias_ = new Crease("ORIAS"), vapula_ = new Crease("VAPULA"),
-                zagan_ = new Crease("ZAGAN"), valac_ = new Crease("VALAC"), andras_ = new Crease("ANDRAS"), flauros_ = new Crease("FLAUROS"),
-                andrealphus_ = new Crease("ANDREALPHUS"), kimaris_ = new Crease("KIMARIS"), amdusias_ = new Crease("AMDUSIAS"), belial_ = new Crease("BELIAL"),
-                decarabia_ = new Crease("DECARABIA"), seere_ = new Crease("SEERE"), dantalion_ = new Crease("DANTALION"), andromalius_ = new Crease("ANDROMALIUS")
+        public static final Mx alpha = new Mx("alpha"), beta = new Mx("beta"), gamma = new Mx("gamma"),
+                delta = new Mx("delta"), epsilon = new Mx("epsilon"), zeta = new Mx("zeta"),
+                eta = new Mx("eta"), theta = new Mx("theta"), iota = new Mx("iota"),
+                kappa = new Mx("kappa"), lambda = new Mx("lambda"), mu = new Mx("mu"),
+                nu = new Mx("nu"), xi = new Mx("xi"), omicron = new Mx("omicron"), pi = new Mx("pi"),
+                rho = new Mx("rho"), sigma = new Mx("sigma"), tau = new Mx("tau"),
+                upsilon = new Mx("upsilon"), phi = new Mx("phi"), chi = new Mx("chi"), psi = new Mx("psi"),
+                omega = new Mx("omega"),
+                alpha_ = new Mx("ALPHA"), beta_ = new Mx("BETA"), gamma_ = new Mx("GAMMA"),
+                delta_ = new Mx("DELTA"), epsilon_ = new Mx("EPSILON"), zeta_ = new Mx("ZETA"),
+                eta_ = new Mx("ETA"), theta_ = new Mx("THETA"), iota_ = new Mx("IOTA"),
+                kappa_ = new Mx("KAPPA"), lambda_ = new Mx("LAMBDA"), mu_ = new Mx("MU"),
+                nu_ = new Mx("NU"), xi_ = new Mx("XI"), omicron_ = new Mx("OMICRON"), pi_ = new Mx("PI"),
+                rho_ = new Mx("RHO"), sigma_ = new Mx("SIGMA"), tau_ = new Mx("TAU"),
+                upsilon_ = new Mx("UPSILON"), phi_ = new Mx("PHI"), chi_ = new Mx("CHI"), psi_ = new Mx("PSI"),
+                omega_ = new Mx("OMEGA"),
+                baal = new Mx("baal"), agares = new Mx("agares"), vassago = new Mx("vassago"), samigina = new Mx("samigina"),
+                marbas = new Mx("marbas"), valefor = new Mx("valefor"), amon = new Mx("amon"), barbatos = new Mx("barbatos"),
+                paimon = new Mx("paimon"), buer = new Mx("buer"), gusion = new Mx("gusion"), sitri = new Mx("sitri"),
+                beleth = new Mx("beleth"), leraje = new Mx("leraje"), eligos = new Mx("eligos"), zepar = new Mx("zepar"),
+                botis = new Mx("botis"), bathin = new Mx("bathin"), sallos = new Mx("sallos"), purson = new Mx("purson"),
+                marax = new Mx("marax"), ipos = new Mx("ipos"), aim = new Mx("aim"), naberius = new Mx("naberius"),
+                glasya_labolas = new Mx("glasya_labolas"), bune = new Mx("bune"), ronove = new Mx("ronove"), berith = new Mx("berith"),
+                astaroth = new Mx("astaroth"), forneus = new Mx("forneus"), foras = new Mx("foras"), asmoday = new Mx("asmoday"),
+                gaap = new Mx("gaap"), furfur = new Mx("furfur"), marchosias = new Mx("marchosias"), stolas = new Mx("stolas"),
+                phenex = new Mx("phenex"), halphas = new Mx("halphas"), malphas = new Mx("malphas"), raum = new Mx("raum"),
+                focalor = new Mx("focalor"), vepar = new Mx("vepar"), sabnock = new Mx("sabnock"), shax = new Mx("shax"),
+                vine = new Mx("vine"), bifrons = new Mx("bifrons"), vual = new Mx("vual"), haagenti = new Mx("haagenti"),
+                crocell = new Mx("crocell"), furcas = new Mx("furcas"), balam = new Mx("balam"), alloces = new Mx("alloces"),
+                caim = new Mx("caim"), murmur = new Mx("murmur"), orobas = new Mx("orobas"), gremory = new Mx("gremory"),
+                ose = new Mx("ose"), amy = new Mx("amy"), orias = new Mx("orias"), vapula = new Mx("vapula"),
+                zagan = new Mx("zagan"), valac = new Mx("valac"), andras = new Mx("andras"), flauros = new Mx("flauros"),
+                andrealphus = new Mx("andrealphus"), kimaris = new Mx("kimaris"), amdusias = new Mx("amdusias"), belial = new Mx("belial"),
+                decarabia = new Mx("decarabia"), seere = new Mx("seere"), dantalion = new Mx("dantalion"), andromalius = new Mx("andromalius"),
+                baal_ = new Mx("BAAL"), agares_ = new Mx("AGARES"), vassago_ = new Mx("VASSAGO"), samigina_ = new Mx("SAMIGINA"),
+                marbas_ = new Mx("MARBAS"), valefor_ = new Mx("VALEFOR"), amon_ = new Mx("AMON"), barbatos_ = new Mx("BARBATOS"),
+                paimon_ = new Mx("PAIMON"), buer_ = new Mx("BUER"), gusion_ = new Mx("GUSION"), sitri_ = new Mx("SITRI"),
+                beleth_ = new Mx("BELETH"), leraje_ = new Mx("LERAJE"), eligos_ = new Mx("ELIGOS"), zepar_ = new Mx("ZEPAR"),
+                botis_ = new Mx("BOTIS"), bathin_ = new Mx("BATHIN"), sallos_ = new Mx("SALLOS"), purson_ = new Mx("PURSON"),
+                marax_ = new Mx("MARAX"), ipos_ = new Mx("IPOS"), aim_ = new Mx("AIM"), naberius_ = new Mx("NABERIUS"),
+                glasya_labolas_ = new Mx("GLASYA_LABOLAS"), bune_ = new Mx("BUNE"), ronove_ = new Mx("RONOVE"), berith_ = new Mx("BERITH"),
+                astaroth_ = new Mx("ASTAROTH"), forneus_ = new Mx("FORNEUS"), foras_ = new Mx("FORAS"), asmoday_ = new Mx("ASMODAY"),
+                gaap_ = new Mx("GAAP"), furfur_ = new Mx("FURFUR"), marchosias_ = new Mx("MARCHOSIAS"), stolas_ = new Mx("STOLAS"),
+                phenex_ = new Mx("PHENEX"), halphas_ = new Mx("HALPHAS"), malphas_ = new Mx("MALPHAS"), raum_ = new Mx("RAUM"),
+                focalor_ = new Mx("FOCALOR"), vepar_ = new Mx("VEPAR"), sabnock_ = new Mx("SABNOCK"), shax_ = new Mx("SHAX"),
+                vine_ = new Mx("VINE"), bifrons_ = new Mx("BIFRONS"), vual_ = new Mx("VUAL"), haagenti_ = new Mx("HAAGENTI"),
+                crocell_ = new Mx("CROCELL"), furcas_ = new Mx("FURCAS"), balam_ = new Mx("BALAM"), alloces_ = new Mx("ALLOCES"),
+                caim_ = new Mx("CAIM"), murmur_ = new Mx("MURMUR"), orobas_ = new Mx("OROBAS"), gremory_ = new Mx("GREMORY"),
+                ose_ = new Mx("OSE"), amy_ = new Mx("AMY"), orias_ = new Mx("ORIAS"), vapula_ = new Mx("VAPULA"),
+                zagan_ = new Mx("ZAGAN"), valac_ = new Mx("VALAC"), andras_ = new Mx("ANDRAS"), flauros_ = new Mx("FLAUROS"),
+                andrealphus_ = new Mx("ANDREALPHUS"), kimaris_ = new Mx("KIMARIS"), amdusias_ = new Mx("AMDUSIAS"), belial_ = new Mx("BELIAL"),
+                decarabia_ = new Mx("DECARABIA"), seere_ = new Mx("SEERE"), dantalion_ = new Mx("DANTALION"), andromalius_ = new Mx("ANDROMALIUS")
                 ;
         /**
          * Has a length of 192, which may be relevant if automatically choosing a predefined hash functor.
          */
-        public static final Crease[] predefined = new Crease[]{alpha, beta, gamma, delta, epsilon, zeta, eta, theta, iota,
+        public static final Mx[] predefined = new Mx[]{alpha, beta, gamma, delta, epsilon, zeta, eta, theta, iota,
                 kappa, lambda, mu, nu, xi, omicron, pi, rho, sigma, tau, upsilon, phi, chi, psi, omega,
                 alpha_, beta_, gamma_, delta_, epsilon_, zeta_, eta_, theta_, iota_,
                 kappa_, lambda_, mu_, nu_, xi_, omicron_, pi_, rho_, sigma_, tau_, upsilon_, phi_, chi_, psi_, omega_,
@@ -8363,7 +8389,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + (data[i] ? 0xEBEDEED9D803C815L : 0xD9D803C815EBEDEEL);
             }
-            return randomize(result);
+            return mix(result);
         }
         public long hash64(final byte[] data) {
             if (data == null) return 0;
@@ -8383,7 +8409,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + data[i];
             }
-            return randomize(result);
+            return mix(result);
         }
 
         public long hash64(final short[] data) {
@@ -8404,78 +8430,52 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + data[i];
             }
-            return randomize(result);
+            return mix(result);
         }
 
         public long hash64(final char[] data) {
             if (data == null) return 0;
-            long result = seed ^ data.length;
-            int i = 0;
-            for (; i + 7 < data.length; i += 8) {
-                result += 0xD96EB1A810CAAF5FL * data[i]
-                        + 0xC862B36DAF790DD5L * data[i + 1]
-                        + 0xB8ACD90C142FE10BL * data[i + 2]
-                        + 0xAA324F90DED86B69L * data[i + 3]
-                        + 0x9CDA5E693FEA10AFL * data[i + 4]
-                        + 0x908E3D2C82567A73L * data[i + 5]
-                        + 0x8538ECB5BD456EA3L * data[i + 6]
-                        + 0xD1B54A32D192ED03L * data[i + 7]
-                ;
+            int i = 0, len = data.length;
+            long h = mixStream(seed, len + 1);
+            for (; i + 7 < len; i += 8) {
+
+                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
+                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
             }
-            for (; i < data.length; i++) {
-                result = 0x9E3779B97F4A7C15L * result + data[i];
+            for (; i < len; i++) {
+                h = mixStream(h, data[i]);
             }
-            return randomize(result);
+            return mix(h);
         }
 
         public long hash64(final CharSequence data) {
             if (data == null) return 0;
-            long result = seed ^ data.length();
-            int i = 0;
-            for (; i + 7 < data.length(); i += 8) {
-                result += 0xD96EB1A810CAAF5FL * data.charAt(i)
-                        + 0xC862B36DAF790DD5L * data.charAt(i + 1)
-                        + 0xB8ACD90C142FE10BL * data.charAt(i + 2)
-                        + 0xAA324F90DED86B69L * data.charAt(i + 3)
-                        + 0x9CDA5E693FEA10AFL * data.charAt(i + 4)
-                        + 0x908E3D2C82567A73L * data.charAt(i + 5)
-                        + 0x8538ECB5BD456EA3L * data.charAt(i + 6)
-                        + 0xD1B54A32D192ED03L * data.charAt(i + 7)
-                ;
+            int i = 0, len = data.length();
+            long h = mixStream(seed, len + 1);
+            for (; i + 7 < len; i += 8) {
+
+                h = mixStream(h, data.charAt(  i), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+                h = mixStream(h, data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
             }
-            for (; i < data.length(); i++) {
-                result = 0x9E3779B97F4A7C15L * result + data.charAt(i);
+            for (; i < len; i++) {
+                h = mixStream(h, data.charAt(i));
             }
-            return randomize(result);
+            return mix(h);
         }
 
         public long hash64(final int[] data) {
             if (data == null) return 0;
-            final int len = data.length, shortLen = len - 3;
-            long result = seed ^ len,
-                    a = (result << 11 | result >>> 53) + len,
-                    b = (a << 13 | a >>> 51) - len,
-                    c = (b << 17 | b >>> 47) + len,
-                    d = (c << 19 | c >>> 45) - len;
-            int i = 0;
-            for (; i < shortLen; i += 4) {
-                final long fa = a + data[i];
-                final long fb = b + data[i + 1];
-                final long fc = c + data[i + 2];
-                final long fd = d + data[i + 3];
-                final long bc = fb ^ fc;
-                final long cd = fc ^ fd;
-                a = (bc << 57 | bc >>> 7);
-                b = (cd << 18 | cd >>> 46);
-                c = fa + bc;
-                d = cd + 0xDE916ABCC965815BL;
-                result += c;
+            int i = 0, len = data.length;
+            long h = mixStream(seed, len + 1);
+            for (; i + 7 < len; i += 8) {
+
+                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
+                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
             }
-            result ^= a ^ b ^ c ^ d;
             for (; i < len; i++) {
-                result = 0xF7C2EBC08F67F2B5L * result + data[i];
+                h = mixStream(h, data[i]);
             }
-            return randomize(result);
+            return mix(h);
         }
 
         public long hash64(final int[] data, final int length) {
@@ -8497,28 +8497,22 @@ public class CrossHash {
             for (; i < len; i++) {
                 result = 0x9E3779B97F4A7C15L * result + data[i];
             }
-            return randomize(result);
+            return mix(result);
         }
 
         public long hash64(final long[] data) {
             if (data == null) return 0;
-            long result = seed ^ data.length;
-            int i = 0;
-            for (; i + 7 < data.length; i += 8) {
-                result += 0xD96EB1A810CAAF5FL * data[i]
-                        + 0xC862B36DAF790DD5L * data[i + 1]
-                        + 0xB8ACD90C142FE10BL * data[i + 2]
-                        + 0xAA324F90DED86B69L * data[i + 3]
-                        + 0x9CDA5E693FEA10AFL * data[i + 4]
-                        + 0x908E3D2C82567A73L * data[i + 5]
-                        + 0x8538ECB5BD456EA3L * data[i + 6]
-                        + 0xD1B54A32D192ED03L * data[i + 7]
-                ;
+            int i = 0, len = data.length;
+            long h = mixStream(seed, len + 1);
+            for (; i + 7 < len; i += 8) {
+
+                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
+                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
             }
-            for (; i < data.length; i++) {
-                result = 0x9E3779B97F4A7C15L * result + data[i];
+            for (; i < len; i++) {
+                h = mixStream(h, data[i]);
             }
-            return randomize(result);
+            return mix(h);
         }
         public long hash64(final float[] data) {
             if (data == null) return 0;
@@ -8538,27 +8532,21 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + floatToIntBits(data[i]);
             }
-            return randomize(result);
+            return mix(result);
         }
         public long hash64(final double[] data) {
             if (data == null) return 0;
-            long result = seed ^ data.length;
-            int i = 0;
-            for (; i + 7 < data.length; i += 8) {
-                result += 0xD96EB1A810CAAF5FL * doubleToMixedIntBits(data[i])
-                        + 0xC862B36DAF790DD5L * doubleToMixedIntBits(data[i + 1])
-                        + 0xB8ACD90C142FE10BL * doubleToMixedIntBits(data[i + 2])
-                        + 0xAA324F90DED86B69L * doubleToMixedIntBits(data[i + 3])
-                        + 0x9CDA5E693FEA10AFL * doubleToMixedIntBits(data[i + 4])
-                        + 0x908E3D2C82567A73L * doubleToMixedIntBits(data[i + 5])
-                        + 0x8538ECB5BD456EA3L * doubleToMixedIntBits(data[i + 6])
-                        + 0xD1B54A32D192ED03L * doubleToMixedIntBits(data[i + 7])
-                ;
+            int i = 0, len = data.length;
+            long h = mixStream(seed, len + 1);
+            for (; i + 7 < len; i += 8) {
+
+                h = mixStream(h, doubleToRawLongBits(data[  i]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
+                h = mixStream(h, doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
             }
-            for (; i < data.length; i++) {
-                result = 0x9E3779B97F4A7C15L * result + doubleToMixedIntBits(data[i]);
+            for (; i < len; i++) {
+                h = mixStream(h, doubleToRawLongBits(data[i]));
             }
-            return randomize(result);
+            return mix(h);
         }
 
         /**
@@ -8589,7 +8577,7 @@ public class CrossHash {
             for (; i < len; i++) {
                 result = 0x9E3779B97F4A7C15L * result + data[i];
             }
-            return randomize(result);
+            return mix(result);
         }
 
         /**
@@ -8621,7 +8609,7 @@ public class CrossHash {
             for (; i < len; i++) {
                 result = 0x9E3779B97F4A7C15L * result + data.charAt(i);
             }
-            return randomize(result);
+            return mix(result);
         }
 
 
@@ -8643,7 +8631,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash64(data[i]);
             }
-            return randomize(result);
+            return mix(result);
         }
 
         public long hash64(final int[][] data) {
@@ -8664,7 +8652,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash64(data[i]);
             }
-            return randomize(result);
+            return mix(result);
         }
 
         public long hash64(final long[][] data) {
@@ -8685,7 +8673,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash64(data[i]);
             }
-            return randomize(result);
+            return mix(result);
         }
 
         public long hash64(final CharSequence[] data) {
@@ -8706,7 +8694,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash64(data[i]);
             }
-            return randomize(result);
+            return mix(result);
         }
 
         public long hash64(final CharSequence[]... data) {
@@ -8727,7 +8715,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash64(data[i]);
             }
-            return randomize(result);
+            return mix(result);
         }
 
         public long hash64(final Iterable<? extends CharSequence> data) {
@@ -8765,7 +8753,7 @@ public class CrossHash {
             for (; i < len; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash(data.get(i));
             }
-            return randomize(result);
+            return mix(result);
         }
 
         public long hash64(final Object[] data) {
@@ -8786,7 +8774,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash64(data[i]);
             }
-            return randomize(result);
+            return mix(result);
         }
 
         public long hash64(final Object data) {
@@ -8814,7 +8802,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + (data[i] ? 0xEBEDEED9D803C815L : 0xD9D803C815EBEDEEL);
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
         public int hash(final byte[] data) {
             if (data == null) return 0;
@@ -8834,7 +8822,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + data[i];
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
 
         public int hash(final short[] data) {
@@ -8855,78 +8843,52 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + data[i];
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
 
         public int hash(final char[] data) {
             if (data == null) return 0;
-            long result = seed ^ data.length;
-            int i = 0;
-            for (; i + 7 < data.length; i += 8) {
-                result += 0xD96EB1A810CAAF5FL * data[i]
-                        + 0xC862B36DAF790DD5L * data[i + 1]
-                        + 0xB8ACD90C142FE10BL * data[i + 2]
-                        + 0xAA324F90DED86B69L * data[i + 3]
-                        + 0x9CDA5E693FEA10AFL * data[i + 4]
-                        + 0x908E3D2C82567A73L * data[i + 5]
-                        + 0x8538ECB5BD456EA3L * data[i + 6]
-                        + 0xD1B54A32D192ED03L * data[i + 7]
-                ;
+            int i = 0, len = data.length;
+            long h = mixStream(seed, len + 1);
+            for (; i + 7 < len; i += 8) {
+
+                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
+                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
             }
-            for (; i < data.length; i++) {
-                result = 0x9E3779B97F4A7C15L * result + data[i];
+            for (; i < len; i++) {
+                h = mixStream(h, data[i]);
             }
-            return (int)randomize(result);
+            return (int) mix(h);
         }
 
         public int hash(final CharSequence data) {
             if (data == null) return 0;
-            long result = seed ^ data.length();
-            int i = 0;
-            for (; i + 7 < data.length(); i += 8) {
-                result += 0xD96EB1A810CAAF5FL * data.charAt(i)
-                        + 0xC862B36DAF790DD5L * data.charAt(i + 1)
-                        + 0xB8ACD90C142FE10BL * data.charAt(i + 2)
-                        + 0xAA324F90DED86B69L * data.charAt(i + 3)
-                        + 0x9CDA5E693FEA10AFL * data.charAt(i + 4)
-                        + 0x908E3D2C82567A73L * data.charAt(i + 5)
-                        + 0x8538ECB5BD456EA3L * data.charAt(i + 6)
-                        + 0xD1B54A32D192ED03L * data.charAt(i + 7)
-                ;
+            int i = 0, len = data.length();
+            long h = mixStream(seed, len + 1);
+            for (; i + 7 < len; i += 8) {
+
+                h = mixStream(h, data.charAt(  i), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+                h = mixStream(h, data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
             }
-            for (; i < data.length(); i++) {
-                result = 0x9E3779B97F4A7C15L * result + data.charAt(i);
+            for (; i < len; i++) {
+                h = mixStream(h, data.charAt(i));
             }
-            return (int)randomize(result);
+            return (int)mix(h);
         }
 
         public int hash(final int[] data) {
             if (data == null) return 0;
-            final int len = data.length, shortLen = len - 3;
-            long result = seed ^ len,
-                    a = (result << 11 | result >>> 53) + len,
-                    b = (a << 13 | a >>> 51) - len,
-                    c = (b << 17 | b >>> 47) + len,
-                    d = (c << 19 | c >>> 45) - len;
-            int i = 0;
-            for (; i < shortLen; i += 4) {
-                final long fa = a + data[i];
-                final long fb = b + data[i + 1];
-                final long fc = c + data[i + 2];
-                final long fd = d + data[i + 3];
-                final long bc = fb ^ fc;
-                final long cd = fc ^ fd;
-                a = (bc << 57 | bc >>> 7);
-                b = (cd << 18 | cd >>> 46);
-                c = fa + bc;
-                d = cd + 0xDE916ABCC965815BL;
-                result += c;
+            int i = 0, len = data.length;
+            long h = mixStream(seed, len + 1);
+            for (; i + 7 < len; i += 8) {
+
+                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
+                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
             }
-            result ^= a ^ b ^ c ^ d;
             for (; i < len; i++) {
-                result = 0xF7C2EBC08F67F2B5L * result + data[i];
+                h = mixStream(h, data[i]);
             }
-            return (int)randomize(result);
+            return (int) mix(h);
         }
 
         public int hash(final int[] data, final int length) {
@@ -8948,28 +8910,22 @@ public class CrossHash {
             for (; i < len; i++) {
                 result = 0x9E3779B97F4A7C15L * result + data[i];
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
 
         public int hash(final long[] data) {
             if (data == null) return 0;
-            long result = seed ^ data.length;
-            int i = 0;
-            for (; i + 7 < data.length; i += 8) {
-                result += 0xD96EB1A810CAAF5FL * data[i]
-                        + 0xC862B36DAF790DD5L * data[i + 1]
-                        + 0xB8ACD90C142FE10BL * data[i + 2]
-                        + 0xAA324F90DED86B69L * data[i + 3]
-                        + 0x9CDA5E693FEA10AFL * data[i + 4]
-                        + 0x908E3D2C82567A73L * data[i + 5]
-                        + 0x8538ECB5BD456EA3L * data[i + 6]
-                        + 0xD1B54A32D192ED03L * data[i + 7]
-                ;
+            int i = 0, len = data.length;
+            long h = mixStream(seed, len + 1);
+            for (; i + 7 < len; i += 8) {
+
+                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
+                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
             }
-            for (; i < data.length; i++) {
-                result = 0x9E3779B97F4A7C15L * result + data[i];
+            for (; i < len; i++) {
+                h = mixStream(h, data[i]);
             }
-            return (int)randomize(result);
+            return (int) mix(h);
         }
         public int hash(final float[] data) {
             if (data == null) return 0;
@@ -8989,27 +8945,21 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + floatToIntBits(data[i]);
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
         public int hash(final double[] data) {
             if (data == null) return 0;
-            long result = seed ^ data.length;
-            int i = 0;
-            for (; i + 7 < data.length; i += 8) {
-                result += 0xD96EB1A810CAAF5FL * doubleToMixedIntBits(data[i])
-                        + 0xC862B36DAF790DD5L * doubleToMixedIntBits(data[i + 1])
-                        + 0xB8ACD90C142FE10BL * doubleToMixedIntBits(data[i + 2])
-                        + 0xAA324F90DED86B69L * doubleToMixedIntBits(data[i + 3])
-                        + 0x9CDA5E693FEA10AFL * doubleToMixedIntBits(data[i + 4])
-                        + 0x908E3D2C82567A73L * doubleToMixedIntBits(data[i + 5])
-                        + 0x8538ECB5BD456EA3L * doubleToMixedIntBits(data[i + 6])
-                        + 0xD1B54A32D192ED03L * doubleToMixedIntBits(data[i + 7])
-                ;
+            int i = 0, len = data.length;
+            long h = mixStream(seed, len + 1);
+            for (; i + 7 < len; i += 8) {
+
+                h = mixStream(h, doubleToRawLongBits(data[  i]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
+                h = mixStream(h, doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
             }
-            for (; i < data.length; i++) {
-                result = 0x9E3779B97F4A7C15L * result + doubleToMixedIntBits(data[i]);
+            for (; i < len; i++) {
+                h = mixStream(h, doubleToRawLongBits(data[i]));
             }
-            return (int)randomize(result);
+            return (int)mix(h);
         }
 
         /**
@@ -9040,7 +8990,7 @@ public class CrossHash {
             for (; i < len; i++) {
                 result = 0x9E3779B97F4A7C15L * result + data[i];
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
 
         /**
@@ -9072,7 +9022,7 @@ public class CrossHash {
             for (; i < len; i++) {
                 result = 0x9E3779B97F4A7C15L * result + data.charAt(i);
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
 
 
@@ -9094,7 +9044,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash64(data[i]);
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
 
         public int hash(final int[][] data) {
@@ -9115,7 +9065,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash64(data[i]);
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
 
         public int hash(final long[][] data) {
@@ -9136,7 +9086,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash64(data[i]);
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
 
         public int hash(final CharSequence[] data) {
@@ -9157,7 +9107,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash64(data[i]);
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
 
         public int hash(final CharSequence[]... data) {
@@ -9178,7 +9128,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash64(data[i]);
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
 
         public int hash(final Iterable<? extends CharSequence> data) {
@@ -9216,7 +9166,7 @@ public class CrossHash {
             for (; i < len; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash(data.get(i));
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
 
         public int hash(final Object[] data) {
@@ -9237,7 +9187,7 @@ public class CrossHash {
             for (; i < data.length; i++) {
                 result = 0x9E3779B97F4A7C15L * result + hash64(data[i]);
             }
-            return (int)randomize(result);
+            return (int) mix(result);
         }
 
 
@@ -9280,7 +9230,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final boolean[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  result      * 0xEBEDEED9D803C815L
@@ -9306,7 +9256,7 @@ public class CrossHash {
         }
         public static long hash64(final long seed, final byte[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9333,7 +9283,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final short[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9360,7 +9310,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final char[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9388,7 +9338,7 @@ public class CrossHash {
         public static long hash64(final long seed, final CharSequence data) {
             if (data == null) return 0;
             final int length = data.length();
-            long result = randomize(seed) ^ length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9415,7 +9365,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final int[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9443,7 +9393,7 @@ public class CrossHash {
         public static long hash64(final long seed, final int[] data, final int length) {
             if (data == null) return 0;
             final int len = Math.min(length, data.length);
-            long result = randomize(seed) ^ len * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ len * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < len; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9470,7 +9420,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final long[] data) {
             if (data == null) return 0;
-            long s = randomize(seed), a = s + b4, b = s + b3, c = s + b2, d = s + b1;
+            long s = mix(seed), a = s + b4, b = s + b3, c = s + b2, d = s + b1;
             final int len = data.length;
             for (int i = 3; i < len; i+=4) {
                 a ^= data[i-3] * b1; a = (a << 23 | a >>> 41) * b3;
@@ -9490,7 +9440,7 @@ public class CrossHash {
         }
         public static long hash64(final long seed, final float[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9516,7 +9466,7 @@ public class CrossHash {
         }
         public static long hash64(final long seed, final double[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9553,7 +9503,7 @@ public class CrossHash {
             if (data == null || start >= end) return 0;
             final int len = Math.min(end, data.length);
 
-            long result = randomize(seed) ^ (len - start) * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ (len - start) * 0x9E3779B97F4A7C15L;
             int i = start;
             for (; i + 7 < len; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9590,7 +9540,7 @@ public class CrossHash {
             if (data == null || start >= end) return 0;
             final int len = Math.min(end, data.length());
 
-            long result = randomize(seed) ^ (len - start) * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ (len - start) * 0x9E3779B97F4A7C15L;
             int i = start;
             for (; i + 7 < len; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9618,7 +9568,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final char[][] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9645,7 +9595,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final int[][] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9672,7 +9622,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final long[][] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9699,7 +9649,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final CharSequence[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9726,7 +9676,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final CharSequence[]... data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9753,7 +9703,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final Iterable<? extends CharSequence> data) {
             if (data == null) return 0;
-            long s = randomize(seed);
+            long s = mix(seed);
             final Iterator<? extends CharSequence> it = data.iterator();
             int len = 0;
             while (it.hasNext())
@@ -9770,7 +9720,7 @@ public class CrossHash {
         public static long hash64(final long seed, final List<? extends CharSequence> data) {
             if (data == null) return 0;
             final int len = data.size();
-            long result = randomize(seed) ^ len * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ len * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < len; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9798,7 +9748,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final Object[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9826,13 +9776,13 @@ public class CrossHash {
         public static long hash64(final long seed, final Object data) {
             if (data == null)
                 return 0;
-            final long h = (data.hashCode() + randomize(seed)) * 0x9E3779B97F4A7C15L;
+            final long h = (data.hashCode() + mix(seed)) * 0x9E3779B97F4A7C15L;
             return h - (h >>> 31) + (h << 33);
         }
 
         public static int hash(final long seed, final boolean[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  result      * 0xEBEDEED9D803C815L
@@ -9858,7 +9808,7 @@ public class CrossHash {
         }
         public static int hash(final long seed, final byte[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9885,7 +9835,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final short[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9912,7 +9862,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final char[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9940,7 +9890,7 @@ public class CrossHash {
         public static int hash(final long seed, final CharSequence data) {
             if (data == null) return 0;
             final int length = data.length();
-            long result = randomize(seed) ^ length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9967,7 +9917,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final int[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -9995,7 +9945,7 @@ public class CrossHash {
         public static int hash(final long seed, final int[] data, final int length) {
             if (data == null) return 0;
             final int len = Math.min(length, data.length);
-            long result = randomize(seed) ^ len * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ len * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < len; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -10022,7 +9972,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final long[] data) {
             if (data == null) return 0;
-            long s = randomize(seed), a = s + b4, b = s + b3, c = s + b2, d = s + b1;
+            long s = mix(seed), a = s + b4, b = s + b3, c = s + b2, d = s + b1;
             final int len = data.length;
             for (int i = 3; i < len; i+=4) {
                 a ^= data[i-3] * b1; a = (a << 23 | a >>> 41) * b3;
@@ -10043,7 +9993,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final float[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -10069,7 +10019,7 @@ public class CrossHash {
         }
         public static int hash(final long seed, final double[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -10106,7 +10056,7 @@ public class CrossHash {
             if (data == null || start >= end) return 0;
             final int len = Math.min(end, data.length);
 
-            long result = randomize(seed) ^ (len - start) * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ (len - start) * 0x9E3779B97F4A7C15L;
             int i = start;
             for (; i + 7 < len; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -10143,7 +10093,7 @@ public class CrossHash {
             if (data == null || start >= end) return 0;
             final int len = Math.min(end, data.length());
 
-            long result = randomize(seed) ^ (len - start) * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ (len - start) * 0x9E3779B97F4A7C15L;
             int i = start;
             for (; i + 7 < len; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -10171,7 +10121,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final char[][] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -10198,7 +10148,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final int[][] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -10225,7 +10175,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final long[][] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -10252,7 +10202,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final CharSequence[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -10279,7 +10229,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final CharSequence[]... data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -10306,7 +10256,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final Iterable<? extends CharSequence> data) {
             if (data == null) return 0;
-            long s = randomize(seed);
+            long s = mix(seed);
             final Iterator<? extends CharSequence> it = data.iterator();
             int len = 0;
             while (it.hasNext())
@@ -10322,7 +10272,7 @@ public class CrossHash {
         public static int hash(final long seed, final List<? extends CharSequence> data) {
             if (data == null) return 0;
             final int len = data.size();
-            long result = randomize(seed) ^ len * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ len * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < len; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -10350,7 +10300,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final Object[] data) {
             if (data == null) return 0;
-            long result = randomize(seed) ^ data.length * 0x9E3779B97F4A7C15L;
+            long result = mix(seed) ^ data.length * 0x9E3779B97F4A7C15L;
             int i = 0;
             for (; i + 7 < data.length; i += 8) {
                 result =  0xEBEDEED9D803C815L * result
@@ -10377,7 +10327,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final Object data) {
             if (data == null) return 0;
-            return (int)((data.hashCode() + randomize(seed)) * 0x9E3779B97F4A7C15L >>> 32);
+            return (int)((data.hashCode() + mix(seed)) * 0x9E3779B97F4A7C15L >>> 32);
         }
     }
 }

@@ -569,6 +569,31 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doIntYolk32        160  avgt    5   91.341 ±  1.210  ns/op
  * </pre>
  * <br>
+ * <pre>
+ * Benchmark                     (len)  Mode  Cnt    Score    Error  Units
+ * HashBenchmark.doCharMx32         50  avgt    5   95.498 ±  7.367  ns/op
+ * HashBenchmark.doCharMx64         50  avgt    5   94.898 ±  7.613  ns/op
+ * HashBenchmark.doCharYolk32       50  avgt    5   53.361 ±  4.232  ns/op
+ * HashBenchmark.doCharYolk64       50  avgt    5   54.592 ±  3.615  ns/op
+ * HashBenchmark.doDoubleMx32       50  avgt    5   84.159 ±  9.978  ns/op
+ * HashBenchmark.doDoubleMx64       50  avgt    5   81.552 ±  4.842  ns/op
+ * HashBenchmark.doDoubleYolk32     50  avgt    5   70.996 ±  6.078  ns/op
+ * HashBenchmark.doDoubleYolk64     50  avgt    5   71.380 ±  5.775  ns/op
+ * HashBenchmark.doIntMx32          50  avgt    5   54.722 ±  2.088  ns/op
+ * HashBenchmark.doIntMx64          50  avgt    5   56.583 ±  4.273  ns/op
+ * HashBenchmark.doIntYolk32        50  avgt    5   32.303 ±  1.621  ns/op
+ * HashBenchmark.doIntYolk64        50  avgt    5   32.116 ±  2.947  ns/op
+ * HashBenchmark.doLongMx32         50  avgt    5   56.161 ±  1.969  ns/op
+ * HashBenchmark.doLongMx64         50  avgt    5   57.265 ±  4.169  ns/op
+ * HashBenchmark.doLongYolk32       50  avgt    5   43.983 ±  2.911  ns/op
+ * HashBenchmark.doLongYolk64       50  avgt    5   44.094 ±  2.524  ns/op
+ * HashBenchmark.doMx32             50  avgt    5  111.704 ± 11.757  ns/op
+ * HashBenchmark.doMx64             50  avgt    5  109.397 ±  8.175  ns/op
+ * HashBenchmark.doYolk32           50  avgt    5   59.630 ±  5.269  ns/op
+ * HashBenchmark.doYolk64           50  avgt    5   62.821 ±  3.784  ns/op
+ * </pre>
+ * Mx (which is Maiga's MX3 hash) does not seem to do well in Java at all...
+ * <br>
  * Notably, all hashes here outperform the JDK version (Arrays.hashCode())
  * when inputs are 80 items or larger.
  */
@@ -1089,63 +1114,63 @@ public class HashBenchmark {
 
 
     @Benchmark
-    public long doCrease64(BenchmarkState state)
+    public long doMx64(BenchmarkState state)
     {
-        return CrossHash.Crease.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Mx.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public int doCrease32(BenchmarkState state)
+    public int doMx32(BenchmarkState state)
     {
-        return CrossHash.Crease.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Mx.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public long doCharCrease64(BenchmarkState state)
+    public long doCharMx64(BenchmarkState state)
     {
-        return CrossHash.Crease.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Mx.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public int doCharCrease32(BenchmarkState state)
+    public int doCharMx32(BenchmarkState state)
     {
-        return CrossHash.Crease.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Mx.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public long doIntCrease64(BenchmarkState state)
+    public long doIntMx64(BenchmarkState state)
     {
-        return CrossHash.Crease.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Mx.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public int doIntCrease32(BenchmarkState state)
+    public int doIntMx32(BenchmarkState state)
     {
-        return CrossHash.Crease.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Mx.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public long doLongCrease64(BenchmarkState state)
+    public long doLongMx64(BenchmarkState state)
     {
-        return CrossHash.Crease.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Mx.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public int doLongCrease32(BenchmarkState state)
+    public int doLongMx32(BenchmarkState state)
     {
-        return CrossHash.Crease.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Mx.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public long doDoubleCrease64(BenchmarkState state)
+    public long doDoubleMx64(BenchmarkState state)
     {
-        return CrossHash.Crease.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Mx.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public int doDoubleCrease32(BenchmarkState state)
+    public int doDoubleMx32(BenchmarkState state)
     {
-        return CrossHash.Crease.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Mx.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
