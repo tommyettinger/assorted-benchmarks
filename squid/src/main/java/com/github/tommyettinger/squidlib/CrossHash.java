@@ -10718,7 +10718,7 @@ public class CrossHash {
 
         public long hash64(final Iterable<? extends CharSequence> data) {
             if (data == null) return 0;
-            long a = this.seed;
+            long a = seed;
             final Iterator<? extends CharSequence> it = data.iterator();
             int len = 0;
             while (it.hasNext())
@@ -11041,7 +11041,7 @@ public class CrossHash {
 
         public int hash(final Iterable<? extends CharSequence> data) {
             if (data == null) return 0;
-            long a = this.seed;
+            long a = seed;
             final Iterator<? extends CharSequence> it = data.iterator();
             int len = 0;
             while (it.hasNext())
@@ -11396,7 +11396,7 @@ public class CrossHash {
 
         public static long hash64(final long seed, final Iterable<? extends CharSequence> data) {
             if (data == null) return 0;
-            long a = this.seed;
+            long a = seed;
             final Iterator<? extends CharSequence> it = data.iterator();
             int len = 0;
             while (it.hasNext())
@@ -11719,7 +11719,7 @@ public class CrossHash {
 
         public static int hash(final long seed, final Iterable<? extends CharSequence> data) {
             if (data == null) return 0;
-            long a = this.seed;
+            long a = seed;
             final Iterator<? extends CharSequence> it = data.iterator();
             int len = 0;
             while (it.hasNext())

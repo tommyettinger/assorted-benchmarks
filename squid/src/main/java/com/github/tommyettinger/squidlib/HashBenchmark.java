@@ -596,6 +596,101 @@ import java.util.concurrent.TimeUnit;
  * <br>
  * Notably, all hashes here outperform the JDK version (Arrays.hashCode())
  * when inputs are 80 items or larger.
+ * <br>
+ * Everything:
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt    Score     Error  Units
+ * HashBenchmark.doCharCurlup32        500  avgt    5   53.569 ±   2.441  ns/op
+ * HashBenchmark.doCharCurlup64        500  avgt    5   51.410 ±   0.805  ns/op
+ * HashBenchmark.doCharHive32          500  avgt    5   93.369 ±   1.003  ns/op
+ * HashBenchmark.doCharHive64          500  avgt    5   64.140 ±   0.931  ns/op
+ * HashBenchmark.doCharJDK32           500  avgt    5   63.810 ±   2.613  ns/op
+ * HashBenchmark.doCharJDK32Mixed      500  avgt    5   63.410 ±   1.574  ns/op
+ * HashBenchmark.doCharMist32          500  avgt    5   62.919 ±   4.392  ns/op
+ * HashBenchmark.doCharMist64          500  avgt    5   65.306 ±   7.147  ns/op
+ * HashBenchmark.doCharMx32            500  avgt    5   87.051 ±   6.178  ns/op
+ * HashBenchmark.doCharMx64            500  avgt    5   88.603 ±   5.285  ns/op
+ * HashBenchmark.doCharPurple32        500  avgt    5   71.863 ±   2.963  ns/op
+ * HashBenchmark.doCharPurple64        500  avgt    5   70.219 ±   1.500  ns/op
+ * HashBenchmark.doCharWater32         500  avgt    5   49.144 ±   5.848  ns/op
+ * HashBenchmark.doCharWater64         500  avgt    5   52.068 ±   4.070  ns/op
+ * HashBenchmark.doCharWisp32          500  avgt    5   46.047 ±   3.112  ns/op
+ * HashBenchmark.doCharWisp64          500  avgt    5   45.212 ±   6.072  ns/op
+ * HashBenchmark.doCharYolk32          500  avgt    5   49.803 ±   2.762  ns/op
+ * HashBenchmark.doCharYolk64          500  avgt    5   50.615 ±   4.725  ns/op
+ * HashBenchmark.doCurlup32            500  avgt    5   92.865 ±   7.526  ns/op
+ * HashBenchmark.doCurlup64            500  avgt    5  104.441 ±   7.848  ns/op
+ * HashBenchmark.doDoubleCurlup32      500  avgt    5  830.444 ±  51.212  ns/op
+ * HashBenchmark.doDoubleCurlup64      500  avgt    5  817.250 ±  60.470  ns/op
+ * HashBenchmark.doDoubleHive32        500  avgt    5  673.765 ±  42.413  ns/op
+ * HashBenchmark.doDoubleHive64        500  avgt    5  689.056 ±  58.073  ns/op
+ * HashBenchmark.doDoubleJDK32         500  avgt    5  732.442 ±  22.580  ns/op
+ * HashBenchmark.doDoubleJDK32Mixed    500  avgt    5  740.965 ±  68.918  ns/op
+ * HashBenchmark.doDoubleMist32        500  avgt    5  850.835 ±  45.014  ns/op
+ * HashBenchmark.doDoubleMist64        500  avgt    5  886.087 ±  59.515  ns/op
+ * HashBenchmark.doDoubleMx32          500  avgt    5  778.458 ±  79.874  ns/op
+ * HashBenchmark.doDoubleMx64          500  avgt    5  796.256 ±  50.307  ns/op
+ * HashBenchmark.doDoublePurple32      500  avgt    5  661.129 ±  70.118  ns/op
+ * HashBenchmark.doDoublePurple64      500  avgt    5  640.118 ±  22.399  ns/op
+ * HashBenchmark.doDoubleWater32       500  avgt    5  848.566 ±  77.674  ns/op
+ * HashBenchmark.doDoubleWater64       500  avgt    5  747.092 ±  38.413  ns/op
+ * HashBenchmark.doDoubleWisp32        500  avgt    5  721.903 ±  50.461  ns/op
+ * HashBenchmark.doDoubleWisp64        500  avgt    5  756.245 ±  33.715  ns/op
+ * HashBenchmark.doDoubleYolk32        500  avgt    5  766.837 ±  59.003  ns/op
+ * HashBenchmark.doDoubleYolk64        500  avgt    5  744.790 ±  19.786  ns/op
+ * HashBenchmark.doHive32              500  avgt    5   95.729 ±   4.527  ns/op
+ * HashBenchmark.doHive64              500  avgt    5   68.553 ±   1.413  ns/op
+ * HashBenchmark.doIntCurlup32         500  avgt    5  283.246 ±  17.758  ns/op
+ * HashBenchmark.doIntCurlup64         500  avgt    5  260.325 ±  35.476  ns/op
+ * HashBenchmark.doIntHive32           500  avgt    5  567.789 ±  10.466  ns/op
+ * HashBenchmark.doIntHive64           500  avgt    5  352.225 ±   7.265  ns/op
+ * HashBenchmark.doIntJDK32            500  avgt    5  374.801 ±  18.898  ns/op
+ * HashBenchmark.doIntJDK32Mixed       500  avgt    5  381.772 ±   7.161  ns/op
+ * HashBenchmark.doIntMist32           500  avgt    5  350.934 ±  29.626  ns/op
+ * HashBenchmark.doIntMist64           500  avgt    5  347.589 ±  42.551  ns/op
+ * HashBenchmark.doIntMx32             500  avgt    5  527.497 ±  31.719  ns/op
+ * HashBenchmark.doIntMx64             500  avgt    5  524.242 ±   8.713  ns/op
+ * HashBenchmark.doIntPurple32         500  avgt    5  449.365 ±  13.748  ns/op
+ * HashBenchmark.doIntPurple64         500  avgt    5  516.276 ± 150.713  ns/op
+ * HashBenchmark.doIntWater32          500  avgt    5  276.873 ±  19.073  ns/op
+ * HashBenchmark.doIntWater64          500  avgt    5  277.801 ±  19.443  ns/op
+ * HashBenchmark.doIntWisp32           500  avgt    5  209.391 ±   9.146  ns/op
+ * HashBenchmark.doIntWisp64           500  avgt    5  207.087 ±  17.810  ns/op
+ * HashBenchmark.doIntYolk32           500  avgt    5  316.624 ±  14.420  ns/op
+ * HashBenchmark.doIntYolk64           500  avgt    5  276.916 ±  26.692  ns/op
+ * HashBenchmark.doJDK32               500  avgt    5   64.711 ±   1.109  ns/op
+ * HashBenchmark.doJDK32Mixed          500  avgt    5   66.012 ±   3.059  ns/op
+ * HashBenchmark.doLongCurlup32        500  avgt    5  452.401 ±   8.351  ns/op
+ * HashBenchmark.doLongCurlup64        500  avgt    5  446.142 ±  10.350  ns/op
+ * HashBenchmark.doLongHive32          500  avgt    5  414.171 ±  10.874  ns/op
+ * HashBenchmark.doLongHive64          500  avgt    5  413.451 ±   9.580  ns/op
+ * HashBenchmark.doLongJDK32           500  avgt    5  523.832 ±  13.048  ns/op
+ * HashBenchmark.doLongJDK32Mixed      500  avgt    5  501.879 ±  10.190  ns/op
+ * HashBenchmark.doLongMist32          500  avgt    5  441.755 ±   4.699  ns/op
+ * HashBenchmark.doLongMist64          500  avgt    5  442.286 ±  80.363  ns/op
+ * HashBenchmark.doLongMx32            500  avgt    5  583.084 ±  13.290  ns/op
+ * HashBenchmark.doLongMx64            500  avgt    5  589.285 ±  34.104  ns/op
+ * HashBenchmark.doLongPurple32        500  avgt    5  517.487 ±   8.826  ns/op
+ * HashBenchmark.doLongPurple64        500  avgt    5  510.932 ±  17.692  ns/op
+ * HashBenchmark.doLongWater32         500  avgt    5  456.439 ±  27.478  ns/op
+ * HashBenchmark.doLongWater64         500  avgt    5  398.698 ±  16.502  ns/op
+ * HashBenchmark.doLongWisp32          500  avgt    5  364.526 ±  12.196  ns/op
+ * HashBenchmark.doLongWisp64          500  avgt    5  372.354 ±  25.042  ns/op
+ * HashBenchmark.doLongYolk32          500  avgt    5  483.083 ±  74.655  ns/op
+ * HashBenchmark.doLongYolk64          500  avgt    5  505.018 ±  18.513  ns/op
+ * HashBenchmark.doMist32              500  avgt    5   73.085 ±   3.755  ns/op
+ * HashBenchmark.doMist64              500  avgt    5   72.576 ±   5.851  ns/op
+ * HashBenchmark.doMx32                500  avgt    5  108.612 ±  11.653  ns/op
+ * HashBenchmark.doMx64                500  avgt    5  105.063 ±   8.336  ns/op
+ * HashBenchmark.doPurple32            500  avgt    5   75.293 ±   2.018  ns/op
+ * HashBenchmark.doPurple64            500  avgt    5   74.368 ±   2.818  ns/op
+ * HashBenchmark.doWater32             500  avgt    5   58.803 ±   6.988  ns/op
+ * HashBenchmark.doWater64             500  avgt    5   55.530 ±   2.478  ns/op
+ * HashBenchmark.doWisp32              500  avgt    5   49.771 ±   4.750  ns/op
+ * HashBenchmark.doWisp64              500  avgt    5   46.358 ±   5.182  ns/op
+ * HashBenchmark.doYolk32              500  avgt    5   58.854 ±   1.512  ns/op
+ * HashBenchmark.doYolk64              500  avgt    5   59.665 ±   6.241  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -1171,6 +1266,67 @@ public class HashBenchmark {
     public int doDoubleMx32(BenchmarkState state)
     {
         return CrossHash.Mx.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+
+    @Benchmark
+    public long doPurple64(BenchmarkState state)
+    {
+        return CrossHash.Purple.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doPurple32(BenchmarkState state)
+    {
+        return CrossHash.Purple.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doCharPurple64(BenchmarkState state)
+    {
+        return CrossHash.Purple.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doCharPurple32(BenchmarkState state)
+    {
+        return CrossHash.Purple.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doIntPurple64(BenchmarkState state)
+    {
+        return CrossHash.Purple.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doIntPurple32(BenchmarkState state)
+    {
+        return CrossHash.Purple.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doLongPurple64(BenchmarkState state)
+    {
+        return CrossHash.Purple.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doLongPurple32(BenchmarkState state)
+    {
+        return CrossHash.Purple.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoublePurple64(BenchmarkState state)
+    {
+        return CrossHash.Purple.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoublePurple32(BenchmarkState state)
+    {
+        return CrossHash.Purple.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
