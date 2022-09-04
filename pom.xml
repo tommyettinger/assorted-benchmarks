@@ -204,8 +204,37 @@
                             <target>17</target>
                             <source>17</source>
                             <includes>
+                                <include>net/adoptopenjdk/bumblebench/*.java</include>
+                                <include>net/adoptopenjdk/bumblebench/examples/*.java</include>
                                 <include>net/adoptopenjdk/bumblebench/java17/*.java</include>
                             </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>disable-17</id>
+            <activation>
+                <jdk>(,16]</jdk>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven.compiler.version}</version>
+                        <configuration>
+                            <source>${maven.compiler.source}</source>
+                            <target>${maven.compiler.target}</target>
+                            <includes>
+                                <include>net/adoptopenjdk/bumblebench/*.java</include>
+                                <include>net/adoptopenjdk/bumblebench/examples/*.java</include>
+                            </includes>
+                            <excludes>
+                                <exclude>net/adoptopenjdk/bumblebench/java17/*.java</exclude>
+                            </excludes>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -221,9 +250,6 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <excludes>
-                        <exclude>net/adoptopenjdk/bumblebench/java17/*.java</exclude>
-                    </excludes>
                 </configuration>
             </plugin>
             <plugin>
