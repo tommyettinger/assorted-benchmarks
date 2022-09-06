@@ -167,6 +167,15 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathAtan2           avgt    5  63.574 ± 2.227  ns/op
  * MathBenchmark.measureSquidAtan2          avgt    5  12.395 ± 0.453  ns/op
  * </pre>
+ * <br>
+ * Measuring tan() on Java 18:
+ * <br>
+ * <pre>
+ * Benchmark                       Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDivideTan  avgt    5   5.217 ± 0.566  ns/op
+ * MathBenchmark.measureMathTan    avgt    5  17.659 ± 1.176  ns/op
+ * MathBenchmark.measureSoontsTan  avgt    5   7.824 ± 0.646  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -196,6 +205,7 @@ public class MathBenchmark {
 
     private int mathCos = -0x8000;
     private int mathSin = -0x8000;
+    private int mathTan = -0x8000;
     private int mathASin = -0x8000;
     private int asinChristensen = -0x8000;
     private int asinSquid = -0x8000;
@@ -219,6 +229,8 @@ public class MathBenchmark {
     private int cosNickDeg = -0x8000;
     private int cosGdxDeg = -0x8000;
     private int sinGdxDeg = -0x8000;
+    private int tanDiv = -0x8000;
+    private int tanSoo = -0x8000;
     private int baseline = -0x8000;
     private int mathAtan2X = -0x4000;
     private int mathAtan2Y = -0x8000;
@@ -290,6 +302,12 @@ public class MathBenchmark {
     public double measureMathSin()
     {
         return Math.sin(inputs[mathSin++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public double measureMathTan()
+    {
+        return Math.tan(inputs[mathTan++ & 0xFFFF]);
     }
 
     @Benchmark
@@ -625,6 +643,20 @@ public class MathBenchmark {
     public float measureGdxCosDeg() {
         return MathUtils.cosDeg(floatInputs[cosGdxDeg++ & 0xFFFF]);
     }
+
+    @Benchmark
+    public float measureDivideTan()
+    {
+        return NumberTools2.tanDivide(floatInputs[tanDiv++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public float measureSoontsTan()
+    {
+        return NumberTools2.tanSoonts(floatInputs[tanSoo++ & 0xFFFF]);
+    }
+
+
     @Benchmark
     public double measureMathAtan2()
     {
