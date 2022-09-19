@@ -168,22 +168,22 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureSquidAtan2          avgt    5  12.395 ± 0.453  ns/op
  * </pre>
  * <br>
- * Measuring tan() on Java 18:
- * <br>
- * <pre>
- * Benchmark                       Mode  Cnt   Score   Error  Units
- * MathBenchmark.measureDivideTan  avgt    5   5.217 ± 0.566  ns/op
- * MathBenchmark.measureMathTan    avgt    5  17.659 ± 1.176  ns/op
- * MathBenchmark.measureSoontsTan  avgt    5   7.824 ± 0.646  ns/op
- * </pre>
- * <br>
- * And on Java 8:
- * <pre>
- * Benchmark                       Mode  Cnt   Score   Error  Units
- * MathBenchmark.measureDivideTan  avgt    5   4.605 ± 0.219  ns/op
- * MathBenchmark.measureMathTan    avgt    5  51.494 ± 2.440  ns/op
- * MathBenchmark.measureSoontsTan  avgt    5  13.219 ± 0.858  ns/op
- * </pre>
+Measuring tan() on Java 18:
+<br>
+<pre>
+Benchmark                       Mode  Cnt   Score   Error  Units
+MathBenchmark.measureDivideTan  avgt    5   5.217 ± 0.566  ns/op
+MathBenchmark.measureMathTan    avgt    5  17.659 ± 1.176  ns/op
+MathBenchmark.measureSoontsTan  avgt    5   7.824 ± 0.646  ns/op
+</pre>
+<br>
+And on Java 8:
+<pre>
+Benchmark                       Mode  Cnt   Score   Error  Units
+MathBenchmark.measureDivideTan  avgt    5   4.605 ± 0.219  ns/op
+MathBenchmark.measureMathTan    avgt    5  51.494 ± 2.440  ns/op
+MathBenchmark.measureSoontsTan  avgt    5  13.219 ± 0.858  ns/op
+</pre>
  */
 
 @State(Scope.Thread)

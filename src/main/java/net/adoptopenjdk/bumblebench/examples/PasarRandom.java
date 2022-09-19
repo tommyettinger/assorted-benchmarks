@@ -263,12 +263,16 @@ public class PasarRandom extends EnhancedRandom {
 		final long fc = stateC;
 		final long fd = stateD;
 		final long fe = stateE;
-		stateA = fd * 0xF1357AEA2E62A9C5L;
-		stateB = (fa << 42 | fa >>> 22);
-		stateC = fb ^ fe;
-		stateD = fa + fc;
-		stateE = fe + 0xDE916ABCC965815BL;
-		return fd;
+//		stateA = fd * 0xF1357AEA2E62A9C5L;
+//		stateB = (fa << 42 | fa >>> 22);
+//		stateC = fb ^ fe;
+//		stateD = fa + fc;
+//		stateE = fe + 0xDE916ABCC965815BL;
+		stateA = fe * 0xF1357AEA2E62A9C5L;
+		stateB = (fa << 44 | fa >>> 20);
+		stateC = fb + fd;
+		stateD = fd + 0x9E3779B97F4A7C15L;
+		return stateE = fa ^ fc;
 	}
 
 	@Override
@@ -276,13 +280,12 @@ public class PasarRandom extends EnhancedRandom {
 		final long fa = stateA;
 		final long fb = stateB;
 		final long fc = stateC;
-		final long fd = stateD;
-		stateE = stateE - 0xDE916ABCC965815BL;
-		stateC = (fa >>> 41 | fa << 23);
-		stateA = fd - stateC;
-		stateD = fb + stateC;
-		stateB = fc ^ stateE;
-		return stateB + (stateA >>> 41 | stateA << 23);
+		final long fe = stateE;
+		stateA = (fb >>> 44 | fb << 20);
+		stateD -= 0x9E3779B97F4A7C15L;
+		stateB = fc - stateD;
+		stateC = fe ^ stateA;
+		return stateE = fa * 0x781494A55DAAED0DL;
 	}
 
 	@Override
@@ -292,12 +295,11 @@ public class PasarRandom extends EnhancedRandom {
 		final long fc = stateC;
 		final long fd = stateD;
 		final long fe = stateE;
-		stateA = (fc << 41 | fc >>> 23);
-		stateB = fd - fc;
-		stateC = fb ^ fe;
-		stateD = fa + fc;
-		stateE = fe + 0xDE916ABCC965815BL;
-		return (int)fd >>> (32 - bits);
+		stateA = fe * 0xF1357AEA2E62A9C5L;
+		stateB = (fa << 44 | fa >>> 20);
+		stateC = fb + fd;
+		stateD = fd + 0x9E3779B97F4A7C15L;
+		return (int) (stateE = fa ^ fc) >>> (32 - bits);
 	}
 
 	@Override
@@ -319,7 +321,7 @@ public class PasarRandom extends EnhancedRandom {
 	}
 
 	public String toString () {
-		return "SlashRandom{" + "stateA=" + (stateA) + "L, stateB=" + (stateB) + "L, stateC=" + (stateC) + "L, stateD=" + (stateD) + "L, stateE=" + (stateE) + "L}";
+		return "PasarRandom{" + "stateA=" + (stateA) + "L, stateB=" + (stateB) + "L, stateC=" + (stateC) + "L, stateD=" + (stateD) + "L, stateE=" + (stateE) + "L}";
 	}
 
 //	public static void main(String[] args) {

@@ -191,7 +191,10 @@
         <profile>
             <id>enable-17</id>
             <activation>
-                <jdk>[17,)</jdk>
+                <property>
+                    <name>e17</name>
+                    <value>true</value>
+                </property>
             </activation>
 
             <build>
