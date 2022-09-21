@@ -20,6 +20,8 @@ package net.adoptopenjdk.bumblebench.examples;
 import com.github.tommyettinger.random.EnhancedRandom;
 
 /**
+ * Like WhiskerRandom, but this has a fifth state that runs like a counter, guaranteeing a minimum period of 2 to the
+ * 64.
  */
 public class PasarRandom extends EnhancedRandom {
 	@Override
@@ -40,12 +42,12 @@ public class PasarRandom extends EnhancedRandom {
 	 */
 	protected long stateC;
 	/**
-	 * The fourth state; can be any long. The first call to {@link #nextLong()} will return this verbatim, if no other
-	 * methods have been called.
+	 * The fourth state; can be any long.
 	 */
 	protected long stateD;
 	/**
-	 * The fourth state; can be any long.
+	 * The fifth state; can be any long. The first call to {@link #nextLong()} will return this verbatim, if no other
+	 * methods have been called.
 	 */
 	protected long stateE;
 
@@ -158,7 +160,7 @@ public class PasarRandom extends EnhancedRandom {
 	 */
 	@Override
 	public void setSeed (long seed) {
-		stateE = seed;
+		stateA = seed;
 		seed ^= seed >>> 32;
 		seed *= 0xbea225f9eb34556dL;
 		seed ^= seed >>> 29;
@@ -166,10 +168,10 @@ public class PasarRandom extends EnhancedRandom {
 		seed ^= seed >>> 32;
 		seed *= 0xbea225f9eb34556dL;
 		seed ^= seed >>> 29;
-		stateA = seed ^ 0xC6BC279692B5C323L;
-		stateB = ~seed;
+		stateB = seed;
 		stateC = seed ^ ~0xC6BC279692B5C323L;
-		stateD = seed;
+		stateD = ~seed;
+		stateE = seed ^ 0xC6BC279692B5C323L;
 	}
 
 	public long getStateA () {
@@ -229,7 +231,7 @@ public class PasarRandom extends EnhancedRandom {
 	}
 
 	/**
-	 * Sets the fourth part of the state.
+	 * Sets the fifth part of the state.
 	 *
 	 * @param stateE can be any long
 	 */
@@ -263,16 +265,27 @@ public class PasarRandom extends EnhancedRandom {
 		final long fc = stateC;
 		final long fd = stateD;
 		final long fe = stateE;
+		// old
 //		stateA = fd * 0xF1357AEA2E62A9C5L;
 //		stateB = (fa << 42 | fa >>> 22);
 //		stateC = fb ^ fe;
 //		stateD = fa + fc;
 //		stateE = fe + 0xDE916ABCC965815BL;
+		// tested to 180PB of ReMort; excellent
+//		stateA = fe * 0xF1357AEA2E62A9C5L;
+//		stateB = (fa << 44 | fa >>> 20);
+//		stateC = fb + fd;
+//		stateD = fd + 0x9E3779B97F4A7C15L;
+//		return stateE = fa ^ fc;
+
+		// rearranging; tried returning fa, fb, fc, and fe, but fe was best.
 		stateA = fe * 0xF1357AEA2E62A9C5L;
 		stateB = (fa << 44 | fa >>> 20);
 		stateC = fb + fd;
 		stateD = fd + 0x9E3779B97F4A7C15L;
-		return stateE = fa ^ fc;
+		stateE = fa ^ fc;
+		return fe;
+
 	}
 
 	@Override
@@ -285,7 +298,8 @@ public class PasarRandom extends EnhancedRandom {
 		stateD -= 0x9E3779B97F4A7C15L;
 		stateB = fc - stateD;
 		stateC = fe ^ stateA;
-		return stateE = fa * 0x781494A55DAAED0DL;
+		stateE = fa * 0x781494A55DAAED0DL;
+		return (stateA * 0x781494A55DAAED0DL);
 	}
 
 	@Override
@@ -299,7 +313,8 @@ public class PasarRandom extends EnhancedRandom {
 		stateB = (fa << 44 | fa >>> 20);
 		stateC = fb + fd;
 		stateD = fd + 0x9E3779B97F4A7C15L;
-		return (int) (stateE = fa ^ fc) >>> (32 - bits);
+		stateE = fa ^ fc;
+		return (int) (fe) >>> (32 - bits);
 	}
 
 	@Override
@@ -336,5 +351,8 @@ public class PasarRandom extends EnhancedRandom {
 //		System.out.println(n0 == p0);
 //		System.out.println(n1 == p1);
 //		System.out.println(n2 == p2);
+//		System.out.println(n0 + " vs. " + p0);
+//		System.out.println(n1 + " vs. " + p1);
+//		System.out.println(n2 + " vs. " + p2);
 //	}
 }

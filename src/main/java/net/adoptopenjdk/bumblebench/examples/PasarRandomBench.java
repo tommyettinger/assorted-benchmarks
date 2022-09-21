@@ -22,38 +22,38 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- * PasarRandomBench score: 736299392.000000 (736.3M 2041.7%)
- *              uncertainty:   7.1%
+ * PasarRandomBench score: 725203008.000000 (725.2M 2040.2%)
+ *              uncertainty:   0.2%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * PasarRandomBench score: 1163435648.000000 (1.163G 2087.5%)
- *              uncertainty:   0.5%
+ * PasarRandomBench score: 1274963584.000000 (1.275G 2096.6%)
+ *              uncertainty:   3.7%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * PasarRandomBench score: 1579453824.000000 (1.579G 2118.0%)
- *              uncertainty:   0.3%
+ * PasarRandomBench score: 1609099904.000000 (1.609G 2119.9%)
+ *              uncertainty:   0.8%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * PasarRandomBench score: 1588766592.000000 (1.589G 2118.6%)
- *              uncertainty:   2.2%
+ * PasarRandomBench score: 1556022400.000000 (1.556G 2116.5%)
+ *              uncertainty:   1.5%
  * <br>
  * GraalVM Java 17:
  * <br>
- * PasarRandomBench score: 1662066048.000000 (1.662G 2123.1%)
- *              uncertainty:   0.2%
+ * PasarRandomBench score: 1709806464.000000 (1.710G 2126.0%)
+ *              uncertainty:   1.7%
  * <br>
  * OpenJ9 Java 17 (Semeru):
  * <br>
- * PasarRandomBench score: 605372160.000000 (605.4M 2022.1%)
- *              uncertainty:   0.8%
+ * PasarRandomBench score: 628034240.000000 (628.0M 2025.8%)
+ *              uncertainty:   3.0%
  * <br>
  * HotSpot Java 18 (Adoptium):
  * <br>
- * PasarRandomBench score: 1565752448.000000 (1.566G 2117.2%)
- *              uncertainty:   2.5%
+ * PasarRandomBench score: 1556091264.000000 (1.556G 2116.5%)
+ *              uncertainty:   1.9%
  */
 public final class PasarRandomBench extends MicroBench {
 
