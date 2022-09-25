@@ -168,30 +168,38 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureSquidAtan2          avgt    5  12.395 ± 0.453  ns/op
  * </pre>
  * <br>
-Measuring tan() on Java 18:
-<br>
-<pre>
-Benchmark                       Mode  Cnt   Score   Error  Units
-MathBenchmark.measureDivideTan  avgt    5   5.217 ± 0.566  ns/op
-MathBenchmark.measureMathTan    avgt    5  17.659 ± 1.176  ns/op
-MathBenchmark.measureSoontsTan  avgt    5   7.824 ± 0.646  ns/op
-</pre>
-<br>
-And on Java 8:
-<pre>
-Benchmark                       Mode  Cnt   Score   Error  Units
-MathBenchmark.measureDivideTan  avgt    5   4.605 ± 0.219  ns/op
-MathBenchmark.measureMathTan    avgt    5  51.494 ± 2.440  ns/op
-MathBenchmark.measureSoontsTan  avgt    5  13.219 ± 0.858  ns/op
-</pre>
+ * Measuring tan() on Java 18:
+ * <br>
+ * <pre>
+ * Benchmark                       Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDivideTan  avgt    5   5.217 ± 0.566  ns/op
+ * MathBenchmark.measureMathTan    avgt    5  17.659 ± 1.176  ns/op
+ * MathBenchmark.measureSoontsTan  avgt    5   7.824 ± 0.646  ns/op
+ * </pre>
+ * <br>
+ * And on Java 8:
+ * <pre>
+ * Benchmark                       Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDivideTan  avgt    5   4.605 ± 0.219  ns/op
+ * MathBenchmark.measureMathTan    avgt    5  51.494 ± 2.440  ns/op
+ * MathBenchmark.measureSoontsTan  avgt    5  13.219 ± 0.858  ns/op
+ * </pre>
+ * Measuring sine approximations; there were some issues during testing that might be resolvable.
+ * <pre>
+ * Benchmark                          Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureBhaskaraSinF  avgt   32  15.087 ± 1.335  ns/op
+ * MathBenchmark.measureBitSinF       avgt   32  13.332 ± 2.200  ns/op
+ * MathBenchmark.measureGdxSinF       avgt   32   3.796 ± 0.088  ns/op
+ * MathBenchmark.measureSquidSinF     avgt   32   8.623 ± 1.084  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Fork(1)
-@Warmup(iterations = 5)
-@Measurement(iterations = 5)
+@Warmup(iterations = 5, time = 5)
+@Measurement(iterations = 5, time = 5)
 public class MathBenchmark {
 
     private final double[] inputs = new double[65536];
@@ -231,6 +239,7 @@ public class MathBenchmark {
     private int sinGdx = -0x8000;
     private int cosWallace = -0x8000;
     private int sinWallace = -0x8000;
+    private int sinBhaskara = -0x8000;
     private int mathCosDeg = -0x8000;
     private int mathSinDeg = -0x8000;
     private int sinNickDeg = -0x8000;
@@ -603,13 +612,13 @@ public class MathBenchmark {
         return n * (-0.775f - 0.225f * n) * ((sn ^ sign) | 1);
     }
     @Benchmark
-    public float measureGdxSin()
+    public float measureGdxSinF()
     {
         return MathUtils.sin(floatInputs[sinGdx++ & 0xFFFF]);
     }
 
     @Benchmark
-    public float measureGdxCos() {
+    public float measureGdxCosF() {
         return MathUtils.cos(floatInputs[cosGdx++ & 0xFFFF]);
     }
 
@@ -617,6 +626,12 @@ public class MathBenchmark {
     public float measureWallaceSin()
     {
         return NumberTools2.sinWallaceN(floatInputs[sinWallace++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public float measureBhaskaraSinF()
+    {
+        return NumberTools2.sinBhaskaroid(floatInputs[sinBhaskara++ & 0xFFFF]);
     }
 
     @Benchmark
@@ -884,8 +899,8 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
             double c = u.measureMathCos(), s = u.measureMathSin(), cd = u.measureMathCosDeg(), sd = u.measureMathSinDeg(), as = u.measureMathASin();
             precisionError += Math.abs(c - (float)c);
             cosFError += Math.abs(u.measureSquidCosF() - c);
-            cosGdxError += Math.abs(u.measureGdxCos() - c);
-            sinGdxError += Math.abs(u.measureGdxSin() - s);
+            cosGdxError += Math.abs(u.measureGdxCosF() - c);
+            sinGdxError += Math.abs(u.measureGdxSinF() - s);
             sinWallaceError += Math.abs(u.measureWallaceSin() - s);
             cosNickError += Math.abs(u.measureSquidCos() - c);
             sinNickError += Math.abs(u.measureSquidSin() - s);
