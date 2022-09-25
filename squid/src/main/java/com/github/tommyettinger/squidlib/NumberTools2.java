@@ -721,10 +721,10 @@ public final class NumberTools2 {
         //Worst approx output: 0.8753479123
         //Correct output:      0.8757029176
         radians *= TrigTools.PI_INVERSE * 2f;
-        final int floor = 16384 - (int)(16384.0 - radians) & -2;
-        radians -= floor;
+        final int ceil = (int) Math.ceil(radians) & -2;
+        radians -= ceil;
         final float x2 = radians * radians, x3 = radians * x2;
-        return (((11 * radians - 3 * x3) / (7 + x2)) * (1 - (floor & 2)));
+        return (((11 * radians - 3 * x3) / (7 + x2)) * (1 - (ceil & 2)));
     }
 
     /**

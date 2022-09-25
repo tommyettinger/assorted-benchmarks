@@ -192,6 +192,15 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureGdxSinF       avgt   32   3.796 ± 0.088  ns/op
  * MathBenchmark.measureSquidSinF     avgt   32   8.623 ± 1.084  ns/op
  * </pre>
+ * The previous results seem especially suspicious when compared with this tiny change, run on Java 17 instead
+ * of 18 and with one function changed from an approximation to Math.ceil().
+ * <pre>
+ * Benchmark                          Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureBhaskaraSinF  avgt   16   7.151 ± 0.148  ns/op
+ * MathBenchmark.measureBitSinF       avgt   16  10.737 ± 0.139  ns/op
+ * MathBenchmark.measureGdxSinF       avgt   16   3.795 ± 0.073  ns/op
+ * MathBenchmark.measureSquidSinF     avgt   16  10.366 ± 0.098  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
