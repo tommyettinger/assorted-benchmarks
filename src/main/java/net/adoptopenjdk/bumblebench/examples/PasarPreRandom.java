@@ -23,7 +23,7 @@ import com.github.tommyettinger.random.EnhancedRandom;
  * Like WhiskerRandom, but this has a fifth state that runs like a counter, guaranteeing a minimum period of 2 to the
  * 64.
  */
-public class PasarRandom extends EnhancedRandom {
+public class PasarPreRandom extends EnhancedRandom {
 	@Override
 	public String getTag() {
 		return "PasR";
@@ -54,7 +54,7 @@ public class PasarRandom extends EnhancedRandom {
 	/**
 	 * Creates a new PasarRandom with a random state.
 	 */
-	public PasarRandom() {
+	public PasarPreRandom() {
 		stateA = EnhancedRandom.seedFromMath();
 		stateB = EnhancedRandom.seedFromMath();
 		stateC = EnhancedRandom.seedFromMath();
@@ -68,7 +68,7 @@ public class PasarRandom extends EnhancedRandom {
 	 *
 	 * @param seed any {@code long} value
 	 */
-	public PasarRandom(long seed) {
+	public PasarPreRandom(long seed) {
 		setSeed(seed);
 	}
 
@@ -82,7 +82,7 @@ public class PasarRandom extends EnhancedRandom {
 	 * @param stateD any {@code long} value
 	 * @param stateE any {@code long} value
 	 */
-	public PasarRandom(long stateA, long stateB, long stateC, long stateD, long stateE) {
+	public PasarPreRandom(long stateA, long stateB, long stateC, long stateD, long stateE) {
 		this.stateA = stateA;
 		this.stateB = stateB;
 		this.stateC = stateC;
@@ -265,12 +265,27 @@ public class PasarRandom extends EnhancedRandom {
 		final long fc = stateC;
 		final long fd = stateD;
 		final long fe = stateE;
+		// old
+//		stateA = fd * 0xF1357AEA2E62A9C5L;
+//		stateB = (fa << 42 | fa >>> 22);
+//		stateC = fb ^ fe;
+//		stateD = fa + fc;
+//		stateE = fe + 0xDE916ABCC965815BL;
 		// tested to 180PB of ReMort; excellent
+//		stateA = fe * 0xF1357AEA2E62A9C5L;
+//		stateB = (fa << 44 | fa >>> 20);
+//		stateC = fb + fd;
+//		stateD = fd + 0x9E3779B97F4A7C15L;
+//		return stateE = fa ^ fc;
+
+		// rearranging; tried returning fa, fb, fc, and fe, but fe was best.
 		stateA = fe * 0xF1357AEA2E62A9C5L;
 		stateB = (fa << 44 | fa >>> 20);
 		stateC = fb + fd;
 		stateD = fd + 0x9E3779B97F4A7C15L;
-		return stateE = fa ^ fc;
+		stateE = fa ^ fc;
+		return fe;
+
 	}
 
 	@Override
@@ -283,7 +298,8 @@ public class PasarRandom extends EnhancedRandom {
 		stateD -= 0x9E3779B97F4A7C15L;
 		stateB = fc - stateD;
 		stateC = fe ^ stateA;
-		return stateE = fa * 0x781494A55DAAED0DL;
+		stateE = fa * 0x781494A55DAAED0DL;
+		return (stateA * 0x781494A55DAAED0DL);
 	}
 
 	@Override
@@ -297,12 +313,13 @@ public class PasarRandom extends EnhancedRandom {
 		stateB = (fa << 44 | fa >>> 20);
 		stateC = fb + fd;
 		stateD = fd + 0x9E3779B97F4A7C15L;
-		return (int) (stateE = fa ^ fc) >>> (32 - bits);
+		stateE = fa ^ fc;
+		return (int) (fe) >>> (32 - bits);
 	}
 
 	@Override
-	public PasarRandom copy () {
-		return new PasarRandom(stateA, stateB, stateC, stateD, stateE);
+	public PasarPreRandom copy () {
+		return new PasarPreRandom(stateA, stateB, stateC, stateD, stateE);
 	}
 
 	@Override
@@ -312,7 +329,7 @@ public class PasarRandom extends EnhancedRandom {
 		if (o == null || getClass() != o.getClass())
 			return false;
 
-		PasarRandom that = (PasarRandom)o;
+		PasarPreRandom that = (PasarPreRandom)o;
 
 		return stateA == that.stateA && stateB == that.stateB && stateC == that.stateC && stateD == that.stateD &&
 				stateE == that.stateE;
