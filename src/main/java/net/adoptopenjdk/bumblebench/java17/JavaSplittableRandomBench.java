@@ -25,6 +25,18 @@ import java.util.random.RandomGeneratorFactory;
  * <br>
  *   JavaSplittableRandomBench score: 1096225664.000000 (1.096G 2081.5%)
  *                       uncertainty:   1.0%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 18 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 19 (BellSoft):
+ * <br>
+ *
  */
 
 public final class JavaSplittableRandomBench extends MicroBench {

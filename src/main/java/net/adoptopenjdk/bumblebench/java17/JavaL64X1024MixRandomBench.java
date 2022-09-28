@@ -25,6 +25,18 @@ import java.util.random.RandomGeneratorFactory;
  * <br>
  *   JavaL64X1024MixRandomBench score: 357766752.000000 (357.8M 1969.5%)
  *                        uncertainty:   0.9%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 18 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 19 (BellSoft):
+ * <br>
+ *
  */
 public final class JavaL64X1024MixRandomBench extends MicroBench {
 

@@ -54,6 +54,11 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * PasarRandomBench score: 1579731200.000000 (1.580G 2118.1%)
  *              uncertainty:   1.6%
+ * <br>
+ * HotSpot Java 19 (BellSoft):
+ * <br>
+ * PasarRandomBench score: 1590802560.000000 (1.591G 2118.8%)
+ *              uncertainty:   2.9%
  */
 public final class PasarRandomBench extends MicroBench {
 

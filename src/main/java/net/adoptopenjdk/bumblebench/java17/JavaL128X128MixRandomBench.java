@@ -25,6 +25,18 @@ import java.util.random.RandomGeneratorFactory;
  * <br>
  *   JavaL128X128MixRandomBench score: 154915952.000000 (154.9M 1885.8%)
  *                        uncertainty:   0.8%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 18 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 19 (BellSoft):
+ * <br>
+ *
  */
 public final class JavaL128X128MixRandomBench extends MicroBench {
 

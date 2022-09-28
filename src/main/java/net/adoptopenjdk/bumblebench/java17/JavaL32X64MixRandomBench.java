@@ -25,6 +25,18 @@ import java.util.random.RandomGeneratorFactory;
  * <br>
  *   JavaL32X64MixRandomBench score: 279142592.000000 (279.1M 1944.7%)
  *                      uncertainty:   0.7%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 18 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 19 (BellSoft):
+ * <br>
+ *
  */
 public final class JavaL32X64MixRandomBench extends MicroBench {
 

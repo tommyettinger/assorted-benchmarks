@@ -25,6 +25,18 @@ import java.util.random.RandomGeneratorFactory;
  * <br>
  *   JavaL64X128StarStarRandomBench score: 707815424.000000 (707.8M 2037.8%)
  *                            uncertainty:   0.1%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 18 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 19 (BellSoft):
+ * <br>
+ *
  */
 public final class JavaL64X128StarStarRandomBench extends MicroBench {
 

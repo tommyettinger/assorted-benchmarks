@@ -25,6 +25,18 @@ import java.util.random.RandomGeneratorFactory;
  * <br>
  *   JavaXoshiro256PlusPlusBench score: 963067584.000000 (963.1M 2068.6%)
  *                         uncertainty:   1.5%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 18 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 19 (BellSoft):
+ * <br>
+ *
  */
 public final class JavaXoshiro256PlusPlusBench extends MicroBench {
 
