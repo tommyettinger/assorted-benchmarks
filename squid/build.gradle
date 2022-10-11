@@ -60,8 +60,8 @@ dependencies {
 //    implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
     implementation 'com.github.libgdx:gdx-ai:5358c19780' // 1.8.3-SNAPSHOT
     implementation 'com.github.tommyettinger:atlantis:5574642135'
-    implementation 'com.github.tommyettinger:digital:c7154afc22'
-    implementation 'com.github.tommyettinger:juniper:0.1.4'
+    implementation 'com.github.tommyettinger:digital:0.1.4'
+    implementation 'com.github.tommyettinger:juniper:0.1.6'
     implementation 'com.github.tommyettinger:jdkgdxds:1.0.4'
 
     implementation group: 'it.unimi.dsi', name: 'fastutil', version:'8.5.0'
