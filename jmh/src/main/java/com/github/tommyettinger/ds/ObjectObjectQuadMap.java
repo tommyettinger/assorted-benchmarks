@@ -75,8 +75,7 @@ public class ObjectObjectQuadMap<K, V> implements Map<K, V>, Iterable<Map.Entry<
 	 * This only needs to be serialized if the full key and value tables are serialized, or if the iteration order should be
 	 * the same before and after serialization. Iteration order is better handled by using {@link ObjectObjectOrderedMap}.
 	 */
-	protected int hashMultiplier = 0x13C6ED;
-
+	protected long hashMultiplier = 0x9E3779B97F4A7C15L;
 	/**
 	 * A bitmask used to confine hashcodes to the size of the table. Must be all 1 bits in its low positions, ie a power of two
 	 * minus 1. If {@link #place(Object)} is overridden, this can be used instead of {@link #shift} to isolate usable bits of a
@@ -238,7 +237,7 @@ public class ObjectObjectQuadMap<K, V> implements Map<K, V>, Iterable<Map.Entry<
 	 * @return an index between 0 and {@link #mask} (both inclusive)
 	 */
 	protected int place (Object item) {
-		return (item.hashCode() * hashMultiplier & mask);
+		return (int)(item.hashCode() * hashMultiplier >>> shift);
 		// This can be used if you know hashCode() has few collisions normally, and won't be maliciously manipulated.
 //		return item.hashCode() & mask;
 	}
@@ -645,9 +644,7 @@ public class ObjectObjectQuadMap<K, V> implements Map<K, V>, Iterable<Map.Entry<
 		mask = newSize - 1;
 		shift = Long.numberOfLeadingZeros(mask);
 
-		// we modify the hash multiplier by... basically it just needs to stay odd, and use 21 bits or fewer (for GWT reasons).
-		// we incorporate the size in here (times 2, so it doesn't make the multiplier even) to randomize things more.
-		hashMultiplier = (hashMultiplier + size + size ^ 0xC79E7B18) * 0x13C6EB & 0x1FFFFF;
+		hashMultiplier = (hashMultiplier + size + size ^ 0xC13FA9A902A6328EL) * 0xF1357AEA2E62A9C5L;
 
 		K[] oldKeyTable = keyTable;
 		V[] oldValueTable = valueTable;
