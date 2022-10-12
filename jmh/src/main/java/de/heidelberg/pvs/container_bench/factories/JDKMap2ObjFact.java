@@ -19,6 +19,7 @@ public enum JDKMap2ObjFact {
 //FASTUTIL_O2O_ARRAY,GOOGLE_O2O_ARRAY,CORENLP_ARRAY
 //JDK_O2O_HASH,FASTUTIL_O2O_HASH,ECLIPSE_O2O_HASH,JDKGDXDS_HASH,CUCKOO_HASH
 //JDK_O2O_HASH,JDKGDXDS_HASH,FASTUTIL_O2O_HASH,ECLIPSE_O2O_HASH
+//JDKGDXDS_HASH,JDKGDXDSQ_HASH,JDK_O2O_HASH
 
 	JDK_O2O_HASH(() -> new java.util.HashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_O2O_LINKEDHASH(() -> new java.util.LinkedHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
@@ -59,6 +60,7 @@ public enum JDKMap2ObjFact {
 	ATLANTIS_INDEXED(() -> new IndexedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
 	JDKGDXDS_HASH(() -> new ObjectObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDSQ_HASH(() -> new ObjectObjectQuadMap<>(16, LoadFactor.LOAD_FACTOR)),
 	CUCKOO_HASH(() -> new ObjectObjectCuckooMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_INDEXED(() -> new ObjectObjectOrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 

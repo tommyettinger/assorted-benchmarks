@@ -10,4 +10,5 @@ java -jar benchmarks.jar "GDXArrayBench" -p size=10,100,1000 -p payloadType=STRI
 java -jar benchmarks.jar "JDKListBench" -p impl=JDK_ARRAY,JDK_LINKED,JDK_VECTOR,FASTUTIL_O_ARRAY,ECLIPSE_O_ARRAY -p size=10,100,1000 -p payloadType=STRING_UNIFORM -wi 5 -i 5 -f 1 -w 5 -r 5
 
 java -jar benchmarks.jar "JDKMapBench" -p impl=JDK_O2O_HASH,JDKGDXDS_HASH,FASTUTIL_O2O_HASH,ECLIPSE_O2O_HASH -p size=100,1000,10000 -wi 5 -i 5 -f 1 -w 5 -r 5
-
+java -jar benchmarks.jar "JDKMapBench" -p impl=JDKGDXDS_HASH,JDKGDXDSQ_HASH,JDK_O2O_HASH -p size=100,1000,10000 -wi 5 -i 5 -f 1 -w 5 -r 5 -p payloadType=STRING_UNIFORM
+java -jar benchmarks.jar "JDKMapBench" -p impl=JDKGDXDSQ_HASH,JDKGDXDS_HASH,JDK_O2O_HASH -p size=100,1000,10000 -wi 5 -i 5 -f 1 -w 5 -r 5 -p payloadType=VECTOR2_UNIFORM
