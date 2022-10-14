@@ -16,6 +16,7 @@ package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectSet;
+import com.badlogic.gdx.utils.OrderedSet;
 import com.github.tommyettinger.random.FourWheelRandom;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 import squidpony.StringKit;
@@ -87,7 +88,7 @@ public final class SerializableWriteBench extends MiniBench {
 			e.printStackTrace();
 		}
 		final String[] words = StringKit.split(book, " ");
-		ObjectSet<String> unique = ObjectSet.with(words);
+		OrderedSet<String> unique = OrderedSet.with(words);
 		HashMap<String, ArrayList<Vector2>> big = new HashMap<>(unique.size);
 		FourWheelRandom random = new FourWheelRandom(12345);
 		for(String u : unique){

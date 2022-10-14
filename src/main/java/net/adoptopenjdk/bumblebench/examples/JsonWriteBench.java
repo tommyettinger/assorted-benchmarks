@@ -24,6 +24,9 @@ import squidpony.StringKit;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Java 17:
@@ -77,18 +80,18 @@ public final class JsonWriteBench extends MiniBench {
 			e.printStackTrace();
 		}
 		final String[] words = StringKit.split(book, " ");
-		ObjectSet<String> unique = ObjectSet.with(words);
-		ObjectMap<String, Array<Vector2>> big = new ObjectMap<>(unique.size);
+		OrderedSet<String> unique = OrderedSet.with(words);
+		HashMap<String, ArrayList<Vector2>> big = new HashMap<>(unique.size);
 		FourWheelRandom random = new FourWheelRandom(12345);
 		for(String u : unique){
-			big.put(u, Array.with(
+			big.put(u, new ArrayList<>(Arrays.asList(
 					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f),
 					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f),
 					new Vector2(random.nextExclusiveFloat() - 0.5f, random.nextExclusiveFloat() - 0.5f)
-			));
+			)));
 		}
 
-		System.out.println("There are " + big.size + " keys in the Map.");
+		System.out.println("There are " + big.size() + " keys in the Map.");
 
 		new Lwjgl3Files().local("json.json").writeString(new Json(JsonWriter.OutputType.minimal).toJson(big), false);
 	}
