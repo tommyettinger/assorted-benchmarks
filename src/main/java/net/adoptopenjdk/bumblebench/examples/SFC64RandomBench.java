@@ -24,28 +24,43 @@ import java.util.Random;
  * <br>
  * HotSpot Java 8:
  * <br>
- * SFC64RandomBench score: 819207872.000000 (819.2M 2052.4%)
- *              uncertainty:   1.8%
+ * SFC64RandomBench score: 851172992.000000 (851.2M 2056.2%)
+ *              uncertainty:   1.3%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * SFC64RandomBench score: 780036096.000000 (780.0M 2047.5%)
- *              uncertainty:   1.5%
+ * SFC64RandomBench score: 794539456.000000 (794.5M 2049.3%)
+ *              uncertainty:   2.5%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * SFC64RandomBench score: 997751616.000000 (997.8M 2072.1%)
- *              uncertainty:   1.6%
- * <br>
- * GraalVM Java 16:
- * <br>
- * SFC64RandomBench score: 1012227200.000000 (1.012G 2073.5%)
- *              uncertainty:   1.6%
+ * SFC64RandomBench score: 1013789312.000000 (1.014G 2073.7%)
+ *              uncertainty:   1.2%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * SFC64RandomBench score: 893554688.000000 (893.6M 2061.1%)
- *              uncertainty:   1.5%
+ * SFC64RandomBench score: 896921664.000000 (896.9M 2061.4%)
+ *              uncertainty:   1.8%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ * SFC64RandomBench score: 990144320.000000 (990.1M 2071.3%)
+ *              uncertainty:   1.0%
+ * <br>
+ * OpenJ9 Java 17 (Semeru):
+ * <br>
+ * SFC64RandomBench score: 501072320.000000 (501.1M 2003.2%)
+ *              uncertainty:   3.7%
+ * <br>
+ * HotSpot Java 18 (Adoptium):
+ * <br>
+ * SFC64RandomBench score: 893886784.000000 (893.9M 2061.1%)
+ *              uncertainty:   0.7%
+ * <br>
+ * HotSpot Java 19 (BellSoft):
+ * <br>
+ * SFC64RandomBench score: 1060832768.000000 (1.061G 2078.2%)
+ *              uncertainty:   0.3%
  */
 public final class SFC64RandomBench extends MicroBench {
 
@@ -148,10 +163,13 @@ public final class SFC64RandomBench extends MicroBench {
 		 */
 		@Override
 		protected int next(int bits) {
-			final long tmp = this.a + this.b + this.d++;
-			this.a = this.b ^ (this.b >>> 11);
-			this.b = this.c + (this.c << 3);
-			this.c = Long.rotateLeft(this.c, 24) + tmp;
+			final long a = this.a;
+			final long b = this.b;
+			final long c = this.c;
+			final long tmp = a + b + this.d++;
+			this.a = b ^ (b >>> 11);
+			this.b = c + (c << 3);
+			this.c = (c << 24 | c >>> 40) + tmp;
 			return (int) tmp >>> 32 - bits;
 		}
 
@@ -166,10 +184,13 @@ public final class SFC64RandomBench extends MicroBench {
 		 */
 		@Override
 		public long nextLong() {
-			final long tmp = this.a + this.b + this.d++;
-			this.a = this.b ^ (this.b >>> 11);
-			this.b = this.c + (this.c << 3);
-			this.c = Long.rotateLeft(this.c, 24) + tmp;
+			final long a = this.a;
+			final long b = this.b;
+			final long c = this.c;
+			final long tmp = a + b + this.d++;
+			this.a = b ^ (b >>> 11);
+			this.b = c + (c << 3);
+			this.c = (c << 24 | c >>> 40) + tmp;
 			return tmp;
 		}
 
@@ -202,3 +223,32 @@ public final class SFC64RandomBench extends MicroBench {
 		return numIterations;
 	}
 }
+
+/**
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8:
+ * <br>
+ * SFC64RandomBench score: 819207872.000000 (819.2M 2052.4%)
+ *              uncertainty:   1.8%
+ * <br>
+ * OpenJ9 Java 15:
+ * <br>
+ * SFC64RandomBench score: 780036096.000000 (780.0M 2047.5%)
+ *              uncertainty:   1.5%
+ * <br>
+ * HotSpot Java 16 (AdoptOpenJDK):
+ * <br>
+ * SFC64RandomBench score: 997751616.000000 (997.8M 2072.1%)
+ *              uncertainty:   1.6%
+ * <br>
+ * GraalVM Java 16:
+ * <br>
+ * SFC64RandomBench score: 1012227200.000000 (1.012G 2073.5%)
+ *              uncertainty:   1.6%
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ * SFC64RandomBench score: 893554688.000000 (893.6M 2061.1%)
+ *              uncertainty:   1.5%
+ */
