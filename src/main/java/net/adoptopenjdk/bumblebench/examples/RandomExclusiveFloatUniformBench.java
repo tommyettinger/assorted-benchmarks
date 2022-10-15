@@ -40,7 +40,7 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  */
 public final class RandomExclusiveFloatUniformBench extends MicroBench {
 
-	private final LaserRandom rng = new LaserRandom(0x12345678);
+	private final WhiskerRandom rng = new WhiskerRandom(0x12345678);
 
 	private float nextExclusiveFloat() {
 		final long bits = rng.nextLong();

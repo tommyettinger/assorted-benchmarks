@@ -15,42 +15,63 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.github.tommyettinger.digital.BitConversion;
-import com.github.tommyettinger.random.LaserRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * (This uses LaserRandom, so a large part of its performance is related to that generator.)
- * <br>
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * HotSpot Java 8:
  * <br>
- * RandomExclusiveDoubleUniformBench score: 566665472.000000 (566.7M 2015.5%)
- *                               uncertainty:   1.5%
+ * RandomDoubleBench score: 343553152.000000 (343.6M 1965.5%)
+ *               uncertainty:   0.9%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * RandomExclusiveDoubleUniformBench score: 370206880.000000 (370.2M 1973.0%)
- *                               uncertainty:   0.5%
+ * RandomDoubleBench score: 479217792.000000 (479.2M 1998.8%)
+ *               uncertainty:   1.3%
  * <br>
- * HotSpot Java 16:
+ * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * RandomExclusiveDoubleUniformBench score: 608618560.000000 (608.6M 2022.7%)
- *                               uncertainty:   2.4%
+ * RandomDoubleBench score: 691251392.000000 (691.3M 2035.4%)
+ *               uncertainty:   1.1%
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ * RandomDoubleBench score: 681904832.000000 (681.9M 2034.0%)
+ *               uncertainty:   1.6%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ * RandomDoubleBench score: 336601504.000000 (336.6M 1963.4%)
+ *               uncertainty:   1.2%
+ * <br>
+ * OpenJ9 Java 17 (Semeru):
+ * <br>
+ * RandomDoubleBench score: 492883744.000000 (492.9M 2001.6%)
+ *               uncertainty:   0.5%
+ * <br>
+ * HotSpot Java 18 (Adoptium):
+ * <br>
+ * RandomDoubleBench score: 677875008.000000 (677.9M 2033.4%)
+ *               uncertainty:   1.2%
+ * <br>
+ * HotSpot Java 19 (BellSoft):
+ * <br>
+ * RandomDoubleBench score: 686081664.000000 (686.1M 2034.7%)
+ *               uncertainty:   0.2%
  */
-public final class RandomExclusiveDoubleUniformBench extends MicroBench {
+public final class RandomDoubleBench extends MicroBench {
 
 	private final WhiskerRandom rng = new WhiskerRandom(0x12345678);
 
-	private double nextExclusiveDouble() {
-		final long bits = rng.nextLong();
-		return BitConversion.longBitsToDouble(1022L - Long.numberOfTrailingZeros(bits) << 52 | bits >>> 12);
+	private double nextDouble() {
+		return (rng.nextLong() & 0x1FFFFFFFFFFFFFL) * 0x1p-53;
 	}
 
 	protected long doBatch(long numIterations) throws InterruptedException {
 		double sum = 0.0;
 		for (long i = 0; i < numIterations; i++)
-			sum += nextExclusiveDouble() - 0.5;
+			sum += nextDouble() - 0.5;
 		return numIterations;
 	}
 }
