@@ -26,9 +26,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * Java 8:
+ * <br>
+ * JsoniterReadBench score: 145.798828 (145.8 498.2%)
+ *               uncertainty:   0.5%
+ * <br>
  * Java 17:
  * <br>
- *
+ * JsoniterReadBench score: 178.906281 (178.9 518.7%)
+ *               uncertainty:   2.1%
  */
 public final class JsoniterReadBench extends MiniBench {
 	@Override

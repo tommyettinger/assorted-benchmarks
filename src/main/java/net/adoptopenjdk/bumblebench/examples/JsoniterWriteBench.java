@@ -33,9 +33,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 /**
+ * Java 8:
+ * <br>
+ * JsoniterWriteBench score: 102.231216 (102.2 462.7%)
+ *                uncertainty:   4.7%
+ * <br>
  * Java 17:
  * <br>
- *
+ * JsoniterWriteBench score: 109.739372 (109.7 469.8%)
+ *                uncertainty:   1.0%
  */
 public final class JsoniterWriteBench extends MiniBench {
 	@Override
