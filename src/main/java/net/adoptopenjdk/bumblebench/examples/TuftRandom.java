@@ -238,18 +238,19 @@ public class TuftRandom extends EnhancedRandom {
 		stateA = fd + fb ^ fc;
 		stateB = (fa << 39 | fa >>> 25);
 		stateC = fc + 0xF1357AEA2E62A9C5L;
-		return (stateD = fa + fb);	}
+		return (stateD = fa + fb);
+	}
 
 	@Override
 	public long previousLong () {
 		final long fa = stateA;
 		final long fb = stateB;
 		final long fc = stateC;
-		stateB = stateD - 0xDE916ABCC965815BL;
-		stateC = (fa >>> 44 | fa << 20);
-		stateA = fb - stateC;
-		stateD = fc ^ stateB;
-		return stateB;
+		final long fd = stateD;
+		stateA = (fb >>> 39 | fb << 25);
+		stateB = fd - stateA;
+		stateC = fc - 0xF1357AEA2E62A9C5L;
+		return (stateD = (fa ^ stateC) - stateB);
 	}
 
 	@Override
@@ -283,5 +284,22 @@ public class TuftRandom extends EnhancedRandom {
 
 	public String toString () {
 		return "TuftRandom{" + "stateA=" + (stateA) + "L, stateB=" + (stateB) + "L, stateC=" + (stateC) + "L, stateD=" + (stateD) + "L}";
+	}
+
+	public static void main(String[] args) {
+		TuftRandom random = new TuftRandom(0L);
+		long n0 = random.nextLong();
+		long n1 = random.nextLong();
+		long n2 = random.nextLong();
+		long n3 = random.nextLong();
+		long p2 = random.previousLong();
+		long p1 = random.previousLong();
+		long p0 = random.previousLong();
+		System.out.println(n0 == p0);
+		System.out.println(n1 == p1);
+		System.out.println(n2 == p2);
+		System.out.println(n0 + " vs. " + p0);
+		System.out.println(n1 + " vs. " + p1);
+		System.out.println(n2 + " vs. " + p2);
 	}
 }
