@@ -20,6 +20,9 @@ package net.adoptopenjdk.bumblebench.examples;
 import com.github.tommyettinger.random.EnhancedRandom;
 
 /**
+ * This random number generator has 256 bits of state, and a guaranteed minimum period of 2 to the 64. It passes at
+ * least 32TB of PractRand without anomalies. It doesn't use multiplication (ARX operations only). It's rather fast,
+ * though not quite as fast as WhiskerRandom in most cases. Maybe second place.
  */
 public class TuftRandom extends EnhancedRandom {
 	@Override
@@ -286,20 +289,20 @@ public class TuftRandom extends EnhancedRandom {
 		return "TuftRandom{" + "stateA=" + (stateA) + "L, stateB=" + (stateB) + "L, stateC=" + (stateC) + "L, stateD=" + (stateD) + "L}";
 	}
 
-	public static void main(String[] args) {
-		TuftRandom random = new TuftRandom(0L);
-		long n0 = random.nextLong();
-		long n1 = random.nextLong();
-		long n2 = random.nextLong();
-		long n3 = random.nextLong();
-		long p2 = random.previousLong();
-		long p1 = random.previousLong();
-		long p0 = random.previousLong();
-		System.out.println(n0 == p0);
-		System.out.println(n1 == p1);
-		System.out.println(n2 == p2);
-		System.out.println(n0 + " vs. " + p0);
-		System.out.println(n1 + " vs. " + p1);
-		System.out.println(n2 + " vs. " + p2);
-	}
+//	public static void main(String[] args) {
+//		TuftRandom random = new TuftRandom(0L);
+//		long n0 = random.nextLong();
+//		long n1 = random.nextLong();
+//		long n2 = random.nextLong();
+//		long n3 = random.nextLong();
+//		long p2 = random.previousLong();
+//		long p1 = random.previousLong();
+//		long p0 = random.previousLong();
+//		System.out.println(n0 == p0);
+//		System.out.println(n1 == p1);
+//		System.out.println(n2 == p2);
+//		System.out.println(n0 + " vs. " + p0);
+//		System.out.println(n1 + " vs. " + p1);
+//		System.out.println(n2 + " vs. " + p2);
+//	}
 }
