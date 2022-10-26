@@ -15,7 +15,7 @@ public class HPPCIntSetBench extends AbstractIntSetBench {
 	@Param
 	HPPCIntSetFact impl;
 	
-	IntHashSet fullSet;
+	IntSet fullSet;
 	
 	@Override
 	public void testSetup() {
@@ -46,7 +46,7 @@ public class HPPCIntSetBench extends AbstractIntSetBench {
 
 	@Override
 	protected void copyBench() {
-		IntHashSet newSet = impl.maker.get();
+		IntSet newSet = impl.maker.get();
 		newSet.addAll(fullSet);
 		blackhole.consume(newSet);
 	}
