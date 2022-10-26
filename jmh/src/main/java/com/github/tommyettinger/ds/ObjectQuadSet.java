@@ -169,7 +169,7 @@ public class ObjectQuadSet<T> implements Iterable<T>, Set<T> {
 	 * The default behavior uses a basic hash mixing family; it simply gets the
 	 * {@link Object#hashCode()} of {@code item}, multiplies it by the current
 	 * {@link #hashMultiplier}, and makes an unsigned right shift by {@link #shift} before
-	 * casting to int and returning. Because the hashMultiplier changes every time the backing
+	 * returning. Because the hashMultiplier changes every time the backing
 	 * table resizes, if a problematic sequence of keys piles up with many collisions, that won't
 	 * continue to cause problems when the next resize changes the hashMultiplier again. This
 	 * doesn't have much way of preventing trouble from hashCode() implementations that always
@@ -189,14 +189,14 @@ public class ObjectQuadSet<T> implements Iterable<T>, Set<T> {
 	 * significantly slower than the hashing family. Neither version provides stronger defenses
 	 * against maliciously-chosen items, but linear probing naturally won't fail entirely even in
 	 * that case. It is possible that a user could write an implementation of place() that is more
-	 * robust against malicious inputs; one such approach is optionally employed by .NET Core and
+	 * robust against malicious inputs; one such approach is optionally employed by .NET and
 	 * newer versions for the hashes of strings. That approach is similar to the current one here.
 	 *
 	 * @param item a non-null Object; its hashCode() method should be used by most implementations
 	 * @return an index between 0 and {@link #mask} (both inclusive)
 	 */
 	protected int place (Object item) {
-		return (int) (item.hashCode() * hashMultiplier >>> shift);
+		return (int)(item.hashCode() * hashMultiplier >>> shift);
 		// This can be used if you know hashCode() has few collisions normally, and won't be maliciously manipulated.
 //		return item.hashCode() & mask;
 	}
@@ -457,7 +457,15 @@ public class ObjectQuadSet<T> implements Iterable<T>, Set<T> {
 		mask = newSize - 1;
 		shift = Long.numberOfLeadingZeros(mask);
 
-		hashMultiplier = (hashMultiplier + size + size ^ 0xC13FA9A902A6328EL) * 0xF1357AEA2E62A9C5L;
+//		// We modify the hash multiplier by... basically it just needs to stay odd, and use 21 bits or fewer (for GWT reasons).
+//		// We incorporate the size in here to randomize things more. The multiplier seems to do a little better if it ends in the
+//		// hex digit 5 or D -- this makes it a valid power-of-two-modulus MCG multiplier, which might help a bit. We also always
+//		// set the bit 0x100000, so we know there will at least be some bits moved to the upper third or so.
+//		hashMultiplier = ((hashMultiplier + size << 3 ^ 0xC79E7B1D) * 0x13C6EB + 0xAF36D01E & 0xFFFFF) | 0x100000;
+
+		// we modify the hash multiplier by multiplying it by a number that Vigna and Steele considered optimal
+		// for a 64-bit MCG random number generator, XORed with 2 times size to randomize the low bits more.
+		hashMultiplier *= size + size ^ 0xF1357AEA2E62A9C5L;
 
 		T[] oldKeyTable = keyTable;
 
