@@ -146,19 +146,19 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>digital</artifactId>
-            <version>0.1.3</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.tommyettinger</groupId>
-            <artifactId>juniper</artifactId>
             <version>0.1.4</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
+            <artifactId>juniper</artifactId>
+            <version>0.1.6</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tommyettinger</groupId>
             <artifactId>jdkgdxds</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.5</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
