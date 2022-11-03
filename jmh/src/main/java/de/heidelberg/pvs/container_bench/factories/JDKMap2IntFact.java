@@ -1,10 +1,6 @@
 package de.heidelberg.pvs.container_bench.factories;
 
 import com.github.tommyettinger.ds.*;
-import de.heidelberg.pvs.container_bench.ObjectMapBare;
-import de.heidelberg.pvs.container_bench.ObjectMapMulXor;
-import de.heidelberg.pvs.container_bench.OrderedMapBare;
-import de.heidelberg.pvs.container_bench.OrderedMapMulXor;
 import io.timeandspace.smoothie.OptimizationObjective;
 import io.timeandspace.smoothie.SmoothieMap;
 import io.timeandspace.smoothie.SwissTable;

@@ -1,6 +1,5 @@
 package squid.squad;
 
-import com.github.tommyettinger.ds.ObjectDeque;
 import com.github.yellowstonegames.grid.Coord;
 
 import javax.annotation.Nullable;

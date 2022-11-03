@@ -14,7 +14,6 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.digital.BitConversion;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**

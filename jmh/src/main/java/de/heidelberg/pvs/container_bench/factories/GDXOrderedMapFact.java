@@ -1,6 +1,5 @@
 package de.heidelberg.pvs.container_bench.factories;
 
-import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.OrderedMap;
 
 import java.util.function.Supplier;

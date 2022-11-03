@@ -1,7 +1,6 @@
 package de.heidelberg.pvs.container_bench.generators;
 
 import com.github.tommyettinger.ds.ObjectList;
-import com.github.tommyettinger.ds.ObjectOrderedSet;
 import com.github.tommyettinger.ds.ObjectSet;
 import com.github.tommyettinger.random.TrimRandom;
 

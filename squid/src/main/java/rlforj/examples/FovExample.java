@@ -2,7 +2,6 @@ package rlforj.examples;
 
 import java.util.Random;
 
-import rlforj.los.IFovAlgorithm;
 import rlforj.los.PrecisePermissive;
 import rlforj.los.ShadowCasting;
 

@@ -2,9 +2,6 @@ package de.heidelberg.pvs.container_bench.factories;
 
 import com.github.tommyettinger.ds.*;
 import de.heidelberg.pvs.container_bench.*;
-import io.timeandspace.smoothie.OptimizationObjective;
-import io.timeandspace.smoothie.SmoothieMap;
-import io.timeandspace.smoothie.SwissTable;
 import squidpony.squidmath.UnorderedMap;
 
 import java.util.Map;

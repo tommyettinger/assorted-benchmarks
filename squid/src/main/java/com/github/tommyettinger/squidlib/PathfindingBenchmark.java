@@ -33,7 +33,6 @@ package com.github.tommyettinger.squidlib;
 
 import com.badlogic.gdx.ai.pfa.*;
 import com.badlogic.gdx.ai.pfa.Connection;
-import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.utils.Array;
@@ -46,8 +45,6 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import space.earlygrey.simplegraphs.*;
-import space.earlygrey.simplegraphs.DirectedGraph;
-import space.earlygrey.simplegraphs.UndirectedGraph;
 import space.earlygrey.simplegraphs.algorithms.DirectedGraphAlgorithms;
 import space.earlygrey.simplegraphs.algorithms.SearchStep;
 import space.earlygrey.simplegraphs.algorithms.UndirectedGraphAlgorithms;
@@ -69,7 +66,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
-import static org.apache.commons.math3.exception.util.LocalizedFormats.DIMENSION;
 import static squidpony.squidgrid.Measurement.CHEBYSHEV;
 
 /**

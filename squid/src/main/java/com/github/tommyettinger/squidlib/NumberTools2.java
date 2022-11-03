@@ -15,7 +15,6 @@
  ******************************************************************************/
 package com.github.tommyettinger.squidlib;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.github.tommyettinger.digital.TrigTools;
 
 import static com.badlogic.gdx.math.MathUtils.PI;

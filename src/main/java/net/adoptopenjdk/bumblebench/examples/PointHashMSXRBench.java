@@ -15,7 +15,6 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import net.adoptopenjdk.bumblebench.core.MicroBench;
-import squidpony.squidmath.Coord;
 
 /**
  * Just speed-testing this; it may  or may not be random enough.

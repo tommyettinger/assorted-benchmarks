@@ -9,19 +9,6 @@
 
 package com.github.tommyettinger.squidlib;
 
-import com.github.tommyettinger.ds.ObjectIntMap;
-import com.github.tommyettinger.ds.ObjectSet;
-import com.koloboke.collect.map.hash.HashObjIntMap;
-import com.koloboke.collect.set.hash.HashObjSet;
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import org.apache.commons.collections4.map.HashedMap;
-import org.eclipse.collections.api.factory.Sets;
-import org.eclipse.collections.api.map.primitive.MutableObjectIntMap;
-import org.eclipse.collections.api.set.MutableSet;
-import org.eclipse.collections.impl.factory.primitive.ObjectIntMaps;
-
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;

@@ -1,11 +1,8 @@
 package de.heidelberg.pvs.container_bench.benchmarks.wordcount;
 
 import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.TearDown;
-import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jol.info.GraphLayout;
 
-import de.heidelberg.pvs.container_bench.factories.FastutilMap2IntFact;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 
 /**

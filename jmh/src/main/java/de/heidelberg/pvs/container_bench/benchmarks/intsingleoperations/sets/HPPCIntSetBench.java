@@ -4,7 +4,6 @@ import java.util.function.Consumer;
 
 import org.openjdk.jmh.annotations.Param;
 
-import com.carrotsearch.hppc.IntHashSet;
 import com.carrotsearch.hppc.IntSet;
 import com.carrotsearch.hppc.cursors.IntCursor;
 

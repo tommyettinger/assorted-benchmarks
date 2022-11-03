@@ -16,8 +16,6 @@ package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
 import com.badlogic.gdx.math.Vector2;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.ByteBufferInput;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 import java.io.ByteArrayInputStream;

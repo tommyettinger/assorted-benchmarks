@@ -1,9 +1,7 @@
 package de.heidelberg.pvs.container_bench.benchmarks.wordcount;
 
 import com.badlogic.gdx.utils.ArrayMap;
-import com.badlogic.gdx.utils.ObjectMap;
 import de.heidelberg.pvs.container_bench.factories.GDXArrayMapFact;
-import de.heidelberg.pvs.container_bench.factories.GDXMapFact;
 import org.openjdk.jmh.annotations.Param;
 
 /**

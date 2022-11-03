@@ -1,6 +1,5 @@
 package de.heidelberg.pvs.container_bench.factories;
 
-import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.OrderedSet;
 
 import java.util.function.Function;

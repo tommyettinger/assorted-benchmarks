@@ -1,10 +1,5 @@
 package com.github.tommyettinger.squidlib;
 
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.utils.NumberUtils;
-
-import java.util.SplittableRandom;
-
 public class ResizePointTest {
     private static class GridPoint2 extends com.badlogic.gdx.math.GridPoint2{
         public GridPoint2(int x, int y) {

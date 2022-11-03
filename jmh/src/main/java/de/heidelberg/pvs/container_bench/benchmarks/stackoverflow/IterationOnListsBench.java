@@ -9,8 +9,6 @@ import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;
 
 import de.heidelberg.pvs.container_bench.benchmarks.singleoperations.AbstractSingleOperationsBench;
-import de.heidelberg.pvs.container_bench.benchmarks.stackoverflow.DoubleBraceStaticInitBench.ArrayListImpl;
-import de.heidelberg.pvs.container_bench.factories.JDKListFact;
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 import de.heidelberg.pvs.container_bench.generators.GeneratorFactory;
 import de.heidelberg.pvs.container_bench.generators.PayloadType;

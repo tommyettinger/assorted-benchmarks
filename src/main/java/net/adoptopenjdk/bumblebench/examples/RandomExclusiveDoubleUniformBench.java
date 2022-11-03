@@ -15,7 +15,6 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.github.tommyettinger.digital.BitConversion;
-import com.github.tommyettinger.random.LaserRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
