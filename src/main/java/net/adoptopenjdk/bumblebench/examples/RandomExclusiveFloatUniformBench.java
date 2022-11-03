@@ -19,24 +19,45 @@ import com.github.tommyettinger.random.LaserRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * (This uses LaserRandom, so a large part of its performance is related to that generator.)
- * <br>
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * HotSpot Java 8:
  * <br>
- * RandomExclusiveFloatUniformBench score: 585160448.000000 (585.2M 2018.7%)
- *                              uncertainty:   2.9%
+ * RandomExclusiveFloatUniformBench score: 622112320.000000 (622.1M 2024.9%)
+ *                              uncertainty:   5.1%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * RandomExclusiveFloatUniformBench score: 397202208.000000 (397.2M 1980.0%)
+ *
+ * <br>
+ * HotSpot Java 16 (AdoptOpenJDK):
+ * <br>
+ * RandomExclusiveFloatUniformBench score: 827187840.000000 (827.2M 2053.4%)
  *                              uncertainty:   0.5%
  * <br>
- * HotSpot Java 16:
+ * HotSpot Java 17 (Adoptium):
  * <br>
- * RandomExclusiveFloatUniformBench score: 617061312.000000 (617.1M 2024.0%)
+ * RandomExclusiveFloatUniformBench score: 832965696.000000 (833.0M 2054.1%)
  *                              uncertainty:   0.6%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ * RandomExclusiveFloatUniformBench score: 729590848.000000 (729.6M 2040.8%)
+ *                              uncertainty:   2.2%
+ * <br>
+ * OpenJ9 Java 17 (Semeru):
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 18 (Adoptium):
+ * <br>
+ * RandomExclusiveFloatUniformBench score: 843629824.000000 (843.6M 2055.3%)
+ *                              uncertainty:   2.1%
+ * <br>
+ * HotSpot Java 19 (BellSoft):
+ * <br>
+ * RandomExclusiveFloatUniformBench score: 759848256.000000 (759.8M 2044.9%)
+ *                              uncertainty:   0.3%
  */
 public final class RandomExclusiveFloatUniformBench extends MicroBench {
 
@@ -55,3 +76,24 @@ public final class RandomExclusiveFloatUniformBench extends MicroBench {
 		return numIterations;
 	}
 }
+//old
+/*
+ * (This uses WhiskerRandom, so a large part of its performance is related to that generator.)
+ * <br>
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8:
+ * <br>
+ * RandomExclusiveFloatUniformBench score: 585160448.000000 (585.2M 2018.7%)
+ *                              uncertainty:   2.9%
+ * <br>
+ * OpenJ9 Java 15:
+ * <br>
+ * RandomExclusiveFloatUniformBench score: 397202208.000000 (397.2M 1980.0%)
+ *                              uncertainty:   0.5%
+ * <br>
+ * HotSpot Java 16:
+ * <br>
+ * RandomExclusiveFloatUniformBench score: 617061312.000000 (617.1M 2024.0%)
+ *                              uncertainty:   0.6%
+ */
