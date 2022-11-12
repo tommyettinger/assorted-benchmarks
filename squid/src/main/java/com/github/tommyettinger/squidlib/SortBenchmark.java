@@ -31,11 +31,12 @@
 
 package com.github.tommyettinger.squidlib;
 
+import com.github.tommyettinger.ds.ObjectList;
+import com.github.tommyettinger.ds.support.sort.ObjectComparators;
 import com.github.tommyettinger.random.WhiskerRandom;
 import com.github.yellowstonegames.text.Language;
 import it.unimi.dsi.fastutil.Swapper;
 import it.unimi.dsi.fastutil.ints.IntComparator;
-import it.unimi.dsi.fastutil.objects.ObjectComparators;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -44,6 +45,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 import sort.GrailSort;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -61,6 +63,7 @@ public class SortBenchmark {
         @Param({ "10", "40", "160", "640", "2560" })
         public int len;
         public String[] words;
+        public ObjectList<String> wordList;
         public int idx;
         public WhiskerRandom random = new WhiskerRandom(1000L);
         public Language[] languages = Language.romanizedLanguages;
@@ -79,6 +82,7 @@ public class SortBenchmark {
             for (int i = 0; i < len; i++) {
                 words[i] = languages[i & 31].sentence(random.nextLong(), random.next(3) + 1, random.next(6)+9);
             }
+            wordList = new ObjectList<>(words);
             idx = 0;
         }
 
@@ -94,6 +98,18 @@ public class SortBenchmark {
     public void doGrailSort(BenchmarkState state)
     {
         state.grail.grailSortInPlace(state.words, 0, state.words.length);
+    }
+
+    @Benchmark
+    public void doEttingerSort(BenchmarkState state)
+    {
+        ObjectComparators.sort(state.wordList, 0, state.words.length, null);
+    }
+
+    @Benchmark
+    public void doJDKSort(BenchmarkState state)
+    {
+        Arrays.sort(state.words, 0, state.words.length);
     }
 
     /*
