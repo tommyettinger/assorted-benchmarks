@@ -49,7 +49,29 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
- *
+ * <pre>
+ * Benchmark                          (len)  Mode  Cnt       Score       Error  Units
+ * SortBenchmark.doEttingerSort          10  avgt    5      38.374 ±     8.379  ns/op
+ * SortBenchmark.doEttingerSort          40  avgt    5     232.439 ±    17.530  ns/op
+ * SortBenchmark.doEttingerSort         160  avgt    5    1117.275 ±   154.614  ns/op
+ * SortBenchmark.doEttingerSort         640  avgt    5    5075.120 ±  1262.704  ns/op
+ * SortBenchmark.doEttingerSort        2560  avgt    5   25815.348 ±  1508.187  ns/op
+ * SortBenchmark.doFastUtilMergeSort     10  avgt    5       4.160 ±     0.278  ns/op
+ * SortBenchmark.doFastUtilMergeSort     40  avgt    5      33.168 ±     0.195  ns/op
+ * SortBenchmark.doFastUtilMergeSort    160  avgt    5     141.816 ±     1.808  ns/op
+ * SortBenchmark.doFastUtilMergeSort    640  avgt    5     582.644 ±    89.238  ns/op
+ * SortBenchmark.doFastUtilMergeSort   2560  avgt    5    2104.164 ±   129.792  ns/op
+ * SortBenchmark.doGrailSort             10  avgt    5      24.669 ±     7.966  ns/op
+ * SortBenchmark.doGrailSort             40  avgt    5    1723.824 ±    75.031  ns/op
+ * SortBenchmark.doGrailSort            160  avgt    5   10493.553 ±  2773.331  ns/op
+ * SortBenchmark.doGrailSort            640  avgt    5   66975.016 ± 39108.912  ns/op
+ * SortBenchmark.doGrailSort           2560  avgt    5  318195.080 ±  7437.860  ns/op
+ * SortBenchmark.doJDKSort               10  avgt    5      38.705 ±     4.284  ns/op
+ * SortBenchmark.doJDKSort               40  avgt    5     159.985 ±    11.280  ns/op
+ * SortBenchmark.doJDKSort              160  avgt    5     780.382 ±    28.775  ns/op
+ * SortBenchmark.doJDKSort              640  avgt    5    3000.739 ±   127.574  ns/op
+ * SortBenchmark.doJDKSort             2560  avgt    5   19924.747 ±  1567.535  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
