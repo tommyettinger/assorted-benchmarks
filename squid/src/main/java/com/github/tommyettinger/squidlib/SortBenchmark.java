@@ -36,7 +36,6 @@ import com.github.tommyettinger.ds.support.sort.ObjectComparators;
 import com.github.tommyettinger.random.WhiskerRandom;
 import com.github.yellowstonegames.text.Language;
 import it.unimi.dsi.fastutil.Swapper;
-import it.unimi.dsi.fastutil.ints.IntComparator;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -51,26 +50,26 @@ import java.util.concurrent.TimeUnit;
 /**
  * <pre>
  * Benchmark                          (len)  Mode  Cnt       Score       Error  Units
- * SortBenchmark.doEttingerSort          10  avgt    5      38.374 ±     8.379  ns/op
- * SortBenchmark.doEttingerSort          40  avgt    5     232.439 ±    17.530  ns/op
- * SortBenchmark.doEttingerSort         160  avgt    5    1117.275 ±   154.614  ns/op
- * SortBenchmark.doEttingerSort         640  avgt    5    5075.120 ±  1262.704  ns/op
- * SortBenchmark.doEttingerSort        2560  avgt    5   25815.348 ±  1508.187  ns/op
- * SortBenchmark.doFastUtilMergeSort     10  avgt    5       4.160 ±     0.278  ns/op
- * SortBenchmark.doFastUtilMergeSort     40  avgt    5      33.168 ±     0.195  ns/op
- * SortBenchmark.doFastUtilMergeSort    160  avgt    5     141.816 ±     1.808  ns/op
- * SortBenchmark.doFastUtilMergeSort    640  avgt    5     582.644 ±    89.238  ns/op
- * SortBenchmark.doFastUtilMergeSort   2560  avgt    5    2104.164 ±   129.792  ns/op
- * SortBenchmark.doGrailSort             10  avgt    5      24.669 ±     7.966  ns/op
- * SortBenchmark.doGrailSort             40  avgt    5    1723.824 ±    75.031  ns/op
- * SortBenchmark.doGrailSort            160  avgt    5   10493.553 ±  2773.331  ns/op
- * SortBenchmark.doGrailSort            640  avgt    5   66975.016 ± 39108.912  ns/op
- * SortBenchmark.doGrailSort           2560  avgt    5  318195.080 ±  7437.860  ns/op
- * SortBenchmark.doJDKSort               10  avgt    5      38.705 ±     4.284  ns/op
- * SortBenchmark.doJDKSort               40  avgt    5     159.985 ±    11.280  ns/op
- * SortBenchmark.doJDKSort              160  avgt    5     780.382 ±    28.775  ns/op
- * SortBenchmark.doJDKSort              640  avgt    5    3000.739 ±   127.574  ns/op
- * SortBenchmark.doJDKSort             2560  avgt    5   19924.747 ±  1567.535  ns/op
+ * SortBenchmark.doEttingerSort          10  avgt    5      38.495 ±    10.539  ns/op
+ * SortBenchmark.doEttingerSort          40  avgt    5     231.777 ±    28.068  ns/op
+ * SortBenchmark.doEttingerSort         160  avgt    5    1161.651 ±   234.271  ns/op
+ * SortBenchmark.doEttingerSort         640  avgt    5    5085.883 ±  1014.257  ns/op
+ * SortBenchmark.doEttingerSort        2560  avgt    5   27641.252 ±  2234.745  ns/op
+ * SortBenchmark.doFastUtilMergeSort     10  avgt    5      25.732 ±     4.912  ns/op
+ * SortBenchmark.doFastUtilMergeSort     40  avgt    5     230.893 ±    11.383  ns/op
+ * SortBenchmark.doFastUtilMergeSort    160  avgt    5    1052.910 ±    52.314  ns/op
+ * SortBenchmark.doFastUtilMergeSort    640  avgt    5    5086.110 ±   589.738  ns/op
+ * SortBenchmark.doFastUtilMergeSort   2560  avgt    5   23602.268 ±  1247.427  ns/op
+ * SortBenchmark.doGrailSort             10  avgt    5      24.912 ±     6.410  ns/op
+ * SortBenchmark.doGrailSort             40  avgt    5    1787.961 ±   132.503  ns/op
+ * SortBenchmark.doGrailSort            160  avgt    5    9839.707 ±  1773.594  ns/op
+ * SortBenchmark.doGrailSort            640  avgt    5   71840.278 ± 38351.597  ns/op
+ * SortBenchmark.doGrailSort           2560  avgt    5  354386.805 ± 45258.285  ns/op
+ * SortBenchmark.doJDKSort               10  avgt    5      39.073 ±     5.933  ns/op
+ * SortBenchmark.doJDKSort               40  avgt    5     161.342 ±    12.756  ns/op
+ * SortBenchmark.doJDKSort              160  avgt    5     778.645 ±    36.450  ns/op
+ * SortBenchmark.doJDKSort              640  avgt    5    3024.694 ±   102.049  ns/op
+ * SortBenchmark.doJDKSort             2560  avgt    5   20000.941 ±  2049.230  ns/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
@@ -113,7 +112,7 @@ public class SortBenchmark {
     @Benchmark
     public void doFastUtilMergeSort(BenchmarkState state)
     {
-        it.unimi.dsi.fastutil.Arrays.mergeSort(0, state.words.length, Integer::compare, state.wordsSwapper);
+        it.unimi.dsi.fastutil.Arrays.mergeSort(0, state.words.length, (a, b) -> state.words[a].compareTo(state.words[b]), state.wordsSwapper);
     }
 
     @Benchmark
