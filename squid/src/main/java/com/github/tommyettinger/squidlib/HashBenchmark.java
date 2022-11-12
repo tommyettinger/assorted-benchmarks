@@ -31,6 +31,7 @@
 
 package com.github.tommyettinger.squidlib;
 
+import com.github.tommyettinger.random.WhiskerRandom;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -762,7 +763,7 @@ public class HashBenchmark {
 
         @Setup(Level.Trial)
         public void setup() {
-            MiniMover64RNG random = new MiniMover64RNG(1000L);
+            WhiskerRandom random = new WhiskerRandom(1000L);
             FakeLanguageGen[] languages = new FakeLanguageGen[16];
             for (int i = 0; i < 16; i++) {
                 languages[i] = FakeLanguageGen.randomLanguage(random.nextLong()).addAccents(0.8, 0.6);
