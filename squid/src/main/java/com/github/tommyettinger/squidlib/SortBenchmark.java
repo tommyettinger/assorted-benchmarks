@@ -71,6 +71,8 @@ public class SortBenchmark {
             words[b] = t;
         };
 
+        public GrailSort<String> grail = new GrailSort<>(String::compareTo);
+
         @Setup(Level.Iteration)
         public void setup() {
             words = new String[len];
@@ -86,6 +88,12 @@ public class SortBenchmark {
     public void doFastUtilMergeSort(BenchmarkState state)
     {
         it.unimi.dsi.fastutil.Arrays.mergeSort(0, state.words.length, Integer::compare, state.wordsSwapper);
+    }
+
+    @Benchmark
+    public void doGrailSort(BenchmarkState state)
+    {
+        state.grail.grailSortInPlace(state.words, 0, state.words.length);
     }
 
     /*
