@@ -48,6 +48,14 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * WhiskerRandomBench score: 647251008.000000 (647.3M 2028.8%)
  *                uncertainty:   1.6%
+ * <br>
+ * HotSpot Java 18 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 19 (BellSoft):
+ * <br>
+ *
  */
 public final class WhiskerRandomBench extends MicroBench {
 
