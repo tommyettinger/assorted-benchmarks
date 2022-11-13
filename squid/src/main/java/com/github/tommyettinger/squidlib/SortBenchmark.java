@@ -32,7 +32,6 @@
 package com.github.tommyettinger.squidlib;
 
 import com.github.tommyettinger.ds.ObjectList;
-import com.github.tommyettinger.ds.support.sort.ObjectComparators;
 import com.github.tommyettinger.random.WhiskerRandom;
 import com.github.yellowstonegames.text.Language;
 import it.unimi.dsi.fastutil.Swapper;
@@ -43,6 +42,7 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 import sort.GrailSort;
+import sort.ObjectComparators;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -70,6 +70,35 @@ import java.util.concurrent.TimeUnit;
  * SortBenchmark.doJDKSort              160  avgt    5     778.645 ±    36.450  ns/op
  * SortBenchmark.doJDKSort              640  avgt    5    3024.694 ±   102.049  ns/op
  * SortBenchmark.doJDKSort             2560  avgt    5   20000.941 ±  2049.230  ns/op
+ * </pre>
+ * Round 2!
+ * <pre>
+ * Benchmark                          (len)  Mode  Cnt       Score        Error  Units
+ * SortBenchmark.doDSSort                10  avgt    5      35.067 ±      8.069  ns/op
+ * SortBenchmark.doDSSort                40  avgt    5     251.090 ±     23.483  ns/op
+ * SortBenchmark.doDSSort               160  avgt    5    1176.802 ±    257.750  ns/op
+ * SortBenchmark.doDSSort               640  avgt    5    5078.693 ±    974.685  ns/op
+ * SortBenchmark.doDSSort              2560  avgt    5   23188.909 ±   2006.005  ns/op
+ * SortBenchmark.doEttingerSort          10  avgt    5      38.436 ±      8.443  ns/op
+ * SortBenchmark.doEttingerSort          40  avgt    5     238.194 ±     77.344  ns/op
+ * SortBenchmark.doEttingerSort         160  avgt    5    1156.285 ±    266.105  ns/op
+ * SortBenchmark.doEttingerSort         640  avgt    5    4931.089 ±    844.457  ns/op
+ * SortBenchmark.doEttingerSort        2560  avgt    5   27701.279 ±   1484.862  ns/op
+ * SortBenchmark.doFastUtilMergeSort     10  avgt    5      25.707 ±      5.537  ns/op
+ * SortBenchmark.doFastUtilMergeSort     40  avgt    5     228.237 ±     19.607  ns/op
+ * SortBenchmark.doFastUtilMergeSort    160  avgt    5    1051.412 ±     39.612  ns/op
+ * SortBenchmark.doFastUtilMergeSort    640  avgt    5    5097.612 ±    842.413  ns/op
+ * SortBenchmark.doFastUtilMergeSort   2560  avgt    5   22032.496 ±   1818.985  ns/op
+ * SortBenchmark.doGrailSort             10  avgt    5      24.620 ±      8.177  ns/op
+ * SortBenchmark.doGrailSort             40  avgt    5    1723.784 ±    127.902  ns/op
+ * SortBenchmark.doGrailSort            160  avgt    5    9667.650 ±   1736.952  ns/op
+ * SortBenchmark.doGrailSort            640  avgt    5   64374.902 ±  39739.745  ns/op
+ * SortBenchmark.doGrailSort           2560  avgt    5  351262.539 ± 115183.625  ns/op
+ * SortBenchmark.doJDKSort               10  avgt    5      37.426 ±      6.492  ns/op
+ * SortBenchmark.doJDKSort               40  avgt    5     162.872 ±     10.075  ns/op
+ * SortBenchmark.doJDKSort              160  avgt    5     767.921 ±     12.894  ns/op
+ * SortBenchmark.doJDKSort              640  avgt    5    3020.724 ±    230.197  ns/op
+ * SortBenchmark.doJDKSort             2560  avgt    5   19171.034 ±   3102.891  ns/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
@@ -125,6 +154,12 @@ public class SortBenchmark {
     public void doEttingerSort(BenchmarkState state)
     {
         ObjectComparators.sort(state.wordList, 0, state.words.length, null);
+    }
+
+    @Benchmark
+    public void doDSSort(BenchmarkState state)
+    {
+        ObjectComparators.sort(state.words, 0, state.words.length, null);
     }
 
     @Benchmark

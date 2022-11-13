@@ -82,7 +82,7 @@ dependencies {
 //    implementation 'com.github.tommyettinger:jdkgdxds:3a9f925cd0'
     implementation 'com.github.tommyettinger:digital:0.1.4'
     implementation 'com.github.tommyettinger:juniper:0.1.6'
-    implementation 'com.github.tommyettinger:jdkgdxds:2150f72d60' // ordered remove() improvement, iterators
+    implementation 'com.github.tommyettinger:jdkgdxds:1.0.5'
 
 
 
