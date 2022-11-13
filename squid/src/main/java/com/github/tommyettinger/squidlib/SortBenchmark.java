@@ -130,6 +130,51 @@ import java.util.concurrent.TimeUnit;
  * SortBenchmark.doJDKSort              640  avgt    5    2869.476 ±    52.685  ns/op
  * SortBenchmark.doJDKSort             2560  avgt    5   16640.592 ±   983.970  ns/op
  * </pre>
+ * Looks like this whole "parallel programming" is just a fad. (Or these sizes aren't even close to big enough for
+ * FastUtil to benefit at all.)
+ * <pre>
+ * Benchmark                                  (len)  Mode  Cnt       Score       Error  Units
+ * SortBenchmark.doDSSort                        10  avgt    5      21.823 ±     2.927  ns/op
+ * SortBenchmark.doDSSort                        40  avgt    5     235.288 ±    25.148  ns/op
+ * SortBenchmark.doDSSort                       160  avgt    5    1185.362 ±    48.895  ns/op
+ * SortBenchmark.doDSSort                       640  avgt    5    4840.674 ±   848.497  ns/op
+ * SortBenchmark.doDSSort                      2560  avgt    5   30775.256 ±  3576.319  ns/op
+ * SortBenchmark.doEttingerSort                  10  avgt    5      36.960 ±     7.082  ns/op
+ * SortBenchmark.doEttingerSort                  40  avgt    5     219.587 ±    36.388  ns/op
+ * SortBenchmark.doEttingerSort                 160  avgt    5    1025.808 ±    68.589  ns/op
+ * SortBenchmark.doEttingerSort                 640  avgt    5    4208.089 ±   833.560  ns/op
+ * SortBenchmark.doEttingerSort                2560  avgt    5   22715.233 ±  3528.032  ns/op
+ * SortBenchmark.doFastUtilMergeSort             10  avgt    5      30.296 ±     7.597  ns/op
+ * SortBenchmark.doFastUtilMergeSort             40  avgt    5     204.066 ±    29.161  ns/op
+ * SortBenchmark.doFastUtilMergeSort            160  avgt    5     967.457 ±    49.805  ns/op
+ * SortBenchmark.doFastUtilMergeSort            640  avgt    5    4106.324 ±   732.560  ns/op
+ * SortBenchmark.doFastUtilMergeSort           2560  avgt    5   22565.827 ±  2170.644  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort     10  avgt    5      31.416 ±     5.438  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort     40  avgt    5     505.660 ±    34.658  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort    160  avgt    5    3983.953 ±   114.515  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort    640  avgt    5   23547.037 ±  3607.127  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort   2560  avgt    5  185265.032 ± 11997.773  ns/op
+ * SortBenchmark.doFastUtilQuickSort             10  avgt    5      31.946 ±     4.688  ns/op
+ * SortBenchmark.doFastUtilQuickSort             40  avgt    5     515.543 ±    47.636  ns/op
+ * SortBenchmark.doFastUtilQuickSort            160  avgt    5    3945.819 ±   204.179  ns/op
+ * SortBenchmark.doFastUtilQuickSort            640  avgt    5   23015.601 ±  2378.468  ns/op
+ * SortBenchmark.doFastUtilQuickSort           2560  avgt    5  187468.882 ± 10601.042  ns/op
+ * SortBenchmark.doGrailSort                     10  avgt    5      21.033 ±     5.848  ns/op
+ * SortBenchmark.doGrailSort                     40  avgt    5    1596.467 ±    39.295  ns/op
+ * SortBenchmark.doGrailSort                    160  avgt    5    9953.656 ±   332.304  ns/op
+ * SortBenchmark.doGrailSort                    640  avgt    5   54884.763 ± 42339.419  ns/op
+ * SortBenchmark.doGrailSort                   2560  avgt    5  333789.830 ± 34319.123  ns/op
+ * SortBenchmark.doJDKSort                       10  avgt    5      30.364 ±     4.454  ns/op
+ * SortBenchmark.doJDKSort                       40  avgt    5     127.459 ±    16.661  ns/op
+ * SortBenchmark.doJDKSort                      160  avgt    5     557.015 ±    15.137  ns/op
+ * SortBenchmark.doJDKSort                      640  avgt    5    2934.185 ±    72.814  ns/op
+ * SortBenchmark.doJDKSort                     2560  avgt    5   15243.943 ±  1581.802  ns/op
+ * SortBenchmark.doParallelJDKSort               10  avgt    5      30.754 ±     7.376  ns/op
+ * SortBenchmark.doParallelJDKSort               40  avgt    5     139.443 ±    16.228  ns/op
+ * SortBenchmark.doParallelJDKSort              160  avgt    5     530.800 ±    19.289  ns/op
+ * SortBenchmark.doParallelJDKSort              640  avgt    5    2278.514 ±    87.634  ns/op
+ * SortBenchmark.doParallelJDKSort             2560  avgt    5   16919.460 ±  1163.633  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -176,6 +221,18 @@ public class SortBenchmark {
     }
 
     @Benchmark
+    public void doFastUtilQuickSort(BenchmarkState state)
+    {
+        it.unimi.dsi.fastutil.Arrays.quickSort(0, state.words.length, state.getComp, state.wordsSwapper);
+    }
+
+    @Benchmark
+    public void doFastUtilParallelQuickSort(BenchmarkState state)
+    {
+        it.unimi.dsi.fastutil.Arrays.parallelQuickSort(0, state.words.length, state.getComp, state.wordsSwapper);
+    }
+
+    @Benchmark
     public void doGrailSort(BenchmarkState state)
     {
         state.grail.grailSortInPlace(state.words, 0, state.words.length);
@@ -197,6 +254,12 @@ public class SortBenchmark {
     public void doJDKSort(BenchmarkState state)
     {
         Arrays.sort(state.words, 0, state.words.length, String::compareTo);
+    }
+
+    @Benchmark
+    public void doParallelJDKSort(BenchmarkState state)
+    {
+        Arrays.parallelSort(state.words, 0, state.words.length, String::compareTo);
     }
 
     /*
