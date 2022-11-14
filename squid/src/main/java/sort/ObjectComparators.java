@@ -56,8 +56,8 @@ public final class ObjectComparators {
 
 	/// The remainder of the code is based on FastUtil.
 
-	private static <K> void swap (List<K> items, int first, int second) {
-		K firstValue = items.get(first);
+	private static <K> void swap (final List<K> items, final int first, final int second) {
+		final K firstValue = items.get(first);
 		items.set(first, items.get(second));
 		items.set(second, firstValue);
 	}
@@ -231,8 +231,8 @@ public final class ObjectComparators {
 		inPlaceMerge(items, from, mid, to, c);
 	}
 
-	private static <K> void swap (K[] items, int first, int second) {
-		K firstValue = items[first];
+	private static <K> void swap (final K[] items, final int first, final int second) {
+		final K firstValue = items[first];
 		items[first] = items[second];
 		items[second] = firstValue;
 	}

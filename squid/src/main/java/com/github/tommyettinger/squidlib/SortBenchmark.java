@@ -31,6 +31,7 @@
 
 package com.github.tommyettinger.squidlib;
 
+import com.badlogic.gdx.utils.Sort;
 import com.github.tommyettinger.ds.ObjectList;
 import com.github.tommyettinger.random.WhiskerRandom;
 import com.github.yellowstonegames.text.Language;
@@ -248,6 +249,12 @@ public class SortBenchmark {
     public void doDSSort(BenchmarkState state)
     {
         ObjectComparators.sort(state.words, 0, state.words.length, String::compareTo);
+    }
+
+    @Benchmark
+    public void doGDXSort(BenchmarkState state)
+    {
+        Sort.instance().sort(state.words, String::compareTo, 0, state.words.length);
     }
 
     @Benchmark
