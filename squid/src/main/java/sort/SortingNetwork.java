@@ -630,8 +630,8 @@ public final class SortingNetwork {
 //			}
 //			return;
 //		}
-		// Insertion sort on smallest arrays, less than 32 items
-		if (length < 32) {
+		// Insertion sort on smallest arrays, less than 8 items
+		if (length < 8) {
 			for (int i = from; i < to; i++) {
 				for (int j = i; j > from && c.compare(items[j - 1], items[j]) > 0; j--) {
 					swap(items, j, j - 1);

@@ -221,7 +221,7 @@ import java.util.concurrent.TimeUnit;
  * SortBenchmark.doFastUtilParallelQuickSort    2560  avgt    5    185895.213 ±    9924.799  ns/op
  * SortBenchmark.doFastUtilParallelQuickSort  655360  avgt    5  72263998.569 ± 1616012.603  ns/op
  * </pre>
- * Changing the threshold for insertion sort in SortingNetwork (and making it otherwise identical to FastUtil's merge
+ * Raising the threshold for insertion sort in SortingNetwork (and making it otherwise identical to FastUtil's merge
  * sort) seems to hurt performance except on very small inputs:
  * <pre>
  * Benchmark                           (len)  Mode  Cnt         Score         Error  Units
@@ -231,6 +231,16 @@ import java.util.concurrent.TimeUnit;
  * SortBenchmark.doNetworkSort            10  avgt    5        24.024 ±       3.608  ns/op
  * SortBenchmark.doNetworkSort          2560  avgt    5     28068.623 ±     906.025  ns/op
  * SortBenchmark.doNetworkSort        655360  avgt    5  43686477.188 ± 1688989.429  ns/op
+ * </pre>
+ * Lowering the threshold doesn't help either:
+ * <pre>
+ * Benchmark                           (len)  Mode  Cnt         Score         Error  Units
+ * SortBenchmark.doFastUtilMergeSort      10  avgt    5        29.787 ±       4.839  ns/op
+ * SortBenchmark.doFastUtilMergeSort    2560  avgt    5     21853.372 ±    1858.570  ns/op
+ * SortBenchmark.doFastUtilMergeSort  655360  avgt    5  41372693.283 ± 2943140.842  ns/op
+ * SortBenchmark.doNetworkSort            10  avgt    5        35.618 ±       5.963  ns/op
+ * SortBenchmark.doNetworkSort          2560  avgt    5     31365.447 ±    2933.582  ns/op
+ * SortBenchmark.doNetworkSort        655360  avgt    5  43048194.273 ± 1232113.309  ns/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
