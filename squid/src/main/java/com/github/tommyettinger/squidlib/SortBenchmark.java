@@ -211,6 +211,17 @@ import java.util.concurrent.TimeUnit;
  * SortBenchmark.doFastUtilQuickSort    2560  avgt    5     184383.374 ±    1730.757  ns/op
  * SortBenchmark.doFastUtilQuickSort  655360  avgt    5  201289079.138 ± 8404552.088  ns/op
  * </pre>
+ * Even the parallel QuickSort is slow... This is on a hexacore laptop with hyperthreading; it has 6 cores/12 threads.
+ * <pre>
+ * Benchmark                                   (len)  Mode  Cnt         Score         Error  Units
+ * SortBenchmark.doFastUtilMergeSort              10  avgt    5        29.694 ±       5.211  ns/op
+ * SortBenchmark.doFastUtilMergeSort            2560  avgt    5     22699.187 ±    1097.819  ns/op
+ * SortBenchmark.doFastUtilMergeSort          655360  avgt    5  41111132.339 ± 1315001.912  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort      10  avgt    5        31.488 ±       4.926  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort    2560  avgt    5    185895.213 ±    9924.799  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort  655360  avgt    5  72263998.569 ± 1616012.603  ns/op
+ * </pre>
+ *
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
