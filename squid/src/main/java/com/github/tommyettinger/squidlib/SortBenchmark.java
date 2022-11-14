@@ -45,6 +45,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 import sort.GrailSort;
 import sort.ObjectComparators;
+import sort.SortingNetwork;
 
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -176,6 +177,30 @@ import java.util.concurrent.TimeUnit;
  * SortBenchmark.doParallelJDKSort              640  avgt    5    2278.514 ±    87.634  ns/op
  * SortBenchmark.doParallelJDKSort             2560  avgt    5   16919.460 ±  1163.633  ns/op
  * </pre>
+ * Something about my sorting network code is either wrong or just slow. (Testing only on smallest and largest.)
+ * <pre>
+ * Benchmark                                  (len)  Mode  Cnt       Score       Error  Units
+ * SortBenchmark.doDSSort                        10  avgt    5      22.218 ±     4.027  ns/op
+ * SortBenchmark.doDSSort                      2560  avgt    5   26506.745 ±  2665.149  ns/op
+ * SortBenchmark.doEttingerSort                  10  avgt    5      36.268 ±     3.476  ns/op
+ * SortBenchmark.doEttingerSort                2560  avgt    5   32657.576 ±  1926.769  ns/op
+ * SortBenchmark.doFastUtilMergeSort             10  avgt    5      30.977 ±     6.417  ns/op
+ * SortBenchmark.doFastUtilMergeSort           2560  avgt    5   23022.791 ±  2496.802  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort     10  avgt    5      32.911 ±     7.789  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort   2560  avgt    5  187682.947 ±  6800.589  ns/op
+ * SortBenchmark.doFastUtilQuickSort             10  avgt    5      32.399 ±     5.664  ns/op
+ * SortBenchmark.doFastUtilQuickSort           2560  avgt    5  191213.166 ± 13027.216  ns/op
+ * SortBenchmark.doGDXSort                       10  avgt    5      29.445 ±     5.965  ns/op
+ * SortBenchmark.doGDXSort                     2560  avgt    5   16999.598 ±  1970.929  ns/op
+ * SortBenchmark.doGrailSort                     10  avgt    5      21.514 ±     7.656  ns/op
+ * SortBenchmark.doGrailSort                   2560  avgt    5  331082.220 ± 26329.563  ns/op
+ * SortBenchmark.doJDKSort                       10  avgt    5      26.825 ±     4.176  ns/op
+ * SortBenchmark.doJDKSort                     2560  avgt    5   17023.164 ±  1070.560  ns/op
+ * SortBenchmark.doNetworkSort                   10  avgt    5     140.368 ±    11.190  ns/op
+ * SortBenchmark.doNetworkSort                 2560  avgt    5   43850.717 ± 10284.215  ns/op
+ * SortBenchmark.doParallelJDKSort               10  avgt    5      30.953 ±     8.260  ns/op
+ * SortBenchmark.doParallelJDKSort             2560  avgt    5   16801.236 ±  1131.503  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -252,6 +277,12 @@ public class SortBenchmark {
     }
 
     @Benchmark
+    public void doNetworkSort(BenchmarkState state)
+    {
+        SortingNetwork.sort(state.words, 0, state.words.length, String::compareTo);
+    }
+
+    @Benchmark
     public void doGDXSort(BenchmarkState state)
     {
         Sort.instance().sort(state.words, String::compareTo, 0, state.words.length);
@@ -277,7 +308,7 @@ public class SortBenchmark {
      *
      * You can run this test:
      *
-     * a) Via the command line from the squidlib-performance module's root folder:
+     * a) Via the command line from the squidlib module's root folder:
      *    $ mvn clean install
      *    $ java -jar benchmarks.jar SortBenchmark
      *
