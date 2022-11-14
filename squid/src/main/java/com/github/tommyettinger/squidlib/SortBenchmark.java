@@ -201,6 +201,16 @@ import java.util.concurrent.TimeUnit;
  * SortBenchmark.doParallelJDKSort               10  avgt    5      30.953 ±     8.260  ns/op
  * SortBenchmark.doParallelJDKSort             2560  avgt    5   16801.236 ±  1131.503  ns/op
  * </pre>
+ * What on Earth is wrong with FastUtil's QuickSort?
+ * <pre>
+ * Benchmark                           (len)  Mode  Cnt          Score         Error  Units
+ * SortBenchmark.doFastUtilMergeSort      10  avgt    5         29.595 ±       5.645  ns/op
+ * SortBenchmark.doFastUtilMergeSort    2560  avgt    5      22486.352 ±    1095.960  ns/op
+ * SortBenchmark.doFastUtilMergeSort  655360  avgt    5   40680600.033 ± 1703346.781  ns/op
+ * SortBenchmark.doFastUtilQuickSort      10  avgt    5         32.102 ±       4.937  ns/op
+ * SortBenchmark.doFastUtilQuickSort    2560  avgt    5     184383.374 ±    1730.757  ns/op
+ * SortBenchmark.doFastUtilQuickSort  655360  avgt    5  201289079.138 ± 8404552.088  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
