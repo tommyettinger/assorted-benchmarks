@@ -581,64 +581,64 @@ public final class SortingNetwork {
 		 */
 		final int length = to - from;
 
-		// Choose a known-best sorting network for the smallest arrays (0-15 elements)
-		// This uses info from https://bertdobbelaere.github.io/sorting_networks.html
-		if (length < 16) {
-			switch (length){
-				case 2:
-					ce2(items, c);
-				break;
-				case 3:
-					ce3(items, c);
-				break;
-				case 4:
-					ce4(items, c);
-					break;
-				case 5:
-					ce5(items, c);
-					break;
-				case 6:
-					ce6(items, c);
-					break;
-				case 7:
-					ce7(items, c);
-					break;
-				case 8:
-					ce8(items, c);
-					break;
-				case 9:
-					ce9(items, c);
-					break;
-				case 10:
-					ce10(items, c);
-					break;
-				case 11:
-					ce11(items, c);
-					break;
-				case 12:
-					ce12(items, c);
-					break;
-				case 13:
-					ce13(items, c);
-					break;
-				case 14:
-					ce14(items, c);
-					break;
-				case 15:
-					ce15(items, c);
-					break;
-			}
-			return;
-		}
-//		// Insertion sort on smallest arrays, less than 16 items
+//		// Choose a known-best sorting network for the smallest arrays (0-15 elements)
+//		// This uses info from https://bertdobbelaere.github.io/sorting_networks.html
 //		if (length < 16) {
-//			for (int i = from; i < to; i++) {
-//				for (int j = i; j > from && c.compare(items[j - 1], items[j]) > 0; j--) {
-//					swap(items, j, j - 1);
-//				}
+//			switch (length){
+//				case 2:
+//					ce2(items, c);
+//				break;
+//				case 3:
+//					ce3(items, c);
+//				break;
+//				case 4:
+//					ce4(items, c);
+//					break;
+//				case 5:
+//					ce5(items, c);
+//					break;
+//				case 6:
+//					ce6(items, c);
+//					break;
+//				case 7:
+//					ce7(items, c);
+//					break;
+//				case 8:
+//					ce8(items, c);
+//					break;
+//				case 9:
+//					ce9(items, c);
+//					break;
+//				case 10:
+//					ce10(items, c);
+//					break;
+//				case 11:
+//					ce11(items, c);
+//					break;
+//				case 12:
+//					ce12(items, c);
+//					break;
+//				case 13:
+//					ce13(items, c);
+//					break;
+//				case 14:
+//					ce14(items, c);
+//					break;
+//				case 15:
+//					ce15(items, c);
+//					break;
 //			}
 //			return;
 //		}
+		// Insertion sort on smallest arrays, less than 32 items
+		if (length < 32) {
+			for (int i = from; i < to; i++) {
+				for (int j = i; j > from && c.compare(items[j - 1], items[j]) > 0; j--) {
+					swap(items, j, j - 1);
+				}
+			}
+			return;
+		}
 
 		// Recursively sort halves
 		int mid = from + to >>> 1;
