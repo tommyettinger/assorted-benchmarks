@@ -1,6 +1,7 @@
 package de.heidelberg.pvs.container_bench.factories;
 
 import com.github.tommyettinger.ds.*;
+import de.heidelberg.pvs.container_bench.ObjectSet32;
 import de.heidelberg.pvs.container_bench.ObjectSetAlt;
 import de.heidelberg.pvs.container_bench.ObjectSetBare;
 import de.heidelberg.pvs.container_bench.OrderedSetBare;
@@ -53,6 +54,7 @@ public enum JDKSetFact {
 	JDKGDXDSQ_HASH(() -> new ObjectQuadSet<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_INDEXED(() -> new ObjectOrderedSet<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSALT_HASH(() -> new ObjectSetAlt<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS32_HASH(() -> new ObjectSet32<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSBARE_HASH(() -> new ObjectSetBare<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSBARE_INDEXED(() -> new OrderedSetBare<>(16, LoadFactor.LOAD_FACTOR))
 

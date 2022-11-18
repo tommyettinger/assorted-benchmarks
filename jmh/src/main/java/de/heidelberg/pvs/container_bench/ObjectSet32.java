@@ -5,40 +5,38 @@ import com.github.tommyettinger.ds.ObjectSet;
 import javax.annotation.Nonnull;
 import java.util.Collection;
 
-public class ObjectSetAlt<T> extends ObjectSet<T> {
-    public ObjectSetAlt() {
+public class ObjectSet32<T> extends ObjectSet<T> {
+    public ObjectSet32() {
     }
 
-    public ObjectSetAlt(int initialCapacity) {
+    public ObjectSet32(int initialCapacity) {
         super(initialCapacity);
     }
 
-    public ObjectSetAlt(int initialCapacity, float loadFactor) {
+    public ObjectSet32(int initialCapacity, float loadFactor) {
         super(initialCapacity, loadFactor);
     }
 
-    public ObjectSetAlt(ObjectSet<? extends T> set) {
+    public ObjectSet32(ObjectSet<? extends T> set) {
         super(set);
     }
 
-    public ObjectSetAlt(Collection<? extends T> coll) {
+    public ObjectSet32(Collection<? extends T> coll) {
         super(coll);
     }
 
-    public ObjectSetAlt(T[] array, int offset, int length) {
+    public ObjectSet32(T[] array, int offset, int length) {
         super(array, offset, length);
     }
 
-    public ObjectSetAlt(T[] array) {
+    public ObjectSet32(T[] array) {
         super(array);
     }
 
-    {
-        hashMultiplier = 0x769C3DC968DB6A07L;
-    }
+    protected int hashMul = 0xEB18A809;
     @Override
     protected int place (Object item) {
-        return (int)(item.hashCode() * hashMultiplier >>> shift); // total collisions: 1761470,    longest pileup: 19
+        return item.hashCode() * hashMul >>> shift;
     }
 
     @Override
@@ -48,7 +46,7 @@ public class ObjectSetAlt<T> extends ObjectSet<T> {
         mask = newSize - 1;
         shift = Long.numberOfLeadingZeros(mask);
 
-        hashMultiplier *= (long)size << 3 ^ 0xF1357AEA2E62A9C5L;
+        hashMul *= 0x2E62A9C5;
 
         T[] oldKeyTable = keyTable;
 
