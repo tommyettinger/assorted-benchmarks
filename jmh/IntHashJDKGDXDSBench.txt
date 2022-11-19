@@ -99,3 +99,39 @@ JDKSetBench.bench                 JDKGDXDS32_HASH    VECTOR2_UNIFORM  467505    
 JDKSetBench.bench                 JDKGDXDS32_HASH    VECTOR2_UNIFORM  467505    1000     ITERATE  sample  645862     4953.964 ±  6.738  ns/op
 JDKSetBench.bench                 JDKGDXDS32_HASH    VECTOR2_UNIFORM  467505    1000        COPY  sample  653437     9662.316 ± 46.300  ns/op
 JDKSetBench.bench                 JDKGDXDS32_HASH    VECTOR2_UNIFORM  467505    1000    CONTAINS  sample  633606       43.381 ±  1.877  ns/op
+
+Trying to gauge if an XLCG-based hash works well (it does not)...
+
+Benchmark                                 (impl)      (payloadType)  (seed)  (size)  (workload)    Mode     Cnt        Score    Error  Units
+JDKSetBench.bench                  JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample  731124    17113.824 ± 38.997  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample  701357     4394.642 ±  7.630  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH     STRING_UNIFORM  467505    1000        COPY  sample  678190     9285.906 ± 40.088  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample  579065       45.006 ±  1.670  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample  594538    10605.492 ± 50.405  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample  708155     4432.140 ±  6.575  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample  477486     6643.564 ± 49.527  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample  651797       35.586 ±  0.659  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample  445053    14195.450 ± 72.167  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample  733367     4283.385 ±  4.996  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000        COPY  sample  723056     8693.787 ± 36.844  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample  621043       45.116 ±  3.229  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH    VECTOR2_UNIFORM  467505    1000    POPULATE  sample  516024    24273.452 ± 55.876  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH    VECTOR2_UNIFORM  467505    1000     ITERATE  sample  716995     4383.182 ± 10.921  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH    VECTOR2_UNIFORM  467505    1000        COPY  sample  615554    10175.561 ± 33.072  ns/op
+JDKSetBench.bench                  JDKGDXDS_HASH    VECTOR2_UNIFORM  467505    1000    CONTAINS  sample  616584       44.043 ±  2.520  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH     STRING_UNIFORM  467505    1000    POPULATE  sample  522842    23950.376 ± 54.111  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH     STRING_UNIFORM  467505    1000     ITERATE  sample  716947     4386.893 ±  9.808  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH     STRING_UNIFORM  467505    1000        COPY  sample  689130     9104.115 ± 31.983  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH     STRING_UNIFORM  467505    1000    CONTAINS  sample  558722       46.516 ±  2.327  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH    INTEGER_UNIFORM  467505    1000    POPULATE  sample  546903    11559.854 ± 58.122  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH    INTEGER_UNIFORM  467505    1000     ITERATE  sample  727193     4319.590 ±  4.919  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH    INTEGER_UNIFORM  467505    1000        COPY  sample  513116     6138.737 ± 41.362  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH    INTEGER_UNIFORM  467505    1000    CONTAINS  sample  699992       38.970 ±  1.743  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH  STRING_DICTIONARY  467505    1000    POPULATE  sample  399274    15811.534 ± 80.989  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH  STRING_DICTIONARY  467505    1000     ITERATE  sample  733331     4292.551 ±  4.757  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH  STRING_DICTIONARY  467505    1000        COPY  sample  705193     8856.563 ± 24.692  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH  STRING_DICTIONARY  467505    1000    CONTAINS  sample  617885       43.353 ±  1.951  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH    VECTOR2_UNIFORM  467505    1000    POPULATE  sample  551639    22701.235 ± 52.340  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH    VECTOR2_UNIFORM  467505    1000     ITERATE  sample  692767     4593.912 ±  6.534  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH    VECTOR2_UNIFORM  467505    1000        COPY  sample  643901     9747.377 ± 35.247  ns/op
+JDKSetBench.bench                JDKGDXDS32_HASH    VECTOR2_UNIFORM  467505    1000    CONTAINS  sample  623107       42.462 ±  2.066  ns/op

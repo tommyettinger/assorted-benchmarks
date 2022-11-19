@@ -32,11 +32,13 @@ public class ObjectSet32<T> extends ObjectSet<T> {
         super(array);
     }
 
-    protected int hashMul = 0x000CF093;
+    protected static final int hashMul = 0x000CF093;
+    protected int hashXor = 0x2E62A9C5;
+//    protected int hashMul = 0x000CF093;
 //    protected int hashMul = 0xEB18A809;
     @Override
     protected int place (Object item) {
-        return item.hashCode() * hashMul >>> shift;
+        return (item.hashCode() ^ hashXor) * hashMul >>> shift;
     }
 
     @Override
@@ -46,8 +48,9 @@ public class ObjectSet32<T> extends ObjectSet<T> {
         mask = newSize - 1;
         shift = Long.numberOfLeadingZeros(mask);
 
+        hashXor = hashXor * 0x5538A ^ 0x9E3779B7;
 //        hashMul *= 0x2E62A9C5;
-        hashMul =  hashMul * 0x9E377 & 0xFFFFF;
+//        hashMul =  hashMul * 0x9E377 & 0xFFFFF;
 
         T[] oldKeyTable = keyTable;
 
