@@ -2,7 +2,6 @@ package de.heidelberg.pvs.container_bench;
 
 import com.github.tommyettinger.ds.ObjectSet;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 
 public class ObjectSet32<T> extends ObjectSet<T> {
@@ -33,7 +32,8 @@ public class ObjectSet32<T> extends ObjectSet<T> {
         super(array);
     }
 
-    protected int hashMul = 0xEB18A809;
+    protected int hashMul = 0x000CF093;
+//    protected int hashMul = 0xEB18A809;
     @Override
     protected int place (Object item) {
         return item.hashCode() * hashMul >>> shift;
@@ -46,7 +46,8 @@ public class ObjectSet32<T> extends ObjectSet<T> {
         mask = newSize - 1;
         shift = Long.numberOfLeadingZeros(mask);
 
-        hashMul *= 0x2E62A9C5;
+//        hashMul *= 0x2E62A9C5;
+        hashMul =  hashMul * 0x9E377 & 0xFFFFF;
 
         T[] oldKeyTable = keyTable;
 
