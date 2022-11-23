@@ -10,11 +10,17 @@ import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryG
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+import objectexplorer.MemoryMeasurer;
 
 import java.io.IOException;
 import java.util.*;
 
 /**
+ * Must be run from working directory 'jmh', with JVM option:
+ * <pre>
+ * -javaagent:memory-measurer.jar
+ * </pre>
+ * <br>
  * Created by Tommy Ettinger on 1/28/2020.
  */
 public class MemoryCheck {
@@ -354,6 +360,7 @@ public class MemoryCheck {
 	}
 	public static void evaluate(Object o)
 	{
-		System.out.println(org.openjdk.jol.info.GraphLayout.parseInstance(o).totalSize());
+		System.out.println(MemoryMeasurer.measureBytes(o));
+//		System.out.println(org.openjdk.jol.info.GraphLayout.parseInstance(o).totalSize());
 	}
 }

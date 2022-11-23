@@ -84,9 +84,10 @@ dependencies {
     implementation 'com.github.tommyettinger:juniper:0.1.6'
     implementation 'com.github.tommyettinger:jdkgdxds:1.0.5'
 
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.openjdk.jol:jol-core:0.10'
 
-
-    testImplementation group: 'junit', name: 'junit', version:'4.13.1'
-    testImplementation group: 'org.openjdk.jol', name: 'jol-core', version: '0.10'
+//    testImplementation 'com.github.tommyettinger:memory-measurer:d0b5ebb731'
+    testImplementation files('memory-measurer.jar')
 }
 
