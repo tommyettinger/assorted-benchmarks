@@ -4,6 +4,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.LongMap;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.OrderedSet;
+import com.github.tommyettinger.ds.ObjectList;
+import com.github.tommyettinger.ds.ObjectOrderedSet;
 import de.heidelberg.pvs.container_bench.factories.LoadFactor;
 import de.heidelberg.pvs.container_bench.generators.dictionary.IntegerDictionaryGenerator;
 import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryGenerator;
@@ -52,10 +54,17 @@ public class MemoryCheck {
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
+				{
+					ObjectList<String> set = new ObjectList<>(size);
+					set.addAll(words);
+					System.out.printf("JDKGDXDS ObjectList, %7d Strings:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
 				System.out.println("UNORDERED");
 				System.out.println("----------------------------------------");
 				{
-					HashSet<String> set = new HashSet<>(size);
+					HashSet<String> set = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(wordList);
 					System.out.printf("JDK HashSet, %7d Strings:\n", size);
 					evaluate(set);
@@ -69,16 +78,16 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectSet<String> set = new ObjectSet<>(size);
+					ObjectSet<String> set = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(words);
 					System.out.printf("GDX ObjectSet, %7d Strings:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectSetBare<String> set = new ObjectSetBare<>(size);
+					com.github.tommyettinger.ds.ObjectSet<String> set = new com.github.tommyettinger.ds.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(words);
-					System.out.printf("JDKGDXDS ObjectSetX, %7d Strings:\n", size);
+					System.out.printf("JDKGDXDS ObjectSet, %7d Strings:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
@@ -106,9 +115,9 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					OrderedSetBare<String> set = new OrderedSetBare<>(size, LoadFactor.LOAD_FACTOR);
+					ObjectOrderedSet<String> set = new ObjectOrderedSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(words);
-					System.out.printf("JDKGDXDS OrderedSetX, %7d Strings:\n", size);
+					System.out.printf("JDKGDXDS ObjectOrderedSet, %7d Strings:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
@@ -150,10 +159,17 @@ public class MemoryCheck {
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
+				{
+					ObjectList<Integer> set = new ObjectList<>(size);
+					set.addAll(numberList);
+					System.out.printf("JDKGDXDS ObjectList, %7d Integers:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
 				System.out.println("UNORDERED");
 				System.out.println("----------------------------------------");
 				{
-					HashSet<Integer> set = new HashSet<>(size);
+					HashSet<Integer> set = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numberList);
 					System.out.printf("JDK HashSet, %7d Integers:\n", size);
 					evaluate(set);
@@ -167,16 +183,16 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectSet<Integer> set = new ObjectSet<>(size);
+					ObjectSet<Integer> set = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
 					System.out.printf("GDX ObjectSet, %7d Integers:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectSetBare<Integer> set = new ObjectSetBare<>(size);
+					com.github.tommyettinger.ds.ObjectSet<Integer> set = new com.github.tommyettinger.ds.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
-					System.out.printf("JDKGDXDS ObjectSetX, %7d Integers:\n", size);
+					System.out.printf("JDKGDXDS ObjectSet, %7d Integers:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
@@ -204,9 +220,9 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					OrderedSetBare<Integer> set = new OrderedSetBare<>(size, LoadFactor.LOAD_FACTOR);
+					ObjectOrderedSet<Integer> set = new ObjectOrderedSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
-					System.out.printf("JDKGDXDS OrderedSetX, %7d Integers:\n", size);
+					System.out.printf("JDKGDXDS ObjectOrderedSet, %7d Integers:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
@@ -254,10 +270,17 @@ public class MemoryCheck {
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
+				{
+					ObjectList<Long> set = new ObjectList<>(size);
+					set.addAll(numbers);
+					System.out.printf("JDKGDXDS ObjectList, %7d Longs:\n", size);
+					evaluate(set);
+					System.out.println("----------------------------------------");
+				}
 				System.out.println("UNORDERED");
 				System.out.println("----------------------------------------");
 				{
-					HashSet<Long> set = new HashSet<>(size);
+					HashSet<Long> set = new HashSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numberList);
 					System.out.printf("JDK HashSet, %7d Longs:\n", size);
 					evaluate(set);
@@ -271,16 +294,16 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectSet<Long> set = new ObjectSet<>(size);
+					ObjectSet<Long> set = new ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
 					System.out.printf("GDX ObjectSet, %7d Longs:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
 				{
-					ObjectSetBare<Long> set = new ObjectSetBare<>(size);
+					com.github.tommyettinger.ds.ObjectSet<Long> set = new com.github.tommyettinger.ds.ObjectSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
-					System.out.printf("JDKGDXDS ObjectSetX, %7d Longs:\n", size);
+					System.out.printf("JDKGDXDS ObjectSet, %7d Longs:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
@@ -308,9 +331,9 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					OrderedSetBare<Long> set = new OrderedSetBare<>(size, LoadFactor.LOAD_FACTOR);
+					ObjectOrderedSet<Long> set = new ObjectOrderedSet<>(size, LoadFactor.LOAD_FACTOR);
 					set.addAll(numbers);
-					System.out.printf("JDKGDXDS OrderedSetX, %7d Longs:\n", size);
+					System.out.printf("JDKGDXDS ObjectOrderedSet, %7d Longs:\n", size);
 					evaluate(set);
 					System.out.println("----------------------------------------");
 				}
@@ -349,7 +372,7 @@ public class MemoryCheck {
 					System.out.println("----------------------------------------");
 				}
 				{
-					LongMap<Object> set = new LongMap<>(size);
+					LongMap<Object> set = new LongMap<>(size, LoadFactor.LOAD_FACTOR);
 					for (int i = 0; i < size; i++) set.put(numbers[i], null);
 					System.out.printf("GDX LongMap, %7d Longs:\n", size);
 					evaluate(set);
