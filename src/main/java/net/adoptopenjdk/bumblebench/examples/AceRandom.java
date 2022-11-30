@@ -274,15 +274,15 @@ public class AceRandom extends EnhancedRandom {
 
 	@Override
 	public long previousLong () {
-		final long fa = stateA;
 		final long fb = stateB;
 		final long fc = stateC;
+		final long fd = stateD;
 		final long fe = stateE;
-		stateA = (fb >>> 44 | fb << 20);
-		stateD -= 0x9E3779B97F4A7C15L;
-		stateB = fc - stateD;
-		stateC = fe ^ stateA;
-		return stateE = fa * 0x781494A55DAAED0DL;
+		stateA -= 0x9E3779B97F4A7C15L;
+		stateC = (fd >>> 52 | fd << 12);
+		stateB = stateC + fe;
+		stateD = fc - stateB;
+		return stateE = fb ^ stateA;
 	}
 
 	@Override
@@ -321,20 +321,32 @@ public class AceRandom extends EnhancedRandom {
 		return "AceRandom{" + "stateA=" + (stateA) + "L, stateB=" + (stateB) + "L, stateC=" + (stateC) + "L, stateD=" + (stateD) + "L, stateE=" + (stateE) + "L}";
 	}
 
-//	public static void main(String[] args) {
-//		AceRandom random = new AceRandom(0L);
-//		long n0 = random.nextLong();
-//		long n1 = random.nextLong();
-//		long n2 = random.nextLong();
-//		long n3 = random.nextLong();
-//		long p2 = random.previousLong();
-//		long p1 = random.previousLong();
-//		long p0 = random.previousLong();
-//		System.out.println(n0 == p0);
-//		System.out.println(n1 == p1);
-//		System.out.println(n2 == p2);
-//		System.out.println(n0 + " vs. " + p0);
-//		System.out.println(n1 + " vs. " + p1);
-//		System.out.println(n2 + " vs. " + p2);
-//	}
+	public static void main(String[] args) {
+		AceRandom random = new AceRandom(1L);
+		long n0 = random.nextLong();
+		long n1 = random.nextLong();
+		long n2 = random.nextLong();
+		long n3 = random.nextLong();
+		long n4 = random.nextLong();
+		long n5 = random.nextLong();
+		long n6 = random.nextLong();
+		long p5 = random.previousLong();
+		long p4 = random.previousLong();
+		long p3 = random.previousLong();
+		long p2 = random.previousLong();
+		long p1 = random.previousLong();
+		long p0 = random.previousLong();
+		System.out.println(n0 == p0);
+		System.out.println(n1 == p1);
+		System.out.println(n2 == p2);
+		System.out.println(n3 == p3);
+		System.out.println(n4 == p4);
+		System.out.println(n5 == p5);
+		System.out.println(n0 + " vs. " + p0);
+		System.out.println(n1 + " vs. " + p1);
+		System.out.println(n2 + " vs. " + p2);
+		System.out.println(n3 + " vs. " + p3);
+		System.out.println(n4 + " vs. " + p4);
+		System.out.println(n5 + " vs. " + p5);
+	}
 }
