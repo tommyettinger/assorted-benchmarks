@@ -1,8 +1,5 @@
 package de.heidelberg.pvs.container_bench.generators;
 
 public enum PayloadType {
-	
-	STRING_UNIFORM, INTEGER_UNIFORM, STRING_DICTIONARY, VECTOR2_UNIFORM;
-	
-
+	STRING_UNIFORM, INTEGER_UNIFORM, STRING_DICTIONARY, VECTOR2_UNIFORM, COORD_UNIFORM
 }

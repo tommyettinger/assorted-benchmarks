@@ -2,6 +2,7 @@ package de.heidelberg.pvs.container_bench.generators;
 
 import de.heidelberg.pvs.container_bench.generators.dictionary.IntegerDictionaryGenerator;
 import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryGenerator;
+import de.heidelberg.pvs.container_bench.generators.uniform.CoordUniformGenerator;
 import de.heidelberg.pvs.container_bench.generators.uniform.IntegerUniformGenerator;
 import de.heidelberg.pvs.container_bench.generators.uniform.StringUniformGenerator;
 import de.heidelberg.pvs.container_bench.generators.uniform.Vector2UniformGenerator;
@@ -24,8 +25,11 @@ public class GeneratorFactory {
 			case VECTOR2_UNIFORM:
 				return new Vector2UniformGenerator();
 
+			case COORD_UNIFORM:
+				return new CoordUniformGenerator();
+
 			default:
-				throw new IllegalArgumentException(String.format("Payload type not specified"));
+				throw new IllegalArgumentException("Payload type not specified");
 		}
 
 	}
@@ -41,7 +45,7 @@ public class GeneratorFactory {
 				return new IntegerDictionaryGenerator();
 
 			default:
-				throw new IllegalArgumentException(String.format("Payload type not specified"));
+				throw new IllegalArgumentException("Payload type not specified");
 		}
 	}
 
