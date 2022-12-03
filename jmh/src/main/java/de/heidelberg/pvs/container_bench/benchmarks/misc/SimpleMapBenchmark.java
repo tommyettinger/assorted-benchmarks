@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import de.heidelberg.pvs.container_bench.generators.TangleRNG;
+import com.github.tommyettinger.random.WhiskerRandom;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Param;
@@ -194,7 +194,7 @@ public class SimpleMapBenchmark {
 			classes.forEach(c -> map.put(c, 1));
 			Collections.shuffle(classes);
 
-			final TangleRNG random = new TangleRNG();
+			final WhiskerRandom random = new WhiskerRandom();
 			for (int i = 0; i < numClasses; i++) {
 				final Object key = classes.get(random.nextInt(numClasses - 1));
 				blackhole.consume(map.get(key));

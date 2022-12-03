@@ -1,7 +1,7 @@
 package de.heidelberg.pvs.container_bench.generators.dictionary;
 
+import com.github.tommyettinger.random.WhiskerRandom;
 import de.heidelberg.pvs.container_bench.generators.IntElementGenerator;
-import de.heidelberg.pvs.container_bench.generators.TangleRNG;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
 import java.io.IOException;
@@ -11,12 +11,12 @@ public class IntegerDictionaryGenerator implements IntElementGenerator{
 
 	int[] words;
 
-	protected TangleRNG randomGenerator;
+	protected WhiskerRandom randomGenerator;
 	
 	public void init(int size, int seed) throws IOException {
 		
 		words = Wordlist.loadInts(size, seed, -1);
-		randomGenerator = new TangleRNG(seed);
+		randomGenerator = new WhiskerRandom(seed);
 		
 	}
 

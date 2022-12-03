@@ -3,6 +3,7 @@ package de.heidelberg.pvs.container_bench.generators;
 import com.github.tommyettinger.ds.ObjectList;
 import com.github.tommyettinger.ds.ObjectSet;
 import com.github.tommyettinger.random.TrimRandom;
+import com.github.tommyettinger.random.WhiskerRandom;
 
 import java.io.*;
 import java.util.*;
@@ -82,7 +83,7 @@ public class Wordlist {
 			}
 
 			if (seed != DEFAULT_SEED) {
-				final TangleRNG rng = new TangleRNG(seed);
+				final WhiskerRandom rng = new WhiskerRandom(seed);
 				final int n = words.size();
 				for (int i = n; i > 1; i--) {
 					Collections.swap(words, rng.nextInt(i), i - 1);
@@ -109,7 +110,7 @@ public class Wordlist {
 			}
 			final int n = words.size();
 			if (seed != DEFAULT_SEED) {
-				final TangleRNG rng = new TangleRNG(seed);
+				final WhiskerRandom rng = new WhiskerRandom(seed);
 				for (int i = n; i > 1; i--) {
 					Collections.swap(words, rng.nextInt(i), i - 1);
 				}

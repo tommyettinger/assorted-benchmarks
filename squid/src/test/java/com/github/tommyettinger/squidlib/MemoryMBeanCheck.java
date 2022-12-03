@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.OrderedSet;
 import com.github.tommyettinger.ds.IndexedMap;
 import com.github.tommyettinger.ds.IndexedSet;
 import com.github.tommyettinger.random.LaserRandom;
+import com.github.tommyettinger.random.WhiskerRandom;
 import com.github.yellowstonegames.grid.Region;
 import com.github.yellowstonegames.place.DungeonTools;
 import com.github.yellowstonegames.place.tileset.DungeonBoneGen;
@@ -14,7 +15,6 @@ import com.github.yellowstonegames.place.tileset.TilesetType;
 import com.sun.management.ThreadMXBean;
 import de.heidelberg.pvs.container_bench.generators.StringDictionaryGenerator;
 import de.heidelberg.pvs.container_bench.generators.StringDictionaryGenerator.CustomString;
-import de.heidelberg.pvs.container_bench.generators.TangleRNG;
 import space.earlygrey.simplegraphs.DirectedGraph;
 import space.earlygrey.simplegraphs.UndirectedGraph;
 import squidpony.squidgrid.Direction;
@@ -567,7 +567,7 @@ public class MemoryMBeanCheck {
         }
     }
     public static void mainFloat () {
-        TangleRNG rng = new TangleRNG(-10000L, 1111111L);
+        WhiskerRandom rng = new WhiskerRandom(1111111L);
         PrintStream out = System.out;
         try {
             System.setOut(new PrintStream(".junk.txt#"));
@@ -580,8 +580,7 @@ public class MemoryMBeanCheck {
             for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
                 Float[] items = new Float[size];
                 Float[] items2 = new Float[size];
-                rng.setStateA(size);
-                rng.setStateB(~size);
+                rng.setSeed(size);
                 for (int j = 0; j < size; j++) {
                     items[j] = (rng.nextInt() >>> 10) * 1024f;// * 0.6180339887498949f;
                     items2[j] = rng.nextInt() * 0.6180339887498949f;
@@ -800,7 +799,7 @@ public class MemoryMBeanCheck {
         }
     }
     public static void mainInteger () {
-        TangleRNG rng = new TangleRNG(-10000L, 1111111L);
+        WhiskerRandom rng = new WhiskerRandom(1111111L);
         PrintStream out = System.out;
         try {
             System.setOut(new PrintStream(".junk.txt#"));
@@ -813,8 +812,7 @@ public class MemoryMBeanCheck {
             for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
                 Integer[] items = new Integer[size];
                 Integer[] items2 = new Integer[size];
-                rng.setStateA(size);
-                rng.setStateB(~size);
+                rng.setSeed(size);
                 for (int j = 0; j < size; j++) {
                     items[j] = (rng.nextInt() << 10);// * 0.6180339887498949f;
                     items2[j] = (rng.nextInt());// * 0.6180339887498949f;

@@ -1,6 +1,7 @@
 package de.heidelberg.pvs.container_bench.generators;
 
 import com.github.tommyettinger.ds.ObjectOrderedSet;
+import com.github.tommyettinger.random.WhiskerRandom;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -10,7 +11,7 @@ public class StringDictionaryGenerator implements ElementGenerator<String> {
 	
 	protected ObjectOrderedSet<String> words;
 	
-	protected TangleRNG generator;
+	protected WhiskerRandom generator;
 	
 	protected int seed; 
 	protected int poolSize;
@@ -20,7 +21,7 @@ public class StringDictionaryGenerator implements ElementGenerator<String> {
 		this.seed = seed;
 		this.poolSize = size;
 		
-		generator = new TangleRNG(seed);
+		generator = new WhiskerRandom(seed);
 		// Read all -> might be too expensive
 		words = Wordlist.loadWordSet(size, seed);
 	}

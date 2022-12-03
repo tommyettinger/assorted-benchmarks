@@ -1,7 +1,7 @@
 package de.heidelberg.pvs.container_bench.generators.dictionary;
 
+import com.github.tommyettinger.random.WhiskerRandom;
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
-import de.heidelberg.pvs.container_bench.generators.TangleRNG;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 
 import java.io.IOException;
@@ -12,7 +12,7 @@ public class StringDictionaryGenerator implements ElementGenerator<String> {
 	
 	protected List<String> words;
 	
-	protected TangleRNG generator;
+	protected WhiskerRandom generator;
 	
 	protected int seed; 
 	protected int poolSize;
@@ -22,7 +22,7 @@ public class StringDictionaryGenerator implements ElementGenerator<String> {
 		this.seed = seed;
 		this.poolSize = size;
 		
-		generator = new TangleRNG(seed);
+		generator = new WhiskerRandom(seed);
 		// Read all -> might be too expensive
 		words = Wordlist.loadWords(size, seed);
 	}

@@ -8,9 +8,9 @@ import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.OrderedSet;
 import com.github.tommyettinger.ds.IndexedMap;
 import com.github.tommyettinger.ds.IndexedSet;
+import com.github.tommyettinger.random.WhiskerRandom;
 import com.koloboke.collect.set.hash.HashObjSet;
 import de.heidelberg.pvs.container_bench.factories.LoadFactor;
-import de.heidelberg.pvs.container_bench.generators.TangleRNG;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryGenerator;
 import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryGenerator.CustomString;
@@ -740,7 +740,7 @@ public class MemoryMBeanCheck {
         }
     }
     public static void mainFloat () {
-        TangleRNG rng = new TangleRNG(-10000L, 1111111L);
+        WhiskerRandom rng = new WhiskerRandom(1111111L);
         PrintStream out = System.out;
         try {
             System.setOut(new PrintStream(".junk.txt#"));
@@ -752,8 +752,7 @@ public class MemoryMBeanCheck {
                 System.setOut(out);
             for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
                 Float[] items = new Float[size];
-                rng.setStateA(size);
-                rng.setStateB(~size);
+                rng.setSeed(size);
                 for (int j = 0; j < size; j++) {
                     items[j] = (rng.nextInt() << 10) * 1024f;// * 0.6180339887498949f;
                 }
@@ -1006,7 +1005,7 @@ public class MemoryMBeanCheck {
         }
     }
     public static void mainInteger () {
-        TangleRNG rng = new TangleRNG(-10000L, 1111111L);
+        WhiskerRandom rng = new WhiskerRandom(1111111L);
         PrintStream out = System.out;
         try {
             System.setOut(new PrintStream(".junk.txt#"));
@@ -1018,8 +1017,7 @@ public class MemoryMBeanCheck {
                 System.setOut(out);
             for (int size : new int[] {1, 10, 100, 1000, 10000, 100000, 1000000}) {
                 Integer[] items = new Integer[size];
-                rng.setStateA(size);
-                rng.setStateB(~size);
+                rng.setSeed(size);
                 for (int j = 0; j < size; j++) {
                     items[j] = (rng.nextInt() << 10);// * 0.6180339887498949f;
                 }

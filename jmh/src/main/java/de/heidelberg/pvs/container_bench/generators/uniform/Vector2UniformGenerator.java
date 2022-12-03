@@ -12,5 +12,4 @@ public class Vector2UniformGenerator extends AbstractUniformGenerator<Vector2> {
 		}
 		return vectors;
 	}
-
 }
