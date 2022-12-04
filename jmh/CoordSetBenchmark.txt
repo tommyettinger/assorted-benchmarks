@@ -51,3 +51,23 @@ JDKCoordSetBench.bench                     JDK_HASH  COORD_UNIFORM  467505   100
 JDKCoordSetBench.bench                     JDK_HASH  COORD_UNIFORM  467505   10000     ITERATE  sample  149626   167115.243 ±   95.456  ns/op
 JDKCoordSetBench.bench                     JDK_HASH  COORD_UNIFORM  467505   10000        COPY  sample   59820   418059.957 ±  662.203  ns/op
 JDKCoordSetBench.bench                     JDK_HASH  COORD_UNIFORM  467505   10000    CONTAINS  sample  583714       69.592 ±    0.499  ns/op
+
+Trying the _ALT hashes, which use jdkgdxds' traditional long-multiply-then-shift approach to limiting the bits...
+
+Benchmark                                   (impl)  (payloadType)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
+JDKCoordSetBench.bench                    MUL_HASH  COORD_UNIFORM  467505   10000    POPULATE  sample  111308   224717.678 ± 391.873  ns/op
+JDKCoordSetBench.bench                    MUL_HASH  COORD_UNIFORM  467505   10000     ITERATE  sample  273510    45676.022 ±  42.075  ns/op
+JDKCoordSetBench.bench                    MUL_HASH  COORD_UNIFORM  467505   10000        COPY  sample  317106    78868.591 ± 168.380  ns/op
+JDKCoordSetBench.bench                    MUL_HASH  COORD_UNIFORM  467505   10000    CONTAINS  sample  627509       44.118 ±   1.554  ns/op
+JDKCoordSetBench.bench                MUL_ALT_HASH  COORD_UNIFORM  467505   10000    POPULATE  sample   85093   294037.040 ± 478.285  ns/op
+JDKCoordSetBench.bench                MUL_ALT_HASH  COORD_UNIFORM  467505   10000     ITERATE  sample  469168    53291.766 ±  93.793  ns/op
+JDKCoordSetBench.bench                MUL_ALT_HASH  COORD_UNIFORM  467505   10000        COPY  sample  153165   163307.443 ± 276.122  ns/op
+JDKCoordSetBench.bench                MUL_ALT_HASH  COORD_UNIFORM  467505   10000    CONTAINS  sample  760317       52.651 ±   1.397  ns/op
+JDKCoordSetBench.bench                     RS_HASH  COORD_UNIFORM  467505   10000    POPULATE  sample   93192   268445.621 ± 365.935  ns/op
+JDKCoordSetBench.bench                     RS_HASH  COORD_UNIFORM  467505   10000     ITERATE  sample  307240    40678.118 ±  33.670  ns/op
+JDKCoordSetBench.bench                     RS_HASH  COORD_UNIFORM  467505   10000        COPY  sample  416173    60087.848 ± 105.072  ns/op
+JDKCoordSetBench.bench                     RS_HASH  COORD_UNIFORM  467505   10000    CONTAINS  sample  595066       41.971 ±   1.242  ns/op
+JDKCoordSetBench.bench                 RS_ALT_HASH  COORD_UNIFORM  467505   10000    POPULATE  sample   86251   290000.808 ± 465.472  ns/op
+JDKCoordSetBench.bench                 RS_ALT_HASH  COORD_UNIFORM  467505   10000     ITERATE  sample  487178    51315.231 ±  27.370  ns/op
+JDKCoordSetBench.bench                 RS_ALT_HASH  COORD_UNIFORM  467505   10000        COPY  sample  221721   112790.557 ± 169.461  ns/op
+JDKCoordSetBench.bench                 RS_ALT_HASH  COORD_UNIFORM  467505   10000    CONTAINS  sample  931587       47.129 ±   1.096  ns/op

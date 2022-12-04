@@ -30,7 +30,9 @@ public enum JDKCoordSetFact {
 	JDKGDXDS_HASH(() -> new ObjectSet<>(16, LoadFactor.LOAD_FACTOR)),
 	CANTOR_HASH(() -> new CantorCoordSet(16, LoadFactor.LOAD_FACTOR)),
 	MUL_HASH(() -> new MulCoordSet(16, LoadFactor.LOAD_FACTOR)),
+	MUL_ALT_HASH(() -> new MulAltCoordSet(16, LoadFactor.LOAD_FACTOR)),
 	RS_HASH(() -> new RSCoordSet(16, LoadFactor.LOAD_FACTOR)),
+	RS_ALT_HASH(() -> new RSAltCoordSet(16, LoadFactor.LOAD_FACTOR)),
 	;
 
 	public Supplier<Set<?>> maker;
