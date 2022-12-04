@@ -60,7 +60,7 @@ public class CantorCoordSet extends ObjectSet<Coord> {
     @Override
     protected int place(Object item) {
         final int x = ((Coord)item).x, y = ((Coord)item).y;
-        return y + ((x + y) * (x + y + 1) >> 1) & mask;
+        return y + ((x + y + 6) * (x + y + 7) >>> 1) & mask;
     }
 
     @Override
