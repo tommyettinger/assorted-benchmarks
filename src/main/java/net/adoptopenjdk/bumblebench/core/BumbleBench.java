@@ -110,7 +110,7 @@ public abstract class BumbleBench extends Util implements Runnable {
 
 	/** Handy helper to print a debug message in the appropriate way.
 	 *
-	 * Requires that {@link DEBUG} is true.  This forces the caller to check
+	 * Requires that {@link #DEBUG} is true.  This forces the caller to check
 	 * <code>DEBUG</code> before calling this method.  This design helps to avoid
 	 * accidentally executing the code to construct the message string itself
 	 * when <code>DEBUG</code> is false.  The usual idiom would be:
