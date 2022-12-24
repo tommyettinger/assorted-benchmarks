@@ -26,33 +26,36 @@ import com.github.tommyettinger.ds.ObjectObjectMap;
 import com.github.tommyettinger.ds.Utilities;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
+import java.util.Collection;
+import java.util.Map;
+
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * HotSpot Java 8:
  * <br>
- * KryoMoreReadBench score: 454.601227 (454.6 611.9%)
- *               uncertainty:   0.9%
+ * KryoMoreReadBench score: 459.841248 (459.8 613.1%)
+ *               uncertainty:   2.5%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * KryoMoreReadBench score: 303.595428 (303.6 571.6%)
+ * KryoMoreReadBench score: 307.733337 (307.7 572.9%)
  *               uncertainty:   0.2%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * KryoMoreReadBench score: 462.843842 (462.8 613.7%)
- *               uncertainty:   1.6%
+ * KryoMoreReadBench score: 459.402710 (459.4 613.0%)
+ *               uncertainty:   2.3%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * KryoMoreReadBench score: 432.686768 (432.7 607.0%)
- *               uncertainty:   0.6%
+ * KryoMoreReadBench score: 435.844788 (435.8 607.7%)
+ *               uncertainty:   0.2%
  * <br>
  * GraalVM Java 17:
  * <br>
- * KryoMoreReadBench score: 432.046844 (432.0 606.9%)
- *               uncertainty:   1.8%
+ * KryoMoreReadBench score: 437.515961 (437.5 608.1%)
+ *               uncertainty:   0.9
  * <br>
  * OpenJ9 Java 17 (Semeru):
  * <br>
@@ -60,13 +63,13 @@ import net.adoptopenjdk.bumblebench.core.MiniBench;
  * <br>
  * HotSpot Java 18 (Adoptium):
  * <br>
- * KryoMoreReadBench score: 420.508484 (420.5 604.1%)
- *               uncertainty:   1.1%
+ * KryoMoreReadBench score: 435.724854 (435.7 607.7%)
+ *               uncertainty:   2.6%
  * <br>
  * HotSpot Java 19 (BellSoft):
  * <br>
- * KryoMoreReadBench score: 393.339874 (393.3 597.5%)
- *               uncertainty:   2.9%
+ * KryoMoreReadBench score: 416.608795 (416.6 603.2%)
+ *               uncertainty:   2.7%
  */
 public final class KryoMoreReadBench extends MiniBench {
 	@Override
@@ -87,11 +90,21 @@ public final class KryoMoreReadBench extends MiniBench {
 			protected ObjectList create(Kryo kryo, Input input, Class type, int size) {
 				return new ObjectList(size);
 			}
+
+			@Override
+			protected ObjectList createCopy(Kryo kryo, Collection original) {
+				return new ObjectList(original.size());
+			}
 		});
 		kryo.register(ObjectObjectMap.class, new MapSerializer(){
 			@Override
 			protected ObjectObjectMap create(Kryo kryo, Input input, Class type, int size) {
-				return new ObjectObjectMap((int)(size / Utilities.getDefaultLoadFactor()+1), Utilities.getDefaultLoadFactor());
+				return new ObjectObjectMap(size, Utilities.getDefaultLoadFactor());
+			}
+
+			@Override
+			protected ObjectObjectMap createCopy(Kryo kryo, Map original) {
+				return new ObjectObjectMap(original.size());
 			}
 		});
 
