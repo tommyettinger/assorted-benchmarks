@@ -201,6 +201,15 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureGdxSinF       avgt   16   3.795 ± 0.073  ns/op
  * MathBenchmark.measureSquidSinF     avgt   16  10.366 ± 0.098  ns/op
  * </pre>
+ * Testing the embedded-systems sin() approximation by Andrew Steadman, it looks like floating-point math is comparably
+ * faster on PCs relative to tiny systems, enough so that the almost-all-int-math approximation is a bit slower than
+ * the Bhaskara I-based approximation. Steadman's is also a tiny bit less accurate, sadly, so no win for it here.
+ * <pre>
+ * Benchmark                          Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureBhaskaraSinF  avgt    5  7.226 ± 0.156  ns/op
+ * MathBenchmark.measureGdxSinF       avgt    5  3.749 ± 0.249  ns/op
+ * MathBenchmark.measureSteadmanSinF  avgt    5  8.633 ± 0.151  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -249,6 +258,7 @@ public class MathBenchmark {
     private int cosWallace = -0x8000;
     private int sinWallace = -0x8000;
     private int sinBhaskara = -0x8000;
+    private int sinSteadman = -0x8000;
     private int mathCosDeg = -0x8000;
     private int mathSinDeg = -0x8000;
     private int sinNickDeg = -0x8000;
@@ -641,6 +651,12 @@ public class MathBenchmark {
     public float measureBhaskaraSinF()
     {
         return NumberTools2.sinBhaskaroid(floatInputs[sinBhaskara++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public float measureSteadmanSinF()
+    {
+        return NumberTools2.sinSteadman(floatInputs[sinSteadman++ & 0xFFFF]);
     }
 
     @Benchmark

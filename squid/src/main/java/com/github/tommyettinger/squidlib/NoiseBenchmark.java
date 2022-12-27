@@ -397,7 +397,7 @@ public class NoiseBenchmark {
     private final Noise squad = new Noise(12345),
             squad3 = new Noise(12345), squad5 = new Noise(12345),
             squadFoam = new Noise(12345), squadPerlin = new Noise(12345),
-            squadFlan = new Noise(12345), squadTaffy = new Noise(12345);
+            squadTaffy = new Noise(12345);
     private final VastNoise vast = new VastNoise(12345);
     private final XastNoise xast = new XastNoise(12345);
     private final FoamNoise foam = new FoamNoise(12345);
@@ -424,8 +424,6 @@ public class NoiseBenchmark {
         squadFoam.setNoiseType(Noise.FOAM);
         squadPerlin.setFractalOctaves(1);
         squadPerlin.setNoiseType(Noise.PERLIN);
-        squadFlan.setFractalOctaves(1);
-        squadFlan.setNoiseType(Noise.FLAN);
         squadTaffy.setFractalOctaves(1);
         squadTaffy.setNoiseType(Noise.TAFFY);
 
@@ -990,25 +988,6 @@ public class NoiseBenchmark {
     @Benchmark
     public float measureSquadPerlinNoise6D() { return squadPerlin.getPerlin(++x, --y, z++, w--, ++u, ++v); }
 
-
-    @Benchmark
-    public float measureSquadFlanNoise2D() { return squadFlan.getFlan(++x, --y); }
-
-    @Benchmark
-    public float measureSquadFlanNoise3D() { return squadFlan.getFlan(++x, --y, z++);
-    }
-
-    @Benchmark
-    public float measureSquadFlanNoise4D() { return squadFlan.getFlan(++x, --y, z++, w--);
-    }
-
-    @Benchmark
-    public float measureSquadFlanNoise5D() { return squadFlan.getFlan(++x, --y, z++, w--, ++u);
-    }
-
-    @Benchmark
-    public float measureSquadFlanNoise6D() { return squadFlan.getFlan(++x, --y, z++, w--, ++u, ++v); }
-    
 
     @Benchmark
     public float measureSquadTaffyNoise2D() { return squadTaffy.getTaffy(++x, --y); }
