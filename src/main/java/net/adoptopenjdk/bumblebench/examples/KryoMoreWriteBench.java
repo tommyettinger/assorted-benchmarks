@@ -33,34 +33,36 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * HotSpot Java 8:
  * <br>
- * KryoMoreWriteBench score: 466.033508 (466.0 614.4%)
- *                uncertainty:   2.3%
+ * KryoMoreWriteBench score: 421.100128 (421.1 604.3%)
+ *                uncertainty:   1.5%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * KryoMoreWriteBench score: 355.941071 (355.9 587.5%)
- *                uncertainty:   1.6%
+ * KryoMoreWriteBench score: 349.401306 (349.4 585.6%)
+ *                uncertainty:   2.5%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * KryoMoreWriteBench score: 440.114502 (440.1 608.7%)
- *                uncertainty:   2.2%
+ * KryoMoreWriteBench score: 433.209595 (433.2 607.1%)
+ *                uncertainty:   1.9%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * KryoMoreWriteBench score: 422.688416 (422.7 604.7%)
- *                uncertainty:   8.5%
+ * KryoMoreWriteBench score: 428.985321 (429.0 606.1%)
+ *                uncertainty:   2.0%
  * <br>
  * GraalVM Java 17:
  * <br>
- * KryoMoreWriteBench score: 435.889465 (435.9 607.7%)
- *                uncertainty:   2.6%
+ * KryoMoreWriteBench score: 441.461853 (441.5 609.0%)
+ *                uncertainty:   2.1%
  * <br>
  * OpenJ9 Java 17 (Semeru):
  * <br>
@@ -68,13 +70,13 @@ import java.nio.file.Paths;
  * <br>
  * HotSpot Java 18 (Adoptium):
  * <br>
- * KryoMoreWriteBench score: 409.629669 (409.6 601.5%)
- *                uncertainty:   4.5%
+ * KryoMoreWriteBench score: 389.832520 (389.8 596.6%)
+ *                uncertainty:   7.9%
  * <br>
  * HotSpot Java 19 (BellSoft):
  * <br>
- * KryoMoreWriteBench score: 416.224670 (416.2 603.1%)
- *                uncertainty:   0.6%
+ * KryoMoreWriteBench score: 410.989960 (411.0 601.9%)
+ *                uncertainty:   2.2%
  */
 public final class KryoMoreWriteBench extends MiniBench {
 	@Override
@@ -109,11 +111,21 @@ public final class KryoMoreWriteBench extends MiniBench {
 			protected ObjectList create(Kryo kryo, Input input, Class type, int size) {
 				return new ObjectList(size);
 			}
+
+			@Override
+			protected ObjectList createCopy(Kryo kryo, Collection original) {
+				return new ObjectList(original.size());
+			}
 		});
 		kryo.register(ObjectObjectMap.class, new MapSerializer(){
 			@Override
 			protected ObjectObjectMap create(Kryo kryo, Input input, Class type, int size) {
-				return new ObjectObjectMap((int)(size / Utilities.getDefaultLoadFactor()+1), Utilities.getDefaultLoadFactor());
+				return new ObjectObjectMap(size, Utilities.getDefaultLoadFactor());
+			}
+
+			@Override
+			protected ObjectObjectMap createCopy(Kryo kryo, Map original) {
+				return new ObjectObjectMap(original.size());
 			}
 		});
 
@@ -168,11 +180,21 @@ public final class KryoMoreWriteBench extends MiniBench {
 			protected ObjectList create(Kryo kryo, Input input, Class type, int size) {
 				return new ObjectList(size);
 			}
+
+			@Override
+			protected ObjectList createCopy(Kryo kryo, Collection original) {
+				return new ObjectList(original.size());
+			}
 		});
 		kryo.register(ObjectObjectMap.class, new MapSerializer(){
 			@Override
 			protected ObjectObjectMap create(Kryo kryo, Input input, Class type, int size) {
-				return new ObjectObjectMap((int)(size / Utilities.getDefaultLoadFactor()+1), Utilities.getDefaultLoadFactor());
+				return new ObjectObjectMap(size, Utilities.getDefaultLoadFactor());
+			}
+
+			@Override
+			protected ObjectObjectMap createCopy(Kryo kryo, Map original) {
+				return new ObjectObjectMap(original.size());
 			}
 		});
 
