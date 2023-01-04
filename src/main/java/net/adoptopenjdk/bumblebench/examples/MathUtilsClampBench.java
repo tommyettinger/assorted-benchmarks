@@ -19,20 +19,42 @@ import com.github.tommyettinger.random.LaserRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
- * New laptop; Windows 10, 10th generation i7, Java 8 HotSpot
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * MathUtilsClampBench score: 22799.572266 (22.80K 1003.4%)
- *                 uncertainty:   2.0%
+ * HotSpot Java 8:
  * <br>
- * New laptop; Windows 10, 10th generation i7, Java 15 HotSpot
+ * MathUtilsClampBench score: 22488.412109 (22.49K 1002.1%)
+ *                 uncertainty:   1.2%
  * <br>
- *  MathUtilsClampBench score: 22622.697266 (22.62K 1002.7%)
- *                 uncertainty:   0.5%
+ * OpenJ9 Java 15:
  * <br>
- * New laptop; Windows 10, 10th generation i7, Java 15 OpenJ9
+ * MathUtilsClampBench score: 21218.283203 (21.22K 996.3%)
+ *                 uncertainty:   1.1%
  * <br>
- *  MathUtilsClampBench score: 21892.371094 (21.89K 999.4%)
- *                 uncertainty:   1.7%
+ * HotSpot Java 16 (AdoptOpenJDK):
+ * <br>
+ * MathUtilsClampBench score: 22937.181641 (22.94K 1004.1%)
+ *                 uncertainty:   1.2%
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ * MathUtilsClampBench score: 22682.332031 (22.68K 1002.9%)
+ *                 uncertainty:   2.5%
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ * MathUtilsClampBench score: 23164.152344 (23.16K 1005.0%)
+ *                 uncertainty:   0.9%
+ * <br>
+ * HotSpot Java 18 (Adoptium):
+ * <br>
+ * MathUtilsClampBench score: 22670.197266 (22.67K 1002.9%)
+ *                 uncertainty:   0.9%
+ * <br>
+ * HotSpot Java 19 (BellSoft):
+ * <br>
+ * MathUtilsClampBench score: 23669.816406 (23.67K 1007.2%)
+ *                 uncertainty:   1.4%
  */
 public final class MathUtilsClampBench extends MicroBench {
 
@@ -54,3 +76,19 @@ public final class MathUtilsClampBench extends MicroBench {
 		return numIterations;
 	}
 }
+/* Old!
+ * New laptop; Windows 10, 10th generation i7, Java 8 HotSpot
+ * <br>
+ * MathUtilsClampBench score: 22799.572266 (22.80K 1003.4%)
+ *                 uncertainty:   2.0%
+ * <br>
+ * New laptop; Windows 10, 10th generation i7, Java 15 HotSpot
+ * <br>
+ *  MathUtilsClampBench score: 22622.697266 (22.62K 1002.7%)
+ *                 uncertainty:   0.5%
+ * <br>
+ * New laptop; Windows 10, 10th generation i7, Java 15 OpenJ9
+ * <br>
+ *  MathUtilsClampBench score: 21892.371094 (21.89K 999.4%)
+ *                 uncertainty:   1.7%
+ */
