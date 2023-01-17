@@ -23,10 +23,7 @@ eclipse.project.name = appName + '-lwjgl3'
 sourceCompatibility = 11
 
 dependencies {
-  implementation ("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"){
-    exclude group: "org.jcraft", module: "jorbis"
-    exclude group: "org.lwjgl", module: "lwjgl-openal"
-  }
+  implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   implementation project(':core')
 }
@@ -45,7 +42,7 @@ run {
 
 jar {
 // sets the name of the .jar file this produces to the name of the game or app.
-  archiveBaseName.set("Anim8GifWrite")
+  archiveBaseName.set("Anim8GifWriteThreaded")
 // using 'lib' instead of the default 'libs' appears to be needed by jpackageimage.
   destinationDirectory = file("$project.buildDir/lib")
 // the duplicatesStrategy matters starting in Gradle 7.0; this setting works.
