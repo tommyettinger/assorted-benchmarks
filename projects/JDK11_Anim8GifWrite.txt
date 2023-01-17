@@ -1,0 +1,13 @@
+Took 2 ms to construct an AnimatedGif
+Took 143 ms to load the Array of Pixmap
+Took 72 ms to configure
+Took 1585 ms to write Scatter
+Took 1709 ms to write Neue
+Took 1056 ms to write Gradient
+Took 1058 ms to write Roberts
+Took 762 ms to write None
+Took 7905 ms to write Pattern
+Took 1503 ms to write Diffusion
+Took 1082 ms to write BlueNoise
+Took 1050 ms to write ChaoticNoise
+Took 17944 ms total

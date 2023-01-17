@@ -38,7 +38,7 @@ public class Main extends ApplicationAdapter {
         namePalette = name;
         subTime = TimeUtils.millis();
         gif.setPalette(new PaletteReducer());
-        gif.setFlipY(false);
+        gif.setFlipY(true);
         System.out.println("Took " + (TimeUtils.millis() - subTime) + " ms to configure");
 
         subTime = TimeUtils.millis();
@@ -87,6 +87,7 @@ public class Main extends ApplicationAdapter {
         System.out.println("Took " + (TimeUtils.millis() - subTime) + " ms to write ChaoticNoise");
 
         System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms total");
+        Gdx.files.local("tmp/imagesClean").deleteDirectory();
         Gdx.app.exit();
     }
 

@@ -23,7 +23,10 @@ eclipse.project.name = appName + '-lwjgl3'
 sourceCompatibility = 11
 
 dependencies {
-  implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+  implementation ("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"){
+    exclude group: "org.jcraft", module: "jorbis"
+    exclude group: "org.lwjgl", module: "lwjgl-openal"
+  }
   implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
   implementation project(':core')
 }
