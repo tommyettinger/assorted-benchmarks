@@ -45,7 +45,7 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if(numWritten == 256 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " GIFs.");
             Gdx.files.local("tmp/imagesClean").deleteDirectory();
             Gdx.app.exit();

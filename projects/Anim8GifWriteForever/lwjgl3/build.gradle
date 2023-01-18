@@ -34,7 +34,7 @@ dependencies {
 def os = System.properties['os.name'].toLowerCase()
 
 run {
-  workingDir = rootProject.file('assets').path
+  workingDir = rootProject.file('.').path
   setIgnoreExitValue(true)
 
   if (os.contains('mac')) {
@@ -45,7 +45,7 @@ run {
 
 jar {
 // sets the name of the .jar file this produces to the name of the game or app.
-  archiveBaseName.set("Anim8GifWrite")
+  archiveBaseName.set("Anim8GifWriteForever")
 // using 'lib' instead of the default 'libs' appears to be needed by jpackageimage.
   destinationDirectory = file("$project.buildDir/lib")
 // the duplicatesStrategy matters starting in Gradle 7.0; this setting works.
