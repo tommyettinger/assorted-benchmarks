@@ -11,7 +11,12 @@ import com.github.tommyettinger.anim8.AnimatedGif;
 import com.github.tommyettinger.anim8.Dithered;
 import com.github.tommyettinger.anim8.PaletteReducer;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+/**
+ * Running for 64 iterations of Neue on Java 19:
+ * <pre>
+ *     Took 99847 ms to write 64 GIFs.
+ * </pre>
+ */
 public class Main extends ApplicationAdapter {
     private static final String name = "market";
     AnimatedGif gif;
@@ -35,7 +40,7 @@ public class Main extends ApplicationAdapter {
         gif.setPalette(new PaletteReducer());
         gif.setFlipY(true);
 
-        gif.setDitherAlgorithm(Dithered.DitherAlgorithm.SCATTER);
+        gif.setDitherAlgorithm(Dithered.DitherAlgorithm.NEUE);
         startTime = TimeUtils.millis();
     }
 
@@ -45,7 +50,7 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
-        if(numWritten == 256 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if(numWritten == 64 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " GIFs.");
             Gdx.files.local("tmp/imagesClean").deleteDirectory();
             Gdx.app.exit();
