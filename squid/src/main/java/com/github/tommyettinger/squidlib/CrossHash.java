@@ -11771,4 +11771,61 @@ public class CrossHash {
             return (int)(h ^ h >>> 31);
         }
     }
+
+    /**
+     * From <a href="https://richardstartin.github.io/posts/collecting-rocks-and-benchmarks">Richard Startin's blog</a>,
+     * originally by Peter Levart.
+     */
+    public static final class Levart {
+        public static int hash_31(CharSequence data) {
+            if (data == null)
+                return 0;
+
+            int result = 1;
+            int i = 0;
+            int len = data.length();
+            int low = len - 7;
+            for (; i < low; i += 8) {
+                result = 31 * 31 * 31 * 31 * 31 * 31 * 31 * 31 * result
+                        + 31 * 31 * 31 * 31 * 31 * 31 * 31 * data.charAt(i)
+                        + 31 * 31 * 31 * 31 * 31 * 31 * data.charAt(i + 1)
+                        + 31 * 31 * 31 * 31 * 31 * data.charAt(i + 2)
+                        + 31 * 31 * 31 * 31 * data.charAt(i + 3)
+                        + 31 * 31 * 31 * data.charAt(i + 4)
+                        + 31 * 31 * data.charAt(i + 5)
+                        + 31 * data.charAt(i + 6)
+                        + data.charAt(i + 7)
+                ;
+            }
+            for (; i < len; i++) {
+                result = 31 * result + data.charAt(i);
+            }
+            return result;
+        }
+        public static int hash_109(CharSequence data) {
+            if (data == null)
+                return 0;
+
+            int i = 0;
+            int len = data.length();
+            int low = len - 7;
+            int result = ~len;
+            for (; i < low; i += 8) {
+                result = 109 * 109 * 109 * 109 * 109 * 109 * 109 * 109 * result
+                        + 109 * 109 * 109 * 109 * 109 * 109 * 109 * data.charAt(i)
+                        + 109 * 109 * 109 * 109 * 109 * 109 * data.charAt(i + 1)
+                        + 109 * 109 * 109 * 109 * 109 * data.charAt(i + 2)
+                        + 109 * 109 * 109 * 109 * data.charAt(i + 3)
+                        + 109 * 109 * 109 * data.charAt(i + 4)
+                        + 109 * 109 * data.charAt(i + 5)
+                        + 109 * data.charAt(i + 6)
+                        + data.charAt(i + 7)
+                ;
+            }
+            for (; i < len; i++) {
+                result = 109 * result + data.charAt(i);
+            }
+            return result;
+        }
+    }
 }

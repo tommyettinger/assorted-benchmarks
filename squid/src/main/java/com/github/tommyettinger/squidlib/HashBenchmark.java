@@ -704,6 +704,7 @@ public class HashBenchmark {
 
         @Param({ "5", "10", "20", "40", "80", "160" })
         public int len;
+        public String[] strings;
         public CharSequence[] words;
         public char[][] chars;
         public long[][] longs;
@@ -768,6 +769,7 @@ public class HashBenchmark {
             for (int i = 0; i < 16; i++) {
                 languages[i] = FakeLanguageGen.randomLanguage(random.nextLong()).addAccents(0.8, 0.6);
             }
+            strings = new String[4096];
             words = new CharSequence[4096];
             chars = new char[4096][];
             longs = new long[4096][];
@@ -778,6 +780,7 @@ public class HashBenchmark {
             }
             for (int i = 0; i < 4096; i++) {
                 String w = languages[i & 15].sentence(random.nextLong(), random.next(3) + 1, random.next(6)+9);
+                strings[i] = w;
                 chars[i] = w.toCharArray();
                 words[i] = new StringBuilder(w);
                 //final int len = (random.next(8)+1);
@@ -1387,6 +1390,18 @@ public class HashBenchmark {
     public int doDoubleJDK32Mixed(BenchmarkState state)
     {
         return HashCommon.mix(Arrays.hashCode(state.doubles[state.idx = state.idx + 1 & 4095]));
+    }
+
+    @Benchmark
+    public int doLevartA32(BenchmarkState state)
+    {
+        return CrossHash.Levart.hash_31(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doLevartB32(BenchmarkState state)
+    {
+        return CrossHash.Levart.hash_109(state.words[state.idx = state.idx + 1 & 4095]);
     }
 
 //    public int ixsHash(int x, int y, int z){
