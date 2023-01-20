@@ -11781,10 +11781,10 @@ public class CrossHash {
             if (data == null)
                 return 0;
 
-            int result = 1;
             int i = 0;
             int len = data.length();
             int low = len - 7;
+            int result = ~len;
             for (; i < low; i += 8) {
                 result = 31 * 31 * 31 * 31 * 31 * 31 * 31 * 31 * result
                         + 31 * 31 * 31 * 31 * 31 * 31 * 31 * data.charAt(i)
@@ -11799,6 +11799,31 @@ public class CrossHash {
             }
             for (; i < len; i++) {
                 result = 31 * result + data.charAt(i);
+            }
+            return result;
+        }
+        public static int hash_31(String[] data) {
+            if (data == null)
+                return 0;
+
+            int i = 0;
+            int len = data.length;
+            int low = len - 7;
+            int result = ~len;
+            for (; i < low; i += 8) {
+                result = 31 * 31 * 31 * 31 * 31 * 31 * 31 * 31 * result
+                        + 31 * 31 * 31 * 31 * 31 * 31 * 31 * hash_31(data[i])
+                        + 31 * 31 * 31 * 31 * 31 * 31 * hash_31(data[i + 1])
+                        + 31 * 31 * 31 * 31 * 31 * hash_31(data[i + 2])
+                        + 31 * 31 * 31 * 31 * hash_31(data[i + 3])
+                        + 31 * 31 * 31 * hash_31(data[i + 4])
+                        + 31 * 31 * hash_31(data[i + 5])
+                        + 31 * hash_31(data[i + 6])
+                        + hash_31(data[i + 7])
+                ;
+            }
+            for (; i < len; i++) {
+                result = 31 * result + hash_31(data[i]);
             }
             return result;
         }
@@ -11824,6 +11849,31 @@ public class CrossHash {
             }
             for (; i < len; i++) {
                 result = 109 * result + data.charAt(i);
+            }
+            return result;
+        }
+        public static int hash_109(String[] data) {
+            if (data == null)
+                return 0;
+
+            int i = 0;
+            int len = data.length;
+            int low = len - 7;
+            int result = ~len;
+            for (; i < low; i += 8) {
+                result = 109 * 109 * 109 * 109 * 109 * 109 * 109 * 109 * result
+                        + 109 * 109 * 109 * 109 * 109 * 109 * 109 * hash_109(data[i])
+                        + 109 * 109 * 109 * 109 * 109 * 109 * hash_109(data[i + 1])
+                        + 109 * 109 * 109 * 109 * 109 * hash_109(data[i + 2])
+                        + 109 * 109 * 109 * 109 * hash_109(data[i + 3])
+                        + 109 * 109 * 109 * hash_109(data[i + 4])
+                        + 109 * 109 * hash_109(data[i + 5])
+                        + 109 * hash_109(data[i + 6])
+                        + hash_109(data[i + 7])
+                ;
+            }
+            for (; i < len; i++) {
+                result = 109 * result + hash_109(data[i]);
             }
             return result;
         }

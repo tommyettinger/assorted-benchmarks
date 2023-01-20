@@ -2,7 +2,7 @@ package de.heidelberg.pvs.container_bench.generators;
 
 import com.github.tommyettinger.ds.ObjectList;
 import com.github.tommyettinger.ds.ObjectOrderedSet;
-import com.github.tommyettinger.random.TrimRandom;
+import com.github.tommyettinger.random.WhiskerRandom;
 
 import java.io.*;
 import java.util.*;
@@ -13,12 +13,11 @@ public class Wordlist {
 	private static final int DEFAULT_SEED = -1;
 
 	/** File name of our input data. */
-	public static final String FILENAME = "word_list.txt.gz";
+	public static final String FILENAME = "../res/word_list.txt";
 
 	public static List<String> loadWords(int size, int seed) throws IOException {
 		// Load the word list
-		try (InputStream is = new FileInputStream(FILENAME);
-			InputStream gi = new GZIPInputStream(is);
+		try (InputStream gi = new FileInputStream(FILENAME);
 			Reader r = new InputStreamReader(gi);
 			BufferedReader reader = new BufferedReader(r)) {
 
@@ -48,7 +47,7 @@ public class Wordlist {
 			}
 
 			if (seed != DEFAULT_SEED) {
-				final TrimRandom rng = new TrimRandom(seed);
+				final WhiskerRandom rng = new WhiskerRandom(seed);
 				final int n = words.size();
 				for (int i = n; i > 1; i--) {
 					Collections.swap(words, rng.nextInt(i), i - 1);
@@ -62,8 +61,7 @@ public class Wordlist {
 	public static ObjectOrderedSet<String> loadWordSet(int size, int seed) throws IOException {
 
 		// Load the word list
-		try (InputStream is = new FileInputStream(FILENAME);
-			InputStream gi = new GZIPInputStream(is);
+		try (InputStream gi = new FileInputStream(FILENAME);
 			Reader r = new InputStreamReader(gi);
 			BufferedReader reader = new BufferedReader(r)) {
 			
@@ -75,16 +73,15 @@ public class Wordlist {
 			}
 			final int n = words.size();
 			if (seed != DEFAULT_SEED) {
-				final TrimRandom rng = new TrimRandom(seed);
+				final WhiskerRandom rng = new WhiskerRandom(seed);
 				for (int i = n; i > 1; i--) {
 					Collections.swap(words, rng.nextInt(i), i - 1);
 				}
 			}
 			ObjectOrderedSet<String> set = new ObjectOrderedSet<>(size);
-			for (int i = 0; set.size() < size;) {
+			for (; set.size() < size;) {
 				for (int j = 0; j < n && set.size() < size; j++) {
 					set.add(words.get(j));
-					i++;
 				}
 			}
 			return set;
@@ -94,8 +91,7 @@ public class Wordlist {
 	public static ObjectOrderedSet<String> loadUniqueWords(int size, int seed) throws IOException {
 
 		// Load the word list
-		try (InputStream is = new FileInputStream(FILENAME);
-			InputStream gi = new GZIPInputStream(is);
+		try (InputStream gi = new FileInputStream(FILENAME);
 			Reader r = new InputStreamReader(gi);
 			BufferedReader reader = new BufferedReader(r)) {
 
@@ -107,7 +103,7 @@ public class Wordlist {
 			}
 			final int n = words.size();
 			if (seed != DEFAULT_SEED) {
-				final TrimRandom rng = new TrimRandom(seed);
+				final WhiskerRandom rng = new WhiskerRandom(seed);
 				words.shuffle(rng);
 			}
 			ObjectOrderedSet<String> set = new ObjectOrderedSet<>(size);

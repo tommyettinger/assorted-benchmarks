@@ -31,7 +31,10 @@
 
 package com.github.tommyettinger.squidlib;
 
+import com.github.tommyettinger.ds.ObjectList;
+import com.github.tommyettinger.ds.ObjectOrderedSet;
 import com.github.tommyettinger.random.WhiskerRandom;
+import de.heidelberg.pvs.container_bench.generators.Wordlist;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -42,6 +45,7 @@ import squidpony.FakeLanguageGen;
 import squidpony.squidmath.HashCommon;
 import squidpony.squidmath.MiniMover64RNG;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
@@ -692,6 +696,15 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doYolk32              500  avgt    5   58.854 ±   1.512  ns/op
  * HashBenchmark.doYolk64              500  avgt    5   59.665 ±   6.241  ns/op
  * </pre>
+ * <br>
+ * There is no beating a precomputed hashCode() on speed.
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt    Score    Error  Units
+ * HashBenchmark.doStringsJDK32         32  avgt    5   36.194 ±  3.742  ns/op
+ * HashBenchmark.doStringsLevartA32     32  avgt    5  702.059 ± 22.347  ns/op
+ * HashBenchmark.doStringsLevartB32     32  avgt    5  697.498 ± 28.563  ns/op
+ * HashBenchmark.doStringsYolk32        32  avgt    5  970.109 ± 74.922  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -704,7 +717,7 @@ public class HashBenchmark {
 
         @Param({ "5", "10", "20", "40", "80", "160" })
         public int len;
-        public String[] strings;
+        public String[][] strings;
         public CharSequence[] words;
         public char[][] chars;
         public long[][] longs;
@@ -714,54 +727,6 @@ public class HashBenchmark {
         private final int[] intInputs = new int[65536];
         private final long[] longInputs = new long[65536];
 
-//        @Benchmark
-//        public long measurePointHash2D()
-//        {
-//            return PointHash.hashAll(longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)]);
-//        }
-//
-//        @Benchmark
-//        public long measurePointHash3D()
-//        {
-//            return PointHash.hashAll(longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)]);
-//        }
-//
-//        @Benchmark
-//        public long measurePointHash4D()
-//        {
-//            return PointHash.hashAll(longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)]);
-//        }
-//
-//        @Benchmark
-//        public long measurePointHash6D()
-//        {
-//            return PointHash.hashAll(longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)], longInputs[(idx++ & 0xFFFF)]);
-//        }
-//
-//        @Benchmark
-//        public long measureHastyPointHash2D()
-//        {
-//            return HastyPointHash.hashAll(intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)]);
-//        }
-//
-//        @Benchmark
-//        public long measureHastyPointHash3D()
-//        {
-//            return HastyPointHash.hashAll(intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)]);
-//        }
-//
-//        @Benchmark
-//        public long measureHastyPointHash4D()
-//        {
-//            return HastyPointHash.hashAll(intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)]);
-//        }
-//
-//        @Benchmark
-//        public long measureHastyPointHash6D()
-//        {
-//            return HastyPointHash.hashAll(intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)], intInputs[(idx++ & 0xFFFF)]);
-//        }
-
         @Setup(Level.Trial)
         public void setup() {
             WhiskerRandom random = new WhiskerRandom(1000L);
@@ -769,7 +734,7 @@ public class HashBenchmark {
             for (int i = 0; i < 16; i++) {
                 languages[i] = FakeLanguageGen.randomLanguage(random.nextLong()).addAccents(0.8, 0.6);
             }
-            strings = new String[4096];
+            strings = new String[4096][len];
             words = new CharSequence[4096];
             chars = new char[4096][];
             longs = new long[4096][];
@@ -778,9 +743,17 @@ public class HashBenchmark {
             for (int i = 0; i < 65536; i++) {
                 intInputs[i] = (int)(longInputs[i] = random.nextLong());
             }
+            try {
+                // 235971 is the number of words in the word list.
+                ObjectList<String> wordSet = Wordlist.loadWordSet(4096 + len, len).order();
+                for (int i = 0; i < 4096; i++) {
+                    wordSet.subList(i, i+len).toArray(strings[i]);
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             for (int i = 0; i < 4096; i++) {
                 String w = languages[i & 15].sentence(random.nextLong(), random.next(3) + 1, random.next(6)+9);
-                strings[i] = w;
                 chars[i] = w.toCharArray();
                 words[i] = new StringBuilder(w);
                 //final int len = (random.next(8)+1);
@@ -1102,6 +1075,12 @@ public class HashBenchmark {
     }
 
     @Benchmark
+    public int doStringsYolk32(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hash(state.strings[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
     public long doCharYolk64(BenchmarkState state)
     {
         return CrossHash.Yolk.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
@@ -1340,6 +1319,12 @@ public class HashBenchmark {
     }
 
     @Benchmark
+    public int doStringsJDK32(BenchmarkState state)
+    {
+        return Arrays.hashCode(state.strings[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
     public int doJDK32Mixed(BenchmarkState state)
     {
         return HashCommon.mix(hashCode(state.words[state.idx = state.idx + 1 & 4095]));
@@ -1399,9 +1384,21 @@ public class HashBenchmark {
     }
 
     @Benchmark
+    public int doStringsLevartA32(BenchmarkState state)
+    {
+        return CrossHash.Levart.hash_31(state.strings[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
     public int doLevartB32(BenchmarkState state)
     {
         return CrossHash.Levart.hash_109(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doStringsLevartB32(BenchmarkState state)
+    {
+        return CrossHash.Levart.hash_109(state.strings[state.idx = state.idx + 1 & 4095]);
     }
 
 //    public int ixsHash(int x, int y, int z){

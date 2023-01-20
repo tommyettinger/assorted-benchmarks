@@ -32,10 +32,13 @@ description = """Benchmarks for Java containers"""
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
-sourceSets.main.resources.srcDirs = [ file('src/main/resources').path ]
-sourceSets.test.resources.srcDirs = [ file('src/main/resources').path ]
-
+sourceSets.main.resources.srcDirs += [ file('src/main/resources').path ]
+sourceSets.test.resources.srcDirs += [ file('src/main/resources').path ]
+processResources {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+}
 shadowJar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     destinationDirectory = project.rootDir
     archiveFileName.set("benchmarks.jar")
     classifier = 'benchmarks'

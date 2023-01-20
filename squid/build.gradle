@@ -14,8 +14,8 @@ plugins {
     id "com.github.johnrengelman.shadow" version "5.2.0"
     id 'com.github.ben-manes.versions' version '0.27.0' // for "gradlew dependencyUpdates -Drevision=release"
 }
-sourceSets.main.resources.srcDirs = [ file('src/main/resources').path ]
-sourceSets.test.resources.srcDirs = [ file('src/main/resources').path ]
+sourceSets.main.resources.srcDirs += [ file('src/main/resources').path ]
+sourceSets.test.resources.srcDirs += [ file('src/main/resources').path ]
 
 repositories {
     mavenLocal()
@@ -34,8 +34,11 @@ description = """Benchmarks for SquidLib-related code"""
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
-
+processResources {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+}
 shadowJar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     destinationDirectory = project.rootDir
     archiveFileName = 'benchmarks.jar'
     archiveClassifier.set("benchmarks")
