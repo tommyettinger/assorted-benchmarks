@@ -15,9 +15,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Running for 64 iterations of Neue on Java 19:
+ * Running for 64 iterations on Java 19:
  * <pre>
- *     Took 147059 ms to write 64 GIFs.
+ *     Took 147059 ms to write 64 GIFs using NEUE
+ *     Took 138949 ms to write 64 GIFs using PATTERN
  * </pre>
  */
 public class Main extends ApplicationAdapter {
@@ -27,6 +28,19 @@ public class Main extends ApplicationAdapter {
     int numWritten = 0;
     int fps = 17;
     long startTime;
+    Dithered.DitherAlgorithm dither = Dithered.DitherAlgorithm.NEUE;
+
+    public Main(String algorithm) {
+        try {
+            dither = Dithered.DitherAlgorithm.valueOf(algorithm);
+        } catch(IllegalArgumentException e) {
+            System.out.println("Invalid algorithm. Valid choices are:");
+            for(Dithered.DitherAlgorithm d : Dithered.DitherAlgorithm.values()) {
+                System.out.println(d.name());
+            }
+            System.exit(1);
+        }
+    }
 
     @Override
     public void create() {
@@ -44,7 +58,7 @@ public class Main extends ApplicationAdapter {
         gif.setPalette(new PaletteReducer());
         gif.setFlipY(true);
 
-        gif.setDitherAlgorithm(Dithered.DitherAlgorithm.NEUE);
+        gif.setDitherAlgorithm(dither);
         startTime = TimeUtils.millis();
     }
 
@@ -55,7 +69,7 @@ public class Main extends ApplicationAdapter {
     @Override
     public void render() {
         if(numWritten == 64 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " GIFs.");
+            System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " GIFs using " + dither.name());
             Gdx.files.local("tmp/imagesClean").deleteDirectory();
             Gdx.app.exit();
         }
