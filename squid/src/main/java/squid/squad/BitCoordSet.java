@@ -1,8 +1,8 @@
 package squid.squad;
 
 import com.github.yellowstonegames.grid.Coord;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public class BitCoordSet extends AbstractCollection<Coord> {

@@ -1,8 +1,8 @@
 package com.github.tommyettinger.squidlib;
 
 import com.github.tommyettinger.ds.ObjectOrderedSet;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 
 /**
@@ -53,7 +53,7 @@ public class OrderedSetX<T> extends ObjectOrderedSet<T> {
 	 * @param item a non-null Object; its hashCode() method should be used by most implementations.
 	 */
 	@Override
-	protected int place(@Nonnull Object item) {
+	protected int place(@NonNull Object item) {
 		return item.hashCode() & mask;
 	}
 }

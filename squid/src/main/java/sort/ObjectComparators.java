@@ -18,8 +18,8 @@
 package sort;
 
 import com.github.tommyettinger.function.ObjToFloatFunction;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;

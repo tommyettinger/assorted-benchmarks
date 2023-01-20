@@ -17,9 +17,9 @@
 
 package sort;
 
-import javax.annotation.Nullable;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import java.util.Comparator;
-import java.util.List;
 
 public final class SortingNetwork {
 	private SortingNetwork() {
@@ -569,7 +569,7 @@ public final class SortingNetwork {
 			throw new UnsupportedOperationException("The given from/to range in Comparators.sort() is invalid.");
 		}
 		if (c == null) {
-			sort(items, from, to, (Comparator<K>)Comparator.naturalOrder());
+			sort(items, from, to, (Comparator<? super K>) Comparator.naturalOrder());
 			return;
 		}
 		/*
