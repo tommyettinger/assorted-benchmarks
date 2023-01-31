@@ -18,7 +18,8 @@ package com.github.tommyettinger.squidlib;
 import com.github.tommyettinger.digital.TrigTools;
 
 import static com.badlogic.gdx.math.MathUtils.PI;
-import static com.github.tommyettinger.digital.TrigTools.HALF_PI;
+import static com.github.tommyettinger.digital.TrigTools.*;
+import static com.github.tommyettinger.digital.TrigTools.SIN_TABLE;
 
 /**
  * Math helper functions.
@@ -778,6 +779,14 @@ public final class NumberTools2 {
         y = (y+(1<<(q-a-1)))>>>(q-a); // Rounding
 
         return (y + c ^ c) * 0x1p-12f;
+    }
+
+    public static float sinLerp(float radians) {
+        radians *= radToIndex;
+        final int floor = (int)(radians + 16384.0) - 16384;
+        final int masked = floor & TABLE_MASK;
+        final float from = SIN_TABLE[masked], to = SIN_TABLE[masked+1];
+        return from + (to - from) * (radians - floor);
     }
 
     /**

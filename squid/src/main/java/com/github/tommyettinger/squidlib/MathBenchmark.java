@@ -210,6 +210,16 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureGdxSinF       avgt    5  3.749 ± 0.249  ns/op
  * MathBenchmark.measureSteadmanSinF  avgt    5  8.633 ± 0.151  ns/op
  * </pre>
+ * With a simpler baseline, the benchmarks changed how often they deoptimize (it seems less frequent now).
+ * This tests just the newest methods, including the very precise (and a little slow) sinLerp.
+ * <pre>
+ * Benchmark                          Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureBhaskaraSinF  avgt    5   7.037 ± 0.196  ns/op
+ * MathBenchmark.measureGdxSinF       avgt    5   3.181 ± 0.176  ns/op
+ * MathBenchmark.measureLerpSinF      avgt    5  10.381 ± 0.089  ns/op
+ * MathBenchmark.measureSquidSinF     avgt    5   6.698 ± 0.198  ns/op
+ * </pre>
+ *
  */
 
 @State(Scope.Thread)
@@ -259,6 +269,7 @@ public class MathBenchmark {
     private int sinWallace = -0x8000;
     private int sinBhaskara = -0x8000;
     private int sinSteadman = -0x8000;
+    private int sinLerp = -0x8000;
     private int mathCosDeg = -0x8000;
     private int mathSinDeg = -0x8000;
     private int sinNickDeg = -0x8000;
@@ -323,7 +334,7 @@ public class MathBenchmark {
     @Benchmark
     public double measureBaseline()
     {
-        return inputs[baseline++ & 0xFFFF];
+        return ((baseline += 0x9E3779B9) >> 24);
     }
 
 
@@ -331,19 +342,19 @@ public class MathBenchmark {
     @Benchmark
     public double measureMathCos()
     {
-        return Math.cos(inputs[mathCos++ & 0xFFFF]);
+        return Math.cos(((mathCos += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public double measureMathSin()
     {
-        return Math.sin(inputs[mathSin++ & 0xFFFF]);
+        return Math.sin(((mathSin += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public double measureMathTan()
     {
-        return Math.tan(inputs[mathTan++ & 0xFFFF]);
+        return Math.tan(((mathTan += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
@@ -367,7 +378,7 @@ public class MathBenchmark {
 
     //@Benchmark
     public double measureCosApproxOld() {
-        return cosOld(inputs[cosOld++ & 0xFFFF]);
+        return cosOld(((cosOld += 0x9E3779B9) >> 24));
 //        cosOld += 0.0625;
 //        final long s = Double.doubleToLongBits(cosOld * 0.3183098861837907 + (cosOld < 0.0 ? -2.0 : 2.0)), m = (s >>> 52 & 0x7FFL) - 0x400, sm = s << m;
 //        final double a = (Double.longBitsToDouble(((sm ^ -((sm & 0x8000000000000L) >> 51)) & 0xfffffffffffffL) | 0x4000000000000000L) - 2.0);
@@ -376,7 +387,7 @@ public class MathBenchmark {
 
     //@Benchmark
     public double measureSinApproxOld() {
-        return sinOld(inputs[sinOld++ & 0xFFFF]);
+        return sinOld(((sinOld += 0x9E3779B9) >> 24));
 //        sinOld += 0.0625;
 //        final long s = Double.doubleToLongBits(sinOld * 0.3183098861837907 + (sinOld < -1.5707963267948966 ? -1.5 : 2.5)), m = (s >>> 52 & 0x7FFL) - 0x400, sm = s << m;
 //        final double a = (Double.longBitsToDouble(((sm ^ -((sm & 0x8000000000000L) >> 51)) & 0xfffffffffffffL) | 0x4000000000000000L) - 2.0);
@@ -413,12 +424,12 @@ public class MathBenchmark {
 
     @Benchmark
     public float measureSquidCosF() {
-        return NumberTools.cos(floatInputs[cosFloat++ & 0xFFFF]);
+        return NumberTools.cos(((cosFloat += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureSquidSinF() {
-        return NumberTools.sin(floatInputs[sinFloat++ & 0xFFFF]);
+        return NumberTools.sin(((sinFloat += 0x9E3779B9) >> 24));
     }
 //    private double sinNick = 1.0;
 //    @Benchmark
@@ -439,37 +450,37 @@ public class MathBenchmark {
     @Benchmark
     public double measureSquidSin()
     {
-        return NumberTools.sin(inputs[sinNick++ & 0xFFFF]);
+        return NumberTools.sin(((sinNick += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public double measureSquidCos()
     {
-        return  NumberTools.cos(inputs[cosNick++ & 0xFFFF]);
+        return  NumberTools.cos(((cosNick += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public double measureBitSin()
     {
-        return sinBit(inputs[sinBit++ & 0xFFFF]);
+        return sinBit(((sinBit += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public double measureBitCos()
     {
-        return cosBit(inputs[cosBit++ & 0xFFFF]);
+        return cosBit(((cosBit += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureBitSinF()
     {
-        return sinBit(floatInputs[sinBitF++ & 0xFFFF]);
+        return sinBit(((sinBitF += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureBitCosF()
     {
-        return cosBit(floatInputs[cosBitF++ & 0xFFFF]);
+        return cosBit(((cosBitF += 0x9E3779B9) >> 24));
     }
     /**
      * A fairly-close approximation of {@link Math#sin(double)} that can be significantly faster (between 4x and 40x
@@ -633,200 +644,206 @@ public class MathBenchmark {
     @Benchmark
     public float measureGdxSinF()
     {
-        return MathUtils.sin(floatInputs[sinGdx++ & 0xFFFF]);
+        return MathUtils.sin(((sinGdx += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureGdxCosF() {
-        return MathUtils.cos(floatInputs[cosGdx++ & 0xFFFF]);
+        return MathUtils.cos(((cosGdx += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureWallaceSin()
     {
-        return NumberTools2.sinWallaceN(floatInputs[sinWallace++ & 0xFFFF]);
+        return NumberTools2.sinWallaceN(((sinWallace += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureBhaskaraSinF()
     {
-        return NumberTools2.sinBhaskaroid(floatInputs[sinBhaskara++ & 0xFFFF]);
+        return NumberTools2.sinBhaskaroid(((sinBhaskara += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureSteadmanSinF()
     {
-        return NumberTools2.sinSteadman(floatInputs[sinSteadman++ & 0xFFFF]);
+        return NumberTools2.sinSteadman(((sinSteadman += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureLerpSinF()
+    {
+        return NumberTools2.sinLerp(((sinLerp += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public double measureMathCosDeg()
     {
-        return Math.cos(inputs[mathCosDeg++ & 0xFFFF] * 0.017453292519943295);
+        return Math.cos(((mathCosDeg += 0x9E3779B9) >> 24) * 0.017453292519943295);
     }
 
     @Benchmark
     public double measureMathSinDeg()
     {
-        return Math.sin(inputs[mathSinDeg++ & 0xFFFF] * 0.017453292519943295);
+        return Math.sin(((mathSinDeg += 0x9E3779B9) >> 24) * 0.017453292519943295);
     }
 
     @Benchmark
     public float measureSquidCosDeg() {
-        return NumberTools.cosDegrees(floatInputs[cosNickDeg++ & 0xFFFF]);
+        return NumberTools.cosDegrees(((cosNickDeg += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureSquidSinDeg() {
-        return NumberTools.sinDegrees(floatInputs[sinNickDeg++ & 0xFFFF]);
+        return NumberTools.sinDegrees(((sinNickDeg += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureGdxSinDeg()
     {
-        return MathUtils.sinDeg(floatInputs[sinGdxDeg++ & 0xFFFF]);
+        return MathUtils.sinDeg(((sinGdxDeg += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureGdxCosDeg() {
-        return MathUtils.cosDeg(floatInputs[cosGdxDeg++ & 0xFFFF]);
+        return MathUtils.cosDeg(((cosGdxDeg += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureDivideTan()
     {
-        return NumberTools2.tanDivide(floatInputs[tanDiv++ & 0xFFFF]);
+        return NumberTools2.tanDivide(((tanDiv += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureSoontsTan()
     {
-        return NumberTools2.tanSoonts(floatInputs[tanSoo++ & 0xFFFF]);
+        return NumberTools2.tanSoonts(((tanSoo += 0x9E3779B9) >> 24));
     }
 
 
     @Benchmark
     public double measureMathAtan2()
     {
-        return Math.atan2(inputs[mathAtan2Y++ & 0xFFFF], inputs[mathAtan2X++ & 0xFFFF]);
+        return Math.atan2(((mathAtan2Y += 0x9E3779B9) >> 24), ((mathAtan2X += 0x9E3779B9) >> 24));
     }
     @Benchmark
     public double measureMathAtan2_()
     {
-        final double z = Math.atan2(inputs[mathAtan2_Y++ & 0xFFFF], inputs[mathAtan2_X++ & 0xFFFF]) * 0.15915494309189535 + 1.0;
+        final double z = Math.atan2(((mathAtan2_Y += 0x9E3779B9) >> 24), ((mathAtan2_X += 0x9E3779B9) >> 24)) * 0.15915494309189535 + 1.0;
         return z - (int)z;
     }
 
     @Benchmark
     public double measureSquidAtan2()
     {
-        return NumberTools.atan2(inputs[atan2SquidY++ & 0xFFFF], inputs[atan2SquidX++ & 0xFFFF]);
+        return NumberTools.atan2(((atan2SquidY += 0x9E3779B9) >> 24), ((atan2SquidX += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureSquidAtan2Float()
     {
-        return NumberTools.atan2(floatInputs[atan2SquidYF++ & 0xFFFF], floatInputs[atan2SquidXF++ & 0xFFFF]);
+        return NumberTools.atan2(((atan2SquidYF += 0x9E3779B9) >> 24), ((atan2SquidXF += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureGdxAtan2()
     {
-        return MathUtils.atan2(floatInputs[atan2GdxY++ & 0xFFFF], floatInputs[atan2GdxX++ & 0xFFFF]);
+        return MathUtils.atan2(((atan2GdxY += 0x9E3779B9) >> 24), ((atan2GdxX += 0x9E3779B9) >> 24));
     }
  
     @Benchmark
     public float measureGtAtan2()
     {
-        return GtMathUtils.atan2(floatInputs[atan2GtY++ & 0xFFFF], floatInputs[atan2GtX++ & 0xFFFF]);
+        return GtMathUtils.atan2(((atan2GtY += 0x9E3779B9) >> 24), ((atan2GtX += 0x9E3779B9) >> 24));
     }
  
     @Benchmark
     public float measureNtAtan2()
     {
-        return NumberTools2.atan2_nt(floatInputs[atan2NtY++ & 0xFFFF], floatInputs[atan2NtX++ & 0xFFFF]);
+        return NumberTools2.atan2_nt(((atan2NtY += 0x9E3779B9) >> 24), ((atan2NtX += 0x9E3779B9) >> 24));
     }
  
     @Benchmark
     public float measureImuliAtan2()
     {
-        return NumberTools2.atan2_quartic(floatInputs[atan2ImY++ & 0xFFFF], floatInputs[atan2ImX++ & 0xFFFF]);
+        return NumberTools2.atan2_quartic(((atan2ImY += 0x9E3779B9) >> 24), ((atan2ImX += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureHighPrecisionAtan2()
     {
-        return NumberTools2.atan2HP(floatInputs[atan2HPY++ & 0xFFFF], floatInputs[atan2HPX++ & 0xFFFF]);
+        return NumberTools2.atan2HP(((atan2HPY += 0x9E3779B9) >> 24), ((atan2HPX += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureRemezAtan2()
     {
-        return NumberTools2.atan2Remez(floatInputs[atan2RmY++ & 0xFFFF], floatInputs[atan2RmX++ & 0xFFFF]);
+        return NumberTools2.atan2Remez(((atan2RmY += 0x9E3779B9) >> 24), ((atan2RmX += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureGeneralAtan2()
     {
-        return NumberTools2.atan2General(floatInputs[atan2GeY++ & 0xFFFF], floatInputs[atan2GeX++ & 0xFFFF]);
+        return NumberTools2.atan2General(((atan2GeY += 0x9E3779B9) >> 24), ((atan2GeX += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureSimpleAtan2()
     {
-        return NumberTools2.atan2Simple(floatInputs[atan2SiY++ & 0xFFFF], floatInputs[atan2SiX++ & 0xFFFF]);
+        return NumberTools2.atan2Simple(((atan2SiY += 0x9E3779B9) >> 24), ((atan2SiX += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureFunkyAtan2()
     {
-        return NumberTools2.atan2Funky(floatInputs[atan2FnY++ & 0xFFFF], floatInputs[atan2FnX++ & 0xFFFF]);
+        return NumberTools2.atan2Funky(((atan2FnY += 0x9E3779B9) >> 24), ((atan2FnX += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureImuliAtan2_()
     {
-        return NumberTools2.atan2_imuli_(floatInputs[atan2Im_Y++ & 0xFFFF], floatInputs[atan2Im_X++ & 0xFFFF]);
+        return NumberTools2.atan2_imuli_(((atan2Im_Y += 0x9E3779B9) >> 24), ((atan2Im_X += 0x9E3779B9) >> 24));
     }
  
     @Benchmark
     public float measureSquidAtan2_()
     {
-        return NumberTools.atan2_(floatInputs[atan2_SquidYF++ & 0xFFFF], floatInputs[atan2_SquidXF++ & 0xFFFF]);
+        return NumberTools.atan2_(((atan2_SquidYF += 0x9E3779B9) >> 24), ((atan2_SquidXF += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureSimpleAtan2_()
     {
-        return NumberTools2.atan2Simple_(floatInputs[atan2Si_Y++ & 0xFFFF], floatInputs[atan2Si_X++ & 0xFFFF]);
+        return NumberTools2.atan2Simple_(((atan2Si_Y += 0x9E3779B9) >> 24), ((atan2Si_X += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureFunkyAtan2_()
     {
-        return NumberTools2.atan2Funky_(floatInputs[atan2Fn_Y++ & 0xFFFF], floatInputs[atan2Fn_X++ & 0xFFFF]);
+        return NumberTools2.atan2Funky_(((atan2Fn_Y += 0x9E3779B9) >> 24), ((atan2Fn_X += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureSquidAtan2DegFloat()
     {
-        return NumberTools.atan2Degrees360(floatInputs[atan2DegSquidYF++ & 0xFFFF], floatInputs[atan2DegSquidXF++ & 0xFFFF]);
+        return NumberTools.atan2Degrees360(((atan2DegSquidYF += 0x9E3779B9) >> 24), ((atan2DegSquidXF += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public float measureGdxAtan2Deg()
     {
-        return (MathUtils.radiansToDegrees * MathUtils.atan2(floatInputs[atan2DegGdxY++ & 0xFFFF], floatInputs[atan2DegGdxX++ & 0xFFFF]) + 360f) % 360f;
+        return (MathUtils.radiansToDegrees * MathUtils.atan2(((atan2DegGdxY += 0x9E3779B9) >> 24), ((atan2DegGdxX += 0x9E3779B9) >> 24)) + 360f) % 360f;
     }
     @Benchmark
     public double measureAtan2Baseline()
     {
-        return inputs[atan2BaselineY++ & 0xFFFF] + inputs[atan2BaselineX++ & 0xFFFF];
+        return ((atan2BaselineY += 0x9E3779B9) >> 24) + ((atan2BaselineX += 0x9E3779B9) >> 24);
     }
     @Benchmark
     public float measureAtan2BaselineFloat()
     {
-        return floatInputs[atan2BaselineYF++ & 0xFFFF] + floatInputs[atan2BaselineXF++ & 0xFFFF];
+        return ((atan2BaselineYF += 0x9E3779B9) >> 24) + ((atan2BaselineXF += 0x9E3779B9) >> 24);
     }
     
     @Benchmark
@@ -844,7 +861,7 @@ public class MathBenchmark {
 
     @Benchmark
     public int measureFloorMath(){
-        return (int) Math.floor(floatInputs[floorMath++ & 0xFFFF]);
+        return (int) Math.floor(((floorMath += 0x9E3779B9) >> 24));
     }
 
     public static int fastFloorGust(float x) {
@@ -853,7 +870,7 @@ public class MathBenchmark {
     }
     @Benchmark
     public int measureFloorGust(){
-        return fastFloorGust(floatInputs[floorGust++ & 0xFFFF]);
+        return fastFloorGust(((floorGust += 0x9E3779B9) >> 24));
     }
 
     public static int fastFloorNoise(float t) {
@@ -861,12 +878,12 @@ public class MathBenchmark {
     }
     @Benchmark
     public int measureFloorNoise(){
-        return fastFloorNoise(floatInputs[floorNoise++ & 0xFFFF]);
+        return fastFloorNoise(((floorNoise += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
     public int measureFloorGdx(){
-        return MathUtils.floor(floatInputs[floorGdx++ & 0xFFFF]);
+        return MathUtils.floor(((floorGdx += 0x9E3779B9) >> 24));
     }
 
     /*
