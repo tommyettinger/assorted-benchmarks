@@ -788,6 +788,27 @@ public final class NumberTools2 {
         final float from = SIN_TABLE[masked], to = SIN_TABLE[masked+1];
         return from + (to - from) * (radians - floor);
     }
+    public static float cosLerp(float radians) {
+        radians *= radToIndex;
+        final int floor = (int)(radians + 16384.0) - 16384;
+        final int masked = floor + SIN_TO_COS & TABLE_MASK;
+        final float from = SIN_TABLE[masked], to = SIN_TABLE[masked+1];
+        return from + (to - from) * (radians - floor);
+    }
+
+    public static float tanLerp(float radians) {
+        radians *= radToIndex;
+        final int floor = (int)(radians + 16384.0) - 16384;
+        final int maskedS = floor & TABLE_MASK;
+        final int maskedC = floor + SIN_TO_COS & TABLE_MASK;
+        final float fromS = SIN_TABLE[maskedS], toS = SIN_TABLE[maskedS+1];
+        final float fromC = SIN_TABLE[maskedC], toC = SIN_TABLE[maskedC+1];
+        return (fromS + (toS - fromS) * (radians - floor))/(fromC + (toC - fromC) * (radians - floor));
+    }
+    public static float tanTable(float radians) {
+        final int r = (int)(radians * radToIndex);
+        return SIN_TABLE[r & TABLE_MASK] / SIN_TABLE[r + SIN_TO_COS & TABLE_MASK];
+    }
 
     /**
      * Returns the tangent in radians, using a Padé approximant.

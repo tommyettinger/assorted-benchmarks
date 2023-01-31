@@ -229,6 +229,25 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathSinF      avgt    5  19.825 ± 0.584  ns/op
  * MathBenchmark.measureSquidSinF     avgt    5   6.896 ± 0.919  ns/op
  * </pre>
+ * tan() benchmarks, on Java 8:
+ * <pre>
+ * Benchmark                       Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDivideTan  avgt    5   4.052 ± 0.108  ns/op
+ * MathBenchmark.measureLerpTan    avgt    5  13.621 ± 0.158  ns/op
+ * MathBenchmark.measureMathTan    avgt    5  59.677 ± 1.474  ns/op
+ * MathBenchmark.measureSoontsTan  avgt    5   9.273 ± 0.286  ns/op
+ * MathBenchmark.measureTableTan   avgt    5   3.674 ± 0.183  ns/op
+ * </pre>
+ * and on Java 19:
+ * <pre>
+ * Benchmark                       Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDivideTan  avgt    5   4.473 ± 0.964  ns/op
+ * MathBenchmark.measureLerpTan    avgt    5   6.499 ± 0.105  ns/op
+ * MathBenchmark.measureMathTan    avgt    5  21.985 ± 1.417  ns/op
+ * MathBenchmark.measureSoontsTan  avgt    5   7.391 ± 0.364  ns/op
+ * MathBenchmark.measureTableTan   avgt    5   3.892 ± 0.345  ns/op
+ * </pre>
+ *
  */
 
 @State(Scope.Thread)
@@ -289,6 +308,8 @@ public class MathBenchmark {
     private int sinGdxDeg = -0x8000;
     private int tanDiv = -0x8000;
     private int tanSoo = -0x8000;
+    private int tanLer = -0x8000;
+    private int tanTab = -0x8000;
     private int baseline = -0x8000;
     private int mathAtan2X = -0x4000;
     private int mathAtan2Y = -0x8000;
@@ -742,6 +763,18 @@ public class MathBenchmark {
     public float measureSoontsTan()
     {
         return NumberTools2.tanSoonts(((tanSoo += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureLerpTan()
+    {
+        return NumberTools2.tanLerp(((tanLer += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureTableTan()
+    {
+        return NumberTools2.tanTable(((tanTab += 0x9E3779B9) >> 24));
     }
 
 
