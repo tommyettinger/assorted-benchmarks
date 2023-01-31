@@ -211,15 +211,24 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureSteadmanSinF  avgt    5  8.633 ± 0.151  ns/op
  * </pre>
  * With a simpler baseline, the benchmarks changed how often they deoptimize (it seems less frequent now).
- * This tests just the newest methods, including the very precise (and a little slow) sinLerp.
+ * This tests just the newest methods, including the very precise (and a little slow) sinLerp. Java 8:
  * <pre>
  * Benchmark                          Mode  Cnt   Score   Error  Units
- * MathBenchmark.measureBhaskaraSinF  avgt    5   7.037 ± 0.196  ns/op
- * MathBenchmark.measureGdxSinF       avgt    5   3.181 ± 0.176  ns/op
- * MathBenchmark.measureLerpSinF      avgt    5  10.381 ± 0.089  ns/op
- * MathBenchmark.measureSquidSinF     avgt    5   6.698 ± 0.198  ns/op
+ * MathBenchmark.measureBhaskaraSinF  avgt    5  17.773 ± 0.414  ns/op
+ * MathBenchmark.measureGdxSinF       avgt    5   2.889 ± 0.140  ns/op
+ * MathBenchmark.measureLerpSinF      avgt    5  10.246 ± 0.153  ns/op
+ * MathBenchmark.measureMathSinF      avgt    5  41.414 ± 2.016  ns/op
+ * MathBenchmark.measureSquidSinF     avgt    5   6.519 ± 0.235  ns/op
  * </pre>
- *
+ * Java 19:
+ * <pre>
+ * Benchmark                          Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureBhaskaraSinF  avgt    5   7.016 ± 0.168  ns/op
+ * MathBenchmark.measureGdxSinF       avgt    5   3.288 ± 0.091  ns/op
+ * MathBenchmark.measureLerpSinF      avgt    5  10.315 ± 0.268  ns/op
+ * MathBenchmark.measureMathSinF      avgt    5  19.825 ± 0.584  ns/op
+ * MathBenchmark.measureSquidSinF     avgt    5   6.896 ± 0.919  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -249,6 +258,8 @@ public class MathBenchmark {
 
     private int mathCos = -0x8000;
     private int mathSin = -0x8000;
+    private int mathCosF = -0x8000;
+    private int mathSinF = -0x8000;
     private int mathTan = -0x8000;
     private int mathASin = -0x8000;
     private int asinChristensen = -0x8000;
@@ -349,6 +360,18 @@ public class MathBenchmark {
     public double measureMathSin()
     {
         return Math.sin(((mathSin += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureMathCosF()
+    {
+        return (float)Math.cos(((mathCos += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureMathSinF()
+    {
+        return (float)Math.sin(((mathSin += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
