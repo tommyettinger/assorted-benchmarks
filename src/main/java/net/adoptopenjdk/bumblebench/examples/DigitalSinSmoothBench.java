@@ -14,7 +14,6 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.math.MathUtils;
 import com.github.tommyettinger.digital.TrigTools;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
@@ -60,7 +59,7 @@ public final class DigitalSinSmoothBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
 		float sum = 0.1f;
-		final float shrink = MathUtils.PI * 8f / numIterations;
+		final float shrink = TrigTools.PI * 8f / numIterations;
 		for (long i = 0; i < numIterations; i++)
 			sum -= TrigTools.sinSmooth((sum + i) * shrink);
 		return numIterations;
