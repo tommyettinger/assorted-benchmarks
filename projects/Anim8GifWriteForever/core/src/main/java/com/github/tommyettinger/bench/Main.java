@@ -28,14 +28,16 @@ public class Main extends ApplicationAdapter {
     Dithered.DitherAlgorithm dither = Dithered.DitherAlgorithm.NEUE;
 
     public Main(String algorithm) {
-        try {
-            dither = Dithered.DitherAlgorithm.valueOf(algorithm);
-        } catch(IllegalArgumentException e) {
-            System.out.println("Invalid algorithm. Valid choices are:");
-            for(Dithered.DitherAlgorithm d : Dithered.DitherAlgorithm.values()) {
-                System.out.println(d.name());
+        if (!"".equals(algorithm)) {
+            try {
+                dither = Dithered.DitherAlgorithm.valueOf(algorithm);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid algorithm. Valid choices are:");
+                for (Dithered.DitherAlgorithm d : Dithered.DitherAlgorithm.values()) {
+                    System.out.println(d.name());
+                }
+                System.exit(1);
             }
-            System.exit(1);
         }
     }
 
@@ -64,12 +66,12 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
-        if(numWritten == 64 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if(numWritten == 32 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " GIFs using " + dither.name());
             Gdx.files.local("tmp/imagesClean").deleteDirectory();
             Gdx.app.exit();
         }
-        gif.write(Gdx.files.local("tmp/imagesClean/" + name + "/AnimatedGif-" + name + "-Scatter.gif"), pixmaps, fps + (numWritten & 7));
+        gif.write(Gdx.files.local("tmp/imagesClean/" + name + "/AnimatedGif-" + name + "-" + dither.name() + ".gif"), pixmaps, fps + (numWritten & 7));
         numWritten++;
     }
 }
