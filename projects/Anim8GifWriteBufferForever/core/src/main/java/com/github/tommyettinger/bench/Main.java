@@ -27,7 +27,7 @@ public class Main extends ApplicationAdapter {
     int numWritten = 0;
     int fps = 17;
     long startTime;
-    Dithered.DitherAlgorithm dither = Dithered.DitherAlgorithm.ROBERTS;
+    Dithered.DitherAlgorithm dither = Dithered.DitherAlgorithm.PATTERN;
 
     public Main(String algorithm) {
         if (!"".equals(algorithm)) {

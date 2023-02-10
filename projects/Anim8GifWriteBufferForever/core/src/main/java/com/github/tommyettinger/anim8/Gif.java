@@ -502,18 +502,20 @@ public class Gif implements AnimationWriter, Dithered {
             break;
             case PATTERN:
             {
+                ByteBuffer pixels = image.getPixels();
+                pixels.rewind();
+                hasTransparent = image.getFormat().equals(Pixmap.Format.RGBA8888);
                 int cr, cg, cb, usedIndex;
                 final float errorMul = palette.ditherStrength * palette.populationBias;
                 for (int y = 0, i = 0; y < height && i < nPix; y++) {
                     for (int px = 0; px < width & i < nPix; px++) {
-                        color = image.getPixel(px, flipped + flipDir * y);
-                        if ((color & 0x80) == 0 && hasTransparent)
+                        cr = pixels.get() & 255;
+                        cg = pixels.get() & 255;
+                        cb = pixels.get() & 255;
+                        if (hasTransparent && (pixels.get() & 0x80) == 0)
                             indexedPixels[i++] = 0;
                         else {
                             int er = 0, eg = 0, eb = 0;
-                            cr = (color >>> 24);
-                            cg = (color >>> 16 & 0xFF);
-                            cb = (color >>> 8 & 0xFF);
                             for (int c = 0; c < 16; c++) {
                                 int rr = Math.min(Math.max((int) (cr + er * errorMul), 0), 255);
                                 int gg = Math.min(Math.max((int) (cg + eg * errorMul), 0), 255);
