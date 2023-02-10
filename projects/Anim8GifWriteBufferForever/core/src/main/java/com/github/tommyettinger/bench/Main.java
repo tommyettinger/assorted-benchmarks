@@ -47,8 +47,12 @@ public class Main extends ApplicationAdapter {
                 System.out.println(Dithered.DitherAlgorithm.GRADIENT_NOISE);
                 System.out.println(Dithered.DitherAlgorithm.PATTERN);
                 System.out.println(Dithered.DitherAlgorithm.CHAOTIC_NOISE);
+                System.out.println(Dithered.DitherAlgorithm.NEUE);
                 System.out.println(Dithered.DitherAlgorithm.DIFFUSION);
                 System.out.println(Dithered.DitherAlgorithm.ROBERTS);
+                System.out.println(Dithered.DitherAlgorithm.SCATTER);
+                System.out.println(Dithered.DitherAlgorithm.BLUE_NOISE);
+                System.out.println(Dithered.DitherAlgorithm.WOVEN);
 //                for (Dithered.DitherAlgorithm d : Dithered.DitherAlgorithm.values()) {
 //                    System.out.println(d.name());
 //                }

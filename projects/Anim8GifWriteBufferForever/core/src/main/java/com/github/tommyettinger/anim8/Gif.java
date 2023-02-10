@@ -728,17 +728,19 @@ public class Gif implements AnimationWriter, Dithered {
                 float adj, strength = 0.1375f * palette.ditherStrength / palette.populationBias;
                 for (int y = 0, i = 0; y < height && i < nPix; y++) {
                     for (int px = 0; px < width & i < nPix; px++) {
-                        color = image.getPixel(px, flipped + flipDir * y);
-                        if ((color & 0x80) == 0 && hasTransparent)
+                        int r = pixels.get() & 255;
+                        int g = pixels.get() & 255;
+                        int b = pixels.get() & 255;
+                        if (hasTransparent && (pixels.get() & 0x80) == 0)
                             indexedPixels[i++] = 0;
                         else {
                             float pos = (PaletteReducer.thresholdMatrix64[(px & 7) | (y & 7) << 3] - 31.5f) * 0.2f;
                             adj = ((PaletteReducer.TRI_BLUE_NOISE_B[(px & 63) | (y & 63) << 6] + 0.5f) * strength) + pos;
-                            int rr = MathUtils.clamp((int) (adj + ((color >>> 24)       )), 0, 255);
+                            int rr = MathUtils.clamp((int) (adj + r), 0, 255);
                             adj = ((PaletteReducer.TRI_BLUE_NOISE_C[(px & 63) | (y & 63) << 6] + 0.5f) * strength) + pos;
-                            int gg = MathUtils.clamp((int) (adj + ((color >>> 16) & 0xFF)), 0, 255);
+                            int gg = MathUtils.clamp((int) (adj + g), 0, 255);
                             adj = ((PaletteReducer.TRI_BLUE_NOISE_D[(px & 63) | (y & 63) << 6] + 0.5f) * strength) + pos;
-                            int bb = MathUtils.clamp((int) (adj + ((color >>> 8)  & 0xFF)), 0, 255);
+                            int bb = MathUtils.clamp((int) (adj + b), 0, 255);
                             usedEntry[(indexedPixels[i] = paletteMapping[((rr << 7) & 0x7C00)
                                     | ((gg << 2) & 0x3E0)
                                     | ((bb >>> 3))]) & 255] = true;
@@ -788,25 +790,27 @@ public class Gif implements AnimationWriter, Dithered {
                             ny = y + 1;
 
                     for (int px = 0; px < width & i < nPix; px++) {
-                        color = image.getPixel(px, py);
-                        if ((color & 0x80) == 0 && hasTransparent)
+                        int r = pixels.get() & 255;
+                        int g = pixels.get() & 255;
+                        int b = pixels.get() & 255;
+                        if (hasTransparent && (pixels.get() & 0x80) == 0)
                             indexedPixels[i++] = 0;
                         else {
                             float tbn = PaletteReducer.TRI_BLUE_NOISE_MULTIPLIERS[(px & 63) | ((y << 6) & 0xFC0)];
                             er = curErrorRed[px] * tbn;
                             eg = curErrorGreen[px] * tbn;
                             eb = curErrorBlue[px] * tbn;
-                            int rr = Math.min(Math.max((int)(((color >>> 24)       ) + er + 0.5f), 0), 0xFF);
-                            int gg = Math.min(Math.max((int)(((color >>> 16) & 0xFF) + eg + 0.5f), 0), 0xFF);
-                            int bb = Math.min(Math.max((int)(((color >>> 8)  & 0xFF) + eb + 0.5f), 0), 0xFF);
+                            int rr = Math.min(Math.max((int)(r + er + 0.5f), 0), 0xFF);
+                            int gg = Math.min(Math.max((int)(g + eg + 0.5f), 0), 0xFF);
+                            int bb = Math.min(Math.max((int)(b + eb + 0.5f), 0), 0xFF);
                             usedEntry[(indexedPixels[i] = paletteIndex =
                                     paletteMapping[((rr << 7) & 0x7C00)
                                             | ((gg << 2) & 0x3E0)
                                             | ((bb >>> 3))]) & 255] = true;
                             used = paletteArray[paletteIndex & 0xFF];
-                            rdiff = (0x2.Ep-8f * ((color>>>24)-    (used>>>24))    );
-                            gdiff = (0x2.Ep-8f * ((color>>>16&255)-(used>>>16&255)));
-                            bdiff = (0x2.Ep-8f * ((color>>>8&255)- (used>>>8&255)) );
+                            rdiff = (0x2.Ep-8f * (r - (used>>>24))    );
+                            gdiff = (0x2.Ep-8f * (g - (used>>>16&255)));
+                            bdiff = (0x2.Ep-8f * (b - (used>>>8&255)) );
                             rdiff *= 1.25f / (0.25f + Math.abs(rdiff));
                             gdiff *= 1.25f / (0.25f + Math.abs(gdiff));
                             bdiff *= 1.25f / (0.25f + Math.abs(bdiff));
@@ -882,25 +886,27 @@ public class Gif implements AnimationWriter, Dithered {
                     int py = flipped + flipDir * y,
                             ny = y + 1;
                     for (int px = 0; px < width && i < nPix; px++) {
-                        color = image.getPixel(px, py);
-                        if ((color & 0x80) == 0 && hasTransparent)
+                        int r = pixels.get() & 255;
+                        int g = pixels.get() & 255;
+                        int b = pixels.get() & 255;
+                        if (hasTransparent && (pixels.get() & 0x80) == 0)
                             indexedPixels[i++] = 0;
                         else {
                             er = Math.min(Math.max(((((px+1) * 0xC13FA9A902A6328FL + (y+1) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-23f - 0x1.4p-1f) * strength, -limit), limit) + (curErrorRed[px]);
                             eg = Math.min(Math.max(((((px+3) * 0xC13FA9A902A6328FL + (y-1) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-23f - 0x1.4p-1f) * strength, -limit), limit) + (curErrorGreen[px]);
                             eb = Math.min(Math.max(((((px+2) * 0xC13FA9A902A6328FL + (y-4) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-23f - 0x1.4p-1f) * strength, -limit), limit) + (curErrorBlue[px]);
 
-                            int rr = MathUtils.clamp((int)(((color >>> 24)       ) + er + 0.5f), 0, 0xFF);
-                            int gg = MathUtils.clamp((int)(((color >>> 16) & 0xFF) + eg + 0.5f), 0, 0xFF);
-                            int bb = MathUtils.clamp((int)(((color >>> 8)  & 0xFF) + eb + 0.5f), 0, 0xFF);
+                            int rr = MathUtils.clamp((int)(r + er + 0.5f), 0, 0xFF);
+                            int gg = MathUtils.clamp((int)(g + eg + 0.5f), 0, 0xFF);
+                            int bb = MathUtils.clamp((int)(b + eb + 0.5f), 0, 0xFF);
                             usedEntry[(indexedPixels[i] = paletteIndex =
                                     paletteMapping[((rr << 7) & 0x7C00)
                                             | ((gg << 2) & 0x3E0)
                                             | ((bb >>> 3))]) & 255] = true;
                             used = paletteArray[paletteIndex & 0xFF];
-                            rdiff = (0x5p-10f * ((color>>>24)-    (used>>>24))    );
-                            gdiff = (0x5p-10f * ((color>>>16&255)-(used>>>16&255)));
-                            bdiff = (0x5p-10f * ((color>>>8&255)- (used>>>8&255)) );
+                            rdiff = (0x5p-10f * (r - (used>>>24))    );
+                            gdiff = (0x5p-10f * (g - (used>>>16&255)));
+                            bdiff = (0x5p-10f * (b - (used>>>8&255)) );
                             if(px < w - 1)
                             {
                                 curErrorRed[px+1]   += rdiff * w7;
