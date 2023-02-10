@@ -19,15 +19,18 @@ import com.github.tommyettinger.anim8.PaletteReducer;
  * </pre>
  */
 public class Main extends ApplicationAdapter {
-    private static final String name = "flashy"; // "market";
-    private static final int TOTAL_FRAMES = 80; // 90 for market
-    private static final String INPUT_EXTENSION = ".png"; // ".jpg";
+    private static final String name = "market";
+    private static final int TOTAL_FRAMES = 90;
+    private static final String INPUT_EXTENSION = ".jpg";
+    //    private static final String name = "flashy"; // "market";
+//    private static final int TOTAL_FRAMES = 80; // 90 for market
+//    private static final String INPUT_EXTENSION = ".png"; // ".jpg";
     AnimatedGif gif;
     Array<Pixmap> pixmaps;
     int numWritten = 0;
     int fps = 17;
     long startTime;
-    Dithered.DitherAlgorithm dither = Dithered.DitherAlgorithm.PATTERN;
+    Dithered.DitherAlgorithm dither = Dithered.DitherAlgorithm.GRADIENT_NOISE;
 
     public Main(String algorithm) {
         if (!"".equals(algorithm)) {

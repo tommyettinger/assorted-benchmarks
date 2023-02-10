@@ -12,10 +12,15 @@ import com.github.tommyettinger.anim8.Dithered;
 import com.github.tommyettinger.anim8.PaletteReducer;
 
 /**
- * Running for 64 iterations on Java 19:
+ * Running for 32 iterations on Java 19:
  * <pre>
- *     Took 99847 ms to write 64 market GIFs using NEUE
- *     Took 485885 ms to write 64 market GIFs using PATTERN
+ *     Took 35241 ms to write 32 GIFs using DIFFUSION
+ *     Took 25606 ms to write 32 GIFs using CHAOTIC_NOISE
+ *     Took 26400 ms to write 32 GIFs using ROBERTS
+ *     Took 25970 ms to write 32 GIFs using GRADIENT_NOISE
+ *     Took 13963 ms to write 32 GIFs using NONE
+ *     Took 225147 ms to write 32 GIFs using PATTERN
+ *     Took 40094 ms to write 32 GIFs using NEUE
  * </pre>
  */
 public class Main extends ApplicationAdapter {
@@ -30,7 +35,7 @@ public class Main extends ApplicationAdapter {
     int numWritten = 0;
     int fps = 17;
     long startTime;
-    Dithered.DitherAlgorithm dither = Dithered.DitherAlgorithm.PATTERN;
+    Dithered.DitherAlgorithm dither = Dithered.DitherAlgorithm.GRADIENT_NOISE;
 
     public Main(String algorithm) {
         if (!"".equals(algorithm)) {
