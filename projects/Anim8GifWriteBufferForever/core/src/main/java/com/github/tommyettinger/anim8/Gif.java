@@ -896,9 +896,9 @@ public class Gif implements AnimationWriter, Dithered {
                             eg = Math.min(Math.max(((((px+3) * 0xC13FA9A902A6328FL + (y-1) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-23f - 0x1.4p-1f) * strength, -limit), limit) + (curErrorGreen[px]);
                             eb = Math.min(Math.max(((((px+2) * 0xC13FA9A902A6328FL + (y-4) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-23f - 0x1.4p-1f) * strength, -limit), limit) + (curErrorBlue[px]);
 
-                            int rr = MathUtils.clamp((int)(r + er + 0.5f), 0, 0xFF);
-                            int gg = MathUtils.clamp((int)(g + eg + 0.5f), 0, 0xFF);
-                            int bb = MathUtils.clamp((int)(b + eb + 0.5f), 0, 0xFF);
+                            int rr = Math.min(Math.max((int)(r + er + 0.5f), 0), 0xFF);
+                            int gg = Math.min(Math.max((int)(g + eg + 0.5f), 0), 0xFF);
+                            int bb = Math.min(Math.max((int)(b + eb + 0.5f), 0), 0xFF);
                             usedEntry[(indexedPixels[i] = paletteIndex =
                                     paletteMapping[((rr << 7) & 0x7C00)
                                             | ((gg << 2) & 0x3E0)

@@ -14,13 +14,16 @@ import com.github.tommyettinger.anim8.PaletteReducer;
 /**
  * Running for 32 iterations on Java 19:
  * <pre>
- *     Took 35241 ms to write 32 GIFs using DIFFUSION
- *     Took 25606 ms to write 32 GIFs using CHAOTIC_NOISE
- *     Took 26400 ms to write 32 GIFs using ROBERTS
- *     Took 25970 ms to write 32 GIFs using GRADIENT_NOISE
  *     Took 13963 ms to write 32 GIFs using NONE
- *     Took 225147 ms to write 32 GIFs using PATTERN
+ *     Took 25606 ms to write 32 GIFs using CHAOTIC_NOISE
+ *     Took 25970 ms to write 32 GIFs using GRADIENT_NOISE
+ *     Took 26400 ms to write 32 GIFs using ROBERTS
+ *     Took 27210 ms to write 32 GIFs using BLUE_NOISE
+ *     Took 35241 ms to write 32 GIFs using DIFFUSION
+ *     Took 36791 ms to write 32 GIFs using SCATTER
  *     Took 40094 ms to write 32 GIFs using NEUE
+ *     Took 41869 ms to write 32 GIFs using WOVEN
+ *     Took 225147 ms to write 32 GIFs using PATTERN
  * </pre>
  */
 public class Main extends ApplicationAdapter {
@@ -43,19 +46,9 @@ public class Main extends ApplicationAdapter {
                 dither = Dithered.DitherAlgorithm.valueOf(algorithm);
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid algorithm. Valid choices are:");
-                System.out.println(Dithered.DitherAlgorithm.NONE);
-                System.out.println(Dithered.DitherAlgorithm.GRADIENT_NOISE);
-                System.out.println(Dithered.DitherAlgorithm.PATTERN);
-                System.out.println(Dithered.DitherAlgorithm.CHAOTIC_NOISE);
-                System.out.println(Dithered.DitherAlgorithm.NEUE);
-                System.out.println(Dithered.DitherAlgorithm.DIFFUSION);
-                System.out.println(Dithered.DitherAlgorithm.ROBERTS);
-                System.out.println(Dithered.DitherAlgorithm.SCATTER);
-                System.out.println(Dithered.DitherAlgorithm.BLUE_NOISE);
-                System.out.println(Dithered.DitherAlgorithm.WOVEN);
-//                for (Dithered.DitherAlgorithm d : Dithered.DitherAlgorithm.values()) {
-//                    System.out.println(d.name());
-//                }
+                for (Dithered.DitherAlgorithm d : Dithered.DitherAlgorithm.values()) {
+                    System.out.println(d.name());
+                }
                 System.exit(1);
             }
         }
