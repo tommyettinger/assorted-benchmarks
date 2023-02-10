@@ -14,14 +14,17 @@ import com.github.tommyettinger.anim8.PaletteReducer;
 /**
  * Running for 64 iterations on Java 19:
  * <pre>
- *     Took 99847 ms to write 64 GIFs using NEUE
- *     Took 485885 ms to write 64 GIFs using PATTERN
+ *     Took 99847 ms to write 64 market GIFs using NEUE
+ *     Took 485885 ms to write 64 market GIFs using PATTERN
  * </pre>
  */
 public class Main extends ApplicationAdapter {
-    private static final String name = "flashy"; // "market";
-    private static final int TOTAL_FRAMES = 80; // 90 for market
-    private static final String INPUT_EXTENSION = ".png"; // ".jpg";
+    private static final String name = "market";
+    private static final int TOTAL_FRAMES = 90;
+    private static final String INPUT_EXTENSION = ".jpg";
+//    private static final String name = "flashy"; // "market";
+//    private static final int TOTAL_FRAMES = 80; // 90 for market
+//    private static final String INPUT_EXTENSION = ".png"; // ".jpg";
     Gif gif;
     Array<Pixmap> pixmaps;
     int numWritten = 0;
@@ -35,9 +38,15 @@ public class Main extends ApplicationAdapter {
                 dither = Dithered.DitherAlgorithm.valueOf(algorithm);
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid algorithm. Valid choices are:");
-                for (Dithered.DitherAlgorithm d : Dithered.DitherAlgorithm.values()) {
-                    System.out.println(d.name());
-                }
+                System.out.println(Dithered.DitherAlgorithm.NONE);
+                System.out.println(Dithered.DitherAlgorithm.GRADIENT_NOISE);
+                System.out.println(Dithered.DitherAlgorithm.PATTERN);
+                System.out.println(Dithered.DitherAlgorithm.CHAOTIC_NOISE);
+                System.out.println(Dithered.DitherAlgorithm.DIFFUSION);
+                System.out.println(Dithered.DitherAlgorithm.ROBERTS);
+//                for (Dithered.DitherAlgorithm d : Dithered.DitherAlgorithm.values()) {
+//                    System.out.println(d.name());
+//                }
                 System.exit(1);
             }
         }
@@ -56,7 +65,7 @@ public class Main extends ApplicationAdapter {
             pixmaps.add(new Pixmap(root.child(name + "/" + name + "_" + i + INPUT_EXTENSION)));
         }
         gif.setPalette(new PaletteReducer());
-        gif.setFlipY(true);
+        gif.setFlipY(true); // the default is also true
 
         gif.setDitherAlgorithm(dither);
         startTime = TimeUtils.millis();
@@ -70,7 +79,7 @@ public class Main extends ApplicationAdapter {
     public void render() {
         if(numWritten == 32 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " GIFs using " + dither.name());
-//            Gdx.files.local("tmp/imagesClean").deleteDirectory();
+            Gdx.files.local("tmp/imagesClean").deleteDirectory();
             Gdx.app.exit();
         }
         gif.write(Gdx.files.local("tmp/imagesClean/" + name + "/Gif-" + name + "-" + dither.name() + ".gif"), pixmaps, fps + (numWritten & 7));
