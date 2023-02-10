@@ -604,17 +604,22 @@ public class Gif implements AnimationWriter, Dithered {
             }
             break;
             case ROBERTS: {
+                ByteBuffer pixels = image.getPixels();
+                pixels.rewind();
+                hasTransparent = image.getFormat().equals(Pixmap.Format.RGBA8888);
                 final float populationBias = palette.populationBias;
                 final float str = (20f * ditherStrength / (populationBias * populationBias * populationBias * populationBias));
                 for (int y = 0, i = 0; y < height && i < nPix; y++) {
                     for (int px = 0; px < width & i < nPix; px++) {
-                        color = image.getPixel(px, flipped + flipDir * y);
-                        if ((color & 0x80) == 0 && hasTransparent)
+                        int r = pixels.get() & 255;
+                        int g = pixels.get() & 255;
+                        int b = pixels.get() & 255;
+                        if (hasTransparent && (pixels.get() & 0x80) == 0)
                             indexedPixels[i++] = 0;
                         else {
-                            int rr = Math.min(Math.max((int)(((color >>> 24)       ) + ((((px-1) * 0xC13FA9A902A6328FL + (y+1) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-22f - 0x1.4p0f) * str + 0.5f), 0), 255);
-                            int gg = Math.min(Math.max((int)(((color >>> 16) & 0xFF) + ((((px+3) * 0xC13FA9A902A6328FL + (y-1) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-22f - 0x1.4p0f) * str + 0.5f), 0), 255);
-                            int bb = Math.min(Math.max((int)(((color >>> 8)  & 0xFF) + ((((px+2) * 0xC13FA9A902A6328FL + (y+3) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-22f - 0x1.4p0f) * str + 0.5f), 0), 255);
+                            int rr = Math.min(Math.max((int)(r + ((((px-1) * 0xC13FA9A902A6328FL + (y+1) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-22f - 0x1.4p0f) * str + 0.5f), 0), 255);
+                            int gg = Math.min(Math.max((int)(g + ((((px+3) * 0xC13FA9A902A6328FL + (y-1) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-22f - 0x1.4p0f) * str + 0.5f), 0), 255);
+                            int bb = Math.min(Math.max((int)(b + ((((px+2) * 0xC13FA9A902A6328FL + (y+3) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-22f - 0x1.4p0f) * str + 0.5f), 0), 255);
                             usedEntry[(indexedPixels[i] = paletteMapping[((rr << 7) & 0x7C00)
                                     | ((gg << 2) & 0x3E0)
                                     | ((bb >>> 3))]) & 255] = true;
