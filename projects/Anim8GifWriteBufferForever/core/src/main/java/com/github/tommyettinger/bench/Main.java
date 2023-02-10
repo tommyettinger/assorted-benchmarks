@@ -19,7 +19,9 @@ import com.github.tommyettinger.anim8.PaletteReducer;
  * </pre>
  */
 public class Main extends ApplicationAdapter {
-    private static final String name = "market";
+    private static final String name = "flashy"; // "market";
+    private static final int TOTAL_FRAMES = 80; // 90 for market
+    private static final String INPUT_EXTENSION = ".png"; // ".jpg";
     Gif gif;
     Array<Pixmap> pixmaps;
     int numWritten = 0;
@@ -46,12 +48,12 @@ public class Main extends ApplicationAdapter {
         Gdx.files.local("tmp/imagesClean").mkdirs();
         Gdx.files.local("tmp/imagesClean").deleteDirectory();
         gif = new Gif();
-        pixmaps = new Array<>(true, 90, Pixmap.class);
+        pixmaps = new Array<>(true, TOTAL_FRAMES, Pixmap.class);
         FileHandle root = Gdx.files.local("SharedAssets/");
         if(!root.exists()) root = Gdx.files.local("../SharedAssets");
         if(!root.exists()) root = Gdx.files.local("../../SharedAssets");
-        for (int i = 1; i <= 90; i++) {
-            pixmaps.add(new Pixmap(root.child(name + "/" + name + "_" + i + ".jpg")));
+        for (int i = 1; i <= TOTAL_FRAMES; i++) {
+            pixmaps.add(new Pixmap(root.child(name + "/" + name + "_" + i + INPUT_EXTENSION)));
         }
         gif.setPalette(new PaletteReducer());
         gif.setFlipY(true);
@@ -68,7 +70,7 @@ public class Main extends ApplicationAdapter {
     public void render() {
         if(numWritten == 32 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " GIFs using " + dither.name());
-            Gdx.files.local("tmp/imagesClean").deleteDirectory();
+//            Gdx.files.local("tmp/imagesClean").deleteDirectory();
             Gdx.app.exit();
         }
         gif.write(Gdx.files.local("tmp/imagesClean/" + name + "/Gif-" + name + "-" + dither.name() + ".gif"), pixmaps, fps + (numWritten & 7));
