@@ -12,7 +12,10 @@ import com.github.tommyettinger.anim8.Apng;
 /**
  * Running for 32 iterations on Java 19:
  * <pre>
+ *     // SUB filter
  *     Took 97003 ms to write 32 APNGs
+ *     // NONE filter
+ *     Took 64966 ms to write 32 APNGs
  * </pre>
  */
 public class Main extends ApplicationAdapter {

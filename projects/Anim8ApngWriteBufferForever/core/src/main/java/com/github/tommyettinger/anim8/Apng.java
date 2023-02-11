@@ -195,7 +195,7 @@ public class Apng implements AnimationWriter, Disposable {
             buffer.endChunk(dataOutput);
 
             int lineLen = width * 4;
-            byte[] lineOut;
+//            byte[] lineOut;
             byte[] curLine;
             byte[] prevLine;
 
@@ -229,12 +229,12 @@ public class Apng implements AnimationWriter, Disposable {
                 pixels.rewind();
 
                 if (curLineBytes == null) {
-                    lineOut = (lineOutBytes = new ByteArray(lineLen)).items;
+//                    lineOut = (lineOutBytes = new ByteArray(lineLen)).items;
                     curLine = (curLineBytes = new ByteArray(lineLen)).items;
                     prevLine = (prevLineBytes = new ByteArray(lineLen)).items;
                 } else {
                     curLine = curLineBytes.ensureCapacity(lineLen);
-                    lineOut = lineOutBytes.ensureCapacity(lineLen);
+//                    lineOut = lineOutBytes.ensureCapacity(lineLen);
                     prevLine = prevLineBytes.ensureCapacity(lineLen);
                     for (int ln = 0, n = lastLineLen; ln < n; ln++)
                         prevLine[ln] = 0;
@@ -279,19 +279,19 @@ public class Apng implements AnimationWriter, Disposable {
 //                    deflaterOutput.write(PAETH);
 //                    deflaterOutput.write(lineOut, 0, lineLen);
 ////NONE
-//                    deflaterOutput.write(FILTER_NONE);
-//                    deflaterOutput.write(curLine, 0, lineLen);
+                    deflaterOutput.write(FILTER_NONE);
+                    deflaterOutput.write(curLine, 0, lineLen);
 ////SUB
-                    lineOut[0] = curLine[0];
-                    lineOut[1] = curLine[1];
-                    lineOut[2] = curLine[2];
-                    lineOut[3] = curLine[3];
-
-                    for (int x = 4; x < lineLen; x++) {
-                        lineOut[x] = (byte) (curLine[x] - curLine[x - 4]);
-                    }
-                    deflaterOutput.write(FILTER_SUB);
-                    deflaterOutput.write(lineOut, 0, lineLen);
+//                    lineOut[0] = curLine[0];
+//                    lineOut[1] = curLine[1];
+//                    lineOut[2] = curLine[2];
+//                    lineOut[3] = curLine[3];
+//
+//                    for (int x = 4; x < lineLen; x++) {
+//                        lineOut[x] = (byte) (curLine[x] - curLine[x - 4]);
+//                    }
+//                    deflaterOutput.write(FILTER_SUB);
+//                    deflaterOutput.write(lineOut, 0, lineLen);
 //// end of filtering
                     byte[] temp = curLine;
                     curLine = prevLine;
