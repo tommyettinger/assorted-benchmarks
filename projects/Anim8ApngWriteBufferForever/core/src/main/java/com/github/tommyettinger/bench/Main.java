@@ -12,19 +12,24 @@ import com.github.tommyettinger.anim8.Apng;
 /**
  * Running for 32 iterations on Java 19:
  * <pre>
- *     // SUB filter
+ *     // SUB filter, market
  *     Took 97003 ms to write 32 APNGs
- *     // NONE filter
+ *     // NONE filter, market
  *     Took 64966 ms to write 32 APNGs
+ *     // NONE filter, alpha
+ *     Took 7784 ms to write 32 APNGs
  * </pre>
  */
 public class Main extends ApplicationAdapter {
-    private static final String name = "market";
-    private static final int TOTAL_FRAMES = 90;
-    private static final String INPUT_EXTENSION = ".jpg";
+//    private static final String name = "market";
+//    private static final int TOTAL_FRAMES = 90;
+//    private static final String INPUT_EXTENSION = ".jpg";
 //    private static final String name = "flashy"; // "market";
 //    private static final int TOTAL_FRAMES = 80; // 90 for market
 //    private static final String INPUT_EXTENSION = ".png"; // ".jpg";
+    private static final String name = "alpha";
+    private static final int TOTAL_FRAMES = 80;
+    private static final String INPUT_EXTENSION = ".png";
     Apng apng;
     Array<Pixmap> pixmaps;
     int numWritten = 0;
