@@ -7,23 +7,15 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.github.tommyettinger.anim8.Gif;
 import com.github.tommyettinger.anim8.Dithered;
 import com.github.tommyettinger.anim8.PaletteReducer;
+import com.github.tommyettinger.anim8.Png;
 
 /**
  * Running for 32 iterations on Java 19:
  * <pre>
- *     Took 13963 ms to write 32 GIFs using NONE
- *     Took 25606 ms to write 32 GIFs using CHAOTIC_NOISE
- *     Took 25970 ms to write 32 GIFs using GRADIENT_NOISE
- *     Took 26400 ms to write 32 GIFs using ROBERTS
- *     Took 27210 ms to write 32 GIFs using BLUE_NOISE
- *     Took 35241 ms to write 32 GIFs using DIFFUSION
- *     Took 36791 ms to write 32 GIFs using SCATTER
- *     Took 40094 ms to write 32 GIFs using NEUE
- *     Took 41869 ms to write 32 GIFs using WOVEN
- *     Took 225147 ms to write 32 GIFs using PATTERN
+ *     // NONE filter, market
+ *     Took 24718 ms to write 32 PNGs using NONE
  * </pre>
  */
 public class Main extends ApplicationAdapter {
@@ -33,7 +25,10 @@ public class Main extends ApplicationAdapter {
 //    private static final String name = "flashy"; // "market";
 //    private static final int TOTAL_FRAMES = 80; // 90 for market
 //    private static final String INPUT_EXTENSION = ".png"; // ".jpg";
-    Gif gif;
+//    private static final String name = "alpha";
+//    private static final int TOTAL_FRAMES = 80;
+//    private static final String INPUT_EXTENSION = ".png";
+    Png png;
     Array<Pixmap> pixmaps;
     int numWritten = 0;
     int fps = 17;
@@ -58,7 +53,7 @@ public class Main extends ApplicationAdapter {
     public void create() {
         Gdx.files.local("tmp/imagesClean").mkdirs();
         Gdx.files.local("tmp/imagesClean").deleteDirectory();
-        gif = new Gif();
+        png = new Png();
         pixmaps = new Array<>(true, TOTAL_FRAMES, Pixmap.class);
         FileHandle root = Gdx.files.local("SharedAssets/");
         if(!root.exists()) root = Gdx.files.local("../SharedAssets");
@@ -66,10 +61,11 @@ public class Main extends ApplicationAdapter {
         for (int i = 1; i <= TOTAL_FRAMES; i++) {
             pixmaps.add(new Pixmap(root.child(name + "/" + name + "_" + i + INPUT_EXTENSION)));
         }
-        gif.setPalette(new PaletteReducer());
-        gif.setFlipY(true); // the default is also true
+        png.setPalette(new PaletteReducer());
+        png.setFlipY(true); // the default is also true
 
-        gif.setDitherAlgorithm(dither);
+        png.setDitherAlgorithm(dither);
+
         startTime = TimeUtils.millis();
     }
 
@@ -80,11 +76,11 @@ public class Main extends ApplicationAdapter {
     @Override
     public void render() {
         if(numWritten == 32 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " GIFs using " + dither.name());
-            Gdx.files.local("tmp/imagesClean").deleteDirectory();
+            System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " PNGs using " + dither.name());
+//            Gdx.files.local("tmp/imagesClean").deleteDirectory();
             Gdx.app.exit();
         }
-        gif.write(Gdx.files.local("tmp/imagesClean/" + name + "/Gif-" + name + "-" + dither.name() + ".gif"), pixmaps, fps + (numWritten & 7));
+        png.write(Gdx.files.local("tmp/imagesClean/" + name + "/Png-" + name + "-" + dither.name() + ".png"), pixmaps, fps + (numWritten & 7));
         numWritten++;
     }
 }
