@@ -241,17 +241,9 @@ public class Apng implements AnimationWriter, Disposable {
                 }
                 lastLineLen = lineLen;
 
-                for (int y = 0; y < height; y++) {
-                    for (int px = 0, x = 0; px < width; px++) {
-                        curLine[x++] = pixels.get();
-                        curLine[x++] = pixels.get();
-                        curLine[x++] = pixels.get();
-                        if (hasAlpha)
-                            curLine[x++] = pixels.get();
-                        else
-                            curLine[x++] = -1;
-
-                    }
+                if(hasAlpha) {
+                    for (int y = 0; y < height; y++) {
+                        pixels.get(curLine, 0, lineLen);
 ////PAETH
 //                    lineOut[0] = (byte) (curLine[0] - prevLine[0]);
 //                    lineOut[1] = (byte) (curLine[1] - prevLine[1]);
@@ -279,8 +271,8 @@ public class Apng implements AnimationWriter, Disposable {
 //                    deflaterOutput.write(PAETH);
 //                    deflaterOutput.write(lineOut, 0, lineLen);
 ////NONE
-                    deflaterOutput.write(FILTER_NONE);
-                    deflaterOutput.write(curLine, 0, lineLen);
+                        deflaterOutput.write(FILTER_NONE);
+                        deflaterOutput.write(curLine, 0, lineLen);
 ////SUB
 //                    lineOut[0] = curLine[0];
 //                    lineOut[1] = curLine[1];
@@ -293,10 +285,43 @@ public class Apng implements AnimationWriter, Disposable {
 //                    deflaterOutput.write(FILTER_SUB);
 //                    deflaterOutput.write(lineOut, 0, lineLen);
 //// end of filtering
-                    byte[] temp = curLine;
-                    curLine = prevLine;
-                    prevLine = temp;
+                        byte[] temp = curLine;
+                        curLine = prevLine;
+                        prevLine = temp;
+                    }
                 }
+                else {
+
+                    for (int y = 0; y < height; y++) {
+                        for (int px = 0, x = 0; px < width; px++) {
+                            curLine[x++] = pixels.get();
+                            curLine[x++] = pixels.get();
+                            curLine[x++] = pixels.get();
+                            curLine[x++] = -1;
+
+                        }
+////NONE
+                        deflaterOutput.write(FILTER_NONE);
+                        deflaterOutput.write(curLine, 0, lineLen);
+////SUB
+//                    lineOut[0] = curLine[0];
+//                    lineOut[1] = curLine[1];
+//                    lineOut[2] = curLine[2];
+//                    lineOut[3] = curLine[3];
+//
+//                    for (int x = 4; x < lineLen; x++) {
+//                        lineOut[x] = (byte) (curLine[x] - curLine[x - 4]);
+//                    }
+//                    deflaterOutput.write(FILTER_SUB);
+//                    deflaterOutput.write(lineOut, 0, lineLen);
+//// end of filtering
+
+                        byte[] temp = curLine;
+                        curLine = prevLine;
+                        prevLine = temp;
+                    }
+                }
+
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
             }
