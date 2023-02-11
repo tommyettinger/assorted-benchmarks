@@ -16,6 +16,8 @@ import com.github.tommyettinger.anim8.Apng;
  *     Took 97003 ms to write 32 APNGs
  *     // NONE filter, market
  *     Took 64966 ms to write 32 APNGs
+ *     // SUB filter, alpha
+ *     Took 16184 ms to write 32 APNGs
  *     // NONE filter, alpha
  *     Took 7784 ms to write 32 APNGs
  * </pre>
