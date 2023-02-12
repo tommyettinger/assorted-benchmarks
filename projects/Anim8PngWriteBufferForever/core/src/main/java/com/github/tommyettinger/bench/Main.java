@@ -15,7 +15,16 @@ import com.github.tommyettinger.anim8.Png;
  * Running for 32 iterations on Java 19:
  * <pre>
  *     // NONE filter, market
- *     Took 24718 ms to write 32 PNGs using NONE
+ *     Took 23663 ms to write 32 PNGs using NONE
+ *     Took 50925 ms to write 32 PNGs using GRADIENT_NOISE
+ *     Took 249653 ms to write 32 PNGs using PATTERN
+ *     Took 54727 ms to write 32 PNGs using DIFFUSION
+ *     Took 56564 ms to write 32 PNGs using BLUE_NOISE
+ *     Took 56753 ms to write 32 PNGs using CHAOTIC_NOISE
+ *     Took 62854 ms to write 32 PNGs using SCATTER
+ *     Took 79308 ms to write 32 PNGs using NEUE
+ *     Took 48343 ms to write 32 PNGs using ROBERTS
+ *     Took 64055 ms to write 32 PNGs using WOVEN
  * </pre>
  */
 public class Main extends ApplicationAdapter {
