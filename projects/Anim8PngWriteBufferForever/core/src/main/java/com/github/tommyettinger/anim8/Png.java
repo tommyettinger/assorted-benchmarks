@@ -954,6 +954,10 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.writeInt(IDAT);
             deflater.reset();
+            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+            ByteBuffer pixels = pixmap.getPixels();
+            pixels.rewind();
 
             final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //            byte[] lineOut, curLine, prevLine;
@@ -974,14 +978,14 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
             lastLineLen = w;
 
-            int color;
             float adj;
             final float strength = 60f * palette.ditherStrength / (palette.populationBias * palette.populationBias);
             for (int y = 0; y < h; y++) {
-                int py = flipY ? (h - y - 1) : y;
                 for (int px = 0; px < w; px++) {
-                    color = pixmap.getPixel(px, py);
-                    if ((color & 0x80) == 0 && hasTransparent)
+                    int r = pixels.get() & 0xFF;
+                    int g = pixels.get() & 0xFF;
+                    int b = pixels.get() & 0xFF;
+                    if (hasAlpha && (pixels.get() & 0x80) == 0)
                         curLine[px] = 0;
                     else {
                         adj = (px * 0.06711056f + y * 0.00583715f);
@@ -989,9 +993,9 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                         adj *= 52.9829189f;
                         adj -= (int) adj;
                         adj = (adj-0.5f) * strength;
-                        int rr = Math.min(Math.max((int)(((color >>> 24)       ) + adj), 0), 255);
-                        int gg = Math.min(Math.max((int)(((color >>> 16) & 0xFF) + adj), 0), 255);
-                        int bb = Math.min(Math.max((int)(((color >>> 8)  & 0xFF) + adj), 0), 255);
+                        int rr = Math.min(Math.max((int)(r + adj), 0), 255);
+                        int gg = Math.min(Math.max((int)(g + adj), 0), 255);
+                        int bb = Math.min(Math.max((int)(b + adj), 0), 255);
                         curLine[px] = paletteMapping[((rr << 7) & 0x7C00)
                                 | ((gg << 2) & 0x3E0)
                                 | ((bb >>> 3))];
