@@ -1332,6 +1332,10 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.writeInt(IDAT);
             deflater.reset();
+            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+            ByteBuffer pixels = pixmap.getPixels();
+            pixels.rewind();
 
             final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //            byte[] lineOut, curLine, prevLine;
@@ -1352,21 +1356,19 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
             lastLineLen = w;
 
-            int color, used;
+            int used;
 
             byte paletteIndex;
             double adj, strength = palette.ditherStrength * palette.populationBias * 1.5;
             long s = 0xC13FA9A902A6328FL;
             for (int y = 0; y < h; y++) {
-                int py = flipY ? (h - y - 1) : y;
                 for (int px = 0; px < w; px++) {
-                    color = pixmap.getPixel(px, py);
-                    if ((color & 0x80) == 0 && hasTransparent)
+                    int rr = pixels.get() & 0xFF;
+                    int gg = pixels.get() & 0xFF;
+                    int bb = pixels.get() & 0xFF;
+                    if (hasAlpha && (pixels.get() & 0x80) == 0)
                         curLine[px] = 0;
                     else {
-                        int rr = ((color >>> 24)       );
-                        int gg = ((color >>> 16) & 0xFF);
-                        int bb = ((color >>> 8)  & 0xFF);
                         paletteIndex =
                                 paletteMapping[((rr << 7) & 0x7C00)
                                         | ((gg << 2) & 0x3E0)
@@ -1384,7 +1386,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                         adj += ((px + y & 1) - 0.5f) * 0x1.8p-49 * strength *
                                 (((s ^ 0x9E3779B97F4A7C15L) * 0xC6BC279692B5CC83L >> 15) +
                                         ((~s ^ 0xDB4F0B9175AE2165L) * 0xD1B54A32D192ED03L >> 15) +
-                                        ((s = (s ^ color) * 0xD1342543DE82EF95L + 0x91E10DA5C79E7B1DL) >> 15));
+                                        ((s = (s ^ rr + gg + bb) * 0xD1342543DE82EF95L + 0x91E10DA5C79E7B1DL) >> 15));
                         rr = Math.min(Math.max((int) (rr + (adj * (rr - (used >>> 24       )))), 0), 0xFF);
                         gg = Math.min(Math.max((int) (gg + (adj * (gg - (used >>> 16 & 0xFF)))), 0), 0xFF);
                         bb = Math.min(Math.max((int) (bb + (adj * (bb - (used >>> 8  & 0xFF)))), 0), 0xFF);
