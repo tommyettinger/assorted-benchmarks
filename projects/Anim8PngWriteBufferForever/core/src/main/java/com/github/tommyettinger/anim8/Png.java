@@ -2944,6 +2944,10 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                     buffer.writeInt(seq++);
                 }
                 deflater.reset();
+                boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+                // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+                ByteBuffer pixels = pixmap.getPixels();
+                pixels.rewind();
 
                 if (curLineBytes == null) {
 //                    lineOut = (lineOutBytes = new ByteArray(width)).items;
@@ -2958,19 +2962,20 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 }
                 lastLineLen = width;
                 for (int y = 0; y < height; y++) {
-                    int py = flipY ? (height - y - 1) : y;
                     for (int px = 0; px < width; px++) {
-                        color = pixmap.getPixel(px, py);
-                        if ((color & 0x80) == 0 && hasTransparent)
+                        int r = pixels.get() & 0xFF;
+                        int g = pixels.get() & 0xFF;
+                        int b = pixels.get() & 0xFF;
+                        if (hasAlpha && (pixels.get() & 0x80) == 0)
                             curLine[px] = 0;
                         else {
                             float pos = (PaletteReducer.thresholdMatrix64[(px & 7) | (y & 7) << 3] - 31.5f) * 0.2f;
                             adj = ((PaletteReducer.TRI_BLUE_NOISE_B[(px & 63) | (y & 63) << 6] + 0.5f) * strength) + pos;
-                            int rr = MathUtils.clamp((int) (adj + ((color >>> 24)       )), 0, 255);
+                            int rr = Math.min(Math.max((int) (adj + r), 0), 255);
                             adj = ((PaletteReducer.TRI_BLUE_NOISE_C[(px & 63) | (y & 63) << 6] + 0.5f) * strength) + pos;
-                            int gg = MathUtils.clamp((int) (adj + ((color >>> 16) & 0xFF)), 0, 255);
+                            int gg = Math.min(Math.max((int) (adj + g), 0), 255);
                             adj = ((PaletteReducer.TRI_BLUE_NOISE_D[(px & 63) | (y & 63) << 6] + 0.5f) * strength) + pos;
-                            int bb = MathUtils.clamp((int) (adj + ((color >>> 8)  & 0xFF)), 0, 255);
+                            int bb = Math.min(Math.max((int) (adj + b), 0), 255);
 
                             curLine[px] = paletteMapping[((rr << 7) & 0x7C00)
                                     | ((gg << 2) & 0x3E0)
