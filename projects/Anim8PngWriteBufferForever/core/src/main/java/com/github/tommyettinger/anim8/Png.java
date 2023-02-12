@@ -1667,6 +1667,10 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         }
         buffer.writeInt(IDAT);
         deflater.reset();
+            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+            ByteBuffer pixels = pixmap.getPixels();
+            pixels.rewind();
 
         final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //        byte[] lineOut, curLine, prevLine;
@@ -1687,20 +1691,18 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
         lastLineLen = w;
 
-        int color, used;
-        int cr, cg, cb,  usedIndex;
+        int used;
+        int usedIndex;
         final float errorMul = palette.ditherStrength * palette.populationBias;
         for (int y = 0; y < h; y++) {
-            int py = flipY ? (h - y - 1) : y;
             for (int px = 0; px < w; px++) {
-                color = pixmap.getPixel(px, py);
-                if ((color & 0x80) == 0 && hasTransparent)
+                int cr = pixels.get() & 0xFF;
+                int cg = pixels.get() & 0xFF;
+                int cb = pixels.get() & 0xFF;
+                if (hasAlpha && (pixels.get() & 0x80) == 0)
                     curLine[px] = 0;
                 else {
                     int er = 0, eg = 0, eb = 0;
-                    cr = (color >>> 24);
-                    cg = (color >>> 16 & 0xFF);
-                    cb = (color >>> 8 & 0xFF);
                     for (int i = 0; i < 16; i++) {
                         int rr = Math.min(Math.max((int) (cr + er * errorMul), 0), 255);
                         int gg = Math.min(Math.max((int) (cg + eg * errorMul), 0), 255);
