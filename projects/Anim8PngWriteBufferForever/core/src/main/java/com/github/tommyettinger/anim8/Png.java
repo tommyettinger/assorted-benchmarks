@@ -479,6 +479,11 @@ public class Png implements AnimationWriter, Dithered, Disposable {
      * @param threshold the analysis threshold to use if there are too many colors (min 0, practical max is over 100000)
      */
     public void writePrecisely(OutputStream output, Pixmap pixmap, int[] exactPalette, boolean ditherFallback, int threshold) {
+        boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+        // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+        ByteBuffer pixels = pixmap.getPixels();
+        pixels.rewind();
+
         IntIntMap colorToIndex = new IntIntMap(256);
         colorToIndex.put(0, 0);
         int color;
@@ -487,10 +492,13 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         int[] paletteArray;
         if (exactPalette == null) {
             for (int y = 0; y < h; y++) {
-                int py = flipY ? (h - y - 1) : y;
                 for (int px = 0; px < w; px++) {
-                    color = pixmap.getPixel(px, py);
-                    if ((color & 0xFE) != 0xFE && !colorToIndex.containsKey(color)) {
+                    int r = pixels.get() & 0xFF;
+                    int g = pixels.get() & 0xFF;
+                    int b = pixels.get() & 0xFF;
+                    int a = (hasAlpha && (pixels.get() & 0x80) == 0) ? 0 : 255;
+                    color = r << 24 | g << 16 | b << 8 | a;
+                    if ((a & 0xFE) != 0xFE && !colorToIndex.containsKey(color)) {
                         if (hasTransparent == 0 && colorToIndex.size >= 256) {
                             write(output, pixmap, true, ditherFallback, threshold);
                             return;
@@ -569,11 +577,16 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
             lastLineLen = lineLen;
 
+            pixels.rewind();
+
             for (int y = 0; y < h; y++) {
                 int py = flipY ? (h - y - 1) : y;
                 for (int px = 0; px < w; px++) {
-                    color = pixmap.getPixel(px, py);
-                    curLine[px] = (byte) colorToIndex.get(color, 0);
+                    int r = pixels.get() & 0xFF;
+                    int g = pixels.get() & 0xFF;
+                    int b = pixels.get() & 0xFF;
+                    int a = (hasAlpha && (pixels.get() & 0x80) == 0) ? 0 : 255;
+                    curLine[px] = (byte) colorToIndex.get(r << 24 | g << 16 | b << 8 | a, 0);
                 }
 
 //                lineOut[0] = (byte) (curLine[0] - prevLine[0]);
