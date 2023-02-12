@@ -1498,6 +1498,10 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.writeInt(IDAT);
             deflater.reset();
+            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+            ByteBuffer pixels = pixmap.getPixels();
+            pixels.rewind();
 
             int color, used;
             float rdiff, gdiff, bdiff;
@@ -1532,27 +1536,28 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 Arrays.fill(nextErrorGreen, (byte) 0);
                 Arrays.fill(nextErrorBlue, (byte) 0);
 
-                int py = flipY ? (h - y - 1) : y,
-                        ny = y + 1;
+                int ny = y + 1;
                 for (int px = 0; px < w; px++) {
-                    color = pixmap.getPixel(px, py);
-                    if ((color & 0x80) == 0 && hasTransparent)
+                    int r = pixels.get() & 0xFF;
+                    int g = pixels.get() & 0xFF;
+                    int b = pixels.get() & 0xFF;
+                    if (hasAlpha && (pixels.get() & 0x80) == 0)
                         curLine[px] = 0;
                     else {
                         er = curErrorRed[px];
                         eg = curErrorGreen[px];
                         eb = curErrorBlue[px];
-                        int rr = Math.min(Math.max((int)(((color >>> 24)       ) + er + 0.5f), 0), 0xFF);
-                        int gg = Math.min(Math.max((int)(((color >>> 16) & 0xFF) + eg + 0.5f), 0), 0xFF);
-                        int bb = Math.min(Math.max((int)(((color >>> 8)  & 0xFF) + eb + 0.5f), 0), 0xFF);
+                        int rr = Math.min(Math.max((int)(r + er + 0.5f), 0), 0xFF);
+                        int gg = Math.min(Math.max((int)(g + eg + 0.5f), 0), 0xFF);
+                        int bb = Math.min(Math.max((int)(b + eb + 0.5f), 0), 0xFF);
                         curLine[px] = paletteIndex =
                                 paletteMapping[((rr << 7) & 0x7C00)
                                         | ((gg << 2) & 0x3E0)
                                         | ((bb >>> 3))];
                         used = paletteArray[paletteIndex & 0xFF];
-                        rdiff = (0x1.8p-8f * ((color>>>24)-    (used>>>24))    );
-                        gdiff = (0x1.8p-8f * ((color>>>16&255)-(used>>>16&255)));
-                        bdiff = (0x1.8p-8f * ((color>>>8&255)- (used>>>8&255)) );
+                        rdiff = (0x1.8p-8f * (r - (used>>>24))    );
+                        gdiff = (0x1.8p-8f * (g - (used>>>16&255)));
+                        bdiff = (0x1.8p-8f * (b - (used>>>8&255)) );
                         rdiff *= 1.25f / (0.25f + Math.abs(rdiff));
                         gdiff *= 1.25f / (0.25f + Math.abs(gdiff));
                         bdiff *= 1.25f / (0.25f + Math.abs(bdiff));
