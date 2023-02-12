@@ -2792,6 +2792,10 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                     buffer.writeInt(seq++);
                 }
                 deflater.reset();
+                boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+                // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+                ByteBuffer pixels = pixmap.getPixels();
+                pixels.rewind();
 
                 if (curLineBytes == null) {
 //                    lineOut = (lineOutBytes = new ByteArray(width)).items;
@@ -2807,15 +2811,16 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 lastLineLen = width;
 
                 for (int y = 0; y < height; y++) {
-                    int py = flipY ? (height - y - 1) : y;
                     for (int px = 0; px < width; px++) {
-                        color = pixmap.getPixel(px, py);
-                        if ((color & 0x80) == 0 && hasTransparent)
+                        int r = pixels.get() & 0xFF;
+                        int g = pixels.get() & 0xFF;
+                        int b = pixels.get() & 0xFF;
+                        if (hasAlpha && (pixels.get() & 0x80) == 0)
                             curLine[px] = 0;
                         else {
-                            int rr = Math.min(Math.max((int)(((color >>> 24)       ) + ((((px-1) * 0xC13FA9A902A6328FL + (y+1) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-22f - 0x1.4p0f) * str + 0.5f), 0), 255);
-                            int gg = Math.min(Math.max((int)(((color >>> 16) & 0xFF) + ((((px+3) * 0xC13FA9A902A6328FL + (y-1) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-22f - 0x1.4p0f) * str + 0.5f), 0), 255);
-                            int bb = Math.min(Math.max((int)(((color >>> 8)  & 0xFF) + ((((px+2) * 0xC13FA9A902A6328FL + (y+3) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-22f - 0x1.4p0f) * str + 0.5f), 0), 255);
+                            int rr = Math.min(Math.max((int)(r + ((((px-1) * 0xC13FA9A902A6328FL + (y+1) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-22f - 0x1.4p0f) * str + 0.5f), 0), 255);
+                            int gg = Math.min(Math.max((int)(g + ((((px+3) * 0xC13FA9A902A6328FL + (y-1) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-22f - 0x1.4p0f) * str + 0.5f), 0), 255);
+                            int bb = Math.min(Math.max((int)(b + ((((px+2) * 0xC13FA9A902A6328FL + (y+3) * 0x91E10DA5C79E7B1DL) >>> 41) * 0x1.4p-22f - 0x1.4p0f) * str + 0.5f), 0), 255);
                             curLine[px] = paletteMapping[((rr << 7) & 0x7C00)
                                     | ((gg << 2) & 0x3E0)
                                     | ((bb >>> 3))];
