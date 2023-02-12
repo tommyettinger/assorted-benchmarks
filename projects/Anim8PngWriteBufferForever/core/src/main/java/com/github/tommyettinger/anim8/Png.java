@@ -835,6 +835,10 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         }
         buffer.writeInt(IDAT);
         deflater.reset();
+            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+            ByteBuffer pixels = pixmap.getPixels();
+            pixels.rewind();
 
         int lineLen = pixmap.getWidth();
 //        byte[] lineOut, curLine, prevLine;
@@ -855,21 +859,18 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
         lastLineLen = lineLen;
 
-        int color;
-        final int w = pixmap.getWidth(), h = pixmap.getHeight();
+            final int w = pixmap.getWidth(), h = pixmap.getHeight();
         for (int y = 0; y < h; y++) {
-            int py = flipY ? (h - y - 1) : y;
             for (int px = 0; px < w; px++) {
-                color = pixmap.getPixel(px, py);
-                if ((color & 0x80) == 0 && hasTransparent)
+                int r = pixels.get() & 0xF8;
+                int g = pixels.get() & 0xF8;
+                int b = pixels.get() & 0xF8;
+                if (hasAlpha && (pixels.get() & 0x80) == 0)
                     curLine[px] = 0;
                 else {
-                    int rr = ((color >>> 24)       );
-                    int gg = ((color >>> 16) & 0xFF);
-                    int bb = ((color >>> 8)  & 0xFF);
-                    curLine[px] = paletteMapping[((rr << 7) & 0x7C00)
-                            | ((gg << 2) & 0x3E0)
-                            | ((bb >>> 3))];
+                    curLine[px] = paletteMapping[((r << 7))
+                        | ((g << 2))
+                        | ((b >>> 3))];
                 }
             }
 
