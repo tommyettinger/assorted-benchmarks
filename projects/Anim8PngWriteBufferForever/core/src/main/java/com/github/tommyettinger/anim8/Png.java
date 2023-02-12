@@ -3856,9 +3856,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if (paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
@@ -3873,7 +3871,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
             lastLineLen = w;
 
-            int color, used;
+            int used;
             float rdiff, gdiff, bdiff;
             float er, eg, eb;
             byte paletteIndex;
@@ -3908,6 +3906,10 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                     Arrays.fill(nextErrorBlue, (byte) 0);
                 }
                 deflater.reset();
+                boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+                // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+                ByteBuffer pixels = pixmap.getPixels();
+                pixels.rewind();
 
                 if (curLineBytes == null) {
                     curLine = (curLineBytes = new ByteArray(w)).items;
@@ -3928,22 +3930,23 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                     Arrays.fill(nextErrorGreen, (byte) 0);
                     Arrays.fill(nextErrorBlue, (byte) 0);
 
-                    int py = flipY ? (h - y - 1) : y,
-                            ny = y + 1;
+                    int ny = y + 1;
                     for (int px = 0; px < w; px++) {
-                        color = pixmap.getPixel(px, py);
-                        if ((color & 0x80) == 0 && hasTransparent)
+                        int r = pixels.get() & 0xFF;
+                        int g = pixels.get() & 0xFF;
+                        int b = pixels.get() & 0xFF;
+                        if (hasAlpha && (pixels.get() & 0x80) == 0)
                             curLine[px] = 0;
                         else {
-                            adj = ((PaletteReducer.TRI_BLUE_NOISE[(px & 63) | (py & 63) << 6] + 0.5f) * 0.005f); // plus or minus 255/400
+                            adj = ((PaletteReducer.TRI_BLUE_NOISE[(px & 63) | (y & 63) << 6] + 0.5f) * 0.005f); // plus or minus 255/400
                             adj = Math.min(Math.max(adj * strength, -limit), limit);
                             er = adj + (curErrorRed[px]);
                             eg = adj + (curErrorGreen[px]);
                             eb = adj + (curErrorBlue[px]);
 
-                            int rr = MathUtils.clamp((int)(((color >>> 24)       ) + er + 0.5f), 0, 0xFF);
-                            int gg = MathUtils.clamp((int)(((color >>> 16) & 0xFF) + eg + 0.5f), 0, 0xFF);
-                            int bb = MathUtils.clamp((int)(((color >>> 8)  & 0xFF) + eb + 0.5f), 0, 0xFF);
+                            int rr = Math.min(Math.max((int)(r + er + 0.5f), 0), 0xFF);
+                            int gg = Math.min(Math.max((int)(g + eg + 0.5f), 0), 0xFF);
+                            int bb = Math.min(Math.max((int)(b + eb + 0.5f), 0), 0xFF);
                             curLine[px] = paletteIndex =
                                     paletteMapping[((rr << 7) & 0x7C00)
                                             | ((gg << 2) & 0x3E0)
