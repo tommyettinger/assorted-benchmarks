@@ -11,12 +11,17 @@ import com.github.tommyettinger.anim8.Apng;
 /**
  * Running for 100 iterations on Java 19:
  * <pre>
+ *     //// cat.jpg
  *     Took 11617 ms to write 100 PNGs
+ *     //// ColorGuard.png
+ *     Took 91300 ms to write 100 PNGs
  * </pre>
  */
 public class Main extends ApplicationAdapter {
-    private static final String name = "cat";
-    private static final String INPUT_EXTENSION = ".jpg";
+//    private static final String name = "cat";
+//    private static final String INPUT_EXTENSION = ".jpg";
+    private static final String name = "ColorGuard";
+    private static final String INPUT_EXTENSION = ".png";
 
     Apng png;
     Pixmap pixmap;
