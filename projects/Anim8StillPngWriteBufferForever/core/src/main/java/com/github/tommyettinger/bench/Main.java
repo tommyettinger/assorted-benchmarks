@@ -31,71 +31,91 @@ import java.io.ByteArrayOutputStream;
  * <pre>
  *     //// cat.jpg
  *     Took 1691 ms to write 100 PNGs
+ *     Image is 3339892 bytes in size.
  *     //// ColorGuard.png
  *     Took 3102 ms to write 100 PNGs
+ *     Image is 33563716 bytes in size.
  * </pre>
  * Running for 100 iterations on Java 19 with compression 1, memory-only:
  * <pre>
  *     //// cat.jpg
  *     Took 5913 ms to write 100 PNGs
+ *     Image is 1957259 bytes in size.
  *     //// ColorGuard.png
  *     Took 24502 ms to write 100 PNGs
+ *     Image is 7067275 bytes in size.
  * </pre>
  * Running for 100 iterations on Java 19 with compression 2, memory-only:
  * <pre>
  *     //// cat.jpg
  *     Took 6552 ms to write 100 PNG
+ *     Image is 1915918 bytes in size.
  *     //// ColorGuard.png
  *     Took 27419 ms to write 100 PNGs
+ *     Image is 6035633 bytes in size.
  * </pre>
  * Running for 100 iterations on Java 19 with compression 3, memory-only:
  * <pre>
  *     //// cat.jpg
  *     Took 7246 ms to write 100 PNGs
+ *     Image is 1896768 bytes in size.
  *     //// ColorGuard.png
  *     Took 37179 ms to write 100 PNGs
+ *     Image is 6035633 bytes in size.
  * </pre>
  * Running for 100 iterations on Java 19 with compression 4, memory-only:
  * <pre>
  *     //// cat.jpg
  *     Took 8261 ms to write 100 PNGs
+ *     Image is 1867873 bytes in size.
  *     //// ColorGuard.png
  *     Took 38500 ms to write 100 PNGs
+ *     Image is 5620034 bytes in size.
  * </pre>
  * Running for 100 iterations on Java 19 with compression 5, memory-only:
  * <pre>
  *     //// cat.jpg
  *     Took 10596 ms to write 100 PNGs
+ *     Image is 1859115 bytes in size.
  *     //// ColorGuard.png
  *     Took 55550 ms to write 100 PNGs
+ *     Image is 5230281 bytes in size.
  * </pre>
  * Running for 100 iterations on Java 19 with compression 6, memory-only:
  * <pre>
  *     //// cat.jpg
  *     Took 11460 ms to write 100 PNGs
+ *     Image is 1858049 bytes in size.
  *     //// ColorGuard.png
  *     Took 91845 ms to write 100 PNGs
+ *     Image is 4882036 bytes in size.
  * </pre>
  * Running for 100 iterations on Java 19 with compression 7, memory-only:
  * <pre>
  *     //// cat.jpg
  *     Took 11451 ms to write 100 PNGs
+ *     Image is 1858197 bytes in size.
  *     //// ColorGuard.png
  *     Took 120597 ms to write 100 PNGs
+ *     Image is 4784270 bytes in size.
  * </pre>
  * Running for 100 iterations on Java 19 with compression 8, memory-only:
  * <pre>
  *     //// cat.jpg
  *     Took 11570 ms to write 100 PNGs
+ *     Image is 1858267 bytes in size.
  *     //// ColorGuard.png
  *     Took 229390 ms to write 100 PNGs
+ *     Image is 4689923 bytes in size.
  * </pre>
  * Running for 100 iterations on Java 19 with compression 9, memory-only:
  * <pre>
  *     //// cat.jpg
  *     Took 11469 ms to write 100 PNGs
+ *     Image is 1858267 bytes in size.
  *     //// ColorGuard.png
  *     Took 299168 ms to write 100 PNGs
+ *     Image is 4659283 bytes in size.
  * </pre>
  * <br>
  * WITH FILTER_PAETH:

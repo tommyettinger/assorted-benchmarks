@@ -356,7 +356,7 @@ public class Apng implements AnimationWriter, Disposable {
             buffer.writeByte(8); // 8 bits per component.
             buffer.writeByte(COLOR_ARGB);
             buffer.writeByte(COMPRESSION_DEFLATE);
-            buffer.writeByte(FILTER_PAETH);
+            buffer.writeByte(FILTER_NONE);
             buffer.writeByte(INTERLACE_NONE);
             buffer.endChunk(dataOutput);
 
@@ -368,14 +368,14 @@ public class Apng implements AnimationWriter, Disposable {
             pixels.rewind();
 
             int lineLen = pixmap.getWidth() * 4;
-            byte[] lineOut;
+//        byte[] lineOut, curLine, prevLine;
             byte[] curLine, prevLine;
             if (curLineBytes == null) {
-            lineOut = (lineOutBytes = new ByteArray(lineLen)).items;
+//            lineOut = (lineOutBytes = new ByteArray(lineLen)).items;
                 curLine = (curLineBytes = new ByteArray(lineLen)).items;
                 prevLine = (prevLineBytes = new ByteArray(lineLen)).items;
             } else {
-            lineOut = lineOutBytes.ensureCapacity(lineLen);
+//            lineOut = lineOutBytes.ensureCapacity(lineLen);
                 curLine = curLineBytes.ensureCapacity(lineLen);
                 prevLine = prevLineBytes.ensureCapacity(lineLen);
                 Arrays.fill(prevLine, 0, lastLineLen, (byte) 0);
@@ -387,35 +387,9 @@ public class Apng implements AnimationWriter, Disposable {
             if(hasAlpha) {
                 for (int y = 0; y < height; y++) {
                     pixels.get(curLine, 0, lineLen);
-////PAETH
-                    lineOut[0] = (byte) (curLine[0] - prevLine[0]);
-                    lineOut[1] = (byte) (curLine[1] - prevLine[1]);
-                    lineOut[2] = (byte) (curLine[2] - prevLine[2]);
-                    lineOut[3] = (byte) (curLine[3] - prevLine[3]);
-
-                    for (int x = 4; x < lineLen; x++) {
-                        int a = curLine[x - 4] & 0xff;
-                        int b = prevLine[x] & 0xff;
-                        int c = prevLine[x - 4] & 0xff;
-                        int p = a + b - c;
-                        int pa = p - a;
-                        if (pa < 0) pa = -pa;
-                        int pb = p - b;
-                        if (pb < 0) pb = -pb;
-                        int pc = p - c;
-                        if (pc < 0) pc = -pc;
-                        if (pa <= pb && pa <= pc)
-                            c = a;
-                        else if (pb <= pc) //
-                            c = b;
-                        lineOut[x] = (byte) (curLine[x] - c);
-                    }
-
-                    deflaterOutput.write(FILTER_PAETH);
-                    deflaterOutput.write(lineOut, 0, lineLen);
 ////NONE
-//                    deflaterOutput.write(FILTER_NONE);
-//                    deflaterOutput.write(curLine, 0, lineLen);
+                    deflaterOutput.write(FILTER_NONE);
+                    deflaterOutput.write(curLine, 0, lineLen);
 //// end of filtering
                 }
             }
@@ -428,36 +402,9 @@ public class Apng implements AnimationWriter, Disposable {
                         curLine[x++] = -1;
 
                     }
-////PAETH
-                    lineOut[0] = (byte) (curLine[0] - prevLine[0]);
-                    lineOut[1] = (byte) (curLine[1] - prevLine[1]);
-                    lineOut[2] = (byte) (curLine[2] - prevLine[2]);
-                    lineOut[3] = (byte) (curLine[3] - prevLine[3]);
-
-                    for (int x = 4; x < lineLen; x++) {
-                        int a = curLine[x - 4] & 0xff;
-                        int b = prevLine[x] & 0xff;
-                        int c = prevLine[x - 4] & 0xff;
-                        int p = a + b - c;
-                        int pa = p - a;
-                        if (pa < 0) pa = -pa;
-                        int pb = p - b;
-                        if (pb < 0) pb = -pb;
-                        int pc = p - c;
-                        if (pc < 0) pc = -pc;
-                        if (pa <= pb && pa <= pc)
-                            c = a;
-                        else if (pb <= pc) //
-                            c = b;
-                        lineOut[x] = (byte) (curLine[x] - c);
-                    }
-
-                    deflaterOutput.write(FILTER_PAETH);
-                    deflaterOutput.write(lineOut, 0, lineLen);
 ////NONE
-//                    deflaterOutput.write(FILTER_NONE);
-//                    deflaterOutput.write(curLine, 0, lineLen);
-//// end of filtering
+                    deflaterOutput.write(FILTER_NONE);
+                    deflaterOutput.write(curLine, 0, lineLen);
                 }
             }
             deflaterOutput.finish();
