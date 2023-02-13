@@ -11,6 +11,8 @@ import com.github.tommyettinger.anim8.Apng;
 import java.io.ByteArrayOutputStream;
 
 /**
+ * WITH FILTER_NONE:
+ * <br>
  * Running for 100 iterations on Java 19 with compression 6, writing to disk:
  * <pre>
  *     //// cat.jpg
@@ -94,6 +96,16 @@ import java.io.ByteArrayOutputStream;
  *     Took 11469 ms to write 100 PNGs
  *     //// ColorGuard.png
  *     Took 299168 ms to write 100 PNGs
+ * </pre>
+ * <br>
+ * WITH FILTER_PAETH:
+ * <br>
+ * Running for 100 iterations on Java 19 with compression 6, memory-only:
+ * <pre>
+ *     //// cat.jpg
+ *     Took 22374 ms to write 100 PNGs
+ *     //// ColorGuard.png
+ *     Took 122772 ms to write 100 PNGs
  * </pre>
  */
 public class Main extends ApplicationAdapter {
