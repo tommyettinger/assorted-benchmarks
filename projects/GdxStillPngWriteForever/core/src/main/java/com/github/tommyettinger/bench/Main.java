@@ -73,8 +73,10 @@ import java.io.IOException;
  * <pre>
  *     //// cat.jpg
  *     Took 28448 ms to write 100 PNGs
+ *     Image is 1510262 bytes in size.
  *     //// ColorGuard.png
  *     Took 131515 ms to write 100 PNGs
+ *     Image is 6194109 bytes in size.
  * </pre>
  * Running for 100 iterations on Java 19 with compression 7, memory-only:
  * <pre>
@@ -149,18 +151,19 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
-        if(numWritten == 100 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if(numWritten == 2 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " PNGs");
 //            Gdx.files.local("tmp/imagesClean").deleteDirectory();
+            System.out.println("Image is " + baos.size() + " bytes in size.");
             Gdx.app.exit();
         }
+        baos.reset();
         try {
             png.write(baos, pixmap);
 //            png.write(Gdx.files.local("tmp/imagesClean/" + name + "/Png-" + name + ".png"), pixmap);
         } catch (IOException e) {
             throw new GdxRuntimeException("Whoops");
         }
-        baos.reset();
         numWritten++;
     }
 }

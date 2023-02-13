@@ -104,8 +104,10 @@ import java.io.ByteArrayOutputStream;
  * <pre>
  *     //// cat.jpg
  *     Took 22374 ms to write 100 PNGs
+ *     Image is 1476145 bytes in size.
  *     //// ColorGuard.png
  *     Took 122772 ms to write 100 PNGs
+ *     Image is 6202379 bytes in size.
  * </pre>
  */
 public class Main extends ApplicationAdapter {
@@ -159,13 +161,14 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
-        if(numWritten == 100 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " PNGs");
+        if(numWritten == 2 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " PNGs.");
 //            Gdx.files.local("tmp/imagesClean").deleteDirectory();
+            System.out.println("Image is " + baos.size() + " bytes in size.");
             Gdx.app.exit();
         }
-        png.write(baos, pixmap);
         baos.reset();
+        png.write(baos, pixmap);
 //        png.write(Gdx.files.local("tmp/imagesClean/" + name + "/Png-" + name + ".png"), pixmap);
         numWritten++;
     }

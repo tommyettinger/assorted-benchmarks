@@ -13,8 +13,10 @@ import com.badlogic.gdx.utils.TimeUtils;
  * <pre>
  *     //// cat.jpg
  *     Took 8538 ms to write 100 CIMs
+ *     Image is 1816104 bytes in size.
  *     //// ColorGuard.png
  *     Took 94175 ms to write 100 CIMs
+ *     Image is 4864251 bytes in size.
  * </pre>
  */
 public class Main extends ApplicationAdapter {
@@ -57,12 +59,14 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
-        if(numWritten == 100 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        FileHandle target = Gdx.files.local("tmp/imagesClean/" + name + "/Cim-" + name + ".cim");
+        if(numWritten == 2 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " CIMs");
 //            Gdx.files.local("tmp/imagesClean").deleteDirectory();
+            System.out.println("Image is " + target.length() + " bytes in size.");
             Gdx.app.exit();
         }
-        PixmapIO.writeCIM(Gdx.files.local("tmp/imagesClean/" + name + "/Cim-" + name + ".cim"), pixmap);
+        PixmapIO.writeCIM(target, pixmap);
         numWritten++;
     }
 }
