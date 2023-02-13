@@ -344,7 +344,7 @@ public class Apng implements AnimationWriter, Disposable {
      * @param output the stream to write to; the stream will not be closed
      * @param pixmap the Pixmap to write
      */
-    private void write (OutputStream output, Pixmap pixmap){
+    public void write(OutputStream output, Pixmap pixmap){
         DeflaterOutputStream deflaterOutput = new DeflaterOutputStream(buffer, deflater);
         DataOutputStream dataOutput = new DataOutputStream(output);
         try {

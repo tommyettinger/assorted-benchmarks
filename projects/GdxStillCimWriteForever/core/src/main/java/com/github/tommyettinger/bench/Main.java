@@ -18,16 +18,25 @@ import com.badlogic.gdx.utils.TimeUtils;
  * </pre>
  */
 public class Main extends ApplicationAdapter {
-//    private static final String name = "cat";
-//    private static final String INPUT_EXTENSION = ".jpg";
-    private static final String name = "ColorGuard";
-    private static final String INPUT_EXTENSION = ".png";
+    private static final String[] names = {"cat", "ColorGuard", };
+    private static final String[] extensions = {".jpg", ".png", };
+
+    String name;
+    String extension;
 
     Pixmap pixmap;
     int numWritten = 0;
     long startTime;
 
     public Main(String algorithm) {
+        try {
+            int index = Integer.parseInt(algorithm);
+            name = names[index];
+            extension = extensions[index];
+        } catch (Exception e) {
+            name = names[0];
+            extension = extensions[0];
+        }
     }
 
     @Override
@@ -37,7 +46,7 @@ public class Main extends ApplicationAdapter {
         FileHandle root = Gdx.files.local("SharedAssets/");
         if(!root.exists()) root = Gdx.files.local("../SharedAssets");
         if(!root.exists()) root = Gdx.files.local("../../SharedAssets");
-        pixmap = new Pixmap(root.child(name + "/" + name + INPUT_EXTENSION));
+        pixmap = new Pixmap(root.child(name + "/" + name + extension));
 
         startTime = TimeUtils.millis();
     }
