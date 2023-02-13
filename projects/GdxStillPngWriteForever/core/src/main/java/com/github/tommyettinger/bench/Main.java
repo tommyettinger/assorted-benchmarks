@@ -12,19 +12,26 @@ import com.badlogic.gdx.utils.TimeUtils;
 import java.io.IOException;
 
 /**
- * Running for 100 iterations on Java 19:
+ * Running for 100 iterations on Java 19 with compression 6:
  * <pre>
  *     //// cat.jpg
  *     Took 27363 ms to write 100 PNGs
  *     //// ColorGuard.png
  *     Took 130362 ms to write 100 PNGs
  * </pre>
+ * Running for 100 iterations on Java 19 with compression 2:
+ * <pre>
+ *     //// cat.jpg
+ *     Took 9053 ms to write 100 PNGs
+ *     //// ColorGuard.png
+ *     Took 45496 ms to write 100 PNG
+ * </pre>
  */
 public class Main extends ApplicationAdapter {
-    private static final String name = "cat";
-    private static final String INPUT_EXTENSION = ".jpg";
-//    private static final String name = "ColorGuard";
-//    private static final String INPUT_EXTENSION = ".png";
+//    private static final String name = "cat";
+//    private static final String INPUT_EXTENSION = ".jpg";
+    private static final String name = "ColorGuard";
+    private static final String INPUT_EXTENSION = ".png";
 
     PixmapIO.PNG png;
     Pixmap pixmap;
@@ -44,7 +51,8 @@ public class Main extends ApplicationAdapter {
         if(!root.exists()) root = Gdx.files.local("../../SharedAssets");
         pixmap = new Pixmap(root.child(name + "/" + name + INPUT_EXTENSION));
         png.setFlipY(true); // the default is also true
-        png.setCompression(6); // default compression used by other PNG stuff
+//        png.setCompression(6); // default compression used by other PNG stuff
+        png.setCompression(2); // lower than default compression rate, faster
 
         startTime = TimeUtils.millis();
     }
