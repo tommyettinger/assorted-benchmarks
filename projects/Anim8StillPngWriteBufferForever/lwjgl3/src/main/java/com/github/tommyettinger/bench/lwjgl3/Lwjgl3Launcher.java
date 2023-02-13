@@ -7,7 +7,7 @@ import com.github.tommyettinger.bench.Main;
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
     public static void main(String[] args) {
-        new Lwjgl3Application(new Main(args.length > 0 ? args[0] : ""), getDefaultConfiguration());
+        new Lwjgl3Application(new Main(args.length > 0 ? args[0] : "", args.length > 1 ? args[1] : "6"), getDefaultConfiguration());
     }
 
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {

@@ -25,19 +25,75 @@ import java.io.ByteArrayOutputStream;
  *     //// ColorGuard.png
  *     Took 27685 ms to write 100 PNGs
  * </pre>
- * Running for 100 iterations on Java 19 with compression 6, memory-only:
+ * Running for 100 iterations on Java 19 with compression 0, memory-only:
  * <pre>
  *     //// cat.jpg
- *     Took ??? ms to write 100 PNGs
+ *     Took 1691 ms to write 100 PNGs
  *     //// ColorGuard.png
- *     Took ??? ms to write 100 PNGs
+ *     Took 3102 ms to write 100 PNGs
+ * </pre>
+ * Running for 100 iterations on Java 19 with compression 1, memory-only:
+ * <pre>
+ *     //// cat.jpg
+ *     Took 5913 ms to write 100 PNGs
+ *     //// ColorGuard.png
+ *     Took 24502 ms to write 100 PNGs
  * </pre>
  * Running for 100 iterations on Java 19 with compression 2, memory-only:
  * <pre>
  *     //// cat.jpg
- *     Took 6506 ms to write 100 PNG
+ *     Took 6552 ms to write 100 PNG
  *     //// ColorGuard.png
- *     Took 27176 ms to write 100 PNGs
+ *     Took 27419 ms to write 100 PNGs
+ * </pre>
+ * Running for 100 iterations on Java 19 with compression 3, memory-only:
+ * <pre>
+ *     //// cat.jpg
+ *     Took 7246 ms to write 100 PNGs
+ *     //// ColorGuard.png
+ *     Took 37179 ms to write 100 PNGs
+ * </pre>
+ * Running for 100 iterations on Java 19 with compression 4, memory-only:
+ * <pre>
+ *     //// cat.jpg
+ *     Took 8261 ms to write 100 PNGs
+ *     //// ColorGuard.png
+ *     Took 38500 ms to write 100 PNGs
+ * </pre>
+ * Running for 100 iterations on Java 19 with compression 5, memory-only:
+ * <pre>
+ *     //// cat.jpg
+ *     Took 10596 ms to write 100 PNGs
+ *     //// ColorGuard.png
+ *     Took 55550 ms to write 100 PNGs
+ * </pre>
+ * Running for 100 iterations on Java 19 with compression 6, memory-only:
+ * <pre>
+ *     //// cat.jpg
+ *     Took 11460 ms to write 100 PNGs
+ *     //// ColorGuard.png
+ *     Took 91845 ms to write 100 PNGs
+ * </pre>
+ * Running for 100 iterations on Java 19 with compression 7, memory-only:
+ * <pre>
+ *     //// cat.jpg
+ *     Took 11451 ms to write 100 PNGs
+ *     //// ColorGuard.png
+ *     Took 120597 ms to write 100 PNGs
+ * </pre>
+ * Running for 100 iterations on Java 19 with compression 8, memory-only:
+ * <pre>
+ *     //// cat.jpg
+ *     Took 11570 ms to write 100 PNGs
+ *     //// ColorGuard.png
+ *     Took 229390 ms to write 100 PNGs
+ * </pre>
+ * Running for 100 iterations on Java 19 with compression 9, memory-only:
+ * <pre>
+ *     //// cat.jpg
+ *     Took 11469 ms to write 100 PNGs
+ *     //// ColorGuard.png
+ *     Took 299168 ms to write 100 PNGs
  * </pre>
  */
 public class Main extends ApplicationAdapter {
@@ -52,14 +108,21 @@ public class Main extends ApplicationAdapter {
     long startTime;
     ByteArrayOutputStream baos;
 
-    public Main(String algorithm) {
+    int compression;
+
+    public Main(String input, String compression) {
         try {
-            int index = Integer.parseInt(algorithm);
+            int index = Integer.parseInt(input);
             name = names[index];
             extension = extensions[index];
         } catch (Exception e) {
             name = names[0];
             extension = extensions[0];
+        }
+        try {
+            this.compression = Integer.parseInt(compression);
+        } catch (Exception e) {
+            this.compression = 6;
         }
     }
 
@@ -73,7 +136,7 @@ public class Main extends ApplicationAdapter {
         if(!root.exists()) root = Gdx.files.local("../../SharedAssets");
         pixmap = new Pixmap(root.child(name + "/" + name + extension));
         png.setFlipY(true); // the default is also true
-        png.setCompression(2); // lower than default compression rate, faster
+        png.setCompression(compression); // lower than default compression rate, faster
         baos = new ByteArrayOutputStream(0x800000);
         startTime = TimeUtils.millis();
     }
