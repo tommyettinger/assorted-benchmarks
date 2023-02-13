@@ -30,6 +30,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
@@ -313,6 +314,109 @@ public class Apng implements AnimationWriter, Disposable {
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
             }
+            buffer.writeInt(IEND);
+            buffer.endChunk(dataOutput);
+
+            output.flush();
+        } catch (IOException e) {
+            Gdx.app.error("anim8", e.getMessage());
+        }
+    }
+
+    /**
+     * Writes the given Pixmap to the requested FileHandle. This can use all 32-bit colors.
+     * @param file a FileHandle that must be writable, and will have the given Pixmap written as a PNG image
+     * @param pixmap a Pixmap to write to the given file
+     */
+    public void write (FileHandle file, Pixmap pixmap) {
+        OutputStream output = file.write(false);
+        try {
+            write(output, pixmap);
+        } finally {
+            StreamUtils.closeQuietly(output);
+        }
+    }
+
+
+    /**
+     * Writes the given Pixmap to the given {@code output} stream without
+     * closing the stream. This can use all 32-bit colors.
+     * @param output the stream to write to; the stream will not be closed
+     * @param pixmap the Pixmap to write
+     */
+    private void write (OutputStream output, Pixmap pixmap){
+        DeflaterOutputStream deflaterOutput = new DeflaterOutputStream(buffer, deflater);
+        DataOutputStream dataOutput = new DataOutputStream(output);
+        try {
+            dataOutput.write(SIGNATURE);
+
+            buffer.writeInt(IHDR);
+            buffer.writeInt(pixmap.getWidth());
+            buffer.writeInt(pixmap.getHeight());
+            buffer.writeByte(8); // 8 bits per component.
+            buffer.writeByte(COLOR_ARGB);
+            buffer.writeByte(COMPRESSION_DEFLATE);
+            buffer.writeByte(FILTER_NONE);
+            buffer.writeByte(INTERLACE_NONE);
+            buffer.endChunk(dataOutput);
+
+            buffer.writeInt(IDAT);
+            deflater.reset();
+            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+            ByteBuffer pixels = pixmap.getPixels();
+            pixels.rewind();
+
+            int lineLen = pixmap.getWidth();
+//        byte[] lineOut, curLine, prevLine;
+            byte[] curLine, prevLine;
+            if (curLineBytes == null) {
+//            lineOut = (lineOutBytes = new ByteArray(lineLen)).items;
+                curLine = (curLineBytes = new ByteArray(lineLen)).items;
+                prevLine = (prevLineBytes = new ByteArray(lineLen)).items;
+            } else {
+//            lineOut = lineOutBytes.ensureCapacity(lineLen);
+                curLine = curLineBytes.ensureCapacity(lineLen);
+                prevLine = prevLineBytes.ensureCapacity(lineLen);
+                Arrays.fill(prevLine, 0, lastLineLen, (byte) 0);
+            }
+
+            lastLineLen = lineLen;
+
+            final int width = pixmap.getWidth(), height = pixmap.getHeight();
+            if(hasAlpha) {
+                for (int y = 0; y < height; y++) {
+                    pixels.get(curLine, 0, lineLen);
+////NONE
+                    deflaterOutput.write(FILTER_NONE);
+                    deflaterOutput.write(curLine, 0, lineLen);
+//// end of filtering
+                    byte[] temp = curLine;
+                    curLine = prevLine;
+                    prevLine = temp;
+                }
+            }
+            else {
+                for (int y = 0; y < height; y++) {
+                    for (int px = 0, x = 0; px < width; px++) {
+                        curLine[x++] = pixels.get();
+                        curLine[x++] = pixels.get();
+                        curLine[x++] = pixels.get();
+                        curLine[x++] = -1;
+
+                    }
+////NONE
+                    deflaterOutput.write(FILTER_NONE);
+                    deflaterOutput.write(curLine, 0, lineLen);
+
+                    byte[] temp = curLine;
+                    curLine = prevLine;
+                    prevLine = temp;
+                }
+            }
+            deflaterOutput.finish();
+            buffer.endChunk(dataOutput);
+
             buffer.writeInt(IEND);
             buffer.endChunk(dataOutput);
 
