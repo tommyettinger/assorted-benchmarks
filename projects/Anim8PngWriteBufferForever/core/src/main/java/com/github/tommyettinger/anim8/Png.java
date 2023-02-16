@@ -2492,7 +2492,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
             // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
             ByteBuffer pixels = pixmap.getPixels();
-            pixels.rewind();
 
             if (curLineBytes == null) {
 //                lineOut = (lineOutBytes = new ByteArray(width)).items;
@@ -2554,6 +2553,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             deflaterOutput.finish();
             buffer.endChunk(dataOutput);
+            pixels.rewind();
         }
 
         buffer.writeInt(IEND);
@@ -2677,7 +2677,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
                 // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
                 ByteBuffer pixels = pixmap.getPixels();
-                pixels.rewind();
 
                 if (curLineBytes == null) {
 //                    lineOut = (lineOutBytes = new ByteArray(width)).items;
@@ -2746,6 +2745,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
+                pixels.rewind();
             }
 
             buffer.writeInt(IEND);
@@ -2832,7 +2832,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
                 // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
                 ByteBuffer pixels = pixmap.getPixels();
-                pixels.rewind();
 
                 if (curLineBytes == null) {
 //                    lineOut = (lineOutBytes = new ByteArray(width)).items;
@@ -2896,6 +2895,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
+                pixels.rewind();
             }
 
             buffer.writeInt(IEND);
@@ -2981,7 +2981,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
                 // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
                 ByteBuffer pixels = pixmap.getPixels();
-                pixels.rewind();
 
                 if (curLineBytes == null) {
 //                    lineOut = (lineOutBytes = new ByteArray(width)).items;
@@ -3048,6 +3047,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
+                pixels.rewind();
             }
 
             buffer.writeInt(IEND);
@@ -3136,7 +3136,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
                 // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
                 ByteBuffer pixels = pixmap.getPixels();
-                pixels.rewind();
 
                 if (curLineBytes == null) {
 //                    lineOut = (lineOutBytes = new ByteArray(width)).items;
@@ -3218,6 +3217,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
+                pixels.rewind();
             }
 
             buffer.writeInt(IEND);
@@ -3331,7 +3331,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
                 // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
                 ByteBuffer pixels = pixmap.getPixels();
-                pixels.rewind();
 
                 if ( curLineBytes == null) {
 //                    lineOut = (lineOutBytes = new ByteArray(w)).items;
@@ -3439,6 +3438,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
+                pixels.rewind();
             }
 
             buffer.writeInt(IEND);
@@ -3527,7 +3527,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
                 // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
                 ByteBuffer pixels = pixmap.getPixels();
-                pixels.rewind();
 
                 if (curLineBytes == null) {
 //                    lineOut = (lineOutBytes = new ByteArray(width)).items;
@@ -3601,6 +3600,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
+                pixels.rewind();
             }
 
             buffer.writeInt(IEND);
@@ -3714,7 +3714,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
                 // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
                 ByteBuffer pixels = pixmap.getPixels();
-                pixels.rewind();
 
                 if (curLineBytes == null) {
 //                    lineOut = (lineOutBytes = new ByteArray(w)).items;
@@ -3822,6 +3821,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
+                pixels.rewind();
             }
 
             buffer.writeInt(IEND);
@@ -3937,7 +3937,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
                 // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
                 ByteBuffer pixels = pixmap.getPixels();
-                pixels.rewind();
 
                 if (curLineBytes == null) {
                     curLine = (curLineBytes = new ByteArray(w)).items;
@@ -4046,6 +4045,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
+                pixels.rewind();
             }
 
             buffer.writeInt(IEND);
@@ -4161,7 +4161,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
                 // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
                 ByteBuffer pixels = pixmap.getPixels();
-                pixels.rewind();
 
                 if (curLineBytes == null) {
                     curLine = (curLineBytes = new ByteArray(w)).items;
@@ -4264,6 +4263,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
+                pixels.rewind();
             }
 
             buffer.writeInt(IEND);

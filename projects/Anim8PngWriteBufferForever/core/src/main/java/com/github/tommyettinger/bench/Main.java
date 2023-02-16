@@ -84,12 +84,13 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void render() {
-        if(numWritten == 32 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (numWritten == 2 || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Took " + (TimeUtils.millis() - startTime) + " ms to write " + numWritten + " PNGs using " + dither.name());
 //            Gdx.files.local("tmp/imagesClean").deleteDirectory();
             Gdx.app.exit();
+        } else {
+            png.write(Gdx.files.local("tmp/imagesClean/" + name + "/Png-" + name + "-" + dither.name() + ".png"), pixmaps, fps + (numWritten & 7));
+            numWritten++;
         }
-        png.write(Gdx.files.local("tmp/imagesClean/" + name + "/Png-" + name + "-" + dither.name() + ".png"), pixmaps, fps + (numWritten & 7));
-        numWritten++;
     }
 }
