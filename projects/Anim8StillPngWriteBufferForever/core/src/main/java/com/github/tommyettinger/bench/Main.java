@@ -169,7 +169,7 @@ public class Main extends ApplicationAdapter {
         if(!root.exists()) root = Gdx.files.local("../SharedAssets");
         if(!root.exists()) root = Gdx.files.local("../../SharedAssets");
         pixmap = new Pixmap(root.child(name + "/" + name + extension));
-        png.setFlipY(true); // the default is also true
+        png.setFlipY(false); // the default is false
         png.setCompression(compression); // lower than default compression rate, faster
         baos = new ByteArrayOutputStream(0x800000);
         startTime = TimeUtils.millis();
@@ -189,7 +189,7 @@ public class Main extends ApplicationAdapter {
         }
         baos.reset();
         png.write(baos, pixmap);
-//        png.write(Gdx.files.local("tmp/imagesClean/" + name + "/Png-" + name + ".png"), pixmap);
+        png.write(Gdx.files.local("tmp/imagesClean/" + name + "/Png-" + name + ".png"), pixmap);
         numWritten++;
     }
 }

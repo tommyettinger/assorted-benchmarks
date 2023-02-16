@@ -92,8 +92,8 @@ public class Apng implements AnimationWriter, Disposable {
 
     private final ChunkBuffer buffer;
     private final Deflater deflater;
-    private ByteArray lineOutBytes, curLineBytes, prevLineBytes;
-    private boolean flipY = true;
+    private ByteArray curLineBytes;
+    private ByteArray prevLineBytes;
     private int lastLineLen;
 
     /**
@@ -115,10 +115,11 @@ public class Apng implements AnimationWriter, Disposable {
     }
 
     /**
-     * If true, the resulting AnimatedPNG is flipped vertically. Default is true.
+     * A no-op; this class never flips the image, regardless of the setting. This method
+     * is here for compatibility with PixmapIO.PNG, and also for possible future changes
+     * if flipping becomes viable.
      */
     public void setFlipY(boolean flipY) {
-        this.flipY = flipY;
     }
 
     /**
@@ -165,7 +166,18 @@ public class Apng implements AnimationWriter, Disposable {
 
     /**
      * Writes animated PNG data consisting of the given {@code frames} to the given {@code output} stream without
-     * closing the stream, at {@code fps} frames per second.
+     * closing the stream, at {@code fps} frames per second. This can use all 32-bit colors.
+     * <br>
+     * This makes some decisions in order to optimize speed at the expense of file size, by
+     * default. You can adjust the compression ratio from the default 6 with {@link #setCompression(int)},
+     * either up to 9 (slightly better file size, but much slower to write), or down to as low as 2
+     * (not-much-worse file size, but much faster to write), or even 0 (with no compression, this writes
+     * drastically more quickly... but the files are huge unless recompressed). Using compression level 0
+     * can be a good idea if you know that the output files will go into a ZIP or JAR file, since those
+     * use the same DEFLATE algorithm that PNG does, and that can't be done twice for any gain. It can
+     * also be a good idea if you intend to optimize the output later using a much smarter tool, like
+     * <a href="https://sourceforge.net/projects/apng/files/APNG_Optimizer/">apngopt</a>.
+     *
      * @param output the stream to write to; the stream will not be closed
      * @param frames an Array of Pixmap frames to write in order to the animated PNG
      * @param fps how many frames per second the animated PNG should display
@@ -339,8 +351,20 @@ public class Apng implements AnimationWriter, Disposable {
 
 
     /**
-     * Writes the given Pixmap to the given {@code output} stream without
+     * Writes the given Pixmap as an animated PNG to the given {@code output} stream without
      * closing the stream. This can use all 32-bit colors.
+     * <br>
+     * This makes some decisions in order to optimize speed at the expense of file size, by
+     * default. You can adjust the compression ratio from the default 6 with {@link #setCompression(int)},
+     * either up to 9 (slightly better file size, but much slower to write), or down to as low as 2
+     * (not-much-worse file size, but much faster to write), or even 0 (with no compression, this writes
+     * drastically more quickly... but the files are huge unless recompressed). Using compression level 0
+     * can be a good idea if you know that the output files will go into a ZIP or JAR file, since those
+     * use the same DEFLATE algorithm that PNG does, and that can't be done twice for any gain. It can
+     * also be a good idea if you intend to optimize the output later using a much smarter tool, like
+     * <a href="https://github.com/shssoichiro/oxipng">oxipng</a> or
+     * <a href="http://www.advsys.net/ken/utils.htm">PNGOUT</a>.
+     *
      * @param output the stream to write to; the stream will not be closed
      * @param pixmap the Pixmap to write
      */

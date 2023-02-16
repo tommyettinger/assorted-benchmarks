@@ -165,7 +165,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
     }
 
     public Png() {
-        this(128 * 128);
+        this(1024);
     }
 
     public Png(int initialBufferSize) {
@@ -482,7 +482,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
         // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
         ByteBuffer pixels = pixmap.getPixels();
-        pixels.rewind();
 
         IntIntMap colorToIndex = new IntIntMap(256);
         colorToIndex.put(0, 0);
@@ -500,6 +499,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                     color = r << 24 | g << 16 | b << 8 | a;
                     if ((a & 0xFE) != 0xFE && !colorToIndex.containsKey(color)) {
                         if (hasTransparent == 0 && colorToIndex.size >= 256) {
+                            pixels.rewind();
                             write(output, pixmap, true, ditherFallback, threshold);
                             return;
                         }
@@ -510,6 +510,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                             colorToIndex.remove(0, 0);
                         }
                         if (colorToIndex.size > 256) {
+                            pixels.rewind();
                             write(output, pixmap, true, ditherFallback, threshold);
                             return;
                         }
@@ -580,7 +581,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             pixels.rewind();
 
             for (int y = 0; y < h; y++) {
-                int py = flipY ? (h - y - 1) : y;
                 for (int px = 0; px < w; px++) {
                     int r = pixels.get() & 0xFF;
                     int g = pixels.get() & 0xFF;
@@ -629,6 +629,8 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             output.flush();
         } catch (IOException e) {
             Gdx.app.error("anim8", e.getMessage());
+        }finally {
+            pixels.rewind();
         }
     }
     /**
@@ -817,6 +819,9 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
         DeflaterOutputStream deflaterOutput = new DeflaterOutputStream(buffer, deflater);
         DataOutputStream dataOutput = new DataOutputStream(output);
+        boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+        // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+        ByteBuffer pixels = pixmap.getPixels();
         try {
         dataOutput.write(SIGNATURE);
 
@@ -839,19 +844,13 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         }
         buffer.endChunk(dataOutput);
 
-        boolean hasTransparent = false;
-        if(paletteArray[0] == 0) {
-            hasTransparent = true;
-            buffer.writeInt(TRNS);
+            if(paletteArray[0] == 0) {
+                buffer.writeInt(TRNS);
             buffer.write(0);
             buffer.endChunk(dataOutput);
         }
         buffer.writeInt(IDAT);
         deflater.reset();
-            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
-            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
-            ByteBuffer pixels = pixmap.getPixels();
-            pixels.rewind();
 
         int lineLen = pixmap.getWidth();
 //        byte[] lineOut, curLine, prevLine;
@@ -927,6 +926,8 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         output.flush();
         } catch (IOException e) {
             Gdx.app.error("anim8", e.getMessage());
+        } finally {
+            pixels.rewind();
         }
     }
 
@@ -936,6 +937,9 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         final byte[] paletteMapping = palette.paletteMapping;
 
         DataOutputStream dataOutput = new DataOutputStream(output);
+        boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+        // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+        ByteBuffer pixels = pixmap.getPixels();
         try {
             dataOutput.write(SIGNATURE);
 
@@ -958,19 +962,13 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if(paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
             }
             buffer.writeInt(IDAT);
             deflater.reset();
-            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
-            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
-            ByteBuffer pixels = pixmap.getPixels();
-            pixels.rewind();
 
             final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //            byte[] lineOut, curLine, prevLine;
@@ -1056,6 +1054,8 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             output.flush();
         } catch (IOException e) {
             Gdx.app.error("anim8", e.getMessage());
+        } finally {
+            pixels.rewind();
         }
     }
 
@@ -1065,6 +1065,9 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         final byte[] paletteMapping = palette.paletteMapping;
 
         DataOutputStream dataOutput = new DataOutputStream(output);
+        boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+        // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+        ByteBuffer pixels = pixmap.getPixels();
         try {
             dataOutput.write(SIGNATURE);
 
@@ -1087,19 +1090,13 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if(paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
             }
             buffer.writeInt(IDAT);
             deflater.reset();
-            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
-            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
-            ByteBuffer pixels = pixmap.getPixels();
-            pixels.rewind();
 
             final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //            byte[] lineOut, curLine, prevLine;
@@ -1180,6 +1177,8 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             output.flush();
         } catch (IOException e) {
             Gdx.app.error("anim8", e.getMessage());
+        } finally {
+            pixels.rewind();
         }
     }
     private void writeBlueNoiseDithered(OutputStream output, Pixmap pixmap) {
@@ -1188,6 +1187,9 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         final byte[] paletteMapping = palette.paletteMapping;
 
         DataOutputStream dataOutput = new DataOutputStream(output);
+        boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+        // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+        ByteBuffer pixels = pixmap.getPixels();
         try {
             dataOutput.write(SIGNATURE);
 
@@ -1210,19 +1212,13 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if(paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
             }
             buffer.writeInt(IDAT);
             deflater.reset();
-            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
-            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
-            ByteBuffer pixels = pixmap.getPixels();
-            pixels.rewind();
 
             final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //            byte[] lineOut, curLine, prevLine;
@@ -1305,6 +1301,8 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             output.flush();
         } catch (IOException e) {
             Gdx.app.error("anim8", e.getMessage());
+        } finally {
+            pixels.rewind();
         }
     }
 
@@ -1314,6 +1312,9 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         final byte[] paletteMapping = palette.paletteMapping;
 
         DataOutputStream dataOutput = new DataOutputStream(output);
+        boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+        // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+        ByteBuffer pixels = pixmap.getPixels();
         try {
             dataOutput.write(SIGNATURE);
 
@@ -1336,19 +1337,13 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if(paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
             }
             buffer.writeInt(IDAT);
             deflater.reset();
-            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
-            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
-            ByteBuffer pixels = pixmap.getPixels();
-            pixels.rewind();
 
             final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //            byte[] lineOut, curLine, prevLine;
@@ -1449,6 +1444,8 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             output.flush();
         } catch (IOException e) {
             Gdx.app.error("anim8", e.getMessage());
+        } finally {
+            pixels.rewind();
         }
     }
 
@@ -1458,6 +1455,9 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         final byte[] paletteMapping = palette.paletteMapping;
 
         DataOutputStream dataOutput = new DataOutputStream(output);
+        boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+        // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+        ByteBuffer pixels = pixmap.getPixels();
         try {
             dataOutput.write(SIGNATURE);
 
@@ -1502,21 +1502,15 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if(paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
             }
             buffer.writeInt(IDAT);
             deflater.reset();
-            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
-            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
-            ByteBuffer pixels = pixmap.getPixels();
-            pixels.rewind();
 
-            int color, used;
+            int used;
             float rdiff, gdiff, bdiff;
             float er, eg, eb;
             byte paletteIndex;
@@ -1640,6 +1634,8 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             output.flush();
         } catch (IOException e) {
             Gdx.app.error("anim8", e.getMessage());
+        } finally {
+            pixels.rewind();
         }
     }
 
@@ -1649,6 +1645,9 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         final byte[] paletteMapping = palette.paletteMapping;
 
         DataOutputStream dataOutput = new DataOutputStream(output);
+        boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+        // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+        ByteBuffer pixels = pixmap.getPixels();
         try {
         dataOutput.write(SIGNATURE);
 
@@ -1671,19 +1670,13 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         }
         buffer.endChunk(dataOutput);
 
-        boolean hasTransparent = false;
-        if(paletteArray[0] == 0) {
-            hasTransparent = true;
-            buffer.writeInt(TRNS);
+            if(paletteArray[0] == 0) {
+                buffer.writeInt(TRNS);
             buffer.write(0);
             buffer.endChunk(dataOutput);
         }
         buffer.writeInt(IDAT);
         deflater.reset();
-            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
-            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
-            ByteBuffer pixels = pixmap.getPixels();
-            pixels.rewind();
 
         final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //        byte[] lineOut, curLine, prevLine;
@@ -1773,6 +1766,8 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         output.flush();
         } catch (IOException e) {
             Gdx.app.error("anim8", e.getMessage());
+        } finally {
+            pixels.rewind();
         }
     }
 
@@ -1782,6 +1777,9 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         final byte[] paletteMapping = palette.paletteMapping;
 
         DataOutputStream dataOutput = new DataOutputStream(output);
+        boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+        // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+        ByteBuffer pixels = pixmap.getPixels();
         try {
             dataOutput.write(SIGNATURE);
 
@@ -1826,21 +1824,15 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if(paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
             }
             buffer.writeInt(IDAT);
             deflater.reset();
-            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
-            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
-            ByteBuffer pixels = pixmap.getPixels();
-            pixels.rewind();
 
-            int color, used;
+            int used;
             float rdiff, gdiff, bdiff;
             float er, eg, eb;
             byte paletteIndex;
@@ -1873,8 +1865,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 Arrays.fill(nextErrorGreen, (byte) 0);
                 Arrays.fill(nextErrorBlue, (byte) 0);
 
-                int py = flipY ? (h - y - 1) : y,
-                        ny = y + 1;
+                int ny = y + 1;
                 for (int px = 0; px < w; px++) {
                     int r = pixels.get() & 0xFF;
                     int g = pixels.get() & 0xFF;
@@ -1966,6 +1957,8 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             output.flush();
         } catch (IOException e) {
             Gdx.app.error("anim8", e.getMessage());
+        } finally {
+            pixels.rewind();
         }
     }
 
@@ -1975,6 +1968,9 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         final byte[] paletteMapping = palette.paletteMapping;
 
         DataOutputStream dataOutput = new DataOutputStream(output);
+        boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+        // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+        ByteBuffer pixels = pixmap.getPixels();
         try {
             dataOutput.write(SIGNATURE);
 
@@ -2019,21 +2015,15 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if(paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
             }
             buffer.writeInt(IDAT);
             deflater.reset();
-            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
-            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
-            ByteBuffer pixels = pixmap.getPixels();
-            pixels.rewind();
 
-            int color, used;
+            int used;
             float rdiff, gdiff, bdiff;
             float er, eg, eb;
             byte paletteIndex;
@@ -2162,6 +2152,8 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             output.flush();
         } catch (IOException e) {
             Gdx.app.error("anim8", e.getMessage());
+        } finally {
+            pixels.rewind();
         }
     }
 
@@ -2172,6 +2164,9 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         final byte[] paletteMapping = palette.paletteMapping;
 
         DataOutputStream dataOutput = new DataOutputStream(output);
+        boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
+        // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
+        ByteBuffer pixels = pixmap.getPixels();
         try {
             dataOutput.write(SIGNATURE);
 
@@ -2216,21 +2211,15 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if(paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
             }
             buffer.writeInt(IDAT);
             deflater.reset();
-            boolean hasAlpha = pixmap.getFormat().equals(Pixmap.Format.RGBA8888);
-            // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
-            ByteBuffer pixels = pixmap.getPixels();
-            pixels.rewind();
 
-            int color, used;
+            int used;
             float rdiff, gdiff, bdiff;
             float er, eg, eb;
             byte paletteIndex;
@@ -2353,6 +2342,8 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             output.flush();
         } catch (IOException e) {
             Gdx.app.error("anim8", e.getMessage());
+        } finally {
+            pixels.rewind();
         }
     }
 
@@ -2642,9 +2633,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if (paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
@@ -2656,7 +2645,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
 //            byte[] lineOut, curLine, prevLine;
             byte[] curLine, prevLine;
-            int color;
 
             lastLineLen = width;
 ;
@@ -2801,9 +2789,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if (paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
@@ -2815,7 +2801,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
 //            byte[] lineOut, curLine, prevLine;
             byte[] curLine, prevLine;
-            int color;
 
             lastLineLen = width;
             final float populationBias = palette.populationBias;
@@ -2953,9 +2938,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if (paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
@@ -2967,7 +2950,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
 //            byte[] lineOut, curLine, prevLine;
             byte[] curLine, prevLine;
-            int color;
 
             lastLineLen = width;
 
@@ -3109,9 +3091,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if (paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
@@ -3123,7 +3103,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
 //            byte[] lineOut, curLine, prevLine;
             byte[] curLine, prevLine;
-            int color, used;
+            int used;
 
             lastLineLen = width;
 
@@ -3300,9 +3280,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if (paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
@@ -3317,7 +3295,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
             lastLineLen = w;
 
-            int color, used;
+            int used;
             float rdiff, gdiff, bdiff;
             float er, eg, eb;
             byte paletteIndex;
@@ -3504,9 +3482,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
             }
             buffer.endChunk(dataOutput);
 
-            boolean hasTransparent = false;
             if (paletteArray[0] == 0) {
-                hasTransparent = true;
                 buffer.writeInt(TRNS);
                 buffer.write(0);
                 buffer.endChunk(dataOutput);
@@ -3702,7 +3678,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
             lastLineLen = w;
 
-            int color, used;
+            int used;
             float rdiff, gdiff, bdiff;
             float er, eg, eb;
             byte paletteIndex;
