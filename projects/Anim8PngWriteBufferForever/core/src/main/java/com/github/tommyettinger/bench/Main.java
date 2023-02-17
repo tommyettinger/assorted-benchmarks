@@ -42,7 +42,7 @@ public class Main extends ApplicationAdapter {
     int numWritten = 0;
     int fps = 17;
     long startTime;
-    Dithered.DitherAlgorithm dither = Dithered.DitherAlgorithm.NONE;
+    Dithered.DitherAlgorithm dither = Dithered.DitherAlgorithm.NEUE;
 
     public Main(String algorithm) {
         if (!"".equals(algorithm)) {

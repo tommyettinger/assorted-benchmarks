@@ -103,8 +103,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
     private final ChunkBuffer buffer;
     private final Deflater deflater;
     private ByteArray curLineBytes;
-    private ByteArray prevLineBytes;
-    private int lastLineLen;
 
     public PaletteReducer palette;
 
@@ -567,21 +565,12 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
             int lineLen = pixmap.getWidth();
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
+            byte[] curLine;
             if (curLineBytes == null) {
-//                lineOut = (lineOutBytes = new ByteArray(lineLen)).items;
                 curLine = (curLineBytes = new ByteArray(lineLen)).items;
-                prevLine = (prevLineBytes = new ByteArray(lineLen)).items;
             } else {
-//                lineOut = lineOutBytes.ensureCapacity(lineLen);
                 curLine = curLineBytes.ensureCapacity(lineLen);
-                prevLine = prevLineBytes.ensureCapacity(lineLen);
-                for (int i = 0, n = lastLineLen; i < n; i++) {
-                    prevLine[i] = 0;
-                }
             }
-
-            lastLineLen = lineLen;
 
             pixels.rewind();
 
@@ -620,10 +609,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                 deflaterOutput.write(FILTER_NONE);
                 deflaterOutput.write(curLine, 0, lineLen);
-
-                byte[] temp = curLine;
-                curLine = prevLine;
-                prevLine = temp;
             }
             deflaterOutput.finish();
             buffer.endChunk(dataOutput);
@@ -749,26 +734,15 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
         buffer.writeInt(IDAT);
         deflater.reset();
 
-        int lineLen = width;
-//        byte[] lineOut, curLine, prevLine;
-        byte[] curLine, prevLine;
+        //        byte[] lineOut, curLine, prevLine;
+        byte[] curLine;
         if (curLineBytes == null) {
-//            lineOut = (lineOutBytes = new ByteArray(lineLen)).items;
-            curLine = (curLineBytes = new ByteArray(lineLen)).items;
-            prevLine = (prevLineBytes = new ByteArray(lineLen)).items;
+            curLine = (curLineBytes = new ByteArray(width)).items;
         } else {
-//            lineOut = lineOutBytes.ensureCapacity(lineLen);
-            curLine = curLineBytes.ensureCapacity(lineLen);
-            prevLine = prevLineBytes.ensureCapacity(lineLen);
-            for (int i = 0, n = lastLineLen; i < n; i++)
-            {
-                prevLine[i] = 0;
-            }
+            curLine = curLineBytes.ensureCapacity(width);
         }
 
-        lastLineLen = lineLen;
-
-        for (int py = startY; py < h; py++) {
+            for (int py = startY; py < h; py++) {
             for (int px = startX; px < w; px++) {
                 color = pixmap.getPixel(px, py);
                 curLine[px - startX] = (byte) colorToIndex.get(color, 0);
@@ -799,11 +773,7 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 //            deflaterOutput.write(lineOut, 0, lineLen);
 
             deflaterOutput.write(FILTER_NONE);
-            deflaterOutput.write(curLine, 0, lineLen);
-
-            byte[] temp = curLine;
-            curLine = prevLine;
-            prevLine = temp;
+            deflaterOutput.write(curLine, 0, width);
         }
         deflaterOutput.finish();
         buffer.endChunk(dataOutput);
@@ -857,22 +827,12 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
         int lineLen = pixmap.getWidth();
 //        byte[] lineOut, curLine, prevLine;
-        byte[] curLine, prevLine;
+        byte[] curLine;
         if (curLineBytes == null) {
-//            lineOut = (lineOutBytes = new ByteArray(lineLen)).items;
             curLine = (curLineBytes = new ByteArray(lineLen)).items;
-            prevLine = (prevLineBytes = new ByteArray(lineLen)).items;
         } else {
-//            lineOut = lineOutBytes.ensureCapacity(lineLen);
             curLine = curLineBytes.ensureCapacity(lineLen);
-            prevLine = prevLineBytes.ensureCapacity(lineLen);
-            for (int i = 0, n = lastLineLen; i < n; i++)
-            {
-                prevLine[i] = 0;
-            }
         }
-
-        lastLineLen = lineLen;
 
             final int w = pixmap.getWidth(), h = pixmap.getHeight();
         for (int y = 0; y < h; y++) {
@@ -915,10 +875,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
             deflaterOutput.write(FILTER_NONE);
             deflaterOutput.write(curLine, 0, lineLen);
-
-            byte[] temp = curLine;
-            curLine = prevLine;
-            prevLine = temp;
         }
         deflaterOutput.finish();
         buffer.endChunk(dataOutput);
@@ -975,22 +931,12 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
             final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
+            byte[] curLine;
             if (curLineBytes == null) {
-//                lineOut = (lineOutBytes = new ByteArray(w)).items;
                 curLine = (curLineBytes = new ByteArray(w)).items;
-                prevLine = (prevLineBytes = new ByteArray(w)).items;
             } else {
-//                lineOut = lineOutBytes.ensureCapacity(w);
                 curLine = curLineBytes.ensureCapacity(w);
-                prevLine = prevLineBytes.ensureCapacity(w);
-                for (int i = 0, n = lastLineLen; i < n; i++)
-                {
-                    prevLine[i] = 0;
-                }
             }
-
-            lastLineLen = w;
 
             float adj;
             final float strength = 60f * palette.ditherStrength / (palette.populationBias * palette.populationBias);
@@ -1043,11 +989,7 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                 deflaterOutput.write(FILTER_NONE);
                 deflaterOutput.write(curLine, 0, w);
-
-                byte[] temp = curLine;
-                curLine = prevLine;
-                prevLine = temp;
-            }
+           }
             deflaterOutput.finish();
             buffer.endChunk(dataOutput);
 
@@ -1103,22 +1045,13 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
             final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
+            byte[] curLine;
             if (curLineBytes == null) {
-//                lineOut = (lineOutBytes = new ByteArray(w)).items;
                 curLine = (curLineBytes = new ByteArray(w)).items;
-                prevLine = (prevLineBytes = new ByteArray(w)).items;
             } else {
-//                lineOut = lineOutBytes.ensureCapacity(w);
                 curLine = curLineBytes.ensureCapacity(w);
-                prevLine = prevLineBytes.ensureCapacity(w);
-                for (int i = 0, n = lastLineLen; i < n; i++)
-                {
-                    prevLine[i] = 0;
-                }
             }
 
-            lastLineLen = w;
 
             final float populationBias = palette.populationBias;
             final float str = (20f * ditherStrength / (populationBias * populationBias * populationBias * populationBias));
@@ -1166,10 +1099,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                 deflaterOutput.write(FILTER_NONE);
                 deflaterOutput.write(curLine, 0, w);
-
-                byte[] temp = curLine;
-                curLine = prevLine;
-                prevLine = temp;
             }
             deflaterOutput.finish();
             buffer.endChunk(dataOutput);
@@ -1225,22 +1154,12 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
             final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
+            byte[] curLine;
             if (curLineBytes == null) {
-//                lineOut = (lineOutBytes = new ByteArray(w)).items;
                 curLine = (curLineBytes = new ByteArray(w)).items;
-                prevLine = (prevLineBytes = new ByteArray(w)).items;
             } else {
-//                lineOut = lineOutBytes.ensureCapacity(w);
                 curLine = curLineBytes.ensureCapacity(w);
-                prevLine = prevLineBytes.ensureCapacity(w);
-                for (int i = 0, n = lastLineLen; i < n; i++)
-                {
-                    prevLine[i] = 0;
-                }
             }
-
-            lastLineLen = w;
 
             float adj, strength = 0.1375f * palette.ditherStrength / palette.populationBias;
             for (int y = 0; y < h; y++) {
@@ -1290,10 +1209,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                 deflaterOutput.write(FILTER_NONE);
                 deflaterOutput.write(curLine, 0, w);
-
-                byte[] temp = curLine;
-                curLine = prevLine;
-                prevLine = temp;
             }
             deflaterOutput.finish();
             buffer.endChunk(dataOutput);
@@ -1350,22 +1265,12 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
             final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
+            byte[] curLine;
             if (curLineBytes == null) {
-//                lineOut = (lineOutBytes = new ByteArray(w)).items;
                 curLine = (curLineBytes = new ByteArray(w)).items;
-                prevLine = (prevLineBytes = new ByteArray(w)).items;
             } else {
-//                lineOut = lineOutBytes.ensureCapacity(w);
                 curLine = curLineBytes.ensureCapacity(w);
-                prevLine = prevLineBytes.ensureCapacity(w);
-                for (int i = 0, n = lastLineLen; i < n; i++)
-                {
-                    prevLine[i] = 0;
-                }
             }
-
-            lastLineLen = w;
 
             int used;
 
@@ -1433,10 +1338,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                 deflaterOutput.write(FILTER_NONE);
                 deflaterOutput.write(curLine, 0, w);
-
-                byte[] temp = curLine;
-                curLine = prevLine;
-                prevLine = temp;
             }
             deflaterOutput.finish();
             buffer.endChunk(dataOutput);
@@ -1520,22 +1421,12 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             float w1 = palette.ditherStrength * 4, w3 = w1 * 3f, w5 = w1 * 5f, w7 = w1 * 7f;
 
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
+            byte[] curLine;
             if (curLineBytes == null) {
-//                lineOut = (lineOutBytes = new ByteArray(w)).items;
                 curLine = (curLineBytes = new ByteArray(w)).items;
-                prevLine = (prevLineBytes = new ByteArray(w)).items;
             } else {
-//                lineOut = lineOutBytes.ensureCapacity(w);
                 curLine = curLineBytes.ensureCapacity(w);
-                prevLine = prevLineBytes.ensureCapacity(w);
-                for (int i = 0, n = lastLineLen; i < n; i++)
-                {
-                    prevLine[i] = 0;
-                }
             }
-
-            lastLineLen = w;
 
             for (int y = 0; y < h; y++) {
                 System.arraycopy(nextErrorRed, 0, curErrorRed, 0, w);
@@ -1623,10 +1514,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                 deflaterOutput.write(FILTER_NONE);
                 deflaterOutput.write(curLine, 0, w);
-
-                byte[] temp = curLine;
-                curLine = prevLine;
-                prevLine = temp;
             }
             deflaterOutput.finish();
             buffer.endChunk(dataOutput);
@@ -1683,24 +1570,14 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
         final int w = pixmap.getWidth(), h = pixmap.getHeight();
 //        byte[] lineOut, curLine, prevLine;
-        byte[] curLine, prevLine;
-        if (curLineBytes == null) {
-//            lineOut = (lineOutBytes = new ByteArray(w)).items;
-            curLine = (curLineBytes = new ByteArray(w)).items;
-            prevLine = (prevLineBytes = new ByteArray(w)).items;
-        } else {
-//            lineOut = lineOutBytes.ensureCapacity(w);
-            curLine = curLineBytes.ensureCapacity(w);
-            prevLine = prevLineBytes.ensureCapacity(w);
-            for (int i = 0, n = lastLineLen; i < n; i++)
-            {
-                prevLine[i] = 0;
+        byte[] curLine;
+            if (curLineBytes == null) {
+                curLine = (curLineBytes = new ByteArray(w)).items;
+            } else {
+                curLine = curLineBytes.ensureCapacity(w);
             }
-        }
 
-        lastLineLen = w;
-
-        int used;
+            int used;
         int usedIndex;
         final float errorMul = palette.ditherStrength * palette.populationBias;
         for (int y = 0; y < h; y++) {
@@ -1755,10 +1632,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
             deflaterOutput.write(FILTER_NONE);
             deflaterOutput.write(curLine, 0, w);
-
-            byte[] temp = curLine;
-            curLine = prevLine;
-            prevLine = temp;
         }
         deflaterOutput.finish();
         buffer.endChunk(dataOutput);
@@ -1842,22 +1715,12 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             float w1 = palette.ditherStrength * 3.5f, w3 = w1 * 3f, w5 = w1 * 5f, w7 = w1 * 7f;
 
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
+            byte[] curLine;
             if (curLineBytes == null) {
-//                lineOut = (lineOutBytes = new ByteArray(w)).items;
                 curLine = (curLineBytes = new ByteArray(w)).items;
-                prevLine = (prevLineBytes = new ByteArray(w)).items;
             } else {
-//                lineOut = lineOutBytes.ensureCapacity(w);
                 curLine = curLineBytes.ensureCapacity(w);
-                prevLine = prevLineBytes.ensureCapacity(w);
-                for (int i = 0, n = lastLineLen; i < n; i++)
-                {
-                    prevLine[i] = 0;
-                }
             }
-
-            lastLineLen = w;
 
             for (int y = 0; y < h; y++) {
                 System.arraycopy(nextErrorRed, 0, curErrorRed, 0, w);
@@ -1946,10 +1809,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                 deflaterOutput.write(FILTER_NONE);
                 deflaterOutput.write(curLine, 0, w);
-
-                byte[] temp = curLine;
-                curLine = prevLine;
-                prevLine = temp;
             }
             deflaterOutput.finish();
             buffer.endChunk(dataOutput);
@@ -2034,22 +1893,12 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
                     adj, strength = (32f * palette.ditherStrength / (palette.populationBias * palette.populationBias)),
                     limit = (float) Math.pow(80, 1.635 - palette.populationBias);
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
+            byte[] curLine;
             if (curLineBytes == null) {
-//                lineOut = (lineOutBytes = new ByteArray(w)).items;
                 curLine = (curLineBytes = new ByteArray(w)).items;
-                prevLine = (prevLineBytes = new ByteArray(w)).items;
             } else {
-//                lineOut = lineOutBytes.ensureCapacity(w);
                 curLine = curLineBytes.ensureCapacity(w);
-                prevLine = prevLineBytes.ensureCapacity(w);
-                for (int i = 0, n = lastLineLen; i < n; i++)
-                {
-                    prevLine[i] = 0;
-                }
             }
-
-            lastLineLen = w;
 
             for (int y = 0; y < h; y++) {
                 System.arraycopy(nextErrorRed, 0, curErrorRed, 0, w);
@@ -2140,10 +1989,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                 deflaterOutput.write(FILTER_NONE);
                 deflaterOutput.write(curLine, 0, w);
-
-                byte[] temp = curLine;
-                curLine = prevLine;
-                prevLine = temp;
             }
             deflaterOutput.finish();
             buffer.endChunk(dataOutput);
@@ -2229,22 +2074,12 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             float w1 = (float) (20f * Math.sqrt(ditherStrength) * populationBias * populationBias * populationBias * populationBias), w3 = w1 * 3f, w5 = w1 * 5f, w7 = w1 * 7f,
                     strength = 48f * ditherStrength / (populationBias * populationBias * populationBias * populationBias),
                     limit = 5f + 130f / (float)Math.sqrt(palette.colorCount+1.5f);
-            byte[] curLine, prevLine;
+            byte[] curLine;
             if (curLineBytes == null) {
-//                lineOut = (lineOutBytes = new ByteArray(w)).items;
                 curLine = (curLineBytes = new ByteArray(w)).items;
-                prevLine = (prevLineBytes = new ByteArray(w)).items;
             } else {
-//                lineOut = lineOutBytes.ensureCapacity(w);
                 curLine = curLineBytes.ensureCapacity(w);
-                prevLine = prevLineBytes.ensureCapacity(w);
-                for (int i = 0, n = lastLineLen; i < n; i++)
-                {
-                    prevLine[i] = 0;
-                }
             }
-
-            lastLineLen = w;
 
             for (int y = 0; y < h; y++) {
                 System.arraycopy(nextErrorRed, 0, curErrorRed, 0, w);
@@ -2330,10 +2165,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                 deflaterOutput.write(FILTER_NONE);
                 deflaterOutput.write(curLine, 0, w);
-
-                byte[] temp = curLine;
-                curLine = prevLine;
-                prevLine = temp;
             }
             deflaterOutput.finish();
             buffer.endChunk(dataOutput);
@@ -2467,7 +2298,7 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
         buffer.endChunk(dataOutput);
 
 //        byte[] lineOut, curLine, prevLine;
-        byte[] curLine, prevLine;
+        byte[] curLine;
             int seq = 0;
         for (int i = 0; i < frames.size; i++) {
 
@@ -2498,15 +2329,10 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             if (curLineBytes == null) {
 //                lineOut = (lineOutBytes = new ByteArray(width)).items;
                 curLine = (curLineBytes = new ByteArray(width)).items;
-                prevLine = (prevLineBytes = new ByteArray(width)).items;
             } else {
 //                lineOut = lineOutBytes.ensureCapacity(width);
                 curLine = curLineBytes.ensureCapacity(width);
-                prevLine = prevLineBytes.ensureCapacity(width);
-                for (int ln = 0, n = lastLineLen; ln < n; ln++)
-                    prevLine[ln] = 0;
             }
-            lastLineLen = width;
 
             for (int y = 0; y < height; y++) {
                 for (int px = 0; px < width; px++) {
@@ -2548,10 +2374,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                 deflaterOutput.write(FILTER_NONE);
                 deflaterOutput.write(curLine, 0, width);
-
-                byte[] temp = curLine;
-                curLine = prevLine;
-                prevLine = temp;
             }
             deflaterOutput.finish();
             buffer.endChunk(dataOutput);
@@ -2646,10 +2468,9 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             buffer.endChunk(dataOutput);
 
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
+            byte[] curLine;
 
-            lastLineLen = width;
-;
+            ;
             float pos;
             final float strength = 60f * palette.ditherStrength / (palette.populationBias * palette.populationBias);
 
@@ -2681,17 +2502,10 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
                 ByteBuffer pixels = pixmap.getPixels();
 
                 if (curLineBytes == null) {
-//                    lineOut = (lineOutBytes = new ByteArray(width)).items;
                     curLine = (curLineBytes = new ByteArray(width)).items;
-                    prevLine = (prevLineBytes = new ByteArray(width)).items;
                 } else {
-//                    lineOut = lineOutBytes.ensureCapacity(width);
                     curLine = curLineBytes.ensureCapacity(width);
-                    prevLine = prevLineBytes.ensureCapacity(width);
-                    for (int ln = 0, n = lastLineLen; ln < n; ln++)
-                        prevLine[ln] = 0;
                 }
-                lastLineLen = width;
 
                 for (int y = 0; y < height; y++) {
                     for (int px = 0; px < width; px++) {
@@ -2740,10 +2554,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                     deflaterOutput.write(FILTER_NONE);
                     deflaterOutput.write(curLine, 0, width);
-
-                    byte[] temp = curLine;
-                    curLine = prevLine;
-                    prevLine = temp;
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
@@ -2802,9 +2612,8 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             buffer.endChunk(dataOutput);
 
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
+            byte[] curLine;
 
-            lastLineLen = width;
             final float populationBias = palette.populationBias;
             final float str = (20f * ditherStrength / (populationBias * populationBias * populationBias * populationBias));
 
@@ -2836,17 +2645,10 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
                 ByteBuffer pixels = pixmap.getPixels();
 
                 if (curLineBytes == null) {
-//                    lineOut = (lineOutBytes = new ByteArray(width)).items;
                     curLine = (curLineBytes = new ByteArray(width)).items;
-                    prevLine = (prevLineBytes = new ByteArray(width)).items;
                 } else {
-//                    lineOut = lineOutBytes.ensureCapacity(width);
                     curLine = curLineBytes.ensureCapacity(width);
-                    prevLine = prevLineBytes.ensureCapacity(width);
-                    for (int ln = 0, n = lastLineLen; ln < n; ln++)
-                        prevLine[ln] = 0;
                 }
-                lastLineLen = width;
 
                 for (int y = 0; y < height; y++) {
                     for (int px = 0; px < width; px++) {
@@ -2890,10 +2692,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                     deflaterOutput.write(FILTER_NONE);
                     deflaterOutput.write(curLine, 0, width);
-
-                    byte[] temp = curLine;
-                    curLine = prevLine;
-                    prevLine = temp;
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
@@ -2951,9 +2749,7 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             buffer.endChunk(dataOutput);
 
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
-
-            lastLineLen = width;
+            byte[] curLine;
 
             float adj, strength = 0.1375f * palette.ditherStrength / palette.populationBias;
 
@@ -2985,17 +2781,10 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
                 ByteBuffer pixels = pixmap.getPixels();
 
                 if (curLineBytes == null) {
-//                    lineOut = (lineOutBytes = new ByteArray(width)).items;
                     curLine = (curLineBytes = new ByteArray(width)).items;
-                    prevLine = (prevLineBytes = new ByteArray(width)).items;
                 } else {
-//                    lineOut = lineOutBytes.ensureCapacity(width);
                     curLine = curLineBytes.ensureCapacity(width);
-                    prevLine = prevLineBytes.ensureCapacity(width);
-                    for (int ln = 0, n = lastLineLen; ln < n; ln++)
-                        prevLine[ln] = 0;
                 }
-                lastLineLen = width;
                 for (int y = 0; y < height; y++) {
                     for (int px = 0; px < width; px++) {
                         int r = pixels.get() & 0xFF;
@@ -3042,10 +2831,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 //                    deflaterOutput.write(lineOut, 0, width);
                     deflaterOutput.write(FILTER_NONE);
                     deflaterOutput.write(curLine, 0, width);
-
-                    byte[] temp = curLine;
-                    curLine = prevLine;
-                    prevLine = temp;
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
@@ -3104,10 +2889,8 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             buffer.endChunk(dataOutput);
 
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
+            byte[] curLine;
             int used;
-
-            lastLineLen = width;
 
             byte paletteIndex;
             double adj, strength = palette.ditherStrength * palette.populationBias * 1.5;
@@ -3140,17 +2923,10 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
                 ByteBuffer pixels = pixmap.getPixels();
 
                 if (curLineBytes == null) {
-//                    lineOut = (lineOutBytes = new ByteArray(width)).items;
                     curLine = (curLineBytes = new ByteArray(width)).items;
-                    prevLine = (prevLineBytes = new ByteArray(width)).items;
                 } else {
-//                    lineOut = lineOutBytes.ensureCapacity(width);
                     curLine = curLineBytes.ensureCapacity(width);
-                    prevLine = prevLineBytes.ensureCapacity(width);
-                    for (int ln = 0, n = lastLineLen; ln < n; ln++)
-                        prevLine[ln] = 0;
                 }
-                lastLineLen = width;
                 long s = 0xC13FA9A902A6328FL * seq;
                 for (int y = 0; y < height; y++) {
                     for (int px = 0; px < width; px++) {
@@ -3212,10 +2988,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                     deflaterOutput.write(FILTER_NONE);
                     deflaterOutput.write(curLine, 0, width);
-
-                    byte[] temp = curLine;
-                    curLine = prevLine;
-                    prevLine = temp;
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
@@ -3293,9 +3065,7 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             buffer.endChunk(dataOutput);
 
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
-
-            lastLineLen = w;
+            byte[] curLine;
 
             int used;
             float rdiff, gdiff, bdiff;
@@ -3334,18 +3104,11 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
                 // This is GWT-incompatible, which is fine because DeflaterOutputStream is already.
                 ByteBuffer pixels = pixmap.getPixels();
 
-                if ( curLineBytes == null) {
-//                    lineOut = (lineOutBytes = new ByteArray(w)).items;
+                if (curLineBytes == null) {
                     curLine = (curLineBytes = new ByteArray(w)).items;
-                    prevLine = (prevLineBytes = new ByteArray(w)).items;
                 } else {
-//                    lineOut = lineOutBytes.ensureCapacity(w);
                     curLine = curLineBytes.ensureCapacity(w);
-                    prevLine = prevLineBytes.ensureCapacity(w);
-                    for (int ln = 0, n = lastLineLen; ln < n; ln++)
-                        prevLine[ln] = 0;
                 }
-                lastLineLen = w;
 
                 for (int y = 0; y < h; y++) {
                     System.arraycopy(nextErrorRed, 0, curErrorRed, 0, w);
@@ -3433,10 +3196,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                     deflaterOutput.write(FILTER_NONE);
                     deflaterOutput.write(curLine, 0, w);
-
-                    byte[] temp = curLine;
-                    curLine = prevLine;
-                    prevLine = temp;
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
@@ -3495,9 +3254,7 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             buffer.endChunk(dataOutput);
 
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
-
-            lastLineLen = width;
+            byte[] curLine;
 
             int used;
             int usedIndex;
@@ -3531,17 +3288,10 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
                 ByteBuffer pixels = pixmap.getPixels();
 
                 if (curLineBytes == null) {
-//                    lineOut = (lineOutBytes = new ByteArray(width)).items;
                     curLine = (curLineBytes = new ByteArray(width)).items;
-                    prevLine = (prevLineBytes = new ByteArray(width)).items;
                 } else {
-//                    lineOut = lineOutBytes.ensureCapacity(width);
                     curLine = curLineBytes.ensureCapacity(width);
-                    prevLine = prevLineBytes.ensureCapacity(width);
-                    for (int ln = 0, n = lastLineLen; ln < n; ln++)
-                        prevLine[ln] = 0;
                 }
-                lastLineLen = width;
 
                 for (int y = 0; y < height; y++) {
                     for (int px = 0; px < width; px++) {
@@ -3595,10 +3345,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                     deflaterOutput.write(FILTER_NONE);
                     deflaterOutput.write(curLine, 0, width);
-
-                    byte[] temp = curLine;
-                    curLine = prevLine;
-                    prevLine = temp;
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
@@ -3676,9 +3422,7 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             buffer.endChunk(dataOutput);
 
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
-
-            lastLineLen = w;
+            byte[] curLine;
 
             int used;
             float rdiff, gdiff, bdiff;
@@ -3718,15 +3462,9 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
                 ByteBuffer pixels = pixmap.getPixels();
 
                 if (curLineBytes == null) {
-//                    lineOut = (lineOutBytes = new ByteArray(w)).items;
                     curLine = (curLineBytes = new ByteArray(w)).items;
-                    prevLine = (prevLineBytes = new ByteArray(w)).items;
                 } else {
-//                    lineOut = lineOutBytes.ensureCapacity(w);
                     curLine = curLineBytes.ensureCapacity(w);
-                    prevLine = prevLineBytes.ensureCapacity(w);
-                    for (int ln = 0, n = lastLineLen; ln < n; ln++)
-                        prevLine[ln] = 0;
                 }
 
                 for (int y = 0; y < h; y++) {
@@ -3816,10 +3554,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                     deflaterOutput.write(FILTER_NONE);
                     deflaterOutput.write(curLine, 0, w);
-
-                    byte[] temp = curLine;
-                    curLine = prevLine;
-                    prevLine = temp;
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
@@ -3897,9 +3631,7 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             buffer.endChunk(dataOutput);
 
 //            byte[] lineOut, curLine, prevLine;
-            byte[] curLine, prevLine;
-
-            lastLineLen = w;
+            byte[] curLine;
 
             int used;
             float rdiff, gdiff, bdiff;
@@ -3942,12 +3674,8 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                 if (curLineBytes == null) {
                     curLine = (curLineBytes = new ByteArray(w)).items;
-                    prevLine = (prevLineBytes = new ByteArray(w)).items;
                 } else {
                     curLine = curLineBytes.ensureCapacity(w);
-                    prevLine = prevLineBytes.ensureCapacity(w);
-                    for (int ln = 0, n = lastLineLen; ln < n; ln++)
-                        prevLine[ln] = 0;
                 }
 
                 for (int y = 0; y < h; y++) {
@@ -4040,10 +3768,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                     deflaterOutput.write(FILTER_NONE);
                     deflaterOutput.write(curLine, 0, w);
-
-                    byte[] temp = curLine;
-                    curLine = prevLine;
-                    prevLine = temp;
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
@@ -4120,9 +3844,7 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
             buffer.writeInt(0);
             buffer.endChunk(dataOutput);
 
-            byte[] curLine, prevLine;
-
-            lastLineLen = w;
+            byte[] curLine;
 
             int used;
             float rdiff, gdiff, bdiff;
@@ -4166,12 +3888,8 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                 if (curLineBytes == null) {
                     curLine = (curLineBytes = new ByteArray(w)).items;
-                    prevLine = (prevLineBytes = new ByteArray(w)).items;
                 } else {
                     curLine = curLineBytes.ensureCapacity(w);
-                    prevLine = prevLineBytes.ensureCapacity(w);
-                    for (int ln = 0, n = lastLineLen; ln < n; ln++)
-                        prevLine[ln] = 0;
                 }
 
                 for (int y = 0; y < h; y++) {
@@ -4258,10 +3976,6 @@ public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
 
                     deflaterOutput.write(FILTER_NONE);
                     deflaterOutput.write(curLine, 0, w);
-
-                    byte[] temp = curLine;
-                    curLine = prevLine;
-                    prevLine = temp;
                 }
                 deflaterOutput.finish();
                 buffer.endChunk(dataOutput);
