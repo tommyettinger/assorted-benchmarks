@@ -97,17 +97,17 @@ public class Apng implements AnimationWriter, Disposable {
     private int lastLineLen;
 
     /**
-     * Creates an AnimatedPNG writer with an initial buffer size of 16384. The buffer can resize later if needed.
+     * Creates an AnimatedPNG writer with an initial buffer size of 1024. The buffer can resize later if needed.
      */
     public Apng() {
-        this(16384);
+        this(1024);
     }
 
     /**
      * Creates an AnimatedPNG writer with the given initial buffer size. The buffer can resize if needed, so using a
      * small size is only a problem if it slows down writing by forcing a resize for several parts of a PNG. A default
-     * of 16384 is reasonable.
-     * @param initialBufferSize the initial size for the buffer that stores PNG chunks; 16384 is a reasonable default
+     * of 1024 is reasonable.
+     * @param initialBufferSize the initial size for the buffer that stores PNG chunks; 1024 is a reasonable default
      */
     public Apng(int initialBufferSize) {
         buffer = new ChunkBuffer(initialBufferSize);

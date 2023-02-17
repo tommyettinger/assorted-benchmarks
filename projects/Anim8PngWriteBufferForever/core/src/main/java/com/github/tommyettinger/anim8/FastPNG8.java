@@ -89,7 +89,7 @@ import static com.github.tommyettinger.anim8.PaletteReducer.shrink;
  * @author Matthias Mann
  * @author Nathan Sweet
  * @author Tommy Ettinger (PNG-8 parts only) */
-public class Png implements AnimationWriter, Dithered, Disposable {
+public class FastPNG8 implements AnimationWriter, Dithered, Disposable {
     static private final byte[] SIGNATURE = {(byte)137, 80, 78, 71, 13, 10, 26, 10};
     static private final int IHDR = 0x49484452, IDAT = 0x49444154, IEND = 0x49454E44,
             PLTE = 0x504C5445, TRNS = 0x74524E53,
@@ -104,7 +104,6 @@ public class Png implements AnimationWriter, Dithered, Disposable {
     private final Deflater deflater;
     private ByteArray curLineBytes;
     private ByteArray prevLineBytes;
-    private boolean flipY = true;
     private int lastLineLen;
 
     public PaletteReducer palette;
@@ -164,21 +163,27 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         this.ditherStrength = Math.max(0f, ditherStrength);
     }
 
-    public Png() {
+    public FastPNG8() {
         this(1024);
     }
 
-    public Png(int initialBufferSize) {
+    public FastPNG8(int initialBufferSize) {
         buffer = new ChunkBuffer(initialBufferSize);
-        deflater = new Deflater();
+        deflater = new Deflater(2);
     }
 
-    /** If true, the resulting PNG is flipped vertically. Default is true. */
-    public void setFlipY (boolean flipY) {
-        this.flipY = flipY;
+    /**
+     * A no-op; this class never flips the image, regardless of the setting. This method
+     * is here for API compatibility with PixmapIO.PNG, and also for possible future changes
+     * if flipping becomes viable.
+     */
+    public void setFlipY(boolean flipY) {
     }
 
-    /** Sets the deflate compression level. Default is {@link Deflater#DEFAULT_COMPRESSION}. */
+    /**
+     * Sets the deflate compression level. Default is compression level 2 (from 0 to 9).
+     * @param level a compression level from 0 (no compression) to 9 (max compression)
+     */
     public void setCompression (int level) {
         deflater.setLevel(level);
     }
@@ -680,8 +685,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
         final int w = startX + width, h = startY + height;
         int[] paletteArray;
         if(exactPalette == null) {
-            for (int y = startY; y < h; y++) {
-                int py = flipY ? (pixmap.getHeight() - y - 1) : y;
+            for (int py = startY; py < h; py++) {
                 for (int px = startX; px < w; px++) {
                     color = pixmap.getPixel(px, py);
                     if ((color & 0xFE) != 0xFE && !colorToIndex.containsKey(color)) {
@@ -764,8 +768,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
 
         lastLineLen = lineLen;
 
-        for (int y = startY; y < h; y++) {
-            int py = flipY ? (pixmap.getHeight() - y - 1) : y;
+        for (int py = startY; py < h; py++) {
             for (int px = startX; px < w; px++) {
                 color = pixmap.getPixel(px, py);
                 curLine[px - startX] = (byte) colorToIndex.get(color, 0);
@@ -2057,8 +2060,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                 Arrays.fill(nextErrorGreen, (byte) 0);
                 Arrays.fill(nextErrorBlue, (byte) 0);
 
-                int py = flipY ? (h - y - 1) : y,
-                        ny = y + 1;
+                int ny = y + 1;
                 for (int px = 0; px < w; px++) {
                     int r = pixels.get() & 0xFF;
                     int g = pixels.get() & 0xFF;
@@ -2066,7 +2068,7 @@ public class Png implements AnimationWriter, Dithered, Disposable {
                     if (hasAlpha && (pixels.get() & 0x80) == 0)
                         curLine[px] = 0;
                     else {
-                        adj = ((PaletteReducer.TRI_BLUE_NOISE[(px & 63) | (py & 63) << 6] + 0.5f) * 0.005f); // plus or minus 255/400
+                        adj = ((PaletteReducer.TRI_BLUE_NOISE[(px & 63) | (y & 63) << 6] + 0.5f) * 0.005f); // plus or minus 255/400
                         adj = Math.min(Math.max(adj * strength, -limit), limit);
                         er = adj + (curErrorRed[px]);
                         eg = adj + (curErrorGreen[px]);

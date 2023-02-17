@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.github.tommyettinger.anim8.Dithered;
 import com.github.tommyettinger.anim8.PaletteReducer;
-import com.github.tommyettinger.anim8.Png;
+import com.github.tommyettinger.anim8.FastPNG8;
 
 /**
  * Running for 32 iterations on Java 19:
@@ -37,7 +37,7 @@ public class Main extends ApplicationAdapter {
 //    private static final String name = "alpha";
 //    private static final int TOTAL_FRAMES = 80;
 //    private static final String INPUT_EXTENSION = ".png";
-    Png png;
+    FastPNG8 png;
     Array<Pixmap> pixmaps;
     int numWritten = 0;
     int fps = 17;
@@ -62,7 +62,7 @@ public class Main extends ApplicationAdapter {
     public void create() {
         Gdx.files.local("tmp/imagesClean").mkdirs();
         Gdx.files.local("tmp/imagesClean").deleteDirectory();
-        png = new Png();
+        png = new FastPNG8();
         pixmaps = new Array<>(true, TOTAL_FRAMES, Pixmap.class);
         FileHandle root = Gdx.files.local("SharedAssets/");
         if(!root.exists()) root = Gdx.files.local("../SharedAssets");
@@ -89,7 +89,7 @@ public class Main extends ApplicationAdapter {
 //            Gdx.files.local("tmp/imagesClean").deleteDirectory();
             Gdx.app.exit();
         } else {
-            png.write(Gdx.files.local("tmp/imagesClean/" + name + "/Png-" + name + "-" + dither.name() + ".png"), pixmaps, fps + (numWritten & 7));
+            png.write(Gdx.files.local("tmp/imagesClean/" + name + "/FastPNG8-" + name + "-" + dither.name() + ".png"), pixmaps, fps + (numWritten & 7));
             numWritten++;
         }
     }
