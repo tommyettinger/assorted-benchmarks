@@ -35,6 +35,7 @@ import com.badlogic.gdx.ai.pfa.*;
 import com.badlogic.gdx.ai.pfa.Connection;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectIntMap;
 import com.github.tommyettinger.ds.ObjectList;
@@ -63,6 +64,7 @@ import squidpony.squidmath.GreasedRegion;
 import squidpony.squidmath.StatefulRNG;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
@@ -272,8 +274,9 @@ public class PathfindingBenchmark {
 
     @State(Scope.Thread)
     public static class BenchmarkState {
-        public int WIDTH = 100;
-        public int HEIGHT = 100;
+        public static final int WIDTH = 100;
+        public static final int HEIGHT = 100;
+        public static final GridPoint2[][] gridPool = new GridPoint2[WIDTH][HEIGHT];
         public DungeonGenerator dungeonGen = new DungeonGenerator(WIDTH, HEIGHT, new StatefulRNG(0x1337BEEFDEAL));
         public char[][] map;
         public double[][] astarMap;
@@ -295,9 +298,10 @@ public class PathfindingBenchmark {
         public StatefulRNG srng;
         public GridGraph gg;
         public GridGraph2 gg2;
-        public IndexedAStarPathFinder<Coord> astar;
+        public IndexedAStarPathFinder<GridPoint2> astar;
         public IndexedAStarPathFinder<Coord> astar2;
         public AStarSearch as;
+        public DefaultGraphPath<GridPoint2> dgpgp;
         public DefaultGraphPath<Coord> dgp;
         public ArrayList<Coord> path;
         public Path<Coord> simplePath;
@@ -315,11 +319,14 @@ public class PathfindingBenchmark {
         
         @Setup(Level.Trial)
         public void setup() {
-                map = dungeonGen.generate();
+            map = dungeonGen.generate();
             ArrayTools.reverse(map);
-            WIDTH = map.length;
-            HEIGHT = map[0].length;
             Coord.expandPoolTo(WIDTH, HEIGHT);
+            for (int x = 0; x < WIDTH; x++) {
+                for (int y = 0; y < HEIGHT; y++) {
+                    gridPool[x][y] = new GridPoint2(x, y);
+                }
+            }
             floors = new GreasedRegion(map, '.');
             floorCount = floors.size();
             floorArray = floors.asCoords();
@@ -364,6 +371,7 @@ public class PathfindingBenchmark {
             astar = new IndexedAStarPathFinder<>(gg, false);
             astar2 = new IndexedAStarPathFinder<>(gg2, false);
             dgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
+            dgpgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
             path = new ArrayList<>(WIDTH + HEIGHT << 1);
             squadPath = new ObjectList<>(WIDTH + HEIGHT << 1);
             simplePath = new Path<>(WIDTH + HEIGHT << 1);
@@ -449,6 +457,7 @@ public class PathfindingBenchmark {
         Coord r;
         final Coord[] tgts = new Coord[1];
         long scanned = 0;
+        state.srng.setState(1234567890L);
         final DijkstraMap dijkstra = state.dijkstra;
         final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
         for (int x = 1; x < state.WIDTH - 1; x++) {
@@ -517,6 +526,7 @@ public class PathfindingBenchmark {
         com.github.yellowstonegames.grid.Coord r;
         final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
         long scanned = 0;
+        state.srng.setState(1234567890L);
         final squid.squad.DijkstraMap dijkstra = state.squadDijkstra;
         final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
         for (int x = 1; x < state.WIDTH - 1; x++) {
@@ -585,6 +595,7 @@ public class PathfindingBenchmark {
         com.github.yellowstonegames.grid.Coord r;
         final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
         long scanned = 0;
+        state.srng.setState(1234567890L);
         final BitDijkstraMap dijkstra = state.bitDijkstra;
         final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
         for (int x = 1; x < state.WIDTH - 1; x++) {
@@ -654,6 +665,7 @@ public class PathfindingBenchmark {
         com.github.yellowstonegames.grid.Coord r;
         final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
         long scanned = 0;
+        state.srng.setState(1234567890L);
         final CDijkstraMap dijkstra = state.cDijkstra;
         final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
         for (int x = 1; x < state.WIDTH - 1; x++) {
@@ -723,6 +735,7 @@ public class PathfindingBenchmark {
         int[] tgts = new int[1];
         long scanned = 0;
         int p;
+        state.srng.setState(1234567890L);
         CustomDijkstraMap dijkstra = state.customDijkstra;
         final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
         for (int x = 1; x < state.WIDTH - 1; x++) {
@@ -780,6 +793,7 @@ public class PathfindingBenchmark {
         Coord r;
         Coord tgt;
         long scanned = 0;
+        state.srng.setState(1234567890L);
         final AStarSearch aStarSearch = state.as;
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
@@ -908,9 +922,9 @@ public class PathfindingBenchmark {
 //        doTinyPathAStar2();
 //    }
 
-    static class GridGraph implements IndexedGraph<Coord>
+    static class GridGraph implements IndexedGraph<GridPoint2>
     {
-        public ObjectIntMap<Coord> points = new ObjectIntMap<>(128 * 128);
+        public ObjectIntMap<GridPoint2> points = new ObjectIntMap<>(128 * 128);
         public char[][] map;
 //        public Heuristic<Coord> heu = new Heuristic<Coord>() {
 //            @Override
@@ -918,29 +932,33 @@ public class PathfindingBenchmark {
 //                return (Math.abs(node.x - endNode.x) + Math.abs(node.y - endNode.y));
 //            }
 //        };
-        public Heuristic<Coord> heu = new Heuristic<Coord>() {
+        public Heuristic<GridPoint2> heu = new Heuristic<GridPoint2>() {
             @Override
-            public float estimate(Coord node, Coord endNode) {
-                return Math.max(Math.abs(node.x - endNode.x), Math.abs(node.y - endNode.y));
+            public float estimate(GridPoint2 node, GridPoint2 endNode) {
+//                return node.dst(endNode);
+                return (Math.abs(node.x - endNode.x) + Math.abs(node.y - endNode.y));
             }
         };
-//        public Heuristic<Coord> heu = new Heuristic<Coord>() {
-//            @Override
-//            public float estimate(Coord node, Coord endNode) {
-//                return (float)node.distance(endNode);
-//            }
-//        };
 
-        public GridGraph(GreasedRegion floors, char[][] map)
+        public GridGraph(Iterable<Coord> floors, char[][] map)
         {
             this.map = map;
-            int floorCount = floors.size();
-            for (int i = 0; i < floorCount; i++) {
-                points.put(floors.nth(i), i);
+            int i = 0;
+            for(Coord c : floors){
+                points.put(BenchmarkState.gridPool[c.x][c.y], i++);
             }
         }
+        // use this if using only libGDX classes.
+//        public GridGraph(Iterable<GridPoint2> floors, char[][] map)
+//        {
+//            this.map = map;
+//            int i = 0;
+//            for(GridPoint2 c : floors){
+//                points.put(BenchmarkState.gridPool[c.x][c.y], i++);
+//            }
+//        }
         @Override
-        public int getIndex(Coord node) {
+        public int getIndex(GridPoint2 node) {
             return points.get(node, -1);
         }
 
@@ -950,14 +968,14 @@ public class PathfindingBenchmark {
         }
 
         @Override
-        public Array<Connection<Coord>> getConnections(Coord fromNode) {
-            Array<Connection<Coord>> conn = new Array<>(false, 8);
+        public Array<Connection<GridPoint2>> getConnections(GridPoint2 fromNode) {
+            Array<Connection<GridPoint2>> conn = new Array<>(false, 8, Connection.class);
             if(map[fromNode.x][fromNode.y] != '.')
                 return conn;
-            Coord t;
+            GridPoint2 t;
             for (int i = 0; i < 8; i++) {
-                t = fromNode.translate(Direction.OUTWARDS[i]);
-                if (t.isWithin(map.length, map[0].length) && map[t.x][t.y] == '.')
+                t = BenchmarkState.gridPool[fromNode.x+Direction.OUTWARDS[i].deltaX][fromNode.y+Direction.OUTWARDS[i].deltaY];
+                if (t.x >= 0 && t.y >= 0 && t.x < map.length && t.y < map[0].length && map[t.x][t.y] == '.')
                     conn.add(new DefaultConnection<>(fromNode, t));
             }
             return conn;
@@ -969,24 +987,12 @@ public class PathfindingBenchmark {
     {
         public int[][] grid;
         public int size;
-//        public Heuristic<Coord> heu = new Heuristic<Coord>() {
-//            @Override
-//            public float estimate(Coord node, Coord endNode) {
-//                return (Math.abs(node.x - endNode.x) + Math.abs(node.y - endNode.y));
-//            }
-//        };
         public Heuristic<Coord> heu = new Heuristic<Coord>() {
             @Override
             public float estimate(Coord node, Coord endNode) {
                 return Math.max(Math.abs(node.x - endNode.x), Math.abs(node.y - endNode.y));
             }
         };
-//        public Heuristic<Coord> heu = new Heuristic<Coord>() {
-//            @Override
-//            public float estimate(Coord node, Coord endNode) {
-//                return (float)node.distance(endNode);
-//            }
-//        };
 
         public GridGraph2(GreasedRegion floors, char[][] map)
         {
@@ -1009,7 +1015,7 @@ public class PathfindingBenchmark {
 
         @Override
         public Array<Connection<Coord>> getConnections(Coord fromNode) {
-            Array<Connection<Coord>> conn = new Array<>(false, 8);
+            Array<Connection<Coord>> conn = new Array<>(false, 8, Connection.class);
             if(grid[fromNode.x][fromNode.y] == 0)
                 return conn;
             Coord t;
@@ -1025,27 +1031,27 @@ public class PathfindingBenchmark {
     @Benchmark
     public long doPathGDXAStar(BenchmarkState state)
     {
-        Coord r;
         long scanned = 0;
+        state.srng.setState(1234567890L);
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
-                r = state.srng.getRandomElement(state.floorArray);
-                state.dgp.clear();
-                if(state.astar.searchNodePath(r, Coord.get(x, y), state.gg.heu, state.dgp))
-                    scanned+= state.dgp.getCount();
+                Coord c = state.srng.getRandomElement(state.floorArray);
+                state.dgpgp.clear();
+                if(state.astar.searchNodePath(BenchmarkState.gridPool[c.x][c.y], BenchmarkState.gridPool[x][y], state.gg.heu, state.dgpgp))
+                    scanned += state.dgpgp.getCount();
             }
         }
+//        if(scanned == 0) throw new RuntimeException("No paths found!");
         return scanned;
     }
 
     @Benchmark
     public long doTinyPathGDXAStar(BenchmarkState state)
     {
-        Coord r;
         long scanned = 0;
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
@@ -1053,12 +1059,13 @@ public class PathfindingBenchmark {
                     continue;
                 // this should ensure no blatant correlation between R and W
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
-                r = state.nearbyMap[x][y];
-                state.dgp.clear();
-                if(state.astar.searchNodePath(r, Coord.get(x, y), state.gg.heu, state.dgp))
-                    scanned += state.dgp.getCount();
+                Coord c = state.nearbyMap[x][y];
+                state.dgpgp.clear();
+                if(state.astar.searchNodePath(BenchmarkState.gridPool[c.x][c.y], BenchmarkState.gridPool[x][y], state.gg.heu, state.dgpgp))
+                    scanned += state.dgpgp.getCount();
             }
         }
+//        if(scanned == 0) throw new RuntimeException("No paths found!");
         return scanned;
     }
 
@@ -1066,10 +1073,10 @@ public class PathfindingBenchmark {
     public long doOneGDXAStar(BenchmarkState state) {
         Coord tgt = state.highest;
         state.srng.setState(state.highest.hashCode());
-        Coord r = state.lowest;
-        state.dgp.clear();
-        state.astar.searchNodePath(r, tgt, state.gg.heu, state.dgp);
-        return state.dgp.getCount();
+        GridPoint2 r = BenchmarkState.gridPool[state.lowest.x][state.lowest.y];
+        state.dgpgp.clear();
+        state.astar.searchNodePath(r, BenchmarkState.gridPool[tgt.x][tgt.y], state.gg.heu, state.dgpgp);
+        return state.dgpgp.getCount();
     }
 
     @Benchmark
@@ -1077,6 +1084,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
+        state.srng.setState(1234567890L);
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -1089,6 +1097,7 @@ public class PathfindingBenchmark {
                     scanned+= state.dgp.getCount();
             }
         }
+//        if(scanned == 0) throw new RuntimeException("No paths found!");
         return scanned;
     }
 
@@ -1109,6 +1118,7 @@ public class PathfindingBenchmark {
                     scanned += state.dgp.getCount();
             }
         }
+//        if(scanned == 0) throw new RuntimeException("No paths found!");
         return scanned;
     }
 
@@ -1127,6 +1137,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
+        state.srng.setState(1234567890L);
         final DirectedGraphAlgorithms<Coord> algo = state.simpleDirectedGraph.algorithms();
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
@@ -1170,6 +1181,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
+        state.srng.setState(1234567890L);
         final UndirectedGraphAlgorithms<Coord> algo = state.simpleUndirectedGraph.algorithms();
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
@@ -1212,6 +1224,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
+        state.srng.setState(1234567890L);
         final squidpony.squidai.graph.DirectedGraphAlgorithms<Coord> algo = state.squidDirectedGraph.algorithms();
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
@@ -1255,6 +1268,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
+        state.srng.setState(1234567890L);
         final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
@@ -1309,6 +1323,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
+        state.srng.setState(1234567890L);
         final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidDefaultGraph.algorithms();
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
@@ -1352,6 +1367,7 @@ public class PathfindingBenchmark {
     {
         Coord r;
         long scanned = 0;
+        state.srng.setState(1234567890L);
         final squidpony.squidai.graph.DirectedGraphAlgorithms<Coord> algo = state.squidCostlyGraph.algorithms();
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
