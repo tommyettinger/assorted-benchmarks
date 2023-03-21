@@ -266,38 +266,38 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * Testing a mix of GridPoint2 and Coord:
  * <pre>
  * Benchmark                                      Mode  Cnt        Score        Error  Units
- * PathfindingBenchmark.doPathAStarSearch         avgt    5   723401.656 ± 100143.566  us/op
- * PathfindingBenchmark.doPathBitDijkstra         avgt    5  1362471.735 ±  28827.452  us/op
- * PathfindingBenchmark.doPathCDijkstra           avgt    5  1376518.398 ±   9843.301  us/op
- * PathfindingBenchmark.doPathCustomDijkstra      avgt    5  2591001.615 ±  67352.760  us/op
- * PathfindingBenchmark.doPathDijkstra            avgt    5  1552855.477 ±  47374.772  us/op
- * PathfindingBenchmark.doPathGDXAStarCoord       avgt    5  1345276.688 ±  16473.037  us/op
- * PathfindingBenchmark.doPathGDXAStarGP          avgt    5    42759.357 ±   1932.409  us/op
- * PathfindingBenchmark.doPathSimpleD             avgt    5   616131.435 ±  10131.809  us/op
- * PathfindingBenchmark.doPathSimpleGPD           avgt    5     1174.820 ±      8.963  us/op
- * PathfindingBenchmark.doPathSimpleGPUD          avgt    5     1163.575 ±     15.182  us/op
- * PathfindingBenchmark.doPathSimpleUD            avgt    5   621103.825 ±  15513.861  us/op
- * PathfindingBenchmark.doPathSquadDijkstra       avgt    5  1398658.505 ±  55511.355  us/op
- * PathfindingBenchmark.doPathSquidCG             avgt    5   644088.093 ±  12692.813  us/op
- * PathfindingBenchmark.doPathSquidD              avgt    5   714277.825 ±  87217.539  us/op
- * PathfindingBenchmark.doPathSquidDG             avgt    5   634813.273 ±   8740.559  us/op
- * PathfindingBenchmark.doPathSquidUD             avgt    5   661954.041 ±  12062.135  us/op
- * PathfindingBenchmark.doTinyPathAStarSearch     avgt    5    10974.680 ±    263.024  us/op
- * PathfindingBenchmark.doTinyPathBitDijkstra     avgt    5    35430.111 ±    815.466  us/op
- * PathfindingBenchmark.doTinyPathCDijkstra       avgt    5    36364.889 ±   1740.616  us/op
- * PathfindingBenchmark.doTinyPathCustomDijkstra  avgt    5   201668.380 ±   7586.828  us/op
- * PathfindingBenchmark.doTinyPathDijkstra        avgt    5    46102.466 ±   4189.637  us/op
- * PathfindingBenchmark.doTinyPathGDXAStarCoord   avgt    5    18222.640 ±    227.460  us/op
- * PathfindingBenchmark.doTinyPathGDXAStarGP      avgt    5    31076.514 ±    625.452  us/op // anomalous?
- * PathfindingBenchmark.doTinyPathSimpleD         avgt    5     8501.443 ±    313.235  us/op
- * PathfindingBenchmark.doTinyPathSimpleGPD       avgt    5     1025.561 ±      6.237  us/op
- * PathfindingBenchmark.doTinyPathSimpleGPUD      avgt    5     1015.949 ±     14.985  us/op
- * PathfindingBenchmark.doTinyPathSimpleUD        avgt    5     8308.827 ±    132.115  us/op
- * PathfindingBenchmark.doTinyPathSquadDijkstra   avgt    5    36713.787 ±   1323.081  us/op
- * PathfindingBenchmark.doTinyPathSquidCG         avgt    5     7617.579 ±    165.523  us/op
- * PathfindingBenchmark.doTinyPathSquidD          avgt    5     8930.869 ±    123.616  us/op
- * PathfindingBenchmark.doTinyPathSquidDG         avgt    5     8376.287 ±    209.275  us/op
- * PathfindingBenchmark.doTinyPathSquidUD         avgt    5     8198.538 ±    160.099  us/op
+ * PathfindingBenchmark.doPathAStarSearch         avgt    5   694973.053 ±  76781.573  us/op
+ * PathfindingBenchmark.doPathBitDijkstra         avgt    5  1347203.565 ±  30430.976  us/op
+ * PathfindingBenchmark.doPathCDijkstra           avgt    5  1372245.507 ±  43683.971  us/op
+ * PathfindingBenchmark.doPathCustomDijkstra      avgt    5  2541415.135 ±  42205.445  us/op
+ * PathfindingBenchmark.doPathDijkstra            avgt    5  1561208.149 ±  54350.308  us/op
+ * PathfindingBenchmark.doPathGDXAStarCoord       avgt    5  1505324.541 ± 401152.476  us/op
+ * PathfindingBenchmark.doPathGDXAStarGP          avgt    5    42891.605 ±    231.301  us/op
+ * PathfindingBenchmark.doPathSimpleD             avgt    5   630883.974 ±  28020.950  us/op
+ * PathfindingBenchmark.doPathSimpleGPD           avgt    5   629837.469 ±  37200.920  us/op
+ * PathfindingBenchmark.doPathSimpleGPUD          avgt    5   619220.421 ±   6467.766  us/op
+ * PathfindingBenchmark.doPathSimpleUD            avgt    5   649818.634 ±  12379.327  us/op
+ * PathfindingBenchmark.doPathSquadDijkstra       avgt    5  1382012.700 ±  31907.690  us/op
+ * PathfindingBenchmark.doPathSquidCG             avgt    5   608523.373 ±  22797.481  us/op
+ * PathfindingBenchmark.doPathSquidD              avgt    5   716529.512 ±  19173.656  us/op
+ * PathfindingBenchmark.doPathSquidDG             avgt    5   598800.799 ±  11845.345  us/op
+ * PathfindingBenchmark.doPathSquidUD             avgt    5   681378.256 ±  17573.780  us/op
+ * PathfindingBenchmark.doTinyPathAStarSearch     avgt    5    11020.876 ±    526.867  us/op
+ * PathfindingBenchmark.doTinyPathBitDijkstra     avgt    5    38062.678 ±   1929.482  us/op
+ * PathfindingBenchmark.doTinyPathCDijkstra       avgt    5    36248.857 ±   1448.693  us/op
+ * PathfindingBenchmark.doTinyPathCustomDijkstra  avgt    5   201641.240 ±   3923.762  us/op
+ * PathfindingBenchmark.doTinyPathDijkstra        avgt    5    47662.265 ±   1852.761  us/op
+ * PathfindingBenchmark.doTinyPathGDXAStarCoord   avgt    5    18515.330 ±    348.738  us/op
+ * PathfindingBenchmark.doTinyPathGDXAStarGP      avgt    5    31057.291 ±    127.932  us/op
+ * PathfindingBenchmark.doTinyPathSimpleD         avgt    5     9473.978 ±    343.797  us/op
+ * PathfindingBenchmark.doTinyPathSimpleGPD       avgt    5     9631.573 ±    396.015  us/op
+ * PathfindingBenchmark.doTinyPathSimpleGPUD      avgt    5     9674.871 ±    154.607  us/op
+ * PathfindingBenchmark.doTinyPathSimpleUD        avgt    5     9670.675 ±    181.448  us/op
+ * PathfindingBenchmark.doTinyPathSquadDijkstra   avgt    5    37475.435 ±   5866.468  us/op
+ * PathfindingBenchmark.doTinyPathSquidCG         avgt    5     7795.309 ±    208.715  us/op
+ * PathfindingBenchmark.doTinyPathSquidD          avgt    5     9624.182 ±    486.599  us/op
+ * PathfindingBenchmark.doTinyPathSquidDG         avgt    5     8056.931 ±    267.515  us/op
+ * PathfindingBenchmark.doTinyPathSquidUD         avgt    5     9435.427 ±    747.011  us/op
  * </pre>
  *
  */
