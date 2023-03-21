@@ -271,12 +271,12 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
 @Warmup(iterations = 4)
 @Measurement(iterations = 3)
 public class PathfindingBenchmark {
-
+    private static final GridPoint2 start = new GridPoint2(), end = new GridPoint2();
     @State(Scope.Thread)
     public static class BenchmarkState {
         public static final int WIDTH = 100;
         public static final int HEIGHT = 100;
-        public static final GridPoint2[][] gridPool = new GridPoint2[WIDTH][HEIGHT];
+//        public static final GridPoint2[][] gridPool = new GridPoint2[WIDTH][HEIGHT];
         public DungeonGenerator dungeonGen = new DungeonGenerator(WIDTH, HEIGHT, new StatefulRNG(0x1337BEEFDEAL));
         public char[][] map;
         public double[][] astarMap;
@@ -322,11 +322,11 @@ public class PathfindingBenchmark {
             map = dungeonGen.generate();
             ArrayTools.reverse(map);
             Coord.expandPoolTo(WIDTH, HEIGHT);
-            for (int x = 0; x < WIDTH; x++) {
-                for (int y = 0; y < HEIGHT; y++) {
-                    gridPool[x][y] = new GridPoint2(x, y);
-                }
-            }
+//            for (int x = 0; x < WIDTH; x++) {
+//                for (int y = 0; y < HEIGHT; y++) {
+//                    gridPool[x][y] = new GridPoint2(x, y);
+//                }
+//            }
             floors = new GreasedRegion(map, '.');
             floorCount = floors.size();
             floorArray = floors.asCoords();
@@ -368,7 +368,7 @@ public class PathfindingBenchmark {
             customDijkstra = new CustomDijkstraMap(map, adj, new StatefulRNG(0x1337BEEF));
             gg = new GridGraph(floors, map);
             gg2 = new GridGraph2(floors, map);
-            astar = new IndexedAStarPathFinder<>(gg, false);
+            astar = new IndexedAStarPathFinder<>(gg, false, GridPoint2::equals);
             astar2 = new IndexedAStarPathFinder<>(gg2, false);
             dgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
             dgpgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
@@ -945,7 +945,7 @@ public class PathfindingBenchmark {
             this.map = map;
             int i = 0;
             for(Coord c : floors){
-                points.put(BenchmarkState.gridPool[c.x][c.y], i++);
+                points.put(new GridPoint2(c.x, c.y), i++);
             }
         }
         // use this if using only libGDX classes.
@@ -954,7 +954,7 @@ public class PathfindingBenchmark {
 //            this.map = map;
 //            int i = 0;
 //            for(GridPoint2 c : floors){
-//                points.put(BenchmarkState.gridPool[c.x][c.y], i++);
+//                points.put(c, i++);
 //            }
 //        }
         @Override
@@ -972,11 +972,10 @@ public class PathfindingBenchmark {
             Array<Connection<GridPoint2>> conn = new Array<>(false, 8, Connection.class);
             if(map[fromNode.x][fromNode.y] != '.')
                 return conn;
-            GridPoint2 t;
             for (int i = 0; i < 8; i++) {
-                t = BenchmarkState.gridPool[fromNode.x+Direction.OUTWARDS[i].deltaX][fromNode.y+Direction.OUTWARDS[i].deltaY];
-                if (t.x >= 0 && t.y >= 0 && t.x < map.length && t.y < map[0].length && map[t.x][t.y] == '.')
-                    conn.add(new DefaultConnection<>(fromNode, t));
+                int x = fromNode.x+Direction.OUTWARDS[i].deltaX, y = fromNode.y+Direction.OUTWARDS[i].deltaY;
+                if (x >= 0 && y >= 0 && x < map.length && y < map[0].length && map[x][y] == '.')
+                    conn.add(new DefaultConnection<>(fromNode, new GridPoint2(x, y)));
             }
             return conn;
         }
@@ -1034,6 +1033,7 @@ public class PathfindingBenchmark {
         long scanned = 0;
         state.srng.setState(1234567890L);
         for (int x = 1; x < state.WIDTH - 1; x++) {
+            end.x = x;
             for (int y = 1; y < state.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
@@ -1041,7 +1041,10 @@ public class PathfindingBenchmark {
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 Coord c = state.srng.getRandomElement(state.floorArray);
                 state.dgpgp.clear();
-                if(state.astar.searchNodePath(BenchmarkState.gridPool[c.x][c.y], BenchmarkState.gridPool[x][y], state.gg.heu, state.dgpgp))
+                start.x = c.x;
+                start.y = c.y;
+                end.y = y;
+                if(state.astar.searchNodePath(start, end, state.gg.heu, state.dgpgp))
                     scanned += state.dgpgp.getCount();
             }
         }
@@ -1054,6 +1057,7 @@ public class PathfindingBenchmark {
     {
         long scanned = 0;
         for (int x = 1; x < state.WIDTH - 1; x++) {
+            end.x = x;
             for (int y = 1; y < state.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
@@ -1061,7 +1065,10 @@ public class PathfindingBenchmark {
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 Coord c = state.nearbyMap[x][y];
                 state.dgpgp.clear();
-                if(state.astar.searchNodePath(BenchmarkState.gridPool[c.x][c.y], BenchmarkState.gridPool[x][y], state.gg.heu, state.dgpgp))
+                start.x = c.x;
+                start.y = c.y;
+                end.y = y;
+                if(state.astar.searchNodePath(start, end, state.gg.heu, state.dgpgp))
                     scanned += state.dgpgp.getCount();
             }
         }
@@ -1073,9 +1080,10 @@ public class PathfindingBenchmark {
     public long doOneGDXAStar(BenchmarkState state) {
         Coord tgt = state.highest;
         state.srng.setState(state.highest.hashCode());
-        GridPoint2 r = BenchmarkState.gridPool[state.lowest.x][state.lowest.y];
         state.dgpgp.clear();
-        state.astar.searchNodePath(r, BenchmarkState.gridPool[tgt.x][tgt.y], state.gg.heu, state.dgpgp);
+        start.set(state.lowest.x, state.lowest.y);
+        end.set(tgt.x, tgt.y);
+        state.astar.searchNodePath(start, end, state.gg.heu, state.dgpgp);
         return state.dgpgp.getCount();
     }
 
