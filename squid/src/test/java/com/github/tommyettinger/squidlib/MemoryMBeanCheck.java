@@ -1056,12 +1056,12 @@ public class MemoryMBeanCheck {
                 System.out.println("Percentage walkable: " + floorCount * 100.0 / (size * size) + "%");
                 final Direction[] outer = Direction.CLOCKWISE;
                 final com.github.yellowstonegames.grid.Direction[] outerSquad = com.github.yellowstonegames.grid.Direction.CLOCKWISE;
-//                System.out.printf("%40s, %7dx%<7d cells: %d\n----------------------------------------\n", "gdx-ai GridGraph", size,
+//                System.out.printf("%40s, %7dx%<7d cells: %d\n----------------------------------------\n", "gdx-ai GridGraphGP", size,
 //                        measure(new Runnable() {
-//                            PathfindingBenchmark.GridGraph gg;
+//                            PathfindingBenchmark.GridGraphGP gg;
 //
 //                            @Override public void run () {
-//                                gg = new PathfindingBenchmark.GridGraph(floors, map);
+//                                gg = new PathfindingBenchmark.GridGraphGP(floors, map);
 //                            }
 //                        }));
                 System.out.printf("%40s, %7dx%<7d cells: %d\n----------------------------------------\n", "simple-graphs DirectedGraph", size,
