@@ -443,20 +443,25 @@ public class PathfindingBenchmark {
             squidCostlyGraph = new squidpony.squidai.graph.CostlyGraph(astarMap, true);
 
             Coord center;
+            GridPoint2 gpCenter;
             Direction[] outer = Direction.CLOCKWISE;
             Direction dir;
             for (int i = floorCount - 1; i >= 0; i--) {
                 center = floorArray[i];
+                gpCenter = gpFloors.get(i);
                 for (int j = 0; j < 8; j++) {
                     dir = outer[j];
                     if(floors.contains(center.x + dir.deltaX, center.y + dir.deltaY))
                     {
+                        GridPoint2 gpMoved = new GridPoint2(gpCenter).add(dir.deltaX, dir.deltaY);
                         simpleDirectedGraph.addEdge(center, center.translate(dir));
+                        sggpDirectedGraph.addEdge(gpCenter, gpMoved);
                         squidDirectedGraph.addEdge(center, center.translate(dir));
                         if(!simpleUndirectedGraph.edgeExists(center, center.translate(dir)))
                         {
                             simpleUndirectedGraph.addEdge(center, center.translate(dir));
                             squidUndirectedGraph.addEdge(center, center.translate(dir));
+                            sggpUndirectedGraph.addEdge(gpCenter, gpMoved);
                         }
                     }
                 }
@@ -1191,8 +1196,9 @@ public class PathfindingBenchmark {
                 start.set(state.srng.getRandomElement(state.gpFloors));
                 state.sggpPath.clear();
                 end.y = y;
-                if(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex).size != 0)
-                    scanned += state.sggpPath.size();
+                state.sggpPath.addAll(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex));
+                if(state.sggpPath.size != 0)
+                    scanned += state.sggpPath.size;
             }
         }
         return scanned;
@@ -1212,8 +1218,9 @@ public class PathfindingBenchmark {
                 start.set(state.srng.getRandomElement(state.gpFloors));
                 state.sggpPath.clear();
                 end.y = y;
-                if(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex).size != 0)
-                    scanned += state.sggpPath.size();
+                state.sggpPath.addAll(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex));
+                if(state.sggpPath.size != 0)
+                    scanned += state.sggpPath.size;
             }
         }
         return scanned;
@@ -1232,8 +1239,9 @@ public class PathfindingBenchmark {
                 start.set(state.gpNearbyMap[x][y]);
                 state.sggpPath.clear();
                 end.y = y;
-                if(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex).size != 0)
-                    scanned += state.sggpPath.size();
+                state.sggpPath.addAll(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex));
+                if(state.sggpPath.size != 0)
+                    scanned += state.sggpPath.size;
             }
         }
         return scanned;
@@ -1252,8 +1260,9 @@ public class PathfindingBenchmark {
                 start.set(state.gpNearbyMap[x][y]);
                 state.sggpPath.clear();
                 end.y = y;
-                if(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex).size != 0)
-                    scanned += state.sggpPath.size();
+                state.sggpPath.addAll(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex));
+                if(state.sggpPath.size != 0)
+                    scanned += state.sggpPath.size;
             }
         }
         return scanned;
@@ -1273,11 +1282,13 @@ public class PathfindingBenchmark {
                 // this should ensure no blatant correlation between R and W
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.floorArray);
-                state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex).size != 0)
-                    scanned += state.path.size();
+                state.simplePath.clear();
+                state.simplePath.addAll(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex));
+                if(state.simplePath.size != 0)
+                    scanned += state.simplePath.size;
             }
         }
+//        if(scanned == 0) throw new RuntimeException("No paths found!");
         return scanned;
     }
 
@@ -1292,9 +1303,10 @@ public class PathfindingBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 r = state.nearbyMap[x][y];
-                state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex).size != 0)
-                    scanned += state.path.size();
+                state.simplePath.clear();
+                state.simplePath.addAll(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex));
+                if(state.simplePath.size != 0)
+                    scanned += state.simplePath.size;
             }
         }
         return scanned;
@@ -1312,9 +1324,10 @@ public class PathfindingBenchmark {
                 if (state.map[x][y] == '#')
                     continue;
                 r = state.srng.getRandomElement(state.floorArray);
-                state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex).size != 0)
-                    scanned += state.path.size();
+                state.simplePath.clear();
+                state.simplePath.addAll(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex));
+                if(state.simplePath.size != 0)
+                    scanned += state.simplePath.size;
             }
         }
         return scanned;
@@ -1333,9 +1346,10 @@ public class PathfindingBenchmark {
                 // this should ensure no blatant correlation between R and W
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.nearbyMap[x][y];
-                state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex).size != 0)
-                    scanned += state.path.size();
+                state.simplePath.clear();
+                state.simplePath.addAll(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex));
+                if(state.simplePath.size != 0)
+                    scanned += state.simplePath.size;
             }
         }
         return scanned;
