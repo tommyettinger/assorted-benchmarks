@@ -22,43 +22,43 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- * WrangleRandomBench score: 120661600.000000 (120.7M 1860.9%)
- *                uncertainty:   0.8%
+ * WrangleRandomBench score: 192793104.000000 (192.8M 1907.7%)
+ *                uncertainty:   0.3%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * WrangleRandomBench score: 2148079616.000000 (2.148G 2148.8%)
- *                uncertainty:   0.8%
+ * WrangleRandomBench score: 2153297152.000000 (2.153G 2149.0%)
+ *                uncertainty:   0.4%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * WrangleRandomBench score: 123785352.000000 (123.8M 1863.4%)
- *                uncertainty:   0.7%
+ * WrangleRandomBench score: 191379744.000000 (191.4M 1907.0%)
+ *                uncertainty:   0.6%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * WrangleRandomBench score: 123263376.000000 (123.3M 1863.0%)
- *                uncertainty:   0.2%
+ * WrangleRandomBench score: 184038128.000000 (184.0M 1903.1%)
+ *                uncertainty:   1.0%
  * <br>
  * GraalVM Java 17:
  * <br>
- * WrangleRandomBench score: 310838336.000000 (310.8M 1955.5%)
+ * WrangleRandomBench score: 500041024.000000 (500.0M 2003.0%)
  *                uncertainty:   0.3%
  * <br>
  * OpenJ9 Java 17 (Semeru):
  * <br>
- * WrangleRandomBench score: 764025600.000000 (764.0M 2045.4%)
- *                uncertainty:   3.1%
+ * WrangleRandomBench score: 779648512.000000 (779.6M 2047.4%)
+ *                uncertainty:   0.2%
  * <br>
  * HotSpot Java 18 (Adoptium):
  * <br>
- * WrangleRandomBench score: 124318344.000000 (124.3M 1863.8%)
- *                uncertainty:   1.2%
+ * WrangleRandomBench score: 185156720.000000 (185.2M 1903.7%)
+ *                uncertainty:   0.5%
  * <br>
  * HotSpot Java 19 (BellSoft):
  * <br>
- * WrangleRandomBench score: 121676064.000000 (121.7M 1861.7%)
- *                uncertainty:   0.7%
+ * WrangleRandomBench score: 169645552.000000 (169.6M 1894.9%)
+ *                uncertainty:   0.4%
  */
 public final class WrangleRandomBench extends MicroBench {
 

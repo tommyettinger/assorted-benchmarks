@@ -174,13 +174,13 @@ public class WrangleRandom extends EnhancedRandom {
 	public long nextLong () {
 		long x = stateA += 0xC13FA9A902A6328FL;
 		long y = stateB += 0x91E10DA5C79E7B1DL;
-		x += (y ^ (y << 11 | y >>> 53) ^ (y << 50 | y >>> 14));
-		y += (x ^ (x << 46 | x >>> 18) ^ (x << 21 | x >>> 43));
+//		x += (y ^ (y << 11 | y >>> 53) ^ (y << 50 | y >>> 14));
+//		y += (x ^ (x << 46 | x >>> 18) ^ (x << 21 | x >>> 43));
 		x += (y ^ (y <<  5 | y >>> 59) ^ (y << 14 | y >>> 50));
 		y += (x ^ (x << 25 | x >>> 39) ^ (x << 41 | x >>> 23));
 		x += (y ^ (y << 53 | y >>> 11) ^ (y << 3  | y >>> 61));
 		y += (x ^ (x << 31 | x >>> 33) ^ (x << 37 | x >>> 27));
-		return x ^ y;
+		return y;
 	}
 
 	/**
@@ -200,13 +200,13 @@ public class WrangleRandom extends EnhancedRandom {
 	public long skip(long advance) {
 		long x = stateA += 0xC13FA9A902A6328FL * advance;
 		long y = stateB += 0x91E10DA5C79E7B1DL * advance;
-		x += (y ^ (y << 11 | y >>> 53) ^ (y << 50 | y >>> 14));
-		y += (x ^ (x << 46 | x >>> 18) ^ (x << 21 | x >>> 43));
+//		x += (y ^ (y << 11 | y >>> 53) ^ (y << 50 | y >>> 14));
+//		y += (x ^ (x << 46 | x >>> 18) ^ (x << 21 | x >>> 43));
 		x += (y ^ (y <<  5 | y >>> 59) ^ (y << 14 | y >>> 50));
 		y += (x ^ (x << 25 | x >>> 39) ^ (x << 41 | x >>> 23));
 		x += (y ^ (y << 53 | y >>> 11) ^ (y << 3  | y >>> 61));
 		y += (x ^ (x << 31 | x >>> 33) ^ (x << 37 | x >>> 27));
-		return x ^ y;
+		return y;
 
 	}
 
@@ -214,26 +214,26 @@ public class WrangleRandom extends EnhancedRandom {
 	public long previousLong () {
 		long x = stateA -= 0xC13FA9A902A6328FL;
 		long y = stateB -= 0x91E10DA5C79E7B1DL;
-		x += (y ^ (y << 11 | y >>> 53) ^ (y << 50 | y >>> 14));
-		y += (x ^ (x << 46 | x >>> 18) ^ (x << 21 | x >>> 43));
+//		x += (y ^ (y << 11 | y >>> 53) ^ (y << 50 | y >>> 14));
+//		y += (x ^ (x << 46 | x >>> 18) ^ (x << 21 | x >>> 43));
 		x += (y ^ (y <<  5 | y >>> 59) ^ (y << 14 | y >>> 50));
 		y += (x ^ (x << 25 | x >>> 39) ^ (x << 41 | x >>> 23));
 		x += (y ^ (y << 53 | y >>> 11) ^ (y << 3  | y >>> 61));
 		y += (x ^ (x << 31 | x >>> 33) ^ (x << 37 | x >>> 27));
-		return x ^ y;
+		return y;
 	}
 
 	@Override
 	public int next (int bits) {
 		long x = stateA += 0xC13FA9A902A6328FL;
 		long y = stateB += 0x91E10DA5C79E7B1DL;
-		x += (y ^ (y << 11 | y >>> 53) ^ (y << 50 | y >>> 14));
-		y += (x ^ (x << 46 | x >>> 18) ^ (x << 21 | x >>> 43));
+//		x += (y ^ (y << 11 | y >>> 53) ^ (y << 50 | y >>> 14));
+//		y += (x ^ (x << 46 | x >>> 18) ^ (x << 21 | x >>> 43));
 		x += (y ^ (y <<  5 | y >>> 59) ^ (y << 14 | y >>> 50));
 		y += (x ^ (x << 25 | x >>> 39) ^ (x << 41 | x >>> 23));
 		x += (y ^ (y << 53 | y >>> 11) ^ (y << 3  | y >>> 61));
 		y += (x ^ (x << 31 | x >>> 33) ^ (x << 37 | x >>> 27));
-		return (int) (x ^ y) >>> (32 - bits);
+		return (int) y >>> (32 - bits);
 	}
 
 	@Override
