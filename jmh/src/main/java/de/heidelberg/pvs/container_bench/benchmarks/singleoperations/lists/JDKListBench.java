@@ -14,8 +14,8 @@ import de.heidelberg.pvs.container_bench.factories.JDKListFact;
  */
 public class JDKListBench extends AbstractListBench<Object> {
 
-	private List<Object> fullList;
-	protected Object[] values;
+	List<Object> fullList;
+	Object[] values;
 
 	@Param
 	public JDKListWorkload workload; 

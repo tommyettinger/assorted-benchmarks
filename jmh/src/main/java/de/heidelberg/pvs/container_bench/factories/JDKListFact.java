@@ -10,11 +10,12 @@ import java.util.function.Supplier;
  *
  */
 public enum JDKListFact {
-	
+	//JDK_ARRAY,JDKGDXDS_O_LIST
 	JDK_ARRAY(java.util.ArrayList::new), //
 	JDK_LINKED(java.util.LinkedList::new), //
     JDK_VECTOR(java.util.Vector::new), //
-	
+
+	JDKGDXDS_O_LIST(com.github.tommyettinger.ds.ObjectList::new),
 	FASTUTIL_O_ARRAY(it.unimi.dsi.fastutil.objects.ObjectArrayList::new), //
 	
 	ECLIPSE_O_ARRAY(org.eclipse.collections.impl.list.mutable.FastList::new), //

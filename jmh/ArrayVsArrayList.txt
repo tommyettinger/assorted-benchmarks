@@ -1,0 +1,33 @@
+Benchmark                             (impl)   (payloadType)  (seed)  (size)  (workload)    Mode     Cnt        Score    Error  Units
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505      10     ITERATE  sample  518667       74.242 ±  2.755  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505      10   GET_INDEX  sample  626024       34.895 ±  1.923  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505      10    CONTAINS  sample  798786       51.421 ±  1.220  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505      10    POPULATE  sample  618607       69.551 ±  8.648  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505      10        COPY  sample  572776       72.997 ±  7.205  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505     100     ITERATE  sample  958938      428.925 ±  1.800  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505     100   GET_INDEX  sample  564448       37.727 ±  1.088  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505     100    CONTAINS  sample  959501      130.009 ±  1.499  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505     100    POPULATE  sample  522895      816.946 ± 33.356  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505     100        COPY  sample  698505       94.366 ±  7.111  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505    1000     ITERATE  sample  868271     3614.131 ±  5.000  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505    1000   GET_INDEX  sample  630995       36.343 ±  1.491  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505    1000    CONTAINS  sample  825826      984.546 ±  4.450  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505    1000    POPULATE  sample  559971     5710.392 ± 60.313  ns/op
+GDXArrayBench.bench                GDX_ARRAY  STRING_UNIFORM  467505    1000        COPY  sample  518526      397.752 ± 20.375  ns/op
+
+Benchmark                             (impl)   (payloadType)  (seed)  (size)  (workload)    Mode     Cnt        Score    Error  Units
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505      10     ITERATE  sample  559306       71.922 ±  2.534  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505      10   GET_INDEX  sample  604857       36.654 ±  1.901  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505      10    CONTAINS  sample  746177       53.658 ±  1.200  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505      10    POPULATE  sample  782801       89.872 ±  9.398  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505      10        COPY  sample  851212       83.723 ±  6.602  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505     100     ITERATE  sample  512971      409.993 ±  3.056  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505     100   GET_INDEX  sample  598695       36.635 ±  1.940  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505     100    CONTAINS  sample  759360      157.582 ±  2.181  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505     100    POPULATE  sample  870616      503.057 ± 21.318  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505     100        COPY  sample  923495      135.299 ± 10.770  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505    1000     ITERATE  sample  868715     3611.989 ±  3.839  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505    1000   GET_INDEX  sample  597368       36.729 ±  1.936  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505    1000    CONTAINS  sample  620551     1303.398 ±  7.761  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505    1000    POPULATE  sample  508023     6315.366 ± 69.979  ns/op
+JDKListBench.bench                 JDK_ARRAY  STRING_UNIFORM  467505    1000        COPY  sample  494783      843.886 ± 25.519  ns/op

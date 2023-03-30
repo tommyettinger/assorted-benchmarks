@@ -16,7 +16,6 @@
 
 package com.github.tommyettinger.ds;
 
-import com.github.tommyettinger.ds.annotations.NotNullDefault;
 import squidpony.squidmath.Coord;
 
 import javax.annotation.Nullable;
@@ -27,7 +26,6 @@ import java.util.Collection;
  * This assumes all Coord keys are in the Coord pool; that is, {@link Coord#expandPoolTo(int, int)} has been called with
  * the maximum values for Coord x and y.
  */
-@NotNullDefault
 public class RSAltCoordSet extends ObjectSet<Coord> {
     public RSAltCoordSet() {
         super();
