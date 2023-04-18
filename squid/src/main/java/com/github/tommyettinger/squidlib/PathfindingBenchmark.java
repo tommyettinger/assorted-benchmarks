@@ -316,6 +316,7 @@ public class PathfindingBenchmark {
         public DungeonGenerator dungeonGen = new DungeonGenerator(WIDTH, HEIGHT, new StatefulRNG(0x1337BEEFDEAL));
         public char[][] map;
         public double[][] astarMap;
+        public float[][] squadAstarMap;
         public GreasedRegion floors;
         public ArrayList<GridPoint2> gpFloors;
         public Region squadFloors;
@@ -323,9 +324,10 @@ public class PathfindingBenchmark {
         public Coord[] floorArray;
         public Coord lowest, highest;
         public Coord[][] nearbyMap;
+        public com.github.yellowstonegames.grid.Coord squadLowest, squadHighest;
+        public com.github.yellowstonegames.grid.Coord[][] squadNearbyMap;
         public GridPoint2[][] gpNearbyMap;
         public com.github.yellowstonegames.grid.Coord[] squadFloorArray;
-        public com.github.yellowstonegames.grid.Coord[][] squadNearbyMap;
         public int[] customNearbyMap;
         public Adjacency adj;
         public DijkstraMap dijkstra;
@@ -359,6 +361,12 @@ public class PathfindingBenchmark {
         public squidpony.squidai.graph.DefaultGraph squidDefaultGraph;
         public squidpony.squidai.graph.CostlyGraph squidCostlyGraph;
         
+
+        public com.github.yellowstonegames.path.DirectedGraph<com.github.yellowstonegames.grid.Coord> squadDirectedGraph;
+        public com.github.yellowstonegames.path.UndirectedGraph<com.github.yellowstonegames.grid.Coord> squadUndirectedGraph;
+        public com.github.yellowstonegames.path.DefaultGraph squadDefaultGraph;
+        public com.github.yellowstonegames.path.CostlyGraph squadCostlyGraph;
+        
         @Setup(Level.Trial)
         public void setup() {
             map = dungeonGen.generate();
@@ -383,11 +391,20 @@ public class PathfindingBenchmark {
 
             lowest = floors.first();
             highest = floors.last();
+            squadLowest = com.github.yellowstonegames.grid.Coord.get(lowest.x, lowest.y);
+            squadHighest = com.github.yellowstonegames.grid.Coord.get(highest.x, highest.y);
             System.out.println("Floors: " + floorCount);
             System.out.println("Percentage walkable: " + floorCount * 100.0 / (WIDTH * HEIGHT) + "%");
             astarMap = DungeonUtility.generateAStarCostMap(map, Collections.<Character, Double>emptyMap(), 1);
+            squadAstarMap = new float[WIDTH][HEIGHT];
+            for (int x = 0; x < WIDTH; x++) {
+                for (int y = 0; y < HEIGHT; y++) {
+                    squadAstarMap[x][y] = (float) astarMap[x][y];
+                }
+            }
             as = new AStarSearch(astarMap, AStarSearch.SearchType.CHEBYSHEV);
             nearbyMap = new Coord[WIDTH][HEIGHT];
+            squadNearbyMap = new com.github.yellowstonegames.grid.Coord[WIDTH][HEIGHT];
             gpNearbyMap = new GridPoint2[WIDTH][HEIGHT];
             squadNearbyMap = new com.github.yellowstonegames.grid.Coord[WIDTH][HEIGHT];
             customNearbyMap = new int[WIDTH * HEIGHT];
@@ -402,6 +419,7 @@ public class PathfindingBenchmark {
                         continue;
                     c = tmp.empty().insert(i, j).flood(floors, 8).remove(i, j).singleRandom(srng);
                     nearbyMap[i][j] = c;
+                    squadNearbyMap[i][j] = com.github.yellowstonegames.grid.Coord.get(c.x, c.y);
                     gpNearbyMap[i][j] = new GridPoint2(c.x, c.y);
                     squadNearbyMap[i][j] = com.github.yellowstonegames.grid.Coord.get(c.x, c.y);
                     customNearbyMap[adj.composite(i, j, 0, 0)] = adj.composite(c.x, c.y, 0, 0);
@@ -442,6 +460,12 @@ public class PathfindingBenchmark {
             squidDefaultGraph = new squidpony.squidai.graph.DefaultGraph(map, true);
             squidCostlyGraph = new squidpony.squidai.graph.CostlyGraph(astarMap, true);
 
+
+            squadDirectedGraph   = new com.github.yellowstonegames.path.DirectedGraph<>(squadFloors);
+            squadUndirectedGraph = new com.github.yellowstonegames.path.UndirectedGraph<>(squadFloors);
+            squadDefaultGraph = new com.github.yellowstonegames.path.DefaultGraph(map, true);
+            squadCostlyGraph = new com.github.yellowstonegames.path.CostlyGraph(squadAstarMap, true);
+
             Coord center;
             GridPoint2 gpCenter;
             Direction[] outer = Direction.CLOCKWISE;
@@ -457,10 +481,12 @@ public class PathfindingBenchmark {
                         simpleDirectedGraph.addEdge(center, center.translate(dir));
                         sggpDirectedGraph.addEdge(gpCenter, gpMoved);
                         squidDirectedGraph.addEdge(center, center.translate(dir));
+                        squadDirectedGraph.addEdge(com.github.yellowstonegames.grid.Coord.get(center.x, center.y), com.github.yellowstonegames.grid.Coord.get(center.x+dir.deltaX, center.y + dir.deltaY));
                         if(!simpleUndirectedGraph.edgeExists(center, center.translate(dir)))
                         {
                             simpleUndirectedGraph.addEdge(center, center.translate(dir));
                             squidUndirectedGraph.addEdge(center, center.translate(dir));
+                            squadUndirectedGraph.addEdge(com.github.yellowstonegames.grid.Coord.get(center.x, center.y), com.github.yellowstonegames.grid.Coord.get(center.x+dir.deltaX, center.y + dir.deltaY));
                             sggpUndirectedGraph.addEdge(gpCenter, gpMoved);
                         }
                     }
@@ -1540,6 +1566,195 @@ public class PathfindingBenchmark {
         }
         return scanned;
     }
+
+    // SQUAD
+
+    @Benchmark
+    public long doPathSquadD(BenchmarkState state)
+    {
+        com.github.yellowstonegames.grid.Coord r;
+        long scanned = 0;
+        state.srng.setState(1234567890L);
+        final com.github.yellowstonegames.path.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadDirectedGraph.algorithms();
+        for (int x = 1; x < state.WIDTH - 1; x++) {
+            for (int y = 1; y < state.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                r = state.srng.getRandomElement(state.squadFloorArray);
+                state.squadPath.clear();
+                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                    scanned += state.squadPath.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathSquadD(BenchmarkState state)
+    {
+        com.github.yellowstonegames.grid.Coord r;
+        long scanned = 0;
+        final com.github.yellowstonegames.path.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadDirectedGraph.algorithms();
+        for (int x = 1; x < state.WIDTH - 1; x++) {
+            for (int y = 1; y < state.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                r = state.squadNearbyMap[x][y];
+                state.squadPath.clear();
+                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                    scanned += state.squadPath.size();
+            }
+        }
+        return scanned;
+    }
+
+
+    @Benchmark
+    public long doPathSquadUD(BenchmarkState state)
+    {
+        com.github.yellowstonegames.grid.Coord r;
+        long scanned = 0;
+        state.srng.setState(1234567890L);
+        final com.github.yellowstonegames.path.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadUndirectedGraph.algorithms();
+        for (int x = 1; x < state.WIDTH - 1; x++) {
+            for (int y = 1; y < state.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                r = state.srng.getRandomElement(state.squadFloorArray);
+                state.squadPath.clear();
+                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                    scanned += state.squadPath.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathSquadUD(BenchmarkState state)
+    {
+        com.github.yellowstonegames.grid.Coord r;
+        long scanned = 0;
+        final com.github.yellowstonegames.path.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadUndirectedGraph.algorithms();
+        for (int x = 1; x < state.WIDTH - 1; x++) {
+            for (int y = 1; y < state.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                r = state.squadNearbyMap[x][y];
+                state.squadPath.clear();
+                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                    scanned += state.squadPath.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doOneSquadUD(BenchmarkState state) {
+        final com.github.yellowstonegames.path.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadUndirectedGraph.algorithms();
+        com.github.yellowstonegames.grid.Coord tgt = state.squadHighest;
+        state.srng.setState(state.highest.hashCode());
+        com.github.yellowstonegames.grid.Coord r = state.squadLowest;
+        state.squadPath.clear();
+        algo.findShortestPath(r, tgt, state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV);
+        return state.squadPath.size();
+    }
+
+
+    @Benchmark
+    public long doPathSquadDG(BenchmarkState state)
+    {
+        com.github.yellowstonegames.grid.Coord r;
+        long scanned = 0;
+        state.srng.setState(1234567890L);
+        final com.github.yellowstonegames.path.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadDefaultGraph.algorithms();
+        for (int x = 1; x < state.WIDTH - 1; x++) {
+            for (int y = 1; y < state.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                r = state.srng.getRandomElement(state.squadFloorArray);
+                state.squadPath.clear();
+                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                    scanned += state.squadPath.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathSquadDG(BenchmarkState state)
+    {
+        com.github.yellowstonegames.grid.Coord r;
+        long scanned = 0;
+        final com.github.yellowstonegames.path.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadDefaultGraph.algorithms();
+        for (int x = 1; x < state.WIDTH - 1; x++) {
+            for (int y = 1; y < state.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                r = state.squadNearbyMap[x][y];
+                state.squadPath.clear();
+                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                    scanned += state.squadPath.size();
+            }
+        }
+        return scanned;
+    }
+
+
+    @Benchmark
+    public long doPathSquadCG(BenchmarkState state)
+    {
+        com.github.yellowstonegames.grid.Coord r;
+        long scanned = 0;
+        state.srng.setState(1234567890L);
+        final com.github.yellowstonegames.path.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadCostlyGraph.algorithms();
+        for (int x = 1; x < state.WIDTH - 1; x++) {
+            for (int y = 1; y < state.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                r = state.srng.getRandomElement(state.squadFloorArray);
+                state.squadPath.clear();
+                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                    scanned += state.squadPath.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathSquadCG(BenchmarkState state)
+    {
+        com.github.yellowstonegames.grid.Coord r;
+        long scanned = 0;
+        final com.github.yellowstonegames.path.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadCostlyGraph.algorithms();
+        for (int x = 1; x < state.WIDTH - 1; x++) {
+            for (int y = 1; y < state.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                // this should ensure no blatant correlation between R and W
+                //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                r = state.squadNearbyMap[x][y];
+                state.squadPath.clear();
+                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                    scanned += state.squadPath.size();
+            }
+        }
+        return scanned;
+    }
+
 
     /*
      * ============================== HOW TO RUN THIS TEST: ====================================
