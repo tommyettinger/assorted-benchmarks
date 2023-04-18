@@ -299,7 +299,33 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathSquidDG         avgt    5     8056.931 ±    267.515  us/op
  * PathfindingBenchmark.doTinyPathSquidUD         avgt    5     9435.427 ±    747.011  us/op
  * </pre>
- *
+ * <br>
+ * On Graal 19, there's pretty much no difference between SquidLib and SquidSquad pathfinding.
+ * There are some odd outliers occasionally, but these may be related to how hot the laptop was getting...
+ * <pre>
+ * Benchmark                                     Mode  Cnt     Score     Error  Units
+ * PathfindingBenchmark.doOneSquadDijkstra       avgt    5     0.465 ±   0.016  ms/op
+ * PathfindingBenchmark.doOneSquadUD             avgt    5     0.538 ±   0.037  ms/op
+ * PathfindingBenchmark.doOneSquidUD             avgt    5     0.532 ±   0.044  ms/op
+ * PathfindingBenchmark.doPathSquadCG            avgt    5   585.296 ±  36.236  ms/op
+ * PathfindingBenchmark.doPathSquadD             avgt    5   826.279 ± 271.676  ms/op
+ * PathfindingBenchmark.doPathSquadDG            avgt    5   683.611 ± 112.950  ms/op
+ * PathfindingBenchmark.doPathSquadDijkstra      avgt    5  1337.169 ±  67.748  ms/op
+ * PathfindingBenchmark.doPathSquadUD            avgt    5   656.321 ±  15.116  ms/op
+ * PathfindingBenchmark.doPathSquidCG            avgt    5   583.824 ±  25.852  ms/op
+ * PathfindingBenchmark.doPathSquidD             avgt    5   705.798 ±  30.227  ms/op
+ * PathfindingBenchmark.doPathSquidDG            avgt    5   660.100 ± 506.954  ms/op
+ * PathfindingBenchmark.doPathSquidUD            avgt    5   655.595 ±  80.861  ms/op
+ * PathfindingBenchmark.doTinyPathSquadCG        avgt    5     7.259 ±   0.287  ms/op
+ * PathfindingBenchmark.doTinyPathSquadD         avgt    5    10.105 ±   4.701  ms/op
+ * PathfindingBenchmark.doTinyPathSquadDG        avgt    5     7.529 ±   0.809  ms/op
+ * PathfindingBenchmark.doTinyPathSquadDijkstra  avgt    5    35.507 ±   2.236  ms/op
+ * PathfindingBenchmark.doTinyPathSquadUD        avgt    5     8.514 ±   0.392  ms/op
+ * PathfindingBenchmark.doTinyPathSquidCG        avgt    5     7.776 ±   0.496  ms/op
+ * PathfindingBenchmark.doTinyPathSquidD         avgt    5     9.705 ±   0.307  ms/op
+ * PathfindingBenchmark.doTinyPathSquidDG        avgt    5     8.092 ±   0.592  ms/op
+ * PathfindingBenchmark.doTinyPathSquidUD        avgt    5     9.611 ±   0.391  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
