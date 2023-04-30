@@ -102,14 +102,14 @@ public class ScruffRandom extends EnhancedRandom {
 	@Override
 	public long getSelectedState (int selection) {
 		switch (selection) {
-		case 0:
-			return stateA;
-		case 1:
-			return stateB;
-		case 2:
-			return stateC;
-		default:
-			return stateD;
+			case 0:
+				return stateA;
+			case 1:
+				return stateB;
+			case 2:
+				return stateC;
+			default:
+				return stateD;
 		}
 	}
 
@@ -124,18 +124,18 @@ public class ScruffRandom extends EnhancedRandom {
 	@Override
 	public void setSelectedState (int selection, long value) {
 		switch (selection) {
-		case 0:
-			stateA = value | 1L;
-			break;
-		case 1:
-			stateB = value;
-			break;
-		case 2:
-			stateC = value;
-			break;
-		default:
-			stateD = value;
-			break;
+			case 0:
+				stateA = value | 1L;
+				break;
+			case 1:
+				stateB = value;
+				break;
+			case 2:
+				stateC = value;
+				break;
+			default:
+				stateD = value;
+				break;
 		}
 	}
 
@@ -237,21 +237,21 @@ public class ScruffRandom extends EnhancedRandom {
 		final long fb = stateB;
 		final long fc = stateC;
 		final long fd = stateD;
-		stateA = fa + 0x9E3779B97F4A7C16L;
-		stateB = fc * fa;
-		stateC = fa + fd;
-		stateD = fb << 11 | fb >>> 53;
-		return fc;
+		stateA = fa + 0x9E3779B97F4A7C15L;
+		stateB = fd * 0xD1342543DE82EF95L;
+		stateC = fa ^ fb;
+		stateD = (fc << 21 | fc >>> 43);
+		return fd - fc;
 	}
 
 	@Override
 	public long previousLong () {
-		stateA -= 0x9E3779B97F4A7C16L;
-		final long d = stateD;
-		stateD = stateC - stateA;
-		stateC = MathTools.modularMultiplicativeInverse(stateA) * stateB;
-		stateB = d << 53 | d >>> 11;
-		return MathTools.modularMultiplicativeInverse(stateA - 0x9E3779B97F4A7C16L) * stateB;
+		stateA -= 0x9E3779B97F4A7C15L;
+		long c = stateC;
+		stateC = (stateD << 43 | stateD >>> 21);
+		stateD = stateB * 0x572B5EE77A54E3BDL; // modular multiplicative inverse of 0xD1342543DE82EF95L
+		stateB = c ^ stateA;
+		return stateB * 0x572B5EE77A54E3BDL - (stateD << 43 | stateD >>> 21);
 	}
 
 	@Override
@@ -260,11 +260,11 @@ public class ScruffRandom extends EnhancedRandom {
 		final long fb = stateB;
 		final long fc = stateC;
 		final long fd = stateD;
-		stateA = fa + 0x9E3779B97F4A7C16L;
-		stateB = fc * fa;
-		stateC = fa + fd;
-		stateD = fb << 11 | fb >>> 53;
-		return (int)(fc) >>> (32 - bits);
+		stateA = fa + 0x9E3779B97F4A7C15L;
+		stateB = fd * 0xD1342543DE82EF95L;
+		stateC = fa ^ fb;
+		stateD = (fc << 21 | fc >>> 43);
+		return (int)(fd - fc) >>> (32 - bits);
 	}
 
 	@Override
@@ -289,6 +289,7 @@ public class ScruffRandom extends EnhancedRandom {
 	}
 
 	public static void main(String[] args) {
+//		System.out.printf(" 0x%016XL ", MathTools.modularMultiplicativeInverse(0xD1342543DE82EF95L));
 		ScruffRandom random = new ScruffRandom(1L);
 		long n0 = random.nextLong();
 		long n1 = random.nextLong();
