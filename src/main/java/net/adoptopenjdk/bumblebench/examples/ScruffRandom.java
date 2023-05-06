@@ -17,7 +17,6 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.digital.MathTools;
 import com.github.tommyettinger.random.EnhancedRandom;
 
 /**
@@ -46,17 +45,17 @@ public class ScruffRandom extends EnhancedRandom {
 	protected long stateD;
 
 	/**
-	 * Creates a new WrenRandom with a random state.
+	 * Creates a new ScruffRandom with a random state.
 	 */
 	public ScruffRandom() {
-		stateA = EnhancedRandom.seedFromMath() | 1L;
+		stateA = EnhancedRandom.seedFromMath();
 		stateB = EnhancedRandom.seedFromMath();
 		stateC = EnhancedRandom.seedFromMath();
 		stateD = EnhancedRandom.seedFromMath();
 	}
 
 	/**
-	 * Creates a new WrenRandom with the given seed; all {@code long} values are permitted.
+	 * Creates a new ScruffRandom with the given seed; all {@code long} values are permitted.
 	 * The seed will be passed to {@link #setSeed(long)} to attempt to adequately distribute the seed randomly.
 	 *
 	 * @param seed any {@code long} value
@@ -66,7 +65,7 @@ public class ScruffRandom extends EnhancedRandom {
 	}
 
 	/**
-	 * Creates a new WrenRandom with the given four states; all {@code long} values are permitted except that
+	 * Creates a new ScruffRandom with the given four states; all {@code long} values are permitted except that
 	 * {@code stateA} must be odd, otherwise it will have 1 added to it to make it odd.
 	 * Other than that, these states will be used verbatim.
 	 *
@@ -76,7 +75,7 @@ public class ScruffRandom extends EnhancedRandom {
 	 * @param stateD any {@code long} value
 	 */
 	public ScruffRandom(long stateA, long stateB, long stateC, long stateD) {
-		this.stateA = stateA | 1L;
+		this.stateA = stateA;
 		this.stateB = stateB;
 		this.stateC = stateC;
 		this.stateD = stateD;
@@ -125,7 +124,7 @@ public class ScruffRandom extends EnhancedRandom {
 	public void setSelectedState (int selection, long value) {
 		switch (selection) {
 			case 0:
-				stateA = value | 1L;
+				stateA = value;
 				break;
 			case 1:
 				stateB = value;
@@ -155,7 +154,7 @@ public class ScruffRandom extends EnhancedRandom {
 		seed ^= seed >>> 32;
 		seed *= 0xbea225f9eb34556dL;
 		seed ^= seed >>> 29;
-		stateA = (seed ^ 0xC6BC279692B5C323L) | 1L;
+		stateA = seed ^ 0xC6BC279692B5C323L;
 		stateB = ~seed;
 		stateC = seed ^ ~0xC6BC279692B5C323L;
 		stateD = seed;
@@ -171,7 +170,7 @@ public class ScruffRandom extends EnhancedRandom {
 	 * @param stateA can be any long
 	 */
 	public void setStateA (long stateA) {
-		this.stateA = stateA | 1L;
+		this.stateA = stateA;
 	}
 
 	public long getStateB () {
@@ -246,13 +245,22 @@ public class ScruffRandom extends EnhancedRandom {
 
 	@Override
 	public long previousLong () {
-		stateA -= 0x9E3779B97F4A7C15L;
-		long c = stateC;
+		final long c = stateC;
 		stateC = (stateD << 43 | stateD >>> 21);
 		stateD = stateB * 0x572B5EE77A54E3BDL; // modular multiplicative inverse of 0xD1342543DE82EF95L
-		stateB = c ^ stateA;
-		return stateB * 0x572B5EE77A54E3BDL - (stateD << 43 | stateD >>> 21);
+		stateB = c ^ (stateA -= 0x9E3779B97F4A7C15L);
+		return stateD - stateC;
 	}
+//
+//	@Override
+//	public long previousLong () {
+//		stateA -= 0x9E3779B97F4A7C15L;
+//		long c = stateC;
+//		stateC = (stateD << 43 | stateD >>> 21);
+//		stateD = stateB * 0x572B5EE77A54E3BDL; // modular multiplicative inverse of 0xD1342543DE82EF95L
+//		stateB = c ^ stateA;
+//		return stateB * 0x572B5EE77A54E3BDL - (stateD << 43 | stateD >>> 21);
+//	}
 
 	@Override
 	public int next (int bits) {
@@ -298,23 +306,34 @@ public class ScruffRandom extends EnhancedRandom {
 		long n4 = random.nextLong();
 		long n5 = random.nextLong();
 		long n6 = random.nextLong();
+		long p6 = random.previousLong();
 		long p5 = random.previousLong();
 		long p4 = random.previousLong();
 		long p3 = random.previousLong();
 		long p2 = random.previousLong();
 		long p1 = random.previousLong();
 		long p0 = random.previousLong();
+		long n = random.nextLong();
+		long np = random.previousLong();
+		long npn = random.nextLong();
+		long npnp = random.previousLong();
+		System.out.println("Are the results correct?");
 		System.out.println(n0 == p0);
 		System.out.println(n1 == p1);
 		System.out.println(n2 == p2);
 		System.out.println(n3 == p3);
 		System.out.println(n4 == p4);
 		System.out.println(n5 == p5);
+		System.out.println(n6 == p6);
+		System.out.println("The 6 forward and 6 backward results were:");
 		System.out.println(n0 + " vs. " + p0);
 		System.out.println(n1 + " vs. " + p1);
 		System.out.println(n2 + " vs. " + p2);
 		System.out.println(n3 + " vs. " + p3);
 		System.out.println(n4 + " vs. " + p4);
 		System.out.println(n5 + " vs. " + p5);
+		System.out.println(n6 + " vs. " + p6);
+		System.out.println("Backward and forward should all be the same:");
+		System.out.println(n + " to " + np  + " to " + npn  + " to " + npnp);
 	}
 }
