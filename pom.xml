@@ -80,7 +80,7 @@
         <dependency>
             <groupId>com.github.yellowstonegames.SquidSquad</groupId>
             <artifactId>SquidGrid</artifactId>
-            <version>6919164a35</version>
+            <version>2460adb6a0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -128,7 +128,7 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>kryo-jdkgdxds</artifactId>
-            <version>1.2.1.0</version>
+            <version>1.3.1.0</version>
         </dependency>
         <!--        Using JitPack-->
         <dependency>
@@ -146,19 +146,19 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>digital</artifactId>
-            <version>0.3.0</version>
+            <version>0.3.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>juniper</artifactId>
-            <version>0.2.0</version>
+            <version>0.3.4</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>jdkgdxds</artifactId>
-            <version>1.2.1</version>
+            <version>1.3.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

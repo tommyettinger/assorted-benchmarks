@@ -17,14 +17,22 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.github.tommyettinger.digital.Base;
 import com.github.tommyettinger.random.EnhancedRandom;
 
 /**
+ * A generator with 4 {@code long} states and a guaranteed minimum period of 2 to the 64, this is structured much like
+ * WhiskerRandom and is almost as fast. In each call to {@link #nextLong()}, this performs 5 different operations: add a
+ * constant, subtract two variables, multiply by a constant, XOR two variables, and bitwise-rotate one variable (this is
+ * one hardware instruction on desktop JVMs and probably many others). None of these operations have any data dependency
+ * on each other, so all of nextLong() can be performed with instruction-level parallelism when available. That's how
+ * this can produce 1.6 billion longs per second while ThreadLocalRandom can only produce about 940 million longs per
+ * second (and ThreadLocalRandom uses JVM-internal variables, too).
  */
 public class ScruffRandom extends EnhancedRandom {
 	@Override
 	public String getTag() {
-		return "SrfR";
+		return "ScrR";
 	}
 
 	/**
@@ -147,17 +155,18 @@ public class ScruffRandom extends EnhancedRandom {
 	 */
 	@Override
 	public void setSeed (long seed) {
+		seed ^= 0xEFA239AADFF080FFL; // somewhat-arbitrary choice from the array in MathTools.GOLDEN_LONGS
+		stateA = seed;
+		stateC = ~seed;
 		seed ^= seed >>> 32;
-		seed *= 0xbea225f9eb34556dL;
+		seed *= 0xBEA225F9EB34556DL;
 		seed ^= seed >>> 29;
-		seed *= 0xbea225f9eb34556dL;
+		seed *= 0xBEA225F9EB34556DL;
 		seed ^= seed >>> 32;
-		seed *= 0xbea225f9eb34556dL;
+		seed *= 0xBEA225F9EB34556DL;
 		seed ^= seed >>> 29;
-		stateA = seed ^ 0xC6BC279692B5C323L;
-		stateB = ~seed;
-		stateC = seed ^ ~0xC6BC279692B5C323L;
-		stateD = seed;
+		stateB = seed ^ 0xC6BC279692B5C323L;
+		stateD = seed ^ ~0xC6BC279692B5C323L;
 	}
 
 	public long getStateA () {
@@ -251,16 +260,6 @@ public class ScruffRandom extends EnhancedRandom {
 		stateB = c ^ (stateA -= 0x9E3779B97F4A7C15L);
 		return stateD - stateC;
 	}
-//
-//	@Override
-//	public long previousLong () {
-//		stateA -= 0x9E3779B97F4A7C15L;
-//		long c = stateC;
-//		stateC = (stateD << 43 | stateD >>> 21);
-//		stateD = stateB * 0x572B5EE77A54E3BDL; // modular multiplicative inverse of 0xD1342543DE82EF95L
-//		stateB = c ^ stateA;
-//		return stateB * 0x572B5EE77A54E3BDL - (stateD << 43 | stateD >>> 21);
-//	}
 
 	@Override
 	public int next (int bits) {
@@ -298,7 +297,7 @@ public class ScruffRandom extends EnhancedRandom {
 
 	public static void main(String[] args) {
 //		System.out.printf(" 0x%016XL ", MathTools.modularMultiplicativeInverse(0xD1342543DE82EF95L));
-		ScruffRandom random = new ScruffRandom(1L);
+		ScruffRandom random = new ScruffRandom(0L);
 		long n0 = random.nextLong();
 		long n1 = random.nextLong();
 		long n2 = random.nextLong();
@@ -326,13 +325,16 @@ public class ScruffRandom extends EnhancedRandom {
 		System.out.println(n5 == p5);
 		System.out.println(n6 == p6);
 		System.out.println("The 6 forward and 6 backward results were:");
-		System.out.println(n0 + " vs. " + p0);
-		System.out.println(n1 + " vs. " + p1);
-		System.out.println(n2 + " vs. " + p2);
-		System.out.println(n3 + " vs. " + p3);
-		System.out.println(n4 + " vs. " + p4);
-		System.out.println(n5 + " vs. " + p5);
-		System.out.println(n6 + " vs. " + p6);
+		System.out.println(Base.BASE16.unsigned(n0) + " vs. " + Base.BASE16.unsigned(p0));
+		System.out.println(Base.BASE16.unsigned(n1) + " vs. " + Base.BASE16.unsigned(p1));
+		System.out.println(Base.BASE16.unsigned(n2) + " vs. " + Base.BASE16.unsigned(p2));
+		System.out.println(Base.BASE16.unsigned(n3) + " vs. " + Base.BASE16.unsigned(p3));
+		System.out.println(Base.BASE16.unsigned(n4) + " vs. " + Base.BASE16.unsigned(p4));
+		System.out.println(Base.BASE16.unsigned(n5) + " vs. " + Base.BASE16.unsigned(p5));
+		System.out.println(Base.BASE16.unsigned(n6) + " vs. " + Base.BASE16.unsigned(p6));
+		System.out.println("Hamming weights of the bit changes between results:");
+		System.out.println(Long.bitCount(n0 ^ n1) + ", " + Long.bitCount(n1 ^ n2) + ", " + Long.bitCount(n2 ^ n3) + ", ");
+		System.out.println(Long.bitCount(n3 ^ n4) + ", " + Long.bitCount(n4 ^ n5) + ", " + Long.bitCount(n5 ^ n6));
 		System.out.println("Backward and forward should all be the same:");
 		System.out.println(n + " to " + np  + " to " + npn  + " to " + npnp);
 	}
