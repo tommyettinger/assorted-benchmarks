@@ -705,6 +705,43 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doStringsLevartB32     32  avgt    5  697.498 ± 28.563  ns/op
  * HashBenchmark.doStringsYolk32        32  avgt    5  970.109 ± 74.922  ns/op
  * </pre>
+ * <br>
+ * Weird results comparing Yolk (based on wyhash), Tern (operating on four numbers at a time, regardless of bits), and
+ * Terra (operating on 256 bits at a time whenever possible):
+ * <pre>
+ * Benchmark                      (len)  Mode  Cnt     Score    Error  Units
+ * HashBenchmark.doCharTern32       256  avgt    5    71.889 ±  4.003  ns/op
+ * HashBenchmark.doCharTern64       256  avgt    5    65.695 ±  1.258  ns/op
+ * HashBenchmark.doCharTerra32      256  avgt    5    52.228 ±  3.288  ns/op
+ * HashBenchmark.doCharTerra64      256  avgt    5    52.197 ±  2.984  ns/op
+ * HashBenchmark.doCharYolk32       256  avgt    5    61.915 ± 24.721  ns/op
+ * HashBenchmark.doCharYolk64       256  avgt    5    55.960 ±  2.815  ns/op
+ * HashBenchmark.doDoubleTern32     256  avgt    5   323.236 ± 26.403  ns/op
+ * HashBenchmark.doDoubleTern64     256  avgt    5   310.274 ±  5.884  ns/op
+ * HashBenchmark.doDoubleTerra32    256  avgt    5   330.666 ± 55.986  ns/op
+ * HashBenchmark.doDoubleTerra64    256  avgt    5   344.461 ± 45.305  ns/op
+ * HashBenchmark.doDoubleYolk32     256  avgt    5   346.685 ± 13.308  ns/op
+ * HashBenchmark.doDoubleYolk64     256  avgt    5   346.187 ±  7.256  ns/op
+ * HashBenchmark.doIntTern32        256  avgt    5   136.491 ±  5.374  ns/op
+ * HashBenchmark.doIntTern64        256  avgt    5   133.608 ±  4.923  ns/op
+ * HashBenchmark.doIntTerra32       256  avgt    5   110.698 ±  4.236  ns/op
+ * HashBenchmark.doIntTerra64       256  avgt    5   109.301 ±  3.413  ns/op
+ * HashBenchmark.doIntYolk32        256  avgt    5   146.865 ±  1.455  ns/op
+ * HashBenchmark.doIntYolk64        256  avgt    5   132.945 ±  0.904  ns/op
+ * HashBenchmark.doLongTern32       256  avgt    5   165.666 ±  3.096  ns/op
+ * HashBenchmark.doLongTern64       256  avgt    5   154.530 ±  1.420  ns/op
+ * HashBenchmark.doLongTerra32      256  avgt    5   154.267 ±  1.579  ns/op
+ * HashBenchmark.doLongTerra64      256  avgt    5   165.239 ±  6.178  ns/op
+ * HashBenchmark.doLongYolk32       256  avgt    5   223.519 ±  2.258  ns/op
+ * HashBenchmark.doLongYolk64       256  avgt    5   185.184 ±  3.170  ns/op
+ * HashBenchmark.doStringsYolk32    256  avgt    5  3114.771 ± 91.328  ns/op
+ * HashBenchmark.doTern32           256  avgt    5    78.926 ±  2.399  ns/op
+ * HashBenchmark.doTern64           256  avgt    5    80.511 ±  1.120  ns/op
+ * HashBenchmark.doTerra32          256  avgt    5   100.669 ±  3.508  ns/op
+ * HashBenchmark.doTerra64          256  avgt    5   101.690 ±  1.668  ns/op
+ * HashBenchmark.doYolk32           256  avgt    5    62.452 ±  0.931  ns/op
+ * HashBenchmark.doYolk64           256  avgt    5    60.434 ±  0.520  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -1252,64 +1289,184 @@ public class HashBenchmark {
     }
 
 
+//    @Benchmark
+//    public long doPurple64(BenchmarkState state)
+//    {
+//        return CrossHash.Purple.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+//    }
+//
+//    @Benchmark
+//    public int doPurple32(BenchmarkState state)
+//    {
+//        return CrossHash.Purple.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+//    }
+//
+//    @Benchmark
+//    public long doCharPurple64(BenchmarkState state)
+//    {
+//        return CrossHash.Purple.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+//    }
+//
+//    @Benchmark
+//    public int doCharPurple32(BenchmarkState state)
+//    {
+//        return CrossHash.Purple.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+//    }
+//
+//    @Benchmark
+//    public long doIntPurple64(BenchmarkState state)
+//    {
+//        return CrossHash.Purple.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+//    }
+//
+//    @Benchmark
+//    public int doIntPurple32(BenchmarkState state)
+//    {
+//        return CrossHash.Purple.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+//    }
+//
+//    @Benchmark
+//    public long doLongPurple64(BenchmarkState state)
+//    {
+//        return CrossHash.Purple.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+//    }
+//
+//    @Benchmark
+//    public int doLongPurple32(BenchmarkState state)
+//    {
+//        return CrossHash.Purple.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+//    }
+//
+//    @Benchmark
+//    public long doDoublePurple64(BenchmarkState state)
+//    {
+//        return CrossHash.Purple.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+//    }
+//
+//    @Benchmark
+//    public int doDoublePurple32(BenchmarkState state)
+//    {
+//        return CrossHash.Purple.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+//    }
+
     @Benchmark
-    public long doPurple64(BenchmarkState state)
+    public long doTern64(BenchmarkState state)
     {
-        return CrossHash.Purple.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Tern.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public int doPurple32(BenchmarkState state)
+    public int doTern32(BenchmarkState state)
     {
-        return CrossHash.Purple.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Tern.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public long doCharPurple64(BenchmarkState state)
+    public long doCharTern64(BenchmarkState state)
     {
-        return CrossHash.Purple.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Tern.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public int doCharPurple32(BenchmarkState state)
+    public int doCharTern32(BenchmarkState state)
     {
-        return CrossHash.Purple.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Tern.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public long doIntPurple64(BenchmarkState state)
+    public long doIntTern64(BenchmarkState state)
     {
-        return CrossHash.Purple.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Tern.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public int doIntPurple32(BenchmarkState state)
+    public int doIntTern32(BenchmarkState state)
     {
-        return CrossHash.Purple.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Tern.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public long doLongPurple64(BenchmarkState state)
+    public long doLongTern64(BenchmarkState state)
     {
-        return CrossHash.Purple.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Tern.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public int doLongPurple32(BenchmarkState state)
+    public int doLongTern32(BenchmarkState state)
     {
-        return CrossHash.Purple.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Tern.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public long doDoublePurple64(BenchmarkState state)
+    public long doDoubleTern64(BenchmarkState state)
     {
-        return CrossHash.Purple.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Tern.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public int doDoublePurple32(BenchmarkState state)
+    public int doDoubleTern32(BenchmarkState state)
     {
-        return CrossHash.Purple.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+        return CrossHash.Tern.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doTerra64(BenchmarkState state)
+    {
+        return CrossHash.Terra.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doTerra32(BenchmarkState state)
+    {
+        return CrossHash.Terra.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doCharTerra64(BenchmarkState state)
+    {
+        return CrossHash.Terra.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doCharTerra32(BenchmarkState state)
+    {
+        return CrossHash.Terra.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doIntTerra64(BenchmarkState state)
+    {
+        return CrossHash.Terra.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doIntTerra32(BenchmarkState state)
+    {
+        return CrossHash.Terra.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doLongTerra64(BenchmarkState state)
+    {
+        return CrossHash.Terra.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doLongTerra32(BenchmarkState state)
+    {
+        return CrossHash.Terra.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoubleTerra64(BenchmarkState state)
+    {
+        return CrossHash.Terra.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleTerra32(BenchmarkState state)
+    {
+        return CrossHash.Terra.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
