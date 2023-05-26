@@ -1,5 +1,6 @@
 package com.github.tommyettinger.squidlib;
 
+import com.github.tommyettinger.digital.Hasher;
 import squidpony.squidmath.*;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -11217,80 +11218,16 @@ public class CrossHash {
     }
 
     public static final class Tern {
-
-        public static final long C = 0xBEA225F9EB34556DL;
-        private final long seed;
+        public long seed;
 
         public Tern(){
             this.seed = 0xC4CEB9FE1A85EC53L;
         }
         public Tern(long seed)
         {
-            this.seed = mix(~seed);
+            this.seed = seed;
         }
 
-        /**
-         * This is Jon Kagstrom's <a href="https://github.com/jonmaiga/mx3/blob/master/mx3.h">MX3 Mixer v3</a>.
-         * @param state any long
-         * @return any long
-         */
-        public static long mix(long state) {
-            state ^= state >>> 32;
-            state *= C;
-            state ^= state >>> 29;
-            state *= C;
-            state ^= state >>> 32;
-            state *= C;
-            return state ^ state >>> 29;
-        }
-
-        public static long mixStream(long h, long x) {
-            x *= C;
-            x ^= x >>> 37;
-            h += x;
-            h *= C;
-//            x *= C;
-//            x ^= x >>> 39;
-//            h += x * C;
-//            h *= C;
-            return h;
-        }
-
-        public static long mixStream(long h, long a, long b, long c, long d) {
-            a *= C;
-            b *= C;
-            c *= C;
-            d *= C;
-            a ^= a >>> 37;
-            b ^= b >>> 37;
-            c ^= c >>> 37;
-            d ^= d >>> 37;
-            h += a;
-            h *= C;
-            h += b;
-            h *= C;
-            h += c;
-            h *= C;
-            h += d;
-            h *= C;
-//            a *= C;
-//            b *= C;
-//            c *= C;
-//            d *= C;
-//            a ^= a >>> 39;
-//            b ^= b >>> 39;
-//            c ^= c >>> 39;
-//            d ^= d >>> 39;
-//            h += a * C;
-//            h *= C;
-//            h += b * C;
-//            h *= C;
-//            h += c * C;
-//            h *= C;
-//            h += d * C;
-//            h *= C;
-            return h;
-        }
         public Tern(final CharSequence seed)
         {
             this(Water.hash64(seed));
@@ -11696,6 +11633,625 @@ public class CrossHash {
             long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
             long m = 0xDB4F0B9175AE2165L ^ a;
 
+            for (; i < strict; i += 4) {
+                long fa = b ^ data[i    ];
+                long fb = c ^ data[i + 1];
+                long fc = d ^ data[i + 2];
+                long fd = a ^ data[i + 3];
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < len; i++) {
+                long item = data[i];
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return (int)m;
+        }
+
+        public int hash(final long[] data) {
+            if (data == null) return 0;
+            int i = 0, len = data.length, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
+
+            for (; i < strict; i += 4) {
+                long fa = b ^ data[i    ];
+                long fb = c ^ data[i + 1];
+                long fc = d ^ data[i + 2];
+                long fd = a ^ data[i + 3];
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < len; i++) {
+                long item = data[i];
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return (int)m;
+        }
+
+        public int hash(final double[] data) {
+            if (data == null) return 0;
+            int i = 0, len = data.length, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
+
+            for (; i < strict; i += 4) {
+                long fa = b ^ doubleToRawLongBits(data[i    ]);
+                long fb = c ^ doubleToRawLongBits(data[i + 1]);
+                long fc = d ^ doubleToRawLongBits(data[i + 2]);
+                long fd = a ^ doubleToRawLongBits(data[i + 3]);
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < len; i++) {
+                long item = doubleToRawLongBits(data[i]);
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return (int)m;
+        }
+
+        public int hash(final Object data) {
+            if (data == null) return 0;
+            return (int)((data.hashCode() + seed) * 0x9E3779B97F4A7C15L >>> 32);
+        }
+    }
+    public static final class Terra {
+        public long seed;
+
+        public Terra(){
+            this.seed = 0xC4CEB9FE1A85EC53L;
+        }
+        public Terra(long seed)
+        {
+            this.seed = seed;
+        }
+
+        public Terra(final CharSequence seed)
+        {
+            this(Water.hash64(seed));
+        }
+
+        public static final Terra alpha = new Terra("alpha"), beta = new Terra("beta"), gamma = new Terra("gamma"),
+                delta = new Terra("delta"), epsilon = new Terra("epsilon"), zeta = new Terra("zeta"),
+                eta = new Terra("eta"), theta = new Terra("theta"), iota = new Terra("iota"),
+                kappa = new Terra("kappa"), lambda = new Terra("lambda"), mu = new Terra("mu"),
+                nu = new Terra("nu"), xi = new Terra("xi"), omicron = new Terra("omicron"), pi = new Terra("pi"),
+                rho = new Terra("rho"), sigma = new Terra("sigma"), tau = new Terra("tau"),
+                upsilon = new Terra("upsilon"), phi = new Terra("phi"), chi = new Terra("chi"), psi = new Terra("psi"),
+                omega = new Terra("omega"),
+                alpha_ = new Terra("ALPHA"), beta_ = new Terra("BETA"), gamma_ = new Terra("GAMMA"),
+                delta_ = new Terra("DELTA"), epsilon_ = new Terra("EPSILON"), zeta_ = new Terra("ZETA"),
+                eta_ = new Terra("ETA"), theta_ = new Terra("THETA"), iota_ = new Terra("IOTA"),
+                kappa_ = new Terra("KAPPA"), lambda_ = new Terra("LAMBDA"), mu_ = new Terra("MU"),
+                nu_ = new Terra("NU"), xi_ = new Terra("XI"), omicron_ = new Terra("OMICRON"), pi_ = new Terra("PI"),
+                rho_ = new Terra("RHO"), sigma_ = new Terra("SIGMA"), tau_ = new Terra("TAU"),
+                upsilon_ = new Terra("UPSILON"), phi_ = new Terra("PHI"), chi_ = new Terra("CHI"), psi_ = new Terra("PSI"),
+                omega_ = new Terra("OMEGA"),
+                baal = new Terra("baal"), agares = new Terra("agares"), vassago = new Terra("vassago"), samigina = new Terra("samigina"),
+                marbas = new Terra("marbas"), valefor = new Terra("valefor"), amon = new Terra("amon"), barbatos = new Terra("barbatos"),
+                paimon = new Terra("paimon"), buer = new Terra("buer"), gusion = new Terra("gusion"), sitri = new Terra("sitri"),
+                beleth = new Terra("beleth"), leraje = new Terra("leraje"), eligos = new Terra("eligos"), zepar = new Terra("zepar"),
+                botis = new Terra("botis"), bathin = new Terra("bathin"), sallos = new Terra("sallos"), purson = new Terra("purson"),
+                marax = new Terra("marax"), ipos = new Terra("ipos"), aim = new Terra("aim"), naberius = new Terra("naberius"),
+                glasya_labolas = new Terra("glasya_labolas"), bune = new Terra("bune"), ronove = new Terra("ronove"), berith = new Terra("berith"),
+                astaroth = new Terra("astaroth"), forneus = new Terra("forneus"), foras = new Terra("foras"), asmoday = new Terra("asmoday"),
+                gaap = new Terra("gaap"), furfur = new Terra("furfur"), marchosias = new Terra("marchosias"), stolas = new Terra("stolas"),
+                phenex = new Terra("phenex"), halphas = new Terra("halphas"), malphas = new Terra("malphas"), raum = new Terra("raum"),
+                focalor = new Terra("focalor"), vepar = new Terra("vepar"), sabnock = new Terra("sabnock"), shax = new Terra("shax"),
+                vine = new Terra("vine"), bifrons = new Terra("bifrons"), vual = new Terra("vual"), haagenti = new Terra("haagenti"),
+                crocell = new Terra("crocell"), furcas = new Terra("furcas"), balam = new Terra("balam"), alloces = new Terra("alloces"),
+                caim = new Terra("caim"), murmur = new Terra("murmur"), orobas = new Terra("orobas"), gremory = new Terra("gremory"),
+                ose = new Terra("ose"), amy = new Terra("amy"), orias = new Terra("orias"), vapula = new Terra("vapula"),
+                zagan = new Terra("zagan"), valac = new Terra("valac"), andras = new Terra("andras"), flauros = new Terra("flauros"),
+                andrealphus = new Terra("andrealphus"), kimaris = new Terra("kimaris"), amdusias = new Terra("amdusias"), belial = new Terra("belial"),
+                decarabia = new Terra("decarabia"), seere = new Terra("seere"), dantalion = new Terra("dantalion"), andromalius = new Terra("andromalius"),
+                baal_ = new Terra("BAAL"), agares_ = new Terra("AGARES"), vassago_ = new Terra("VASSAGO"), samigina_ = new Terra("SAMIGINA"),
+                marbas_ = new Terra("MARBAS"), valefor_ = new Terra("VALEFOR"), amon_ = new Terra("AMON"), barbatos_ = new Terra("BARBATOS"),
+                paimon_ = new Terra("PAIMON"), buer_ = new Terra("BUER"), gusion_ = new Terra("GUSION"), sitri_ = new Terra("SITRI"),
+                beleth_ = new Terra("BELETH"), leraje_ = new Terra("LERAJE"), eligos_ = new Terra("ELIGOS"), zepar_ = new Terra("ZEPAR"),
+                botis_ = new Terra("BOTIS"), bathin_ = new Terra("BATHIN"), sallos_ = new Terra("SALLOS"), purson_ = new Terra("PURSON"),
+                marax_ = new Terra("MARAX"), ipos_ = new Terra("IPOS"), aim_ = new Terra("AIM"), naberius_ = new Terra("NABERIUS"),
+                glasya_labolas_ = new Terra("GLASYA_LABOLAS"), bune_ = new Terra("BUNE"), ronove_ = new Terra("RONOVE"), berith_ = new Terra("BERITH"),
+                astaroth_ = new Terra("ASTAROTH"), forneus_ = new Terra("FORNEUS"), foras_ = new Terra("FORAS"), asmoday_ = new Terra("ASMODAY"),
+                gaap_ = new Terra("GAAP"), furfur_ = new Terra("FURFUR"), marchosias_ = new Terra("MARCHOSIAS"), stolas_ = new Terra("STOLAS"),
+                phenex_ = new Terra("PHENEX"), halphas_ = new Terra("HALPHAS"), malphas_ = new Terra("MALPHAS"), raum_ = new Terra("RAUM"),
+                focalor_ = new Terra("FOCALOR"), vepar_ = new Terra("VEPAR"), sabnock_ = new Terra("SABNOCK"), shax_ = new Terra("SHAX"),
+                vine_ = new Terra("VINE"), bifrons_ = new Terra("BIFRONS"), vual_ = new Terra("VUAL"), haagenti_ = new Terra("HAAGENTI"),
+                crocell_ = new Terra("CROCELL"), furcas_ = new Terra("FURCAS"), balam_ = new Terra("BALAM"), alloces_ = new Terra("ALLOCES"),
+                caim_ = new Terra("CAIM"), murmur_ = new Terra("MURMUR"), orobas_ = new Terra("OROBAS"), gremory_ = new Terra("GREMORY"),
+                ose_ = new Terra("OSE"), amy_ = new Terra("AMY"), orias_ = new Terra("ORIAS"), vapula_ = new Terra("VAPULA"),
+                zagan_ = new Terra("ZAGAN"), valac_ = new Terra("VALAC"), andras_ = new Terra("ANDRAS"), flauros_ = new Terra("FLAUROS"),
+                andrealphus_ = new Terra("ANDREALPHUS"), kimaris_ = new Terra("KIMARIS"), amdusias_ = new Terra("AMDUSIAS"), belial_ = new Terra("BELIAL"),
+                decarabia_ = new Terra("DECARABIA"), seere_ = new Terra("SEERE"), dantalion_ = new Terra("DANTALION"), andromalius_ = new Terra("ANDROMALIUS")
+                ;
+        /**
+         * Has a length of 192, which may be relevant if automatically choosing a predefined hash functor.
+         */
+        public static final Terra[] predefined = new Terra[]{alpha, beta, gamma, delta, epsilon, zeta, eta, theta, iota,
+                kappa, lambda, mu, nu, xi, omicron, pi, rho, sigma, tau, upsilon, phi, chi, psi, omega,
+                alpha_, beta_, gamma_, delta_, epsilon_, zeta_, eta_, theta_, iota_,
+                kappa_, lambda_, mu_, nu_, xi_, omicron_, pi_, rho_, sigma_, tau_, upsilon_, phi_, chi_, psi_, omega_,
+                baal, agares, vassago, samigina, marbas, valefor, amon, barbatos,
+                paimon, buer, gusion, sitri, beleth, leraje, eligos, zepar,
+                botis, bathin, sallos, purson, marax, ipos, aim, naberius,
+                glasya_labolas, bune, ronove, berith, astaroth, forneus, foras, asmoday,
+                gaap, furfur, marchosias, stolas, phenex, halphas, malphas, raum,
+                focalor, vepar, sabnock, shax, vine, bifrons, vual, haagenti,
+                crocell, furcas, balam, alloces, caim, murmur, orobas, gremory,
+                ose, amy, orias, vapula, zagan, valac, andras, flauros,
+                andrealphus, kimaris, amdusias, belial, decarabia, seere, dantalion, andromalius,
+                baal_, agares_, vassago_, samigina_, marbas_, valefor_, amon_, barbatos_,
+                paimon_, buer_, gusion_, sitri_, beleth_, leraje_, eligos_, zepar_,
+                botis_, bathin_, sallos_, purson_, marax_, ipos_, aim_, naberius_,
+                glasya_labolas_, bune_, ronove_, berith_, astaroth_, forneus_, foras_, asmoday_,
+                gaap_, furfur_, marchosias_, stolas_, phenex_, halphas_, malphas_, raum_,
+                focalor_, vepar_, sabnock_, shax_, vine_, bifrons_, vual_, haagenti_,
+                crocell_, furcas_, balam_, alloces_, caim_, murmur_, orobas_, gremory_,
+                ose_, amy_, orias_, vapula_, zagan_, valac_, andras_, flauros_,
+                andrealphus_, kimaris_, amdusias_, belial_, decarabia_, seere_, dantalion_, andromalius_};
+
+        public long hash64(final char[] data) {
+            if (data == null) return 0;
+            int i = 0, len = data.length, stricter = len - 15, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
+
+            for (; i < stricter; i += 16) {
+                long fa = b ^ data[i      ] ^ (data[i + 0x1] & 0xFFFFL) << 16 ^ (data[i + 0x2] & 0xFFFFL) << 32 ^ (data[i + 0x3] & 0xFFFFL) << 48;
+                long fb = c ^ data[i + 0x4] ^ (data[i + 0x5] & 0xFFFFL) << 16 ^ (data[i + 0x6] & 0xFFFFL) << 32 ^ (data[i + 0x7] & 0xFFFFL) << 48;
+                long fc = d ^ data[i + 0x8] ^ (data[i + 0x9] & 0xFFFFL) << 16 ^ (data[i + 0xA] & 0xFFFFL) << 32 ^ (data[i + 0xB] & 0xFFFFL) << 48;
+                long fd = a ^ data[i + 0xC] ^ (data[i + 0xD] & 0xFFFFL) << 16 ^ (data[i + 0xE] & 0xFFFFL) << 32 ^ (data[i + 0xF] & 0xFFFFL) << 48;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < strict; i += 4) {
+                long fa = b ^ data[i    ];
+                long fb = c ^ data[i + 1];
+                long fc = d ^ data[i + 2];
+                long fd = a ^ data[i + 3];
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < len; i++) {
+                long item = data[i];
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+               + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+               + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+               + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return m;
+        }
+
+        public long hash64(final CharSequence data) {
+            if (data == null) return 0;
+            int i = 0, len = data.length(), stricter = len - 15, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
+
+            for (; i < stricter; i += 16) {
+                long fa = b ^ data.charAt(i      ) ^ (data.charAt(i + 0x1) & 0xFFFFL) << 16 ^ (data.charAt(i + 0x2) & 0xFFFFL) << 32 ^ (data.charAt(i + 0x3) & 0xFFFFL) << 48;
+                long fb = c ^ data.charAt(i + 0x4) ^ (data.charAt(i + 0x5) & 0xFFFFL) << 16 ^ (data.charAt(i + 0x6) & 0xFFFFL) << 32 ^ (data.charAt(i + 0x7) & 0xFFFFL) << 48;
+                long fc = d ^ data.charAt(i + 0x8) ^ (data.charAt(i + 0x9) & 0xFFFFL) << 16 ^ (data.charAt(i + 0xA) & 0xFFFFL) << 32 ^ (data.charAt(i + 0xB) & 0xFFFFL) << 48;
+                long fd = a ^ data.charAt(i + 0xC) ^ (data.charAt(i + 0xD) & 0xFFFFL) << 16 ^ (data.charAt(i + 0xE) & 0xFFFFL) << 32 ^ (data.charAt(i + 0xF) & 0xFFFFL) << 48;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < strict; i += 4) {
+                long fa = b ^ data.charAt(i    );
+                long fb = c ^ data.charAt(i + 1);
+                long fc = d ^ data.charAt(i + 2);
+                long fd = a ^ data.charAt(i + 3);
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < len; i++) {
+                long item = data.charAt(i);
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return m;
+        }
+
+        public long hash64(final int[] data) {
+            if (data == null) return 0;
+            int i = 0, len = data.length, stricter = len - 7, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
+
+            for (; i < stricter; i += 8) {
+                long fa = b ^ data[i      ] ^ (data[i + 0x1] & 0xFFFFFFFFL) << 32;
+                long fb = c ^ data[i + 0x2] ^ (data[i + 0x3] & 0xFFFFFFFFL) << 32;
+                long fc = d ^ data[i + 0x4] ^ (data[i + 0x5] & 0xFFFFFFFFL) << 32;
+                long fd = a ^ data[i + 0x6] ^ (data[i + 0x7] & 0xFFFFFFFFL) << 32;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < strict; i += 4) {
+                long fa = b ^ data[i    ];
+                long fb = c ^ data[i + 1];
+                long fc = d ^ data[i + 2];
+                long fd = a ^ data[i + 3];
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < len; i++) {
+                long item = data[i];
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return m;
+        }
+
+        public long hash64(final long[] data) {
+            if (data == null) return 0;
+            int i = 0, len = data.length, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
+
+            for (; i < strict; i += 4) {
+                long fa = b ^ data[i    ];
+                long fb = c ^ data[i + 1];
+                long fc = d ^ data[i + 2];
+                long fd = a ^ data[i + 3];
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < len; i++) {
+                long item = data[i];
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return m;
+        }
+
+        public long hash64(final double[] data) {
+            if (data == null) return 0;
+            int i = 0, len = data.length, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
+
+            for (; i < strict; i += 4) {
+                long fa = b ^ doubleToRawLongBits(data[i    ]);
+                long fb = c ^ doubleToRawLongBits(data[i + 1]);
+                long fc = d ^ doubleToRawLongBits(data[i + 2]);
+                long fd = a ^ doubleToRawLongBits(data[i + 3]);
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < len; i++) {
+                long item = doubleToRawLongBits(data[i]);
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return m;
+        }
+
+        public long hash64(final Object data) {
+            if (data == null)
+                return 0;
+            final long h = (data.hashCode() + seed) * 0x9E3779B97F4A7C15L;
+            return h - (h >>> 31) + (h << 33);
+        }
+
+        public int hash(final char[] data) {
+            if (data == null) return 0;
+            int i = 0, len = data.length, stricter = len - 15, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
+
+            for (; i < stricter; i += 16) {
+                long fa = b ^ data[i      ] ^ (data[i + 0x1] & 0xFFFFL) << 16 ^ (data[i + 0x2] & 0xFFFFL) << 32 ^ (data[i + 0x3] & 0xFFFFL) << 48;
+                long fb = c ^ data[i + 0x4] ^ (data[i + 0x5] & 0xFFFFL) << 16 ^ (data[i + 0x6] & 0xFFFFL) << 32 ^ (data[i + 0x7] & 0xFFFFL) << 48;
+                long fc = d ^ data[i + 0x8] ^ (data[i + 0x9] & 0xFFFFL) << 16 ^ (data[i + 0xA] & 0xFFFFL) << 32 ^ (data[i + 0xB] & 0xFFFFL) << 48;
+                long fd = a ^ data[i + 0xC] ^ (data[i + 0xD] & 0xFFFFL) << 16 ^ (data[i + 0xE] & 0xFFFFL) << 32 ^ (data[i + 0xF] & 0xFFFFL) << 48;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < strict; i += 4) {
+                long fa = b ^ data[i    ];
+                long fb = c ^ data[i + 1];
+                long fc = d ^ data[i + 2];
+                long fd = a ^ data[i + 3];
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < len; i++) {
+                long item = data[i];
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return (int)m;
+        }
+
+        public int hash(final CharSequence data) {
+            if (data == null) return 0;
+            int i = 0, len = data.length(), stricter = len - 15, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
+
+            for (; i < stricter; i += 16) {
+                long fa = b ^ data.charAt(i      ) ^ (data.charAt(i + 0x1) & 0xFFFFL) << 16 ^ (data.charAt(i + 0x2) & 0xFFFFL) << 32 ^ (data.charAt(i + 0x3) & 0xFFFFL) << 48;
+                long fb = c ^ data.charAt(i + 0x4) ^ (data.charAt(i + 0x5) & 0xFFFFL) << 16 ^ (data.charAt(i + 0x6) & 0xFFFFL) << 32 ^ (data.charAt(i + 0x7) & 0xFFFFL) << 48;
+                long fc = d ^ data.charAt(i + 0x8) ^ (data.charAt(i + 0x9) & 0xFFFFL) << 16 ^ (data.charAt(i + 0xA) & 0xFFFFL) << 32 ^ (data.charAt(i + 0xB) & 0xFFFFL) << 48;
+                long fd = a ^ data.charAt(i + 0xC) ^ (data.charAt(i + 0xD) & 0xFFFFL) << 16 ^ (data.charAt(i + 0xE) & 0xFFFFL) << 32 ^ (data.charAt(i + 0xF) & 0xFFFFL) << 48;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < strict; i += 4) {
+                long fa = b ^ data.charAt(i    );
+                long fb = c ^ data.charAt(i + 1);
+                long fc = d ^ data.charAt(i + 2);
+                long fd = a ^ data.charAt(i + 3);
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            for (; i < len; i++) {
+                long item = data.charAt(i);
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return (int)m;
+        }
+
+        public int hash(final int[] data) {
+            if (data == null) return 0;
+            int i = 0, len = data.length, stricter = len - 7, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
+
+            for (; i < stricter; i += 8) {
+                long fa = b ^ data[i      ] ^ (data[i + 0x1] & 0xFFFFFFFFL) << 32;
+                long fb = c ^ data[i + 0x2] ^ (data[i + 0x3] & 0xFFFFFFFFL) << 32;
+                long fc = d ^ data[i + 0x4] ^ (data[i + 0x5] & 0xFFFFFFFFL) << 32;
+                long fd = a ^ data[i + 0x6] ^ (data[i + 0x7] & 0xFFFFFFFFL) << 32;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
+            }
             for (; i < strict; i += 4) {
                 long fa = b ^ data[i    ];
                 long fb = c ^ data[i + 1];
