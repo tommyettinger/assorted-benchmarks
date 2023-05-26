@@ -11421,62 +11421,178 @@ public class CrossHash {
 
         public long hash64(final CharSequence data) {
             if (data == null) return 0;
-            int i = 0, len = data.length();
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
+            int i = 0, len = data.length(), strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
 
-                h = mixStream(h, data.charAt(  i), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
-                h = mixStream(h, data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
+            for (; i < strict; i += 4) {
+                long fa = b ^ data.charAt(i    );
+                long fb = c ^ data.charAt(i + 1);
+                long fc = d ^ data.charAt(i + 2);
+                long fd = a ^ data.charAt(i + 3);
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
             for (; i < len; i++) {
-                h = mixStream(h, data.charAt(i));
+                long item = data.charAt(i);
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
-            return mix(h);
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return m;
         }
 
         public long hash64(final int[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
+            int i = 0, len = data.length, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
 
-                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+            for (; i < strict; i += 4) {
+                long fa = b ^ data[i    ];
+                long fb = c ^ data[i + 1];
+                long fc = d ^ data[i + 2];
+                long fd = a ^ data[i + 3];
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
             for (; i < len; i++) {
-                h = mixStream(h, data[i]);
+                long item = data[i];
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
-            return mix(h);
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return m;
         }
 
         public long hash64(final long[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
+            int i = 0, len = data.length, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
 
-                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+            for (; i < strict; i += 4) {
+                long fa = b ^ data[i    ];
+                long fb = c ^ data[i + 1];
+                long fc = d ^ data[i + 2];
+                long fd = a ^ data[i + 3];
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
             for (; i < len; i++) {
-                h = mixStream(h, data[i]);
+                long item = data[i];
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
-            return mix(h);
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return m;
         }
 
         public long hash64(final double[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
+            int i = 0, len = data.length, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
 
-                h = mixStream(h, doubleToRawLongBits(data[  i]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
-                h = mixStream(h, doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
+            for (; i < strict; i += 4) {
+                long fa = b ^ doubleToRawLongBits(data[i    ]);
+                long fb = c ^ doubleToRawLongBits(data[i + 1]);
+                long fc = d ^ doubleToRawLongBits(data[i + 2]);
+                long fd = a ^ doubleToRawLongBits(data[i + 3]);
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
             for (; i < len; i++) {
-                h = mixStream(h, doubleToRawLongBits(data[i]));
+                long item = doubleToRawLongBits(data[i]);
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
-            return mix(h);
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return m;
         }
 
         public long hash64(final Object data) {
@@ -11488,77 +11604,222 @@ public class CrossHash {
 
         public int hash(final char[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
+            int i = 0, len = data.length, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
 
-                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+            for (; i < strict; i += 4) {
+                long fa = b ^ data[i    ];
+                long fb = c ^ data[i + 1];
+                long fc = d ^ data[i + 2];
+                long fd = a ^ data[i + 3];
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
             for (; i < len; i++) {
-                h = mixStream(h, data[i]);
+                long item = data[i];
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
-            return (int) mix(h);
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return (int)m;
         }
 
         public int hash(final CharSequence data) {
             if (data == null) return 0;
-            int i = 0, len = data.length();
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
+            int i = 0, len = data.length(), strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
 
-                h = mixStream(h, data.charAt(  i), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
-                h = mixStream(h, data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
+            for (; i < strict; i += 4) {
+                long fa = b ^ data.charAt(i    );
+                long fb = c ^ data.charAt(i + 1);
+                long fc = d ^ data.charAt(i + 2);
+                long fd = a ^ data.charAt(i + 3);
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
             for (; i < len; i++) {
-                h = mixStream(h, data.charAt(i));
+                long item = data.charAt(i);
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
-            return (int)mix(h);
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return (int)m;
         }
 
         public int hash(final int[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
+            int i = 0, len = data.length, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
 
-                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+            for (; i < strict; i += 4) {
+                long fa = b ^ data[i    ];
+                long fb = c ^ data[i + 1];
+                long fc = d ^ data[i + 2];
+                long fd = a ^ data[i + 3];
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
             for (; i < len; i++) {
-                h = mixStream(h, data[i]);
+                long item = data[i];
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
-            return (int) mix(h);
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return (int)m;
         }
 
         public int hash(final long[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
+            int i = 0, len = data.length, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
 
-                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+            for (; i < strict; i += 4) {
+                long fa = b ^ data[i    ];
+                long fb = c ^ data[i + 1];
+                long fc = d ^ data[i + 2];
+                long fd = a ^ data[i + 3];
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
             for (; i < len; i++) {
-                h = mixStream(h, data[i]);
+                long item = data[i];
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
-            return (int) mix(h);
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return (int)m;
         }
 
         public int hash(final double[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
+            int i = 0, len = data.length, strict = len - 3;
+            long a = seed ^ len, b = a + 0xF7C2EBC08F67F2B5L, c = ~a + 0x94D049BB133111EBL, d = ~b + 0x8538ECB5BD456EA3L;
+            long m = 0xDB4F0B9175AE2165L ^ a;
 
-                h = mixStream(h, doubleToRawLongBits(data[  i]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
-                h = mixStream(h, doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
+            for (; i < strict; i += 4) {
+                long fa = b ^ doubleToRawLongBits(data[i    ]);
+                long fb = c ^ doubleToRawLongBits(data[i + 1]);
+                long fc = d ^ doubleToRawLongBits(data[i + 2]);
+                long fd = a ^ doubleToRawLongBits(data[i + 3]);
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
             for (; i < len; i++) {
-                h = mixStream(h, doubleToRawLongBits(data[i]));
+                long item = doubleToRawLongBits(data[i]);
+                long fa = b ^ item;
+                long fb = c ^ item;
+                long fc = d ^ item;
+                long fd = a ^ item;
+                a += (fa << 25 | fa >>> 39);
+                b += (fb << 44 | fb >>> 20);
+                c += (fc << 37 | fc >>> 27);
+                d += (fd << 18 | fd >>> 46);
+                m += a ^ b ^ c ^ d;
+                m = (m << 42 | m >>> 22);
             }
-            return (int)mix(h);
+            m += (a ^ (a << 25 | a >>> 39) ^ (a << 38 | a >>> 26))
+                    + (b ^ (b << 47 | b >>> 17) ^ (b << 19 | b >>> 45))
+                    + (c ^ (c << 11 | c >>> 53) ^ (c << 58 | c >>>  6))
+                    + (d ^ (d << 37 | d >>> 27) ^ (d << 21 | d >>> 43));
+
+            m ^= m >>> 27;
+            m *= 0x3C79AC492BA7B653L;
+            m ^= m >>> 33;
+            m *= 0x1C69B3F74AC4AE35L;
+            m ^= m >>> 27;
+            return (int)m;
         }
 
         public int hash(final Object data) {
