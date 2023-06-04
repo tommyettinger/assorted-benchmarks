@@ -768,6 +768,32 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doTerra64    256  avgt    5  36.971 ± 1.109  ns/op
  * HashBenchmark.doYolk64     256  avgt    5  29.444 ± 0.277  ns/op
  * </pre>
+ * It looks like Hound isn't very good, much of the time. It also looks like Terra performs way better when the length
+ * is always a multiple of 16, if it's hashing chars, but doCharTerra64 and doTerra64 only have that happen 1/16 of the
+ * time... Hm.
+ * <pre>
+ * Benchmark                      (len)  Mode  Cnt    Score     Error  Units
+ * HashBenchmark.doCharHound64      256  avgt    5   25.201 ±   0.890  ns/op
+ * HashBenchmark.doCharTern64       256  avgt    5   32.385 ±   0.394  ns/op
+ * HashBenchmark.doCharTerra64      256  avgt    5   32.833 ±   1.957  ns/op
+ * HashBenchmark.doCharYolk64       256  avgt    5   26.628 ±   3.276  ns/op
+ * HashBenchmark.doDoubleHound64    256  avgt    5  470.156 ±  54.139  ns/op
+ * HashBenchmark.doDoubleTern64     256  avgt    5  343.367 ±  31.062  ns/op
+ * HashBenchmark.doDoubleTerra64    256  avgt    5  350.679 ±  22.595  ns/op
+ * HashBenchmark.doDoubleYolk64     256  avgt    5  469.640 ± 101.738  ns/op
+ * HashBenchmark.doHound64          256  avgt    5   31.838 ±   1.493  ns/op
+ * HashBenchmark.doIntHound64       256  avgt    5  205.368 ±   9.026  ns/op
+ * HashBenchmark.doIntTern64        256  avgt    5  209.487 ±   4.583  ns/op
+ * HashBenchmark.doIntTerra64       256  avgt    5  148.991 ±  18.546  ns/op
+ * HashBenchmark.doIntYolk64        256  avgt    5  184.977 ±   4.125  ns/op
+ * HashBenchmark.doLongHound64      256  avgt    5  307.076 ±  11.117  ns/op
+ * HashBenchmark.doLongTern64       256  avgt    5  271.079 ±  29.057  ns/op
+ * HashBenchmark.doLongTerra64      256  avgt    5  224.664 ±   4.318  ns/op
+ * HashBenchmark.doLongYolk64       256  avgt    5  245.319 ±   7.200  ns/op
+ * HashBenchmark.doTern64           256  avgt    5   35.794 ±   0.847  ns/op
+ * HashBenchmark.doTerra64          256  avgt    5   36.947 ±   0.473  ns/op
+ * HashBenchmark.doYolk64           256  avgt    5   21.718 ±   0.204  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -1493,6 +1519,66 @@ public class HashBenchmark {
     public int doDoubleTerra32(BenchmarkState state)
     {
         return CrossHash.Terra.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doHound64(BenchmarkState state)
+    {
+        return CrossHash.Hound.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doHound32(BenchmarkState state)
+    {
+        return CrossHash.Hound.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doCharHound64(BenchmarkState state)
+    {
+        return CrossHash.Hound.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doCharHound32(BenchmarkState state)
+    {
+        return CrossHash.Hound.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doIntHound64(BenchmarkState state)
+    {
+        return CrossHash.Hound.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doIntHound32(BenchmarkState state)
+    {
+        return CrossHash.Hound.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doLongHound64(BenchmarkState state)
+    {
+        return CrossHash.Hound.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doLongHound32(BenchmarkState state)
+    {
+        return CrossHash.Hound.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoubleHound64(BenchmarkState state)
+    {
+        return CrossHash.Hound.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleHound32(BenchmarkState state)
+    {
+        return CrossHash.Hound.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
