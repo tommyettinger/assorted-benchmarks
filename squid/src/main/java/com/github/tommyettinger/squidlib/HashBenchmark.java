@@ -1522,6 +1522,66 @@ public class HashBenchmark {
     }
 
     @Benchmark
+    public long doTempo64(BenchmarkState state)
+    {
+        return CrossHash.Tempo.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doTempo32(BenchmarkState state)
+    {
+        return CrossHash.Tempo.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doCharTempo64(BenchmarkState state)
+    {
+        return CrossHash.Tempo.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doCharTempo32(BenchmarkState state)
+    {
+        return CrossHash.Tempo.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doIntTempo64(BenchmarkState state)
+    {
+        return CrossHash.Tempo.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doIntTempo32(BenchmarkState state)
+    {
+        return CrossHash.Tempo.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doLongTempo64(BenchmarkState state)
+    {
+        return CrossHash.Tempo.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doLongTempo32(BenchmarkState state)
+    {
+        return CrossHash.Tempo.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoubleTempo64(BenchmarkState state)
+    {
+        return CrossHash.Tempo.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleTempo32(BenchmarkState state)
+    {
+        return CrossHash.Tempo.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
     public long doHound64(BenchmarkState state)
     {
         return CrossHash.Hound.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
