@@ -759,6 +759,15 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doTerra64          256  avgt    5   64.109 ±  2.717  ns/op
  * HashBenchmark.doYolk64           256  avgt    5   55.007 ±  1.011  ns/op
  * </pre>
+ * <br>
+ * An even quicker check to make sure the benchmarks for CharSequence s operate on a little over 256 chars at a time.
+ * This seems to be shorter than they were before, which is somewhat of a surprise.
+ * <pre>
+ * Benchmark                (len)  Mode  Cnt   Score   Error  Units
+ * HashBenchmark.doTern64     256  avgt    5  27.111 ± 0.517  ns/op
+ * HashBenchmark.doTerra64    256  avgt    5  36.971 ± 1.109  ns/op
+ * HashBenchmark.doYolk64     256  avgt    5  29.444 ± 0.277  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -788,6 +797,7 @@ public class HashBenchmark {
             for (int i = 0; i < 16; i++) {
                 languages[i] = FakeLanguageGen.randomLanguage(random.nextLong()).addAccents(0.8, 0.6);
             }
+            final String[] mid = {",", ",", ",", ";"}, end = {".", ".", ".", "!", "?", "..."};
             strings = new String[4096][len];
             words = new CharSequence[4096];
             chars = new char[4096][];
@@ -807,10 +817,9 @@ public class HashBenchmark {
                 throw new RuntimeException(e);
             }
             for (int i = 0; i < 4096; i++) {
-                String w = languages[i & 15].sentence(random.nextLong(), random.next(3) + 1, random.next(6)+9);
+                String w = languages[i & 15].sentence(random.nextLong(), len+4>>1, len+6>>1, mid, end, 0.2, len + random.next(5));
                 chars[i] = w.toCharArray();
                 words[i] = new StringBuilder(w);
-                //final int len = (random.next(8)+1);
                 long[] lon = new long[len];
                 int[] inn = new int[len];
                 double[] don = new double[len];
