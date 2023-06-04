@@ -742,6 +742,23 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doYolk32           256  avgt    5    62.452 ±  0.931  ns/op
  * HashBenchmark.doYolk64           256  avgt    5    60.434 ±  0.520  ns/op
  * </pre>
+ * <br>
+ * Just a quick check for the latest change, using long casts instead of masks with longs where possible.
+ * Terra is looking quite a bit better; it's just still not very fast at hashing CharSequence s. This is probably
+ * because the CharSequence s are words or sentences with random lengths, as opposed to length-256 arrays...
+ * <pre>
+ * Benchmark                      (len)  Mode  Cnt    Score    Error  Units
+ * HashBenchmark.doCharTerra64      256  avgt    5   53.870 ±  1.229  ns/op
+ * HashBenchmark.doCharYolk64       256  avgt    5   51.747 ±  0.730  ns/op
+ * HashBenchmark.doDoubleTerra64    256  avgt    5  246.348 ±  3.501  ns/op
+ * HashBenchmark.doDoubleYolk64     256  avgt    5  322.763 ±  2.934  ns/op
+ * HashBenchmark.doIntTerra64       256  avgt    5  120.792 ± 38.499  ns/op
+ * HashBenchmark.doIntYolk64        256  avgt    5  153.787 ±  5.374  ns/op
+ * HashBenchmark.doLongTerra64      256  avgt    5  178.570 ± 21.178  ns/op
+ * HashBenchmark.doLongYolk64       256  avgt    5  223.294 ± 27.653  ns/op
+ * HashBenchmark.doTerra64          256  avgt    5   64.109 ±  2.717  ns/op
+ * HashBenchmark.doYolk64           256  avgt    5   55.007 ±  1.011  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
