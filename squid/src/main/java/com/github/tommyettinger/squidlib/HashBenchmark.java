@@ -794,6 +794,31 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doTerra64          256  avgt    5   36.947 ±   0.473  ns/op
  * HashBenchmark.doYolk64           256  avgt    5   21.718 ±   0.204  ns/op
  * </pre>
+ * <br>
+ * Checking Tempo vs. Terra...
+ * <pre>
+ * Benchmark                      (len)  Mode  Cnt    Score     Error  Units
+ * HashBenchmark.doCharTempo64      256  avgt    5   30.051 ±   3.816  ns/op
+ * HashBenchmark.doCharTern64       256  avgt    5   31.810 ±   1.727  ns/op
+ * HashBenchmark.doCharTerra64      256  avgt    5   32.457 ±   1.665  ns/op
+ * HashBenchmark.doCharYolk64       256  avgt    5   25.114 ±   0.278  ns/op
+ * HashBenchmark.doDoubleTempo64    256  avgt    5  303.735 ±  38.026  ns/op
+ * HashBenchmark.doDoubleTern64     256  avgt    5  271.593 ±  98.179  ns/op
+ * HashBenchmark.doDoubleTerra64    256  avgt    5  254.267 ±   9.608  ns/op
+ * HashBenchmark.doDoubleYolk64     256  avgt    5  347.034 ±   6.320  ns/op
+ * HashBenchmark.doIntTempo64       256  avgt    5  127.269 ±  24.712  ns/op
+ * HashBenchmark.doIntTern64        256  avgt    5  158.629 ±   5.060  ns/op
+ * HashBenchmark.doIntTerra64       256  avgt    5  126.739 ±  10.546  ns/op
+ * HashBenchmark.doIntYolk64        256  avgt    5  161.366 ±  20.127  ns/op
+ * HashBenchmark.doLongTempo64      256  avgt    5  239.744 ±  83.437  ns/op
+ * HashBenchmark.doLongTern64       256  avgt    5  258.770 ±  91.291  ns/op
+ * HashBenchmark.doLongTerra64      256  avgt    5  201.565 ±  83.148  ns/op
+ * HashBenchmark.doLongYolk64       256  avgt    5  254.663 ± 100.583  ns/op
+ * HashBenchmark.doTempo64          256  avgt    5   37.085 ±   9.953  ns/op
+ * HashBenchmark.doTern64           256  avgt    5   35.896 ±   3.684  ns/op
+ * HashBenchmark.doTerra64          256  avgt    5   37.653 ±   3.254  ns/op
+ * HashBenchmark.doYolk64           256  avgt    5   22.512 ±   2.108  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
