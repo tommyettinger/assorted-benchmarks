@@ -11866,10 +11866,10 @@ public class CrossHash {
             long m = 0xDB4F0B9175AE2165L ^ a;
 
             for (; i < stricter; i += 16) {
-                long fa = b ^ data[i      ] ^ (data[i + 0x1] & 0xFFFFL) << 16 ^ (data[i + 0x2] & 0xFFFFL) << 32 ^ (data[i + 0x3] & 0xFFFFL) << 48;
-                long fb = c ^ data[i + 0x4] ^ (data[i + 0x5] & 0xFFFFL) << 16 ^ (data[i + 0x6] & 0xFFFFL) << 32 ^ (data[i + 0x7] & 0xFFFFL) << 48;
-                long fc = d ^ data[i + 0x8] ^ (data[i + 0x9] & 0xFFFFL) << 16 ^ (data[i + 0xA] & 0xFFFFL) << 32 ^ (data[i + 0xB] & 0xFFFFL) << 48;
-                long fd = a ^ data[i + 0xC] ^ (data[i + 0xD] & 0xFFFFL) << 16 ^ (data[i + 0xE] & 0xFFFFL) << 32 ^ (data[i + 0xF] & 0xFFFFL) << 48;
+                long fa = b ^ data[i      ] ^ (long)data[i + 0x1] << 16 ^ (long)data[i + 0x2] << 32 ^ (long)data[i + 0x3] << 48;
+                long fb = c ^ data[i + 0x4] ^ (long)data[i + 0x5] << 16 ^ (long)data[i + 0x6] << 32 ^ (long)data[i + 0x7] << 48;
+                long fc = d ^ data[i + 0x8] ^ (long)data[i + 0x9] << 16 ^ (long)data[i + 0xA] << 32 ^ (long)data[i + 0xB] << 48;
+                long fd = a ^ data[i + 0xC] ^ (long)data[i + 0xD] << 16 ^ (long)data[i + 0xE] << 32 ^ (long)data[i + 0xF] << 48;
                 a += (fa << 25 | fa >>> 39);
                 b += (fb << 44 | fb >>> 20);
                 c += (fc << 37 | fc >>> 27);
@@ -11922,10 +11922,10 @@ public class CrossHash {
             long m = 0xDB4F0B9175AE2165L ^ a;
 
             for (; i < stricter; i += 16) {
-                long fa = b ^ data.charAt(i      ) ^ (data.charAt(i + 0x1) & 0xFFFFL) << 16 ^ (data.charAt(i + 0x2) & 0xFFFFL) << 32 ^ (data.charAt(i + 0x3) & 0xFFFFL) << 48;
-                long fb = c ^ data.charAt(i + 0x4) ^ (data.charAt(i + 0x5) & 0xFFFFL) << 16 ^ (data.charAt(i + 0x6) & 0xFFFFL) << 32 ^ (data.charAt(i + 0x7) & 0xFFFFL) << 48;
-                long fc = d ^ data.charAt(i + 0x8) ^ (data.charAt(i + 0x9) & 0xFFFFL) << 16 ^ (data.charAt(i + 0xA) & 0xFFFFL) << 32 ^ (data.charAt(i + 0xB) & 0xFFFFL) << 48;
-                long fd = a ^ data.charAt(i + 0xC) ^ (data.charAt(i + 0xD) & 0xFFFFL) << 16 ^ (data.charAt(i + 0xE) & 0xFFFFL) << 32 ^ (data.charAt(i + 0xF) & 0xFFFFL) << 48;
+                long fa = b ^ data.charAt(i      ) ^ (long)data.charAt(i + 0x1) << 16 ^ (long)data.charAt(i + 0x2) << 32 ^ (long)data.charAt(i + 0x3) << 48;
+                long fb = c ^ data.charAt(i + 0x4) ^ (long)data.charAt(i + 0x5) << 16 ^ (long)data.charAt(i + 0x6) << 32 ^ (long)data.charAt(i + 0x7) << 48;
+                long fc = d ^ data.charAt(i + 0x8) ^ (long)data.charAt(i + 0x9) << 16 ^ (long)data.charAt(i + 0xA) << 32 ^ (long)data.charAt(i + 0xB) << 48;
+                long fd = a ^ data.charAt(i + 0xC) ^ (long)data.charAt(i + 0xD) << 16 ^ (long)data.charAt(i + 0xE) << 32 ^ (long)data.charAt(i + 0xF) << 48;
                 a += (fa << 25 | fa >>> 39);
                 b += (fb << 44 | fb >>> 20);
                 c += (fc << 37 | fc >>> 27);
@@ -11978,10 +11978,10 @@ public class CrossHash {
             long m = 0xDB4F0B9175AE2165L ^ a;
 
             for (; i < stricter; i += 8) {
-                long fa = b ^ data[i      ] ^ (data[i + 0x1] & 0xFFFFFFFFL) << 32;
-                long fb = c ^ data[i + 0x2] ^ (data[i + 0x3] & 0xFFFFFFFFL) << 32;
-                long fc = d ^ data[i + 0x4] ^ (data[i + 0x5] & 0xFFFFFFFFL) << 32;
-                long fd = a ^ data[i + 0x6] ^ (data[i + 0x7] & 0xFFFFFFFFL) << 32;
+                long fa = b ^ (data[i      ] & 0xFFFFFFFFL) ^ (long)data[i + 0x1] << 32;
+                long fb = c ^ (data[i + 0x2] & 0xFFFFFFFFL) ^ (long)data[i + 0x3] << 32;
+                long fc = d ^ (data[i + 0x4] & 0xFFFFFFFFL) ^ (long)data[i + 0x5] << 32;
+                long fd = a ^ (data[i + 0x6] & 0xFFFFFFFFL) ^ (long)data[i + 0x7] << 32;
                 a += (fa << 25 | fa >>> 39);
                 b += (fb << 44 | fb >>> 20);
                 c += (fc << 37 | fc >>> 27);
@@ -11990,10 +11990,10 @@ public class CrossHash {
                 m = (m << 42 | m >>> 22);
             }
             for (; i < strict; i += 4) {
-                long fa = b ^ data[i    ];
-                long fb = c ^ data[i + 1];
-                long fc = d ^ data[i + 2];
-                long fd = a ^ data[i + 3];
+                long fa = b ^ (data[i    ] & 0xFFFFFFFFL);
+                long fb = c ^ (data[i + 1] & 0xFFFFFFFFL);
+                long fc = d ^ (data[i + 2] & 0xFFFFFFFFL);
+                long fd = a ^ (data[i + 3] & 0xFFFFFFFFL);
                 a += (fa << 25 | fa >>> 39);
                 b += (fb << 44 | fb >>> 20);
                 c += (fc << 37 | fc >>> 27);
@@ -12002,7 +12002,7 @@ public class CrossHash {
                 m = (m << 42 | m >>> 22);
             }
             for (; i < len; i++) {
-                long item = data[i];
+                long item = (data[i] & 0xFFFFFFFFL);
                 long fa = b ^ item;
                 long fb = c ^ item;
                 long fc = d ^ item;
@@ -12129,10 +12129,10 @@ public class CrossHash {
             long m = 0xDB4F0B9175AE2165L ^ a;
 
             for (; i < stricter; i += 16) {
-                long fa = b ^ data[i      ] ^ (data[i + 0x1] & 0xFFFFL) << 16 ^ (data[i + 0x2] & 0xFFFFL) << 32 ^ (data[i + 0x3] & 0xFFFFL) << 48;
-                long fb = c ^ data[i + 0x4] ^ (data[i + 0x5] & 0xFFFFL) << 16 ^ (data[i + 0x6] & 0xFFFFL) << 32 ^ (data[i + 0x7] & 0xFFFFL) << 48;
-                long fc = d ^ data[i + 0x8] ^ (data[i + 0x9] & 0xFFFFL) << 16 ^ (data[i + 0xA] & 0xFFFFL) << 32 ^ (data[i + 0xB] & 0xFFFFL) << 48;
-                long fd = a ^ data[i + 0xC] ^ (data[i + 0xD] & 0xFFFFL) << 16 ^ (data[i + 0xE] & 0xFFFFL) << 32 ^ (data[i + 0xF] & 0xFFFFL) << 48;
+                long fa = b ^ data[i      ] ^ (long)data[i + 0x1] << 16 ^ (long)data[i + 0x2] << 32 ^ (long)data[i + 0x3] << 48;
+                long fb = c ^ data[i + 0x4] ^ (long)data[i + 0x5] << 16 ^ (long)data[i + 0x6] << 32 ^ (long)data[i + 0x7] << 48;
+                long fc = d ^ data[i + 0x8] ^ (long)data[i + 0x9] << 16 ^ (long)data[i + 0xA] << 32 ^ (long)data[i + 0xB] << 48;
+                long fd = a ^ data[i + 0xC] ^ (long)data[i + 0xD] << 16 ^ (long)data[i + 0xE] << 32 ^ (long)data[i + 0xF] << 48;
                 a += (fa << 25 | fa >>> 39);
                 b += (fb << 44 | fb >>> 20);
                 c += (fc << 37 | fc >>> 27);
@@ -12185,10 +12185,10 @@ public class CrossHash {
             long m = 0xDB4F0B9175AE2165L ^ a;
 
             for (; i < stricter; i += 16) {
-                long fa = b ^ data.charAt(i      ) ^ (data.charAt(i + 0x1) & 0xFFFFL) << 16 ^ (data.charAt(i + 0x2) & 0xFFFFL) << 32 ^ (data.charAt(i + 0x3) & 0xFFFFL) << 48;
-                long fb = c ^ data.charAt(i + 0x4) ^ (data.charAt(i + 0x5) & 0xFFFFL) << 16 ^ (data.charAt(i + 0x6) & 0xFFFFL) << 32 ^ (data.charAt(i + 0x7) & 0xFFFFL) << 48;
-                long fc = d ^ data.charAt(i + 0x8) ^ (data.charAt(i + 0x9) & 0xFFFFL) << 16 ^ (data.charAt(i + 0xA) & 0xFFFFL) << 32 ^ (data.charAt(i + 0xB) & 0xFFFFL) << 48;
-                long fd = a ^ data.charAt(i + 0xC) ^ (data.charAt(i + 0xD) & 0xFFFFL) << 16 ^ (data.charAt(i + 0xE) & 0xFFFFL) << 32 ^ (data.charAt(i + 0xF) & 0xFFFFL) << 48;
+                long fa = b ^ data.charAt(i      ) ^ (long)data.charAt(i + 0x1) << 16 ^ (long)data.charAt(i + 0x2) << 32 ^ (long)data.charAt(i + 0x3) << 48;
+                long fb = c ^ data.charAt(i + 0x4) ^ (long)data.charAt(i + 0x5) << 16 ^ (long)data.charAt(i + 0x6) << 32 ^ (long)data.charAt(i + 0x7) << 48;
+                long fc = d ^ data.charAt(i + 0x8) ^ (long)data.charAt(i + 0x9) << 16 ^ (long)data.charAt(i + 0xA) << 32 ^ (long)data.charAt(i + 0xB) << 48;
+                long fd = a ^ data.charAt(i + 0xC) ^ (long)data.charAt(i + 0xD) << 16 ^ (long)data.charAt(i + 0xE) << 32 ^ (long)data.charAt(i + 0xF) << 48;
                 a += (fa << 25 | fa >>> 39);
                 b += (fb << 44 | fb >>> 20);
                 c += (fc << 37 | fc >>> 27);
@@ -12241,10 +12241,10 @@ public class CrossHash {
             long m = 0xDB4F0B9175AE2165L ^ a;
 
             for (; i < stricter; i += 8) {
-                long fa = b ^ data[i      ] ^ (data[i + 0x1] & 0xFFFFFFFFL) << 32;
-                long fb = c ^ data[i + 0x2] ^ (data[i + 0x3] & 0xFFFFFFFFL) << 32;
-                long fc = d ^ data[i + 0x4] ^ (data[i + 0x5] & 0xFFFFFFFFL) << 32;
-                long fd = a ^ data[i + 0x6] ^ (data[i + 0x7] & 0xFFFFFFFFL) << 32;
+                long fa = b ^ (data[i      ] & 0xFFFFFFFFL) ^ (long)data[i + 0x1] << 32;
+                long fb = c ^ (data[i + 0x2] & 0xFFFFFFFFL) ^ (long)data[i + 0x3] << 32;
+                long fc = d ^ (data[i + 0x4] & 0xFFFFFFFFL) ^ (long)data[i + 0x5] << 32;
+                long fd = a ^ (data[i + 0x6] & 0xFFFFFFFFL) ^ (long)data[i + 0x7] << 32;
                 a += (fa << 25 | fa >>> 39);
                 b += (fb << 44 | fb >>> 20);
                 c += (fc << 37 | fc >>> 27);
@@ -12253,10 +12253,10 @@ public class CrossHash {
                 m = (m << 42 | m >>> 22);
             }
             for (; i < strict; i += 4) {
-                long fa = b ^ data[i    ];
-                long fb = c ^ data[i + 1];
-                long fc = d ^ data[i + 2];
-                long fd = a ^ data[i + 3];
+                long fa = b ^ (data[i    ] & 0xFFFFFFFFL);
+                long fb = c ^ (data[i + 1] & 0xFFFFFFFFL);
+                long fc = d ^ (data[i + 2] & 0xFFFFFFFFL);
+                long fd = a ^ (data[i + 3] & 0xFFFFFFFFL);
                 a += (fa << 25 | fa >>> 39);
                 b += (fb << 44 | fb >>> 20);
                 c += (fc << 37 | fc >>> 27);
@@ -12265,7 +12265,7 @@ public class CrossHash {
                 m = (m << 42 | m >>> 22);
             }
             for (; i < len; i++) {
-                long item = data[i];
+                long item = data[i] & 0xFFFFFFFFL;
                 long fa = b ^ item;
                 long fb = c ^ item;
                 long fc = d ^ item;
