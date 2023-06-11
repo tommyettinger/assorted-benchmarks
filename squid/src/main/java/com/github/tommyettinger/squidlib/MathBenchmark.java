@@ -32,6 +32,7 @@
 package com.github.tommyettinger.squidlib;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.github.tommyettinger.digital.BitConversion;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -247,7 +248,19 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureSoontsTan  avgt    5   7.391 ± 0.364  ns/op
  * MathBenchmark.measureTableTan   avgt    5   3.892 ± 0.345  ns/op
  * </pre>
- *
+ * <br>
+ * Benchmarking various float to int floor implementations on Java 19:
+ * <pre>
+ * Benchmark                                Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureFloorBitAbs         avgt    5  3.210 ± 0.132  ns/op
+ * MathBenchmark.measureFloorBitArithmetic  avgt    5  5.955 ± 0.072  ns/op
+ * MathBenchmark.measureFloorBitCorrect     avgt    5  3.797 ± 0.135  ns/op
+ * MathBenchmark.measureFloorFloatAbs       avgt    5  4.163 ± 0.149  ns/op
+ * MathBenchmark.measureFloorGdx            avgt    5  2.925 ± 0.123  ns/op
+ * MathBenchmark.measureFloorGust           avgt    5  3.179 ± 0.179  ns/op
+ * MathBenchmark.measureFloorIncorrect      avgt    5  2.845 ± 0.262  ns/op
+ * MathBenchmark.measureFloorMath           avgt    5  5.155 ± 0.039  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -362,6 +375,10 @@ public class MathBenchmark {
     private int floorGust = 0;
     private int floorNoise = 0;
     private int floorGdx = 0;
+    private int floorBfc = 0;
+    private int floorBfr = 0;
+    private int floorBfa = 0;
+    private int floorFfa = 0;
 
     @Benchmark
     public double measureBaseline()
@@ -917,29 +934,59 @@ public class MathBenchmark {
 
     @Benchmark
     public int measureFloorMath(){
-        return (int) Math.floor(((floorMath += 0x9E3779B9) >> 24));
+        return (int) Math.floor(((floorMath += 0x9E3779B9) * 0x1p-24f));
     }
 
     public static int fastFloorGust(float x) {
         int xi = (int) x;
         return x < xi ? xi - 1 : xi;
     }
-    @Benchmark
-    public int measureFloorGust(){
-        return fastFloorGust(((floorGust += 0x9E3779B9) >> 24));
+    public static int floatFloorAbs(float x) {
+        return (int)Math.copySign((int)Math.abs(x), x);
     }
-
-    public static int fastFloorNoise(float t) {
+    public static int bitFloorAbs(float x) {
+        final int s = BitConversion.floatToIntBits(x) >> 31;
+        return (int)Math.abs(x) + s ^ s;
+    }
+    public static int bitFloorCorrect(final float f) {
+        final int i = (int)f;
+        return i + (BitConversion.floatToIntBits(-i + f) >> 31);
+    }
+    public static int bitFloorArithmetic(final float f) {
+        final int i = (int)f;
+        return i + (BitConversion.floatToIntBits(f - i) >> 31);
+    }
+    public static int fastFloorNoiseIncorrect(float t) {
         return t >= 0f ? (int) t : (int) t - 1;
     }
     @Benchmark
-    public int measureFloorNoise(){
-        return fastFloorNoise(((floorNoise += 0x9E3779B9) >> 24));
+    public int measureFloorGust(){
+        return fastFloorGust(((floorGust += 0x9E3779B9) * 0x1p-24f));
+    }
+    @Benchmark
+    public int measureFloorIncorrect(){
+        return fastFloorNoiseIncorrect(((floorNoise += 0x9E3779B9)  * 0x1p-24f));
     }
 
     @Benchmark
     public int measureFloorGdx(){
-        return MathUtils.floor(((floorGdx += 0x9E3779B9) >> 24));
+        return MathUtils.floor(((floorGdx += 0x9E3779B9) * 0x1p-24f));
+    }
+    @Benchmark
+    public int measureFloorFloatAbs(){
+        return floatFloorAbs(((floorFfa += 0x9E3779B9) * 0x1p-24f));
+    }
+    @Benchmark
+    public int measureFloorBitAbs(){
+        return bitFloorAbs(((floorBfa += 0x9E3779B9) * 0x1p-24f));
+    }
+    @Benchmark
+    public int measureFloorBitCorrect(){
+        return bitFloorCorrect(((floorBfc += 0x9E3779B9) * 0x1p-24f));
+    }
+    @Benchmark
+    public int measureFloorBitArithmetic(){
+        return bitFloorArithmetic(((floorBfr += 0x9E3779B9) * 0x1p-24f));
     }
 
     /*
