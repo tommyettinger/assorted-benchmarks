@@ -249,7 +249,20 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureTableTan   avgt    5   3.892 ± 0.345  ns/op
  * </pre>
  * <br>
- * Benchmarking various float to int floor implementations on Java 19:
+ * Benchmarking various float to int floor implementations on Java 8:
+ * <pre>
+ * Benchmark                                Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureFloorBitAbs         avgt    5  3.068 ± 0.027  ns/op
+ * MathBenchmark.measureFloorBitArithmetic  avgt    5  5.801 ± 0.124  ns/op
+ * MathBenchmark.measureFloorBitCorrect     avgt    5  4.146 ± 0.122  ns/op
+ * MathBenchmark.measureFloorFloatAbs       avgt    5  3.979 ± 0.189  ns/op
+ * MathBenchmark.measureFloorGdx            avgt    5  2.776 ± 0.153  ns/op
+ * MathBenchmark.measureFloorGust           avgt    5  2.990 ± 0.087  ns/op
+ * MathBenchmark.measureFloorIncorrect      avgt    5  2.569 ± 0.156  ns/op
+ * MathBenchmark.measureFloorMath           avgt    5  6.623 ± 0.321  ns/op
+ * </pre>
+ * <br>
+ * And on Java 19:
  * <pre>
  * Benchmark                                Mode  Cnt  Score   Error  Units
  * MathBenchmark.measureFloorBitAbs         avgt    5  3.210 ± 0.132  ns/op
