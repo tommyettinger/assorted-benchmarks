@@ -84,7 +84,7 @@ clean.delete += [file("war")]
 // This next line can be changed if you want to, for instance, always build into the
 // docs/ folder of a Git repo, which can be set to automatically publish on GitHub Pages.
 // This is relative to the html/ folder.
-var outputPath = "../../../docs/bunny/gdx/gwt/"
+var outputPath = "../../../docs/bunny/bhaskara/gwt/"
 
 //var outputPath = "build/dist/"
 

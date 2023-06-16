@@ -3,7 +3,8 @@
 <module rename-to="html">
   <source path="" />
   <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
-  <inherits name="com.github.tommyettinger.BunnyMark" />
+  <inherits name="com.BunnyMark" />
+  <inherits name="com.github.tommyettinger.digital" />
   <entry-point class="com.github.tommyettinger.gwt.GwtLauncher" />
   <set-configuration-property name="gdx.assetpath" value="../assets" />
   <set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
