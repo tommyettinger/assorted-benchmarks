@@ -783,7 +783,7 @@ public final class NumberTools2 {
 
     public static float sinLerp(float radians) {
         radians *= radToIndex;
-        final int floor = (int)(radians + 16384.0) - 16384;
+        final int floor = (int)(radians + 16384.0) - 16384; // fast floor trick
         final int masked = floor & TABLE_MASK;
         final float from = SIN_TABLE[masked], to = SIN_TABLE[masked+1];
         return from + (to - from) * (radians - floor);
