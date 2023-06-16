@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.Spritz;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.utils.Array;
@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  */
 public class BunnyMark extends ApplicationAdapter {
     private SpriteBatch batch;
-    private Sprite sprite;
+    private Spritz sprite;
     private OrthographicCamera camera;
     private ScreenViewport viewport;
     private static final RandomXS128 random = new RandomXS128();
@@ -56,7 +56,7 @@ public class BunnyMark extends ApplicationAdapter {
         batch = new SpriteBatch(5400);
         labelFont = new BitmapFont();
         labelFont.setColor(Color.WHITE);
-        sprite = new Sprite(new Texture("wabbit_alpha.png"));
+        sprite = new Spritz(new Texture("wabbit_alpha.png"));
         camera = new OrthographicCamera();
         viewport = new ScreenViewport(camera);
         viewport.apply();

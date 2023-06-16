@@ -31,6 +31,7 @@ gwt {
 
 dependencies {
   implementation "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
+  api "com.github.tommyettinger:digital:$digitalVersion:sources"
   implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.1"
   implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.1:sources"
   implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
