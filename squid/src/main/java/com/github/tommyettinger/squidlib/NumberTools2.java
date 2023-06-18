@@ -803,7 +803,8 @@ public final class NumberTools2 {
         final int maskedC = floor + SIN_TO_COS & TABLE_MASK;
         final float fromS = SIN_TABLE[maskedS], toS = SIN_TABLE[maskedS+1];
         final float fromC = SIN_TABLE[maskedC], toC = SIN_TABLE[maskedC+1];
-        return (fromS + (toS - fromS) * (radians - floor))/(fromC + (toC - fromC) * (radians - floor));
+        radians -= floor;
+        return (fromS + (toS - fromS) * radians)/(fromC + (toC - fromC) * radians);
     }
     public static float tanTable(float radians) {
         final int r = (int)(radians * radToIndex);
