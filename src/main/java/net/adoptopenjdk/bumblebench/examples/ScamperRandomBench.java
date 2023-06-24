@@ -22,48 +22,48 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- * ScruffRandomBench score: 975726976.000000 (975.7M 2069.9%)
-              uncertainty:   0.9%
+ * ScamperRandomBench score: 249187072.000000 (249.2M 1933.4%)
+ *                uncertainty:   0.5%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * ScruffRandomBench score: 1453985152.000000 (1.454G 2109.8%)
-              uncertainty:   0.4%
+ * ScamperRandomBench score: 1537481344.000000 (1.537G 2115.3%)
+ *                uncertainty:   1.6%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * ScruffRandomBench score: 1577533568.000000 (1.578G 2117.9%)
-              uncertainty:   1.9%
+ * ScamperRandomBench score: 280850592.000000 (280.9M 1945.3%)
+ *                uncertainty:   0.1%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * ScruffRandomBench score: 1495354752.000000 (1.495G 2112.6%)
-              uncertainty:   1.8%
+ * ScamperRandomBench score: 300880448.000000 (300.9M 1952.2%)
+ *                uncertainty:   2.5%
  * <br>
  * GraalVM Java 17:
  * <br>
- * ScruffRandomBench score: 1840755712.000000 (1.841G 2133.3%)
-              uncertainty:   1.3%
+ * ScamperRandomBench score: 625543680.000000 (625.5M 2025.4%)
+ *                uncertainty:   0.3%
  * <br>
  * OpenJ9 Java 17 (Semeru):
  * <br>
- * ScruffRandomBench score: 689638656.000000 (689.6M 2035.2%)
-              uncertainty:   0.3%
+ * ScamperRandomBench score: 786560832.000000 (786.6M 2048.3%)
+ *                uncertainty:   3.1%
  * <br>
  * HotSpot Java 18 (Adoptium):
  * <br>
- * ScruffRandomBench score: 1506329600.000000 (1.506G 2113.3%)
-              uncertainty:   2.3%
+ * ScamperRandomBench score: 303764064.000000 (303.8M 1953.2%)
+ *                uncertainty:   0.7%
  * <br>
  * HotSpot Java 19 (BellSoft):
  * <br>
- * ScruffRandomBench score: 1635361536.000000 (1.635G 2121.5%)
-              uncertainty:   0.1%
+ * ScamperRandomBench score: 314405216.000000 (314.4M 1956.6%)
+ *                uncertainty:   0.5%
  */
-public final class ScruffRandomBench extends MicroBench {
+public final class ScamperRandomBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
-		ScruffRandom rng = new ScruffRandom(0x12345678);
+		ScamperRandom rng = new ScamperRandom(0x12345678);
 		long sum = 0L;
 		for (long i = 0; i < numIterations; i++)
 			sum += rng.nextLong();
