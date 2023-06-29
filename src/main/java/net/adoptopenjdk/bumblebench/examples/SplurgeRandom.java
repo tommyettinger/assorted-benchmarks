@@ -65,6 +65,20 @@ public class SplurgeRandom extends EnhancedRandom {
 	}
 
 	/**
+	 * Creates a new SplurgeRandom with the given two states; all {@code long} values are permitted.
+	 * These states will be used verbatim for stateA and stateB. Both stateC and stateD will be assigned 1.
+	 *
+	 * @param stateA any {@code long} value
+	 * @param stateB any {@code long} value
+	 */
+	public SplurgeRandom(long stateA, long stateB) {
+		this.stateA = stateA;
+		this.stateB = stateB;
+		this.stateC = 1L;
+		this.stateD = 1L;
+	}
+
+	/**
 	 * Creates a new SplurgeRandom with the given four states; all {@code long} values are permitted.
 	 * These states will be used verbatim.
 	 *
@@ -131,7 +145,7 @@ public class SplurgeRandom extends EnhancedRandom {
 		case 2:
 			stateC = value;
 			break;
-		default:
+		case 3:
 			stateD = value;
 			break;
 		}
@@ -146,17 +160,17 @@ public class SplurgeRandom extends EnhancedRandom {
 	 */
 	@Override
 	public void setSeed (long seed) {
+		seed ^= seed >>> 32;
 		stateA = seed ^ 0xC6BC279692B5C323L;
-		stateB = seed ^ ~0xC6BC279692B5C323L;
-		seed ^= seed >>> 32;
-		seed *= 0xbea225f9eb34556dL;
+		seed *= 0xBEA225F9EB34556DL;
 		seed ^= seed >>> 29;
-		seed *= 0xbea225f9eb34556dL;
+		stateB = seed ^ ~0xD3833E804F4C574BL;
+		seed *= 0xBEA225F9EB34556DL;
 		seed ^= seed >>> 32;
-		seed *= 0xbea225f9eb34556dL;
+		stateC = seed ^ 0xD3833E804F4C574BL;
+		seed *= 0xBEA225F9EB34556DL;
 		seed ^= seed >>> 29;
-		stateC = ~seed;
-		stateD = seed;
+		stateD = seed ^ ~0xC6BC279692B5C323L;
 	}
 
 	public long getStateA () {
@@ -212,6 +226,22 @@ public class SplurgeRandom extends EnhancedRandom {
 	}
 
 	/**
+	 * Sets each state variable to either {@code stateA} or {@code stateB}, alternating.
+	 * This uses {@link #setSelectedState(int, long)} to set the values. If there is one
+	 * state variable ({@link #getStateCount()} is 1), then this only sets that state
+	 * variable to stateA. If there are two state variables, the first is set to stateA,
+	 * and the second to stateB. If there are more, it reuses stateA, then stateB, then
+	 * stateA, and so on until all variables are set.
+	 *
+	 * @param stateA the long value to use for states at index 0, 2, 4, 6...
+	 * @param stateB the long value to use for states at index 1, 3, 5, 7...
+	 */
+	@Override
+	public void setState(long stateA, long stateB) {
+		setState(stateA, stateB, 1L, 1L);
+	}
+
+	/**
 	 * Sets the state completely to the given four state variables.
 	 * This is the same as calling {@link #setStateA(long)}, {@link #setStateB(long)},
 	 * {@link #setStateC(long)}, and {@link #setStateD(long)} as a group.
@@ -239,7 +269,7 @@ public class SplurgeRandom extends EnhancedRandom {
 		c += b ^ (b << 17 | b >>> 47) ^ (b << 34 | b >>> 30);
 		d += c ^ (c <<  5 | c >>> 59) ^ (c << 58 | c >>>  6);
 		a += d ^ (d << 47 | d >>> 17) ^ (d << 38 | d >>> 26);
-		return a;
+		return (a ^ (a << 44 | a >>> 20) ^ (a << 21 | a >>> 43));
 	}
 
 	@Override
@@ -256,7 +286,7 @@ public class SplurgeRandom extends EnhancedRandom {
 		c += b ^ (b << 17 | b >>> 47) ^ (b << 34 | b >>> 30);
 		d += c ^ (c <<  5 | c >>> 59) ^ (c << 58 | c >>>  6);
 		a += d ^ (d << 47 | d >>> 17) ^ (d << 38 | d >>> 26);
-		return a;
+		return (a ^ (a << 44 | a >>> 20) ^ (a << 21 | a >>> 43));
 	}
 
 	@Override
@@ -269,7 +299,7 @@ public class SplurgeRandom extends EnhancedRandom {
 		c += b ^ (b << 17 | b >>> 47) ^ (b << 34 | b >>> 30);
 		d += c ^ (c <<  5 | c >>> 59) ^ (c << 58 | c >>>  6);
 		a += d ^ (d << 47 | d >>> 17) ^ (d << 38 | d >>> 26);
-		return a;
+		return (a ^ (a << 44 | a >>> 20) ^ (a << 21 | a >>> 43));
 	}
 
 	@Override
@@ -282,7 +312,7 @@ public class SplurgeRandom extends EnhancedRandom {
 		c += b ^ (b << 17 | b >>> 47) ^ (b << 34 | b >>> 30);
 		d += c ^ (c <<  5 | c >>> 59) ^ (c << 58 | c >>>  6);
 		a += d ^ (d << 47 | d >>> 17) ^ (d << 38 | d >>> 26);
-		return (int)a >>> (32 - bits);
+		return (int)(a ^ (a << 44 | a >>> 20) ^ (a << 21 | a >>> 43)) >>> (32 - bits);
 	}
 
 	@Override

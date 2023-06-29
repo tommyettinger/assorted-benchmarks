@@ -17,7 +17,7 @@ package net.adoptopenjdk.bumblebench.examples;
 
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
-/**
+/** // These benchmarks are out-of-date; it has slowed down since these were measured.
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * HotSpot Java 8:
