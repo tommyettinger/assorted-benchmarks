@@ -40,6 +40,12 @@ import java.util.random.RandomGeneratorFactory;
  * <br>
  * JavaGeneratorRandomBench score: 61231188.000000 (61.23M 1793.0%)
  *                     uncertainty:   0.6%
+ *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ * JavaGeneratorRandomBench score: 61817620.000000 (61.82M 1794.0%)
+ *                      uncertainty:   0.2%
  */
 public final class JavaGeneratorRandomBench extends MicroBench {
 

@@ -21,7 +21,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
 
-        <gdx.version>1.11.0</gdx.version>
+        <gdx.version>1.12.0</gdx.version>
     </properties>
     <licenses>
         <license>
@@ -211,6 +211,62 @@
                         <configuration>
                             <target>17</target>
                             <source>17</source>
+                            <includes>
+                                <include>net/adoptopenjdk/bumblebench/*.java</include>
+                                <include>net/adoptopenjdk/bumblebench/examples/*.java</include>
+                                <include>net/adoptopenjdk/bumblebench/java17/*.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>enable-18</id>
+            <activation>
+                <property>
+                    <name>e18</name>
+                    <value>true</value>
+                </property>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven.compiler.version}</version>
+                        <configuration>
+                            <target>18</target>
+                            <source>18</source>
+                            <includes>
+                                <include>net/adoptopenjdk/bumblebench/*.java</include>
+                                <include>net/adoptopenjdk/bumblebench/examples/*.java</include>
+                                <include>net/adoptopenjdk/bumblebench/java17/*.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>enable-19</id>
+            <activation>
+                <property>
+                    <name>e19</name>
+                    <value>true</value>
+                </property>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>${maven.compiler.version}</version>
+                        <configuration>
+                            <target>19</target>
+                            <source>19</source>
                             <includes>
                                 <include>net/adoptopenjdk/bumblebench/*.java</include>
                                 <include>net/adoptopenjdk/bumblebench/examples/*.java</include>

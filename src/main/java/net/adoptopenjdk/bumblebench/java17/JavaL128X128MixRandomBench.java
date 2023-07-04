@@ -37,6 +37,11 @@ import java.util.random.RandomGeneratorFactory;
  * HotSpot Java 19 (BellSoft):
  * <br>
  *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ * JavaL128X128MixRandomBench score: 162612864.000000 (162.6M 1890.7%)
+ *                        uncertainty:   0.7%
  */
 public final class JavaL128X128MixRandomBench extends MicroBench {
 

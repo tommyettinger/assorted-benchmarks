@@ -37,6 +37,12 @@ import java.util.random.RandomGeneratorFactory;
  * HotSpot Java 19 (BellSoft):
  * <br>
  *
+ *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ * JavaSplittableRandomBench score: 1041109120.000000 (1.041G 2076.4%)
+ *                       uncertainty:   0.8%
  */
 
 public final class JavaSplittableRandomBench extends MicroBench {

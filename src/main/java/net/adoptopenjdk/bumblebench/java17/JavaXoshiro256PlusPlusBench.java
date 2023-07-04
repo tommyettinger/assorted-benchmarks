@@ -37,6 +37,11 @@ import java.util.random.RandomGeneratorFactory;
  * HotSpot Java 19 (BellSoft):
  * <br>
  *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ * JavaXoshiro256PlusPlusBench score: 938913216.000000 (938.9M 2066.0%)
+ *                         uncertainty:   1.1%
  */
 public final class JavaXoshiro256PlusPlusBench extends MicroBench {
 
