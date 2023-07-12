@@ -386,13 +386,14 @@ public class PathfindingBenchmark {
         public squidpony.squidai.graph.UndirectedGraph<Coord> squidUndirectedGraph;
         public squidpony.squidai.graph.DefaultGraph squidDefaultGraph;
         public squidpony.squidai.graph.CostlyGraph squidCostlyGraph;
-        
 
         public com.github.yellowstonegames.path.DirectedGraph<com.github.yellowstonegames.grid.Coord> squadDirectedGraph;
         public com.github.yellowstonegames.path.UndirectedGraph<com.github.yellowstonegames.grid.Coord> squadUndirectedGraph;
         public com.github.yellowstonegames.path.DefaultGraph squadDefaultGraph;
         public com.github.yellowstonegames.path.CostlyGraph squadCostlyGraph;
-        
+
+        public NateStar nate;
+
         @Setup(Level.Trial)
         public void setup() {
             map = dungeonGen.generate();
@@ -430,7 +431,6 @@ public class PathfindingBenchmark {
             }
             as = new AStarSearch(astarMap, AStarSearch.SearchType.CHEBYSHEV);
             nearbyMap = new Coord[WIDTH][HEIGHT];
-            squadNearbyMap = new com.github.yellowstonegames.grid.Coord[WIDTH][HEIGHT];
             gpNearbyMap = new GridPoint2[WIDTH][HEIGHT];
             squadNearbyMap = new com.github.yellowstonegames.grid.Coord[WIDTH][HEIGHT];
             customNearbyMap = new int[WIDTH * HEIGHT];
@@ -445,7 +445,6 @@ public class PathfindingBenchmark {
                         continue;
                     c = tmp.empty().insert(i, j).flood(floors, 8).remove(i, j).singleRandom(srng);
                     nearbyMap[i][j] = c;
-                    squadNearbyMap[i][j] = com.github.yellowstonegames.grid.Coord.get(c.x, c.y);
                     gpNearbyMap[i][j] = new GridPoint2(c.x, c.y);
                     squadNearbyMap[i][j] = com.github.yellowstonegames.grid.Coord.get(c.x, c.y);
                     customNearbyMap[adj.composite(i, j, 0, 0)] = adj.composite(c.x, c.y, 0, 0);
@@ -518,6 +517,12 @@ public class PathfindingBenchmark {
                     }
                 }
             }
+            nate = new NateStar(WIDTH, HEIGHT) {
+                @Override
+                protected boolean isValid(int x, int y) {
+                    return floors.contains(x, y);
+                }
+            };
         }
 
     }
@@ -1505,7 +1510,6 @@ public class PathfindingBenchmark {
         return state.path.size();
     }
 
-
     @Benchmark
     public long doPathSquidDG(BenchmarkState state)
     {
@@ -1781,6 +1785,53 @@ public class PathfindingBenchmark {
         return scanned;
     }
 
+    // NATE
+
+
+    @Benchmark
+    public long doPathNate(BenchmarkState state)
+    {
+        long scanned = 0;
+        state.srng.setState(1234567890L);
+        final NateStar nate = state.nate;
+        for (int x = 1; x < state.WIDTH - 1; x++) {
+            for (int y = 1; y < state.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                start.set(state.srng.getRandomElement(state.gpFloors));
+                int len = nate.getPath(start.x, start.y, x, y).size;
+                if(len != 0)
+                    scanned += len;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathNate(BenchmarkState state)
+    {
+        long scanned = 0;
+        final NateStar nate = state.nate;
+        for (int x = 1; x < state.WIDTH - 1; x++) {
+            for (int y = 1; y < state.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                start.set(state.gpNearbyMap[x][y]);
+                int len = nate.getPath(start.x, start.y, x, y).size;
+                if(len != 0)
+                    scanned += len;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doOneNate(BenchmarkState state) {
+        final NateStar nate = state.nate;
+        GridPoint2 start = state.highestGP;
+        GridPoint2 end = state.lowestGP;
+        return nate.getPath(start.x, start.y, end.x, end.y).size;
+    }
 
     /*
      * ============================== HOW TO RUN THIS TEST: ====================================
