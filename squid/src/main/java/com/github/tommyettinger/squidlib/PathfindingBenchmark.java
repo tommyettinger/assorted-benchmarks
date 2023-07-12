@@ -358,6 +358,33 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * here is GDXAStarGP, interestingly, even after it was fixed so that it finds paths as often as anything else does. I
  * think this is because the gdx-ai implementation using GridPoint2 doesn't use any hashed lookups, only arrays. The
  * gdx-ai implementation using Coord does use hashed lookups, and is much slower.
+ * <br>
+ * I don't know what happened. GDXAStarCoord is almost the same code as GDXAStarGP, but it's much slower...
+ * <pre>
+ * Benchmark                                  Mode  Cnt     Score     Error  Units
+ * PathfindingBenchmark.doPathAStarSearch     avgt    5   643.035 ±  43.603  ms/op
+ * PathfindingBenchmark.doPathBitDijkstra     avgt    5  1338.887 ±  37.311  ms/op
+ * PathfindingBenchmark.doPathCDijkstra       avgt    5  1351.684 ±  34.891  ms/op
+ * PathfindingBenchmark.doPathCustomDijkstra  avgt    5  2529.270 ±  90.358  ms/op
+ * PathfindingBenchmark.doPathDijkstra        avgt    5  1520.068 ±  47.062  ms/op
+ * PathfindingBenchmark.doPathGDXAStarCoord   avgt    5  1131.681 ±  15.601  ms/op
+ * PathfindingBenchmark.doPathGDXAStarGP      avgt    5   550.697 ±  11.223  ms/op
+ * PathfindingBenchmark.doPathNate            avgt    5  2223.303 ±  60.252  ms/op
+ * PathfindingBenchmark.doPathSimpleD         avgt    5   639.887 ±  81.174  ms/op
+ * PathfindingBenchmark.doPathSimpleGPD       avgt    5   614.273 ±   7.684  ms/op
+ * PathfindingBenchmark.doPathSimpleGPUD      avgt    5   609.471 ±  10.010  ms/op
+ * PathfindingBenchmark.doPathSimpleUD        avgt    5   625.789 ±   8.055  ms/op
+ * PathfindingBenchmark.doPathSquadCG         avgt    5   577.080 ±   5.190  ms/op
+ * PathfindingBenchmark.doPathSquadD          avgt    5   727.053 ±  15.023  ms/op
+ * PathfindingBenchmark.doPathSquadDG         avgt    5   603.581 ± 113.664  ms/op
+ * PathfindingBenchmark.doPathSquadDijkstra   avgt    5  1363.334 ±  20.328  ms/op
+ * PathfindingBenchmark.doPathSquadUD         avgt    5   698.364 ±   7.639  ms/op
+ * PathfindingBenchmark.doPathSquidCG         avgt    5   627.614 ±   6.351  ms/op
+ * PathfindingBenchmark.doPathSquidD          avgt    5   752.059 ±   7.853  ms/op
+ * PathfindingBenchmark.doPathSquidDG         avgt    5   595.272 ±  32.003  ms/op
+ * PathfindingBenchmark.doPathSquidUD         avgt    5   698.687 ±  14.065  ms/op
+ * </pre>
+ *
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -494,8 +521,8 @@ public class PathfindingBenchmark {
             cDijkstra = new CDijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
             cDijkstra.setBlockingRequirement(0);
             customDijkstra = new CustomDijkstraMap(map, adj, new StatefulRNG(0x1337BEEF));
-            gg = new GridGraphGP(floors, map);
-            gg2 = new GridGraphCoord(floors, map);
+            gg = new GridGraphGP(floors, WIDTH, HEIGHT);
+            gg2 = new GridGraphCoord(floors, WIDTH, HEIGHT);
             astar = new IndexedAStarPathFinder<>(gg, false, GridPoint2::equals);
             astar2 = new IndexedAStarPathFinder<>(gg2, false);
             dgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
@@ -1075,19 +1102,16 @@ public class PathfindingBenchmark {
     static class GridGraphGP implements IndexedGraph<GridPoint2>
     {
         public int[][] indices;
-        public char[][] map;
+        public GridPoint2[][] grid;
+        public int nodeCount;
         public Heuristic<GridPoint2> heu = (node, endNode) ->
                 (Math.abs(node.x - endNode.x) + Math.abs(node.y - endNode.y));
 
-        public GridPoint2[][] grid;
 
-        public int nodeCount;
-
-        public GridGraphGP(Iterable<Coord> floors, char[][] map)
+        public GridGraphGP(Iterable<Coord> floors, int width, int height)
         {
-            this.map = map;
-            grid = new GridPoint2[map.length][map[0].length];
-            indices = ArrayTools.fill(-1, map.length, map[0].length);
+            grid = new GridPoint2[width][height];
+            indices = ArrayTools.fill(-1, width, height);
             int i = 0;
             for(Coord c : floors){
                 GridPoint2 pt = new GridPoint2(c.x, c.y);
@@ -1118,11 +1142,11 @@ public class PathfindingBenchmark {
         @Override
         public Array<Connection<GridPoint2>> getConnections(GridPoint2 fromNode) {
             Array<Connection<GridPoint2>> conn = new Array<>(false, 8, Connection.class);
-            if(map[fromNode.x][fromNode.y] != '.')
+            if(indices[fromNode.x][fromNode.y] == -1)
                 return conn;
             for (int i = 0; i < 8; i++) {
                 int x = fromNode.x+Direction.OUTWARDS[i].deltaX, y = fromNode.y+Direction.OUTWARDS[i].deltaY;
-                if (x >= 0 && y >= 0 && x < map.length && y < map[0].length && map[x][y] == '.')
+                if (x >= 0 && y >= 0 && x < indices.length && y < indices[0].length && indices[x][y] != -1)
                     conn.add(new DefaultConnection<>(fromNode, new GridPoint2(x, y)));
             }
             return conn;
@@ -1132,38 +1156,39 @@ public class PathfindingBenchmark {
 
     static class GridGraphCoord implements IndexedGraph<Coord>
     {
-        public ObjectIntMap<Coord> points = new ObjectIntMap<>(128 * 128);
-        public char[][] map;
+        public int[][] map;
+        int nodeCount;
         public Heuristic<Coord> heu = (node, endNode) ->
                 Math.max(Math.abs(node.x - endNode.x), Math.abs(node.y - endNode.y));
 
-        public GridGraphCoord(Iterable<Coord> floors, char[][] map)
+        public GridGraphCoord(Iterable<Coord> floors, int width, int height)
         {
-            this.map = map;
+            this.map = ArrayTools.fill(-1, width, height);
             int i = 0;
             for(Coord c : floors){
-                points.put(c, i++);
+                map[c.x][c.y] = i++;
             }
+            nodeCount = i;
         }
 
         @Override
         public int getIndex(Coord node) {
-            return points.get(node, -1);
+            return map[node.x][node.y];
         }
 
         @Override
         public int getNodeCount() {
-            return points.size;
+            return nodeCount;
         }
 
         @Override
         public Array<Connection<Coord>> getConnections(Coord fromNode) {
             Array<Connection<Coord>> conn = new Array<>(false, 8, Connection.class);
-            if(map[fromNode.x][fromNode.y] != '.')
+            if(map[fromNode.x][fromNode.y] == -1)
                 return conn;
             for (int i = 0; i < 8; i++) {
                 int x = fromNode.x+Direction.OUTWARDS[i].deltaX, y = fromNode.y+Direction.OUTWARDS[i].deltaY;
-                if (x >= 0 && y >= 0 && x < map.length && y < map[0].length && map[x][y] == '.')
+                if (x >= 0 && y >= 0 && x < map.length && y < map[0].length && map[x][y] != -1)
                     conn.add(new DefaultConnection<>(fromNode, Coord.get(x, y)));
             }
             return conn;
