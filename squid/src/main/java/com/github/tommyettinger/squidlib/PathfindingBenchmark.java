@@ -326,6 +326,38 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathSquidDG        avgt    5     8.092 ±   0.592  ms/op
  * PathfindingBenchmark.doTinyPathSquidUD        avgt    5     9.611 ±   0.391  ms/op
  * </pre>
+ * <br>
+ * Testing on HotSpot Java 19, with all the varieties of the broadest test, doPath:
+ * <pre>
+ * Benchmark                                  Mode  Cnt     Score    Error  Units
+ * PathfindingBenchmark.doPathAStarSearch     avgt    5   652.217 ± 22.756  ms/op
+ * PathfindingBenchmark.doPathBitDijkstra     avgt    5  1344.788 ± 32.642  ms/op
+ * PathfindingBenchmark.doPathCDijkstra       avgt    5  1347.899 ± 47.326  ms/op
+ * PathfindingBenchmark.doPathCustomDijkstra  avgt    5  2541.292 ± 49.725  ms/op
+ * PathfindingBenchmark.doPathDijkstra        avgt    5  1517.510 ± 63.571  ms/op
+ * PathfindingBenchmark.doPathGDXAStarCoord   avgt    5  1376.808 ± 37.770  ms/op
+ * PathfindingBenchmark.doPathGDXAStarGP      avgt    5   531.745 ±  7.271  ms/op
+ * PathfindingBenchmark.doPathNate            avgt    5  2456.673 ± 85.702  ms/op
+ * PathfindingBenchmark.doPathSimpleD         avgt    5   614.864 ± 43.617  ms/op
+ * PathfindingBenchmark.doPathSimpleGPD       avgt    5   622.291 ±  7.097  ms/op
+ * PathfindingBenchmark.doPathSimpleGPUD      avgt    5   618.404 ± 39.350  ms/op
+ * PathfindingBenchmark.doPathSimpleUD        avgt    5   603.095 ±  5.638  ms/op
+ * PathfindingBenchmark.doPathSquadCG         avgt    5   608.257 ±  8.455  ms/op
+ * PathfindingBenchmark.doPathSquadD          avgt    5   738.030 ± 15.758  ms/op
+ * PathfindingBenchmark.doPathSquadDG         avgt    5   604.759 ±  9.936  ms/op
+ * PathfindingBenchmark.doPathSquadDijkstra   avgt    5  1341.546 ± 25.508  ms/op
+ * PathfindingBenchmark.doPathSquadUD         avgt    5   659.084 ± 12.445  ms/op
+ * PathfindingBenchmark.doPathSquidCG         avgt    5   625.508 ±  5.220  ms/op
+ * PathfindingBenchmark.doPathSquidD          avgt    5   748.627 ± 12.934  ms/op
+ * PathfindingBenchmark.doPathSquidDG         avgt    5   619.013 ± 11.420  ms/op
+ * PathfindingBenchmark.doPathSquidUD         avgt    5   690.944 ±  6.758  ms/op
+ * </pre>
+ * The slowest two here are CustomDijkstra, which was never especially fast because it does so much extra work,
+ * and Nate (using the new/old NateStar class here from a 2014 Gist by Nathan Sweet). I haven't really picked apart
+ * NateStar to see why it's so slow, but it takes about 4x as much time as Simple-Graphs or SquidSquad. The fastest one
+ * here is GDXAStarGP, interestingly, even after it was fixed so that it finds paths as often as anything else does. I
+ * think this is because the gdx-ai implementation using GridPoint2 doesn't use any hashed lookups, only arrays. The
+ * gdx-ai implementation using Coord does use hashed lookups, and is much slower.
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
