@@ -384,7 +384,35 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doPathSquidDG         avgt    5   595.272 ±  32.003  ms/op
  * PathfindingBenchmark.doPathSquidUD         avgt    5   698.687 ±  14.065  ms/op
  * </pre>
- *
+ * <br>
+ * THAT'S what happened. GDXAStarGP uses the Manhattan distance metric (effectively 4-way), while all other times here
+ * used the Chebyshev metric (8-way, all equally weighted). That seems to speed up GDXAStarGP unfairly, so I switched it
+ * to match the rest and use Chebyshev. Lo and behold, it is now just a tiny bit slower than GDXAStarCoord, instead of
+ * about twice as fast or faster.
+ * <pre>
+ * Benchmark                                  Mode  Cnt     Score     Error  Units
+ * PathfindingBenchmark.doPathAStarSearch     avgt    4   688.900 ±  90.273  ms/op
+ * PathfindingBenchmark.doPathBitDijkstra     avgt    4  1333.449 ± 136.421  ms/op
+ * PathfindingBenchmark.doPathCDijkstra       avgt    4  1374.697 ± 156.989  ms/op
+ * PathfindingBenchmark.doPathCustomDijkstra  avgt    4  2468.169 ± 110.896  ms/op
+ * PathfindingBenchmark.doPathDijkstra        avgt    4  1543.327 ±  54.205  ms/op
+ * PathfindingBenchmark.doPathGDXAStarCoord   avgt    4   978.116 ±  26.467  ms/op
+ * PathfindingBenchmark.doPathGDXAStarGP      avgt    4   998.174 ±  16.103  ms/op
+ * PathfindingBenchmark.doPathNate            avgt    4  2385.063 ± 109.239  ms/op
+ * PathfindingBenchmark.doPathSimpleD         avgt    4   540.575 ±  18.275  ms/op
+ * PathfindingBenchmark.doPathSimpleGPD       avgt    4   547.958 ±   7.451  ms/op
+ * PathfindingBenchmark.doPathSimpleGPUD      avgt    4   538.080 ±  39.487  ms/op
+ * PathfindingBenchmark.doPathSimpleUD        avgt    4   542.024 ±  17.646  ms/op
+ * PathfindingBenchmark.doPathSquadCG         avgt    4   613.782 ±   9.437  ms/op
+ * PathfindingBenchmark.doPathSquadD          avgt    4   799.459 ±  11.113  ms/op
+ * PathfindingBenchmark.doPathSquadDG         avgt    4   575.314 ±  59.555  ms/op
+ * PathfindingBenchmark.doPathSquadDijkstra   avgt    4  1307.063 ±  50.400  ms/op
+ * PathfindingBenchmark.doPathSquadUD         avgt    4   637.927 ±  14.603  ms/op
+ * PathfindingBenchmark.doPathSquidCG         avgt    4   646.996 ±  28.062  ms/op
+ * PathfindingBenchmark.doPathSquidD          avgt    4   728.152 ±  17.170  ms/op
+ * PathfindingBenchmark.doPathSquidDG         avgt    4   628.153 ±  14.555  ms/op
+ * PathfindingBenchmark.doPathSquidUD         avgt    4   707.871 ±  58.645  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -524,7 +552,7 @@ public class PathfindingBenchmark {
             gg = new GridGraphGP(floors, WIDTH, HEIGHT);
             gg2 = new GridGraphCoord(floors, WIDTH, HEIGHT);
             astar = new IndexedAStarPathFinder<>(gg, false, GridPoint2::equals);
-            astar2 = new IndexedAStarPathFinder<>(gg2, false);
+            astar2 = new IndexedAStarPathFinder<>(gg2, false, Coord::equals);
             dgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
             dgpgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
             path = new ArrayList<>(WIDTH + HEIGHT << 1);
@@ -608,7 +636,7 @@ public class PathfindingBenchmark {
         return scanned;
     }
 
- 
+
     @Benchmark
     public long doScanCustomDijkstra(BenchmarkState state)
     {
@@ -655,7 +683,7 @@ public class PathfindingBenchmark {
         }
         return scanned;
     }
- 
+
     @Benchmark
     public long doTinyPathDijkstra(BenchmarkState state)
     {
@@ -682,7 +710,7 @@ public class PathfindingBenchmark {
         }
         return scanned;
     }
-    
+
     @Benchmark
     public long doOneDijkstra(BenchmarkState state) {
         final DijkstraMap dijkstra = state.dijkstra;
@@ -1105,13 +1133,18 @@ public class PathfindingBenchmark {
         public GridPoint2[][] grid;
         public int nodeCount;
         public Heuristic<GridPoint2> heu = (node, endNode) ->
-                (Math.abs(node.x - endNode.x) + Math.abs(node.y - endNode.y));
+                Math.max(Math.abs(node.x - endNode.x), Math.abs(node.y - endNode.y));
 
 
         public GridGraphGP(Iterable<Coord> floors, int width, int height)
         {
             grid = new GridPoint2[width][height];
-            indices = ArrayTools.fill(-1, width, height);
+            indices = new int[width][height];
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    indices[x][y] = -1;
+                }
+            }
             int i = 0;
             for(Coord c : floors){
                 GridPoint2 pt = new GridPoint2(c.x, c.y);
@@ -1121,13 +1154,21 @@ public class PathfindingBenchmark {
             nodeCount = i;
         }
         // use this if using only libGDX classes.
-//        public GridGraphGP(Iterable<GridPoint2> floors, char[][] map)
-//        {
-//            this.map = map;
-//            int i = 0;
-//            for(GridPoint2 c : floors){
-//                points.put(c, i++);
+//        public GridGraphGP(Iterable<GridPoint2> floors, int width, int height) {
+//            grid = new GridPoint2[width][height];
+//            indices = new int[width][height];
+//            for (int x = 0; x < width; x++) {
+//                for (int y = 0; y < height; y++) {
+//                    indices[x][y] = -1;
+//                }
 //            }
+//            int i = 0;
+//            for (GridPoint2 c : floors) {
+//                GridPoint2 pt = new GridPoint2(c.x, c.y);
+//                grid[c.x][c.y] = pt;
+//                indices[c.x][c.y] = i++;
+//            }
+//            nodeCount = i;
 //        }
         @Override
         public int getIndex(GridPoint2 node) {
