@@ -14,7 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.random.EnhancedRandom;
+import com.github.tommyettinger.digital.MathTools;
 import com.github.tommyettinger.random.WhiskerRandom;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
@@ -51,16 +51,27 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 19 (BellSoft):
  * <br>
- * GaussianProbitBench score: 148206544.000000 (148.2M 1881.4%)
- *                 uncertainty:   1.0%
+ * GaussianLogitBench score: 94903432.000000 (94.90M 1836.8%)
+ *                uncertainty:   0.2%
  */
-public final class GaussianProbitBench extends MicroBench {
+public final class GaussianLogitBench extends MicroBench {
+	/**
+	 * Meant to imitate {@link MathTools#probit(double)} using the simpler logit function. This scales the actual logit
+	 * function by {@code Math.sqrt(Math.PI/8.0)}, which makes it have the same slope as probit when x is 0.5. The
+	 * permissible values for x are between 0.0 and 1.0 inclusive. If you pass 0, you will get negative infinity, and if
+	 * you pass 1, you will get positive infinity.
+	 * @param x between 0 and 1, inclusive if you do accept infinite outputs, or exclusive if you do not
+	 * @return an approximately-normal-distributed double with mu = 0.0, sigma = 1.0
+	 */
+	public static double logit(double x) {
+		return 0.6266570686577501 * Math.log(x / (1.0 - x));
+	}
 
 	protected long doBatch(long numIterations) throws InterruptedException {
 		WhiskerRandom rng = new WhiskerRandom(0x12345678);
 		double sum = 0.0;
 		for (long i = 0; i < numIterations; i++)
-			sum += EnhancedRandom.probit(rng.nextExclusiveDouble());
+			sum += logit(rng.nextExclusiveDouble());
 		return numIterations;
 	}
 }
