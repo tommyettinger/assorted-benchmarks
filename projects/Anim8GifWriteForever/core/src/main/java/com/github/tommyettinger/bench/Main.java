@@ -12,10 +12,19 @@ import com.github.tommyettinger.anim8.Dithered;
 import com.github.tommyettinger.anim8.PaletteReducer;
 
 /**
- * Running for 64 iterations on Java 19:
+ * Running for 32 iterations on Java 19, using commit 93d82766b2 from a long time ago:
  * <pre>
- *     Took 99847 ms to write 64 GIFs using NEUE
- *     Took 485885 ms to write 64 GIFs using PATTERN
+ *     Took 53507 ms to write 32 GIFs using NEUE
+ * </pre>
+ * <br>
+ * Running for 32 iterations on Java 19, using release 0.4.0:
+ * <pre>
+ *     Took 54505 ms to write 32 GIFs using NEUE
+ * </pre>
+ * <br>
+ * Running for 32 iterations on Java 19, using commit d733d0cd0b from September 14, 2023:
+ * <pre>
+ *     Took 352973 ms to write 32 GIFs using NEUE
  * </pre>
  */
 public class Main extends ApplicationAdapter {
