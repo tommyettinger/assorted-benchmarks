@@ -26,6 +26,11 @@ import com.github.tommyettinger.anim8.PaletteReducer;
  * <pre>
  *     Took 352973 ms to write 32 GIFs using NEUE
  * </pre>
+ * <br>
+ * Running for 32 iterations on Java 19, using commit 9a07ecdf56 from September 14, 2023:
+ * <pre>
+ *     Took 55160 ms to write 32 GIFs using NEUE
+ * </pre>
  */
 public class Main extends ApplicationAdapter {
     private static final String name = "market";
