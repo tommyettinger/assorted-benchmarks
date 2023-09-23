@@ -27,7 +27,7 @@ import com.github.tommyettinger.random.*;
  * This implements all methods from {@link EnhancedRandom}, including the optional {@link #skip(long)} and
  * {@link #previousLong()} methods.
  */
-public class WyRandom extends EnhancedRandom {
+public class WySafeRandom extends EnhancedRandom {
 
 	/**
 	 * The only state variable; can be any {@code long}.
@@ -35,25 +35,25 @@ public class WyRandom extends EnhancedRandom {
 	public long state;
 
 	/**
-	 * Creates a new WyRandom with a random state.
+	 * Creates a new WySafeRandom with a random state.
 	 */
-	public WyRandom() {
+	public WySafeRandom() {
 		this(EnhancedRandom.seedFromMath());
 	}
 
 	/**
-	 * Creates a new WyRandom with the given state; all {@code long} values are permitted.
+	 * Creates a new WySafeRandom with the given state; all {@code long} values are permitted.
 	 *
 	 * @param state any {@code long} value
 	 */
-	public WyRandom(long state) {
+	public WySafeRandom(long state) {
 		super(state);
 		this.state = state;
 	}
 
 	@Override
 	public String getTag() {
-		return "WyrR";
+		return "WySR";
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class WyRandom extends EnhancedRandom {
 	public long nextLong () {
 		final long x = (state += 0xA0761D6478BD642FL);
 		final long y = x ^ 0xE7037ED1A0B428DBL;
-		return x * y ^ Math.unsignedMultiplyHigh(x, y);
+		return x ^ y ^ x * y ^ Math.unsignedMultiplyHigh(x, y);
 	}
 
 	/**
@@ -144,7 +144,7 @@ public class WyRandom extends EnhancedRandom {
 	public long skip (long advance) {
 		final long x = (state += 0xA0761D6478BD642FL * advance);
 		final long y = x ^ 0xE7037ED1A0B428DBL;
-		return x * y ^ Math.unsignedMultiplyHigh(x, y);
+		return x ^ y ^ x * y ^ Math.unsignedMultiplyHigh(x, y);
 	}
 
 	@Override
@@ -152,19 +152,19 @@ public class WyRandom extends EnhancedRandom {
 		final long x = state;
 		state -= 0xA0761D6478BD642FL;
 		final long y = x ^ 0xE7037ED1A0B428DBL;
-		return x * y ^ Math.unsignedMultiplyHigh(x, y);
+		return x ^ y ^ x * y ^ Math.unsignedMultiplyHigh(x, y);
 	}
 
 	@Override
 	public int next (int bits) {
 		final long x = (state += 0xA0761D6478BD642FL);
 		final long y = x ^ 0xE7037ED1A0B428DBL;
-		return (int)(x * y ^ Math.unsignedMultiplyHigh(x, y)) >>> (32 - bits);
+		return (int)(x ^ y ^ x * y ^ Math.unsignedMultiplyHigh(x, y)) >>> (32 - bits);
 	}
 
 	@Override
-	public WyRandom copy () {
-		return new WyRandom(state);
+	public WySafeRandom copy () {
+		return new WySafeRandom(state);
 	}
 
 	@Override
@@ -174,13 +174,13 @@ public class WyRandom extends EnhancedRandom {
 		if (o == null || getClass() != o.getClass())
 			return false;
 
-		WyRandom that = (WyRandom)o;
+		WySafeRandom that = (WySafeRandom)o;
 
 		return state == that.state;
 	}
 
 	@Override
 	public String toString () {
-		return "WyRandom{state=" + (state) + "L}";
+		return "WySafeRandom{state=" + (state) + "L}";
 	}
 }
