@@ -23,35 +23,43 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- *
+ * Jsf32RandomLongBench score: 482270336.000000 (482.3M 1999.4%)
+ *                  uncertainty:   0.7%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- *
+ * Jsf32RandomLongBench score: 633274240.000000 (633.3M 2026.6%)
+ *                  uncertainty:   0.3%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- *
+ * Jsf32RandomLongBench score: 581192448.000000 (581.2M 2018.1%)
+ *                  uncertainty:   0.1%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- *
+ * Jsf32RandomLongBench score: 587701440.000000 (587.7M 2019.2%)
+ *                  uncertainty:   0.1%
  * <br>
  * GraalVM Java 17:
  * <br>
- *
+ * Jsf32RandomLongBench score: 562360192.000000 (562.4M 2014.8%)
+ *                  uncertainty:   0.2%
  * <br>
  * OpenJ9 Java 17 (Semeru):
  * <br>
- *
+ * Jsf32RandomLongBench score: 632982784.000000 (633.0M 2026.6%)
+ *                  uncertainty:   0.3%
  * <br>
  * HotSpot Java 18 (Adoptium):
  * <br>
- *
+ * Jsf32RandomLongBench score: 587845120.000000 (587.8M 2019.2%)
+ *                  uncertainty:   0.2%
  * <br>
  * HotSpot Java 19 (BellSoft):
  * <br>
- *
+ * Jsf32RandomLongBench score: 582462656.000000 (582.5M 2018.3%)
+ *                  uncertainty:   0.5%
  */
 public final class Jsf32RandomLongBench extends MicroBench {
 
