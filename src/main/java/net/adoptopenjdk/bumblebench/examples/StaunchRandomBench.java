@@ -105,4 +105,12 @@ public final class StaunchRandomBench extends MicroBench {
  * HotSpot Java 19 (BellSoft):
  * <br>
  *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 20:
+ * <br>
+ *
  */
