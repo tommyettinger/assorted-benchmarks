@@ -159,15 +159,15 @@ public class SpoonRandom extends EnhancedRandom {
 	 */
 	@Override
 	public void setSeed (long seed) {
+		seed ^= seed >>> 32;
+		seed *= 0xbea225f9eb34556dL;
+		seed ^= seed >>> 29;
 		stateA = seed;
-		seed ^= seed >>> 32;
-		seed *= 0xbea225f9eb34556dL;
-		seed ^= seed >>> 29;
 		seed *= 0xbea225f9eb34556dL;
 		seed ^= seed >>> 32;
-		seed *= 0xbea225f9eb34556dL;
-		seed ^= seed >>> 29;
 		stateB = (seed ^ 0xC6BC279692B5C323L) | 1L;
+		seed *= 0xbea225f9eb34556dL;
+		seed ^= seed >>> 29;
 		stateC = (seed ^ ~0xC6BC279692B5C323L) | 1L;
 	}
 
