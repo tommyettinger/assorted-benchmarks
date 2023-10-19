@@ -12,7 +12,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work
-    id "com.github.johnrengelman.shadow" version "5.2.0"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
     id 'com.github.ben-manes.versions' version '0.27.0' // for "gradlew dependencyUpdates -Drevision=release"
 }
 
@@ -29,8 +29,8 @@ version = '1.0'
 
 description = """Benchmarks for Java containers"""
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+java.sourceCompatibility = 1.8
+java.targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
 sourceSets.main.resources.srcDirs += [ file('src/main/resources').path ]
 sourceSets.test.resources.srcDirs += [ file('src/main/resources').path ]
@@ -41,7 +41,7 @@ shadowJar {
     duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     destinationDirectory = project.rootDir
     archiveFileName.set("benchmarks.jar")
-    classifier = 'benchmarks'
+    archiveClassifier.set("benchmarks")
     manifest.attributes('Main-Class': 'org.openjdk.jmh.Main')
 }
 
@@ -86,9 +86,9 @@ dependencies {
     //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
     //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
 //    implementation 'com.github.tommyettinger:jdkgdxds:3a9f925cd0'
-    implementation 'com.github.tommyettinger:digital:0.3.3'
-    implementation('com.github.tommyettinger:juniper:0.3.5')
-    implementation('com.github.tommyettinger:jdkgdxds:1.4.0') {
+    implementation 'com.github.tommyettinger:digital:0.4.0'
+    implementation('com.github.tommyettinger:juniper:0.3.9')
+    implementation('com.github.tommyettinger:jdkgdxds:1.4.1') {
         exclude group: 'com.github.tommyettinger', module: 'digital'
     }
 
