@@ -274,6 +274,19 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureFloorIncorrect      avgt    5  2.845 ± 0.262  ns/op
  * MathBenchmark.measureFloorMath           avgt    5  5.155 ± 0.039  ns/op
  * </pre>
+ * Testing just sine approximations on Java 20:
+ * <pre>
+ * Benchmark                          Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureBhaskaraSinF  avgt    5   7.499 ± 0.041  ns/op
+ * MathBenchmark.measureBitSinF       avgt    5  13.616 ± 0.081  ns/op
+ * MathBenchmark.measureGdxSinF       avgt    5   3.123 ± 0.025  ns/op
+ * MathBenchmark.measureHastingsSinF  avgt    5  20.384 ± 0.101  ns/op
+ * MathBenchmark.measureLerpSinF      avgt    5  10.615 ± 0.070  ns/op
+ * MathBenchmark.measureMathSinF      avgt    5  20.021 ± 0.277  ns/op
+ * MathBenchmark.measureSquidSinF     avgt    5  14.379 ± 0.181  ns/op
+ * MathBenchmark.measureSteadmanSinF  avgt    5   8.538 ± 0.049  ns/op
+ * </pre>
+ * Several of these started off faster, but deoptimized or slowed down due to machine temperature.
  */
 
 @State(Scope.Thread)
@@ -325,6 +338,7 @@ public class MathBenchmark {
     private int sinWallace = -0x8000;
     private int sinBhaskara = -0x8000;
     private int sinSteadman = -0x8000;
+    private int sinHastings = -0x8000;
     private int sinLerp = -0x8000;
     private int mathCosDeg = -0x8000;
     private int mathSinDeg = -0x8000;
@@ -736,6 +750,12 @@ public class MathBenchmark {
     public float measureBhaskaraSinF()
     {
         return NumberTools2.sinBhaskaroid(((sinBhaskara += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureHastingsSinF()
+    {
+        return NumberTools2.sinHastings(((sinHastings += 0x9E3779B9) >> 24));
     }
 
     @Benchmark

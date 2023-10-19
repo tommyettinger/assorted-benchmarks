@@ -780,6 +780,23 @@ public final class NumberTools2 {
 
         return (y + c ^ c) * 0x1p-12f;
     }
+    /**
+     * Credit to <a href="https://stackoverflow.com/a/524606">Darius Bacon's Stack Overflow answer</a>.
+     * The algorithm is by Hastings, from Approximations For Digital Computers.
+     * The use of a triangle wave to reduce the range was my idea. This doesn't use a LUT.
+     * @param radians the angle to get the sine of, in radians
+     * @return the sine of the given angle
+     */
+    public static float sinHastings(float radians) {
+        radians = radians * (PI_INVERSE * 0.5f) + 0.25f;
+        radians = 4f * Math.abs(radians - ((int)(radians + 16384.5) - 16384)) - 1f;
+        float r2 = radians * radians;
+        return ((((0.00015148419f * r2
+                - 0.00467376557f) * r2
+                + 0.07968967928f) * r2
+                - 0.64596371106f) * r2
+                + 1.57079631847f) * radians;
+    }
 
     public static float sinLerp(float radians) {
         radians *= radToIndex;
