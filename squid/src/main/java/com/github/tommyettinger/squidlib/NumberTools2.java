@@ -797,6 +797,9 @@ public final class NumberTools2 {
                 - 0.64596371106f) * r2
                 + 1.57079631847f) * radians;
     }
+    public static float sinRound(float radians) {
+        return SIN_TABLE[Math.round(radians * radToIndex) & TABLE_MASK];
+    }
 
     public static float sinLerp(float radians) {
         radians *= radToIndex;

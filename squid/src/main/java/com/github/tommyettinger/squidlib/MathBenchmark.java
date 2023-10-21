@@ -339,6 +339,7 @@ public class MathBenchmark {
     private int sinBhaskara = -0x8000;
     private int sinSteadman = -0x8000;
     private int sinHastings = -0x8000;
+    private int sinRound = -0x8000;
     private int sinLerp = -0x8000;
     private int mathCosDeg = -0x8000;
     private int mathSinDeg = -0x8000;
@@ -756,6 +757,11 @@ public class MathBenchmark {
     public float measureHastingsSinF()
     {
         return NumberTools2.sinHastings(((sinHastings += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public float measureRoundSinF()
+    {
+        return NumberTools2.sinRound(((sinRound += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
