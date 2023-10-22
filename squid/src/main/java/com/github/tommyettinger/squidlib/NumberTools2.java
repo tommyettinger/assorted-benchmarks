@@ -810,6 +810,12 @@ public final class NumberTools2 {
         final int idx = (int)(radians * radToIndex + 0.5f);
         return SIN_TABLE[(idx + (idx >> 31)) & TABLE_MASK];
     }
+    public static final float radToIndexBonus = (TABLE_SIZE << 1) / PI2;
+    public static final int TABLE_MASK_BONUS = (TABLE_SIZE << 1) - 1;
+    public static float sinBonus(float radians) {
+        final int idx = (int)(radians * radToIndexBonus) & TABLE_MASK_BONUS;
+        return SIN_TABLE[(idx & 1) + (idx >>> 1)];
+    }
 
     public static float sinLerp(float radians) {
         radians *= radToIndex;

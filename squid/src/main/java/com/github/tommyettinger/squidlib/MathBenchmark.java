@@ -288,6 +288,23 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureSteadmanSinF  avgt    5   8.538 ± 0.049  ns/op
  * </pre>
  * Several of these started off faster, but deoptimized or slowed down due to machine temperature.
+ * <br>
+ * More sine approximations on Java 20:
+ * <pre>
+ * Benchmark                           Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureBhaskaraSinF   avgt    5   7.340 ± 0.112  ns/op
+ * MathBenchmark.measureBitSinF        avgt    5  13.473 ± 0.127  ns/op
+ * MathBenchmark.measureBonusSinF      avgt    5   3.790 ± 0.096  ns/op
+ * MathBenchmark.measureDigitalSinF    avgt    5   6.081 ± 0.046  ns/op
+ * MathBenchmark.measureGdxSinF        avgt    5   3.146 ± 0.172  ns/op
+ * MathBenchmark.measureLerpSinF       avgt    5  10.625 ± 0.355  ns/op
+ * MathBenchmark.measureMathSinF       avgt    5  19.823 ± 0.168  ns/op
+ * MathBenchmark.measureRoundSinF      avgt    5   5.000 ± 0.208  ns/op
+ * MathBenchmark.measureShiftySinF     avgt    5   3.796 ± 0.134  ns/op
+ * MathBenchmark.measureSquidSinF      avgt    5  14.357 ± 0.133  ns/op
+ * MathBenchmark.measureUnroundedSinF  avgt    5   3.167 ± 0.148  ns/op
+ * </pre>
+ * Shifty and Bonus need to be evaluated for how much more accurate they are than Unrounded.
  */
 
 @State(Scope.Thread)
@@ -338,6 +355,7 @@ public class MathBenchmark {
     private int cosWallace = -0x8000;
     private int sinWallace = -0x8000;
     private int sinBhaskara = -0x8000;
+    private int sinBonus = -0x8000;
     private int sinSteadman = -0x8000;
     private int sinHastings = -0x8000;
     private int sinRound = -0x8000;
@@ -747,8 +765,8 @@ public class MathBenchmark {
         return MathUtils.cos(((cosGdx += 0x9E3779B9) >> 24));
     }
 
-    @Benchmark
-    public float measureWallaceSin()
+//    @Benchmark
+    public float measureWallaceSinF()
     {
         return NumberTools2.sinWallaceN(((sinWallace += 0x9E3779B9) >> 24));
     }
@@ -760,6 +778,12 @@ public class MathBenchmark {
     }
 
     @Benchmark
+    public float measureBonusSinF()
+    {
+        return NumberTools2.sinBonus(((sinBonus += 0x9E3779B9) >> 24));
+    }
+
+//    @Benchmark
     public float measureHastingsSinF()
     {
         return NumberTools2.sinHastings(((sinHastings += 0x9E3779B9) >> 24));
@@ -774,7 +798,7 @@ public class MathBenchmark {
     {
         return NumberTools2.sinUnrounded(((sinUnrounded += 0x9E3779B9) >> 24));
     }
-    @Benchmark
+//    @Benchmark
     public float measureSignSinF()
     {
         return NumberTools2.sinSign(((sinSign += 0x9E3779B9) >> 24));
@@ -784,7 +808,7 @@ public class MathBenchmark {
     {
         return NumberTools2.sinShifty(((sinShifty += 0x9E3779B9) >> 24));
     }
-    @Benchmark
+//    @Benchmark
     public float measureTT2SinF()
     {
         return TrigTools2.sin(((sinTT2 += 0x9E3779B9) >> 24));
@@ -795,7 +819,7 @@ public class MathBenchmark {
         return TrigTools.sin(((sinDigital += 0x9E3779B9) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureSteadmanSinF()
     {
         return NumberTools2.sinSteadman(((sinSteadman += 0x9E3779B9) >> 24));
@@ -1116,7 +1140,7 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
             cosFError += Math.abs(u.measureSquidCosF() - c);
             cosGdxError += Math.abs(u.measureGdxCosF() - c);
             sinGdxError += Math.abs(u.measureGdxSinF() - s);
-            sinWallaceError += Math.abs(u.measureWallaceSin() - s);
+            sinWallaceError += Math.abs(u.measureWallaceSinF() - s);
             cosNickError += Math.abs(u.measureSquidCos() - c);
             sinNickError += Math.abs(u.measureSquidSin() - s);
             sinFError += Math.abs(u.measureSquidSinF() - s);
