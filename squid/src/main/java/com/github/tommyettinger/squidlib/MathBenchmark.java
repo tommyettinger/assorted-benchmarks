@@ -33,6 +33,7 @@ package com.github.tommyettinger.squidlib;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.github.tommyettinger.digital.BitConversion;
+import com.github.tommyettinger.digital.TrigTools;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -340,7 +341,10 @@ public class MathBenchmark {
     private int sinSteadman = -0x8000;
     private int sinHastings = -0x8000;
     private int sinRound = -0x8000;
+    private int sinUnrounded = -0x8000;
     private int sinSign = -0x8000;
+    private int sinShifty = -0x8000;
+    private int sinDigital = -0x8000;
     private int sinTT2 = -0x8000;
     private int sinLerp = -0x8000;
     private int mathCosDeg = -0x8000;
@@ -766,14 +770,29 @@ public class MathBenchmark {
         return NumberTools2.sinRound(((sinRound += 0x9E3779B9) >> 24));
     }
     @Benchmark
+    public float measureUnroundedSinF()
+    {
+        return NumberTools2.sinUnrounded(((sinUnrounded += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
     public float measureSignSinF()
     {
         return NumberTools2.sinSign(((sinSign += 0x9E3779B9) >> 24));
     }
     @Benchmark
+    public float measureShiftySinF()
+    {
+        return NumberTools2.sinShifty(((sinShifty += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
     public float measureTT2SinF()
     {
         return TrigTools2.sin(((sinTT2 += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public float measureDigitalSinF()
+    {
+        return TrigTools.sin(((sinDigital += 0x9E3779B9) >> 24));
     }
 
     @Benchmark

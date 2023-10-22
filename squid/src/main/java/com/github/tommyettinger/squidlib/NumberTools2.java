@@ -800,8 +800,15 @@ public final class NumberTools2 {
     public static float sinRound(float radians) {
         return SIN_TABLE[Math.round(radians * radToIndex) & TABLE_MASK];
     }
+    public static float sinUnrounded(float radians) {
+        return SIN_TABLE[(int)(radians * radToIndex) & TABLE_MASK];
+    }
     public static float sinSign(float radians) {
         return SIN_TABLE[(int)(radians * radToIndex + Math.copySign(0.5f, radians)) & TABLE_MASK];
+    }
+    public static float sinShifty(float radians) {
+        final int idx = (int)(radians * radToIndex + 0.5f);
+        return SIN_TABLE[(idx + (idx >> 31)) & TABLE_MASK];
     }
 
     public static float sinLerp(float radians) {
