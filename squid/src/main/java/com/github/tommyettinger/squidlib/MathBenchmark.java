@@ -363,6 +363,7 @@ public class MathBenchmark {
     private int sinSign = -0x8000;
     private int sinShifty = -0x8000;
     private int sinDigital = -0x8000;
+    private int sinSplit = -0x8000;
     private int sinTT2 = -0x8000;
     private int sinLerp = -0x8000;
     private int mathCosDeg = -0x8000;
@@ -535,12 +536,12 @@ public class MathBenchmark {
         return a * a * (3f - 2f * a) * -2f + 1f;
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureSquidCosF() {
         return NumberTools.cos(((cosFloat += 0x9E3779B9) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureSquidSinF() {
         return NumberTools.sin(((sinFloat += 0x9E3779B9) >> 24));
     }
@@ -584,13 +585,13 @@ public class MathBenchmark {
         return cosBit(((cosBit += 0x9E3779B9) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureBitSinF()
     {
         return sinBit(((sinBitF += 0x9E3779B9) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureBitCosF()
     {
         return cosBit(((cosBitF += 0x9E3779B9) >> 24));
@@ -788,7 +789,7 @@ public class MathBenchmark {
     {
         return NumberTools2.sinHastings(((sinHastings += 0x9E3779B9) >> 24));
     }
-    @Benchmark
+//    @Benchmark
     public float measureRoundSinF()
     {
         return NumberTools2.sinRound(((sinRound += 0x9E3779B9) >> 24));
@@ -816,7 +817,12 @@ public class MathBenchmark {
     @Benchmark
     public float measureDigitalSinF()
     {
-        return TrigTools.sin(((sinDigital += 0x9E3779B9) >> 24));
+        return NumberTools2.sinDigital(((sinDigital += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public float measureSplitSinF()
+    {
+        return NumberTools2.sinSplit(((sinSplit += 0x9E3779B9) >> 24));
     }
 
 //    @Benchmark
