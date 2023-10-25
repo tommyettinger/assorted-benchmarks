@@ -315,14 +315,16 @@ import java.util.concurrent.TimeUnit;
 @Measurement(iterations = 5, time = 5)
 public class MathBenchmark {
 
+    private final FastSinCos fastSinCos = FastSinCos.getTable();
     private final double[] inputs = new double[65536];
     private final float[] floatInputs = new float[65536];
+    private final int[] intInputs = new int[65536];
     private final double[] arcInputs = new double[65536];
     {
         for (int i = 0; i < 65536; i++) {
-            floatInputs[i] = (float) (inputs[i] =
+            intInputs[i] = (int)(floatInputs[i] = (float) (inputs[i] =
                     (DiverRNG.determine(i) >> 10) * 0x1p-41
-            );
+            ));
             arcInputs[i] = (DiverRNG.determine(~i) >> 10) * 0x1p-53;
         }
     }
@@ -372,6 +374,10 @@ public class MathBenchmark {
     private int cosNickDeg = -0x8000;
     private int cosGdxDeg = -0x8000;
     private int sinGdxDeg = -0x8000;
+    private int cosDigitalDeg = -0x8000;
+    private int sinDigitalDeg = -0x8000;
+    private int cosFSCDeg = -0x8000;
+    private int sinFSCDeg = -0x8000;
     private int tanDiv = -0x8000;
     private int tanSoo = -0x8000;
     private int tanLer = -0x8000;
@@ -868,6 +874,28 @@ public class MathBenchmark {
     @Benchmark
     public float measureGdxCosDeg() {
         return MathUtils.cosDeg(((cosGdxDeg += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureDigitalSinDeg()
+    {
+        return TrigTools.sinDeg(((sinDigitalDeg += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureDigitalCosDeg() {
+        return TrigTools.cosDeg(((cosDigitalDeg += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureFSCSinDeg()
+    {
+        return fastSinCos.sinDeg(((sinFSCDeg += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureFSCCosDeg() {
+        return fastSinCos.cosDeg(((cosFSCDeg += 0x9E3779B9) >> 24));
     }
 
     @Benchmark

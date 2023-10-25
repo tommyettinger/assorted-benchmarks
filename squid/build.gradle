@@ -74,9 +74,9 @@ dependencies {
 //    implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
     implementation 'com.github.libgdx:gdx-ai:5c14a88fe3' // after 1.8.2, unreleased as of March 18 2023
     implementation 'com.github.tommyettinger:atlantis:5574642135'
-    implementation 'com.github.tommyettinger:digital:c3cc4d98e6'
-    implementation('com.github.tommyettinger:juniper:0.3.9'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
-    implementation('com.github.tommyettinger:jdkgdxds:1.4.1'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
+    implementation 'com.github.tommyettinger:digital:0.4.1'
+    implementation('com.github.tommyettinger:juniper:0.4.0'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
+    implementation('com.github.tommyettinger:jdkgdxds:1.4.2'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
 
 
     implementation "it.unimi.dsi:fastutil:8.5.9"
