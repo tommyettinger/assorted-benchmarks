@@ -305,6 +305,18 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureUnroundedSinF  avgt    5   3.167 ± 0.148  ns/op
  * </pre>
  * Shifty and Bonus need to be evaluated for how much more accurate they are than Unrounded.
+ * (Bonus is terrible, Shifty isn't bad at all).
+ * <br>
+ * Just the fastest sin and cos approximations:
+ * <pre>
+ * Benchmark                         Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureCToolsCosF   avgt    5  3.506 ± 0.092  ns/op
+ * MathBenchmark.measureCToolsSinF   avgt    5  7.281 ± 0.053  ns/op
+ * MathBenchmark.measureDigitalCosF  avgt    5  6.708 ± 0.109  ns/op
+ * MathBenchmark.measureDigitalSinF  avgt    5  3.786 ± 0.140  ns/op
+ * MathBenchmark.measureGdxCosF      avgt    5  6.131 ± 0.155  ns/op
+ * MathBenchmark.measureGdxSinF      avgt    5  3.138 ± 0.144  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -365,6 +377,13 @@ public class MathBenchmark {
     private int sinSign = -0x8000;
     private int sinShifty = -0x8000;
     private int sinDigital = -0x8000;
+    private int sinSmootherDigital = -0x8000;
+    private int sinCTools = -0x8000;
+    private int sinSmootherCTools = -0x8000;
+    private int cosDigital = -0x8000;
+    private int cosSmootherDigital = -0x8000;
+    private int cosCTools = -0x8000;
+    private int cosSmootherCTools = -0x8000;
     private int sinSplit = -0x8000;
     private int sinTT2 = -0x8000;
     private int sinLerp = -0x8000;
@@ -778,13 +797,13 @@ public class MathBenchmark {
         return NumberTools2.sinWallaceN(((sinWallace += 0x9E3779B9) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureBhaskaraSinF()
     {
         return NumberTools2.sinBhaskaroid(((sinBhaskara += 0x9E3779B9) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureBonusSinF()
     {
         return NumberTools2.sinBonus(((sinBonus += 0x9E3779B9) >> 24));
@@ -800,7 +819,7 @@ public class MathBenchmark {
     {
         return NumberTools2.sinRound(((sinRound += 0x9E3779B9) >> 24));
     }
-    @Benchmark
+//    @Benchmark
     public float measureUnroundedSinF()
     {
         return NumberTools2.sinUnrounded(((sinUnrounded += 0x9E3779B9) >> 24));
@@ -810,7 +829,7 @@ public class MathBenchmark {
     {
         return NumberTools2.sinSign(((sinSign += 0x9E3779B9) >> 24));
     }
-    @Benchmark
+//    @Benchmark
     public float measureShiftySinF()
     {
         return NumberTools2.sinShifty(((sinShifty += 0x9E3779B9) >> 24));
@@ -823,9 +842,44 @@ public class MathBenchmark {
     @Benchmark
     public float measureDigitalSinF()
     {
-        return NumberTools2.sinDigital(((sinDigital += 0x9E3779B9) >> 24));
+        return TrigTools.sin(((sinDigital += 0x9E3779B9) >> 24));
     }
     @Benchmark
+    public float measureDigitalSmootherSinF()
+    {
+        return TrigTools.sinSmoother(((sinSmootherDigital += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public float measureCToolsSinF()
+    {
+        return CosTools.sin(((sinCTools += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public float measureCToolsSmootherSinF()
+    {
+        return CosTools.sinSmoother(((sinSmootherCTools += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public float measureDigitalCosF()
+    {
+        return TrigTools.cos(((cosDigital += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public float measureDigitalSmootherCosF()
+    {
+        return TrigTools.cosSmoother(((cosSmootherDigital += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public float measureCToolsCosF()
+    {
+        return CosTools.cos(((cosCTools += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public float measureCToolsSmootherCosF()
+    {
+        return CosTools.cosSmoother(((cosSmootherCTools += 0x9E3779B9) >> 24));
+    }
+//    @Benchmark
     public float measureSplitSinF()
     {
         return NumberTools2.sinSplit(((sinSplit += 0x9E3779B9) >> 24));
@@ -837,7 +891,7 @@ public class MathBenchmark {
         return NumberTools2.sinSteadman(((sinSteadman += 0x9E3779B9) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureLerpSinF()
     {
         return NumberTools2.sinLerp(((sinLerp += 0x9E3779B9) >> 24));
