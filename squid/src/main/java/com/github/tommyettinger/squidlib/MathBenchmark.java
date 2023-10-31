@@ -317,6 +317,23 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureGdxCosF      avgt    5  6.131 ± 0.155  ns/op
  * MathBenchmark.measureGdxSinF      avgt    5  3.138 ± 0.144  ns/op
  * </pre>
+ * These next results don't make any sense; the BumbleBench ones are much more reasonable.
+ * For digital, sin() is faster than cos() but sinSmoother() is slower than cosSmoother().
+ * For CosTools, cos() is faster than sin() and cosSmoother() is slower than sinSmoother().
+ * What.
+ * <pre>
+ * Benchmark                                 Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureCToolsCosF           avgt    5   3.538 ± 0.088  ns/op
+ * MathBenchmark.measureCToolsSinF           avgt    5   7.241 ± 0.138  ns/op
+ * MathBenchmark.measureCToolsSmootherCosF   avgt    5   8.595 ± 0.164  ns/op
+ * MathBenchmark.measureCToolsSmootherSinF   avgt    5   4.703 ± 0.106  ns/op
+ * MathBenchmark.measureDigitalCosF          avgt    5   6.786 ± 0.340  ns/op
+ * MathBenchmark.measureDigitalSinF          avgt    5   3.761 ± 0.218  ns/op
+ * MathBenchmark.measureDigitalSmootherCosF  avgt    5   5.335 ± 0.166  ns/op
+ * MathBenchmark.measureDigitalSmootherSinF  avgt    5  10.568 ± 0.183  ns/op
+ * MathBenchmark.measureGdxCosF              avgt    5   6.104 ± 0.065  ns/op
+ * MathBenchmark.measureGdxSinF              avgt    5   3.059 ± 0.079  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
