@@ -37,7 +37,6 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectIntMap;
 import com.github.tommyettinger.ds.ObjectList;
 import com.github.yellowstonegames.grid.Region;
 import org.openjdk.jmh.annotations.*;

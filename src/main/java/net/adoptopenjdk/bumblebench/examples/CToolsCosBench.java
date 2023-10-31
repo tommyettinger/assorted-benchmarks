@@ -14,7 +14,6 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.digital.TrigTools;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 /**
@@ -44,9 +43,11 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
 public final class CToolsCosBench extends MicroBench {
 	protected long doBatch(long numIterations) throws InterruptedException {
 		float sum = 0.1f;
-		final float shrink = TrigTools.PI * 8f / numIterations;
-		for (long i = 0; i < numIterations; i++)
-			sum -= CosTools.cos((sum + i) * shrink);
+		for (long i = 0L, bits = 123L; i < numIterations; i++, bits += 0x9E3779B97F4A7C15L) {
+			sum -= CosTools.cos(
+					Float.intBitsToFloat(129 - Long.numberOfLeadingZeros(bits) << 23 | ((int) bits & 0x807FFFFF))
+			);
+		}
 		return numIterations;
 	}
 }

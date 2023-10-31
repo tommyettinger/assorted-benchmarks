@@ -22,6 +22,42 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
+ *
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 20:
+ * <br>
+ *
+ */
+public final class DigitalSinBench extends MicroBench {
+
+	protected long doBatch(long numIterations) throws InterruptedException {
+		float sum = 0.1f;
+		for (long i = 0L, bits = 123L; i < numIterations; i++, bits += 0x9E3779B97F4A7C15L) {
+			sum -= TrigTools.sin(
+					Float.intBitsToFloat(129 - Long.numberOfLeadingZeros(bits) << 23 | ((int) bits & 0x807FFFFF))
+			);
+		}
+		return numIterations;
+	}
+}
+
+/* OLD
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8:
+ * <br>
  * DigitalSinBench score: 120219528.000000 (120.2M 1860.5%)
  *             uncertainty:   0.3%
  * <br>
@@ -45,16 +81,6 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * DigitalSinBench score: 120815472.000000 (120.8M 1861.0%)
  *             uncertainty:   0.4%
  */
-public final class DigitalSinBench extends MicroBench {
-
-	protected long doBatch(long numIterations) throws InterruptedException {
-		float sum = 0.1f;
-		final float shrink = TrigTools.PI * 8f / numIterations;
-		for (long i = 0; i < numIterations; i++)
-			sum -= TrigTools.sin((sum + i) * shrink);
-		return numIterations;
-	}
-}
 
 /* OLD
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:

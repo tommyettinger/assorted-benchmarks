@@ -14,7 +14,6 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.math.MathUtils;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 import squidpony.squidmath.NumberTools;
 
@@ -50,9 +49,11 @@ public final class SquidSinFloatBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
 		float sum = 0.1f;
-		final float shrink = MathUtils.PI * 8f / numIterations;
-		for (long i = 0; i < numIterations; i++)
-			sum -= NumberTools.sin((sum + i) * shrink);
+		for (long i = 0L, bits = 123L; i < numIterations; i++, bits += 0x9E3779B97F4A7C15L) {
+			sum -= NumberTools.sin(
+					Float.intBitsToFloat(129 - Long.numberOfLeadingZeros(bits) << 23 | ((int) bits & 0x807FFFFF))
+			);
+		}
 		return numIterations;
 	}
 }

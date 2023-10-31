@@ -14,12 +14,65 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.github.tommyettinger.digital.TrigTools;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
 import static com.github.tommyettinger.digital.TrigTools.PI_INVERSE;
 
+
 /**
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 20:
+ * <br>
+ *
+ */
+public final class DigitalSinHastingsBench extends MicroBench {
+	/**
+	 * Credit to <a href="https://stackoverflow.com/a/524606">Darius Bacon's Stack Overflow answer</a>.
+	 * The algorithm is by Hastings, from Approximations For Digital Computers.
+	 * The use of a triangle wave to reduce the range was my idea. This doesn't use a LUT.
+	 * @param radians the angle to get the sine of, in radians
+	 * @return the sine of the given angle
+	 */
+	public static float sinHastings(float radians) {
+		radians = radians * (PI_INVERSE * 0.5f) + 0.25f;
+		radians = 4f * Math.abs(radians - ((int)(radians + 16384.5) - 16384)) - 1f;
+		float r2 = radians * radians;
+		return ((((0.00015148419f * r2
+				- 0.00467376557f) * r2
+				+ 0.07968967928f) * r2
+				- 0.64596371106f) * r2
+				+ 1.57079631847f) * radians;
+	}
+
+	protected long doBatch(long numIterations) throws InterruptedException {
+		float sum = 0.1f;
+		for (long i = 0L, bits = 123L; i < numIterations; i++, bits += 0x9E3779B97F4A7C15L) {
+			sum -= sinHastings(
+					Float.intBitsToFloat(129 - Long.numberOfLeadingZeros(bits) << 23 | ((int) bits & 0x807FFFFF))
+			);
+		}
+		return numIterations;
+	}
+}
+
+/* OLD
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * HotSpot Java 8:
@@ -71,75 +124,4 @@ import static com.github.tommyettinger.digital.TrigTools.PI_INVERSE;
  * <br>
  * DigitalSinHastingsBench score: 45158560.000000 (45.16M 1762.6%)
  *                     uncertainty:   0.9%
- */
-public final class DigitalSinHastingsBench extends MicroBench {
-	/**
-	 * Credit to <a href="https://stackoverflow.com/a/524606">Darius Bacon's Stack Overflow answer</a>.
-	 * The algorithm is by Hastings, from Approximations For Digital Computers.
-	 * The use of a triangle wave to reduce the range was my idea. This doesn't use a LUT.
-	 * @param radians the angle to get the sine of, in radians
-	 * @return the sine of the given angle
-	 */
-	public static float sinHastings(float radians) {
-		radians = radians * (PI_INVERSE * 0.5f) + 0.25f;
-		radians = 4f * Math.abs(radians - ((int)(radians + 16384.5) - 16384)) - 1f;
-		float r2 = radians * radians;
-		return ((((0.00015148419f * r2
-				- 0.00467376557f) * r2
-				+ 0.07968967928f) * r2
-				- 0.64596371106f) * r2
-				+ 1.57079631847f) * radians;
-	}
-
-	protected long doBatch(long numIterations) throws InterruptedException {
-		float sum = 0.1f;
-		final float shrink = TrigTools.PI * 8f / numIterations;
-		for (long i = 0; i < numIterations; i++)
-			sum -= sinHastings((sum + i) * shrink);
-		return numIterations;
-	}
-}
-
-/*
- * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
- * <br>
- * HotSpot Java 8:
- * <br>
- *
- * <br>
- * OpenJ9 Java 15:
- * <br>
- *
- * <br>
- * HotSpot Java 16 (AdoptOpenJDK):
- * <br>
- *
- * <br>
- * HotSpot Java 17 (Adoptium):
- * <br>
- *
- * <br>
- * GraalVM Java 17:
- * <br>
- *
- * <br>
- * OpenJ9 Java 17 (Semeru):
- * <br>
- *
- * <br>
- * HotSpot Java 18 (Adoptium):
- * <br>
- *
- * <br>
- * HotSpot Java 19 (BellSoft):
- * <br>
- *
- * <br>
- * HotSpot Java 20 (BellSoft):
- * <br>
- *
- * <br>
- * GraalVM Java 20:
- * <br>
- *
  */

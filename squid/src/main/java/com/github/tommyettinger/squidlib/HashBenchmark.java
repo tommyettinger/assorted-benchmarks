@@ -32,7 +32,6 @@
 package com.github.tommyettinger.squidlib;
 
 import com.github.tommyettinger.ds.ObjectList;
-import com.github.tommyettinger.ds.ObjectOrderedSet;
 import com.github.tommyettinger.random.WhiskerRandom;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 import org.openjdk.jmh.annotations.*;
@@ -43,7 +42,6 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 import squidpony.FakeLanguageGen;
 import squidpony.squidmath.HashCommon;
-import squidpony.squidmath.MiniMover64RNG;
 
 import java.io.IOException;
 import java.util.Arrays;

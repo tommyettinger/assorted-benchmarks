@@ -19,7 +19,6 @@ import com.github.tommyettinger.digital.TrigTools;
 
 import static com.badlogic.gdx.math.MathUtils.PI;
 import static com.github.tommyettinger.digital.TrigTools.*;
-import static com.github.tommyettinger.digital.TrigTools.SIN_TABLE;
 
 /**
  * Math helper functions.

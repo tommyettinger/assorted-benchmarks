@@ -2,7 +2,6 @@ package de.heidelberg.pvs.container_bench;
 
 import com.github.tommyettinger.ds.ObjectSet;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 
 public class ObjectSetAlt<T> extends ObjectSet<T> {

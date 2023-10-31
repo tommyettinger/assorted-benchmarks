@@ -1,11 +1,6 @@
 package de.heidelberg.pvs.container_bench.factories;
 
 import com.github.tommyettinger.ds.*;
-import de.heidelberg.pvs.container_bench.ObjectSet32;
-import de.heidelberg.pvs.container_bench.ObjectSetAlt;
-import de.heidelberg.pvs.container_bench.ObjectSetBare;
-import de.heidelberg.pvs.container_bench.OrderedSetBare;
-import squidpony.squidmath.UnorderedSet;
 
 import java.util.Set;
 import java.util.function.Supplier;

@@ -6,7 +6,6 @@ import com.github.tommyettinger.random.WhiskerRandom;
 
 import java.io.*;
 import java.util.*;
-import java.util.zip.GZIPInputStream;
 
 public class Wordlist {
 	

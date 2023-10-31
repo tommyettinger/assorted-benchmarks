@@ -14,50 +14,37 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
+import com.badlogic.gdx.math.MathUtils;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
-
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * HotSpot Java 8 (AdoptOpenJDK):
- * <br>
- * SquidSinFloatAltBench score: 73303128.000000 (73.30M 1811.0%)
- *                   uncertainty:   0.5%
- * <br>
- * OpenJ9 Java 15:
- * <br>
- * SquidSinFloatAltBench score: 66262600.000000 (66.26M 1800.9%)
- *                   uncertainty:   0.6%
- * <br>
- * HotSpot Java 16 (AdoptOpenJDK):
- * <br>
- * SquidSinFloatAltBench score: 71553392.000000 (71.55M 1808.6%)
- *                   uncertainty:   0.5%
- * <br>
- * GraalVM CE Java 16:
+ * HotSpot Java 8:
  * <br>
  *
  * <br>
- * HotSpot Java 17 (SAP Machine):
+ * HotSpot Java 17 (Adoptium):
  * <br>
  *
  * <br>
- * It just isn't as fast as the regular NumberTools.sin(float).
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 20:
+ * <br>
+ *
  */
-public final class SquidSinFloatAltBench extends MicroBench {
-	public static float sin(float radians)
-	{
-		radians *= 0.6366197723675814f;
-		final int floor = (radians >= 0 ? (int) radians : (int) radians - 1) & -2;
-		radians -= floor;
-		radians *= 2f - radians;
-		return Math.copySign(radians * (-0.775f - 0.225f * radians), ((floor & 2) - 1));
-	}
+public final class GDXCosBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
 		float sum = 0.1f;
 		for (long i = 0L, bits = 123L; i < numIterations; i++, bits += 0x9E3779B97F4A7C15L) {
-			sum -= sin(
+			sum -= MathUtils.cos(
 					Float.intBitsToFloat(129 - Long.numberOfLeadingZeros(bits) << 23 | ((int) bits & 0x807FFFFF))
 			);
 		}
