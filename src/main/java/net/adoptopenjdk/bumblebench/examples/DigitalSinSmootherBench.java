@@ -22,6 +22,41 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
+ *
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 20:
+ * <br>
+ *
+ */
+public final class DigitalSinSmootherBench extends MicroBench {
+
+	protected long doBatch(long numIterations) throws InterruptedException {
+		float sum = 0.1f;
+		final float shrink = TrigTools.PI * 8f / numIterations;
+		for (long i = 0; i < numIterations; i++)
+			sum -= TrigTools.sinSmoother((sum + i) * shrink);
+		return numIterations;
+	}
+}
+
+
+/* OLD
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8:
+ * <br>
  * DigitalSinSmootherBench score: 84239928.000000 (84.24M 1824.9%)
  *                     uncertainty:   0.2%
  * <br>
@@ -54,46 +89,4 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * DigitalSinSmootherBench score: 84595008.000000 (84.60M 1825.3%)
  *                     uncertainty:   0.1%
- */
-public final class DigitalSinSmootherBench extends MicroBench {
-
-	protected long doBatch(long numIterations) throws InterruptedException {
-		float sum = 0.1f;
-		final float shrink = TrigTools.PI * 8f / numIterations;
-		for (long i = 0; i < numIterations; i++)
-			sum -= TrigTools.sinSmoother((sum + i) * shrink);
-		return numIterations;
-	}
-}
-
-/*
- * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
- * <br>
- * HotSpot Java 8:
- * <br>
- *
- * <br>
- * OpenJ9 Java 15:
- * <br>
- *
- * <br>
- * HotSpot Java 16 (AdoptOpenJDK):
- * <br>
- *
- * <br>
- * HotSpot Java 17 (Adoptium):
- * <br>
- *
- * <br>
- * GraalVM Java 17:
- * <br>
- *
- * <br>
- * HotSpot Java 18 (Adoptium):
- * <br>
- *
- * <br>
- * HotSpot Java 19 (BellSoft):
- * <br>
- *
  */

@@ -40,52 +40,53 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  *
  */
-public final class DigitalSinBench extends MicroBench {
+public final class DigitalCosSmootherBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
 		float sum = 0.1f;
 		final float shrink = TrigTools.PI * 8f / numIterations;
 		for (long i = 0; i < numIterations; i++)
-			sum -= TrigTools.sin((sum + i) * shrink);
+			sum -= TrigTools.cosSmoother((sum + i) * shrink);
 		return numIterations;
 	}
 }
+
 
 /* OLD
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
  * HotSpot Java 8:
  * <br>
- * DigitalSinBench score: 149810848.000000 (149.8M 1882.5%)
- *             uncertainty:   0.6%
+ * DigitalSinSmootherBench score: 84239928.000000 (84.24M 1824.9%)
+ *                     uncertainty:   0.2%
  * <br>
  * OpenJ9 Java 15:
  * <br>
- * DigitalSinBench score: 149791632.000000 (149.8M 1882.5%)
- *             uncertainty:   0.4%
+ * DigitalSinSmootherBench score: 84092720.000000 (84.09M 1824.7%)
+ *                     uncertainty:   1.5%
  * <br>
  * HotSpot Java 16 (AdoptOpenJDK):
  * <br>
- * DigitalSinBench score: 151432256.000000 (151.4M 1883.6%)
- *             uncertainty:   0.5%
+ * DigitalSinSmootherBench score: 84961760.000000 (84.96M 1825.8%)
+ *                     uncertainty:   0.5%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- * DigitalSinBench score: 149509440.000000 (149.5M 1882.3%)
- *             uncertainty:   0.3%
+ * DigitalSinSmootherBench score: 84208928.000000 (84.21M 1824.9%)
+ *                     uncertainty:   0.7%
  * <br>
  * GraalVM Java 17:
  * <br>
- * DigitalSinBench score: 150604880.000000 (150.6M 1883.0%)
- *             uncertainty:   0.3%
+ * DigitalSinSmootherBench score: 84736304.000000 (84.74M 1825.5%)
+ *                     uncertainty:   0.2%
  * <br>
  * HotSpot Java 18 (Adoptium):
  * <br>
- * DigitalSinBench score: 149607872.000000 (149.6M 1882.4%)
- *             uncertainty:   0.3%
+ * DigitalSinSmootherBench score: 84507312.000000 (84.51M 1825.2%)
+ *                     uncertainty:   0.8%
  * <br>
  * HotSpot Java 19 (BellSoft):
  * <br>
- * DigitalSinBench score: 149943920.000000 (149.9M 1882.6%)
- *             uncertainty:   0.4%
+ * DigitalSinSmootherBench score: 84595008.000000 (84.60M 1825.3%)
+ *                     uncertainty:   0.1%
  */

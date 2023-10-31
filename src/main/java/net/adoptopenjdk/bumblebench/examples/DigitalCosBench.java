@@ -40,13 +40,13 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  *
  */
-public final class DigitalSinBench extends MicroBench {
+public final class DigitalCosBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {
 		float sum = 0.1f;
 		final float shrink = TrigTools.PI * 8f / numIterations;
 		for (long i = 0; i < numIterations; i++)
-			sum -= TrigTools.sin((sum + i) * shrink);
+			sum -= TrigTools.cos((sum + i) * shrink);
 		return numIterations;
 	}
 }
