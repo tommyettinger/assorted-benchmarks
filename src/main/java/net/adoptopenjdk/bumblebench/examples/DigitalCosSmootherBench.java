@@ -34,7 +34,8 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 20 (BellSoft):
  * <br>
- *
+ * DigitalCosSmootherBench score: 83474408.000000 (83.47M 1824.0%)
+ *                     uncertainty:   0.2%
  * <br>
  * GraalVM Java 20:
  * <br>
