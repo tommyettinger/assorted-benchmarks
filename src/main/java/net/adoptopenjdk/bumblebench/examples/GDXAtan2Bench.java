@@ -57,7 +57,7 @@ public class GDXAtan2Bench extends MicroBench {
     private float nextExclusiveFloat() {
         final long bits = rng.nextLong();
         return Float.intBitsToFloat(126 - Long.numberOfTrailingZeros(bits) << 23
-                | (int)(bits >> 40 & 0x807FFFFF));
+                | ((int)(bits >> 40) & 0x807FFFFF));
     }
 
     protected long doBatch (long numIterations) throws InterruptedException {

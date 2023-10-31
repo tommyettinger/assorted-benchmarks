@@ -41,7 +41,7 @@ public class GDXNewAtan2Bench extends MicroBench {
     private float nextExclusiveFloat() {
         final long bits = rng.nextLong();
         return Float.intBitsToFloat(126 - Long.numberOfTrailingZeros(bits) << 23
-                | (int)(bits >> 40 & 0x807FFFFF));
+                | ((int)(bits >> 40) & 0x807FFFFF));
     }
     /**
      * @param i any finite double or float, but more commonly a float

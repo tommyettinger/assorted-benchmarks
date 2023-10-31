@@ -27,11 +27,11 @@ public class MathAtan2Bench extends MicroBench {
     private float nextExclusiveFloat() {
         final long bits = rng.nextLong();
         return Float.intBitsToFloat(126 - Long.numberOfTrailingZeros(bits) << 23
-                | (int)(bits >> 40 & 0x807FFFFF));
+                | ((int)(bits >> 40) & 0x807FFFFF));
     }
 
     protected long doBatch (long numIterations) throws InterruptedException {
-        float sum = 0.1f;
+        double sum = 0.1f;
         for (long i = 0; i < numIterations; i++)
             sum += Math.atan2(nextExclusiveFloat(), nextExclusiveFloat());
         return numIterations;

@@ -19,6 +19,43 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
+ * HotSpot Java 8:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ * StrictMathSinBench score: 23575690.000000 (23.58M 1697.6%)
+ *                uncertainty:   0.7%
+ * <br>
+ * GraalVM Java 20:
+ * <br>
+ *
+ */
+public final class StrictMathSinBench extends MicroBench {
+
+	protected long doBatch(long numIterations) throws InterruptedException {
+		double sum = 0.1;
+		for (long i = 0L, bits = 123L; i < numIterations; i++, bits += 0x9E3779B97F4A7C15L) {
+			sum -= StrictMath.sin(
+					Float.intBitsToFloat(129 - Long.numberOfLeadingZeros(bits) << 23 | ((int) bits & 0x807FFFFF))
+			);
+		}
+		return numIterations;
+	}
+}
+
+/* OLD
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
  * HotSpot Java 8 (AdoptOpenJDK):
  * <br>
  * StrictMathSinBench score: 34722412.000000 (34.72M 1736.3%)
@@ -44,13 +81,3 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * StrictMathSinBench score: 31586566.000000 (31.59M 1726.8%)
  *                uncertainty:   4.5%
  */
-public final class StrictMathSinBench extends MicroBench {
-
-	protected long doBatch(long numIterations) throws InterruptedException {
-		double sum = 0.1;
-		final double shrink = Math.PI * 8.0 / numIterations;
-		for (long i = 0; i < numIterations; i++)
-			sum -= StrictMath.sin((sum + i) * shrink);
-		return numIterations;
-	}
-}

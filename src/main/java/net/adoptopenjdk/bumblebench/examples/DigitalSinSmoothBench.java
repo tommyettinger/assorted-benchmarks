@@ -17,6 +17,42 @@ package net.adoptopenjdk.bumblebench.examples;
 import com.github.tommyettinger.digital.TrigTools;
 import net.adoptopenjdk.bumblebench.core.MicroBench;
 
+/**
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ * DigitalSinSmoothBench score: 138973856.000000 (139.0M 1875.0%)
+ *                   uncertainty:   0.9%
+ * <br>
+ * GraalVM Java 20:
+ * <br>
+ *
+ */public final class DigitalSinSmoothBench extends MicroBench {
+
+	protected long doBatch(long numIterations) throws InterruptedException {
+		float sum = 0.1f;
+		for (long i = 0L, bits = 123L; i < numIterations; i++, bits += 0x9E3779B97F4A7C15L) {
+			sum -= TrigTools.sinSmooth(
+					Float.intBitsToFloat(129 - Long.numberOfLeadingZeros(bits) << 23 | ((int) bits & 0x807FFFFF))
+			);
+		}
+		return numIterations;
+	}
+}
+
 /* OLD
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
@@ -54,70 +90,4 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * DigitalSinSmoothBench score: 56127560.000000 (56.13M 1784.3%)
  *                   uncertainty:   0.1%
- */
-/**
- * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
- * <br>
- * HotSpot Java 8:
- * <br>
- *
- * <br>
- * HotSpot Java 17 (Adoptium):
- * <br>
- *
- * <br>
- * GraalVM Java 17:
- * <br>
- *
- * <br>
- * HotSpot Java 20 (BellSoft):
- * <br>
- *
- * <br>
- * GraalVM Java 20:
- * <br>
- *
- */public final class DigitalSinSmoothBench extends MicroBench {
-
-	protected long doBatch(long numIterations) throws InterruptedException {
-		float sum = 0.1f;
-		for (long i = 0L, bits = 123L; i < numIterations; i++, bits += 0x9E3779B97F4A7C15L) {
-			sum -= TrigTools.sinSmooth(
-					Float.intBitsToFloat(129 - Long.numberOfLeadingZeros(bits) << 23 | ((int) bits & 0x807FFFFF))
-			);
-		}
-		return numIterations;
-	}
-}
-
-/*
- * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
- * <br>
- * HotSpot Java 8:
- * <br>
- *
- * <br>
- * OpenJ9 Java 15:
- * <br>
- *
- * <br>
- * HotSpot Java 16 (AdoptOpenJDK):
- * <br>
- *
- * <br>
- * HotSpot Java 17 (Adoptium):
- * <br>
- *
- * <br>
- * GraalVM Java 17:
- * <br>
- *
- * <br>
- * HotSpot Java 18 (Adoptium):
- * <br>
- *
- * <br>
- * HotSpot Java 19 (BellSoft):
- * <br>
- *
  */
