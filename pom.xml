@@ -146,7 +146,7 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>digital</artifactId>
-            <version>0.4.1</version>
+            <version>9747484294</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

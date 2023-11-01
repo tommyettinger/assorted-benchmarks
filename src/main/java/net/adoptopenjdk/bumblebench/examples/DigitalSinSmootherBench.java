@@ -32,14 +32,15 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  *
  * <br>
- * HotSpot Java 20 (BellSoft):
+ * HotSpot Java 20 (BellSoft), work in progress:
  * <br>
  * DigitalSinSmootherBench score: 386295136.000000 (386.3M 1977.2%)
  *                     uncertainty:   1.2%
  * <br>
- * GraalVM Java 20:
+ * HotSpot Java 20 (BellSoft), 0.4.2:
  * <br>
- *
+ * DigitalSinSmootherBench score: 436330912.000000 (436.3M 1989.4%)
+ *                     uncertainty:   0.3%
  */
 public final class DigitalSinSmootherBench extends MicroBench {
 

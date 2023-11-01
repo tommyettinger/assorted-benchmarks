@@ -20,26 +20,15 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
 /**
  * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
  * <br>
- * HotSpot Java 8:
- * <br>
- *
- * <br>
- * HotSpot Java 17 (Adoptium):
- * <br>
- *
- * <br>
- * GraalVM Java 17:
- * <br>
- *
- * <br>
- * HotSpot Java 20 (BellSoft):
+ * HotSpot Java 20 (BellSoft), work in progress:
  * <br>
  * DigitalCosSmootherBench score: 362530176.000000 (362.5M 1970.9%)
  *                     uncertainty:   0.6%
  * <br>
- * GraalVM Java 20:
+ * HotSpot Java 20 (BellSoft), 0.4.2:
  * <br>
- *
+ * DigitalCosSmootherBench score: 482780736.000000 (482.8M 1999.5%)
+ *                     uncertainty:   1.0%
  */
 public final class DigitalCosSmootherBench extends MicroBench {
 
