@@ -412,6 +412,16 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doPathSquidDG         avgt    4   628.153 ±  14.555  ms/op
  * PathfindingBenchmark.doPathSquidUD         avgt    4   707.871 ±  58.645  ms/op
  * </pre>
+ * <br>
+ * Just testing "One" path benchmarks...
+ * <pre>
+ * Benchmark                                Mode  Cnt   Score   Error  Units
+ * PathfindingBenchmark.doOneGDXAStarCoord  avgt    5  59.180 ± 5.344  ms/op
+ * PathfindingBenchmark.doOneGDXAStarGP     avgt    5  53.216 ± 4.294  ms/op
+ * PathfindingBenchmark.doOneSimpleGPUD     avgt    5  33.380 ± 0.362  ms/op
+ * PathfindingBenchmark.doOneSquadUD        avgt    5  59.009 ± 0.473  ms/op
+ * PathfindingBenchmark.doOneSquidUD        avgt    5  55.728 ± 1.296  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -422,8 +432,8 @@ public class PathfindingBenchmark {
     private static final GridPoint2 start = new GridPoint2(), end = new GridPoint2();
     @State(Scope.Thread)
     public static class BenchmarkState {
-        public static final int WIDTH = 100;
-        public static final int HEIGHT = 100;
+        public static final int WIDTH = 666;
+        public static final int HEIGHT = 666;
 //        public static final GridPoint2[][] gridPool = new GridPoint2[WIDTH][HEIGHT];
         public DungeonGenerator dungeonGen = new DungeonGenerator(WIDTH, HEIGHT, new StatefulRNG(0x1337BEEFDEAL));
         public char[][] map;
