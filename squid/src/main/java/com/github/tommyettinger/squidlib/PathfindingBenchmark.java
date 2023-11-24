@@ -796,11 +796,11 @@ public class PathfindingBenchmark {
         com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
         state.srng.setState(state.highest.hashCode());
         com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
-        state.path.clear();
+        state.squadPath.clear();
         dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgt);
         dijkstra.clearGoals();
         dijkstra.resetMap();
-        return state.path.size();
+        return state.squadPath.size();
     }
 
     @Benchmark
@@ -935,11 +935,11 @@ public class PathfindingBenchmark {
         com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
         state.srng.setState(state.highest.hashCode());
         com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
-        state.path.clear();
+        state.squadPath.clear();
         dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgt);
         dijkstra.clearGoals();
         dijkstra.resetMap();
-        return state.path.size();
+        return state.squadPath.size();
     }
 
     @Benchmark
@@ -1394,7 +1394,7 @@ public class PathfindingBenchmark {
         GridPoint2 end = state.lowestGP;
         state.sggpPath.clear();
         state.sggpPath.addAll(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex));
-        return state.path.size();
+        return state.sggpPath.size();
     }
 
     @Benchmark
@@ -1447,7 +1447,7 @@ public class PathfindingBenchmark {
         GridPoint2 end = state.lowestGP;
         state.sggpPath.clear();
         state.sggpPath.addAll(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex));
-        return state.path.size();
+        return state.sggpPath.size();
     }
 
     @Benchmark
