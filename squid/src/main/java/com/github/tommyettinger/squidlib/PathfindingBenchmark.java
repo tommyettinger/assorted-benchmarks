@@ -31,12 +31,15 @@
 
 package com.github.tommyettinger.squidlib;
 
-import com.badlogic.gdx.ai.pfa.*;
 import com.badlogic.gdx.ai.pfa.Connection;
+import com.badlogic.gdx.ai.pfa.DefaultConnection;
+import com.badlogic.gdx.ai.pfa.DefaultGraphPath;
+import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.github.tommyettinger.ds.ObjectList;
 import com.github.yellowstonegames.grid.Region;
 import org.openjdk.jmh.annotations.*;
@@ -44,15 +47,17 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
-import space.earlygrey.simplegraphs.*;
+import space.earlygrey.simplegraphs.DirectedGraph;
+import space.earlygrey.simplegraphs.Path;
+import space.earlygrey.simplegraphs.UndirectedGraph;
 import space.earlygrey.simplegraphs.algorithms.DirectedGraphAlgorithms;
 import space.earlygrey.simplegraphs.algorithms.SearchStep;
 import space.earlygrey.simplegraphs.algorithms.UndirectedGraphAlgorithms;
+import squid.lib.DijkstraMap;
 import squid.squad.BitDijkstraMap;
 import squid.squad.CDijkstraMap;
 import squidpony.ArrayTools;
 import squidpony.squidai.CustomDijkstraMap;
-import squid.lib.DijkstraMap;
 import squidpony.squidgrid.Adjacency;
 import squidpony.squidgrid.Direction;
 import squidpony.squidgrid.mapping.DungeonGenerator;
@@ -416,11 +421,13 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * Just testing "One" path benchmarks...
  * <pre>
  * Benchmark                                Mode  Cnt   Score   Error  Units
- * PathfindingBenchmark.doOneGDXAStarCoord  avgt    5  59.180 ± 5.344  ms/op
- * PathfindingBenchmark.doOneGDXAStarGP     avgt    5  53.216 ± 4.294  ms/op
- * PathfindingBenchmark.doOneSimpleGPUD     avgt    5  33.380 ± 0.362  ms/op
- * PathfindingBenchmark.doOneSquadUD        avgt    5  59.009 ± 0.473  ms/op
- * PathfindingBenchmark.doOneSquidUD        avgt    5  55.728 ± 1.296  ms/op
+ * PathfindingBenchmark.doOneGDXAStarCoord  avgt    5  45.167 ± 2.560  ms/op
+ * PathfindingBenchmark.doOneGDXAStarGP     avgt    5  41.186 ± 2.570  ms/op
+ * PathfindingBenchmark.doOneNate           avgt    5  50.798 ± 0.431  ms/op
+ * PathfindingBenchmark.doOneSimpleGPD      avgt    5  23.082 ± 0.317  ms/op
+ * PathfindingBenchmark.doOneSimpleGPUD     avgt    5  22.112 ± 0.278  ms/op
+ * PathfindingBenchmark.doOneSquadUD        avgt    5  46.873 ± 1.155  ms/op
+ * PathfindingBenchmark.doOneSquidUD        avgt    5  46.210 ± 1.541  ms/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
@@ -444,6 +451,7 @@ public class PathfindingBenchmark {
         public Region squadFloors;
         public int floorCount;
         public Coord[] floorArray;
+        public GreasedRegion tmp;
         public Coord lowest, highest;
         public GridPoint2 lowestGP, highestGP;
         public Coord[][] nearbyMap;
@@ -491,11 +499,59 @@ public class PathfindingBenchmark {
 
         public NateStar nate;
 
+        public Coord rejectionSample(int x, int y) {
+            Coord c;
+            do {
+                c = Coord.get(srng.nextInt(17) - 8 + x, srng.nextInt(17) - 8 + y);
+            } while ((x == c.x && y == c.y) || c.x <= 0 || c.y <= 0 || c.x >= WIDTH - 1 || c.y >= HEIGHT - 1 || map[c.x][c.y] == '#');
+            return c;
+        }
+        public Coord floodSample(int x, int y) {
+            return tmp.empty().insert(x, y).flood(floors, 8).remove(x, y).singleRandom(srng);
+        }
+        /*
+        OK, how fast is this now...
+Generated map at 196279000
+Coord pools filled at 242161600
+Region stuff done at 310191200
+Floors: 269830
+Percentage walkable: 60.83335587840092%
+AStar done at 324709600
+Tiny paths made at 121244385400
+Edges added at 248746725400
+Nate sweetened at 248748408300
+
+         Optimized!
+Starting at 158700
+Generated map at 191956600
+Coord pools filled at 236418300
+Region stuff done at 306619200
+Floors: 269830
+Percentage walkable: 60.83335587840092%
+AStar done at 321422100
+Tiny paths made at 1710092700
+Dijkstra maps made at 1828516800
+AStar finders made at 30106468700
+Paths made at 30108881500
+Simple finders made at 58843922800
+Squid finders made at 89689895500
+Squad finders made at 120669415500
+Edges added at 129571434600
+Nate sweetened at 129572932000
+
+248748408300 (old)
+129572932000 (new)
+         */
         @Setup(Level.Trial)
         public void setup() {
+            long startTime = System.nanoTime();
+            System.out.println("Starting at " + TimeUtils.timeSinceNanos(startTime));
             map = dungeonGen.generate();
-            ArrayTools.reverse(map);
+            System.out.println("Generated map at " + TimeUtils.timeSinceNanos(startTime));
+//            ArrayTools.reverse(map);
             Coord.expandPoolTo(WIDTH, HEIGHT);
+            com.github.yellowstonegames.grid.Coord.expandPoolTo(WIDTH, HEIGHT);
+            System.out.println("Coord pools filled at " + TimeUtils.timeSinceNanos(startTime));
 //            for (int x = 0; x < WIDTH; x++) {
 //                for (int y = 0; y < HEIGHT; y++) {
 //                    gridPool[x][y] = new GridPoint2(x, y);
@@ -512,6 +568,7 @@ public class PathfindingBenchmark {
 
             squadFloors = new Region(map, '.');
             squadFloorArray = squadFloors.asCoords();
+            System.out.println("Region stuff done at " + TimeUtils.timeSinceNanos(startTime));
 
             lowest = floors.first();
             highest = floors.last();
@@ -528,12 +585,13 @@ public class PathfindingBenchmark {
                     squadAstarMap[x][y] = (float) astarMap[x][y];
                 }
             }
+            System.out.println("AStar done at " + TimeUtils.timeSinceNanos(startTime));
             as = new AStarSearch(astarMap, AStarSearch.SearchType.CHEBYSHEV);
             nearbyMap = new Coord[WIDTH][HEIGHT];
             gpNearbyMap = new GridPoint2[WIDTH][HEIGHT];
             squadNearbyMap = new com.github.yellowstonegames.grid.Coord[WIDTH][HEIGHT];
             customNearbyMap = new int[WIDTH * HEIGHT];
-            GreasedRegion tmp = new GreasedRegion(WIDTH, HEIGHT);
+            tmp = new GreasedRegion(WIDTH, HEIGHT);
             adj = new Adjacency.BasicAdjacency(WIDTH, HEIGHT, CHEBYSHEV);
             adj.blockingRule = 0;
             srng = new StatefulRNG(0x1337BEEF1337CA77L);
@@ -542,13 +600,15 @@ public class PathfindingBenchmark {
                 for (int j = 1; j < HEIGHT - 1; j++) {
                     if(map[i][j] == '#')
                         continue;
-                    c = tmp.empty().insert(i, j).flood(floors, 8).remove(i, j).singleRandom(srng);
+                    c = rejectionSample(i, j);
+//                    c = floodSample(i, j);
                     nearbyMap[i][j] = c;
                     gpNearbyMap[i][j] = new GridPoint2(c.x, c.y);
                     squadNearbyMap[i][j] = com.github.yellowstonegames.grid.Coord.get(c.x, c.y);
                     customNearbyMap[adj.composite(i, j, 0, 0)] = adj.composite(c.x, c.y, 0, 0);
                 }
             }
+            System.out.println("Tiny paths made at " + TimeUtils.timeSinceNanos(startTime));
             dijkstra = new DijkstraMap(map, CHEBYSHEV, new StatefulRNG(0x1337BEEF));
             dijkstra.setBlockingRequirement(0);
             squadDijkstra = new squid.squad.DijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
@@ -558,16 +618,18 @@ public class PathfindingBenchmark {
             cDijkstra = new CDijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
             cDijkstra.setBlockingRequirement(0);
             customDijkstra = new CustomDijkstraMap(map, adj, new StatefulRNG(0x1337BEEF));
+            System.out.println("Dijkstra maps made at " + TimeUtils.timeSinceNanos(startTime));
             gg = new GridGraphGP(floors, WIDTH, HEIGHT);
             gg2 = new GridGraphCoord(floors, WIDTH, HEIGHT);
             astar = new IndexedAStarPathFinder<>(gg, false, GridPoint2::equals);
             astar2 = new IndexedAStarPathFinder<>(gg2, false, Coord::equals);
+            System.out.println("AStar finders made at " + TimeUtils.timeSinceNanos(startTime));
             dgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
             dgpgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
             path = new ArrayList<>(WIDTH + HEIGHT << 1);
             squadPath = new ObjectList<>(WIDTH + HEIGHT << 1);
-
             simplePath = new Path<>(WIDTH + HEIGHT << 1);
+            System.out.println("Paths made at " + TimeUtils.timeSinceNanos(startTime));
             simpleDirectedGraph = new DirectedGraph<>(floors);
             simpleUndirectedGraph = new UndirectedGraph<>(floors);
             simpleHeu = (currentNode, targetNode) ->
@@ -578,17 +640,20 @@ public class PathfindingBenchmark {
             sggpUndirectedGraph = new UndirectedGraph<>(gpFloors);
             sggpHeu = (currentNode, targetNode) ->
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
+            System.out.println("Simple finders made at " + TimeUtils.timeSinceNanos(startTime));
 
             squidDirectedGraph   = new squidpony.squidai.graph.DirectedGraph<>(floors);
             squidUndirectedGraph = new squidpony.squidai.graph.UndirectedGraph<>(floors);
             squidDefaultGraph = new squidpony.squidai.graph.DefaultGraph(map, true);
             squidCostlyGraph = new squidpony.squidai.graph.CostlyGraph(astarMap, true);
 
+            System.out.println("Squid finders made at " + TimeUtils.timeSinceNanos(startTime));
 
             squadDirectedGraph   = new com.github.yellowstonegames.path.DirectedGraph<>(squadFloors);
             squadUndirectedGraph = new com.github.yellowstonegames.path.UndirectedGraph<>(squadFloors);
             squadDefaultGraph = new com.github.yellowstonegames.path.DefaultGraph(map, true);
             squadCostlyGraph = new com.github.yellowstonegames.path.CostlyGraph(squadAstarMap, true);
+            System.out.println("Squad finders made at " + TimeUtils.timeSinceNanos(startTime));
 
             Coord center;
             GridPoint2 gpCenter;
@@ -616,12 +681,14 @@ public class PathfindingBenchmark {
                     }
                 }
             }
+            System.out.println("Edges added at " + TimeUtils.timeSinceNanos(startTime));
             nate = new NateStar(WIDTH, HEIGHT) {
                 @Override
                 protected boolean isValid(int x, int y) {
                     return floors.contains(x, y);
                 }
             };
+            System.out.println("Nate sweetened at " + TimeUtils.timeSinceNanos(startTime));
         }
 
     }
