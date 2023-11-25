@@ -437,11 +437,12 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
 @Measurement(iterations = 3)
 public class PathfindingBenchmark {
     private static final GridPoint2 start = new GridPoint2(), end = new GridPoint2();
+
     @State(Scope.Thread)
     public static class BenchmarkState {
         public static final int WIDTH = 666;
         public static final int HEIGHT = 666;
-//        public static final GridPoint2[][] gridPool = new GridPoint2[WIDTH][HEIGHT];
+        //        public static final GridPoint2[][] gridPool = new GridPoint2[WIDTH][HEIGHT];
         public DungeonGenerator dungeonGen = new DungeonGenerator(WIDTH, HEIGHT, new StatefulRNG(0x1337BEEFDEAL));
         public char[][] map;
         public double[][] astarMap;
@@ -506,9 +507,11 @@ public class PathfindingBenchmark {
             } while ((x == c.x && y == c.y) || c.x <= 0 || c.y <= 0 || c.x >= WIDTH - 1 || c.y >= HEIGHT - 1 || map[c.x][c.y] == '#');
             return c;
         }
+
         public Coord floodSample(int x, int y) {
             return tmp.empty().insert(x, y).flood(floors, 8).remove(x, y).singleRandom(srng);
         }
+
         /*
         OK, how fast is this now...
 Generated map at 196279000
@@ -598,7 +601,7 @@ Nate sweetened at 129572932000
             Coord c;
             for (int i = 1; i < WIDTH - 1; i++) {
                 for (int j = 1; j < HEIGHT - 1; j++) {
-                    if(map[i][j] == '#')
+                    if (map[i][j] == '#')
                         continue;
                     c = rejectionSample(i, j);
 //                    c = floodSample(i, j);
@@ -642,14 +645,14 @@ Nate sweetened at 129572932000
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
             System.out.println("Simple finders made at " + TimeUtils.timeSinceNanos(startTime));
 
-            squidDirectedGraph   = new squidpony.squidai.graph.DirectedGraph<>(floors);
+            squidDirectedGraph = new squidpony.squidai.graph.DirectedGraph<>(floors);
             squidUndirectedGraph = new squidpony.squidai.graph.UndirectedGraph<>(floors);
             squidDefaultGraph = new squidpony.squidai.graph.DefaultGraph(map, true);
             squidCostlyGraph = new squidpony.squidai.graph.CostlyGraph(astarMap, true);
 
             System.out.println("Squid finders made at " + TimeUtils.timeSinceNanos(startTime));
 
-            squadDirectedGraph   = new com.github.yellowstonegames.path.DirectedGraph<>(squadFloors);
+            squadDirectedGraph = new com.github.yellowstonegames.path.DirectedGraph<>(squadFloors);
             squadUndirectedGraph = new com.github.yellowstonegames.path.UndirectedGraph<>(squadFloors);
             squadDefaultGraph = new com.github.yellowstonegames.path.DefaultGraph(map, true);
             squadCostlyGraph = new com.github.yellowstonegames.path.CostlyGraph(squadAstarMap, true);
@@ -664,18 +667,16 @@ Nate sweetened at 129572932000
                 gpCenter = gpFloors.get(i);
                 for (int j = 0; j < 8; j++) {
                     dir = outer[j];
-                    if(floors.contains(center.x + dir.deltaX, center.y + dir.deltaY))
-                    {
+                    if (floors.contains(center.x + dir.deltaX, center.y + dir.deltaY)) {
                         GridPoint2 gpMoved = new GridPoint2(gpCenter).add(dir.deltaX, dir.deltaY);
                         simpleDirectedGraph.addEdge(center, center.translate(dir));
                         sggpDirectedGraph.addEdge(gpCenter, gpMoved);
                         squidDirectedGraph.addEdge(center, center.translate(dir));
-                        squadDirectedGraph.addEdge(com.github.yellowstonegames.grid.Coord.get(center.x, center.y), com.github.yellowstonegames.grid.Coord.get(center.x+dir.deltaX, center.y + dir.deltaY));
-                        if(!simpleUndirectedGraph.edgeExists(center, center.translate(dir)))
-                        {
+                        squadDirectedGraph.addEdge(com.github.yellowstonegames.grid.Coord.get(center.x, center.y), com.github.yellowstonegames.grid.Coord.get(center.x + dir.deltaX, center.y + dir.deltaY));
+                        if (!simpleUndirectedGraph.edgeExists(center, center.translate(dir))) {
                             simpleUndirectedGraph.addEdge(center, center.translate(dir));
                             squidUndirectedGraph.addEdge(center, center.translate(dir));
-                            squadUndirectedGraph.addEdge(com.github.yellowstonegames.grid.Coord.get(center.x, center.y), com.github.yellowstonegames.grid.Coord.get(center.x+dir.deltaX, center.y + dir.deltaY));
+                            squadUndirectedGraph.addEdge(com.github.yellowstonegames.grid.Coord.get(center.x, center.y), com.github.yellowstonegames.grid.Coord.get(center.x + dir.deltaX, center.y + dir.deltaY));
                             sggpUndirectedGraph.addEdge(gpCenter, gpMoved);
                         }
                     }
@@ -694,8 +695,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doScanDijkstra(BenchmarkState state)
-    {
+    public long doScanDijkstra(BenchmarkState state) {
         long scanned = 0;
         final DijkstraMap dijkstra = state.dijkstra;
         for (int x = 1; x < state.WIDTH - 1; x++) {
@@ -714,8 +714,7 @@ Nate sweetened at 129572932000
 
 
     @Benchmark
-    public long doScanCustomDijkstra(BenchmarkState state)
-    {
+    public long doScanCustomDijkstra(BenchmarkState state) {
         CustomDijkstraMap dijkstra = state.customDijkstra;
         long scanned = 0;
         for (int x = 1; x < state.WIDTH - 1; x++) {
@@ -733,8 +732,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathDijkstra(BenchmarkState state)
-    {
+    public long doPathDijkstra(BenchmarkState state) {
         Coord r;
         final Coord[] tgts = new Coord[1];
         long scanned = 0;
@@ -761,8 +759,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathDijkstra(BenchmarkState state)
-    {
+    public long doTinyPathDijkstra(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         final Coord[] tgts = new Coord[1];
@@ -802,8 +799,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathSquadDijkstra(BenchmarkState state)
-    {
+    public long doPathSquadDijkstra(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
         long scanned = 0;
@@ -830,12 +826,11 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSquadDijkstra(BenchmarkState state)
-    {
-            com.github.yellowstonegames.grid.Coord r;
-            final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
-            long scanned = 0;
-            final squid.squad.DijkstraMap dijkstra = state.squadDijkstra;
+    public long doTinyPathSquadDijkstra(BenchmarkState state) {
+        com.github.yellowstonegames.grid.Coord r;
+        final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
+        long scanned = 0;
+        final squid.squad.DijkstraMap dijkstra = state.squadDijkstra;
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -858,7 +853,7 @@ Nate sweetened at 129572932000
 
     @Benchmark
     public long doOneSquadDijkstra(BenchmarkState state) {
-            final squid.squad.DijkstraMap dijkstra = state.squadDijkstra;
+        final squid.squad.DijkstraMap dijkstra = state.squadDijkstra;
         final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
         com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
         state.srng.setState(state.highest.hashCode());
@@ -871,8 +866,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathBitDijkstra(BenchmarkState state)
-    {
+    public long doPathBitDijkstra(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
         long scanned = 0;
@@ -899,12 +893,11 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathBitDijkstra(BenchmarkState state)
-    {
-            com.github.yellowstonegames.grid.Coord r;
-            final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
-            long scanned = 0;
-            final BitDijkstraMap dijkstra = state.bitDijkstra;
+    public long doTinyPathBitDijkstra(BenchmarkState state) {
+        com.github.yellowstonegames.grid.Coord r;
+        final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
+        long scanned = 0;
+        final BitDijkstraMap dijkstra = state.bitDijkstra;
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -927,7 +920,7 @@ Nate sweetened at 129572932000
 
     @Benchmark
     public long doOneBitDijkstra(BenchmarkState state) {
-            final BitDijkstraMap dijkstra = state.bitDijkstra;
+        final BitDijkstraMap dijkstra = state.bitDijkstra;
         final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
         com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
         state.srng.setState(state.highest.hashCode());
@@ -941,8 +934,7 @@ Nate sweetened at 129572932000
 
 
     @Benchmark
-    public long doPathCDijkstra(BenchmarkState state)
-    {
+    public long doPathCDijkstra(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
         long scanned = 0;
@@ -969,12 +961,11 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathCDijkstra(BenchmarkState state)
-    {
-            com.github.yellowstonegames.grid.Coord r;
-            final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
-            long scanned = 0;
-            final CDijkstraMap dijkstra = state.cDijkstra;
+    public long doTinyPathCDijkstra(BenchmarkState state) {
+        com.github.yellowstonegames.grid.Coord r;
+        final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
+        long scanned = 0;
+        final CDijkstraMap dijkstra = state.cDijkstra;
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -997,7 +988,7 @@ Nate sweetened at 129572932000
 
     @Benchmark
     public long doOneCDijkstra(BenchmarkState state) {
-            final CDijkstraMap dijkstra = state.cDijkstra;
+        final CDijkstraMap dijkstra = state.cDijkstra;
         final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
         com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
         state.srng.setState(state.highest.hashCode());
@@ -1010,8 +1001,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathCustomDijkstra(BenchmarkState state)
-    {
+    public long doPathCustomDijkstra(BenchmarkState state) {
         Coord r;
         int[] tgts = new int[1];
         long scanned = 0;
@@ -1037,9 +1027,9 @@ Nate sweetened at 129572932000
         }
         return scanned;
     }
+
     @Benchmark
-    public long doTinyPathCustomDijkstra(BenchmarkState state)
-    {
+    public long doTinyPathCustomDijkstra(BenchmarkState state) {
         Coord r;
         int[] tgts = new int[1];
         long scanned = 0;
@@ -1055,7 +1045,7 @@ Nate sweetened at 129572932000
                 r = state.nearbyMap[x][y];
                 p = state.adj.composite(r.x, r.y, 0, 0);
                 tgts[0] = state.adj.composite(x, y, 0, 0);
-                dijkstra.findPath(9,  9,null, null, p, tgts);
+                dijkstra.findPath(9, 9, null, null, p, tgts);
                 dijkstra.clearGoals();
                 dijkstra.resetMap();
                 scanned += dijkstra.path.size;
@@ -1065,12 +1055,8 @@ Nate sweetened at 129572932000
     }
 
 
-
-
-
     @Benchmark
-    public long doPathAStarSearch(BenchmarkState state)
-    {
+    public long doPathAStarSearch(BenchmarkState state) {
         Coord r;
         Coord tgt;
         long scanned = 0;
@@ -1094,8 +1080,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathAStarSearch(BenchmarkState state)
-    {
+    public long doTinyPathAStarSearch(BenchmarkState state) {
         Coord r;
         Coord tgt;
         long scanned = 0;
@@ -1113,7 +1098,6 @@ Nate sweetened at 129572932000
         }
         return scanned;
     }
-
 
 
 //    public long doPathAStar()
@@ -1203,8 +1187,7 @@ Nate sweetened at 129572932000
 //        doTinyPathAStar2();
 //    }
 
-    static class GridGraphGP implements IndexedGraph<GridPoint2>
-    {
+    static class GridGraphGP implements IndexedGraph<GridPoint2> {
         public int[][] indices;
         public GridPoint2[][] grid;
         public int nodeCount;
@@ -1212,8 +1195,7 @@ Nate sweetened at 129572932000
                 Math.max(Math.abs(node.x - endNode.x), Math.abs(node.y - endNode.y));
 
 
-        public GridGraphGP(Iterable<Coord> floors, int width, int height)
-        {
+        public GridGraphGP(Iterable<Coord> floors, int width, int height) {
             grid = new GridPoint2[width][height];
             indices = new int[width][height];
             for (int x = 0; x < width; x++) {
@@ -1222,13 +1204,14 @@ Nate sweetened at 129572932000
                 }
             }
             int i = 0;
-            for(Coord c : floors){
+            for (Coord c : floors) {
                 GridPoint2 pt = new GridPoint2(c.x, c.y);
                 grid[c.x][c.y] = pt;
                 indices[c.x][c.y] = i++;
             }
             nodeCount = i;
         }
+
         // use this if using only libGDX classes.
 //        public GridGraphGP(Iterable<GridPoint2> floors, int width, int height) {
 //            grid = new GridPoint2[width][height];
@@ -1259,10 +1242,10 @@ Nate sweetened at 129572932000
         @Override
         public Array<Connection<GridPoint2>> getConnections(GridPoint2 fromNode) {
             Array<Connection<GridPoint2>> conn = new Array<>(false, 8, Connection.class);
-            if(indices[fromNode.x][fromNode.y] == -1)
+            if (indices[fromNode.x][fromNode.y] == -1)
                 return conn;
             for (int i = 0; i < 8; i++) {
-                int x = fromNode.x+Direction.OUTWARDS[i].deltaX, y = fromNode.y+Direction.OUTWARDS[i].deltaY;
+                int x = fromNode.x + Direction.OUTWARDS[i].deltaX, y = fromNode.y + Direction.OUTWARDS[i].deltaY;
                 if (x >= 0 && y >= 0 && x < indices.length && y < indices[0].length && indices[x][y] != -1)
                     conn.add(new DefaultConnection<>(fromNode, new GridPoint2(x, y)));
             }
@@ -1271,18 +1254,16 @@ Nate sweetened at 129572932000
     }
 
 
-    static class GridGraphCoord implements IndexedGraph<Coord>
-    {
+    static class GridGraphCoord implements IndexedGraph<Coord> {
         public int[][] map;
         int nodeCount;
         public Heuristic<Coord> heu = (node, endNode) ->
                 Math.max(Math.abs(node.x - endNode.x), Math.abs(node.y - endNode.y));
 
-        public GridGraphCoord(Iterable<Coord> floors, int width, int height)
-        {
+        public GridGraphCoord(Iterable<Coord> floors, int width, int height) {
             this.map = ArrayTools.fill(-1, width, height);
             int i = 0;
-            for(Coord c : floors){
+            for (Coord c : floors) {
                 map[c.x][c.y] = i++;
             }
             nodeCount = i;
@@ -1301,10 +1282,10 @@ Nate sweetened at 129572932000
         @Override
         public Array<Connection<Coord>> getConnections(Coord fromNode) {
             Array<Connection<Coord>> conn = new Array<>(false, 8, Connection.class);
-            if(map[fromNode.x][fromNode.y] == -1)
+            if (map[fromNode.x][fromNode.y] == -1)
                 return conn;
             for (int i = 0; i < 8; i++) {
-                int x = fromNode.x+Direction.OUTWARDS[i].deltaX, y = fromNode.y+Direction.OUTWARDS[i].deltaY;
+                int x = fromNode.x + Direction.OUTWARDS[i].deltaX, y = fromNode.y + Direction.OUTWARDS[i].deltaY;
                 if (x >= 0 && y >= 0 && x < map.length && y < map[0].length && map[x][y] != -1)
                     conn.add(new DefaultConnection<>(fromNode, Coord.get(x, y)));
             }
@@ -1313,8 +1294,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathGDXAStarGP(BenchmarkState state)
-    {
+    public long doPathGDXAStarGP(BenchmarkState state) {
         long scanned = 0;
         state.srng.setState(1234567890L);
         for (int x = 1; x < state.WIDTH - 1; x++) {
@@ -1323,7 +1303,7 @@ Nate sweetened at 129572932000
                     continue;
                 start.set(state.srng.getRandomElement(state.gpFloors));
                 state.dgpgp.clear();
-                if(state.astar.searchNodePath(state.gg.grid[start.x][start.y], state.gg.grid[x][y], state.gg.heu, state.dgpgp))
+                if (state.astar.searchNodePath(state.gg.grid[start.x][start.y], state.gg.grid[x][y], state.gg.heu, state.dgpgp))
                     scanned += state.dgpgp.getCount();
             }
         }
@@ -1332,8 +1312,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathGDXAStarGP(BenchmarkState state)
-    {
+    public long doTinyPathGDXAStarGP(BenchmarkState state) {
         long scanned = 0;
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
@@ -1341,7 +1320,7 @@ Nate sweetened at 129572932000
                     continue;
                 start.set(state.gpNearbyMap[x][y]);
                 state.dgpgp.clear();
-                if(state.astar.searchNodePath(state.gg.grid[start.x][start.y], state.gg.grid[x][y], state.gg.heu, state.dgpgp))
+                if (state.astar.searchNodePath(state.gg.grid[start.x][start.y], state.gg.grid[x][y], state.gg.heu, state.dgpgp))
                     scanned += state.dgpgp.getCount();
             }
         }
@@ -1359,8 +1338,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathGDXAStarCoord(BenchmarkState state)
-    {
+    public long doPathGDXAStarCoord(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
@@ -1372,7 +1350,7 @@ Nate sweetened at 129572932000
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.floorArray);
                 state.dgp.clear();
-                if(state.astar2.searchNodePath(r, Coord.get(x, y), state.gg2.heu, state.dgp))
+                if (state.astar2.searchNodePath(r, Coord.get(x, y), state.gg2.heu, state.dgp))
                     scanned += state.dgp.getCount();
             }
         }
@@ -1381,8 +1359,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathGDXAStarCoord(BenchmarkState state)
-    {
+    public long doTinyPathGDXAStarCoord(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         for (int x = 1; x < state.WIDTH - 1; x++) {
@@ -1393,7 +1370,7 @@ Nate sweetened at 129572932000
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.nearbyMap[x][y];
                 state.dgp.clear();
-                if(state.astar2.searchNodePath(r, Coord.get(x, y), state.gg2.heu, state.dgp))
+                if (state.astar2.searchNodePath(r, Coord.get(x, y), state.gg2.heu, state.dgp))
                     scanned += state.dgp.getCount();
             }
         }
@@ -1412,8 +1389,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathSimpleGPD(BenchmarkState state)
-    {
+    public long doPathSimpleGPD(BenchmarkState state) {
         long scanned = 0;
         state.srng.setState(1234567890L);
         final DirectedGraphAlgorithms<GridPoint2> algo = state.sggpDirectedGraph.algorithms();
@@ -1426,7 +1402,7 @@ Nate sweetened at 129572932000
                 state.sggpPath.clear();
                 end.y = y;
                 state.sggpPath.addAll(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex));
-                if(state.sggpPath.size != 0)
+                if (state.sggpPath.size != 0)
                     scanned += state.sggpPath.size;
             }
         }
@@ -1434,8 +1410,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSimpleGPD(BenchmarkState state)
-    {
+    public long doTinyPathSimpleGPD(BenchmarkState state) {
         long scanned = 0;
         final DirectedGraphAlgorithms<GridPoint2> algo = state.sggpDirectedGraph.algorithms();
         for (int x = 1; x < state.WIDTH - 1; x++) {
@@ -1447,7 +1422,7 @@ Nate sweetened at 129572932000
                 state.sggpPath.clear();
                 end.y = y;
                 state.sggpPath.addAll(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex));
-                if(state.sggpPath.size != 0)
+                if (state.sggpPath.size != 0)
                     scanned += state.sggpPath.size;
             }
         }
@@ -1465,8 +1440,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathSimpleGPUD(BenchmarkState state)
-    {
+    public long doPathSimpleGPUD(BenchmarkState state) {
         long scanned = 0;
         state.srng.setState(1234567890L);
         final UndirectedGraphAlgorithms<GridPoint2> algo = state.sggpUndirectedGraph.algorithms();
@@ -1479,7 +1453,7 @@ Nate sweetened at 129572932000
                 state.sggpPath.clear();
                 end.y = y;
                 state.sggpPath.addAll(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex));
-                if(state.sggpPath.size != 0)
+                if (state.sggpPath.size != 0)
                     scanned += state.sggpPath.size;
             }
         }
@@ -1487,8 +1461,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSimpleGPUD(BenchmarkState state)
-    {
+    public long doTinyPathSimpleGPUD(BenchmarkState state) {
         long scanned = 0;
         final UndirectedGraphAlgorithms<GridPoint2> algo = state.sggpUndirectedGraph.algorithms();
         for (int x = 1; x < state.WIDTH - 1; x++) {
@@ -1500,7 +1473,7 @@ Nate sweetened at 129572932000
                 state.sggpPath.clear();
                 end.y = y;
                 state.sggpPath.addAll(algo.findShortestPath(start, end, state.sggpHeu, SearchStep::vertex));
-                if(state.sggpPath.size != 0)
+                if (state.sggpPath.size != 0)
                     scanned += state.sggpPath.size;
             }
         }
@@ -1518,8 +1491,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathSimpleD(BenchmarkState state)
-    {
+    public long doPathSimpleD(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
@@ -1533,7 +1505,7 @@ Nate sweetened at 129572932000
                 r = state.srng.getRandomElement(state.floorArray);
                 state.simplePath.clear();
                 state.simplePath.addAll(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex));
-                if(state.simplePath.size != 0)
+                if (state.simplePath.size != 0)
                     scanned += state.simplePath.size;
             }
         }
@@ -1542,8 +1514,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSimpleD(BenchmarkState state)
-    {
+    public long doTinyPathSimpleD(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         final DirectedGraphAlgorithms<Coord> algo = state.simpleDirectedGraph.algorithms();
@@ -1554,7 +1525,7 @@ Nate sweetened at 129572932000
                 r = state.nearbyMap[x][y];
                 state.simplePath.clear();
                 state.simplePath.addAll(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex));
-                if(state.simplePath.size != 0)
+                if (state.simplePath.size != 0)
                     scanned += state.simplePath.size;
             }
         }
@@ -1562,8 +1533,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathSimpleUD(BenchmarkState state)
-    {
+    public long doPathSimpleUD(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
@@ -1575,7 +1545,7 @@ Nate sweetened at 129572932000
                 r = state.srng.getRandomElement(state.floorArray);
                 state.simplePath.clear();
                 state.simplePath.addAll(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex));
-                if(state.simplePath.size != 0)
+                if (state.simplePath.size != 0)
                     scanned += state.simplePath.size;
             }
         }
@@ -1583,8 +1553,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSimpleUD(BenchmarkState state)
-    {
+    public long doTinyPathSimpleUD(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         final UndirectedGraphAlgorithms<Coord> algo = state.simpleUndirectedGraph.algorithms();
@@ -1597,7 +1566,7 @@ Nate sweetened at 129572932000
                 r = state.nearbyMap[x][y];
                 state.simplePath.clear();
                 state.simplePath.addAll(algo.findShortestPath(r, Coord.get(x, y), state.simpleHeu, SearchStep::vertex));
-                if(state.simplePath.size != 0)
+                if (state.simplePath.size != 0)
                     scanned += state.simplePath.size;
             }
         }
@@ -1605,8 +1574,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathSquidD(BenchmarkState state)
-    {
+    public long doPathSquidD(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
@@ -1619,7 +1587,7 @@ Nate sweetened at 129572932000
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -1627,8 +1595,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSquidD(BenchmarkState state)
-    {
+    public long doTinyPathSquidD(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         final squidpony.squidai.graph.DirectedGraphAlgorithms<Coord> algo = state.squidDirectedGraph.algorithms();
@@ -1640,7 +1607,7 @@ Nate sweetened at 129572932000
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.nearbyMap[x][y];
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -1659,8 +1626,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathSquidUD(BenchmarkState state)
-    {
+    public long doPathSquidUD(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
@@ -1673,7 +1639,7 @@ Nate sweetened at 129572932000
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -1681,8 +1647,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSquidUD(BenchmarkState state)
-    {
+    public long doTinyPathSquidUD(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
@@ -1694,7 +1659,7 @@ Nate sweetened at 129572932000
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.nearbyMap[x][y];
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -1713,8 +1678,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathSquidDG(BenchmarkState state)
-    {
+    public long doPathSquidDG(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
@@ -1727,7 +1691,7 @@ Nate sweetened at 129572932000
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -1735,8 +1699,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSquidDG(BenchmarkState state)
-    {
+    public long doTinyPathSquidDG(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidDefaultGraph.algorithms();
@@ -1748,7 +1711,7 @@ Nate sweetened at 129572932000
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.nearbyMap[x][y];
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -1767,8 +1730,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathSquidCG(BenchmarkState state)
-    {
+    public long doPathSquidCG(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
@@ -1781,7 +1743,7 @@ Nate sweetened at 129572932000
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.floorArray);
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -1789,8 +1751,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSquidCG(BenchmarkState state)
-    {
+    public long doTinyPathSquidCG(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         final squidpony.squidai.graph.DirectedGraphAlgorithms<Coord> algo = state.squidCostlyGraph.algorithms();
@@ -1802,7 +1763,7 @@ Nate sweetened at 129572932000
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.nearbyMap[x][y];
                 state.path.clear();
-                if(algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, Coord.get(x, y), state.path, squidpony.squidai.graph.Heuristic.CHEBYSHEV))
                     scanned += state.path.size();
             }
         }
@@ -1823,8 +1784,7 @@ Nate sweetened at 129572932000
     // SQUAD
 
     @Benchmark
-    public long doPathSquadD(BenchmarkState state)
-    {
+    public long doPathSquadD(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
@@ -1837,7 +1797,7 @@ Nate sweetened at 129572932000
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.squadFloorArray);
                 state.squadPath.clear();
-                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
                     scanned += state.squadPath.size();
             }
         }
@@ -1845,8 +1805,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSquadD(BenchmarkState state)
-    {
+    public long doTinyPathSquadD(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final com.github.yellowstonegames.path.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadDirectedGraph.algorithms();
@@ -1858,7 +1817,7 @@ Nate sweetened at 129572932000
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.squadNearbyMap[x][y];
                 state.squadPath.clear();
-                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
                     scanned += state.squadPath.size();
             }
         }
@@ -1877,8 +1836,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathSquadUD(BenchmarkState state)
-    {
+    public long doPathSquadUD(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
@@ -1891,7 +1849,7 @@ Nate sweetened at 129572932000
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.squadFloorArray);
                 state.squadPath.clear();
-                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
                     scanned += state.squadPath.size();
             }
         }
@@ -1899,8 +1857,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSquadUD(BenchmarkState state)
-    {
+    public long doTinyPathSquadUD(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final com.github.yellowstonegames.path.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadUndirectedGraph.algorithms();
@@ -1912,7 +1869,7 @@ Nate sweetened at 129572932000
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.squadNearbyMap[x][y];
                 state.squadPath.clear();
-                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
                     scanned += state.squadPath.size();
             }
         }
@@ -1932,8 +1889,7 @@ Nate sweetened at 129572932000
 
 
     @Benchmark
-    public long doPathSquadDG(BenchmarkState state)
-    {
+    public long doPathSquadDG(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
@@ -1946,7 +1902,7 @@ Nate sweetened at 129572932000
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.squadFloorArray);
                 state.squadPath.clear();
-                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
                     scanned += state.squadPath.size();
             }
         }
@@ -1954,8 +1910,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSquadDG(BenchmarkState state)
-    {
+    public long doTinyPathSquadDG(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final com.github.yellowstonegames.path.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadDefaultGraph.algorithms();
@@ -1967,7 +1922,7 @@ Nate sweetened at 129572932000
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.squadNearbyMap[x][y];
                 state.squadPath.clear();
-                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
                     scanned += state.squadPath.size();
             }
         }
@@ -1986,8 +1941,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathSquadCG(BenchmarkState state)
-    {
+    public long doPathSquadCG(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
@@ -2000,7 +1954,7 @@ Nate sweetened at 129572932000
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.squadFloorArray);
                 state.squadPath.clear();
-                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
                     scanned += state.squadPath.size();
             }
         }
@@ -2008,8 +1962,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathSquadCG(BenchmarkState state)
-    {
+    public long doTinyPathSquadCG(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final com.github.yellowstonegames.path.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadCostlyGraph.algorithms();
@@ -2021,7 +1974,7 @@ Nate sweetened at 129572932000
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.squadNearbyMap[x][y];
                 state.squadPath.clear();
-                if(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
+                if (algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.squadPath, com.github.yellowstonegames.path.Heuristic.CHEBYSHEV))
                     scanned += state.squadPath.size();
             }
         }
@@ -2043,8 +1996,7 @@ Nate sweetened at 129572932000
 
 
     @Benchmark
-    public long doPathNate(BenchmarkState state)
-    {
+    public long doPathNate(BenchmarkState state) {
         long scanned = 0;
         state.srng.setState(1234567890L);
         final NateStar nate = state.nate;
@@ -2054,7 +2006,7 @@ Nate sweetened at 129572932000
                     continue;
                 start.set(state.srng.getRandomElement(state.gpFloors));
                 int len = nate.getPath(start.x, start.y, x, y).size;
-                if(len != 0)
+                if (len != 0)
                     scanned += len;
             }
         }
@@ -2062,8 +2014,7 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doTinyPathNate(BenchmarkState state)
-    {
+    public long doTinyPathNate(BenchmarkState state) {
         long scanned = 0;
         final NateStar nate = state.nate;
         for (int x = 1; x < state.WIDTH - 1; x++) {
@@ -2072,7 +2023,7 @@ Nate sweetened at 129572932000
                     continue;
                 start.set(state.gpNearbyMap[x][y]);
                 int len = nate.getPath(start.x, start.y, x, y).size;
-                if(len != 0)
+                if (len != 0)
                     scanned += len;
             }
         }
