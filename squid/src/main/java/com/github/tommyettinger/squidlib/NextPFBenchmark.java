@@ -50,16 +50,32 @@ import space.earlygrey.simplegraphs.algorithms.SearchStep;
 import space.earlygrey.simplegraphs.algorithms.UndirectedGraphAlgorithms;
 import squidpony.squidgrid.Direction;
 import squidpony.squidgrid.mapping.DungeonGenerator;
-import squidpony.squidgrid.mapping.DungeonUtility;
 import squidpony.squidmath.Coord;
 import squidpony.squidmath.GreasedRegion;
 import squidpony.squidmath.StatefulRNG;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
- *
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * NextSimple commit: 5c8a354fe5 ran at (2023-11-24T21:34:17.064986900)
+ * <br>
+ * Benchmark                                 Mode  Cnt    Score    Error  Units
+ * NextPFBenchmark.doOneNextSimpleGPD        avgt    5    0.258 ±  0.008  ms/op
+ * NextPFBenchmark.doOneNextSimpleGPUD       avgt    5    0.264 ±  0.002  ms/op
+ * NextPFBenchmark.doOneSimpleGPD            avgt    5    0.264 ±  0.003  ms/op
+ * NextPFBenchmark.doOneSimpleGPUD           avgt    5    0.253 ±  0.003  ms/op
+ * NextPFBenchmark.doPathNextSimpleGPD       avgt    5  580.469 ± 10.042  ms/op
+ * NextPFBenchmark.doPathNextSimpleGPUD      avgt    5  575.511 ±  2.303  ms/op
+ * NextPFBenchmark.doPathSimpleGPD           avgt    5  584.774 ±  6.890  ms/op
+ * NextPFBenchmark.doPathSimpleGPUD          avgt    5  553.034 ±  6.594  ms/op
+ * NextPFBenchmark.doTinyPathNextSimpleGPD   avgt    5   33.903 ±  0.571  ms/op
+ * NextPFBenchmark.doTinyPathNextSimpleGPUD  avgt    5   33.338 ±  0.431  ms/op
+ * NextPFBenchmark.doTinyPathSimpleGPD       avgt    5   33.848 ±  0.337  ms/op
+ * NextPFBenchmark.doTinyPathSimpleGPUD      avgt    5   33.603 ±  0.694  ms/op
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -71,8 +87,8 @@ public class NextPFBenchmark {
 
     @State(Scope.Thread)
     public static class BenchmarkState {
-        public static final int WIDTH = 666;
-        public static final int HEIGHT = 666;
+        public static final int WIDTH = 100;
+        public static final int HEIGHT = 100;
         //        public static final GridPoint2[][] gridPool = new GridPoint2[WIDTH][HEIGHT];
         public DungeonGenerator dungeonGen = new DungeonGenerator(WIDTH, HEIGHT, new StatefulRNG(0x1337BEEFDEAL));
         public char[][] map;
@@ -144,13 +160,12 @@ Nate sweetened at 129572932000
         @Setup(Level.Trial)
         public void setup() {
             long startTime = System.nanoTime();
-            System.out.println("Starting at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.println("\nStarting at " + TimeUtils.timeSinceNanos(startTime) + " (or "+ LocalDateTime.now()+")");
             map = dungeonGen.generate();
-            System.out.println();
-            DungeonUtility.debugPrint(map);
-            System.out.println();
+//            System.out.println();
+//            DungeonUtility.debugPrint(map);
+//            System.out.println();
             System.out.println("Generated map at " + TimeUtils.timeSinceNanos(startTime));
-            System.out.println();
 //            ArrayTools.reverse(map);
             Coord.expandPoolTo(WIDTH, HEIGHT);
             com.github.yellowstonegames.grid.Coord.expandPoolTo(WIDTH, HEIGHT);

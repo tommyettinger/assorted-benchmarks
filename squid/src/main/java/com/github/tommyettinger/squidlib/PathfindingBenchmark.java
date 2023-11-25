@@ -550,6 +550,9 @@ Nate sweetened at 129572932000
             long startTime = System.nanoTime();
             System.out.println("Starting at " + TimeUtils.timeSinceNanos(startTime));
             map = dungeonGen.generate();
+//            System.out.println();
+//            DungeonUtility.debugPrint(map);
+//            System.out.println();
             System.out.println("Generated map at " + TimeUtils.timeSinceNanos(startTime));
 //            ArrayTools.reverse(map);
             Coord.expandPoolTo(WIDTH, HEIGHT);
