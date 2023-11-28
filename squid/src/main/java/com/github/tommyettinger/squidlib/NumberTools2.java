@@ -822,13 +822,12 @@ public final class NumberTools2 {
     public static double sinFFD(double radians) {
         return SIN_TABLE_D[(int) (radians * radToIndexD + 16384.5) - 16384 & TABLE_MASK];
     }
-    public static float sinSmootherFF(float radians)
-    {
-        radians *= radToIndex;
-        final int floor = (int) (radians + 16384.0) - 16384;
+    public static float sinSmootherFF(float radians) {
+        final double r = radians * radToIndexD;
+        final int floor = (int) (r + 16384.0) - 16384;
         final int masked = floor & TABLE_MASK;
         final float from = SIN_TABLE[masked], to = SIN_TABLE[masked+1];
-        return from + (to - from) * (radians - floor);
+        return from + (to - from) * ((float)r - floor);
     }
     public static double sinSmootherFF(double radians)
     {
