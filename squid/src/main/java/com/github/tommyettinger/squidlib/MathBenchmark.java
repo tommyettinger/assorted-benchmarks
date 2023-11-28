@@ -334,6 +334,16 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureGdxCosF              avgt    5   6.104 ± 0.065  ns/op
  * MathBenchmark.measureGdxSinF              avgt    5   3.059 ± 0.079  ns/op
  * </pre>
+ * More nonsense results...
+ * <pre>
+ * Benchmark                                 Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDigitalSinF          avgt   10   7.287 ± 0.195  ns/op
+ * MathBenchmark.measureDigitalSmootherSinF  avgt   10   4.440 ± 0.042  ns/op
+ * MathBenchmark.measureFFSinF               avgt   10   6.459 ± 0.012  ns/op
+ * MathBenchmark.measureFFSmootherSinF       avgt   10  10.625 ± 0.049  ns/op
+ * MathBenchmark.measureGdxSinF              avgt   10   3.057 ± 0.038  ns/op
+ * MathBenchmark.measureMathSinF             avgt   10  19.836 ± 0.140  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -397,6 +407,8 @@ public class MathBenchmark {
     private int sinSmootherDigital = -0x8000;
     private int sinCTools = -0x8000;
     private int sinSmootherCTools = -0x8000;
+    private int sinFF = -0x8000;
+    private int sinSmootherFF = -0x8000;
     private int cosDigital = -0x8000;
     private int cosSmootherDigital = -0x8000;
     private int cosCTools = -0x8000;
@@ -866,16 +878,28 @@ public class MathBenchmark {
     {
         return TrigTools.sinSmoother(((sinSmootherDigital += 0x9E3779B9) >> 24));
     }
+//    @Benchmark
+//    public float measureCToolsSinF()
+//    {
+//        return CosTools.sin(((sinCTools += 0x9E3779B9) >> 24));
+//    }
+//    @Benchmark
+//    public float measureCToolsSmootherSinF()
+//    {
+//        return CosTools.sinSmoother(((sinSmootherCTools += 0x9E3779B9) >> 24));
+//    }
+@Benchmark
+public float measureFFSinF()
+{
+    return NumberTools2.sinFF(((sinFF += 0x9E3779B9) >> 24));
+}
     @Benchmark
-    public float measureCToolsSinF()
+    public float measureFFSmootherSinF()
     {
-        return CosTools.sin(((sinCTools += 0x9E3779B9) >> 24));
+        return NumberTools2.sinSmootherFF(((sinSmootherFF += 0x9E3779B9) >> 24));
     }
-    @Benchmark
-    public float measureCToolsSmootherSinF()
-    {
-        return CosTools.sinSmoother(((sinSmootherCTools += 0x9E3779B9) >> 24));
-    }
+
+
     @Benchmark
     public float measureDigitalCosF()
     {
@@ -886,16 +910,16 @@ public class MathBenchmark {
     {
         return TrigTools.cosSmoother(((cosSmootherDigital += 0x9E3779B9) >> 24));
     }
-    @Benchmark
-    public float measureCToolsCosF()
-    {
-        return CosTools.cos(((cosCTools += 0x9E3779B9) >> 24));
-    }
-    @Benchmark
-    public float measureCToolsSmootherCosF()
-    {
-        return CosTools.cosSmoother(((cosSmootherCTools += 0x9E3779B9) >> 24));
-    }
+//    @Benchmark
+//    public float measureCToolsCosF()
+//    {
+//        return CosTools.cos(((cosCTools += 0x9E3779B9) >> 24));
+//    }
+//    @Benchmark
+//    public float measureCToolsSmootherCosF()
+//    {
+//        return CosTools.cosSmoother(((cosSmootherCTools += 0x9E3779B9) >> 24));
+//    }
 //    @Benchmark
     public float measureSplitSinF()
     {
