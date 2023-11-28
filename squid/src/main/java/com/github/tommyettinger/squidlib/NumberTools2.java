@@ -816,6 +816,29 @@ public final class NumberTools2 {
         final int idx = (int)(radians * radToIndex + 0.5f);
         return SIN_TABLE[(idx + (idx >> 31)) & TABLE_MASK];
     }
+    public static float sinFF(float radians) {
+        return SIN_TABLE[(int) (radians * radToIndexD + 16384.5) - 16384 & TABLE_MASK];
+    }
+    public static double sinFFD(double radians) {
+        return SIN_TABLE_D[(int) (radians * radToIndexD + 16384.5) - 16384 & TABLE_MASK];
+    }
+    public static float sinSmootherFF(float radians)
+    {
+        radians *= radToIndex;
+        final int floor = (int) (radians + 16384.0) - 16384;
+        final int masked = floor & TABLE_MASK;
+        final float from = SIN_TABLE[masked], to = SIN_TABLE[masked+1];
+        return from + (to - from) * (radians - floor);
+    }
+    public static double sinSmootherFF(double radians)
+    {
+        radians *= radToIndexD;
+        final int floor = (int) (radians + 16384.0) - 16384;
+        final int masked = floor & TABLE_MASK;
+        final float from = SIN_TABLE[masked], to = SIN_TABLE[masked+1];
+        return from + (to - from) * (radians - floor);
+    }
+
     public static final float radToIndexBonus = (TABLE_SIZE << 1) / PI2;
     public static final int TABLE_MASK_BONUS = (TABLE_SIZE << 1) - 1;
     public static float sinBonus(float radians) {
