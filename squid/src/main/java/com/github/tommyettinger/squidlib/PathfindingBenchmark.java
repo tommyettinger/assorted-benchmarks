@@ -547,17 +547,17 @@ Nate sweetened at 129572932000
          */
         @Setup(Level.Trial)
         public void setup() {
-            long startTime = System.nanoTime();
-            System.out.println("Starting at " + TimeUtils.timeSinceNanos(startTime));
+            long previousTime = System.nanoTime();
+            System.out.printf("Starting took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             map = dungeonGen.generate();
 //            System.out.println();
 //            DungeonUtility.debugPrint(map);
 //            System.out.println();
-            System.out.println("Generated map at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("Generated map took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 //            ArrayTools.reverse(map);
             Coord.expandPoolTo(WIDTH, HEIGHT);
             com.github.yellowstonegames.grid.Coord.expandPoolTo(WIDTH, HEIGHT);
-            System.out.println("Coord pools filled at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("Coord pools filled took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 //            for (int x = 0; x < WIDTH; x++) {
 //                for (int y = 0; y < HEIGHT; y++) {
 //                    gridPool[x][y] = new GridPoint2(x, y);
@@ -574,7 +574,7 @@ Nate sweetened at 129572932000
 
             squadFloors = new Region(map, '.');
             squadFloorArray = squadFloors.asCoords();
-            System.out.println("Region stuff done at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("Region stuff done took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 
             lowest = floors.first();
             highest = floors.last();
@@ -582,8 +582,8 @@ Nate sweetened at 129572932000
             squadHighest = com.github.yellowstonegames.grid.Coord.get(highest.x, highest.y);
             lowestGP = new GridPoint2(lowest.x, lowest.y);
             highestGP = new GridPoint2(highest.x, highest.y);
-            System.out.println("Floors: " + floorCount);
-            System.out.println("Percentage walkable: " + floorCount * 100.0 / (WIDTH * HEIGHT) + "%");
+            System.out.println("[INFO] Floors: " + floorCount);
+            System.out.println("[INFO] Percentage walkable: " + floorCount * 100.0 / (WIDTH * HEIGHT) + "%");
             astarMap = DungeonUtility.generateAStarCostMap(map, Collections.<Character, Double>emptyMap(), 1);
             squadAstarMap = new float[WIDTH][HEIGHT];
             for (int x = 0; x < WIDTH; x++) {
@@ -591,7 +591,7 @@ Nate sweetened at 129572932000
                     squadAstarMap[x][y] = (float) astarMap[x][y];
                 }
             }
-            System.out.println("AStar done at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("AStar done took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             as = new AStarSearch(astarMap, AStarSearch.SearchType.CHEBYSHEV);
             nearbyMap = new Coord[WIDTH][HEIGHT];
             gpNearbyMap = new GridPoint2[WIDTH][HEIGHT];
@@ -614,7 +614,7 @@ Nate sweetened at 129572932000
                     customNearbyMap[adj.composite(i, j, 0, 0)] = adj.composite(c.x, c.y, 0, 0);
                 }
             }
-            System.out.println("Tiny paths made at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("Tiny paths made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             dijkstra = new DijkstraMap(map, CHEBYSHEV, new StatefulRNG(0x1337BEEF));
             dijkstra.setBlockingRequirement(0);
             squadDijkstra = new squid.squad.DijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
@@ -624,18 +624,18 @@ Nate sweetened at 129572932000
             cDijkstra = new CDijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
             cDijkstra.setBlockingRequirement(0);
             customDijkstra = new CustomDijkstraMap(map, adj, new StatefulRNG(0x1337BEEF));
-            System.out.println("Dijkstra maps made at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("Dijkstra maps made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             gg = new GridGraphGP(floors, WIDTH, HEIGHT);
             gg2 = new GridGraphCoord(floors, WIDTH, HEIGHT);
             astar = new IndexedAStarPathFinder<>(gg, false, GridPoint2::equals);
             astar2 = new IndexedAStarPathFinder<>(gg2, false, Coord::equals);
-            System.out.println("AStar finders made at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("AStar finders made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             dgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
             dgpgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
             path = new ArrayList<>(WIDTH + HEIGHT << 1);
             squadPath = new ObjectList<>(WIDTH + HEIGHT << 1);
             simplePath = new Path<>(WIDTH + HEIGHT << 1);
-            System.out.println("Paths made at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("Paths made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             simpleDirectedGraph = new DirectedGraph<>(floors);
             simpleUndirectedGraph = new UndirectedGraph<>(floors);
             simpleHeu = (currentNode, targetNode) ->
@@ -646,20 +646,20 @@ Nate sweetened at 129572932000
             sggpUndirectedGraph = new UndirectedGraph<>(gpFloors);
             sggpHeu = (currentNode, targetNode) ->
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
-            System.out.println("Simple finders made at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("Simple finders made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 
             squidDirectedGraph = new squidpony.squidai.graph.DirectedGraph<>(floors);
             squidUndirectedGraph = new squidpony.squidai.graph.UndirectedGraph<>(floors);
             squidDefaultGraph = new squidpony.squidai.graph.DefaultGraph(map, true);
             squidCostlyGraph = new squidpony.squidai.graph.CostlyGraph(astarMap, true);
 
-            System.out.println("Squid finders made at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("Squid finders made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 
             squadDirectedGraph = new com.github.yellowstonegames.path.DirectedGraph<>(squadFloors);
             squadUndirectedGraph = new com.github.yellowstonegames.path.UndirectedGraph<>(squadFloors);
             squadDefaultGraph = new com.github.yellowstonegames.path.DefaultGraph(map, true);
             squadCostlyGraph = new com.github.yellowstonegames.path.CostlyGraph(squadAstarMap, true);
-            System.out.println("Squad finders made at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("Squad finders made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 
             Coord center;
             GridPoint2 gpCenter;
@@ -685,14 +685,14 @@ Nate sweetened at 129572932000
                     }
                 }
             }
-            System.out.println("Edges added at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("Edges added took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             nate = new NateStar(WIDTH, HEIGHT) {
                 @Override
                 protected boolean isValid(int x, int y) {
                     return floors.contains(x, y);
                 }
             };
-            System.out.println("Nate sweetened at " + TimeUtils.timeSinceNanos(startTime));
+            System.out.printf("Nate sweetened took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
         }
 
     }
