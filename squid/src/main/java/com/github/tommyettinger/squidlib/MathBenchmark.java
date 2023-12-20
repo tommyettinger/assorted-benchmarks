@@ -344,6 +344,26 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureGdxSinF              avgt   10   3.057 ± 0.038  ns/op
  * MathBenchmark.measureMathSinF             avgt   10  19.836 ± 0.140  ns/op
  * </pre>
+ * Testing a select few sine methods with Graal 17...
+ * <pre>
+ * Benchmark                                 Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDigitalSinF          avgt    5   7.412 ± 0.070  ns/op
+ * MathBenchmark.measureDigitalSmootherSinF  avgt    5   9.936 ± 0.243  ns/op
+ * MathBenchmark.measureFloatySinF           avgt    5   6.205 ± 0.116  ns/op
+ * MathBenchmark.measureGdxSinF              avgt    5   5.058 ± 0.138  ns/op
+ * MathBenchmark.measureMathSinF             avgt    5  19.896 ± 0.157  ns/op
+ * MathBenchmark.measureRoundSinF            avgt    5   6.121 ± 0.127  ns/op
+ * </pre>
+ * And now testing a select few sine methods with Graal 21 (wow, fast!)...
+ * <pre>
+ * Benchmark                                 Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDigitalSinF          avgt    5   3.887 ± 0.117  ns/op
+ * MathBenchmark.measureDigitalSmootherSinF  avgt    5   5.106 ± 0.139  ns/op
+ * MathBenchmark.measureFloatySinF           avgt    5   3.811 ± 0.232  ns/op
+ * MathBenchmark.measureGdxSinF              avgt    5   3.427 ± 0.094  ns/op
+ * MathBenchmark.measureMathSinF             avgt    5  13.572 ± 0.718  ns/op
+ * MathBenchmark.measureRoundSinF            avgt    5   5.000 ± 0.210  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -408,6 +428,7 @@ public class MathBenchmark {
     private int sinCTools = -0x8000;
     private int sinSmootherCTools = -0x8000;
     private int sinFF = -0x8000;
+    private int sinFloaty = -0x8000;
     private int sinSmootherFF = -0x8000;
     private int cosDigital = -0x8000;
     private int cosSmootherDigital = -0x8000;
@@ -843,7 +864,7 @@ public class MathBenchmark {
     {
         return NumberTools2.sinHastings(((sinHastings += 0x9E3779B9) >> 24));
     }
-//    @Benchmark
+    @Benchmark
     public float measureRoundSinF()
     {
         return NumberTools2.sinRound(((sinRound += 0x9E3779B9) >> 24));
@@ -888,16 +909,21 @@ public class MathBenchmark {
 //    {
 //        return CosTools.sinSmoother(((sinSmootherCTools += 0x9E3779B9) >> 24));
 //    }
+//@Benchmark
+//public float measureFFSinF()
+//{
+//    return NumberTools2.sinFF(((sinFF += 0x9E3779B9) >> 24));
+//}
+//    @Benchmark
+//    public float measureFFSmootherSinF()
+//    {
+//        return NumberTools2.sinSmootherFF(((sinSmootherFF += 0x9E3779B9) >> 24));
+//    }
 @Benchmark
-public float measureFFSinF()
+public float measureFloatySinF()
 {
-    return NumberTools2.sinFF(((sinFF += 0x9E3779B9) >> 24));
+    return NumberTools2.sinFloaty(((sinFloaty += 0x9E3779B9) >> 24));
 }
-    @Benchmark
-    public float measureFFSmootherSinF()
-    {
-        return NumberTools2.sinSmootherFF(((sinSmootherFF += 0x9E3779B9) >> 24));
-    }
 
 
     @Benchmark

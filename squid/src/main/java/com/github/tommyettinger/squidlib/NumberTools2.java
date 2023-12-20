@@ -802,9 +802,6 @@ public final class NumberTools2 {
     public static float sinUnrounded(float radians) {
         return SIN_TABLE[(int)(radians * radToIndex) & TABLE_MASK];
     }
-    public static float sinDigital(final float radians) {
-        return SIN_TABLE[(int) (radians * radToIndex + 0.5f) & TABLE_MASK];
-    }
     public static float sinSplit(final float radians) {
         final int idx = (int) (radians * radToIndex + 0.5f);
         return SIN_TABLE[idx & TABLE_MASK];
@@ -836,6 +833,9 @@ public final class NumberTools2 {
         final int masked = floor & TABLE_MASK;
         final float from = SIN_TABLE[masked], to = SIN_TABLE[masked+1];
         return from + (to - from) * (radians - floor);
+    }
+    public static float sinFloaty(final float radians) {
+        return SIN_TABLE[(int) (radians * radToIndex + 16384.5f) & TABLE_MASK];
     }
 
     public static final float radToIndexBonus = (TABLE_SIZE << 1) / PI2;
