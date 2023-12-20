@@ -837,6 +837,13 @@ public final class NumberTools2 {
     public static float sinFloaty(final float radians) {
         return SIN_TABLE[(int) (radians * radToIndex + 16384.5f) & TABLE_MASK];
     }
+    public static float cosRound(float radians) {
+        return COS_TABLE[Math.round(radians * radToIndex) & TABLE_MASK];
+    }
+
+    public static float cosFloaty(final float radians) {
+        return COS_TABLE[(int) (radians * radToIndex + 16384.5f) & TABLE_MASK];
+    }
 
     public static final float radToIndexBonus = (TABLE_SIZE << 1) / PI2;
     public static final int TABLE_MASK_BONUS = (TABLE_SIZE << 1) - 1;

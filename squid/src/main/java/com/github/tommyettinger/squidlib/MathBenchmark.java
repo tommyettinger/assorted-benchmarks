@@ -354,7 +354,7 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathSinF             avgt    5  19.896 ± 0.157  ns/op
  * MathBenchmark.measureRoundSinF            avgt    5   6.121 ± 0.127  ns/op
  * </pre>
- * And now testing a select few sine methods with Graal 21 (wow, fast!)...
+ * And now testing a select few sine methods with Graal 20 (wow, fast!)...
  * <pre>
  * Benchmark                                 Mode  Cnt   Score   Error  Units
  * MathBenchmark.measureDigitalSinF          avgt    5   3.887 ± 0.117  ns/op
@@ -363,6 +363,26 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureGdxSinF              avgt    5   3.427 ± 0.094  ns/op
  * MathBenchmark.measureMathSinF             avgt    5  13.572 ± 0.718  ns/op
  * MathBenchmark.measureRoundSinF            avgt    5   5.000 ± 0.210  ns/op
+ * </pre>
+ * Testing a select few cosine methods with Graal 17...
+ * <pre>
+ * Benchmark                                 Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDigitalCosF          avgt    5   6.509 ± 0.167  ns/op
+ * MathBenchmark.measureDigitalSmootherCosF  avgt    5   8.578 ± 0.067  ns/op
+ * MathBenchmark.measureFloatyCosF           avgt    5   6.252 ± 0.091  ns/op
+ * MathBenchmark.measureGdxCosF              avgt    5   6.292 ± 0.788  ns/op
+ * MathBenchmark.measureMathCosF             avgt    5  20.245 ± 1.938  ns/op
+ * MathBenchmark.measureRoundCosF            avgt    5   6.160 ± 0.173  ns/o
+ * </pre>
+ * And now testing a select few cosine methods with Graal 20 (wow, fast again!)...
+ * <pre>
+ * Benchmark                                 Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDigitalCosF          avgt    5   3.843 ± 0.159  ns/op
+ * MathBenchmark.measureDigitalSmootherCosF  avgt    5   4.600 ± 0.045  ns/op
+ * MathBenchmark.measureFloatyCosF           avgt    5   3.581 ± 0.090  ns/op
+ * MathBenchmark.measureGdxCosF              avgt    5   3.616 ± 0.064  ns/op
+ * MathBenchmark.measureMathCosF             avgt    5  13.108 ± 0.347  ns/op
+ * MathBenchmark.measureRoundCosF            avgt    5   4.999 ± 0.367  ns/op
  * </pre>
  */
 
@@ -420,6 +440,7 @@ public class MathBenchmark {
     private int sinSteadman = -0x8000;
     private int sinHastings = -0x8000;
     private int sinRound = -0x8000;
+    private int cosRound = -0x8000;
     private int sinUnrounded = -0x8000;
     private int sinSign = -0x8000;
     private int sinShifty = -0x8000;
@@ -429,6 +450,7 @@ public class MathBenchmark {
     private int sinSmootherCTools = -0x8000;
     private int sinFF = -0x8000;
     private int sinFloaty = -0x8000;
+    private int cosFloaty = -0x8000;
     private int sinSmootherFF = -0x8000;
     private int cosDigital = -0x8000;
     private int cosSmootherDigital = -0x8000;
@@ -864,16 +886,6 @@ public class MathBenchmark {
     {
         return NumberTools2.sinHastings(((sinHastings += 0x9E3779B9) >> 24));
     }
-    @Benchmark
-    public float measureRoundSinF()
-    {
-        return NumberTools2.sinRound(((sinRound += 0x9E3779B9) >> 24));
-    }
-//    @Benchmark
-    public float measureUnroundedSinF()
-    {
-        return NumberTools2.sinUnrounded(((sinUnrounded += 0x9E3779B9) >> 24));
-    }
 //    @Benchmark
     public float measureSignSinF()
     {
@@ -919,12 +931,34 @@ public class MathBenchmark {
 //    {
 //        return NumberTools2.sinSmootherFF(((sinSmootherFF += 0x9E3779B9) >> 24));
 //    }
-@Benchmark
-public float measureFloatySinF()
-{
-    return NumberTools2.sinFloaty(((sinFloaty += 0x9E3779B9) >> 24));
-}
 
+    @Benchmark
+    public float measureRoundSinF()
+    {
+        return NumberTools2.sinRound(((sinRound += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureFloatySinF() {
+        return NumberTools2.sinFloaty(((sinFloaty += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureRoundCosF()
+    {
+        return NumberTools2.cosRound(((cosRound += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureFloatyCosF() {
+        return NumberTools2.cosFloaty(((cosFloaty += 0x9E3779B9) >> 24));
+    }
+
+    //    @Benchmark
+    public float measureUnroundedSinF()
+    {
+        return NumberTools2.sinUnrounded(((sinUnrounded += 0x9E3779B9) >> 24));
+    }
 
     @Benchmark
     public float measureDigitalCosF()
