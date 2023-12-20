@@ -40,6 +40,7 @@ import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.github.tommyettinger.ds.ObjectDeque;
 import com.github.tommyettinger.ds.ObjectList;
 import com.github.yellowstonegames.grid.Region;
 import org.openjdk.jmh.annotations.*;
@@ -478,7 +479,8 @@ public class PathfindingBenchmark {
         public ArrayList<Coord> path;
         public Path<Coord> simplePath;
         public Path<GridPoint2> sggpPath;
-        public ObjectList<com.github.yellowstonegames.grid.Coord> squadPath;
+        public ObjectDeque<com.github.yellowstonegames.grid.Coord> squadPath;
+        public ObjectList<com.github.yellowstonegames.grid.Coord> squadList;
 
         public DirectedGraph<Coord> simpleDirectedGraph;
         public UndirectedGraph<Coord> simpleUndirectedGraph;
@@ -633,7 +635,8 @@ Nate sweetened at 129572932000
             dgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
             dgpgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
             path = new ArrayList<>(WIDTH + HEIGHT << 1);
-            squadPath = new ObjectList<>(WIDTH + HEIGHT << 1);
+            squadPath = new ObjectDeque<>(WIDTH + HEIGHT << 1);
+            squadList = new ObjectList<>(WIDTH + HEIGHT << 1);
             simplePath = new Path<>(WIDTH + HEIGHT << 1);
             System.out.printf("Paths made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             simpleDirectedGraph = new DirectedGraph<>(floors);
@@ -819,7 +822,7 @@ Nate sweetened at 129572932000
                 r = state.srng.getRandomElement(state.squadFloorArray);
                 tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
                 state.path.clear();
-                dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgts);
+                dijkstra.findPath(state.squadList, PATH_LENGTH, -1, null, null, r, tgts);
                 dijkstra.clearGoals();
                 dijkstra.resetMap();
                 scanned += state.path.size();
@@ -845,7 +848,7 @@ Nate sweetened at 129572932000
                 tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
                 //dijkstra.partialScan(r,9, null);
                 state.path.clear();
-                dijkstra.findPath(state.squadPath, 9, 9, null, null, r, tgts);
+                dijkstra.findPath(state.squadList, 9, 9, null, null, r, tgts);
                 dijkstra.clearGoals();
                 dijkstra.resetMap();
                 scanned += state.path.size();
@@ -862,7 +865,7 @@ Nate sweetened at 129572932000
         state.srng.setState(state.highest.hashCode());
         com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
         state.squadPath.clear();
-        dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgt);
+        dijkstra.findPath(state.squadList, PATH_LENGTH, -1, null, null, r, tgt);
         dijkstra.clearGoals();
         dijkstra.resetMap();
         return state.squadPath.size();
@@ -886,7 +889,7 @@ Nate sweetened at 129572932000
                 r = state.srng.getRandomElement(state.squadFloorArray);
                 tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
                 state.path.clear();
-                dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgts);
+                dijkstra.findPath(state.squadList, PATH_LENGTH, -1, null, null, r, tgts);
                 dijkstra.clearGoals();
                 dijkstra.resetMap();
                 scanned += state.path.size();
@@ -912,7 +915,7 @@ Nate sweetened at 129572932000
                 tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
                 //dijkstra.partialScan(r,9, null);
                 state.path.clear();
-                dijkstra.findPath(state.squadPath, 9, 9, null, null, r, tgts);
+                dijkstra.findPath(state.squadList, 9, 9, null, null, r, tgts);
                 dijkstra.clearGoals();
                 dijkstra.resetMap();
                 scanned += state.path.size();
@@ -929,7 +932,7 @@ Nate sweetened at 129572932000
         state.srng.setState(state.highest.hashCode());
         com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
         state.path.clear();
-        dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgt);
+        dijkstra.findPath(state.squadList, PATH_LENGTH, -1, null, null, r, tgt);
         dijkstra.clearGoals();
         dijkstra.resetMap();
         return state.path.size();
@@ -954,7 +957,7 @@ Nate sweetened at 129572932000
                 r = state.srng.getRandomElement(state.squadFloorArray);
                 tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
                 state.path.clear();
-                dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgts);
+                dijkstra.findPath(state.squadList, PATH_LENGTH, -1, null, null, r, tgts);
                 dijkstra.clearGoals();
                 dijkstra.resetMap();
                 scanned += state.path.size();
@@ -980,7 +983,7 @@ Nate sweetened at 129572932000
                 tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
                 //dijkstra.partialScan(r,9, null);
                 state.path.clear();
-                dijkstra.findPath(state.squadPath, 9, 9, null, null, r, tgts);
+                dijkstra.findPath(state.squadList, 9, 9, null, null, r, tgts);
                 dijkstra.clearGoals();
                 dijkstra.resetMap();
                 scanned += state.path.size();
@@ -997,7 +1000,7 @@ Nate sweetened at 129572932000
         state.srng.setState(state.highest.hashCode());
         com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
         state.squadPath.clear();
-        dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgt);
+        dijkstra.findPath(state.squadList, PATH_LENGTH, -1, null, null, r, tgt);
         dijkstra.clearGoals();
         dijkstra.resetMap();
         return state.squadPath.size();

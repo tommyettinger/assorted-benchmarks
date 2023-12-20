@@ -71,7 +71,7 @@ dependencies {
     // transitively grabs libGDX 1.9.10:
     //implementation 'com.github.tommyettinger:merry-ds:dc9e1bceb6'
 
-    implementation 'com.badlogicgames.gdx:gdx:1.12.0'
+    implementation 'com.badlogicgames.gdx:gdx:1.12.1'
 
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:913cd5921a' // Oct 4 2020
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.2'

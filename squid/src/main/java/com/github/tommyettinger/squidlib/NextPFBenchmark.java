@@ -33,10 +33,6 @@ package com.github.tommyettinger.squidlib;
 
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.utils.TimeUtils;
-import graph.earlygrey.simplegraphs.NextDirectedGraph;
-import graph.earlygrey.simplegraphs.NextPath;
-import graph.earlygrey.simplegraphs.NextUndirectedGraph;
-import graph.earlygrey.simplegraphs.utils.NextHeuristic;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
@@ -76,12 +72,28 @@ import java.util.concurrent.TimeUnit;
  * NextPFBenchmark.doTinyPathNextSimpleGPUD  avgt    5   33.338 ±  0.431  ms/op
  * NextPFBenchmark.doTinyPathSimpleGPD       avgt    5   33.848 ±  0.337  ms/op
  * NextPFBenchmark.doTinyPathSimpleGPUD      avgt    5   33.603 ±  0.694  ms/op
+ * <br>
+ * NextSimple commit: 5a1df43b66 ran at (2023-12-19T19:46:58.758513300)
+ * <br>
+ * Benchmark                                 Mode  Cnt    Score     Error  Units
+ * NextPFBenchmark.doOneNextSimpleGPD        avgt    3    0.246 ±   0.007  ms/op
+ * NextPFBenchmark.doOneNextSimpleGPUD       avgt    3    0.265 ±   0.010  ms/op
+ * NextPFBenchmark.doOneSimpleGPD            avgt    3    0.261 ±   0.016  ms/op
+ * NextPFBenchmark.doOneSimpleGPUD           avgt    3    0.257 ±   0.011  ms/op
+ * NextPFBenchmark.doPathNextSimpleGPD       avgt    3  558.628 ±  10.157  ms/op
+ * NextPFBenchmark.doPathNextSimpleGPUD      avgt    3  568.411 ±  47.685  ms/op
+ * NextPFBenchmark.doPathSimpleGPD           avgt    3  594.630 ± 355.578  ms/op
+ * NextPFBenchmark.doPathSimpleGPUD          avgt    3  587.656 ±  86.492  ms/op
+ * NextPFBenchmark.doTinyPathNextSimpleGPD   avgt    3   34.219 ±   0.799  ms/op
+ * NextPFBenchmark.doTinyPathNextSimpleGPUD  avgt    3   34.162 ±   3.432  ms/op
+ * NextPFBenchmark.doTinyPathSimpleGPD       avgt    3   34.482 ±   3.290  ms/op
+ * NextPFBenchmark.doTinyPathSimpleGPUD      avgt    3   34.291 ±   3.864  ms/op
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Fork(1)
-@Warmup(iterations = 4)
-@Measurement(iterations = 3)
+@Warmup(iterations = 4, time = 5)
+@Measurement(iterations = 3, time = 5)
 public class NextPFBenchmark {
     private static final GridPoint2 start = new GridPoint2(), end = new GridPoint2();
 
@@ -107,10 +119,10 @@ public class NextPFBenchmark {
         public UndirectedGraph<GridPoint2> sggpUndirectedGraph;
         public space.earlygrey.simplegraphs.utils.Heuristic<GridPoint2> sggpHeu;
 
-        public NextPath<GridPoint2> nsgPath;
-        public NextDirectedGraph<GridPoint2> nsgDirectedGraph;
-        public NextUndirectedGraph<GridPoint2> nsgUndirectedGraph;
-        public NextHeuristic<GridPoint2> nsgHeu;
+        public graph.sg.Path<GridPoint2> nsgPath;
+        public graph.sg.DirectedGraph<GridPoint2> nsgDirectedGraph;
+        public graph.sg.UndirectedGraph<GridPoint2> nsgUndirectedGraph;
+        public graph.sg.Heuristic<GridPoint2> nsgHeu;
 
         public Coord rejectionSample(int x, int y) {
             Coord c;
@@ -212,9 +224,9 @@ Nate sweetened at 129572932000
             sggpUndirectedGraph = new UndirectedGraph<>(gpFloors);
             sggpHeu = (currentNode, targetNode) ->
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
-            nsgPath = new NextPath<>(WIDTH + HEIGHT << 1);
-            nsgDirectedGraph = new NextDirectedGraph<>(gpFloors);
-            nsgUndirectedGraph = new NextUndirectedGraph<>(gpFloors);
+            nsgPath = new graph.sg.Path<>(WIDTH + HEIGHT << 1);
+            nsgDirectedGraph = new graph.sg.DirectedGraph<>(gpFloors);
+            nsgUndirectedGraph = new graph.sg.UndirectedGraph<>(gpFloors);
             nsgHeu = (currentNode, targetNode) ->
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
             System.out.println("Simple finders made at " + TimeUtils.timeSinceNanos(startTime));
