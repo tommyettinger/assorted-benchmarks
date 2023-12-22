@@ -440,6 +440,20 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureSmoothly2CosDbl        avgt    5  9.482 ± 0.203  ns/op
  * MathBenchmark.measureSmoothly2SinDbl        avgt    5  9.400 ± 0.329  ns/op
  * </pre>
+ * Comparing variations on sin/cos "Smoothly" for doubles and floats, Graal 20:
+ * <pre>
+ * Benchmark                                   Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalSmootherCosDbl  avgt    5  4.771 ± 0.224  ns/op
+ * MathBenchmark.measureDigitalSmootherCosF    avgt    5  4.700 ± 0.106  ns/op
+ * MathBenchmark.measureDigitalSmootherSinDbl  avgt    5  5.121 ± 0.095  ns/op
+ * MathBenchmark.measureDigitalSmootherSinF    avgt    5  5.145 ± 0.180  ns/op
+ * MathBenchmark.measureSmoothly1CosDbl        avgt    5  5.086 ± 0.097  ns/op
+ * MathBenchmark.measureSmoothly1SinDbl        avgt    5  5.063 ± 0.124  ns/op
+ * MathBenchmark.measureSmoothly2CosDbl        avgt    5  4.880 ± 0.196  ns/op
+ * MathBenchmark.measureSmoothly2SinDbl        avgt    5  4.886 ± 0.079  ns/op
+ * MathBenchmark.measureSmoothlyCosF           avgt    5  5.042 ± 0.149  ns/op
+ * MathBenchmark.measureSmoothlySinF           avgt    5  5.010 ± 0.057  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -1085,6 +1099,10 @@ public class MathBenchmark {
         return TrigTools.sinSmoother((double) ((sinSmootherDigitalDbl += 0x9E3779B9) >> 24));
     }
     @Benchmark
+    public double measureSmoothly1SinDbl() {
+        return NumberTools2.sinSmoothly1( ((sinSmoothlyDbl += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
     public double measureSmoothly2SinDbl() {
         return NumberTools2.sinSmoothly2( ((sinSmoothly2Dbl += 0x9E3779B9) >> 24));
     }
@@ -1098,6 +1116,10 @@ public class MathBenchmark {
     public double measureDigitalSmootherCosDbl()
     {
         return TrigTools.cosSmoother((double) ((cosSmootherDigitalDbl += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public double measureSmoothly1CosDbl() {
+        return NumberTools2.cosSmoothly1( ((cosSmoothlyDbl += 0x9E3779B9) >> 24));
     }
     @Benchmark
     public double measureSmoothly2CosDbl() {

@@ -861,6 +861,22 @@ public final class NumberTools2 {
         return from + (to - from) * (radians - floor);
     }
 
+    public static double sinSmoothly1(double radians) {
+        radians *= radToIndexD;
+        final int floor = (int)(radians + 16384.0) - 16384;
+        final int masked = floor & TABLE_MASK;
+        final double from = SIN_TABLE_D[masked], to = SIN_TABLE_D[masked+1];
+        return from + (to - from) * (radians - floor);
+    }
+
+    public static double cosSmoothly1(double radians) {
+        radians *= radToIndexD;
+        final int floor = (int)(radians + 16384.0) - 16384;
+        final int masked = floor & TABLE_MASK;
+        final double from = COS_TABLE_D[masked], to = COS_TABLE_D[masked+1];
+        return from + (to - from) * (radians - floor);
+    }
+
     public static double sinSmoothly2(double radians) {
         radians = radians * radToIndexD + 16384.0;
         final int floor = (int)(radians);
