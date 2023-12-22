@@ -410,6 +410,36 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureSmoothlyCosF         avgt    5  4.507 ± 0.069  ns/op
  * MathBenchmark.measureSmoothlySinF         avgt    5  4.501 ± 0.087  ns/op
  * </pre>
+ * Double variant, Graal 20:
+ * <pre>
+ * Benchmark                                   Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalCosDbl          avgt    5  3.708 ± 0.116  ns/op
+ * MathBenchmark.measureDigitalSinDbl          avgt    5  3.631 ± 0.064  ns/op
+ * MathBenchmark.measureDigitalSmootherCosDbl  avgt    5  4.683 ± 0.173  ns/op
+ * MathBenchmark.measureDigitalSmootherSinDbl  avgt    5  5.075 ± 0.032  ns/op
+ * MathBenchmark.measureSmoothly2CosDbl        avgt    5  4.843 ± 0.083  ns/op
+ * MathBenchmark.measureSmoothly2SinDbl        avgt    5  4.870 ± 0.200  ns/op
+ * </pre>
+ * Double variant, Graal 17:
+ * <pre>
+ * Benchmark                                   Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDigitalCosDbl          avgt    5   6.227 ± 0.065  ns/op
+ * MathBenchmark.measureDigitalSinDbl          avgt    5   6.209 ± 0.067  ns/op
+ * MathBenchmark.measureDigitalSmootherCosDbl  avgt    5   8.655 ± 0.195  ns/op
+ * MathBenchmark.measureDigitalSmootherSinDbl  avgt    5  10.023 ± 0.178  ns/op
+ * MathBenchmark.measureSmoothly2CosDbl        avgt    5   9.411 ± 0.211  ns/op
+ * MathBenchmark.measureSmoothly2SinDbl        avgt    5   9.387 ± 0.149  ns/op
+ * </pre>
+ * Double variant, HotSpot 17:
+ * <pre>
+ * Benchmark                                   Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalCosDbl          avgt    5  6.165 ± 0.044  ns/op
+ * MathBenchmark.measureDigitalSinDbl          avgt    5  6.109 ± 0.054  ns/op
+ * MathBenchmark.measureDigitalSmootherCosDbl  avgt    5  8.590 ± 0.195  ns/op
+ * MathBenchmark.measureDigitalSmootherSinDbl  avgt    5  9.695 ± 0.049  ns/op
+ * MathBenchmark.measureSmoothly2CosDbl        avgt    5  9.482 ± 0.203  ns/op
+ * MathBenchmark.measureSmoothly2SinDbl        avgt    5  9.400 ± 0.329  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -482,6 +512,14 @@ public class MathBenchmark {
     private int sinSmootherFF = -0x8000;
     private int cosDigital = -0x8000;
     private int cosSmootherDigital = -0x8000;
+    private int sinDigitalDbl = -0x8000;
+    private int sinSmootherDigitalDbl = -0x8000;
+    private int cosDigitalDbl = -0x8000;
+    private int cosSmootherDigitalDbl = -0x8000;
+    private int sinSmoothlyDbl = -0x8000;
+    private int cosSmoothlyDbl = -0x8000;
+    private int sinSmoothly2Dbl = -0x8000;
+    private int cosSmoothly2Dbl = -0x8000;
     private int cosCTools = -0x8000;
     private int cosSmootherCTools = -0x8000;
     private int sinSplit = -0x8000;
@@ -1036,6 +1074,37 @@ public class MathBenchmark {
         return NumberTools2.sinLerp(((sinLerp += 0x9E3779B9) >> 24));
     }
 
+    @Benchmark
+    public double measureDigitalSinDbl()
+    {
+        return TrigTools.sin((double) ((sinDigitalDbl += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public double measureDigitalSmootherSinDbl()
+    {
+        return TrigTools.sinSmoother((double) ((sinSmootherDigitalDbl += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public double measureSmoothly2SinDbl() {
+        return NumberTools2.sinSmoothly2( ((sinSmoothly2Dbl += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public double measureDigitalCosDbl()
+    {
+        return TrigTools.cos((double) ((cosDigitalDbl += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public double measureDigitalSmootherCosDbl()
+    {
+        return TrigTools.cosSmoother((double) ((cosSmootherDigitalDbl += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public double measureSmoothly2CosDbl() {
+        return NumberTools2.cosSmoothly2( ((cosSmoothly2Dbl += 0x9E3779B9) >> 24));
+    }
+
+    
     @Benchmark
     public double measureMathCosDeg()
     {
