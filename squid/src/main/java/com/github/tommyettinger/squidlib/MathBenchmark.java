@@ -384,6 +384,32 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathCosF             avgt    5  13.108 ± 0.347  ns/op
  * MathBenchmark.measureRoundCosF            avgt    5   4.999 ± 0.367  ns/op
  * </pre>
+ * Without changing Digital's cosSmoother() implementation, and still on Graal 20,
+ * there's on odd slowdown in testing for some reason. The new "Smoothly" methods
+ * are faster, though:
+ * <pre>
+ * Benchmark                                 Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalSmootherCosF  avgt    5  5.804 ± 0.231  ns/op
+ * MathBenchmark.measureDigitalSmootherSinF  avgt    5  6.291 ± 0.176  ns/op
+ * MathBenchmark.measureSmoothlyCosF         avgt    5  5.091 ± 0.123  ns/op
+ * MathBenchmark.measureSmoothlySinF         avgt    5  5.008 ± 0.101  ns/op
+ * </pre>
+ * Also testing the above with Graal 17, where cosSmoothly is oddly slower:
+ * <pre>
+ * Benchmark                                 Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalSmootherCosF  avgt    5  8.526 ± 0.112  ns/op
+ * MathBenchmark.measureDigitalSmootherSinF  avgt    5  9.877 ± 0.056  ns/op
+ * MathBenchmark.measureSmoothlyCosF         avgt    5  9.672 ± 0.087  ns/op
+ * MathBenchmark.measureSmoothlySinF         avgt    5  9.567 ± 0.091  ns/op
+ * </pre>
+ * And testing the above with HotSpot 17, which shows the opposite:
+ * <pre>
+ * Benchmark                                 Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalSmootherCosF  avgt    5  8.656 ± 0.023  ns/op
+ * MathBenchmark.measureDigitalSmootherSinF  avgt    5  4.543 ± 0.100  ns/op
+ * MathBenchmark.measureSmoothlyCosF         avgt    5  4.507 ± 0.069  ns/op
+ * MathBenchmark.measureSmoothlySinF         avgt    5  4.501 ± 0.087  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -451,6 +477,8 @@ public class MathBenchmark {
     private int sinFF = -0x8000;
     private int sinFloaty = -0x8000;
     private int cosFloaty = -0x8000;
+    private int sinSmoothly = -0x8000;
+    private int cosSmoothly = -0x8000;
     private int sinSmootherFF = -0x8000;
     private int cosDigital = -0x8000;
     private int cosSmootherDigital = -0x8000;
@@ -952,6 +980,16 @@ public class MathBenchmark {
     @Benchmark
     public float measureFloatyCosF() {
         return NumberTools2.cosFloaty(((cosFloaty += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureSmoothlySinF() {
+        return NumberTools2.sinSmoothly(((sinSmoothly += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureSmoothlyCosF() {
+        return NumberTools2.cosSmoothly(((cosSmoothly += 0x9E3779B9) >> 24));
     }
 
     //    @Benchmark

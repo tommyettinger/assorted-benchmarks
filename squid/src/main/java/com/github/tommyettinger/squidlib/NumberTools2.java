@@ -845,6 +845,39 @@ public final class NumberTools2 {
         return COS_TABLE[(int) (radians * radToIndex + 16384.5f) & TABLE_MASK];
     }
 
+    public static float sinSmoothly(float radians) {
+        radians *= radToIndex;
+        final int floor = (int)(radians + 16384f) - 16384;
+        final int masked = floor & TABLE_MASK;
+        final float from = SIN_TABLE[masked], to = SIN_TABLE[masked+1];
+        return from + (to - from) * (radians - floor);
+    }
+
+    public static float cosSmoothly(float radians) {
+        radians *= radToIndex;
+        final int floor = (int)(radians + 16384f) - 16384;
+        final int masked = floor & TABLE_MASK;
+        final float from = COS_TABLE[masked], to = COS_TABLE[masked+1];
+        return from + (to - from) * (radians - floor);
+    }
+
+    public static double sinSmoothly(double radians) {
+        radians = radians * radToIndexD + 16384;
+        final int floor = (int)(radians);
+        final int masked = floor & TABLE_MASK;
+        final double from = SIN_TABLE_D[masked], to = SIN_TABLE_D[masked+1];
+        return from + (to - from) * (radians - floor);
+    }
+
+    public static double cosSmoothly(double radians) {
+        radians = radians * radToIndexD + 16384;
+        final int floor = (int)(radians);
+        final int masked = floor & TABLE_MASK;
+        final double from = COS_TABLE_D[masked], to = COS_TABLE_D[masked+1];
+        return from + (to - from) * (radians - floor);
+    }
+
+
     public static final float radToIndexBonus = (TABLE_SIZE << 1) / PI2;
     public static final int TABLE_MASK_BONUS = (TABLE_SIZE << 1) - 1;
     public static float sinBonus(float radians) {
