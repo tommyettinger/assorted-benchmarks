@@ -40,6 +40,11 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * GraalVM Java 20:
  * <br>
  *
+ * <br>
+ * HotSpot Java 20 (BellSoft), 0.4.7:
+ * <br>
+ *
+ *
  */public final class DigitalSinSmoothBench extends MicroBench {
 
 	protected long doBatch(long numIterations) throws InterruptedException {

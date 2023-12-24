@@ -29,6 +29,10 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * DigitalCosSmootherBench score: 482780736.000000 (482.8M 1999.5%)
  *                     uncertainty:   1.0%
+ * <br>
+ * HotSpot Java 20 (BellSoft), 0.4.7:
+ * <br>
+ *
  */
 public final class DigitalCosSmootherBench extends MicroBench {
 

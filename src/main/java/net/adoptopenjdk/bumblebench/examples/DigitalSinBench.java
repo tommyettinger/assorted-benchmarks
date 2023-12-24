@@ -41,6 +41,10 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * DigitalSinBench score: 627723456.000000 (627.7M 2025.8%)
  *             uncertainty:   0.3%
+ * <br>
+ * HotSpot Java 20 (BellSoft), 0.4.7:
+ * <br>
+ *
  */
 public final class DigitalSinBench extends MicroBench {
 

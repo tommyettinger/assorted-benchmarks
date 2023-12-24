@@ -128,7 +128,7 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>kryo-jdkgdxds</artifactId>
-            <version>1.4.1.0</version>
+            <version>1.4.6.0</version>
         </dependency>
         <!--        Using JitPack-->
         <dependency>
@@ -146,19 +146,19 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>digital</artifactId>
-            <version>9747484294</version>
+            <version>fbb4504818</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>juniper</artifactId>
-            <version>0.4.0</version>
+            <version>0.5.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>jdkgdxds</artifactId>
-            <version>1.4.2</version>
+            <version>1.4.6</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
