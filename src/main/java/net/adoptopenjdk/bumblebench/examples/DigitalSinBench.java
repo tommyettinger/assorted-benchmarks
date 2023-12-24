@@ -24,27 +24,30 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  *
  * <br>
- * HotSpot Java 17 (Adoptium):
+ * HotSpot Java 17 (Adoptium), 0.4.7:
  * <br>
- *
- * <br>
- * GraalVM Java 17:
- * <br>
- *
- * <br>
- * HotSpot Java 20 (BellSoft), work in progress:
- * <br>
- * DigitalSinBench score: 638993344.000000 (639.0M 2027.5%)
- *             uncertainty:   3.2%
+ * DigitalSinBench score: 722898112.000000 (722.9M 2039.9%)
+ *             uncertainty:   0.8%
  * <br>
  * HotSpot Java 20 (BellSoft), 0.4.2:
  * <br>
  * DigitalSinBench score: 627723456.000000 (627.7M 2025.8%)
  *             uncertainty:   0.3%
  * <br>
- * HotSpot Java 20 (BellSoft), 0.4.7:
+ * HotSpot Java 21 (BellSoft), 0.4.7:
  * <br>
- *
+ * DigitalSinBench score: 734074624.000000 (734.1M 2041.4%)
+ *             uncertainty:   2.0%
+ * <br>
+ * GraalVM Java 17, 0.4.7:
+ * <br>
+ * DigitalSinBench score: 718129408.000000 (718.1M 2039.2%)
+ *             uncertainty:   1.1%
+ * <br>
+ * GraalVM Java 20, 0.4.7:
+ * <br>
+ * DigitalSinBench score: 711472000.000000 (711.5M 2038.3%)
+ *             uncertainty:   0.8%
  */
 public final class DigitalSinBench extends MicroBench {
 
