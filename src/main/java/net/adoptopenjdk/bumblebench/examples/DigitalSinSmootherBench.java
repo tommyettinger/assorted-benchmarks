@@ -44,7 +44,7 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * DigitalSinSmootherBench score: 399242112.000000 (399.2M 1980.5%)
  *                     uncertainty:   1.3%
  * <br>
- * GraalVM Java 20, 0.4.7:
+ * GraalVM Java 21, 0.4.7:
  * <br>
  * DigitalSinSmootherBench score: 400032960.000000 (400.0M 1980.7%)
  *                     uncertainty:   0.8%

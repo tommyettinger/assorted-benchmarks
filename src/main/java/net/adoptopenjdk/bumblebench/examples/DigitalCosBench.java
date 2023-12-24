@@ -26,15 +26,7 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- *
- * <br>
- * GraalVM Java 17:
- * <br>
- *
- * <br>
- * HotSpot Java 20 (BellSoft), work in progress:
- * <br>
- * DigitalCosBench score: 602492864.000000 (602.5M 2021.7%)
+ * DigitalCosBench score: 724534656.000000 (724.5M 2040.1%)
  *             uncertainty:   0.5%
  * <br>
  * HotSpot Java 20 (BellSoft), 0.4.2:
@@ -42,9 +34,20 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * DigitalCosBench score: 672228928.000000 (672.2M 2032.6%)
  *             uncertainty:   0.4%
  * <br>
- * HotSpot Java 20 (BellSoft), 0.4.7:
+ * HotSpot Java 21 (BellSoft), 0.4.7:
  * <br>
- *
+ * DigitalCosBench score: 736185280.000000 (736.2M 2041.7%)
+ *             uncertainty:   5.3%
+ * <br>
+ * GraalVM Java 17, 0.4.7:
+ * <br>
+ * DigitalCosBench score: 719542400.000000 (719.5M 2039.4%)
+ *             uncertainty:   1.8%
+ * <br>
+ * GraalVM Java 21, 0.4.7:
+ * <br>
+ * DigitalCosBench score: 718207744.000000 (718.2M 2039.2%)
+ *             uncertainty:   2.8%
  */
 public final class DigitalCosBench extends MicroBench {
 
