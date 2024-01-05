@@ -506,28 +506,26 @@ public class DextraMap {
     }
 
     /**
-     * Internally, DijkstraMap uses int primitives instead of Coord objects, but the specific encoding depends on
-     * this DijkstraMap's width and height. This method converts from a Coord to an encoded int that stores the same
-     * information, but is specific to this width and height and is somewhat more efficient to work with.
+     * Internally, DijkstraMap uses int primitives instead of Coord objects. This method converts from a Coord to an
+     * encoded int that stores the same information, but is somewhat more efficient to work with.
      *
      * @param point a Coord to find an encoded int for
-     * @return an int that encodes the given Coord for this DijkstraMap's width and height
+     * @return an int that encodes the given Coord
      */
     public int encode(final Coord point) {
-        return width * point.y + point.x;
+        return point.y << 16 | (point.x & 0xFFFF);
     }
 
     /**
-     * Internally, DijkstraMap uses int primitives instead of Coord objects, but the specific encoding depends on
-     * this DijkstraMap's width and height. This method converts from an x,y point to an encoded int that stores the
-     * same information, but is specific to this width and height and is somewhat more efficient to work with.
+     * Internally, DijkstraMap uses int primitives instead of Coord objects. This method converts from an x,y point to
+     * an encoded int that stores the same information, but is somewhat more efficient to work with.
      *
      * @param x the x component of the point to find an encoded int for
      * @param y the y component of the point to find an encoded int for
-     * @return an int that encodes the given x,y point for this DijkstraMap's width and height
+     * @return an int that encodes the given x,y point
      */
     public int encode(final int x, final int y) {
-        return width * y + x;
+        return y << 16 | (x & 0xFFFF);
     }
 
     /**
@@ -539,33 +537,33 @@ public class DextraMap {
      * @return the Coord that represents the same x,y position that the given encoded int stores
      */
     public Coord decode(final int encoded) {
-        return Coord.get(encoded % width, encoded / width);
+        return Coord.get(encoded & 0xFFFF, encoded >>> 16);
     }
 
     /**
      * If you for some reason have one of the internally-used ints produced by {@link #encode(Coord)}, this will decode
      * the x component of the point encoded in that int. This is an extremely simple method that is equivalent to the
-     * code {@code encoded % width}, where width is a public field in this class. You probably would use this method in
+     * code {@code encoded & 0xFFFF}. You probably would use this method in
      * conjunction with {@link #decodeY(int)}, or would instead use {@link #decode(int)} to get a Coord.
      *
-     * @param encoded an encoded int specific to this DijkstraMap's height and width; see {@link #encode(Coord)}
+     * @param encoded an encoded int; see {@link #encode(Coord)}
      * @return the x component of the position that the given encoded int stores
      */
     public int decodeX(final int encoded) {
-        return encoded % width;
+        return encoded & 0xFFFF;
     }
 
     /**
      * If you for some reason have one of the internally-used ints produced by {@link #encode(Coord)}, this will decode
      * the y component of the point encoded in that int. This is an extremely simple method that is equivalent to the
-     * code {@code encoded / width}, where width is a public field in this class. You probably would use this method in
+     * code {@code encoded >>> 16}. You probably would use this method in
      * conjunction with {@link #decodeX(int)}, or would instead use {@link #decode(int)} to get a Coord.
      *
-     * @param encoded an encoded int specific to this DijkstraMap's height and width; see {@link #encode(Coord)}
+     * @param encoded an encoded int; see {@link #encode(Coord)}
      * @return the y component of the position that the given encoded int stores
      */
     public int decodeY(final int encoded) {
-        return encoded / width;
+        return encoded >>> 16;
     }
 
     /**
