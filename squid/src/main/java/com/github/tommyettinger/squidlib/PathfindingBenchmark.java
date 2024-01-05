@@ -466,8 +466,8 @@ public class PathfindingBenchmark {
         public DijkstraMap dijkstra;
         public CustomDijkstraMap customDijkstra;
         public squid.squad.DijkstraMap squadDijkstra;
-        public BitDijkstraMap bitDijkstra;
-        public CDijkstraMap cDijkstra;
+//        public BitDijkstraMap bitDijkstra;
+//        public CDijkstraMap cDijkstra;
         public StatefulRNG srng;
         public GridGraphGP gg;
         public GridGraphCoord gg2;
@@ -480,7 +480,6 @@ public class PathfindingBenchmark {
         public Path<Coord> simplePath;
         public Path<GridPoint2> sggpPath;
         public ObjectDeque<com.github.yellowstonegames.grid.Coord> squadPath;
-        public ObjectList<com.github.yellowstonegames.grid.Coord> squadList;
 
         public DirectedGraph<Coord> simpleDirectedGraph;
         public UndirectedGraph<Coord> simpleUndirectedGraph;
@@ -576,7 +575,7 @@ Nate sweetened at 129572932000
 
             squadFloors = new Region(map, '.');
             squadFloorArray = squadFloors.asCoords();
-            System.out.printf("Region stuff done took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
+            System.out.printf("Region stuff took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 
             lowest = floors.first();
             highest = floors.last();
@@ -586,14 +585,14 @@ Nate sweetened at 129572932000
             highestGP = new GridPoint2(highest.x, highest.y);
             System.out.println("[INFO] Floors: " + floorCount);
             System.out.println("[INFO] Percentage walkable: " + floorCount * 100.0 / (WIDTH * HEIGHT) + "%");
-            astarMap = DungeonUtility.generateAStarCostMap(map, Collections.<Character, Double>emptyMap(), 1);
+            astarMap = DungeonUtility.generateAStarCostMap(map, Collections.emptyMap(), 1);
             squadAstarMap = new float[WIDTH][HEIGHT];
             for (int x = 0; x < WIDTH; x++) {
                 for (int y = 0; y < HEIGHT; y++) {
                     squadAstarMap[x][y] = (float) astarMap[x][y];
                 }
             }
-            System.out.printf("AStar done took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
+            System.out.printf("AStar took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             as = new AStarSearch(astarMap, AStarSearch.SearchType.CHEBYSHEV);
             nearbyMap = new Coord[WIDTH][HEIGHT];
             gpNearbyMap = new GridPoint2[WIDTH][HEIGHT];
@@ -616,17 +615,17 @@ Nate sweetened at 129572932000
                     customNearbyMap[adj.composite(i, j, 0, 0)] = adj.composite(c.x, c.y, 0, 0);
                 }
             }
-            System.out.printf("Tiny paths made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
+            System.out.printf("Tiny paths took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             dijkstra = new DijkstraMap(map, CHEBYSHEV, new StatefulRNG(0x1337BEEF));
             dijkstra.setBlockingRequirement(0);
             squadDijkstra = new squid.squad.DijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
             squadDijkstra.setBlockingRequirement(0);
-            bitDijkstra = new BitDijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
-            bitDijkstra.setBlockingRequirement(0);
-            cDijkstra = new CDijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
-            cDijkstra.setBlockingRequirement(0);
+//            bitDijkstra = new BitDijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
+//            bitDijkstra.setBlockingRequirement(0);
+//            cDijkstra = new CDijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
+//            cDijkstra.setBlockingRequirement(0);
             customDijkstra = new CustomDijkstraMap(map, adj, new StatefulRNG(0x1337BEEF));
-            System.out.printf("Dijkstra maps made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
+            System.out.printf("Dijkstra maps took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             gg = new GridGraphGP(floors, WIDTH, HEIGHT);
             gg2 = new GridGraphCoord(floors, WIDTH, HEIGHT);
             astar = new IndexedAStarPathFinder<>(gg, false, GridPoint2::equals);
@@ -636,7 +635,6 @@ Nate sweetened at 129572932000
             dgpgp = new DefaultGraphPath<>(WIDTH + HEIGHT << 1);
             path = new ArrayList<>(WIDTH + HEIGHT << 1);
             squadPath = new ObjectDeque<>(WIDTH + HEIGHT << 1);
-            squadList = new ObjectList<>(WIDTH + HEIGHT << 1);
             simplePath = new Path<>(WIDTH + HEIGHT << 1);
             System.out.printf("Paths made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             simpleDirectedGraph = new DirectedGraph<>(floors);
@@ -649,20 +647,20 @@ Nate sweetened at 129572932000
             sggpUndirectedGraph = new UndirectedGraph<>(gpFloors);
             sggpHeu = (currentNode, targetNode) ->
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
-            System.out.printf("Simple finders made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
+            System.out.printf("Simple finders took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 
             squidDirectedGraph = new squidpony.squidai.graph.DirectedGraph<>(floors);
             squidUndirectedGraph = new squidpony.squidai.graph.UndirectedGraph<>(floors);
             squidDefaultGraph = new squidpony.squidai.graph.DefaultGraph(map, true);
             squidCostlyGraph = new squidpony.squidai.graph.CostlyGraph(astarMap, true);
 
-            System.out.printf("Squid finders made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
+            System.out.printf("Squid finders took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 
             squadDirectedGraph = new com.github.yellowstonegames.path.DirectedGraph<>(squadFloors);
             squadUndirectedGraph = new com.github.yellowstonegames.path.UndirectedGraph<>(squadFloors);
             squadDefaultGraph = new com.github.yellowstonegames.path.DefaultGraph(map, true);
             squadCostlyGraph = new com.github.yellowstonegames.path.CostlyGraph(squadAstarMap, true);
-            System.out.printf("Squad finders made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
+            System.out.printf("Squad finders took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 
             Coord center;
             GridPoint2 gpCenter;
@@ -688,14 +686,14 @@ Nate sweetened at 129572932000
                     }
                 }
             }
-            System.out.printf("Edges added took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
+            System.out.printf("Edges took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             nate = new NateStar(WIDTH, HEIGHT) {
                 @Override
                 protected boolean isValid(int x, int y) {
                     return floors.contains(x, y);
                 }
             };
-            System.out.printf("Nate sweetened took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
+            System.out.printf("Nate took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
         }
 
     }
@@ -822,7 +820,7 @@ Nate sweetened at 129572932000
                 r = state.srng.getRandomElement(state.squadFloorArray);
                 tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
                 state.path.clear();
-                dijkstra.findPath(state.squadList, PATH_LENGTH, -1, null, null, r, tgts);
+                dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgts);
                 dijkstra.clearGoals();
                 dijkstra.resetMap();
                 scanned += state.path.size();
@@ -848,7 +846,7 @@ Nate sweetened at 129572932000
                 tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
                 //dijkstra.partialScan(r,9, null);
                 state.path.clear();
-                dijkstra.findPath(state.squadList, 9, 9, null, null, r, tgts);
+                dijkstra.findPath(state.squadPath, 9, 9, null, null, r, tgts);
                 dijkstra.clearGoals();
                 dijkstra.resetMap();
                 scanned += state.path.size();
@@ -865,146 +863,146 @@ Nate sweetened at 129572932000
         state.srng.setState(state.highest.hashCode());
         com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
         state.squadPath.clear();
-        dijkstra.findPath(state.squadList, PATH_LENGTH, -1, null, null, r, tgt);
+        dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgt);
         dijkstra.clearGoals();
         dijkstra.resetMap();
         return state.squadPath.size();
     }
-
-    @Benchmark
-    public long doPathBitDijkstra(BenchmarkState state) {
-        com.github.yellowstonegames.grid.Coord r;
-        final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
-        long scanned = 0;
-        state.srng.setState(1234567890L);
-        final BitDijkstraMap dijkstra = state.bitDijkstra;
-        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
-                if (state.map[x][y] == '#')
-                    continue;
-                // this should ensure no blatant correlation between R and W
-                // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
-                //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
-                r = state.srng.getRandomElement(state.squadFloorArray);
-                tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
-                state.path.clear();
-                dijkstra.findPath(state.squadList, PATH_LENGTH, -1, null, null, r, tgts);
-                dijkstra.clearGoals();
-                dijkstra.resetMap();
-                scanned += state.path.size();
-            }
-        }
-        return scanned;
-    }
-
-    @Benchmark
-    public long doTinyPathBitDijkstra(BenchmarkState state) {
-        com.github.yellowstonegames.grid.Coord r;
-        final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
-        long scanned = 0;
-        final BitDijkstraMap dijkstra = state.bitDijkstra;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
-                if (state.map[x][y] == '#')
-                    continue;
-                // this should ensure no blatant correlation between R and W
-                //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
-                //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
-                r = state.squadNearbyMap[x][y];
-                tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
-                //dijkstra.partialScan(r,9, null);
-                state.path.clear();
-                dijkstra.findPath(state.squadList, 9, 9, null, null, r, tgts);
-                dijkstra.clearGoals();
-                dijkstra.resetMap();
-                scanned += state.path.size();
-            }
-        }
-        return scanned;
-    }
-
-    @Benchmark
-    public long doOneBitDijkstra(BenchmarkState state) {
-        final BitDijkstraMap dijkstra = state.bitDijkstra;
-        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
-        com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
-        state.srng.setState(state.highest.hashCode());
-        com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
-        state.path.clear();
-        dijkstra.findPath(state.squadList, PATH_LENGTH, -1, null, null, r, tgt);
-        dijkstra.clearGoals();
-        dijkstra.resetMap();
-        return state.path.size();
-    }
-
-
-    @Benchmark
-    public long doPathCDijkstra(BenchmarkState state) {
-        com.github.yellowstonegames.grid.Coord r;
-        final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
-        long scanned = 0;
-        state.srng.setState(1234567890L);
-        final CDijkstraMap dijkstra = state.cDijkstra;
-        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
-                if (state.map[x][y] == '#')
-                    continue;
-                // this should ensure no blatant correlation between R and W
-                // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
-                //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
-                r = state.srng.getRandomElement(state.squadFloorArray);
-                tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
-                state.path.clear();
-                dijkstra.findPath(state.squadList, PATH_LENGTH, -1, null, null, r, tgts);
-                dijkstra.clearGoals();
-                dijkstra.resetMap();
-                scanned += state.path.size();
-            }
-        }
-        return scanned;
-    }
-
-    @Benchmark
-    public long doTinyPathCDijkstra(BenchmarkState state) {
-        com.github.yellowstonegames.grid.Coord r;
-        final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
-        long scanned = 0;
-        final CDijkstraMap dijkstra = state.cDijkstra;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
-                if (state.map[x][y] == '#')
-                    continue;
-                // this should ensure no blatant correlation between R and W
-                //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
-                //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
-                r = state.squadNearbyMap[x][y];
-                tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
-                //dijkstra.partialScan(r,9, null);
-                state.path.clear();
-                dijkstra.findPath(state.squadList, 9, 9, null, null, r, tgts);
-                dijkstra.clearGoals();
-                dijkstra.resetMap();
-                scanned += state.path.size();
-            }
-        }
-        return scanned;
-    }
-
-    @Benchmark
-    public long doOneCDijkstra(BenchmarkState state) {
-        final CDijkstraMap dijkstra = state.cDijkstra;
-        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
-        com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
-        state.srng.setState(state.highest.hashCode());
-        com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
-        state.squadPath.clear();
-        dijkstra.findPath(state.squadList, PATH_LENGTH, -1, null, null, r, tgt);
-        dijkstra.clearGoals();
-        dijkstra.resetMap();
-        return state.squadPath.size();
-    }
+//
+//    @Benchmark
+//    public long doPathBitDijkstra(BenchmarkState state) {
+//        com.github.yellowstonegames.grid.Coord r;
+//        final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
+//        long scanned = 0;
+//        state.srng.setState(1234567890L);
+//        final BitDijkstraMap dijkstra = state.bitDijkstra;
+//        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
+//        for (int x = 1; x < state.WIDTH - 1; x++) {
+//            for (int y = 1; y < state.HEIGHT - 1; y++) {
+//                if (state.map[x][y] == '#')
+//                    continue;
+//                // this should ensure no blatant correlation between R and W
+//                // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+//                //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
+//                r = state.srng.getRandomElement(state.squadFloorArray);
+//                tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
+//                state.path.clear();
+//                dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgts);
+//                dijkstra.clearGoals();
+//                dijkstra.resetMap();
+//                scanned += state.path.size();
+//            }
+//        }
+//        return scanned;
+//    }
+//
+//    @Benchmark
+//    public long doTinyPathBitDijkstra(BenchmarkState state) {
+//        com.github.yellowstonegames.grid.Coord r;
+//        final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
+//        long scanned = 0;
+//        final BitDijkstraMap dijkstra = state.bitDijkstra;
+//        for (int x = 1; x < state.WIDTH - 1; x++) {
+//            for (int y = 1; y < state.HEIGHT - 1; y++) {
+//                if (state.map[x][y] == '#')
+//                    continue;
+//                // this should ensure no blatant correlation between R and W
+//                //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+//                //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
+//                r = state.squadNearbyMap[x][y];
+//                tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
+//                //dijkstra.partialScan(r,9, null);
+//                state.path.clear();
+//                dijkstra.findPath(state.squadPath, 9, 9, null, null, r, tgts);
+//                dijkstra.clearGoals();
+//                dijkstra.resetMap();
+//                scanned += state.path.size();
+//            }
+//        }
+//        return scanned;
+//    }
+//
+//    @Benchmark
+//    public long doOneBitDijkstra(BenchmarkState state) {
+//        final BitDijkstraMap dijkstra = state.bitDijkstra;
+//        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
+//        com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
+//        state.srng.setState(state.highest.hashCode());
+//        com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
+//        state.path.clear();
+//        dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgt);
+//        dijkstra.clearGoals();
+//        dijkstra.resetMap();
+//        return state.path.size();
+//    }
+//
+//
+//    @Benchmark
+//    public long doPathCDijkstra(BenchmarkState state) {
+//        com.github.yellowstonegames.grid.Coord r;
+//        final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
+//        long scanned = 0;
+//        state.srng.setState(1234567890L);
+//        final CDijkstraMap dijkstra = state.cDijkstra;
+//        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
+//        for (int x = 1; x < state.WIDTH - 1; x++) {
+//            for (int y = 1; y < state.HEIGHT - 1; y++) {
+//                if (state.map[x][y] == '#')
+//                    continue;
+//                // this should ensure no blatant correlation between R and W
+//                // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+//                //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
+//                r = state.srng.getRandomElement(state.squadFloorArray);
+//                tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
+//                state.path.clear();
+//                dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgts);
+//                dijkstra.clearGoals();
+//                dijkstra.resetMap();
+//                scanned += state.path.size();
+//            }
+//        }
+//        return scanned;
+//    }
+//
+//    @Benchmark
+//    public long doTinyPathCDijkstra(BenchmarkState state) {
+//        com.github.yellowstonegames.grid.Coord r;
+//        final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
+//        long scanned = 0;
+//        final CDijkstraMap dijkstra = state.cDijkstra;
+//        for (int x = 1; x < state.WIDTH - 1; x++) {
+//            for (int y = 1; y < state.HEIGHT - 1; y++) {
+//                if (state.map[x][y] == '#')
+//                    continue;
+//                // this should ensure no blatant correlation between R and W
+//                //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+//                //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
+//                r = state.squadNearbyMap[x][y];
+//                tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
+//                //dijkstra.partialScan(r,9, null);
+//                state.path.clear();
+//                dijkstra.findPath(state.squadPath, 9, 9, null, null, r, tgts);
+//                dijkstra.clearGoals();
+//                dijkstra.resetMap();
+//                scanned += state.path.size();
+//            }
+//        }
+//        return scanned;
+//    }
+//
+//    @Benchmark
+//    public long doOneCDijkstra(BenchmarkState state) {
+//        final CDijkstraMap dijkstra = state.cDijkstra;
+//        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
+//        com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
+//        state.srng.setState(state.highest.hashCode());
+//        com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
+//        state.squadPath.clear();
+//        dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgt);
+//        dijkstra.clearGoals();
+//        dijkstra.resetMap();
+//        return state.squadPath.size();
+//    }
 
     @Benchmark
     public long doPathCustomDijkstra(BenchmarkState state) {
@@ -1193,7 +1191,7 @@ Nate sweetened at 129572932000
 //        doTinyPathAStar2();
 //    }
 
-    static class GridGraphGP implements IndexedGraph<GridPoint2> {
+    public static class GridGraphGP implements IndexedGraph<GridPoint2> {
         public int[][] indices;
         public GridPoint2[][] grid;
         public int nodeCount;
@@ -1260,7 +1258,7 @@ Nate sweetened at 129572932000
     }
 
 
-    static class GridGraphCoord implements IndexedGraph<Coord> {
+    public static class GridGraphCoord implements IndexedGraph<Coord> {
         public int[][] map;
         int nodeCount;
         public Heuristic<Coord> heu = (node, endNode) ->

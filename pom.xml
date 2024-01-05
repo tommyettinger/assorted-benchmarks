@@ -80,7 +80,8 @@
         <dependency>
             <groupId>com.github.yellowstonegames.SquidSquad</groupId>
             <artifactId>SquidGrid</artifactId>
-            <version>2460adb6a0</version>
+            <version>b0c70155fa</version>
+<!--            <version>2460adb6a0</version>-->
             <scope>compile</scope>
         </dependency>
         <dependency>
