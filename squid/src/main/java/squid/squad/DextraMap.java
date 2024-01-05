@@ -17,10 +17,7 @@
 package squid.squad;
 
 import com.github.tommyettinger.digital.ArrayTools;
-import com.github.tommyettinger.ds.IntList;
-import com.github.tommyettinger.ds.ObjectDeque;
-import com.github.tommyettinger.ds.ObjectFloatOrderedMap;
-import com.github.tommyettinger.ds.ObjectList;
+import com.github.tommyettinger.ds.*;
 import com.github.tommyettinger.random.EnhancedRandom;
 import com.github.tommyettinger.random.FlowRandom;
 import com.github.yellowstonegames.grid.*;
@@ -147,8 +144,6 @@ public class DextraMap {
 
     private CoordSet friends;
 
-    private CoordSet tempSet;
-
     public boolean cutShort;
 
     /**
@@ -160,7 +155,7 @@ public class DextraMap {
      * variable and not a local one to avoid reallocating the data structure. Each item is an encoded point, as done by
      * {@link #encode(int, int)}.
      */
-    protected IntList fresh = new IntList(256);
+    protected IntDeque fresh = new IntDeque(256);
 
     /**
      * The MizuchiRandom used to decide which one of multiple equally-short paths to take; this has its state set
@@ -763,14 +758,14 @@ public class DextraMap {
         if (x < 0 || x >= width || y < 0 || y >= height || gradientMap[x][y] < counter)
             return;
         gradientMap[x][y] = counter;
-        fresh.add(encode(x, y));
+        fresh.addFirst(encode(x, y));
     }
 
     private void setFresh(final Coord pt, float counter) {
         if (!pt.isWithin(width, height) || gradientMap[pt.x][pt.y] < counter)
             return;
         gradientMap[pt.x][pt.y] = counter;
-        fresh.add(encode(pt));
+        fresh.addFirst(encode(pt));
     }
 
     /**
@@ -908,8 +903,8 @@ public class DextraMap {
         while (numAssigned > 0) {
             numAssigned = 0;
             fsz = fresh.size();
-            for (int ci = fsz - 1; ci >= 0; ci--) {
-                cen = fresh.removeAt(ci);
+            for (int ci = fsz; ci > 0; ci--) {
+                cen = fresh.removeLast();
                 cenX = decodeX(cen);
                 cenY = decodeY(cen);
                 dist = gradientMap[cenX][cenY];
@@ -1113,8 +1108,8 @@ public class DextraMap {
         while (numAssigned > 0 && iter++ < limit) {
             numAssigned = 0;
             fsz = fresh.size();
-            for (int ci = fsz - 1; ci >= 0; ci--) {
-                cen = fresh.removeAt(ci);
+            for (int ci = fsz; ci > 0; ci--) {
+                cen = fresh.removeLast();
                 cenX = decodeX(cen);
                 cenY = decodeY(cen);
                 dist = gradientMap[cenX][cenY];
@@ -1196,8 +1191,8 @@ public class DextraMap {
         while (numAssigned > 0) {
             numAssigned = 0;
             fsz = fresh.size();
-            for (int ci = fsz - 1; ci >= 0; ci--) {
-                cen = fresh.removeAt(ci);
+            for (int ci = fsz; ci > 0; ci--) {
+                cen = fresh.removeLast();
                 cenX = decodeX(cen);
                 cenY = decodeY(cen);
                 dist = gradientMap[cenX][cenY];
@@ -1221,7 +1216,6 @@ public class DextraMap {
                     if (gradientMap[adjX][adjY] <= FLOOR && cs < gradientMap[adjX][adjY]) {
                         ++mappedCount;
                         if (targets.contains(adj = Coord.get(adjX, adjY))) {
-                            fresh.clear();
                             return adj;
                         }
                         setFresh(adjX, adjY, cs);
@@ -1342,8 +1336,8 @@ public class DextraMap {
         while (numAssigned > 0) {
             numAssigned = 0;
             fsz = fresh.size();
-            for (int ci = fsz - 1; ci >= 0; ci--) {
-                cen = fresh.removeAt(ci);
+            for (int ci = fsz; ci > 0; ci--) {
+                cen = fresh.removeLast();
                 cenX = decodeX(cen);
                 cenY = decodeY(cen);
                 dist = gradientMap[cenX][cenY];
@@ -1501,8 +1495,8 @@ public class DextraMap {
         while (numAssigned > 0) {
             numAssigned = 0;
             fsz = fresh.size();
-            for (int ci = fsz - 1; ci >= 0; ci--) {
-                cen = fresh.removeAt(ci);
+            for (int ci = fsz; ci > 0; ci--) {
+                cen = fresh.removeLast();
                 cenX = decodeX(cen);
                 cenY = decodeY(cen);
                 dist = gradientClone[cenX][cenY];
@@ -1681,8 +1675,8 @@ public class DextraMap {
         while (numAssigned > 0 && iter++ < limit) {
             numAssigned = 0;
             fsz = fresh.size();
-            for (int ci = fsz - 1; ci >= 0; ci--) {
-                cen = fresh.removeAt(ci);
+            for (int ci = fsz; ci > 0; ci--) {
+                cen = fresh.removeLast();
                 cenX = decodeX(cen);
                 cenY = decodeY(cen);
                 dist = gradientClone[cenX][cenY];
