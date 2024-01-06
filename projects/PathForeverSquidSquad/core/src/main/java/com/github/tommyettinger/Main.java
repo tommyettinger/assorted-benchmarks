@@ -1,24 +1,24 @@
 package com.github.tommyettinger;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.github.tommyettinger.ds.ObjectDeque;
 import com.github.tommyettinger.random.PouchRandom;
 import com.github.yellowstonegames.grid.Coord;
 import com.github.yellowstonegames.grid.Direction;
 import com.github.yellowstonegames.grid.Region;
+import com.github.yellowstonegames.path.Algorithms;
+import com.github.yellowstonegames.path.Heuristic;
+import com.github.yellowstonegames.path.UndirectedGraph;
 import com.github.yellowstonegames.place.DungeonProcessor;
-import space.earlygrey.simplegraphs.Path;
-import space.earlygrey.simplegraphs.UndirectedGraph;
-import space.earlygrey.simplegraphs.algorithms.SearchStep;
-import space.earlygrey.simplegraphs.algorithms.UndirectedGraphAlgorithms;
 
 import java.util.Arrays;
 
 /**
- * OK. Some weird profiling results...
- * According to VisualVM, Connection.getWeight() alone takes 22.8% of the app's total time.
- * Connection.getA() and getB() each take 3.3% of the total time.
- * I'm not sure why these methods in particular take so much time, but they are called very often.
- * One of the few other high times would be the self time of AStarSearch.update(), which takes 34.6% .
+ * Even weirder!
+ * Node.resetAlgorithmAttributes takes over 27% of the total time.
+ * Almost 40% of the time is spent on BinaryHeap methods.
+ * 33% is spent on the self time of AlgorithmImplementations.aStarSearch() .
+ * Yes, that leaves barely any time left, and nothing else comes close to these.
  */
 public class Main extends ApplicationAdapter {
 
@@ -34,9 +34,8 @@ public class Main extends ApplicationAdapter {
     public int floorCount;
     public Coord[] floorArray;
 
-    public Path<Coord> simplePath;
-    public UndirectedGraph<Coord> simpleUndirectedGraph;
-    public space.earlygrey.simplegraphs.utils.Heuristic<Coord> simpleHeu;
+    public ObjectDeque<Coord> path;
+    public UndirectedGraph<Coord> undirectedGraph;
 
     @Override
     public void create() {
@@ -48,10 +47,8 @@ public class Main extends ApplicationAdapter {
         floors = new Region(map, '.');
         floorCount = floors.size();
         floorArray = floors.asCoords();
-        simplePath = new Path<>(WIDTH + HEIGHT << 1, false);
-        simpleUndirectedGraph = new UndirectedGraph<>(Arrays.asList(floorArray));
-        simpleHeu = (currentNode, targetNode) ->
-                Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
+        path = new ObjectDeque<>(WIDTH + HEIGHT << 1);
+        undirectedGraph = new UndirectedGraph<>(Arrays.asList(floorArray));
 
         Coord center;
         Direction[] outer = Direction.CLOCKWISE;
@@ -61,25 +58,25 @@ public class Main extends ApplicationAdapter {
             for (int j = 0; j < 8; j++) {
                 dir = outer[j];
                 if (floors.contains(center.x + dir.deltaX, center.y + dir.deltaY)) {
-                    if (!simpleUndirectedGraph.edgeExists(center, center.translate(dir))) {
-                        simpleUndirectedGraph.addEdge(center, center.translate(dir));
+                    if (!undirectedGraph.edgeExists(center, center.translate(dir))) {
+                        undirectedGraph.addEdge(center, center.translate(dir));
                     }
                 }
             }
         }
 
-        final UndirectedGraphAlgorithms<Coord> algo = simpleUndirectedGraph.algorithms();
+        final Algorithms<Coord> algo = undirectedGraph.algorithms();
 
         long previousTime = System.nanoTime(), startTime = previousTime;
         for (int i = 0; ; i++) {
             Coord start = random.randomElement(floorArray);
             Coord end = random.randomElement(floorArray);
-            simplePath.clear();
-            simplePath.addAll(algo.findShortestPath(start, end, simpleHeu, SearchStep::vertex));
+            path.clear();
+            algo.findShortestPath(start, end, path, Heuristic.CHEBYSHEV);
 
             double diff = (double)(-previousTime + (previousTime = System.nanoTime()));
             if((i & i - 1) == 0)
-                System.out.printf("Path #%d with length %d took %g ns; total time %g ns\n", i, simplePath.size,
+                System.out.printf("Path #%d with length %d took %g ns; total time %g ns\n", i, path.size,
                         diff, (double)(previousTime - startTime));
         }
     }
