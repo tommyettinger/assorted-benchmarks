@@ -539,7 +539,7 @@ public class PathfindingBenchmark {
         public Path<Coord> simplePath;
         public graph.sg.Path<Coord> updatePath;
         public Path<GridPoint2> sggpPath;
-        public graph.sg.Path<GridPoint2> upgpPath;
+//        public graph.sg.Path<GridPoint2> upgpPath;
         public ObjectDeque<com.github.yellowstonegames.grid.Coord> squadPath;
 
         public DirectedGraph<Coord> simpleDirectedGraph;
@@ -554,9 +554,9 @@ public class PathfindingBenchmark {
         public graph.sg.UndirectedGraph<Coord> updateUndirectedGraph;
         public graph.sg.Heuristic<Coord> updateHeu;
 
-        public graph.sg.DirectedGraph<GridPoint2> upgpDirectedGraph;
-        public graph.sg.UndirectedGraph<GridPoint2> upgpUndirectedGraph;
-        public graph.sg.Heuristic<GridPoint2> upgpHeu;
+//        public graph.sg.DirectedGraph<GridPoint2> upgpDirectedGraph;
+//        public graph.sg.UndirectedGraph<GridPoint2> upgpUndirectedGraph;
+//        public graph.sg.Heuristic<GridPoint2> upgpHeu;
 
         public squidpony.squidai.graph.DirectedGraph<Coord> squidDirectedGraph;
         public squidpony.squidai.graph.UndirectedGraph<Coord> squidUndirectedGraph;
@@ -571,11 +571,12 @@ public class PathfindingBenchmark {
         public NateStar nate;
 
         public Coord rejectionSample(int x, int y) {
-            Coord c;
+            int cx, cy;
             do {
-                c = Coord.get(srng.nextInt(17) - 8 + x, srng.nextInt(17) - 8 + y);
-            } while ((x == c.x && y == c.y) || c.x <= 0 || c.y <= 0 || c.x >= WIDTH - 1 || c.y >= HEIGHT - 1 || map[c.x][c.y] == '#');
-            return c;
+                cx = srng.nextInt(17) - 8 + x;
+                cy = srng.nextInt(17) - 8 + y;
+            } while (cx <= 0 || cy <= 0 || cx >= WIDTH - 1 || cy >= HEIGHT - 1 || (x == cx && y == cy) || map[cx][cy] == '#');
+            return Coord.get(cx, cy);
         }
 
         public Coord floodSample(int x, int y) {
@@ -619,20 +620,14 @@ Nate sweetened at 129572932000
         public void setup() {
             long previousTime = System.nanoTime();
             System.out.printf("Starting took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
+            Coord.expandPoolTo(WIDTH, HEIGHT);
+            com.github.yellowstonegames.grid.Coord.expandPoolTo(WIDTH, HEIGHT);
+            System.out.printf("Coord pools filled took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             map = dungeonGen.generate();
 //            System.out.println();
 //            DungeonUtility.debugPrint(map);
 //            System.out.println();
             System.out.printf("Generated map took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
-//            ArrayTools.reverse(map);
-            Coord.expandPoolTo(WIDTH, HEIGHT);
-            com.github.yellowstonegames.grid.Coord.expandPoolTo(WIDTH, HEIGHT);
-            System.out.printf("Coord pools filled took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
-//            for (int x = 0; x < WIDTH; x++) {
-//                for (int y = 0; y < HEIGHT; y++) {
-//                    gridPool[x][y] = new GridPoint2(x, y);
-//                }
-//            }
             floors = new GreasedRegion(map, '.');
             floorCount = floors.size();
             floorArray = floors.asCoords();
@@ -708,7 +703,7 @@ Nate sweetened at 129572932000
             squadPath = new ObjectDeque<>(WIDTH + HEIGHT << 1);
             simplePath = new Path<>(WIDTH + HEIGHT << 1);
             updatePath = new graph.sg.Path<>(WIDTH + HEIGHT << 1);
-            upgpPath = new graph.sg.Path<>(WIDTH + HEIGHT << 1);
+//            upgpPath = new graph.sg.Path<>(WIDTH + HEIGHT << 1);
             System.out.printf("Paths made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             simpleDirectedGraph = new DirectedGraph<>(floors);
             simpleUndirectedGraph = new UndirectedGraph<>(floors);
@@ -727,11 +722,11 @@ Nate sweetened at 129572932000
             updateHeu = (currentNode, targetNode) ->
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
 
-            upgpPath = new graph.sg.Path<>(WIDTH + HEIGHT << 1);
-            upgpDirectedGraph = new graph.sg.DirectedGraph<>(gpFloors);
-            upgpUndirectedGraph = new graph.sg.UndirectedGraph<>(gpFloors);
-            upgpHeu = (currentNode, targetNode) ->
-                    Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
+//            upgpPath = new graph.sg.Path<>(WIDTH + HEIGHT << 1);
+//            upgpDirectedGraph = new graph.sg.DirectedGraph<>(gpFloors);
+//            upgpUndirectedGraph = new graph.sg.UndirectedGraph<>(gpFloors);
+//            upgpHeu = (currentNode, targetNode) ->
+//                    Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
             System.out.printf("Update finders took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 
             squidDirectedGraph = new squidpony.squidai.graph.DirectedGraph<>(floors);
@@ -761,14 +756,14 @@ Nate sweetened at 129572932000
                         simpleDirectedGraph.addEdge(center, center.translate(dir));
                         sggpDirectedGraph.addEdge(gpCenter, gpMoved);
                         updateDirectedGraph.addEdge(center, center.translate(dir));
-                        upgpDirectedGraph.addEdge(gpCenter, gpMoved);
+//                        upgpDirectedGraph.addEdge(gpCenter, gpMoved);
                         squidDirectedGraph.addEdge(center, center.translate(dir));
                         squadDirectedGraph.addEdge(com.github.yellowstonegames.grid.Coord.get(center.x, center.y), com.github.yellowstonegames.grid.Coord.get(center.x + dir.deltaX, center.y + dir.deltaY));
                         if (!simpleUndirectedGraph.edgeExists(center, center.translate(dir))) {
                             simpleUndirectedGraph.addEdge(center, center.translate(dir));
                             squidUndirectedGraph.addEdge(center, center.translate(dir));
                             updateUndirectedGraph.addEdge(center, center.translate(dir));
-                            upgpUndirectedGraph.addEdge(gpCenter, gpMoved);
+//                            upgpUndirectedGraph.addEdge(gpCenter, gpMoved);
                             squadUndirectedGraph.addEdge(com.github.yellowstonegames.grid.Coord.get(center.x, center.y), com.github.yellowstonegames.grid.Coord.get(center.x + dir.deltaX, center.y + dir.deltaY));
                             sggpUndirectedGraph.addEdge(gpCenter, gpMoved);
                         }
@@ -2191,107 +2186,107 @@ Nate sweetened at 129572932000
 
     // UPDATE
     
-    @Benchmark
-    public long doPathUpdateGPD(BenchmarkState state) {
-        long scanned = 0;
-        state.srng.setState(1234567890L);
-        final graph.sg.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.upgpDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            end.x = x;
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
-                if (state.map[x][y] == '#')
-                    continue;
-                start.set(state.srng.getRandomElement(state.gpFloors));
-                state.upgpPath.clear();
-                end.y = y;
-                state.upgpPath.addAll(algo.findShortestPath(start, end, state.upgpHeu, graph.sg.algorithms.SearchStep::vertex));
-                if (state.upgpPath.size != 0)
-                    scanned += state.upgpPath.size;
-            }
-        }
-        return scanned;
-    }
-
-    @Benchmark
-    public long doTinyPathUpdateGPD(BenchmarkState state) {
-        long scanned = 0;
-        final graph.sg.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.upgpDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            end.x = x;
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
-                if (state.map[x][y] == '#')
-                    continue;
-                start.set(state.gpNearbyMap[x][y]);
-                state.upgpPath.clear();
-                end.y = y;
-                state.upgpPath.addAll(algo.findShortestPath(start, end, state.upgpHeu, graph.sg.algorithms.SearchStep::vertex));
-                if (state.upgpPath.size != 0)
-                    scanned += state.upgpPath.size;
-            }
-        }
-        return scanned;
-    }
-
-    @Benchmark
-    public long doOneUpdateGPD(BenchmarkState state) {
-        final graph.sg.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.upgpDirectedGraph.algorithms();
-        GridPoint2 start = state.highestGP;
-        GridPoint2 end = state.lowestGP;
-        state.upgpPath.clear();
-        state.upgpPath.addAll(algo.findShortestPath(start, end, state.upgpHeu, graph.sg.algorithms.SearchStep::vertex));
-        return state.upgpPath.size();
-    }
-
-    @Benchmark
-    public long doPathUpdateGPUD(BenchmarkState state) {
-        long scanned = 0;
-        state.srng.setState(1234567890L);
-        final graph.sg.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.upgpUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            end.x = x;
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
-                if (state.map[x][y] == '#')
-                    continue;
-                start.set(state.srng.getRandomElement(state.gpFloors));
-                state.upgpPath.clear();
-                end.y = y;
-                state.upgpPath.addAll(algo.findShortestPath(start, end, state.upgpHeu, graph.sg.algorithms.SearchStep::vertex));
-                if (state.upgpPath.size != 0)
-                    scanned += state.upgpPath.size;
-            }
-        }
-        return scanned;
-    }
-
-    @Benchmark
-    public long doTinyPathUpdateGPUD(BenchmarkState state) {
-        long scanned = 0;
-        final graph.sg.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.upgpUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            end.x = x;
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
-                if (state.map[x][y] == '#')
-                    continue;
-                start.set(state.gpNearbyMap[x][y]);
-                state.upgpPath.clear();
-                end.y = y;
-                state.upgpPath.addAll(algo.findShortestPath(start, end, state.upgpHeu, graph.sg.algorithms.SearchStep::vertex));
-                if (state.upgpPath.size != 0)
-                    scanned += state.upgpPath.size;
-            }
-        }
-        return scanned;
-    }
-
-    @Benchmark
-    public long doOneUpdateGPUD(BenchmarkState state) {
-        final graph.sg.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.upgpUndirectedGraph.algorithms();
-        GridPoint2 start = state.highestGP;
-        GridPoint2 end = state.lowestGP;
-        state.upgpPath.clear();
-        state.upgpPath.addAll(algo.findShortestPath(start, end, state.upgpHeu, graph.sg.algorithms.SearchStep::vertex));
-        return state.upgpPath.size();
-    }
+//    @Benchmark
+//    public long doPathUpdateGPD(BenchmarkState state) {
+//        long scanned = 0;
+//        state.srng.setState(1234567890L);
+//        final graph.sg.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.upgpDirectedGraph.algorithms();
+//        for (int x = 1; x < state.WIDTH - 1; x++) {
+//            end.x = x;
+//            for (int y = 1; y < state.HEIGHT - 1; y++) {
+//                if (state.map[x][y] == '#')
+//                    continue;
+//                start.set(state.srng.getRandomElement(state.gpFloors));
+//                state.upgpPath.clear();
+//                end.y = y;
+//                state.upgpPath.addAll(algo.findShortestPath(start, end, state.upgpHeu, graph.sg.algorithms.SearchStep::vertex));
+//                if (state.upgpPath.size != 0)
+//                    scanned += state.upgpPath.size;
+//            }
+//        }
+//        return scanned;
+//    }
+//
+//    @Benchmark
+//    public long doTinyPathUpdateGPD(BenchmarkState state) {
+//        long scanned = 0;
+//        final graph.sg.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.upgpDirectedGraph.algorithms();
+//        for (int x = 1; x < state.WIDTH - 1; x++) {
+//            end.x = x;
+//            for (int y = 1; y < state.HEIGHT - 1; y++) {
+//                if (state.map[x][y] == '#')
+//                    continue;
+//                start.set(state.gpNearbyMap[x][y]);
+//                state.upgpPath.clear();
+//                end.y = y;
+//                state.upgpPath.addAll(algo.findShortestPath(start, end, state.upgpHeu, graph.sg.algorithms.SearchStep::vertex));
+//                if (state.upgpPath.size != 0)
+//                    scanned += state.upgpPath.size;
+//            }
+//        }
+//        return scanned;
+//    }
+//
+//    @Benchmark
+//    public long doOneUpdateGPD(BenchmarkState state) {
+//        final graph.sg.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.upgpDirectedGraph.algorithms();
+//        GridPoint2 start = state.highestGP;
+//        GridPoint2 end = state.lowestGP;
+//        state.upgpPath.clear();
+//        state.upgpPath.addAll(algo.findShortestPath(start, end, state.upgpHeu, graph.sg.algorithms.SearchStep::vertex));
+//        return state.upgpPath.size();
+//    }
+//
+//    @Benchmark
+//    public long doPathUpdateGPUD(BenchmarkState state) {
+//        long scanned = 0;
+//        state.srng.setState(1234567890L);
+//        final graph.sg.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.upgpUndirectedGraph.algorithms();
+//        for (int x = 1; x < state.WIDTH - 1; x++) {
+//            end.x = x;
+//            for (int y = 1; y < state.HEIGHT - 1; y++) {
+//                if (state.map[x][y] == '#')
+//                    continue;
+//                start.set(state.srng.getRandomElement(state.gpFloors));
+//                state.upgpPath.clear();
+//                end.y = y;
+//                state.upgpPath.addAll(algo.findShortestPath(start, end, state.upgpHeu, graph.sg.algorithms.SearchStep::vertex));
+//                if (state.upgpPath.size != 0)
+//                    scanned += state.upgpPath.size;
+//            }
+//        }
+//        return scanned;
+//    }
+//
+//    @Benchmark
+//    public long doTinyPathUpdateGPUD(BenchmarkState state) {
+//        long scanned = 0;
+//        final graph.sg.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.upgpUndirectedGraph.algorithms();
+//        for (int x = 1; x < state.WIDTH - 1; x++) {
+//            end.x = x;
+//            for (int y = 1; y < state.HEIGHT - 1; y++) {
+//                if (state.map[x][y] == '#')
+//                    continue;
+//                start.set(state.gpNearbyMap[x][y]);
+//                state.upgpPath.clear();
+//                end.y = y;
+//                state.upgpPath.addAll(algo.findShortestPath(start, end, state.upgpHeu, graph.sg.algorithms.SearchStep::vertex));
+//                if (state.upgpPath.size != 0)
+//                    scanned += state.upgpPath.size;
+//            }
+//        }
+//        return scanned;
+//    }
+//
+//    @Benchmark
+//    public long doOneUpdateGPUD(BenchmarkState state) {
+//        final graph.sg.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.upgpUndirectedGraph.algorithms();
+//        GridPoint2 start = state.highestGP;
+//        GridPoint2 end = state.lowestGP;
+//        state.upgpPath.clear();
+//        state.upgpPath.addAll(algo.findShortestPath(start, end, state.upgpHeu, graph.sg.algorithms.SearchStep::vertex));
+//        return state.upgpPath.size();
+//    }
 
     @Benchmark
     public long doPathUpdateD(BenchmarkState state) {
