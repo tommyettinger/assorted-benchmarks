@@ -37,7 +37,7 @@ import java.util.List;
  * 
  * @param <V> Type of vertex; this is usually {@link Coord}
  */
-public interface Heuristic<V> {
+public interface Heuristic<V extends Coord> {
 
 	/** Calculates an estimated cost to reach the goal node from the given node.
 	 * @param node the start node

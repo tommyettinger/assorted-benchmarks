@@ -24,7 +24,7 @@ import com.github.yellowstonegames.grid.Coord;
  * @param <V> the vertex type; often {@link Coord}
  * @author earlygrey
  */
-public class Connection<V> extends Edge<V> {
+public class Connection<V extends Coord> extends Edge<V> {
     //================================================================================
     // Fields and constants
     //================================================================================
@@ -113,7 +113,7 @@ public class Connection<V> extends Edge<V> {
      * A Connection that treats A-to-B as a different edge from B-to-A.
      * @param <V> the vertex type; often {@link Coord}
      */
-    public static class DirectedConnection<V> extends Connection<V> {
+    public static class DirectedConnection<V extends Coord> extends Connection<V> {
 
         @Override
         public boolean equals(Object o) {
@@ -139,7 +139,7 @@ public class Connection<V> extends Edge<V> {
      * A Connection that treats A-to-B and B-to-A as the same edge.
      * @param <V> the vertex type; often {@link Coord}
      */
-    public static class UndirectedConnection<V> extends Connection<V> {
+    public static class UndirectedConnection<V extends Coord> extends Connection<V> {
 
         @Override
         public boolean equals(Object o) {

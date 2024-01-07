@@ -23,7 +23,7 @@ import com.github.yellowstonegames.grid.Coord;
  * @param <V> the vertex type; often {@link Coord}
  * @author earlygrey
  */
-public class UndirectedGraphAlgorithms<V> extends Algorithms<V> {
+public class UndirectedGraphAlgorithms<V extends Coord> extends Algorithms<V> {
 
     UndirectedGraphAlgorithms(UndirectedGraph<V> graph) {
         super(graph);

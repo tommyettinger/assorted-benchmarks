@@ -22,7 +22,7 @@ import com.github.yellowstonegames.grid.Coord;
  * @param <V> the vertex type; often {@link Coord}
  * @author earlygrey
  */
-public abstract class Edge<V> {
+public abstract class Edge<V extends Coord> {
     public Edge(){}
 
     public abstract V getA();
