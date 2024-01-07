@@ -16,7 +16,8 @@
 package com.github.yellowstonegames.path;
 
 import com.github.tommyettinger.digital.BitConversion;
-import com.github.tommyettinger.ds.BinaryHeap;
+//import com.github.tommyettinger.ds.BinaryHeap;
+import com.badlogic.gdx.utils.BinaryHeap;
 import com.github.tommyettinger.ds.ObjectDeque;
 import com.github.tommyettinger.ds.ObjectList;
 import com.github.tommyettinger.ds.ObjectOrderedSet;
@@ -188,52 +189,52 @@ class AlgorithmImplementations<V> {
             }
             if (!u.visited) {
                 u.visited = true;
-//                int n = u.outEdges.size();
-//                for (int i = 0; i < n; i++) {
-//                    Connection<V> e = u.outEdges.get(i);
-//                    Node<V> v = e.b;
-//                    v.resetAlgorithmAttributes(runID);
-//                    if (!v.visited) {
-//                        float newDistance = u.distance + e.weight;
-//                        if (newDistance < v.distance) {
-//                            v.distance = newDistance;
-//                            v.prev = u;
-//                            if (hasHeuristic && !v.seen) {
-//                                v.estimate = heuristic.estimate(v.object, target.object);
-//                            }
-//                            if (!v.seen) {
-//                                heap.add(v, v.distance + v.estimate);
-//                            } else {
-//                                heap.setValue(v, v.distance + v.estimate);
-//                            }
-//                            v.seen = true;
-//                        }
-//                    }
-//                }
-
-                ObjectList<Connection<V>> outEdges = u.outEdges;
-                for (Connection<V> e : outEdges) {
-                    Node<V> v = e.getNodeB();
+                int n = u.outEdges.size();
+                for (int i = 0; i < n; i++) {
+                    Connection<V> e = u.outEdges.get(i);
+                    Node<V> v = e.b;
                     v.resetAlgorithmAttributes(runID);
                     if (!v.visited) {
-                        float newDistance = u.distance + e.getWeight();
+                        float newDistance = u.distance + e.weight;
                         if (newDistance < v.distance) {
                             v.distance = newDistance;
                             v.prev = u;
-//                            v.connection = e;
-                            if (heuristic != null && !v.seen) {
-                                v.estimate = heuristic.estimate(v.getObject(), target.getObject());
+                            if (hasHeuristic && !v.seen) {
+                                v.estimate = heuristic.estimate(v.object, target.object);
                             }
                             if (!v.seen) {
                                 heap.add(v, v.distance + v.estimate);
                             } else {
                                 heap.setValue(v, v.distance + v.estimate);
                             }
-                            v.index = (u.index + 1);
                             v.seen = true;
                         }
                     }
                 }
+
+//                ObjectList<Connection<V>> outEdges = u.outEdges;
+//                for (Connection<V> e : outEdges) {
+//                    Node<V> v = e.getNodeB();
+//                    v.resetAlgorithmAttributes(runID);
+//                    if (!v.visited) {
+//                        float newDistance = u.distance + e.getWeight();
+//                        if (newDistance < v.distance) {
+//                            v.distance = newDistance;
+//                            v.prev = u;
+////                            v.connection = e;
+//                            if (heuristic != null && !v.seen) {
+//                                v.estimate = heuristic.estimate(v.getObject(), target.getObject());
+//                            }
+//                            if (!v.seen) {
+//                                heap.add(v, v.distance + v.estimate);
+//                            } else {
+//                                heap.setValue(v, v.distance + v.estimate);
+//                            }
+//                            v.index = (u.index + 1);
+//                            v.seen = true;
+//                        }
+//                    }
+//                }
             }
         }
         heap.clear();

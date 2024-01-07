@@ -14,7 +14,9 @@ import com.github.yellowstonegames.place.DungeonProcessor;
 import java.util.Arrays;
 
 /**
- *
+ * This is for experimenting with changes to SquidSquad's pathfinding code.
+ * Currently, it seems very slightly slower using libGDX's BinaryHeap instead
+ * of jdkgdxds' BinaryHeap.
  */
 public class Main extends ApplicationAdapter {
 
