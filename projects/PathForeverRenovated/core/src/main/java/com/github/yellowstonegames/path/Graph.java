@@ -28,7 +28,7 @@ import java.util.Set;
  * @param <V> the vertex type; often {@link Coord}
  * @author earlygrey
  */
-public abstract class Graph<V extends Coord> {
+public abstract class Graph<V> {
 
     //================================================================================
     // Members

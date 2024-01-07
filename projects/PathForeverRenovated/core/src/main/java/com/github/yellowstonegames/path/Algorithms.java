@@ -30,7 +30,7 @@ import com.github.yellowstonegames.grid.Coord;
  * @param <V> the vertex type; often {@link Coord}
  * @author earlygrey
  */
-public class Algorithms<V extends Coord> {
+public class Algorithms<V> {
 
     final Graph<V> graph;
     final AlgorithmImplementations<V> implementations;

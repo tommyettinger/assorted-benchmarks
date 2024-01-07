@@ -30,7 +30,7 @@ import java.util.Collection;
  * @param <V> the vertex type; often {@link Coord}
  * @author earlygrey
  */
-public class Node<V extends Coord> extends BinaryHeap.Node {
+public class Node<V> extends BinaryHeap.Node {
     //================================================================================
     // Graph structure related members
     //================================================================================

@@ -21,13 +21,12 @@ import com.badlogic.gdx.utils.BinaryHeap;
 import com.github.tommyettinger.ds.ObjectDeque;
 import com.github.tommyettinger.ds.ObjectList;
 import com.github.tommyettinger.ds.ObjectOrderedSet;
-import com.github.yellowstonegames.grid.Coord;
 
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
-class AlgorithmImplementations<V extends Coord> {
+class AlgorithmImplementations<V> {
 
     //================================================================================
     // Fields

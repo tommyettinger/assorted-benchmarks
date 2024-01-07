@@ -26,7 +26,7 @@ import java.util.Collection;
  * @param <V> the vertex type; often {@link Coord}
  * @author earlygrey
  */
-public class UndirectedGraph<V extends Coord> extends Graph<V>{
+public class UndirectedGraph<V> extends Graph<V>{
     protected UndirectedGraphAlgorithms<V> algorithms;
 
     //================================================================================

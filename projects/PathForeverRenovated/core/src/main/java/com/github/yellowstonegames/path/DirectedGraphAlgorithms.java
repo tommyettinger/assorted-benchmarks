@@ -24,7 +24,7 @@ import com.github.yellowstonegames.grid.Coord;
  * @param <V> the vertex type; often {@link Coord}
  * @author earlygrey
  */
-public class DirectedGraphAlgorithms<V extends Coord> extends Algorithms<V> {
+public class DirectedGraphAlgorithms<V> extends Algorithms<V> {
 
     DirectedGraphAlgorithms(DirectedGraph<V> graph) {
         super(graph);
