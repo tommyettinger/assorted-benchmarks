@@ -22,51 +22,33 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- *
- * <br>
- * OpenJ9 Java 15:
- * <br>
- *
- * <br>
- * HotSpot Java 16 (AdoptOpenJDK):
- * <br>
- *
+ * Rawr32RandomIntBench score: 499279872.000000 (499.3M 2002.9%)
+ *                  uncertainty:   2.4%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
- *
+ * Rawr32RandomIntBench score: 447392800.000000 (447.4M 1991.9%)
+ *                  uncertainty:   0.9%
  * <br>
  * GraalVM Java 17:
  * <br>
- *
- * <br>
- * OpenJ9 Java 17 (Semeru):
- * <br>
- *
- * <br>
- * HotSpot Java 18 (Adoptium):
- * <br>
- *
- * <br>
- * HotSpot Java 19 (BellSoft):
- * <br>
- *
+ * Rawr32RandomIntBench score: 789812672.000000 (789.8M 2048.7%)
+ *                  uncertainty:   1.0%
  * <br>
  * HotSpot Java 20 (BellSoft):
  * <br>
- *
- * <br>
- * GraalVM Java 20:
- * <br>
- *
+ * Rawr32RandomIntBench score: 450368064.000000 (450.4M 1992.6%)
+ *                  uncertainty:   0.3%
  * <br>
  * HotSpot Java 21 (BellSoft):
  * <br>
- *
+ * Rawr32RandomIntBench score: 491983136.000000 (492.0M 2001.4%)
+ *                  uncertainty:   1.6%
  * <br>
  * GraalVM Java 21:
  * <br>
- *
+ * Rawr32RandomIntBench score: 789923776.000000 (789.9M 2048.7%)
+ *                  uncertainty:   1.1%
  */
 public final class Rawr32RandomIntBench extends MicroBench {
 
@@ -78,3 +60,32 @@ public final class Rawr32RandomIntBench extends MicroBench {
 		return numIterations;
 	}
 }
+
+// TEMPLATE
+/*
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 21 (BellSoft):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 21:
+ * <br>
+ *
+ */

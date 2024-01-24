@@ -60,3 +60,32 @@ public final class Rawr32RandomLongBench extends MicroBench {
 		return numIterations;
 	}
 }
+
+// TEMPLATE
+/*
+ * Windows 10, 10th gen i7 mobile hexacore at 2.6 GHz:
+ * <br>
+ * HotSpot Java 8:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 17 (Adoptium):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 17:
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 20 (BellSoft):
+ * <br>
+ *
+ * <br>
+ * HotSpot Java 21 (BellSoft):
+ * <br>
+ *
+ * <br>
+ * GraalVM Java 21:
+ * <br>
+ *
+ */
