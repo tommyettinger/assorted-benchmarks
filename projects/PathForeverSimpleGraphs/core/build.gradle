@@ -6,6 +6,7 @@ dependencies {
   implementation "space.earlygrey:simple-graphs:$simpleGraphsVersion"
   implementation "com.github.yellowstonegames.SquidSquad:SquidGrid:$squidSquadVersion" 
   implementation "com.github.yellowstonegames.SquidSquad:SquidPlace:$squidSquadVersion"
-  implementation "com.github.yellowstonegames.SquidSquad:SquidPath:$squidSquadVersion" 
+  implementation "com.github.yellowstonegames.SquidSquad:SquidPath:$squidSquadVersion"
+  testImplementation "junit:junit:4.13.2"
 
 }

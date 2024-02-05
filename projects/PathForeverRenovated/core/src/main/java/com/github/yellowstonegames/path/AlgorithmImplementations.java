@@ -16,8 +16,8 @@
 package com.github.yellowstonegames.path;
 
 import com.github.tommyettinger.digital.BitConversion;
-//import com.github.tommyettinger.ds.BinaryHeap;
-import com.badlogic.gdx.utils.BinaryHeap;
+import com.github.tommyettinger.ds.BinaryHeap;
+//import com.badlogic.gdx.utils.BinaryHeap;
 import com.github.tommyettinger.ds.ObjectDeque;
 import com.github.tommyettinger.ds.ObjectList;
 import com.github.tommyettinger.ds.ObjectOrderedSet;
