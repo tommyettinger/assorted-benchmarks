@@ -512,7 +512,34 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doPathUpdateD        avgt    5  116.903 ±  7.765  ms/op
  * PathfindingBenchmark.doPathUpdateUD       avgt    5  123.612 ± 12.652  ms/op
  * </pre>
- *
+ * <br>
+ * That's more like it.
+ * <pre>
+ * Benchmark                                 Mode  Cnt    Score    Error  Units
+ * PathfindingBenchmark.doPathAStarSearch    avgt    5  102.008 ±  2.544  ms/op
+ * PathfindingBenchmark.doPathDijkstra       avgt    5  200.748 ± 14.854  ms/op
+ * PathfindingBenchmark.doPathGDXAStarCoord  avgt    5  152.216 ±  5.499  ms/op
+ * PathfindingBenchmark.doPathGDXAStarGP     avgt    5  148.781 ±  2.076  ms/op
+ * PathfindingBenchmark.doPathGandD          avgt    5   86.486 ±  4.249  ms/op
+ * PathfindingBenchmark.doPathGandUD         avgt    5   88.571 ±  6.369  ms/op
+ * PathfindingBenchmark.doPathNate           avgt    5  284.124 ± 11.564  ms/op
+ * PathfindingBenchmark.doPathSimpleD        avgt    5   90.866 ±  2.983  ms/op
+ * PathfindingBenchmark.doPathSimpleGPD      avgt    5   86.018 ±  1.451  ms/op
+ * PathfindingBenchmark.doPathSimpleGPUD     avgt    5   89.248 ±  6.616  ms/op
+ * PathfindingBenchmark.doPathSimpleUD       avgt    5   90.672 ±  3.649  ms/op
+ * PathfindingBenchmark.doPathSquadCG        avgt    5   84.807 ±  3.530  ms/op
+ * PathfindingBenchmark.doPathSquadD         avgt    5  111.338 ±  2.752  ms/op
+ * PathfindingBenchmark.doPathSquadDG        avgt    5   87.315 ±  3.192  ms/op
+ * PathfindingBenchmark.doPathSquadDextra    avgt    5  118.472 ±  5.174  ms/op
+ * PathfindingBenchmark.doPathSquadDijkstra  avgt    5  178.991 ± 16.849  ms/op
+ * PathfindingBenchmark.doPathSquadUD        avgt    5  103.877 ±  3.920  ms/op
+ * PathfindingBenchmark.doPathSquidCG        avgt    5   89.737 ±  4.900  ms/op
+ * PathfindingBenchmark.doPathSquidD         avgt    5  106.923 ±  2.238  ms/op
+ * PathfindingBenchmark.doPathSquidDG        avgt    5   91.189 ±  5.682  ms/op
+ * PathfindingBenchmark.doPathSquidUD        avgt    5  104.971 ±  3.627  ms/op
+ * PathfindingBenchmark.doPathUpdateD        avgt    5  111.345 ±  4.609  ms/op
+ * PathfindingBenchmark.doPathUpdateUD       avgt    5  109.997 ±  1.495  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -563,7 +590,7 @@ public class PathfindingBenchmark {
         public ArrayList<Coord> path;
         public Path<com.github.yellowstonegames.grid.Coord> simplePath;
         public graph.sg.Path<com.github.yellowstonegames.grid.Coord> updatePath;
-        public com.github.tommyettinger.gand.ds.ObjectDeque<com.github.yellowstonegames.grid.Coord> gandPath;
+        public com.github.tommyettinger.gand.Path<com.github.yellowstonegames.grid.Coord> gandPath;
         public Path<GridPoint2> sggpPath;
 //        public graph.sg.Path<GridPoint2> upgpPath;
         public ObjectDeque<com.github.yellowstonegames.grid.Coord> squadPath;
@@ -582,7 +609,7 @@ public class PathfindingBenchmark {
 
         public com.github.tommyettinger.gand.DirectedGraph<com.github.yellowstonegames.grid.Coord> gandDirectedGraph;
         public com.github.tommyettinger.gand.UndirectedGraph<com.github.yellowstonegames.grid.Coord> gandUndirectedGraph;
-        public com.github.tommyettinger.gand.Heuristic<com.github.yellowstonegames.grid.Coord> gandHeu;
+        public com.github.tommyettinger.gand.utils.Heuristic<com.github.yellowstonegames.grid.Coord> gandHeu;
 
 //        public graph.sg.DirectedGraph<GridPoint2> upgpDirectedGraph;
 //        public graph.sg.UndirectedGraph<GridPoint2> upgpUndirectedGraph;
@@ -733,7 +760,7 @@ Nate sweetened at 129572932000
             squadPath = new ObjectDeque<>(WIDTH + HEIGHT << 1);
             simplePath = new Path<>(WIDTH + HEIGHT << 1);
             updatePath = new graph.sg.Path<>(WIDTH + HEIGHT << 1);
-            gandPath = new com.github.tommyettinger.gand.ds.ObjectDeque<>(WIDTH + HEIGHT << 1);
+            gandPath = new com.github.tommyettinger.gand.Path<>(WIDTH + HEIGHT << 1);
 //            upgpPath = new graph.sg.Path<>(WIDTH + HEIGHT << 1);
             System.out.printf("Paths made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             simpleDirectedGraph = new DirectedGraph<>(squadFloors);
@@ -2422,7 +2449,7 @@ Nate sweetened at 129572932000
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
-        final com.github.tommyettinger.gand.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.gandDirectedGraph.algorithms();
+        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.gandDirectedGraph.algorithms();
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -2431,7 +2458,7 @@ Nate sweetened at 129572932000
                 // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.srng.getRandomElement(state.squadFloorArray);
                 state.gandPath.clear();
-                algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.gandPath, state.gandHeu);
+                state.gandPath.addAll(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.gandHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
                 if (state.gandPath.size != 0)
                     scanned += state.gandPath.size;
             }
@@ -2444,14 +2471,14 @@ Nate sweetened at 129572932000
     public long doTinyPathGandD(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
-        final com.github.tommyettinger.gand.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.gandDirectedGraph.algorithms();
+        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.gandDirectedGraph.algorithms();
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 r = state.squadNearbyMap[x][y];
                 state.gandPath.clear();
-                algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.gandPath, state.gandHeu);
+                state.gandPath.addAll(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.gandHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
                 if (state.gandPath.size != 0)
                     scanned += state.gandPath.size;
             }
@@ -2464,14 +2491,14 @@ Nate sweetened at 129572932000
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
-        final com.github.tommyettinger.gand.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.gandUndirectedGraph.algorithms();
+        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.gandUndirectedGraph.algorithms();
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 r = state.srng.getRandomElement(state.squadFloorArray);
                 state.gandPath.clear();
-                algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.gandPath, state.gandHeu);
+                state.gandPath.addAll(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.gandHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
                 if (state.gandPath.size != 0)
                     scanned += state.gandPath.size;
             }
@@ -2483,7 +2510,7 @@ Nate sweetened at 129572932000
     public long doTinyPathGandUD(BenchmarkState state) {
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
-        final com.github.tommyettinger.gand.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.gandUndirectedGraph.algorithms();
+        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.gandUndirectedGraph.algorithms();
         for (int x = 1; x < state.WIDTH - 1; x++) {
             for (int y = 1; y < state.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
@@ -2492,7 +2519,7 @@ Nate sweetened at 129572932000
                 //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
                 r = state.squadNearbyMap[x][y];
                 state.gandPath.clear();
-                algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.gandPath, state.gandHeu);
+                state.gandPath.addAll(algo.findShortestPath(r, com.github.yellowstonegames.grid.Coord.get(x, y), state.gandHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
                 if (state.gandPath.size != 0)
                     scanned += state.gandPath.size;
             }
