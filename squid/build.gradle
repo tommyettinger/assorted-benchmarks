@@ -86,7 +86,13 @@ dependencies {
 
 //    implementation 'com.github.tommyettinger:gand:b10403facd' // early, from Feb 5 2024
 //    implementation 'com.github.tommyettinger:gand:23a6bc8f0e' // also from Feb 5 2024, but swaps out most code for simple-graphs.
-    implementation 'com.github.tommyettinger:gand:0.0.1' // from Feb 8 2024
+//    implementation 'com.github.tommyettinger:gand:2682125' // from Feb 6 2024, just before the next line
+//    implementation 'com.github.tommyettinger:gand:83eac03' // from Feb 6 2024
+//    implementation 'com.github.tommyettinger:gand:0.0.1' // from Feb 8 2024
+//    implementation 'com.github.tommyettinger:gand:4aaff4c1c6' // from Feb 9 2024
+//    implementation 'com.github.tommyettinger:gand:d329449ced' // from Feb 9 2024' the variant that uses long hash
+//    implementation 'com.github.tommyettinger:gand:866a294dff' // from Feb 9 2024; the variant that uses unmodified hash
+    implementation 'com.github.tommyettinger:gand:11b831cf92' // from Feb 9 2024; uses unmodified hash and ObjectOrderedSet
 
 
     implementation 'com.github.tommyettinger:atlantis:5574642135'
