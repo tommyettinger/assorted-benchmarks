@@ -77,12 +77,16 @@ dependencies {
 
     implementation "com.github.tommyettinger:blazingchain:1.4.4.4"
 //    implementation 'com.github.tommyettinger:BlazingChain:dfddeb3dda'
+
     implementation 'com.github.earlygrey:simple-graphs:5.1.1'
 //    implementation('com.github.tommyettinger:simple-graphs:5a1df43b66'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
+
 //    implementation 'com.badlogicgames.gdx:gdx-ai:1.8.2'
     implementation 'com.github.libgdx:gdx-ai:5c14a88fe3' // after 1.8.2, unreleased as of March 18 2023
+
 //    implementation 'com.github.tommyettinger:gand:b10403facd' // early, from Feb 5 2024
-    implementation 'com.github.tommyettinger:gand:23a6bc8f0e' // also from Feb 5 2024, but swaps out most code for simple-graphs.
+//    implementation 'com.github.tommyettinger:gand:23a6bc8f0e' // also from Feb 5 2024, but swaps out most code for simple-graphs.
+    implementation 'com.github.tommyettinger:gand:0.0.1' // from Feb 8 2024
 
 
     implementation 'com.github.tommyettinger:atlantis:5574642135'
