@@ -1,0 +1,272 @@
+[
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_BenchmarkState_jmhType_B2",
+  "fields":[{"name":"setupInvocationMutex"}, {"name":"setupIterationMutex"}, {"name":"setupTrialMutex"}, {"name":"tearInvocationMutex"}, {"name":"tearIterationMutex"}, {"name":"tearTrialMutex"}]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathGandD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathGandD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathGandGPD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathGandGPD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathGandGPUD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathGandGPUD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathGandUD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathGandUD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathGandVD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathGandVD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathGandVUD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathGandVUD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathSimpleD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathSimpleD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathSimpleGPD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathSimpleGPD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathSimpleGPUD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathSimpleGPUD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathSimpleUD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathSimpleUD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathSimpleVD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathSimpleVD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathSimpleVUD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathSimpleVUD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathSquadD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathSquadD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathSquadUD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathSquadUD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathSquidD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathSquidD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathSquidUD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathSquidUD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathUpdateD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathUpdateD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_doPathUpdateUD_jmhTest",
+  "queryAllDeclaredMethods":true,
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"doPathUpdateUD_AverageTime","parameterTypes":["org.openjdk.jmh.runner.InfraControl","org.openjdk.jmh.infra.ThreadParams"] }]
+},
+{
+  "name":"com.github.tommyettinger.squidlib.jmh_generated.PathfindingBenchmark_jmhType_B2",
+  "fields":[{"name":"setupInvocationMutex"}, {"name":"setupIterationMutex"}, {"name":"setupTrialMutex"}, {"name":"tearInvocationMutex"}, {"name":"tearIterationMutex"}, {"name":"tearTrialMutex"}]
+},
+{
+  "name":"java.io.Console",
+  "methods":[{"name":"charset","parameterTypes":[] }]
+},
+{
+  "name":"java.lang.Boolean",
+  "methods":[{"name":"valueOf","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"java.lang.Integer",
+  "methods":[{"name":"valueOf","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"java.lang.Object",
+  "queryAllDeclaredMethods":true
+},
+{
+  "name":"java.lang.String",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String"] }, {"name":"valueOf","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"org.openjdk.jmh.infra.BenchmarkParams",
+  "fields":[{"name":"benchmark"}, {"name":"forks"}, {"name":"generatedTarget"}, {"name":"jvm"}, {"name":"jvmArgs"}, {"name":"markerBegin"}, {"name":"markerEnd"}, {"name":"measurement"}, {"name":"mode"}, {"name":"opsPerInvocation"}, {"name":"params"}, {"name":"synchIterations"}, {"name":"threadGroups"}, {"name":"threads"}, {"name":"timeUnit"}, {"name":"warmup"}, {"name":"warmupForks"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.BenchmarkParamsL0",
+  "fields":[{"name":"markerBegin"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.BenchmarkParamsL1",
+  "fields":[{"name":"markerBegin"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.BenchmarkParamsL2",
+  "fields":[{"name":"benchmark"}, {"name":"forks"}, {"name":"generatedTarget"}, {"name":"jvm"}, {"name":"jvmArgs"}, {"name":"markerBegin"}, {"name":"measurement"}, {"name":"mode"}, {"name":"opsPerInvocation"}, {"name":"params"}, {"name":"synchIterations"}, {"name":"threadGroups"}, {"name":"threads"}, {"name":"timeUnit"}, {"name":"warmup"}, {"name":"warmupForks"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.BenchmarkParamsL3",
+  "fields":[{"name":"benchmark"}, {"name":"forks"}, {"name":"generatedTarget"}, {"name":"jvm"}, {"name":"jvmArgs"}, {"name":"markerBegin"}, {"name":"measurement"}, {"name":"mode"}, {"name":"opsPerInvocation"}, {"name":"params"}, {"name":"synchIterations"}, {"name":"threadGroups"}, {"name":"threads"}, {"name":"timeUnit"}, {"name":"warmup"}, {"name":"warmupForks"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.BenchmarkParamsL4",
+  "fields":[{"name":"benchmark"}, {"name":"forks"}, {"name":"generatedTarget"}, {"name":"jvm"}, {"name":"jvmArgs"}, {"name":"markerBegin"}, {"name":"markerEnd"}, {"name":"measurement"}, {"name":"mode"}, {"name":"opsPerInvocation"}, {"name":"params"}, {"name":"synchIterations"}, {"name":"threadGroups"}, {"name":"threads"}, {"name":"timeUnit"}, {"name":"warmup"}, {"name":"warmupForks"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.Blackhole",
+  "fields":[{"name":"b1"}, {"name":"b2"}, {"name":"bool1"}, {"name":"bool2"}, {"name":"c1"}, {"name":"c2"}, {"name":"d1"}, {"name":"d2"}, {"name":"f1"}, {"name":"f2"}, {"name":"i1"}, {"name":"i2"}, {"name":"l1"}, {"name":"l2"}, {"name":"markerBegin"}, {"name":"markerEnd"}, {"name":"obj1"}, {"name":"s1"}, {"name":"s2"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.BlackholeL0",
+  "fields":[{"name":"markerBegin"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.BlackholeL1",
+  "fields":[{"name":"markerBegin"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.BlackholeL2",
+  "fields":[{"name":"b1"}, {"name":"b2"}, {"name":"bool1"}, {"name":"bool2"}, {"name":"c1"}, {"name":"c2"}, {"name":"d1"}, {"name":"d2"}, {"name":"f1"}, {"name":"f2"}, {"name":"i1"}, {"name":"i2"}, {"name":"l1"}, {"name":"l2"}, {"name":"markerBegin"}, {"name":"obj1"}, {"name":"s1"}, {"name":"s2"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.BlackholeL3",
+  "fields":[{"name":"b1"}, {"name":"b2"}, {"name":"bool1"}, {"name":"bool2"}, {"name":"c1"}, {"name":"c2"}, {"name":"d1"}, {"name":"d2"}, {"name":"f1"}, {"name":"f2"}, {"name":"i1"}, {"name":"i2"}, {"name":"l1"}, {"name":"l2"}, {"name":"markerBegin"}, {"name":"obj1"}, {"name":"s1"}, {"name":"s2"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.BlackholeL4",
+  "fields":[{"name":"b1"}, {"name":"b2"}, {"name":"bool1"}, {"name":"bool2"}, {"name":"c1"}, {"name":"c2"}, {"name":"d1"}, {"name":"d2"}, {"name":"f1"}, {"name":"f2"}, {"name":"i1"}, {"name":"i2"}, {"name":"l1"}, {"name":"l2"}, {"name":"markerBegin"}, {"name":"markerEnd"}, {"name":"obj1"}, {"name":"s1"}, {"name":"s2"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.Control",
+  "fields":[{"name":"markerBegin"}, {"name":"markerEnd"}, {"name":"startMeasurement"}, {"name":"stopMeasurement"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.ControlL0",
+  "fields":[{"name":"markerBegin"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.ControlL1",
+  "fields":[{"name":"markerBegin"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.ControlL2",
+  "fields":[{"name":"markerBegin"}, {"name":"startMeasurement"}, {"name":"stopMeasurement"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.ControlL3",
+  "fields":[{"name":"markerBegin"}, {"name":"startMeasurement"}, {"name":"stopMeasurement"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.ControlL4",
+  "fields":[{"name":"markerBegin"}, {"name":"markerEnd"}, {"name":"startMeasurement"}, {"name":"stopMeasurement"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.IterationParams",
+  "fields":[{"name":"batchSize"}, {"name":"count"}, {"name":"markerBegin"}, {"name":"markerEnd"}, {"name":"timeValue"}, {"name":"type"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.IterationParamsL0",
+  "fields":[{"name":"markerBegin"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.IterationParamsL1",
+  "fields":[{"name":"markerBegin"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.IterationParamsL2",
+  "fields":[{"name":"batchSize"}, {"name":"count"}, {"name":"markerBegin"}, {"name":"timeValue"}, {"name":"type"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.IterationParamsL3",
+  "fields":[{"name":"batchSize"}, {"name":"count"}, {"name":"markerBegin"}, {"name":"timeValue"}, {"name":"type"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.IterationParamsL4",
+  "fields":[{"name":"batchSize"}, {"name":"count"}, {"name":"markerBegin"}, {"name":"markerEnd"}, {"name":"timeValue"}, {"name":"type"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.ThreadParams",
+  "fields":[{"name":"groupCount"}, {"name":"groupIdx"}, {"name":"groupThreadCount"}, {"name":"groupThreadIdx"}, {"name":"markerBegin"}, {"name":"markerEnd"}, {"name":"subgroupCount"}, {"name":"subgroupIdx"}, {"name":"subgroupThreadCount"}, {"name":"subgroupThreadIdx"}, {"name":"threadCount"}, {"name":"threadIdx"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.ThreadParamsL0",
+  "fields":[{"name":"markerBegin"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.ThreadParamsL1",
+  "fields":[{"name":"markerBegin"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.ThreadParamsL2",
+  "fields":[{"name":"groupCount"}, {"name":"groupIdx"}, {"name":"groupThreadCount"}, {"name":"groupThreadIdx"}, {"name":"markerBegin"}, {"name":"subgroupCount"}, {"name":"subgroupIdx"}, {"name":"subgroupThreadCount"}, {"name":"subgroupThreadIdx"}, {"name":"threadCount"}, {"name":"threadIdx"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.ThreadParamsL3",
+  "fields":[{"name":"groupCount"}, {"name":"groupIdx"}, {"name":"groupThreadCount"}, {"name":"groupThreadIdx"}, {"name":"markerBegin"}, {"name":"subgroupCount"}, {"name":"subgroupIdx"}, {"name":"subgroupThreadCount"}, {"name":"subgroupThreadIdx"}, {"name":"threadCount"}, {"name":"threadIdx"}]
+},
+{
+  "name":"org.openjdk.jmh.infra.ThreadParamsL4",
+  "fields":[{"name":"groupCount"}, {"name":"groupIdx"}, {"name":"groupThreadCount"}, {"name":"groupThreadIdx"}, {"name":"markerBegin"}, {"name":"markerEnd"}, {"name":"subgroupCount"}, {"name":"subgroupIdx"}, {"name":"subgroupThreadCount"}, {"name":"subgroupThreadIdx"}, {"name":"threadCount"}, {"name":"threadIdx"}]
+},
+{
+  "name":"org.openjdk.jmh.runner.InfraControl",
+  "fields":[{"name":"benchmarkParams"}, {"name":"isDone"}, {"name":"isFailing"}, {"name":"iterationParams"}, {"name":"lastIteration"}, {"name":"markerBegin"}, {"name":"markerEnd"}, {"name":"preSetup"}, {"name":"preTearDown"}, {"name":"shouldSynchIterations"}, {"name":"threads"}, {"name":"volatileSpoiler"}, {"name":"warmdownDone"}, {"name":"warmdownShouldWait"}, {"name":"warmdownVisited"}, {"name":"warmupDone"}, {"name":"warmupShouldWait"}, {"name":"warmupVisited"}]
+},
+{
+  "name":"org.openjdk.jmh.runner.InfraControlL0",
+  "fields":[{"name":"markerBegin"}]
+},
+{
+  "name":"org.openjdk.jmh.runner.InfraControlL1",
+  "fields":[{"name":"markerBegin"}]
+},
+{
+  "name":"org.openjdk.jmh.runner.InfraControlL2",
+  "fields":[{"name":"benchmarkParams"}, {"name":"isDone"}, {"name":"isFailing"}, {"name":"iterationParams"}, {"name":"lastIteration"}, {"name":"markerBegin"}, {"name":"preSetup"}, {"name":"preTearDown"}, {"name":"shouldSynchIterations"}, {"name":"threads"}, {"name":"volatileSpoiler"}, {"name":"warmdownDone"}, {"name":"warmdownShouldWait"}, {"name":"warmdownVisited"}, {"name":"warmupDone"}, {"name":"warmupShouldWait"}, {"name":"warmupVisited"}]
+},
+{
+  "name":"org.openjdk.jmh.runner.InfraControlL3",
+  "fields":[{"name":"benchmarkParams"}, {"name":"isDone"}, {"name":"isFailing"}, {"name":"iterationParams"}, {"name":"lastIteration"}, {"name":"markerBegin"}, {"name":"preSetup"}, {"name":"preTearDown"}, {"name":"shouldSynchIterations"}, {"name":"threads"}, {"name":"volatileSpoiler"}, {"name":"warmdownDone"}, {"name":"warmdownShouldWait"}, {"name":"warmdownVisited"}, {"name":"warmupDone"}, {"name":"warmupShouldWait"}, {"name":"warmupVisited"}]
+},
+{
+  "name":"org.openjdk.jmh.runner.InfraControlL4",
+  "fields":[{"name":"benchmarkParams"}, {"name":"isDone"}, {"name":"isFailing"}, {"name":"iterationParams"}, {"name":"lastIteration"}, {"name":"markerBegin"}, {"name":"markerEnd"}, {"name":"preSetup"}, {"name":"preTearDown"}, {"name":"shouldSynchIterations"}, {"name":"threads"}, {"name":"volatileSpoiler"}, {"name":"warmdownDone"}, {"name":"warmdownShouldWait"}, {"name":"warmdownVisited"}, {"name":"warmupDone"}, {"name":"warmupShouldWait"}, {"name":"warmupVisited"}]
+},
+{
+  "name":"org.openjdk.jmh.runner.options.TimeValue",
+  "methods":[{"name":"valueOf","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"sun.misc.Unsafe",
+  "fields":[{"name":"theUnsafe"}]
+}
+]

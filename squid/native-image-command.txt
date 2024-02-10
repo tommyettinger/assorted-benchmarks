@@ -1,0 +1,4 @@
+C:\d\jvm\graal21\bin\java -agentlib:native-image-agent=config-output-dir=src/main/resources/META-INF/native-image -jar benchmarks.jar "PathfindingBenchmark.doPath.+(D|UD)$" -wi 5 -i 5 -f 0 -w 7 -r 7
+gradlew clean
+gradlew shadowJar
+C:\d\jvm\graal21\bin\native-image.cmd  -jar benchmarks.jar --install-exit-handlers --initialize-at-build-time=org.openjdk.jmh.infra,org.openjdk.jmh.util.Utils,org.openjdk.jmh.runner.InfraControl,org.openjdk.jmh.runner.InfraControlL0,org.openjdk.jmh.runner.InfraControlL1,org.openjdk.jmh.runner.InfraControlL2,org.openjdk.jmh.runner.InfraControlL3,org.openjdk.jmh.runner.InfraControlL4 -O3 -march=native --no-fallback

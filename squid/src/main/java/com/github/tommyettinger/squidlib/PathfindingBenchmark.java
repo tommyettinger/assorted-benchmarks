@@ -613,6 +613,52 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doPathUpdateD     avgt    5  112.493 ± 11.546  ms/op
  * PathfindingBenchmark.doPathUpdateUD    avgt    5  114.295 ±  4.411  ms/op
  * </pre>
+ * <br>
+ * These benchmarks used Graal 21, and are even faster.
+ * <pre>
+ * Benchmark                              Mode  Cnt    Score    Error  Units
+ * PathfindingBenchmark.doPathGandD       avgt    5   85.348 ±  2.918  ms/op
+ * PathfindingBenchmark.doPathGandGPD     avgt    5   86.529 ±  6.207  ms/op
+ * PathfindingBenchmark.doPathGandGPUD    avgt    5   82.921 ±  5.128  ms/op
+ * PathfindingBenchmark.doPathGandUD      avgt    5   85.252 ±  8.089  ms/op
+ * PathfindingBenchmark.doPathGandVD      avgt    5   84.046 ±  5.013  ms/op
+ * PathfindingBenchmark.doPathGandVUD     avgt    5   84.325 ±  6.253  ms/op
+ * PathfindingBenchmark.doPathSimpleD     avgt    5   85.145 ± 10.070  ms/op
+ * PathfindingBenchmark.doPathSimpleGPD   avgt    5   83.547 ±  9.850  ms/op
+ * PathfindingBenchmark.doPathSimpleGPUD  avgt    5   85.983 ±  7.908  ms/op
+ * PathfindingBenchmark.doPathSimpleUD    avgt    5   85.089 ±  6.965  ms/op
+ * PathfindingBenchmark.doPathSimpleVD    avgt    5   84.012 ±  7.179  ms/op
+ * PathfindingBenchmark.doPathSimpleVUD   avgt    5   82.364 ±  4.729  ms/op
+ * PathfindingBenchmark.doPathSquadD      avgt    5   99.211 ±  2.938  ms/op
+ * PathfindingBenchmark.doPathSquadUD     avgt    5   94.450 ±  3.282  ms/op
+ * PathfindingBenchmark.doPathSquidD      avgt    5   91.733 ±  6.331  ms/op
+ * PathfindingBenchmark.doPathSquidUD     avgt    5  102.381 ±  8.808  ms/op
+ * PathfindingBenchmark.doPathUpdateD     avgt    5  109.875 ±  4.879  ms/op
+ * PathfindingBenchmark.doPathUpdateUD    avgt    5  109.953 ±  6.181  ms/op
+ * </pre>
+ * <br>
+ * These benchmarks use Graal 21 but as a native-image, and are all a little slower.
+ * <pre>
+ * Benchmark                              Mode  Cnt    Score    Error  Units
+ * PathfindingBenchmark.doPathGandD       avgt    5  110.861 ┬▒  5.333  ms/op
+ * PathfindingBenchmark.doPathGandGPD     avgt    5  111.335 ┬▒  4.575  ms/op
+ * PathfindingBenchmark.doPathGandGPUD    avgt    5  112.075 ┬▒ 10.512  ms/op
+ * PathfindingBenchmark.doPathGandUD      avgt    5  117.298 ┬▒ 10.469  ms/op
+ * PathfindingBenchmark.doPathGandVD      avgt    5  110.249 ┬▒ 11.113  ms/op
+ * PathfindingBenchmark.doPathGandVUD     avgt    5  112.560 ┬▒  5.155  ms/op
+ * PathfindingBenchmark.doPathSimpleD     avgt    5  109.391 ┬▒  8.257  ms/op
+ * PathfindingBenchmark.doPathSimpleGPD   avgt    5  101.312 ┬▒ 11.169  ms/op
+ * PathfindingBenchmark.doPathSimpleGPUD  avgt    5  100.855 ┬▒  7.589  ms/op
+ * PathfindingBenchmark.doPathSimpleUD    avgt    5  113.416 ┬▒ 16.365  ms/op
+ * PathfindingBenchmark.doPathSimpleVD    avgt    5  104.496 ┬▒  6.021  ms/op
+ * PathfindingBenchmark.doPathSimpleVUD   avgt    5  107.814 ┬▒ 11.690  ms/op
+ * PathfindingBenchmark.doPathSquadD      avgt    5  107.717 ┬▒  4.724  ms/op
+ * PathfindingBenchmark.doPathSquadUD     avgt    5  111.091 ┬▒  7.319  ms/op
+ * PathfindingBenchmark.doPathSquidD      avgt    5  109.249 ┬▒  8.252  ms/op
+ * PathfindingBenchmark.doPathSquidUD     avgt    5  108.593 ┬▒  5.739  ms/op
+ * PathfindingBenchmark.doPathUpdateD     avgt    5  137.515 ┬▒  4.414  ms/op
+ * PathfindingBenchmark.doPathUpdateUD    avgt    5  144.917 ┬▒  7.125  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
