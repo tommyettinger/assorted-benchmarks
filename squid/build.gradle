@@ -92,7 +92,8 @@ dependencies {
 //    implementation 'com.github.tommyettinger:gand:4aaff4c1c6' // from Feb 9 2024
 //    implementation 'com.github.tommyettinger:gand:d329449ced' // from Feb 9 2024' the variant that uses long hash
 //    implementation 'com.github.tommyettinger:gand:866a294dff' // from Feb 9 2024; the variant that uses unmodified hash
-    implementation 'com.github.tommyettinger:gand:11b831cf92' // from Feb 9 2024; uses unmodified hash and ObjectOrderedSet
+//    implementation 'com.github.tommyettinger:gand:11b831cf92' // from Feb 9 2024; uses unmodified hash and ObjectOrderedSet
+    implementation 'com.github.tommyettinger:gand:b4de1a2b3b' // from Feb 9 2024; uses long hash and ObjectOrderedSet
 
 
     implementation 'com.github.tommyettinger:atlantis:5574642135'

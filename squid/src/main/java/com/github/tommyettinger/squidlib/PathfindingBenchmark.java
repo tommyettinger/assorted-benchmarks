@@ -38,6 +38,7 @@ import com.badlogic.gdx.ai.pfa.Heuristic;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedAStarPathFinder;
 import com.badlogic.gdx.ai.pfa.indexed.IndexedGraph;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.github.tommyettinger.ds.ObjectDeque;
 import com.github.yellowstonegames.grid.Region;
@@ -588,6 +589,30 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doPathSquadDijkstra  avgt    5  176.347 ± 15.541  ms/op
  * PathfindingBenchmark.doPathSquadUD        avgt    5   99.600 ±  3.707  ms/op
  * </pre>
+ * <br>
+ * Gand does quite well with the long-multiply-and-shift based hash() method.
+ * This benchmark was done on Java 21 (HotSpot), which may explain the faster times all around.
+ * <pre>
+ * Benchmark                              Mode  Cnt    Score    Error  Units
+ * PathfindingBenchmark.doPathGandD       avgt    5   88.065 ±  5.976  ms/op
+ * PathfindingBenchmark.doPathGandGPD     avgt    5   84.130 ±  1.429  ms/op
+ * PathfindingBenchmark.doPathGandGPUD    avgt    5   91.360 ±  8.520  ms/op
+ * PathfindingBenchmark.doPathGandUD      avgt    5   91.981 ±  6.990  ms/op
+ * PathfindingBenchmark.doPathGandVD      avgt    5   89.918 ±  7.754  ms/op
+ * PathfindingBenchmark.doPathGandVUD     avgt    5   89.740 ±  9.491  ms/op
+ * PathfindingBenchmark.doPathSimpleD     avgt    5   91.593 ±  6.388  ms/op
+ * PathfindingBenchmark.doPathSimpleGPD   avgt    5   87.722 ±  7.374  ms/op
+ * PathfindingBenchmark.doPathSimpleGPUD  avgt    5   86.635 ±  5.672  ms/op
+ * PathfindingBenchmark.doPathSimpleUD    avgt    5   88.345 ±  4.861  ms/op
+ * PathfindingBenchmark.doPathSimpleVD    avgt    5   91.605 ± 10.770  ms/op
+ * PathfindingBenchmark.doPathSimpleVUD   avgt    5   97.987 ± 10.791  ms/op
+ * PathfindingBenchmark.doPathSquadD      avgt    5   94.244 ±  3.036  ms/op
+ * PathfindingBenchmark.doPathSquadUD     avgt    5   90.522 ±  3.184  ms/op
+ * PathfindingBenchmark.doPathSquidD      avgt    5  100.839 ±  3.748  ms/op
+ * PathfindingBenchmark.doPathSquidUD     avgt    5  105.825 ±  2.997  ms/op
+ * PathfindingBenchmark.doPathUpdateD     avgt    5  112.493 ± 11.546  ms/op
+ * PathfindingBenchmark.doPathUpdateUD    avgt    5  114.295 ±  4.411  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -596,28 +621,31 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
 @Measurement(iterations = 3)
 public class PathfindingBenchmark {
     private static final GridPoint2 start = new GridPoint2(), end = new GridPoint2();
+    private static final Vector2 startV = new Vector2(), endV = new Vector2();
 
     @State(Scope.Thread)
     public static class BenchmarkState {
         public static final int WIDTH = 60;
         public static final int HEIGHT = 60;
-        //        public static final GridPoint2[][] gridPool = new GridPoint2[WIDTH][HEIGHT];
         public DungeonGenerator dungeonGen = new DungeonGenerator(WIDTH, HEIGHT, new StatefulRNG(0x1337BEEFDEAL));
         public char[][] map;
         public double[][] astarMap;
         public float[][] squadAstarMap;
         public GreasedRegion floors;
         public ArrayList<GridPoint2> gpFloors;
+        public ArrayList<Vector2> vFloors;
         public Region squadFloors;
         public int floorCount;
         public Coord[] floorArray;
         public GreasedRegion tmp;
         public Coord lowest, highest;
         public GridPoint2 lowestGP, highestGP;
+        public Vector2 lowestV, highestV;
         public Coord[][] nearbyMap;
         public com.github.yellowstonegames.grid.Coord squadLowest, squadHighest;
         public com.github.yellowstonegames.grid.Coord[][] squadNearbyMap;
         public GridPoint2[][] gpNearbyMap;
+        public Vector2[][] vNearbyMap;
         public com.github.yellowstonegames.grid.Coord[] squadFloorArray;
         public int[] customNearbyMap;
         public Adjacency adj;
@@ -639,10 +667,12 @@ public class PathfindingBenchmark {
         public Path<com.github.yellowstonegames.grid.Coord> simplePath;
         public graph.sg.Path<com.github.yellowstonegames.grid.Coord> updatePath;
         public com.github.tommyettinger.gand.Path<com.github.yellowstonegames.grid.Coord> gandPath;
-        public com.github.tommyettinger.gand.Path<GridPoint2> ggpPath;
-        public Path<GridPoint2> sggpPath;
-//        public graph.sg.Path<GridPoint2> upgpPath;
         public ObjectDeque<com.github.yellowstonegames.grid.Coord> squadPath;
+        public Path<GridPoint2> sggpPath;
+        public com.github.tommyettinger.gand.Path<GridPoint2> ggpPath;
+        public Path<Vector2> sgvPath;
+        public com.github.tommyettinger.gand.Path<Vector2> gvPath;
+//        public graph.sg.Path<GridPoint2> upgpPath;
 
         public DirectedGraph<com.github.yellowstonegames.grid.Coord> simpleDirectedGraph;
         public UndirectedGraph<com.github.yellowstonegames.grid.Coord> simpleUndirectedGraph;
@@ -651,6 +681,10 @@ public class PathfindingBenchmark {
         public DirectedGraph<GridPoint2> sggpDirectedGraph;
         public UndirectedGraph<GridPoint2> sggpUndirectedGraph;
         public space.earlygrey.simplegraphs.utils.Heuristic<GridPoint2> sggpHeu;
+
+        public DirectedGraph<Vector2> sgvDirectedGraph;
+        public UndirectedGraph<Vector2> sgvUndirectedGraph;
+        public space.earlygrey.simplegraphs.utils.Heuristic<Vector2> sgvHeu;
 
         public graph.sg.DirectedGraph<com.github.yellowstonegames.grid.Coord> updateDirectedGraph;
         public graph.sg.UndirectedGraph<com.github.yellowstonegames.grid.Coord> updateUndirectedGraph;
@@ -663,6 +697,10 @@ public class PathfindingBenchmark {
         public com.github.tommyettinger.gand.DirectedGraph<GridPoint2> ggpDirectedGraph;
         public com.github.tommyettinger.gand.UndirectedGraph<GridPoint2> ggpUndirectedGraph;
         public com.github.tommyettinger.gand.utils.Heuristic<GridPoint2> ggpHeu;
+
+        public com.github.tommyettinger.gand.DirectedGraph<Vector2> gvDirectedGraph;
+        public com.github.tommyettinger.gand.UndirectedGraph<Vector2> gvUndirectedGraph;
+        public com.github.tommyettinger.gand.utils.Heuristic<Vector2> gvHeu;
 
 //        public graph.sg.DirectedGraph<GridPoint2> upgpDirectedGraph;
 //        public graph.sg.UndirectedGraph<GridPoint2> upgpUndirectedGraph;
@@ -743,8 +781,10 @@ Nate sweetened at 129572932000
             floorArray = floors.asCoords();
 
             gpFloors = new ArrayList<>(floorCount);
+            vFloors = new ArrayList<>(floorCount);
             for (int i = 0; i < floorCount; i++) {
                 gpFloors.add(new GridPoint2(floorArray[i].x, floorArray[i].y));
+                vFloors.add(new Vector2(floorArray[i].x, floorArray[i].y));
             }
 
             squadFloors = new Region(map, '.');
@@ -815,8 +855,10 @@ Nate sweetened at 129572932000
             updatePath = new graph.sg.Path<>(WIDTH + HEIGHT << 1);
             gandPath = new com.github.tommyettinger.gand.Path<>(WIDTH + HEIGHT << 1);
             ggpPath = new com.github.tommyettinger.gand.Path<>(WIDTH + HEIGHT << 1);
+            gvPath = new com.github.tommyettinger.gand.Path<>(WIDTH + HEIGHT << 1);
 //            upgpPath = new graph.sg.Path<>(WIDTH + HEIGHT << 1);
             sggpPath = new Path<>(WIDTH + HEIGHT << 1);
+            sgvPath = new Path<>(WIDTH + HEIGHT << 1);
             System.out.printf("Paths made took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             simpleDirectedGraph = new DirectedGraph<>(squadFloors);
             simpleUndirectedGraph = new UndirectedGraph<>(squadFloors);
@@ -827,6 +869,12 @@ Nate sweetened at 129572932000
             sggpUndirectedGraph = new UndirectedGraph<>(gpFloors);
             sggpHeu = (currentNode, targetNode) ->
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
+
+            sgvDirectedGraph = new DirectedGraph<>(vFloors);
+            sgvUndirectedGraph = new UndirectedGraph<>(vFloors);
+            sgvHeu = (currentNode, targetNode) ->
+                    Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
+
             System.out.printf("Simple finders took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 
             updateDirectedGraph = new graph.sg.DirectedGraph<>(squadFloors);
@@ -852,6 +900,11 @@ Nate sweetened at 129572932000
             ggpHeu = (currentNode, targetNode) ->
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
 
+            gvDirectedGraph = new com.github.tommyettinger.gand.DirectedGraph<>(vFloors);
+            gvUndirectedGraph = new com.github.tommyettinger.gand.UndirectedGraph<>(vFloors);
+            gvHeu = (currentNode, targetNode) ->
+                    Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
+
             System.out.printf("Gand finders took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 
             squidDirectedGraph = new squidpony.squidai.graph.DirectedGraph<>(floors);
@@ -869,6 +922,7 @@ Nate sweetened at 129572932000
 
             Coord center;
             GridPoint2 gpCenter;
+            Vector2 vCenter;
             com.github.yellowstonegames.grid.Coord squadCenter, squadMoved;
             Direction[] outer = Direction.CLOCKWISE;
             Direction dir;
@@ -876,14 +930,18 @@ Nate sweetened at 129572932000
                 center = floorArray[i];
                 squadCenter = com.github.yellowstonegames.grid.Coord.get(center.x, center.y);
                 gpCenter = gpFloors.get(i);
+                vCenter = vFloors.get(i);
                 for (int j = 0; j < 8; j++) {
                     dir = outer[j];
                     if (floors.contains(center.x + dir.deltaX, center.y + dir.deltaY)) {
                         GridPoint2 gpMoved = new GridPoint2(gpCenter).add(dir.deltaX, dir.deltaY);
+                        Vector2 vMoved = new Vector2(vCenter).add(dir.deltaX, dir.deltaY);
                         squadMoved = com.github.yellowstonegames.grid.Coord.get(center.x + dir.deltaX, center.y + dir.deltaY);
                         simpleDirectedGraph.addEdge(squadCenter, squadMoved);
                         sggpDirectedGraph.addEdge(gpCenter, gpMoved);
                         ggpDirectedGraph.addEdge(gpCenter, gpMoved);
+                        sgvDirectedGraph.addEdge(vCenter, vMoved);
+                        gvDirectedGraph.addEdge(vCenter, vMoved);
                         updateDirectedGraph.addEdge(squadCenter, squadMoved);
                         gandDirectedGraph.addEdge(squadCenter, squadMoved);
 //                        upgpDirectedGraph.addEdge(gpCenter, gpMoved);
@@ -898,6 +956,8 @@ Nate sweetened at 129572932000
                             squadUndirectedGraph.addEdge(squadCenter, squadMoved);
                             sggpUndirectedGraph.addEdge(gpCenter, gpMoved);
                             ggpUndirectedGraph.addEdge(gpCenter, gpMoved);
+                            sgvUndirectedGraph.addEdge(vCenter, vMoved);
+                            gvUndirectedGraph.addEdge(vCenter, vMoved);
                         }
                     }
                 }
@@ -918,8 +978,8 @@ Nate sweetened at 129572932000
     public long doScanDijkstra(BenchmarkState state) {
         long scanned = 0;
         final DijkstraMap dijkstra = state.dijkstra;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 dijkstra.setGoal(x, y);
@@ -937,8 +997,8 @@ Nate sweetened at 129572932000
     public long doScanCustomDijkstra(BenchmarkState state) {
         CustomDijkstraMap dijkstra = state.customDijkstra;
         long scanned = 0;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 dijkstra.setGoal(state.adj.composite(x, y, 0, 0));
@@ -958,9 +1018,9 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final DijkstraMap dijkstra = state.dijkstra;
-        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        final int PATH_LENGTH = BenchmarkState.WIDTH * BenchmarkState.HEIGHT;
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -984,8 +1044,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         final Coord[] tgts = new Coord[1];
         final DijkstraMap dijkstra = state.dijkstra;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1007,7 +1067,7 @@ Nate sweetened at 129572932000
     @Benchmark
     public long doOneDijkstra(BenchmarkState state) {
         final DijkstraMap dijkstra = state.dijkstra;
-        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
+        final int PATH_LENGTH = BenchmarkState.WIDTH * BenchmarkState.HEIGHT;
         Coord tgt = state.highest;
         state.srng.setState(state.highest.hashCode());
         Coord r = state.lowest;
@@ -1025,9 +1085,9 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final squid.squad.DijkstraMap dijkstra = state.squadDijkstra;
-        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        final int PATH_LENGTH = BenchmarkState.WIDTH * BenchmarkState.HEIGHT;
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1035,11 +1095,11 @@ Nate sweetened at 129572932000
                 //((StatefulRNG) dijkstra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
                 r = state.srng.getRandomElement(state.squadFloorArray);
                 tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
-                state.path.clear();
+                state.squadPath.clear();
                 dijkstra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgts);
                 dijkstra.clearGoals();
                 dijkstra.resetMap();
-                scanned += state.path.size();
+                scanned += state.squadPath.size();
             }
         }
         return scanned;
@@ -1051,8 +1111,8 @@ Nate sweetened at 129572932000
         final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
         long scanned = 0;
         final squid.squad.DijkstraMap dijkstra = state.squadDijkstra;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1061,11 +1121,11 @@ Nate sweetened at 129572932000
                 r = state.squadNearbyMap[x][y];
                 tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
                 //dijkstra.partialScan(r,9, null);
-                state.path.clear();
+                state.squadPath.clear();
                 dijkstra.findPath(state.squadPath, 9, 9, null, null, r, tgts);
                 dijkstra.clearGoals();
                 dijkstra.resetMap();
-                scanned += state.path.size();
+                scanned += state.squadPath.size();
             }
         }
         return scanned;
@@ -1074,7 +1134,7 @@ Nate sweetened at 129572932000
     @Benchmark
     public long doOneSquadDijkstra(BenchmarkState state) {
         final squid.squad.DijkstraMap dijkstra = state.squadDijkstra;
-        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
+        final int PATH_LENGTH = BenchmarkState.WIDTH * BenchmarkState.HEIGHT;
         com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
         state.srng.setState(state.highest.hashCode());
         com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
@@ -1089,8 +1149,8 @@ Nate sweetened at 129572932000
     public long doScanSquadDijkstra(BenchmarkState state) {
         long scanned = 0;
         final squid.squad.DijkstraMap dijkstra = state.squadDijkstra;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 dijkstra.setGoal(x, y);
@@ -1110,9 +1170,9 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final squid.squad.DextraMap dextra = state.squadDextra;
-        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        final int PATH_LENGTH = BenchmarkState.WIDTH * BenchmarkState.HEIGHT;
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1120,11 +1180,11 @@ Nate sweetened at 129572932000
                 //((StatefulRNG) dextra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
                 r = state.srng.getRandomElement(state.squadFloorArray);
                 tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
-                state.path.clear();
+                state.squadPath.clear();
                 dextra.findPath(state.squadPath, PATH_LENGTH, -1, null, null, r, tgts);
                 dextra.clearGoals();
                 dextra.resetMap();
-                scanned += state.path.size();
+                scanned += state.squadPath.size();
             }
         }
         return scanned;
@@ -1136,8 +1196,8 @@ Nate sweetened at 129572932000
         final com.github.yellowstonegames.grid.Coord[] tgts = new com.github.yellowstonegames.grid.Coord[1];
         long scanned = 0;
         final squid.squad.DextraMap dextra = state.squadDextra;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1146,11 +1206,11 @@ Nate sweetened at 129572932000
                 r = state.squadNearbyMap[x][y];
                 tgts[0] = com.github.yellowstonegames.grid.Coord.get(x, y);
                 //dextra.partialScan(r,9, null);
-                state.path.clear();
+                state.squadPath.clear();
                 dextra.findPath(state.squadPath, 9, 9, null, null, r, tgts);
                 dextra.clearGoals();
                 dextra.resetMap();
-                scanned += state.path.size();
+                scanned += state.squadPath.size();
             }
         }
         return scanned;
@@ -1159,7 +1219,7 @@ Nate sweetened at 129572932000
     @Benchmark
     public long doOneSquadDextra(BenchmarkState state) {
         final squid.squad.DextraMap dextra = state.squadDextra;
-        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
+        final int PATH_LENGTH = BenchmarkState.WIDTH * BenchmarkState.HEIGHT;
         com.github.yellowstonegames.grid.Coord tgt = com.github.yellowstonegames.grid.Coord.get(state.highest.x, state.highest.y);
         state.srng.setState(state.highest.hashCode());
         com.github.yellowstonegames.grid.Coord r = com.github.yellowstonegames.grid.Coord.get(state.lowest.x, state.lowest.y);
@@ -1174,8 +1234,8 @@ Nate sweetened at 129572932000
     public long doScanSquadDextra(BenchmarkState state) {
         long scanned = 0;
         final squid.squad.DextraMap dijkstra = state.squadDextra;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 dijkstra.setGoal(x, y);
@@ -1332,9 +1392,9 @@ Nate sweetened at 129572932000
         int p;
         state.srng.setState(1234567890L);
         CustomDijkstraMap dijkstra = state.customDijkstra;
-        final int PATH_LENGTH = state.WIDTH * state.HEIGHT;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        final int PATH_LENGTH = BenchmarkState.WIDTH * BenchmarkState.HEIGHT;
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1359,8 +1419,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         int p;
         CustomDijkstraMap dijkstra = state.customDijkstra;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1386,8 +1446,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final AStarSearch aStarSearch = state.as;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1409,8 +1469,8 @@ Nate sweetened at 129572932000
         Coord tgt;
         long scanned = 0;
         final AStarSearch aStarSearch = state.as;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 r = state.nearbyMap[x][y];
@@ -1621,8 +1681,8 @@ Nate sweetened at 129572932000
     public long doPathGDXAStarGP(BenchmarkState state) {
         long scanned = 0;
         state.srng.setState(1234567890L);
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 start.set(state.srng.getRandomElement(state.gpFloors));
@@ -1638,8 +1698,8 @@ Nate sweetened at 129572932000
     @Benchmark
     public long doTinyPathGDXAStarGP(BenchmarkState state) {
         long scanned = 0;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 start.set(state.gpNearbyMap[x][y]);
@@ -1666,8 +1726,8 @@ Nate sweetened at 129572932000
         Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1686,8 +1746,8 @@ Nate sweetened at 129572932000
     public long doTinyPathGDXAStarCoord(BenchmarkState state) {
         Coord r;
         long scanned = 0;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1717,9 +1777,9 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final DirectedGraphAlgorithms<GridPoint2> algo = state.sggpDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
             end.x = x;
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 start.set(state.srng.getRandomElement(state.gpFloors));
@@ -1737,9 +1797,9 @@ Nate sweetened at 129572932000
     public long doTinyPathSimpleGPD(BenchmarkState state) {
         long scanned = 0;
         final DirectedGraphAlgorithms<GridPoint2> algo = state.sggpDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
             end.x = x;
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 start.set(state.gpNearbyMap[x][y]);
@@ -1768,9 +1828,9 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final UndirectedGraphAlgorithms<GridPoint2> algo = state.sggpUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
             end.x = x;
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 start.set(state.srng.getRandomElement(state.gpFloors));
@@ -1788,9 +1848,9 @@ Nate sweetened at 129572932000
     public long doTinyPathSimpleGPUD(BenchmarkState state) {
         long scanned = 0;
         final UndirectedGraphAlgorithms<GridPoint2> algo = state.sggpUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
             end.x = x;
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 start.set(state.gpNearbyMap[x][y]);
@@ -1820,8 +1880,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.simpleDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1842,8 +1902,8 @@ Nate sweetened at 129572932000
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.simpleDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 r = state.squadNearbyMap[x][y];
@@ -1862,8 +1922,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.simpleUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 r = state.srng.getRandomElement(state.squadFloorArray);
@@ -1881,8 +1941,8 @@ Nate sweetened at 129572932000
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.simpleUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1898,13 +1958,117 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
+    public long doPathSimpleVD(BenchmarkState state) {
+        long scanned = 0;
+        state.srng.setState(1234567890L);
+        final DirectedGraphAlgorithms<Vector2> algo = state.sgvDirectedGraph.algorithms();
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            endV.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                startV.set(state.srng.getRandomElement(state.vFloors));
+                state.sgvPath.clear();
+                endV.y = y;
+                state.sgvPath.addAll(algo.findShortestPath(startV, endV, state.sgvHeu, SearchStep::vertex));
+                if (state.sgvPath.size != 0)
+                    scanned += state.sgvPath.size;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathSimpleVD(BenchmarkState state) {
+        long scanned = 0;
+        final DirectedGraphAlgorithms<Vector2> algo = state.sgvDirectedGraph.algorithms();
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            endV.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                startV.set(state.vNearbyMap[x][y]);
+                state.sgvPath.clear();
+                endV.y = y;
+                state.sgvPath.addAll(algo.findShortestPath(startV, endV, state.sgvHeu, SearchStep::vertex));
+                if (state.sgvPath.size != 0)
+                    scanned += state.sgvPath.size;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doOneSimpleVD(BenchmarkState state) {
+        final DirectedGraphAlgorithms<Vector2> algo = state.sgvDirectedGraph.algorithms();
+        Vector2 startV = state.highestV;
+        Vector2 endV = state.lowestV;
+        state.sgvPath.clear();
+        state.sgvPath.addAll(algo.findShortestPath(startV, endV, state.sgvHeu, SearchStep::vertex));
+        return state.sgvPath.size();
+    }
+
+    @Benchmark
+    public long doPathSimpleVUD(BenchmarkState state) {
+        long scanned = 0;
+        state.srng.setState(1234567890L);
+        final UndirectedGraphAlgorithms<Vector2> algo = state.sgvUndirectedGraph.algorithms();
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            endV.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                startV.set(state.srng.getRandomElement(state.vFloors));
+                state.sgvPath.clear();
+                endV.y = y;
+                state.sgvPath.addAll(algo.findShortestPath(startV, endV, state.sgvHeu, SearchStep::vertex));
+                if (state.sgvPath.size != 0)
+                    scanned += state.sgvPath.size;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathSimpleVUD(BenchmarkState state) {
+        long scanned = 0;
+        final UndirectedGraphAlgorithms<Vector2> algo = state.sgvUndirectedGraph.algorithms();
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            endV.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                startV.set(state.vNearbyMap[x][y]);
+                state.sgvPath.clear();
+                endV.y = y;
+                state.sgvPath.addAll(algo.findShortestPath(startV, endV, state.sgvHeu, SearchStep::vertex));
+                if (state.sgvPath.size != 0)
+                    scanned += state.sgvPath.size;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doOneSimpleVUD(BenchmarkState state) {
+        final UndirectedGraphAlgorithms<Vector2> algo = state.sgvUndirectedGraph.algorithms();
+        Vector2 startV = state.highestV;
+        Vector2 endV = state.lowestV;
+        state.sgvPath.clear();
+        state.sgvPath.addAll(algo.findShortestPath(startV, endV, state.sgvHeu, SearchStep::vertex));
+        return state.sgvPath.size();
+    }
+
+    // SQUIDLIB
+
+    @Benchmark
     public long doPathSquidD(BenchmarkState state) {
         Coord r;
         long scanned = 0;
         state.srng.setState(1234567890L);
         final squidpony.squidai.graph.DirectedGraphAlgorithms<Coord> algo = state.squidDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1923,8 +2087,8 @@ Nate sweetened at 129572932000
         Coord r;
         long scanned = 0;
         final squidpony.squidai.graph.DirectedGraphAlgorithms<Coord> algo = state.squidDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1955,8 +2119,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -1975,8 +2139,8 @@ Nate sweetened at 129572932000
         Coord r;
         long scanned = 0;
         final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2007,8 +2171,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidDefaultGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2027,8 +2191,8 @@ Nate sweetened at 129572932000
         Coord r;
         long scanned = 0;
         final squidpony.squidai.graph.UndirectedGraphAlgorithms<Coord> algo = state.squidDefaultGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2059,8 +2223,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final squidpony.squidai.graph.DirectedGraphAlgorithms<Coord> algo = state.squidCostlyGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2079,8 +2243,8 @@ Nate sweetened at 129572932000
         Coord r;
         long scanned = 0;
         final squidpony.squidai.graph.DirectedGraphAlgorithms<Coord> algo = state.squidCostlyGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2113,8 +2277,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final com.github.yellowstonegames.path.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2133,8 +2297,8 @@ Nate sweetened at 129572932000
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final com.github.yellowstonegames.path.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2165,8 +2329,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final com.github.yellowstonegames.path.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2185,8 +2349,8 @@ Nate sweetened at 129572932000
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final com.github.yellowstonegames.path.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2218,8 +2382,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final com.github.yellowstonegames.path.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadDefaultGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2238,8 +2402,8 @@ Nate sweetened at 129572932000
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final com.github.yellowstonegames.path.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadDefaultGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2270,8 +2434,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final com.github.yellowstonegames.path.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadCostlyGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2290,8 +2454,8 @@ Nate sweetened at 129572932000
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final com.github.yellowstonegames.path.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.squadCostlyGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2426,8 +2590,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final graph.sg.algorithms.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.updateDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2448,8 +2612,8 @@ Nate sweetened at 129572932000
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final graph.sg.algorithms.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.updateDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 r = state.squadNearbyMap[x][y];
@@ -2468,8 +2632,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final graph.sg.algorithms.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.updateUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 r = state.srng.getRandomElement(state.squadFloorArray);
@@ -2487,8 +2651,8 @@ Nate sweetened at 129572932000
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final graph.sg.algorithms.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.updateUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2511,8 +2675,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.gandDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2533,8 +2697,8 @@ Nate sweetened at 129572932000
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.gandDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 r = state.squadNearbyMap[x][y];
@@ -2553,8 +2717,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.gandUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 r = state.srng.getRandomElement(state.squadFloorArray);
@@ -2572,8 +2736,8 @@ Nate sweetened at 129572932000
         com.github.yellowstonegames.grid.Coord r;
         long scanned = 0;
         final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<com.github.yellowstonegames.grid.Coord> algo = state.gandUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 // this should ensure no blatant correlation between R and W
@@ -2593,9 +2757,9 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.ggpDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
             end.x = x;
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 start.set(state.srng.getRandomElement(state.gpFloors));
@@ -2613,9 +2777,9 @@ Nate sweetened at 129572932000
     public long doTinyPathGandGPD(BenchmarkState state) {
         long scanned = 0;
         final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.ggpDirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
             end.x = x;
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 start.set(state.gpNearbyMap[x][y]);
@@ -2644,9 +2808,9 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.ggpUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
             end.x = x;
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 start.set(state.srng.getRandomElement(state.gpFloors));
@@ -2664,9 +2828,9 @@ Nate sweetened at 129572932000
     public long doTinyPathGandGPUD(BenchmarkState state) {
         long scanned = 0;
         final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.ggpUndirectedGraph.algorithms();
-        for (int x = 1; x < state.WIDTH - 1; x++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
             end.x = x;
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 start.set(state.gpNearbyMap[x][y]);
@@ -2691,6 +2855,109 @@ Nate sweetened at 129572932000
     }
     
     
+    @Benchmark
+    public long doPathGandVD(BenchmarkState state) {
+        long scanned = 0;
+        state.srng.setState(1234567890L);
+        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<Vector2> algo = state.gvDirectedGraph.algorithms();
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            endV.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                startV.set(state.srng.getRandomElement(state.vFloors));
+                state.gvPath.clear();
+                endV.y = y;
+                state.gvPath.addAll(algo.findShortestPath(startV, endV, state.gvHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+                if (state.gvPath.size != 0)
+                    scanned += state.gvPath.size;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathGandVD(BenchmarkState state) {
+        long scanned = 0;
+        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<Vector2> algo = state.gvDirectedGraph.algorithms();
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            endV.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                startV.set(state.vNearbyMap[x][y]);
+                state.gvPath.clear();
+                endV.y = y;
+                state.gvPath.addAll(algo.findShortestPath(startV, endV, state.gvHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+                if (state.gvPath.size != 0)
+                    scanned += state.gvPath.size;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doOneGandVD(BenchmarkState state) {
+        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<Vector2> algo = state.gvDirectedGraph.algorithms();
+        Vector2 startV = state.highestV;
+        Vector2 endV = state.lowestV;
+        state.gvPath.clear();
+        state.gvPath.addAll(algo.findShortestPath(startV, endV, state.gvHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+        return state.gvPath.size();
+    }
+
+    @Benchmark
+    public long doPathGandVUD(BenchmarkState state) {
+        long scanned = 0;
+        state.srng.setState(1234567890L);
+        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<Vector2> algo = state.gvUndirectedGraph.algorithms();
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            endV.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                startV.set(state.srng.getRandomElement(state.vFloors));
+                state.gvPath.clear();
+                endV.y = y;
+                state.gvPath.addAll(algo.findShortestPath(startV, endV, state.gvHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+                if (state.gvPath.size != 0)
+                    scanned += state.gvPath.size;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathGandVUD(BenchmarkState state) {
+        long scanned = 0;
+        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<Vector2> algo = state.gvUndirectedGraph.algorithms();
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            endV.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                startV.set(state.vNearbyMap[x][y]);
+                state.gvPath.clear();
+                endV.y = y;
+                state.gvPath.addAll(algo.findShortestPath(startV, endV, state.gvHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+                if (state.gvPath.size != 0)
+                    scanned += state.gvPath.size;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doOneGandVUD(BenchmarkState state) {
+        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<Vector2> algo = state.gvUndirectedGraph.algorithms();
+        Vector2 startV = state.highestV;
+        Vector2 endV = state.lowestV;
+        state.gvPath.clear();
+        state.gvPath.addAll(algo.findShortestPath(startV, endV, state.gvHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+        return state.gvPath.size();
+    }
+    
+    
     // NATE
 
 
@@ -2699,8 +2966,8 @@ Nate sweetened at 129572932000
         long scanned = 0;
         state.srng.setState(1234567890L);
         final NateStar nate = state.nate;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 start.set(state.srng.getRandomElement(state.gpFloors));
@@ -2716,8 +2983,8 @@ Nate sweetened at 129572932000
     public long doTinyPathNate(BenchmarkState state) {
         long scanned = 0;
         final NateStar nate = state.nate;
-        for (int x = 1; x < state.WIDTH - 1; x++) {
-            for (int y = 1; y < state.HEIGHT - 1; y++) {
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
                 start.set(state.gpNearbyMap[x][y]);
