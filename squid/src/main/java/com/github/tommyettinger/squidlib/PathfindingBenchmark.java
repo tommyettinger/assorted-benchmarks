@@ -659,6 +659,18 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doPathUpdateD     avgt    5  137.515 ┬▒  4.414  ms/op
  * PathfindingBenchmark.doPathUpdateUD    avgt    5  144.917 ┬▒  7.125  ms/op
  * </pre>
+ * <br>
+ * Then I wanted to figure out if the custom hash() in Gand's Grid2DDirectedGraph mattered. It doesn't, really.
+ * Tested with a Graal 21 JVM, but many more iterations than usual (and 3 forks):
+ * <pre>
+ * C:\d\jvm\graal21\bin\java -jar benchmarks.jar "PathfindingBenchmark.doPath.*Gand(D|G2D|GPD|VD)$" -wi 8 -i 8 -f 3 -w 10 -r 1
+ *
+ * Benchmark                           Mode  Cnt   Score   Error  Units
+ * PathfindingBenchmark.doPathGandD    avgt   24  84.131 ± 2.524  ms/op
+ * PathfindingBenchmark.doPathGandG2D  avgt   24  81.051 ± 1.101  ms/op
+ * PathfindingBenchmark.doPathGandGPD  avgt   24  81.817 ± 0.875  ms/op
+ * PathfindingBenchmark.doPathGandVD   avgt   24  85.488 ± 1.459  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -743,6 +755,7 @@ public class PathfindingBenchmark {
         public com.github.tommyettinger.gand.DirectedGraph<GridPoint2> ggpDirectedGraph;
         public com.github.tommyettinger.gand.UndirectedGraph<GridPoint2> ggpUndirectedGraph;
         public com.github.tommyettinger.gand.utils.Heuristic<GridPoint2> ggpHeu;
+        public com.github.tommyettinger.gand.Grid2DDirectedGraph gg2DirectedGraph;
 
         public com.github.tommyettinger.gand.DirectedGraph<Vector2> gvDirectedGraph;
         public com.github.tommyettinger.gand.UndirectedGraph<Vector2> gvUndirectedGraph;
@@ -945,6 +958,7 @@ Nate sweetened at 129572932000
             ggpUndirectedGraph = new com.github.tommyettinger.gand.UndirectedGraph<>(gpFloors);
             ggpHeu = (currentNode, targetNode) ->
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
+            gg2DirectedGraph = new com.github.tommyettinger.gand.Grid2DDirectedGraph(gpFloors);
 
             gvDirectedGraph = new com.github.tommyettinger.gand.DirectedGraph<>(vFloors);
             gvUndirectedGraph = new com.github.tommyettinger.gand.UndirectedGraph<>(vFloors);
@@ -986,6 +1000,7 @@ Nate sweetened at 129572932000
                         simpleDirectedGraph.addEdge(squadCenter, squadMoved);
                         sggpDirectedGraph.addEdge(gpCenter, gpMoved);
                         ggpDirectedGraph.addEdge(gpCenter, gpMoved);
+                        gg2DirectedGraph.addEdge(gpCenter, gpMoved);
                         sgvDirectedGraph.addEdge(vCenter, vMoved);
                         gvDirectedGraph.addEdge(vCenter, vMoved);
                         updateDirectedGraph.addEdge(squadCenter, squadMoved);
@@ -3002,8 +3017,58 @@ Nate sweetened at 129572932000
         state.gvPath.addAll(algo.findShortestPath(startV, endV, state.gvHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
         return state.gvPath.size();
     }
-    
-    
+
+    @Benchmark
+    public long doPathGandG2D(BenchmarkState state) {
+        long scanned = 0;
+        state.srng.setState(1234567890L);
+        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.gg2DirectedGraph.algorithms();
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            end.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                start.set(state.srng.getRandomElement(state.gpFloors));
+                state.ggpPath.clear();
+                end.y = y;
+                state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+                if (state.ggpPath.size != 0)
+                    scanned += state.ggpPath.size;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathGandG2D(BenchmarkState state) {
+        long scanned = 0;
+        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.gg2DirectedGraph.algorithms();
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            end.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                start.set(state.gpNearbyMap[x][y]);
+                state.ggpPath.clear();
+                end.y = y;
+                state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+                if (state.ggpPath.size != 0)
+                    scanned += state.ggpPath.size;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doOneGandG2D(BenchmarkState state) {
+        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.gg2DirectedGraph.algorithms();
+        GridPoint2 start = state.highestGP;
+        GridPoint2 end = state.lowestGP;
+        state.ggpPath.clear();
+        state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+        return state.ggpPath.size();
+    }
+
     // NATE
 
 
