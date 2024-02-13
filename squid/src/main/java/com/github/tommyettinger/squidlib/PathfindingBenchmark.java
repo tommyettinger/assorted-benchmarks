@@ -756,6 +756,7 @@ public class PathfindingBenchmark {
         public com.github.tommyettinger.gand.UndirectedGraph<GridPoint2> ggpUndirectedGraph;
         public com.github.tommyettinger.gand.utils.Heuristic<GridPoint2> ggpHeu;
         public com.github.tommyettinger.gand.Grid2DDirectedGraph gg2DirectedGraph;
+        public com.github.tommyettinger.gand.Grid2DUndirectedGraph gg2UndirectedGraph;
 
         public com.github.tommyettinger.gand.DirectedGraph<Vector2> gvDirectedGraph;
         public com.github.tommyettinger.gand.UndirectedGraph<Vector2> gvUndirectedGraph;
@@ -959,6 +960,7 @@ Nate sweetened at 129572932000
             ggpHeu = (currentNode, targetNode) ->
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
             gg2DirectedGraph = new com.github.tommyettinger.gand.Grid2DDirectedGraph(gpFloors);
+            gg2UndirectedGraph = new com.github.tommyettinger.gand.Grid2DUndirectedGraph(gpFloors);
 
             gvDirectedGraph = new com.github.tommyettinger.gand.DirectedGraph<>(vFloors);
             gvUndirectedGraph = new com.github.tommyettinger.gand.UndirectedGraph<>(vFloors);
@@ -1017,6 +1019,7 @@ Nate sweetened at 129572932000
                             squadUndirectedGraph.addEdge(squadCenter, squadMoved);
                             sggpUndirectedGraph.addEdge(gpCenter, gpMoved);
                             ggpUndirectedGraph.addEdge(gpCenter, gpMoved);
+                            gg2UndirectedGraph.addEdge(gpCenter, gpMoved);
                             sgvUndirectedGraph.addEdge(vCenter, vMoved);
                             gvUndirectedGraph.addEdge(vCenter, vMoved);
                         }
@@ -2915,7 +2918,6 @@ Nate sweetened at 129572932000
         return state.ggpPath.size();
     }
     
-    
     @Benchmark
     public long doPathGandVD(BenchmarkState state) {
         long scanned = 0;
@@ -3068,6 +3070,57 @@ Nate sweetened at 129572932000
         state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
         return state.ggpPath.size();
     }
+    @Benchmark
+    public long doPathGandG2UD(BenchmarkState state) {
+        long scanned = 0;
+        state.srng.setState(1234567890L);
+        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.gg2UndirectedGraph.algorithms();
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            end.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                start.set(state.srng.getRandomElement(state.gpFloors));
+                state.ggpPath.clear();
+                end.y = y;
+                state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+                if (state.ggpPath.size != 0)
+                    scanned += state.ggpPath.size;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathGandG2UD(BenchmarkState state) {
+        long scanned = 0;
+        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.gg2UndirectedGraph.algorithms();
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            end.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                start.set(state.gpNearbyMap[x][y]);
+                state.ggpPath.clear();
+                end.y = y;
+                state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+                if (state.ggpPath.size != 0)
+                    scanned += state.ggpPath.size;
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doOneGandG2UD(BenchmarkState state) {
+        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.gg2UndirectedGraph.algorithms();
+        GridPoint2 start = state.highestGP;
+        GridPoint2 end = state.lowestGP;
+        state.ggpPath.clear();
+        state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+        return state.ggpPath.size();
+    }
+
 
     // NATE
 

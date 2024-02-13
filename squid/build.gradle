@@ -95,7 +95,8 @@ dependencies {
 //    implementation 'com.github.tommyettinger:gand:11b831cf92' // from Feb 9 2024; uses unmodified hash and ObjectOrderedSet
 //    implementation 'com.github.tommyettinger:gand:b4de1a2b3b' // from Feb 9 2024; uses long hash and ObjectOrderedSet
 //    implementation 'com.github.tommyettinger:gand:2f0505c775' // from Feb 11 2024; adds Grid2DDirectedGraph
-    implementation 'com.github.tommyettinger:9a608d9cec' // from Feb 11 2024; Grid2DDirectedGraph.hash() is simpler
+//    implementation 'com.github.tommyettinger:gand:9a608d9cec' // from Feb 11 2024; Grid2DDirectedGraph.hash() is simpler
+    implementation 'com.github.tommyettinger:gand:9844969b11' // from Feb 12 2024; set hashing experiments
 
 
     implementation 'com.github.tommyettinger:atlantis:5574642135'
