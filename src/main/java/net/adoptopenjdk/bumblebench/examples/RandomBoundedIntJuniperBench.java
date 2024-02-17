@@ -43,7 +43,8 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * GraalVM Java 21:
  * <br>
- *
+ * RandomBoundedIntJuniperBench score: 860149440.000000 (860.1M 2057.3%)
+ *                          uncertainty:   1.1%
  */
 public final class RandomBoundedIntJuniperBench extends MicroBench {
 

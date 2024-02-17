@@ -43,7 +43,8 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * GraalVM Java 21:
  * <br>
- *
+ * RandomBoundedIntTephriumBench score: 848035840.000000 (848.0M 2055.8%)
+ *                           uncertainty:   1.5%
  */
 public final class RandomBoundedIntTephriumBench extends MicroBench {
 
