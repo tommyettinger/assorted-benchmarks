@@ -22,7 +22,8 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * HotSpot Java 8:
  * <br>
- *
+ * RandomBoundedIntTephriumBench score: 801106432.000000 (801.1M 2050.2%)
+ *                           uncertainty:   1.5%
  * <br>
  * HotSpot Java 17 (Adoptium):
  * <br>
