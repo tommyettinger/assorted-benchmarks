@@ -705,6 +705,27 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doPathUpdateD     avgt    5  112.092 ± 10.465  ms/op
  * PathfindingBenchmark.doPathUpdateUD    avgt    5  107.864 ± 15.506  ms/op
  * </pre>
+ * <br>
+ * Testing with HotSpot 21, gand vs. simple-graphs:
+ * <pre>
+ * Benchmark                              Mode  Cnt   Score    Error  Units
+ * PathfindingBenchmark.doPathGandD       avgt    6  90.185 ±  3.859  ms/op
+ * PathfindingBenchmark.doPathGandF2D     avgt    6  91.301 ±  2.814  ms/op
+ * PathfindingBenchmark.doPathGandF2UD    avgt    6  97.420 ± 17.997  ms/op
+ * PathfindingBenchmark.doPathGandGPD     avgt    6  86.968 ±  3.936  ms/op
+ * PathfindingBenchmark.doPathGandGPUD    avgt    6  90.276 ±  3.554  ms/op
+ * PathfindingBenchmark.doPathGandI2D     avgt    6  87.024 ±  1.841  ms/op
+ * PathfindingBenchmark.doPathGandI2UD    avgt    6  91.188 ±  2.119  ms/op
+ * PathfindingBenchmark.doPathGandUD      avgt    6  89.594 ±  3.466  ms/op
+ * PathfindingBenchmark.doPathGandVD      avgt    6  86.989 ±  1.969  ms/op
+ * PathfindingBenchmark.doPathGandVUD     avgt    6  90.665 ±  2.551  ms/op
+ * PathfindingBenchmark.doPathSimpleD     avgt    6  86.347 ±  1.440  ms/op
+ * PathfindingBenchmark.doPathSimpleGPD   avgt    6  86.724 ±  6.734  ms/op
+ * PathfindingBenchmark.doPathSimpleGPUD  avgt    6  86.327 ±  7.636  ms/op
+ * PathfindingBenchmark.doPathSimpleUD    avgt    6  86.465 ±  1.625  ms/op
+ * PathfindingBenchmark.doPathSimpleVD    avgt    6  89.704 ±  3.446  ms/op
+ * PathfindingBenchmark.doPathSimpleVUD   avgt    6  87.182 ±  5.677  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
