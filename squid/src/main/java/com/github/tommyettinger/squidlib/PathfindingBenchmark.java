@@ -41,6 +41,8 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.github.tommyettinger.ds.ObjectDeque;
+import com.github.tommyettinger.gand.points.PointF2;
+import com.github.tommyettinger.gand.points.PointI2;
 import com.github.yellowstonegames.grid.Region;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
@@ -712,6 +714,8 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
 public class PathfindingBenchmark {
     private static final GridPoint2 start = new GridPoint2(), end = new GridPoint2();
     private static final Vector2 startV = new Vector2(), endV = new Vector2();
+    private static final PointI2 startI = new PointI2(), endI = new PointI2();
+    private static final PointF2 startF = new PointF2(), endF = new PointF2();
 
     @State(Scope.Thread)
     public static class BenchmarkState {
@@ -724,6 +728,8 @@ public class PathfindingBenchmark {
         public GreasedRegion floors;
         public ArrayList<GridPoint2> gpFloors;
         public ArrayList<Vector2> vFloors;
+        public ArrayList<PointI2> iFloors;
+        public ArrayList<PointF2> fFloors;
         public Region squadFloors;
         public int floorCount;
         public Coord[] floorArray;
@@ -731,11 +737,15 @@ public class PathfindingBenchmark {
         public Coord lowest, highest;
         public GridPoint2 lowestGP, highestGP;
         public Vector2 lowestV, highestV;
+        public PointI2 lowestI, highestI;
+        public PointF2 lowestF, highestF;
         public Coord[][] nearbyMap;
         public com.github.yellowstonegames.grid.Coord squadLowest, squadHighest;
         public com.github.yellowstonegames.grid.Coord[][] squadNearbyMap;
         public GridPoint2[][] gpNearbyMap;
         public Vector2[][] vNearbyMap;
+        public PointI2[][] iNearbyMap;
+        public PointF2[][] fNearbyMap;
         public com.github.yellowstonegames.grid.Coord[] squadFloorArray;
         public int[] customNearbyMap;
         public Adjacency adj;
@@ -762,6 +772,8 @@ public class PathfindingBenchmark {
         public com.github.tommyettinger.gand.Path<GridPoint2> ggpPath;
         public Path<Vector2> sgvPath;
         public com.github.tommyettinger.gand.Path<Vector2> gvPath;
+        public com.github.tommyettinger.gand.Path<PointI2> giPath;
+        public com.github.tommyettinger.gand.Path<PointF2> gfPath;
 //        public graph.sg.Path<GridPoint2> upgpPath;
 
         public DirectedGraph<com.github.yellowstonegames.grid.Coord> simpleDirectedGraph;
@@ -787,12 +799,18 @@ public class PathfindingBenchmark {
         public com.github.tommyettinger.gand.DirectedGraph<GridPoint2> ggpDirectedGraph;
         public com.github.tommyettinger.gand.UndirectedGraph<GridPoint2> ggpUndirectedGraph;
         public com.github.tommyettinger.gand.utils.Heuristic<GridPoint2> ggpHeu;
-        public com.github.tommyettinger.gand.Grid2DDirectedGraph gg2DirectedGraph;
-        public com.github.tommyettinger.gand.Grid2DUndirectedGraph gg2UndirectedGraph;
 
         public com.github.tommyettinger.gand.DirectedGraph<Vector2> gvDirectedGraph;
         public com.github.tommyettinger.gand.UndirectedGraph<Vector2> gvUndirectedGraph;
         public com.github.tommyettinger.gand.utils.Heuristic<Vector2> gvHeu;
+
+        public com.github.tommyettinger.gand.Int2DirectedGraph gi2DirectedGraph;
+        public com.github.tommyettinger.gand.Int2UndirectedGraph gi2UndirectedGraph;
+        public com.github.tommyettinger.gand.utils.Heuristic<PointI2> giHeu;
+
+        public com.github.tommyettinger.gand.Float2DirectedGraph gf2DirectedGraph;
+        public com.github.tommyettinger.gand.Float2UndirectedGraph gf2UndirectedGraph;
+        public com.github.tommyettinger.gand.utils.Heuristic<PointF2> gfHeu;
 
 //        public graph.sg.DirectedGraph<GridPoint2> upgpDirectedGraph;
 //        public graph.sg.UndirectedGraph<GridPoint2> upgpUndirectedGraph;
@@ -877,6 +895,8 @@ Nate sweetened at 129572932000
             for (int i = 0; i < floorCount; i++) {
                 gpFloors.add(new GridPoint2(floorArray[i].x, floorArray[i].y));
                 vFloors.add(new Vector2(floorArray[i].x, floorArray[i].y));
+                iFloors.add(new PointI2(floorArray[i].x, floorArray[i].y));
+                fFloors.add(new PointF2(floorArray[i].x, floorArray[i].y));
             }
 
             squadFloors = new Region(map, '.');
@@ -889,6 +909,12 @@ Nate sweetened at 129572932000
             squadHighest = com.github.yellowstonegames.grid.Coord.get(highest.x, highest.y);
             lowestGP = new GridPoint2(lowest.x, lowest.y);
             highestGP = new GridPoint2(highest.x, highest.y);
+            lowestV = new Vector2(lowest.x, lowest.y);
+            highestV = new Vector2(highest.x, highest.y);
+            lowestI = new PointI2(lowest.x, lowest.y);
+            highestI = new PointI2(highest.x, highest.y);
+            lowestF = new PointF2(lowest.x, lowest.y);
+            highestF = new PointF2(highest.x, highest.y);
             System.out.println("[INFO] Floors: " + floorCount);
             System.out.println("[INFO] Percentage walkable: " + floorCount * 100.0 / (WIDTH * HEIGHT) + "%");
             astarMap = DungeonUtility.generateAStarCostMap(map, Collections.emptyMap(), 1);
@@ -918,6 +944,9 @@ Nate sweetened at 129572932000
                     nearbyMap[i][j] = c;
                     gpNearbyMap[i][j] = new GridPoint2(c.x, c.y);
                     squadNearbyMap[i][j] = com.github.yellowstonegames.grid.Coord.get(c.x, c.y);
+                    vNearbyMap[i][j] = new Vector2(c.x, c.y);
+                    iNearbyMap[i][j] = new PointI2(c.x, c.y);
+                    fNearbyMap[i][j] = new PointF2(c.x, c.y);
                     customNearbyMap[adj.composite(i, j, 0, 0)] = adj.composite(c.x, c.y, 0, 0);
                 }
             }
@@ -948,6 +977,8 @@ Nate sweetened at 129572932000
             gandPath = new com.github.tommyettinger.gand.Path<>(WIDTH + HEIGHT << 1);
             ggpPath = new com.github.tommyettinger.gand.Path<>(WIDTH + HEIGHT << 1);
             gvPath = new com.github.tommyettinger.gand.Path<>(WIDTH + HEIGHT << 1);
+            giPath = new com.github.tommyettinger.gand.Path<>(WIDTH + HEIGHT << 1);
+            gfPath = new com.github.tommyettinger.gand.Path<>(WIDTH + HEIGHT << 1);
 //            upgpPath = new graph.sg.Path<>(WIDTH + HEIGHT << 1);
             sggpPath = new Path<>(WIDTH + HEIGHT << 1);
             sgvPath = new Path<>(WIDTH + HEIGHT << 1);
@@ -991,13 +1022,21 @@ Nate sweetened at 129572932000
             ggpUndirectedGraph = new com.github.tommyettinger.gand.UndirectedGraph<>(gpFloors);
             ggpHeu = (currentNode, targetNode) ->
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
-            gg2DirectedGraph = new com.github.tommyettinger.gand.Grid2DDirectedGraph(gpFloors);
-            gg2UndirectedGraph = new com.github.tommyettinger.gand.Grid2DUndirectedGraph(gpFloors);
 
             gvDirectedGraph = new com.github.tommyettinger.gand.DirectedGraph<>(vFloors);
             gvUndirectedGraph = new com.github.tommyettinger.gand.UndirectedGraph<>(vFloors);
             gvHeu = (currentNode, targetNode) ->
                     Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
+
+            gi2DirectedGraph = new com.github.tommyettinger.gand.Int2DirectedGraph(iFloors);
+            gi2UndirectedGraph = new com.github.tommyettinger.gand.Int2UndirectedGraph(iFloors);
+            giHeu = (currentNode, targetNode) ->
+                    Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
+            gf2DirectedGraph = new com.github.tommyettinger.gand.Float2DirectedGraph(fFloors);
+            gf2UndirectedGraph = new com.github.tommyettinger.gand.Float2UndirectedGraph(fFloors);
+            gfHeu = (currentNode, targetNode) ->
+                    Math.max(Math.abs(currentNode.x - targetNode.x), Math.abs(currentNode.y - targetNode.y));
+
 
             System.out.printf("Gand finders took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
 
@@ -1017,6 +1056,8 @@ Nate sweetened at 129572932000
             Coord center;
             GridPoint2 gpCenter;
             Vector2 vCenter;
+            PointI2 iCenter;
+            PointF2 fCenter;
             com.github.yellowstonegames.grid.Coord squadCenter, squadMoved;
             Direction[] outer = Direction.CLOCKWISE;
             Direction dir;
@@ -1025,18 +1066,25 @@ Nate sweetened at 129572932000
                 squadCenter = com.github.yellowstonegames.grid.Coord.get(center.x, center.y);
                 gpCenter = gpFloors.get(i);
                 vCenter = vFloors.get(i);
+                iCenter = iFloors.get(i);
+                fCenter = fFloors.get(i);
                 for (int j = 0; j < 8; j++) {
                     dir = outer[j];
                     if (floors.contains(center.x + dir.deltaX, center.y + dir.deltaY)) {
                         GridPoint2 gpMoved = new GridPoint2(gpCenter).add(dir.deltaX, dir.deltaY);
                         Vector2 vMoved = new Vector2(vCenter).add(dir.deltaX, dir.deltaY);
+                        PointI2 iMoved = new PointI2(iCenter);
+                        iMoved.add(dir.deltaX, dir.deltaY);
+                        PointF2 fMoved = new PointF2(vCenter);
+                        fMoved.add(dir.deltaX, dir.deltaY);
                         squadMoved = com.github.yellowstonegames.grid.Coord.get(center.x + dir.deltaX, center.y + dir.deltaY);
                         simpleDirectedGraph.addEdge(squadCenter, squadMoved);
                         sggpDirectedGraph.addEdge(gpCenter, gpMoved);
                         ggpDirectedGraph.addEdge(gpCenter, gpMoved);
-                        gg2DirectedGraph.addEdge(gpCenter, gpMoved);
                         sgvDirectedGraph.addEdge(vCenter, vMoved);
                         gvDirectedGraph.addEdge(vCenter, vMoved);
+                        gi2DirectedGraph.addEdge(iCenter, iMoved);
+                        gf2DirectedGraph.addEdge(fCenter, fMoved);
                         updateDirectedGraph.addEdge(squadCenter, squadMoved);
                         gandDirectedGraph.addEdge(squadCenter, squadMoved);
 //                        upgpDirectedGraph.addEdge(gpCenter, gpMoved);
@@ -1051,9 +1099,10 @@ Nate sweetened at 129572932000
                             squadUndirectedGraph.addEdge(squadCenter, squadMoved);
                             sggpUndirectedGraph.addEdge(gpCenter, gpMoved);
                             ggpUndirectedGraph.addEdge(gpCenter, gpMoved);
-                            gg2UndirectedGraph.addEdge(gpCenter, gpMoved);
                             sgvUndirectedGraph.addEdge(vCenter, vMoved);
                             gvUndirectedGraph.addEdge(vCenter, vMoved);
+                            gi2UndirectedGraph.addEdge(iCenter, iMoved);
+                            gf2UndirectedGraph.addEdge(fCenter, fMoved);
                         }
                     }
                 }
@@ -3053,104 +3102,104 @@ Nate sweetened at 129572932000
     }
 
     @Benchmark
-    public long doPathGandG2D(BenchmarkState state) {
+    public long doPathGandI2D(BenchmarkState state) {
         long scanned = 0;
         state.srng.setState(1234567890L);
-        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.gg2DirectedGraph.algorithms();
+        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<PointI2> algo = state.gi2DirectedGraph.algorithms();
         for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
-            end.x = x;
+            endI.x = x;
             for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
-                start.set(state.srng.getRandomElement(state.gpFloors));
-                state.ggpPath.clear();
-                end.y = y;
-                state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
-                if (state.ggpPath.size != 0)
-                    scanned += state.ggpPath.size;
+                startI.set(state.srng.getRandomElement(state.iFloors));
+                state.giPath.clear();
+                endI.y = y;
+                state.giPath.addAll(algo.findShortestPath(startI, endI, state.giHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+                if (state.giPath.size != 0)
+                    scanned += state.giPath.size;
             }
         }
         return scanned;
     }
 
     @Benchmark
-    public long doTinyPathGandG2D(BenchmarkState state) {
+    public long doTinyPathGandI2D(BenchmarkState state) {
         long scanned = 0;
-        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.gg2DirectedGraph.algorithms();
+        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<PointI2> algo = state.gi2DirectedGraph.algorithms();
         for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
-            end.x = x;
+            endI.x = x;
             for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
-                start.set(state.gpNearbyMap[x][y]);
-                state.ggpPath.clear();
-                end.y = y;
-                state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
-                if (state.ggpPath.size != 0)
-                    scanned += state.ggpPath.size;
+                startI.set(state.gpNearbyMap[x][y]);
+                state.giPath.clear();
+                endI.y = y;
+                state.giPath.addAll(algo.findShortestPath(startI, endI, state.giHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+                if (state.giPath.size != 0)
+                    scanned += state.giPath.size;
             }
         }
         return scanned;
     }
 
     @Benchmark
-    public long doOneGandG2D(BenchmarkState state) {
-        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<GridPoint2> algo = state.gg2DirectedGraph.algorithms();
-        GridPoint2 start = state.highestGP;
-        GridPoint2 end = state.lowestGP;
-        state.ggpPath.clear();
-        state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
-        return state.ggpPath.size();
+    public long doOneGandI2D(BenchmarkState state) {
+        final com.github.tommyettinger.gand.algorithms.DirectedGraphAlgorithms<PointI2> algo = state.gi2DirectedGraph.algorithms();
+        PointI2 startI = state.highestI;
+        PointI2 endI = state.lowestI;
+        state.giPath.clear();
+        state.giPath.addAll(algo.findShortestPath(startI, endI, state.giHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+        return state.giPath.size();
     }
     @Benchmark
-    public long doPathGandG2UD(BenchmarkState state) {
+    public long doPathGandI2UD(BenchmarkState state) {
         long scanned = 0;
         state.srng.setState(1234567890L);
-        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.gg2UndirectedGraph.algorithms();
+        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<PointI2> algo = state.gi2UndirectedGraph.algorithms();
         for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
-            end.x = x;
+            endI.x = x;
             for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
-                start.set(state.srng.getRandomElement(state.gpFloors));
-                state.ggpPath.clear();
-                end.y = y;
-                state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
-                if (state.ggpPath.size != 0)
-                    scanned += state.ggpPath.size;
+                startI.set(state.srng.getRandomElement(state.gpFloors));
+                state.giPath.clear();
+                endI.y = y;
+                state.giPath.addAll(algo.findShortestPath(startI, endI, state.giHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+                if (state.giPath.size != 0)
+                    scanned += state.giPath.size;
             }
         }
         return scanned;
     }
 
     @Benchmark
-    public long doTinyPathGandG2UD(BenchmarkState state) {
+    public long doTinyPathGandI2UD(BenchmarkState state) {
         long scanned = 0;
-        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.gg2UndirectedGraph.algorithms();
+        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<PointI2> algo = state.gi2UndirectedGraph.algorithms();
         for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
-            end.x = x;
+            endI.x = x;
             for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
                     continue;
-                start.set(state.gpNearbyMap[x][y]);
-                state.ggpPath.clear();
-                end.y = y;
-                state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
-                if (state.ggpPath.size != 0)
-                    scanned += state.ggpPath.size;
+                startI.set(state.gpNearbyMap[x][y]);
+                state.giPath.clear();
+                endI.y = y;
+                state.giPath.addAll(algo.findShortestPath(startI, endI, state.giHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+                if (state.giPath.size != 0)
+                    scanned += state.giPath.size;
             }
         }
         return scanned;
     }
 
     @Benchmark
-    public long doOneGandG2UD(BenchmarkState state) {
-        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<GridPoint2> algo = state.gg2UndirectedGraph.algorithms();
-        GridPoint2 start = state.highestGP;
-        GridPoint2 end = state.lowestGP;
-        state.ggpPath.clear();
-        state.ggpPath.addAll(algo.findShortestPath(start, end, state.ggpHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
-        return state.ggpPath.size();
+    public long doOneGandI2UD(BenchmarkState state) {
+        final com.github.tommyettinger.gand.algorithms.UndirectedGraphAlgorithms<PointI2> algo = state.gi2UndirectedGraph.algorithms();
+        PointI2 startI = state.highestI;
+        PointI2 endI = state.lowestI;
+        state.giPath.clear();
+        state.giPath.addAll(algo.findShortestPath(startI, endI, state.giHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
+        return state.giPath.size();
     }
 
 
