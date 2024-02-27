@@ -726,6 +726,31 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doPathSimpleVD    avgt    6  89.704 ±  3.446  ms/op
  * PathfindingBenchmark.doPathSimpleVUD   avgt    6  87.182 ±  5.677  ms/op
  * </pre>
+ * <br>
+ * Testing with GraalVM 21, gand vs. simple-graphs, with some more tests:
+ * <pre>
+ * Benchmark                                   Mode  Cnt   Score    Error  Units
+ * PathfindingBenchmark.doPathGandD            avgt    6  83.944 ±  3.680  ms/op
+ * PathfindingBenchmark.doPathGandF2D          avgt    6  85.413 ±  4.384  ms/op
+ * PathfindingBenchmark.doPathGandF2UD         avgt    6  85.223 ±  3.012  ms/op
+ * PathfindingBenchmark.doPathGandGPD          avgt    6  85.223 ± 15.170  ms/op
+ * PathfindingBenchmark.doPathGandGPUD         avgt    6  85.251 ±  4.396  ms/op
+ * PathfindingBenchmark.doPathGandGenericF2D   avgt    6  84.996 ±  7.195  ms/op
+ * PathfindingBenchmark.doPathGandGenericF2UD  avgt    6  85.356 ±  4.442  ms/op
+ * PathfindingBenchmark.doPathGandGenericI2D   avgt    6  82.332 ±  5.332  ms/op
+ * PathfindingBenchmark.doPathGandGenericI2UD  avgt    6  83.437 ±  3.359  ms/op
+ * PathfindingBenchmark.doPathGandI2D          avgt    6  82.958 ±  2.692  ms/op
+ * PathfindingBenchmark.doPathGandI2UD         avgt    6  86.136 ±  3.773  ms/op
+ * PathfindingBenchmark.doPathGandUD           avgt    6  85.454 ±  4.622  ms/op
+ * PathfindingBenchmark.doPathGandVD           avgt    6  84.587 ±  2.381  ms/op
+ * PathfindingBenchmark.doPathGandVUD          avgt    6  89.802 ±  4.564  ms/op
+ * PathfindingBenchmark.doPathSimpleD          avgt    6  85.582 ±  2.713  ms/op
+ * PathfindingBenchmark.doPathSimpleGPD        avgt    6  84.040 ±  3.175  ms/op
+ * PathfindingBenchmark.doPathSimpleGPUD       avgt    6  84.308 ±  3.026  ms/op
+ * PathfindingBenchmark.doPathSimpleUD         avgt    6  85.452 ±  5.027  ms/op
+ * PathfindingBenchmark.doPathSimpleVD         avgt    6  84.966 ±  3.899  ms/op
+ * PathfindingBenchmark.doPathSimpleVUD        avgt    6  84.552 ±  3.014  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
