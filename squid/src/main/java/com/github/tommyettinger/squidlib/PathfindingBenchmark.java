@@ -892,6 +892,8 @@ Nate sweetened at 129572932000
 
             gpFloors = new ArrayList<>(floorCount);
             vFloors = new ArrayList<>(floorCount);
+            iFloors = new ArrayList<>(floorCount);
+            fFloors = new ArrayList<>(floorCount);
             for (int i = 0; i < floorCount; i++) {
                 gpFloors.add(new GridPoint2(floorArray[i].x, floorArray[i].y));
                 vFloors.add(new Vector2(floorArray[i].x, floorArray[i].y));
@@ -930,6 +932,9 @@ Nate sweetened at 129572932000
             gpNearbyMap = new GridPoint2[WIDTH][HEIGHT];
             squadNearbyMap = new com.github.yellowstonegames.grid.Coord[WIDTH][HEIGHT];
             customNearbyMap = new int[WIDTH * HEIGHT];
+            vNearbyMap = new Vector2[WIDTH][HEIGHT];
+            iNearbyMap = new PointI2[WIDTH][HEIGHT];
+            fNearbyMap = new PointF2[WIDTH][HEIGHT];
             tmp = new GreasedRegion(WIDTH, HEIGHT);
             adj = new Adjacency.BasicAdjacency(WIDTH, HEIGHT, CHEBYSHEV);
             adj.blockingRule = 0;
