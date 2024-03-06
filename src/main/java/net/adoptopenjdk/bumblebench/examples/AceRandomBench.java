@@ -70,6 +70,21 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * AceRandomBench score: 567918336.000000 (567.9M 2015.7%)
  *            uncertainty:   3.4%
+ * <br>
+ * Now we're using PGO, and the results are drastically better. The steps used here:
+ * <pre>
+ * echo Building an instrumented JAR:
+ * native-image.cmd --pgo-instrument -jar target/BumbleBench.jar
+ * echo Running the instrumented JAR to collect profile information:
+ * BumbleBench.exe AceRandomBench
+ * echo Building a PGO JAR:
+ * native-image.cmd --pgo=default.iprof -jar target/BumbleBench.jar
+ * echo Running the PGO JAR:
+ * BumbleBench.exe AceRandomBench
+ * </pre>
+ * <br>
+ * AceRandomBench score: 1705748992.000000 (1.706G 2125.7%)
+ *            uncertainty:   3.1%
  */
 public final class AceRandomBench extends MicroBench {
 
