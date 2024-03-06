@@ -14,7 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
+import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.math.Vector2;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
@@ -38,7 +38,7 @@ public final class SerializableReadBench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		byte[] data = new Lwjgl3Files().local("ser.dat").readBytes();
+		byte[] data = new HeadlessFiles().local("ser.dat").readBytes();
 		HashMap<String, ArrayList<Vector2>> big;
 
 		int counter = 0;

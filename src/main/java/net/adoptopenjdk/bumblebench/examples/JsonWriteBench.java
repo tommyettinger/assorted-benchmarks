@@ -14,7 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
+import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.*;
 import com.github.tommyettinger.random.FourWheelRandom;
@@ -93,7 +93,7 @@ public final class JsonWriteBench extends MiniBench {
 
 		System.out.println("There are " + big.size() + " keys in the Map.");
 
-		new Lwjgl3Files().local("json.json").writeString(new Json(JsonWriter.OutputType.minimal).toJson(big), false);
+		new HeadlessFiles().local("json.json").writeString(new Json(JsonWriter.OutputType.minimal).toJson(big), false);
 	}
 
 }

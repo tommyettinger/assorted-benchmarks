@@ -14,7 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
+import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.math.Vector2;
 import com.jsoniter.JsonIterator;
 import com.jsoniter.spi.Config;
@@ -44,7 +44,7 @@ public final class JsoniterReadBench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		String data = new Lwjgl3Files().local("jsoniter.json").readString();
+		String data = new HeadlessFiles().local("jsoniter.json").readString();
 		HashMap<String, ArrayList<Vector2>> big;
 		Config cfg = new Config.Builder()
 				.omitDefaultValue(true)
@@ -63,7 +63,7 @@ public final class JsoniterReadBench extends MiniBench {
 		return numLoops * numIterationsPerLoop;
 	}
 	public static void main(String[] args) {
-		byte[] data = new Lwjgl3Files().local("jsoniter.json").readBytes();
+		byte[] data = new HeadlessFiles().local("jsoniter.json").readBytes();
 		Config cfg = new Config.Builder()
 				.omitDefaultValue(true)
 				.build();

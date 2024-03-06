@@ -14,7 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
+import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.ByteBufferInput;
@@ -37,7 +37,7 @@ public final class KryoReadBench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		byte[] data = new Lwjgl3Files().local("kryo.dat").readBytes();
+		byte[] data = new HeadlessFiles().local("kryo.dat").readBytes();
 		HashMap<String, ArrayList<Vector2>> big;
 		Kryo kryo = new Kryo();
 		kryo.register(HashMap.class);

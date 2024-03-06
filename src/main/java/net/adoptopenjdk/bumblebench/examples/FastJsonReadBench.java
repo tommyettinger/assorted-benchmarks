@@ -16,7 +16,7 @@ package net.adoptopenjdk.bumblebench.examples;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
+import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.math.Vector2;
 import com.github.tommyettinger.ds.ObjectObjectMap;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
@@ -39,7 +39,7 @@ public final class FastJsonReadBench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		String data = new Lwjgl3Files().local("fastjson.json").readString();
+		String data = new HeadlessFiles().local("fastjson.json").readString();
 		HashMap<String, ArrayList<Vector2>> big;
 		ParserConfig config = new ParserConfig();
 

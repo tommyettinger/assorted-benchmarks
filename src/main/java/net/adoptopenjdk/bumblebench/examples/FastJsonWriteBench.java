@@ -15,7 +15,7 @@
 package net.adoptopenjdk.bumblebench.examples;
 
 import com.alibaba.fastjson.JSON;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
+import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.OrderedSet;
@@ -92,7 +92,7 @@ public final class FastJsonWriteBench extends MiniBench {
 		}
 		System.out.println("There are " + big.size() + " keys in the Map.");
 
-		new Lwjgl3Files().local("fastjson.json").writeString(JSON.toJSONString(big), false);
+		new HeadlessFiles().local("fastjson.json").writeString(JSON.toJSONString(big), false);
 	}
 
 }

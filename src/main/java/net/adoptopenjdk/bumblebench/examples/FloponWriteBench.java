@@ -14,7 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
+import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -92,7 +92,7 @@ public final class FloponWriteBench extends MiniBench {
 			));
 		}
 
-		new Lwjgl3Files().local("flopon.json").writeString(new Flopon(FloponWriter.OutputType.minimal).toFlopon(big), false);
+		new HeadlessFiles().local("flopon.json").writeString(new Flopon(FloponWriter.OutputType.minimal).toFlopon(big), false);
 	}
 }
 

@@ -14,7 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
+import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -36,7 +36,7 @@ public final class FloponReadBench extends MiniBench {
 
 	@Override
 	protected long doBatch(long numLoops, int numIterationsPerLoop) throws InterruptedException {
-		String data = new Lwjgl3Files().local("flopon.json").readString();
+		String data = new HeadlessFiles().local("flopon.json").readString();
 		ObjectMap<String, Array<Vector2>> big;
 
 		Flopon flopon = new Flopon(FloponWriter.OutputType.minimal);

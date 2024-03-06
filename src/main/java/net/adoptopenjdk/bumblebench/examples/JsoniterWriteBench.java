@@ -14,7 +14,7 @@
 
 package net.adoptopenjdk.bumblebench.examples;
 
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Files;
+import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.OrderedSet;
@@ -107,7 +107,7 @@ public final class JsoniterWriteBench extends MiniBench {
 
 		System.out.println("There are " + big.size() + " keys in the Map.");
 
-		new Lwjgl3Files().local("jsoniter.json").writeString(JsonStream.serialize(config, big), false);
+		new HeadlessFiles().local("jsoniter.json").writeString(JsonStream.serialize(config, big), false);
 	}
 
 }

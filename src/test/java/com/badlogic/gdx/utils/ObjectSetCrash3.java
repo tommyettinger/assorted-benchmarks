@@ -2,8 +2,8 @@ package com.badlogic.gdx.utils;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.backends.headless.HeadlessApplication;
+import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 
 public class ObjectSetCrash3 extends ApplicationAdapter {
@@ -36,10 +36,6 @@ public class ObjectSetCrash3 extends ApplicationAdapter {
 
     @Override
     public void render() {
-        // standard clear the background routine for libGDX
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glDisable(GL20.GL_BLEND);
     }
 
     @Override
@@ -49,10 +45,8 @@ public class ObjectSetCrash3 extends ApplicationAdapter {
 
 
     public static void main(String[] arg) {
-        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-        config.setTitle("LibGDX Test: ObjectSet<String> crash");
-        config.setWindowedMode(500, 100);
-        config.setIdleFPS(1);
-        new Lwjgl3Application(new ObjectSetCrash3(), config);
+        HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
+        System.out.println("LibGDX Test: ObjectSet<String> crash");
+        new HeadlessApplication(new ObjectSetCrash3(), config);
     }
 }
