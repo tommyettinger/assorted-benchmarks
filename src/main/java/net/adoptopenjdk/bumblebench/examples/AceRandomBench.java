@@ -60,18 +60,38 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * GraalVM 21 (Oracle)
  * <br>
- * This is clearly incorrect, it looks like the entire loop was elided.
+ * On the first try, this is clearly incorrect, it looks like the entire loop was elided.
  * <br>
  * AceRandomBench score: 652692438696862300000000000.000000 (652.7E+24 6174.3%)
  *            uncertainty:  24.0%
+ * <br>
+ * On the next try, we keep `sum` in a private variable and write it at the end of the benchmark, to ensure the timing
+ * actually counts the RNG calls (since now they have a lasting effect).
+ * <br>
+ * AceRandomBench score: 567918336.000000 (567.9M 2015.7%)
+ *            uncertainty:   3.4%
  */
 public final class AceRandomBench extends MicroBench {
 
+	private long sum = 0L;
 	protected long doBatch(long numIterations) throws InterruptedException {
 		AceRandom rng = new AceRandom(0x12345678);
-		long sum = 0L;
 		for (long i = 0; i < numIterations; i++)
 			sum += rng.nextLong();
 		return numIterations;
+	}
+
+	/**
+	 * Optionally implemented by subclasses and called at the end of a run to verify
+	 * whether the run was correct or not. Defaults to true. If false, an ERROR message
+	 * is printed instead of the final score. Implementing methods may output their own
+	 * error message(s) as well.
+	 */
+	@Override
+	protected boolean verify() {
+		System.out.println("Final sum was: ");
+		System.out.println(sum);
+		System.out.println();
+		return super.verify();
 	}
 }
