@@ -1,0 +1,11 @@
+{
+  "resources":{
+  "includes":[{
+    "pattern":"\\QAceRandomBench.properties\\E"
+  }, {
+    "pattern":"\\Qnet/adoptopenjdk/bumblebench/core/BumbleBench.properties\\E"
+  }, {
+    "pattern":"\\Qnet/adoptopenjdk/bumblebench/examples/AceRandomBench.properties\\E"
+  }]},
+  "bundles":[]
+}

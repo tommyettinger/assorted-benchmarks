@@ -57,6 +57,13 @@ import net.adoptopenjdk.bumblebench.core.MicroBench;
  * <br>
  * AceRandomBench score: 1752449536.000000 (1.752G 2128.4%)
  *            uncertainty:   1.6%
+ * <br>
+ * GraalVM 21 (Oracle)
+ * <br>
+ * This is clearly incorrect, it looks like the entire loop was elided.
+ * <br>
+ * AceRandomBench score: 652692438696862300000000000.000000 (652.7E+24 6174.3%)
+ *            uncertainty:  24.0%
  */
 public final class AceRandomBench extends MicroBench {
 

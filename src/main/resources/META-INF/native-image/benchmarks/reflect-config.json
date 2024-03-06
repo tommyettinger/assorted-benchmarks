@@ -1,0 +1,20 @@
+[
+{
+  "name":"AceRandomBench"
+},
+{
+  "name":"java.io.InputStream",
+  "methods":[{"name":"readAllBytes","parameterTypes":[] }]
+},
+{
+  "name":"net.adoptopenjdk.bumblebench.core.BumbleBench",
+  "methods":[{"name":"bumbleMain","parameterTypes":[] }]
+},
+{
+  "name":"net.adoptopenjdk.bumblebench.examples.AceRandomBench",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.misc.IOUtils"
+}
+]
