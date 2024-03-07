@@ -124,12 +124,12 @@
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>
-            <version>5.4.0</version>
+            <version>5.6.0</version>
         </dependency>
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>kryo-jdkgdxds</artifactId>
-            <version>1.4.6.0</version>
+            <version>1.4.8.1</version>
         </dependency>
         <!--        Using JitPack-->
         <dependency>
@@ -147,7 +147,7 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>digital</artifactId>
-            <version>fbb4504818</version>
+            <version>0.4.7</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -159,13 +159,18 @@
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>jdkgdxds</artifactId>
-            <version>1.4.6</version>
+            <version>1.4.8</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
             <artifactId>flopon</artifactId>
             <version>6ceb4ab88a</version>
+        </dependency>
+        <dependency>
+            <groupId>org.furyio</groupId>
+            <artifactId>fury-core</artifactId>
+            <version>0.4.1</version>
         </dependency>
         <!--        For local installations-->
 
