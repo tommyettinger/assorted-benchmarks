@@ -28,7 +28,8 @@ import java.util.HashMap;
 /**
  * Java 17:
  * <br>
- *
+ * FuryReadBench score: 640.986328 (641.0 646.3%)
+ *           uncertainty:   1.2%
  */
 public final class FuryReadBench extends MiniBench {
 	@Override
@@ -45,7 +46,7 @@ public final class FuryReadBench extends MiniBench {
 		fury.register(ArrayList.class);
 		fury.register(Vector2.class);
 
-		int counter = 0;
+		long counter = 0;
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();

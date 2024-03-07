@@ -41,7 +41,7 @@ public final class SerializableReadBench extends MiniBench {
 		byte[] data = new HeadlessFiles().local("ser.dat").readBytes();
 		HashMap<String, ArrayList<Vector2>> big;
 
-		int counter = 0;
+		long counter = 0;
 		try {
 			for (long i = 0; i < numLoops; i++) {
 				for (int j = 0; j < numIterationsPerLoop; j++) {

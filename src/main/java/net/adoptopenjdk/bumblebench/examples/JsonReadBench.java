@@ -41,7 +41,7 @@ public final class JsonReadBench extends MiniBench {
 
 		Json json = new Json(JsonWriter.OutputType.minimal);
 
-		int counter = 0;
+		long counter = 0;
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();

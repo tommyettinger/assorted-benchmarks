@@ -38,7 +38,8 @@ import io.fury.*;
 /**
  * Java 17:
  * <br>
- *
+ * FuryWriteBench score: 526.263489 (526.3 626.6%)
+ *            uncertainty:   8.4%
  */
 public final class FuryWriteBench extends MiniBench {
 	@Override
@@ -71,7 +72,7 @@ public final class FuryWriteBench extends MiniBench {
 		fury.register(Vector2.class);
 
 		MemoryBuffer mem = MemoryBuffer.newHeapBuffer(65536);
-		int counter = 0;
+		long counter = 0;
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();

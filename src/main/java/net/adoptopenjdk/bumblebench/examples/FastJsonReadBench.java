@@ -43,7 +43,7 @@ public final class FastJsonReadBench extends MiniBench {
 		HashMap<String, ArrayList<Vector2>> big;
 		ParserConfig config = new ParserConfig();
 
-		int counter = 0;
+		long counter = 0;
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();

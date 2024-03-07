@@ -63,7 +63,7 @@ public final class FloponWriteBench extends MiniBench {
 
 		Flopon flopon = new Flopon(FloponWriter.OutputType.minimal);
 
-		int counter = 0;
+		long counter = 0;
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();

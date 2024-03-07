@@ -85,26 +85,26 @@ public final class KryoMoreReadBench extends MiniBench {
 
 		Kryo kryo = new Kryo();
 		kryo.register(Vector2.class);
-		kryo.register(ObjectList.class, new CollectionSerializer(){
+		kryo.register(ObjectList.class, new CollectionSerializer<ObjectList<?>>(){
 			@Override
-			protected ObjectList create(Kryo kryo, Input input, Class type, int size) {
-				return new ObjectList(size);
+			protected ObjectList<?> create(Kryo kryo, Input input, Class type, int size) {
+				return new ObjectList<>(size);
 			}
 
 			@Override
-			protected ObjectList createCopy(Kryo kryo, Collection original) {
-				return new ObjectList(original.size());
+			protected ObjectList<?> createCopy(Kryo kryo, ObjectList original) {
+				return new ObjectList<>(original.size());
 			}
 		});
-		kryo.register(ObjectObjectMap.class, new MapSerializer(){
+		kryo.register(ObjectObjectMap.class, new MapSerializer<ObjectObjectMap<?, ?>>(){
 			@Override
-			protected ObjectObjectMap create(Kryo kryo, Input input, Class type, int size) {
-				return new ObjectObjectMap(size, Utilities.getDefaultLoadFactor());
+			protected ObjectObjectMap<?, ?> create(Kryo kryo, Input input, Class type, int size) {
+				return new ObjectObjectMap<>(size, Utilities.getDefaultLoadFactor());
 			}
 
 			@Override
-			protected ObjectObjectMap createCopy(Kryo kryo, Map original) {
-				return new ObjectObjectMap(original.size());
+			protected ObjectObjectMap<?, ?> createCopy(Kryo kryo, ObjectObjectMap<?, ?> original) {
+				return new ObjectObjectMap<>(original.size());
 			}
 		});
 
@@ -118,7 +118,7 @@ public final class KryoMoreReadBench extends MiniBench {
 //		ms.setValueClass(ObjectList.class, cs);
 //		kryo.register(ObjectObjectMap.class, ms);
 
-		int counter = 0;
+		long counter = 0;
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();

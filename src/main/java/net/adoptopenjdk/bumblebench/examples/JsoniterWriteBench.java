@@ -72,7 +72,7 @@ public final class JsoniterWriteBench extends MiniBench {
 				.omitDefaultValue(true)
 				.build();
 		JsonStream.setMode(EncodingMode.DYNAMIC_MODE);
-		int counter = 0;
+		long counter = 0;
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
