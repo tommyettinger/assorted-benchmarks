@@ -36,10 +36,19 @@ import io.fury.*;
 
 
 /**
+ * With serializeJavaObject():
+ * <br>
  * Java 17:
  * <br>
  * FuryWriteBench score: 526.263489 (526.3 626.6%)
  *            uncertainty:   8.4%
+ * <br>
+ * With serialize():
+ * <br>
+ * Java 17:
+ * <br>
+ * FuryWriteBench score: 521.859558 (521.9 625.7%)
+ *            uncertainty:  19.0%
  */
 public final class FuryWriteBench extends MiniBench {
 	@Override
@@ -76,7 +85,7 @@ public final class FuryWriteBench extends MiniBench {
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				fury.serializeJavaObject(mem, big);
+				fury.serialize(mem, big);
 				counter += mem.size();
 				pauseTimer();
 			}
@@ -112,7 +121,7 @@ public final class FuryWriteBench extends MiniBench {
 
 		try {
 			FileOutputStream stream = new FileOutputStream("fury.dat");
-			byte[] bytes = fury.serializeJavaObject(big);
+			byte[] bytes = fury.serialize(big);
 			System.out.println("Fury serialized data is " + bytes.length + " bytes in size.");
 			stream.write(bytes);
 			stream.flush();

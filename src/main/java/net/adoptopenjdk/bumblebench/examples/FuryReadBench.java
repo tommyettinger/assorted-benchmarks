@@ -26,10 +26,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
+ * With deserializeJavaObject():
+ * <br>
  * Java 17:
  * <br>
  * FuryReadBench score: 640.986328 (641.0 646.3%)
  *           uncertainty:   1.2%
+ * <br>
+ * With deserialize():
+ * <br>
+ * Java 17:
+ * <br>
+ * FuryReadBench score: 632.360962 (632.4 644.9%)
+ *           uncertainty:   2.1%
  */
 public final class FuryReadBench extends MiniBench {
 	@Override
@@ -50,7 +59,7 @@ public final class FuryReadBench extends MiniBench {
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				big = fury.deserializeJavaObject(data, HashMap.class);
+				big = (HashMap<String, ArrayList<Vector2>>) fury.deserialize(data);
 				counter += big.size();
 				pauseTimer();
 			}
