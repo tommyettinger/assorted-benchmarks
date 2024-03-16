@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench.factories;
 
-import com.esotericsoftware.kryo.kryo5.util.CuckooObjectMap;
+import com.esotericsoftware.kryo.util.CuckooObjectMap;
 
 import java.util.function.Supplier;
 

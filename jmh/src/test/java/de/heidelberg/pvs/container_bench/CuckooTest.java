@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench;
 
-import com.esotericsoftware.kryo.kryo5.util.CuckooObjectMap;
+import com.esotericsoftware.kryo.util.CuckooObjectMap;
 import org.junit.Test;
 
 public class CuckooTest {

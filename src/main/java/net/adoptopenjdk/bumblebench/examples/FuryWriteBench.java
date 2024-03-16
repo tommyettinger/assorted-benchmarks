@@ -85,7 +85,7 @@ public final class FuryWriteBench extends MiniBench {
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				fury.serialize(mem, big);
+				fury.serializeJavaObject(mem, big);
 				counter += mem.size();
 				pauseTimer();
 			}
@@ -121,7 +121,7 @@ public final class FuryWriteBench extends MiniBench {
 
 		try {
 			FileOutputStream stream = new FileOutputStream("fury.dat");
-			byte[] bytes = fury.serialize(big);
+			byte[] bytes = fury.serializeJavaObject(big);
 			System.out.println("Fury serialized data is " + bytes.length + " bytes in size.");
 			stream.write(bytes);
 			stream.flush();

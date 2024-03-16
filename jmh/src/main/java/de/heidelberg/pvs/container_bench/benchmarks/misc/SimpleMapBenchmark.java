@@ -19,8 +19,8 @@
 
 package de.heidelberg.pvs.container_bench.benchmarks.misc;
 
-import com.esotericsoftware.kryo.kryo5.util.CuckooObjectMap;
-import com.esotericsoftware.kryo.kryo5.util.IdentityObjectIntMap;
+import com.esotericsoftware.kryo.util.CuckooObjectMap;
+import com.esotericsoftware.kryo.util.IdentityObjectIntMap;
 
 import java.util.Collections;
 import java.util.IdentityHashMap;

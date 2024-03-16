@@ -59,7 +59,7 @@ public final class FuryReadBench extends MiniBench {
 		for (long i = 0; i < numLoops; i++) {
 			for (int j = 0; j < numIterationsPerLoop; j++) {
 				startTimer();
-				big = (HashMap<String, ArrayList<Vector2>>) fury.deserialize(data);
+				big = fury.deserializeJavaObject(data, HashMap.class);
 				counter += big.size();
 				pauseTimer();
 			}

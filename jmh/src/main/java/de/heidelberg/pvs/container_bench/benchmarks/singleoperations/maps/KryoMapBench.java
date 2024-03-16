@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench.benchmarks.singleoperations.maps;
 
-import com.esotericsoftware.kryo.kryo5.util.CuckooObjectMap;
+import com.esotericsoftware.kryo.util.CuckooObjectMap;
 import de.heidelberg.pvs.container_bench.factories.KryoMapFact;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Param;

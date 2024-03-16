@@ -2,10 +2,7 @@ package de.heidelberg.pvs.container_bench.generators;
 
 import de.heidelberg.pvs.container_bench.generators.dictionary.IntegerDictionaryGenerator;
 import de.heidelberg.pvs.container_bench.generators.dictionary.StringDictionaryGenerator;
-import de.heidelberg.pvs.container_bench.generators.uniform.CoordUniformGenerator;
-import de.heidelberg.pvs.container_bench.generators.uniform.IntegerUniformGenerator;
-import de.heidelberg.pvs.container_bench.generators.uniform.StringUniformGenerator;
-import de.heidelberg.pvs.container_bench.generators.uniform.Vector2UniformGenerator;
+import de.heidelberg.pvs.container_bench.generators.uniform.*;
 
 public class GeneratorFactory {
 
@@ -21,6 +18,9 @@ public class GeneratorFactory {
 
 			case STRING_DICTIONARY:
 				return new StringDictionaryGenerator();
+
+			case OBJECT_UNIFORM:
+				return new ObjectUniformGenerator();
 
 			case VECTOR2_UNIFORM:
 				return new Vector2UniformGenerator();

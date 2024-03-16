@@ -13,7 +13,7 @@ import squidpony.squidmath.UnorderedMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public enum JDKMap2ObjFact {
+public enum JDKMapIdentityFact {
 //JDK_O2O_HASH,KOLOBOKE_O2O_HASH,FASTUTIL_O2O_HASH,ECLIPSE_O2O_HASH,APACHE_O2O_HASH,MAHOUT_O2O_HASH,AGRONA_O2O_HASH,SQUID_HASH,JDKGDXDS_HASH
 //JDK_O2O_LINKEDHASH,FASTUTIL_O2O_LINKEDHASH,APACHE_O2O_LINKEDHASH,SQUID_INDEXED,ATLANTIS_INDEXED,JDKGDXDS_INDEXED
 //FASTUTIL_O2O_ARRAY,GOOGLE_O2O_ARRAY,CORENLP_ARRAY
@@ -25,7 +25,7 @@ public enum JDKMap2ObjFact {
 	JDK_O2O_HASH(() -> new java.util.HashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_O2O_LINKEDHASH(() -> new java.util.LinkedHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_O2O_TREE(() -> new java.util.TreeMap<>()), //
-	JDK_O2O_HASHTABLE(() -> new java.util.Hashtable<>(16, LoadFactor.LOAD_FACTOR)), //
+	JDK_O2O_IDENTITY(() -> new java.util.IdentityHashMap<>(16)), //
 
 	KOLOBOKE_O2O_HASH(com.koloboke.collect.map.hash.HashObjObjMaps::newMutableMap), //
 	KOLOBOKE_O2O_QHASH(KolobokeQHash.ObjObjMaps::newMutableMap), //
@@ -61,8 +61,7 @@ public enum JDKMap2ObjFact {
 	ATLANTIS_INDEXED(() -> new IndexedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
 	JDKGDXDS_HASH(() -> new ObjectObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
-	JDKGDXDSQ_HASH(() -> new ObjectObjectQuadMap<>(16, LoadFactor.LOAD_FACTOR)),
-	CUCKOO_HASH(() -> new ObjectObjectCuckooMap<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_IDENTITY(() -> new IdentityObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_INDEXED(() -> new ObjectObjectOrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
 	JDKGDXDSFIB_HASH(() -> new ObjectMapFib<>(16, LoadFactor.LOAD_FACTOR)),
@@ -85,11 +84,11 @@ public enum JDKMap2ObjFact {
 
 	public final int maxsize;
 
-	private JDKMap2ObjFact(Supplier<Map<Object, Object>> maker) {
+	private JDKMapIdentityFact(Supplier<Map<Object, Object>> maker) {
 		this(maker, Integer.MAX_VALUE);
 	}
 
-	private JDKMap2ObjFact(Supplier<Map<Object, Object>> maker, int maxsize) {
+	private JDKMapIdentityFact(Supplier<Map<Object, Object>> maker, int maxsize) {
 		this.maker = maker;
 		this.maxsize = maxsize;
 	}
