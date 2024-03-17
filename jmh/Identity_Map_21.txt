@@ -1,3 +1,67 @@
+Benchmark                                           (impl)   (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt        Score      Error  Units
+JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505     100    POPULATE  sample  494656     1627.213 ±   25.536  ns/op
+JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505     100    CONTAINS  sample  702206       84.829 ±    1.776  ns/op
+JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505     100        COPY  sample  648353     1260.586 ±   27.978  ns/op
+JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505     100     ITERATE  sample  821914     1005.280 ±    2.655  ns/op
+JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505    1000    POPULATE  sample  684180    18293.125 ±   63.814  ns/op
+JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505    1000    CONTAINS  sample  588091       79.788 ±    1.553  ns/op
+JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505    1000        COPY  sample  511050    12224.811 ±   43.881  ns/op
+JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505    1000     ITERATE  sample  807641     7744.684 ±    8.449  ns/op
+JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505   10000    POPULATE  sample   59383   421410.316 ±  928.551  ns/op
+JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505   10000    CONTAINS  sample  725970      119.087 ±    1.838  ns/op
+JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505   10000        COPY  sample  108408   230680.049 ±  511.654  ns/op
+JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505   10000     ITERATE  sample  150382   166407.671 ±  110.576  ns/op
+JDKIdentityMapBench.bench                 JDK_O2O_IDENTITY  OBJECT_UNIFORM                    100  467505     100    POPULATE  sample  684590     2325.586 ±   28.042  ns/op
+JDKIdentityMapBench.bench                 JDK_O2O_IDENTITY  OBJECT_UNIFORM                    100  467505     100    CONTAINS  sample  703227       74.341 ±    1.363  ns/op
+JDKIdentityMapBench.bench                 JDK_O2O_IDENTITY  OBJECT_UNIFORM                    100  467505     100        COPY  sample  519432     1559.884 ±   31.524  ns/op
+JDKIdentityMapBench.bench                 JDK_O2O_IDENTITY  OBJECT_UNIFORM                    100  467505     100     ITERATE  sample  661489     1232.098 ±   22.106  ns/op
+JDKIdentityMapBench.bench                 JDK_O2O_IDENTITY  OBJECT_UNIFORM                    100  467505    1000    POPULATE  sample  502787    24936.119 ±   83.514  ns/op
+JDKIdentityMapBench.bench                 JDK_O2O_IDENTITY  OBJECT_UNIFORM                    100  467505    1000    CONTAINS  sample  673040       86.136 ±    1.427  ns/op
+JDKIdentityMapBench.bench                 JDK_O2O_IDENTITY  OBJECT_UNIFORM                    100  467505    1000        COPY  sample  424285    14903.143 ±   98.705  ns/op
+JDKIdentityMapBench.bench                 JDK_O2O_IDENTITY  OBJECT_UNIFORM                    100  467505    1000     ITERATE  sample  439059    14385.886 ±   81.601  ns/op
+JDKIdentityMapBench.bench                 JDK_O2O_IDENTITY  OBJECT_UNIFORM                    100  467505   10000    POPULATE  sample   56576   442436.380 ±  873.312  ns/op
+JDKIdentityMapBench.bench                 JDK_O2O_IDENTITY  OBJECT_UNIFORM                    100  467505   10000    CONTAINS  sample  860533      103.031 ±    2.071  ns/op
+JDKIdentityMapBench.bench                 JDK_O2O_IDENTITY  OBJECT_UNIFORM                    100  467505   10000        COPY  sample   97133   257556.663 ±  581.638  ns/op
+JDKIdentityMapBench.bench                 JDK_O2O_IDENTITY  OBJECT_UNIFORM                    100  467505   10000     ITERATE  sample  165186   151445.271 ±  309.669  ns/op
+JDKIdentityMapBench.bench                    JDKGDXDS_HASH  OBJECT_UNIFORM                    100  467505     100    POPULATE  sample  858350     1879.681 ±   29.678  ns/op
+JDKIdentityMapBench.bench                    JDKGDXDS_HASH  OBJECT_UNIFORM                    100  467505     100    CONTAINS  sample  733303       82.437 ±    1.370  ns/op
+JDKIdentityMapBench.bench                    JDKGDXDS_HASH  OBJECT_UNIFORM                    100  467505     100        COPY  sample  570743     2775.115 ±   30.016  ns/op
+JDKIdentityMapBench.bench                    JDKGDXDS_HASH  OBJECT_UNIFORM                    100  467505     100     ITERATE  sample  777107     1069.761 ±    3.238  ns/op
+JDKIdentityMapBench.bench                    JDKGDXDS_HASH  OBJECT_UNIFORM                    100  467505    1000    POPULATE  sample  593351    21073.382 ±   67.230  ns/op
+JDKIdentityMapBench.bench                    JDKGDXDS_HASH  OBJECT_UNIFORM                    100  467505    1000    CONTAINS  sample  682697       79.540 ±    2.065  ns/op
+JDKIdentityMapBench.bench                    JDKGDXDS_HASH  OBJECT_UNIFORM                    100  467505    1000        COPY  sample  388611    16147.841 ±   75.636  ns/op
+JDKIdentityMapBench.bench                    JDKGDXDS_HASH  OBJECT_UNIFORM                    100  467505    1000     ITERATE  sample  504067    12403.865 ±   11.111  ns/op
+JDKIdentityMapBench.bench                    JDKGDXDS_HASH  OBJECT_UNIFORM                    100  467505   10000    POPULATE  sample   49733   503115.231 ± 1144.060  ns/op
+JDKIdentityMapBench.bench                    JDKGDXDS_HASH  OBJECT_UNIFORM                    100  467505   10000    CONTAINS  sample  951976      107.360 ±   10.148  ns/op
+JDKIdentityMapBench.bench                    JDKGDXDS_HASH  OBJECT_UNIFORM                    100  467505   10000        COPY  sample   64564   387544.445 ±  753.167  ns/op
+JDKIdentityMapBench.bench                    JDKGDXDS_HASH  OBJECT_UNIFORM                    100  467505   10000     ITERATE  sample  137609   181809.089 ±  188.862  ns/op
+JDKIdentityMapBench.bench                   JDKGDXDS_TOSTR  OBJECT_UNIFORM                    100  467505     100    POPULATE  sample  681964     2353.677 ±   29.337  ns/op
+JDKIdentityMapBench.bench                   JDKGDXDS_TOSTR  OBJECT_UNIFORM                    100  467505     100    CONTAINS  sample  838850       36.683 ±    0.947  ns/op
+JDKIdentityMapBench.bench                   JDKGDXDS_TOSTR  OBJECT_UNIFORM                    100  467505     100        COPY  sample  748001     2134.667 ±   28.426  ns/op
+JDKIdentityMapBench.bench                   JDKGDXDS_TOSTR  OBJECT_UNIFORM                    100  467505     100     ITERATE  sample  670887     1225.989 ±    7.666  ns/op
+JDKIdentityMapBench.bench                   JDKGDXDS_TOSTR  OBJECT_UNIFORM                    100  467505    1000    POPULATE  sample  225857   110758.251 ±  149.393  ns/op
+JDKIdentityMapBench.bench                   JDKGDXDS_TOSTR  OBJECT_UNIFORM                    100  467505    1000    CONTAINS  sample  574955       69.333 ±    2.425  ns/op
+JDKIdentityMapBench.bench                   JDKGDXDS_TOSTR  OBJECT_UNIFORM                    100  467505    1000        COPY  sample  299004    41830.276 ±   96.543  ns/op
+JDKIdentityMapBench.bench                   JDKGDXDS_TOSTR  OBJECT_UNIFORM                    100  467505    1000     ITERATE  sample  525130    11913.342 ±   11.558  ns/op
+JDKIdentityMapBench.bench                   JDKGDXDS_TOSTR  OBJECT_UNIFORM                    100  467505   10000    POPULATE  sample   33963   736877.552 ± 1590.348  ns/op
+JDKIdentityMapBench.bench                   JDKGDXDS_TOSTR  OBJECT_UNIFORM                    100  467505   10000    CONTAINS  sample  691380      106.330 ±    1.866  ns/op
+JDKIdentityMapBench.bench                   JDKGDXDS_TOSTR  OBJECT_UNIFORM                    100  467505   10000        COPY  sample   50696   493779.633 ±  960.931  ns/op
+JDKIdentityMapBench.bench                   JDKGDXDS_TOSTR  OBJECT_UNIFORM                    100  467505   10000     ITERATE  sample  220016   113619.500 ±   97.954  ns/op
+JDKIdentityMapBench.bench                JDKGDXDS_IDENTITY  OBJECT_UNIFORM                    100  467505     100    POPULATE  sample  835030     1886.391 ±   16.470  ns/op
+JDKIdentityMapBench.bench                JDKGDXDS_IDENTITY  OBJECT_UNIFORM                    100  467505     100    CONTAINS  sample  818976       80.665 ±    1.604  ns/op
+JDKIdentityMapBench.bench                JDKGDXDS_IDENTITY  OBJECT_UNIFORM                    100  467505     100        COPY  sample  534253     1470.817 ±   22.054  ns/op
+JDKIdentityMapBench.bench                JDKGDXDS_IDENTITY  OBJECT_UNIFORM                    100  467505     100     ITERATE  sample  757260     1092.039 ±    3.183  ns/op
+JDKIdentityMapBench.bench                JDKGDXDS_IDENTITY  OBJECT_UNIFORM                    100  467505    1000    POPULATE  sample  575263    21770.394 ±   70.179  ns/op
+JDKIdentityMapBench.bench                JDKGDXDS_IDENTITY  OBJECT_UNIFORM                    100  467505    1000    CONTAINS  sample  621653       91.088 ±    9.228  ns/op
+JDKIdentityMapBench.bench                JDKGDXDS_IDENTITY  OBJECT_UNIFORM                    100  467505    1000        COPY  sample  393372    16052.792 ±   91.759  ns/op
+JDKIdentityMapBench.bench                JDKGDXDS_IDENTITY  OBJECT_UNIFORM                    100  467505    1000     ITERATE  sample  543863    11501.236 ±   13.173  ns/op
+JDKIdentityMapBench.bench                JDKGDXDS_IDENTITY  OBJECT_UNIFORM                    100  467505   10000    POPULATE  sample   52195   479482.355 ± 1095.529  ns/op
+JDKIdentityMapBench.bench                JDKGDXDS_IDENTITY  OBJECT_UNIFORM                    100  467505   10000    CONTAINS  sample  518551      103.853 ±    2.931  ns/op
+JDKIdentityMapBench.bench                JDKGDXDS_IDENTITY  OBJECT_UNIFORM                    100  467505   10000        COPY  sample   77496   322926.558 ±  653.082  ns/op
+JDKIdentityMapBench.bench                JDKGDXDS_IDENTITY  OBJECT_UNIFORM                    100  467505   10000     ITERATE  sample  135083   185180.750 ±  207.792  ns/op
+
+Older results that didn't actually test the main new thing, JDKGDXDS_TOSTR:
+
 Benchmark                                           (impl)   (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
 JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505     100    POPULATE  sample  864901     1682.592 ±  27.052  ns/op
 JDKIdentityMapBench.bench                     JDK_O2O_HASH  OBJECT_UNIFORM                    100  467505     100    CONTAINS  sample  701562       84.756 ±   1.552  ns/op
