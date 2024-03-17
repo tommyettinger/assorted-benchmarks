@@ -1,10 +1,7 @@
 package de.heidelberg.pvs.container_bench.factories;
 
 import com.github.tommyettinger.ds.*;
-import de.heidelberg.pvs.container_bench.ObjectMapBare;
-import de.heidelberg.pvs.container_bench.ObjectMapMulXor;
-import de.heidelberg.pvs.container_bench.OrderedMapBare;
-import de.heidelberg.pvs.container_bench.OrderedMapMulXor;
+import de.heidelberg.pvs.container_bench.*;
 import io.timeandspace.smoothie.OptimizationObjective;
 import io.timeandspace.smoothie.SmoothieMap;
 import io.timeandspace.smoothie.SwissTable;
@@ -20,7 +17,7 @@ public enum JDKMapIdentityFact {
 //JDK_O2O_HASH,FASTUTIL_O2O_HASH,ECLIPSE_O2O_HASH,JDKGDXDS_HASH,CUCKOO_HASH
 //JDK_O2O_HASH,JDKGDXDS_HASH,FASTUTIL_O2O_HASH,ECLIPSE_O2O_HASH
 //JDKGDXDS_HASH,JDKGDXDSQ_HASH,JDK_O2O_HASH
-//JDK_O2O_HASH,JDKGDXDS_HASH,KOLOBOKE_O2O_HASH,FASTUTIL_O2O_HASH
+//JDK_O2O_HASH,JDK_O2O_IDENTITY,JDKGDXDS_HASH,JDKGDXDS_TOSTR,JDKGDXDS_IDENTITY
 
 	JDK_O2O_HASH(() -> new java.util.HashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_O2O_LINKEDHASH(() -> new java.util.LinkedHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
@@ -61,6 +58,7 @@ public enum JDKMapIdentityFact {
 	ATLANTIS_INDEXED(() -> new IndexedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
 	JDKGDXDS_HASH(() -> new ObjectObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_TOSTR(() -> new ObjectMapToString<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_IDENTITY(() -> new IdentityObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_INDEXED(() -> new ObjectObjectOrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 

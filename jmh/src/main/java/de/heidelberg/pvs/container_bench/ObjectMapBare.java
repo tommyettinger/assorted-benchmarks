@@ -2,6 +2,7 @@ package de.heidelberg.pvs.container_bench;
 
 import com.github.tommyettinger.ds.ObjectObjectMap;
 
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -51,6 +52,28 @@ public class ObjectMapBare<K, V> extends ObjectObjectMap<K, V> {
 	 */
 	public ObjectMapBare(Map<? extends K, ? extends V> map) {
 		super(map);
+	}
+
+	/**
+	 * Given two side-by-side arrays, one of keys, one of values, this constructs a map and inserts each pair of key and value into it.
+	 * If keys and values have different lengths, this only uses the length of the smaller array.
+	 *
+	 * @param keys   an array of keys
+	 * @param values an array of values
+	 */
+	public ObjectMapBare(K[] keys, V[] values) {
+		super(keys, values);
+	}
+
+	/**
+	 * Given two side-by-side collections, one of keys, one of values, this constructs a map and inserts each pair of key and value into it.
+	 * If keys and values have different lengths, this only uses the length of the smaller collection.
+	 *
+	 * @param keys   a Collection of keys
+	 * @param values a Collection of values
+	 */
+	public ObjectMapBare(Collection<? extends K> keys, Collection<? extends V> values) {
+		super(keys, values);
 	}
 
 	/**
