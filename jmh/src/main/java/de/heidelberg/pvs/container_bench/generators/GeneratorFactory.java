@@ -22,6 +22,9 @@ public class GeneratorFactory {
 			case OBJECT_UNIFORM:
 				return new ObjectUniformGenerator();
 
+			case CLASS_UNIFORM:
+				return new ClassUniformGenerator();
+
 			case VECTOR2_UNIFORM:
 				return new Vector2UniformGenerator();
 
