@@ -2,16 +2,12 @@ package de.heidelberg.pvs.container_bench.factories;
 
 import com.github.tommyettinger.ds.*;
 import de.heidelberg.pvs.container_bench.*;
-import io.timeandspace.smoothie.OptimizationObjective;
-import io.timeandspace.smoothie.SmoothieMap;
-import io.timeandspace.smoothie.SwissTable;
-import squidpony.squidmath.UnorderedMap;
 
 import java.util.Map;
 import java.util.function.Supplier;
 
 public enum JDKClassMapFact {
-//JDKGDXDS_HASH,JDKGDXDS_CLASS,JDKGDXDS_TOSTR,JDKGDXDS_IDENTITY,JDK_O2O_HASH,JDK_O2O_IDENTITY
+//JDKGDXDS_HASH,JDKGDXDS_CLASS,JDKGDXDS_SPEC_CLASS,JDK_O2O_HASH
 
 	JDK_O2O_HASH(() -> new java.util.HashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_O2O_IDENTITY(() -> new java.util.IdentityHashMap<>(16)), //
@@ -31,6 +27,7 @@ public enum JDKClassMapFact {
 	JDKGDXDS_TOSTR(() -> new ObjectMapToString<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_IDENTITY(() -> new IdentityObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_CLASS(() -> new ClassObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_SPEC_CLASS(() -> new ClassSpecializedMap<>(16, LoadFactor.LOAD_FACTOR)),
 	;
 
 	public final Supplier<Map<Class<?>, Object>> maker;

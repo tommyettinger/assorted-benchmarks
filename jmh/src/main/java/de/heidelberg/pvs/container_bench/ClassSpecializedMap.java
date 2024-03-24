@@ -1212,7 +1212,7 @@ public class ClassSpecializedMap<V> implements Map<Class<?>, V>, Iterable<Map.En
 			iter.reset();
 			int hc = 1;
 			for (V v : this)
-				hc = 31 * hc + (v == null ? 0 : v.hashCode());
+				hc = 421 * hc + (v == null ? 0 : v.hashCode());
 			iter.currentIndex = currentIdx;
 			iter.nextIndex = nextIdx;
 			iter.hasNext = hn;
