@@ -5,3 +5,19 @@ JDKClassMapBench.bench                     JDKGDXDS_CLASS  CLASS_UNIFORM        
 JDKClassMapBench.bench                JDKGDXDS_SPEC_CLASS  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  541431      97.104 ± 2.992  ns/op
 JDKClassMapBench.bench                      JDKGDXDS_HASH  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  618591      89.901 ± 2.112  ns/op
 JDKClassMapBench.bench                       JDK_O2O_HASH  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  629905      89.645 ± 1.651  ns/op
+
+(Now this was run with Java 21.)
+
+Benchmark                                          (impl)  (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt       Score   Error  Units
+JDKClassMapBench.bench                     JDKGDXDS_CLASS  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  597190      46.529 ± 1.719  ns/op
+JDKClassMapBench.bench                JDKGDXDS_SPEC_CLASS  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  607125      44.727 ± 1.381  ns/op
+JDKClassMapBench.bench                      JDKGDXDS_HASH  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  630075      80.319 ± 1.674  ns/op
+JDKClassMapBench.bench                       JDK_O2O_HASH  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  590485      92.814 ± 1.721  ns/op
+
+(Run on Java 8, none of the variants show the regression...)
+
+Benchmark                                          (impl)  (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt       Score   Error  Units
+JDKClassMapBench.bench                     JDKGDXDS_CLASS  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  613917      46.824 ± 2.223  ns/op
+JDKClassMapBench.bench                JDKGDXDS_SPEC_CLASS  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  573714      48.237 ± 2.414  ns/op
+JDKClassMapBench.bench                      JDKGDXDS_HASH  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  567600      43.106 ± 1.141  ns/op
+JDKClassMapBench.bench                       JDK_O2O_HASH  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  674680      42.762 ± 1.484  ns/op
