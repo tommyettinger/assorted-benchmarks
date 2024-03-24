@@ -1,0 +1,19 @@
+Benchmark                                        (impl)  (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt        Score    Error  Units
+JDKClassMapBench.bench                    JDKGDXDS_HASH  CLASS_UNIFORM                    100  467505     100    CONTAINS  sample  754629       80.832 ±  1.027  ns/op
+JDKClassMapBench.bench                    JDKGDXDS_HASH  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  668115       81.861 ±  0.725  ns/op
+JDKClassMapBench.bench                    JDKGDXDS_HASH  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  890805       98.925 ±  1.260  ns/op
+JDKClassMapBench.bench                   JDKGDXDS_CLASS  CLASS_UNIFORM                    100  467505     100    CONTAINS  sample  717741       36.479 ±  1.431  ns/op
+JDKClassMapBench.bench                   JDKGDXDS_CLASS  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  583905       42.890 ±  1.317  ns/op
+JDKClassMapBench.bench                   JDKGDXDS_CLASS  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  794982       63.817 ±  1.861  ns/op
+JDKClassMapBench.bench                   JDKGDXDS_TOSTR  CLASS_UNIFORM                    100  467505     100    CONTAINS  sample  873239      136.483 ±  5.076  ns/op
+JDKClassMapBench.bench                   JDKGDXDS_TOSTR  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  603743      194.558 ± 12.714  ns/op
+JDKClassMapBench.bench                   JDKGDXDS_TOSTR  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  874852      227.185 ±  7.279  ns/op
+JDKClassMapBench.bench                JDKGDXDS_IDENTITY  CLASS_UNIFORM                    100  467505     100    CONTAINS  sample  724524       75.304 ±  1.969  ns/op
+JDKClassMapBench.bench                JDKGDXDS_IDENTITY  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  665474       86.923 ±  1.274  ns/op
+JDKClassMapBench.bench                JDKGDXDS_IDENTITY  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  519229       95.894 ±  2.673  ns/op
+JDKClassMapBench.bench                     JDK_O2O_HASH  CLASS_UNIFORM                    100  467505     100    CONTAINS  sample  694250       85.523 ±  1.587  ns/op
+JDKClassMapBench.bench                     JDK_O2O_HASH  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  584270       84.275 ±  2.112  ns/op
+JDKClassMapBench.bench                     JDK_O2O_HASH  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  760418      114.576 ±  2.327  ns/op
+JDKClassMapBench.bench                 JDK_O2O_IDENTITY  CLASS_UNIFORM                    100  467505     100    CONTAINS  sample  689623       85.471 ±  2.203  ns/op
+JDKClassMapBench.bench                 JDK_O2O_IDENTITY  CLASS_UNIFORM                    100  467505    1000    CONTAINS  sample  622373       88.836 ±  1.484  ns/op
+JDKClassMapBench.bench                 JDK_O2O_IDENTITY  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  834256      104.639 ±  2.320  ns/op
