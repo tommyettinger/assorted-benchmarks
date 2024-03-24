@@ -69,6 +69,10 @@ dependencies {
     implementation 'com.esotericsoftware:kryo:5.6.0'
     implementation "org.furyio:fury-core:0.4.1"
 
+    implementation 'org.reflections:reflections:0.10.2'
+
+    implementation 'org.slf4j:slf4j-nop:2.0.12'
+
     // transitively grabs libGDX 1.9.10:
     //implementation 'com.github.tommyettinger:merry-ds:dc9e1bceb6'
 
