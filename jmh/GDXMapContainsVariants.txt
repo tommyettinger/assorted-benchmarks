@@ -1,0 +1,19 @@
+Benchmark                               (impl)    (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt        Score   Error  Units
+GDXMapBench.bench                 GDX_O2O_HASH  VECTOR2_UNIFORM                    100  467505    1000    CONTAINS  sample  664146       41.497 ± 1.964  ns/op
+GDXMapBench.bench                 GDX_O2O_HASH  VECTOR2_UNIFORM                    100  467505   10000    CONTAINS  sample  602596       53.823 ± 2.013  ns/op
+GDXMapBench.bench                   GDX_0_HASH  VECTOR2_UNIFORM                    100  467505    1000    CONTAINS  sample  655411       40.893 ± 1.188  ns/op
+GDXMapBench.bench                   GDX_0_HASH  VECTOR2_UNIFORM                    100  467505   10000    CONTAINS  sample  510712       54.133 ± 1.912  ns/op
+GDXMapBench.bench                   GDX_1_HASH  VECTOR2_UNIFORM                    100  467505    1000    CONTAINS  sample  649795       43.784 ± 1.925  ns/op
+GDXMapBench.bench                   GDX_1_HASH  VECTOR2_UNIFORM                    100  467505   10000    CONTAINS  sample  944266       52.765 ± 0.922  ns/op
+GDXMapBench.bench                   GDX_2_HASH  VECTOR2_UNIFORM                    100  467505    1000    CONTAINS  sample  690031       40.774 ± 1.365  ns/op
+GDXMapBench.bench                   GDX_2_HASH  VECTOR2_UNIFORM                    100  467505   10000    CONTAINS  sample  976718       53.425 ± 1.162  ns/op
+GDXMapBench.bench                   GDX_3_HASH  VECTOR2_UNIFORM                    100  467505    1000    CONTAINS  sample  635696       43.556 ± 2.226  ns/op
+GDXMapBench.bench                   GDX_3_HASH  VECTOR2_UNIFORM                    100  467505   10000    CONTAINS  sample  510231       55.768 ± 2.135  ns/op
+GDXMapBench.bench                GDX_0INT_HASH  VECTOR2_UNIFORM                    100  467505    1000    CONTAINS  sample  632722       48.273 ± 8.967  ns/op
+GDXMapBench.bench                GDX_0INT_HASH  VECTOR2_UNIFORM                    100  467505   10000    CONTAINS  sample  504844       59.000 ± 2.782  ns/op
+GDXMapBench.bench                GDX_1INT_HASH  VECTOR2_UNIFORM                    100  467505    1000    CONTAINS  sample  634661       41.813 ± 1.322  ns/op
+GDXMapBench.bench                GDX_1INT_HASH  VECTOR2_UNIFORM                    100  467505   10000    CONTAINS  sample  513066       58.556 ± 4.002  ns/op
+GDXMapBench.bench                GDX_2INT_HASH  VECTOR2_UNIFORM                    100  467505    1000    CONTAINS  sample  637758       43.521 ± 1.922  ns/op
+GDXMapBench.bench                GDX_2INT_HASH  VECTOR2_UNIFORM                    100  467505   10000    CONTAINS  sample  703266       54.924 ± 2.354  ns/op
+GDXMapBench.bench                GDX_3INT_HASH  VECTOR2_UNIFORM                    100  467505    1000    CONTAINS  sample  611115       42.927 ± 1.303  ns/op
+GDXMapBench.bench                GDX_3INT_HASH  VECTOR2_UNIFORM                    100  467505   10000    CONTAINS  sample  514624       57.044 ± 3.325  ns/op
