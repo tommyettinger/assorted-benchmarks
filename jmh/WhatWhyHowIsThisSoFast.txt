@@ -1,0 +1,9 @@
+Benchmark                                       (impl)  (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt        Score      Error  Units
+JDKClassMapBench.bench                 CUCKOO_IDENTITY  CLASS_UNIFORM                    100  467505   10000    POPULATE  sample  127561   195966.530 ±  571.994  ns/op
+JDKClassMapBench.bench                 CUCKOO_IDENTITY  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  547389       66.721 ±    3.171  ns/op
+JDKClassMapBench.bench                 CUCKOO_IDENTITY  CLASS_UNIFORM                    100  467505   10000        COPY  sample  433195    28972.571 ±  112.011  ns/op
+JDKClassMapBench.bench                 CUCKOO_IDENTITY  CLASS_UNIFORM                    100  467505   10000     ITERATE  sample  450259    27967.087 ±  119.868  ns/op
+JDKClassMapBench.bench                JDK_O2O_IDENTITY  CLASS_UNIFORM                    100  467505   10000    POPULATE  sample   48105   519917.337 ± 1236.993  ns/op
+JDKClassMapBench.bench                JDK_O2O_IDENTITY  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  811006       69.108 ±    4.164  ns/op
+JDKClassMapBench.bench                JDK_O2O_IDENTITY  CLASS_UNIFORM                    100  467505   10000        COPY  sample   74930   334065.876 ±  636.791  ns/op
+JDKClassMapBench.bench                JDK_O2O_IDENTITY  CLASS_UNIFORM                    100  467505   10000     ITERATE  sample  166905   149937.926 ±  277.678  ns/op

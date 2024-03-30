@@ -18,6 +18,9 @@
 package de.heidelberg.pvs.container_bench;
 
 import com.github.tommyettinger.digital.BitConversion;
+import com.github.tommyettinger.ds.IdentitySet;
+import com.github.tommyettinger.ds.ObjectList;
+import com.github.tommyettinger.ds.ObjectSet;
 import com.github.tommyettinger.ds.Utilities;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -286,9 +289,14 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 		Arrays.fill(valueTable, null);
 	}
 
-	private void regenHashFunctions (int newSize) {
-		int idx1 = (int)(-(hashMultiplier2 ^ ((newSize + hashMultiplier2) * hashMultiplier2 | 5L)) >>> 56);
-		int idx2 = (int)(-(hashMultiplier1 ^ ((newSize + hashMultiplier1) * hashMultiplier1 | 7L)) >>> 56) | 256;
+	private void regenHashFunctions (int modifier) {
+		//This is close to a kind of Xor-Square-Or pattern, or XQO, that (if modifier weren't added) would be a passable
+		//random number generator. The result is used to select one of 256 possible long values for hashMultiplier1, and
+		//a different result selects from a different 256 possible long values for hashMultiplier2. The modifier here
+		//usually refers to a new size of the key and value tables, but where this is called in rehash(), it is
+		//different in each loop iteration there.
+		int idx1 = (int)(-(hashMultiplier2 ^ ((modifier + hashMultiplier2) * hashMultiplier2 | 5L)) >>> 56);
+		int idx2 = (int)(-(hashMultiplier1 ^ ((modifier + hashMultiplier1) * hashMultiplier1 | 7L)) >>> 56) | 256;
 		hashMultiplier1 = Utilities.GOOD_MULTIPLIERS[idx1];
 		hashMultiplier2 = Utilities.GOOD_MULTIPLIERS[idx2];
 	}
@@ -387,7 +395,7 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 
 	@Override
 	public @NonNull Set<K> keySet () {
-		Set<K> set = new HashSet<>(size);
+		IdentitySet<K> set = new IdentitySet<>(size);
 		for (int i = 0; i < keyTable.length; i++) {
 			if (keyTable[i] != null) {
 				set.add(keyTable[i]);
@@ -398,7 +406,7 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 
 	@Override
 	public @NonNull Collection<V> values () {
-		List<V> values = new ArrayList<>(size);
+		ObjectList<V> values = new ObjectList<>(size);
 		for (int i = 0; i < keyTable.length; i++) {
 			if (keyTable[i] != null) {
 				values.add(valueTable[i]);
@@ -409,7 +417,7 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 
 	@Override
 	public @NonNull Set<Entry<K, V>> entrySet () {
-		Set<Entry<K, V>> set = new HashSet<>(size);
+		IdentitySet<Entry<K, V>> set = new IdentitySet<>(size);
 		for (int i = 0; i < keyTable.length; i++) {
 			if (keyTable[i] != null) {
 				set.add(new SimpleImmutableEntry<>(keyTable[i], valueTable[i]));
