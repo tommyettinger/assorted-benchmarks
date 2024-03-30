@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public enum JDKClassMapFact {
-//JDKGDXDS_HASH,JDKGDXDS_CLASS,JDKGDXDS_SPEC_CLASS,JDK_O2O_HASH
+//JDKGDXDS_HASH,CUCKOO_IDENTITY,JDKGDXDS_IDENTITY,JDKGDXDS_CLASS,JDKGDXDS_SPEC_CLASS,JDK_O2O_HASH,JDK_O2O_IDENTITY,FASTUTIL_O2O_HASH
 
 	JDK_O2O_HASH(() -> new java.util.HashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_O2O_IDENTITY(() -> new java.util.IdentityHashMap<>(16)), //
@@ -28,6 +28,8 @@ public enum JDKClassMapFact {
 	JDKGDXDS_IDENTITY(() -> new IdentityObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_CLASS(() -> new ClassObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_SPEC_CLASS(() -> new ClassSpecializedMap<>(16, LoadFactor.LOAD_FACTOR)),
+
+	CUCKOO_IDENTITY(() -> new IdentityCuckooMap<>(16, LoadFactor.LOAD_FACTOR)),
 	;
 
 	public final Supplier<Map<Class<?>, Object>> maker;
