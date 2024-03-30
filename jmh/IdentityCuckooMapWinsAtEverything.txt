@@ -1,0 +1,25 @@
+Benchmark                                          (impl)  (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt        Score      Error  Units
+JDKClassMapBench.bench                      JDKGDXDS_HASH  CLASS_UNIFORM                    100  467505   10000    POPULATE  sample   43043   581167.223 ± 1548.644  ns/op
+JDKClassMapBench.bench                      JDKGDXDS_HASH  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  506991       69.956 ±    3.172  ns/op
+JDKClassMapBench.bench                      JDKGDXDS_HASH  CLASS_UNIFORM                    100  467505   10000        COPY  sample   56952   439003.402 ±  953.744  ns/op
+JDKClassMapBench.bench                      JDKGDXDS_HASH  CLASS_UNIFORM                    100  467505   10000     ITERATE  sample  127284   196603.535 ±  198.880  ns/op
+JDKClassMapBench.bench                    CUCKOO_IDENTITY  CLASS_UNIFORM                    100  467505   10000    POPULATE  sample  122195   204485.247 ±  537.632  ns/op
+JDKClassMapBench.bench                    CUCKOO_IDENTITY  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  537877       62.184 ±    7.632  ns/op
+JDKClassMapBench.bench                    CUCKOO_IDENTITY  CLASS_UNIFORM                    100  467505   10000        COPY  sample  549683     5733.232 ±   23.814  ns/op
+JDKClassMapBench.bench                    CUCKOO_IDENTITY  CLASS_UNIFORM                    100  467505   10000     ITERATE  sample  561448     5617.635 ±   21.783  ns/op
+JDKClassMapBench.bench                JDKGDXDS_SPEC_CLASS  CLASS_UNIFORM                    100  467505   10000    POPULATE  sample   40004   625540.339 ± 1075.841  ns/op
+JDKClassMapBench.bench                JDKGDXDS_SPEC_CLASS  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  767643       69.525 ±    0.662  ns/op
+JDKClassMapBench.bench                JDKGDXDS_SPEC_CLASS  CLASS_UNIFORM                    100  467505   10000        COPY  sample   58227   429429.850 ±  759.314  ns/op
+JDKClassMapBench.bench                JDKGDXDS_SPEC_CLASS  CLASS_UNIFORM                    100  467505   10000     ITERATE  sample  131769   189811.470 ±  171.280  ns/op
+JDKClassMapBench.bench                       JDK_O2O_HASH  CLASS_UNIFORM                    100  467505   10000    POPULATE  sample   51260   488227.728 ± 1298.276  ns/op
+JDKClassMapBench.bench                       JDK_O2O_HASH  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  778374       75.299 ±    0.849  ns/op
+JDKClassMapBench.bench                       JDK_O2O_HASH  CLASS_UNIFORM                    100  467505   10000        COPY  sample   74855   334205.016 ±  677.014  ns/op
+JDKClassMapBench.bench                       JDK_O2O_HASH  CLASS_UNIFORM                    100  467505   10000     ITERATE  sample  109662   228068.001 ±  215.112  ns/op
+JDKClassMapBench.bench                   JDK_O2O_IDENTITY  CLASS_UNIFORM                    100  467505   10000    POPULATE  sample   49441   505682.479 ±  836.433  ns/op
+JDKClassMapBench.bench                   JDK_O2O_IDENTITY  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  827897       64.942 ±    1.258  ns/op
+JDKClassMapBench.bench                   JDK_O2O_IDENTITY  CLASS_UNIFORM                    100  467505   10000        COPY  sample   81086   308276.188 ±  608.897  ns/op
+JDKClassMapBench.bench                   JDK_O2O_IDENTITY  CLASS_UNIFORM                    100  467505   10000     ITERATE  sample  166240   150213.413 ±  270.003  ns/op
+JDKClassMapBench.bench                  FASTUTIL_O2O_HASH  CLASS_UNIFORM                    100  467505   10000    POPULATE  sample   41615   601092.946 ± 1297.723  ns/op
+JDKClassMapBench.bench                  FASTUTIL_O2O_HASH  CLASS_UNIFORM                    100  467505   10000    CONTAINS  sample  948733       64.823 ±    1.398  ns/op
+JDKClassMapBench.bench                  FASTUTIL_O2O_HASH  CLASS_UNIFORM                    100  467505   10000        COPY  sample   94290   265348.073 ±  564.809  ns/op
+JDKClassMapBench.bench                  FASTUTIL_O2O_HASH  CLASS_UNIFORM                    100  467505   10000     ITERATE  sample  139543   179311.473 ±  346.418  ns/op
