@@ -71,9 +71,9 @@ public class JDKIdentityMapBench extends AbstractMapBench<Object, Object> {
 
 			@Override
 			public void run(JDKIdentityMapBench self) throws InterruptedException {
-				int index = self.keyGenerator.generateIndex(self.size);
-				self.blackhole.consume(self.fullMap.containsKey(self.keys[index]));
-				
+				for (int i = 0; i < 64; i++) {
+					self.blackhole.consume(self.fullMap.containsKey(self.keys[self.keyGenerator.generateIndex(self.size)]));
+				}
 			}
 			
 		}, //

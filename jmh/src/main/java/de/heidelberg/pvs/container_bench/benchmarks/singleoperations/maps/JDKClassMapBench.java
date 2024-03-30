@@ -71,8 +71,7 @@ public class JDKClassMapBench extends AbstractMapBench<Class<?>, Object> {
 
 			@Override
 			public void run(JDKClassMapBench self) throws InterruptedException {
-				int index = self.keyGenerator.generateIndex(self.size);
-				self.blackhole.consume(self.fullMap.containsKey(self.keys[index]));
+				self.blackhole.consume(self.fullMap.containsKey(self.keys[self.keyGenerator.generateIndex(self.size)]));
 				
 			}
 			

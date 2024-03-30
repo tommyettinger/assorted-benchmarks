@@ -78,6 +78,7 @@ public enum JDKMapIdentityFact {
 	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000),
 
 	CUCKOO_IDENTITY(() -> new IdentityCuckooMap<>(16, LoadFactor.LOAD_FACTOR)),
+	CUCKOO_IDENTITY2(() -> new IdentityCuckooMap2<>(16, LoadFactor.LOAD_FACTOR)),
 	CUCKOO_ORIGINAL(() -> new CuckooHashMap<>(16, LoadFactor.LOAD_FACTOR)),
 
 	;

@@ -17,17 +17,9 @@
 
 package de.heidelberg.pvs.container_bench;
 
-import com.github.tommyettinger.digital.BitConversion;
 import com.github.tommyettinger.random.AceRandom;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Cuckoo hash table based implementation of the <tt>Map</tt> interface. This
@@ -134,7 +126,7 @@ public class CuckooHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V> 
         // Find the position of the most-significant bit; this will determine the number of bits
         // we need to set in the hash function.
         // This only works when buckets is a power of two, but that's every time here.
-        hashBits = -BitConversion.countTrailingZeros(buckets);
+        hashBits = -Integer.numberOfTrailingZeros(buckets);
       }
 
       @Override
@@ -144,7 +136,7 @@ public class CuckooHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V> 
         final int h = System.identityHashCode(obj);
 
         // Shift the product down so that only `hashBits` bits remain in the output.
-        return BitConversion.imul(h, a) + BitConversion.imul((h << 16 | h >>> 16), b) >>> hashBits;
+        return (h * a) + ((h << 16 | h >>> 16) * b) >>> hashBits;
       }
     }
 
@@ -210,7 +202,7 @@ public class CuckooHashMap<K, V> extends AbstractMap<K, V> implements Map<K, V> 
     }
 
     size = 0;
-    defaultStartSize = Math.max(2, 0x80000000 >>> BitConversion.countLeadingZeros(initialCapacity));
+    defaultStartSize = Math.max(2, 0x80000000 >>> Integer.numberOfLeadingZeros(initialCapacity));
 
     // Capacity is meant to be the total capacity of the two internal tables.
     T1 = new MapEntry[defaultStartSize / 2];

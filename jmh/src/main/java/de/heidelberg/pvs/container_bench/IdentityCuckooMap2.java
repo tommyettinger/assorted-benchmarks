@@ -17,10 +17,8 @@
 
 package de.heidelberg.pvs.container_bench;
 
-import com.github.tommyettinger.digital.BitConversion;
 import com.github.tommyettinger.ds.IdentitySet;
 import com.github.tommyettinger.ds.ObjectList;
-import com.github.tommyettinger.ds.ObjectSet;
 import com.github.tommyettinger.ds.Utilities;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -63,7 +61,7 @@ import java.util.*;
  * @param <K> the type of keys maintained by this map
  * @param <V> the type of mapped values
  */
-public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
+public class IdentityCuckooMap2<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	protected static final int THRESHOLD_LOOP = 8;
 	protected static final int DEFAULT_START_SIZE = 16;
@@ -71,9 +69,9 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 
 	protected float loadFactor;
 
-	protected int shift;
-	protected long hashMultiplier1;
-	protected long hashMultiplier2;
+	protected int mask;
+	protected int hashMultiplier1;
+	protected int hashMultiplier2;
 
 	protected int size;
 
@@ -85,7 +83,7 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 	/**
 	 * Constructs an empty <tt>IdentityCuckooMap</tt> with the default initial capacity (16).
 	 */
-	public IdentityCuckooMap() {
+	public IdentityCuckooMap2() {
 		this(DEFAULT_START_SIZE, DEFAULT_LOAD_FACTOR);
 	}
 
@@ -95,7 +93,7 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 	 *
 	 * @param initialCapacity the initial capacity.
 	 */
-	public IdentityCuckooMap(int initialCapacity) {
+	public IdentityCuckooMap2(int initialCapacity) {
 		this(initialCapacity, DEFAULT_LOAD_FACTOR);
 	}
 
@@ -108,12 +106,12 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 	 *
 	 * @param loadFactor the load factor.
 	 */
-	public IdentityCuckooMap(float loadFactor) {
+	public IdentityCuckooMap2(float loadFactor) {
 		this(DEFAULT_START_SIZE, loadFactor);
 	}
 
 	@SuppressWarnings("unchecked")
-	public IdentityCuckooMap(int initialCapacity, float loadFactor) {
+	public IdentityCuckooMap2(int initialCapacity, float loadFactor) {
 		if (initialCapacity <= 0) {
 			throw new IllegalArgumentException("initial capacity must be strictly positive");
 		}
@@ -122,9 +120,8 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 		}
 
 		size = 0;
-//		int tableSize = Utilities.tableSize(initialCapacity, loadFactor);
-		int tableSize = Math.max(2, 1 << -BitConversion.countLeadingZeros(initialCapacity));
-		shift = BitConversion.countLeadingZeros(tableSize - 1L); // 1L ensures we use the long overload.
+		int tableSize = Math.max(2, 1 << -Integer.numberOfLeadingZeros(initialCapacity));
+		mask = -1 >>> Integer.numberOfLeadingZeros(tableSize - 1);
 
 		keyTable = (K[])new Object[tableSize];
 		valueTable = (V[])new Object[tableSize];
@@ -133,9 +130,9 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 		regenHashFunctions(tableSize);
 	}
 
-	public IdentityCuckooMap(IdentityCuckooMap<? extends K, ? extends V> other) {
+	public IdentityCuckooMap2(IdentityCuckooMap2<? extends K, ? extends V> other) {
 		size = other.size;
-		shift = other.shift;
+		mask = other.mask;
 		loadFactor = other.loadFactor;
 		hashMultiplier1 = other.hashMultiplier1;
 		hashMultiplier2 = other.hashMultiplier2;
@@ -147,8 +144,8 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 	public boolean containsKey (Object key) {
 		final int hc = System.identityHashCode(key);
 
-		return key != null && (key == keyTable[(int)(hashMultiplier1 * hc >>> shift) | 1] ||
-				key == keyTable[(int)(hashMultiplier2 * hc >>> shift) & -2]);
+		return key != null && (key == keyTable[(hashMultiplier1 * hc & mask) | 1] ||
+				key == keyTable[(hashMultiplier2 * hc & mask) & -2]);
 	}
 
 	@Override
@@ -164,12 +161,12 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 		if(key == null) return defaultValue;
 
 		int hc = System.identityHashCode(key);
-		int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
+		int hr1 = (hashMultiplier1 * hc & mask) | 1;
 		if (key == keyTable[hr1]) {
 			return valueTable[hr1];
 		}
 
-		int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
+		int hr2 = (hashMultiplier2 * hc & mask) & -2;
 		if (key == keyTable[hr2]) {
 			return valueTable[hr2];
 		}
@@ -184,12 +181,12 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 		boolean absent = true;
 		V old = null;
 		int hc = System.identityHashCode(key);
-		int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
+		int hr1 = (hashMultiplier1 * hc & mask) | 1;
 		if (key == keyTable[hr1]) {
 			old = valueTable[hr1];
 			absent = false;
 		} else {
-			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
+			int hr2 = (hashMultiplier2 * hc & mask) & -2;
 			if (key == keyTable[hr2]) {
 				old = valueTable[hr2];
 				absent = false;
@@ -226,13 +223,13 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 		int loop = 0;
 		while (loop++ < THRESHOLD_LOOP) {
 			int hc = System.identityHashCode(key);
-			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
+			int hr1 = (hashMultiplier1 * hc & mask) | 1;
 			K k1 = keyTable[hr1];
 			if (k1 == null || key == k1) {
 				valueTable[hr1] = value;
 				return null;
 			}
-			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
+			int hr2 = (hashMultiplier2 * hc & mask) & -2;
 			K k2 = keyTable[hr2];
 			if (k2 == null || key == k2) {
 				valueTable[hr2] = value;
@@ -256,7 +253,7 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 		if (key == null)
 			return null;
 		int hc = System.identityHashCode(key);
-		int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
+		int hr1 = (hashMultiplier1 * hc & mask) | 1;
 		V oldValue = null;
 
 		if (key == keyTable[hr1]) {
@@ -265,7 +262,7 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 			valueTable[hr1] = null;
 			size--;
 		} else {
-			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
+			int hr2 = (hashMultiplier2 * hc & mask) & -2;
 			if (key == keyTable[hr2]) {
 				oldValue = valueTable[hr2];
 				keyTable[hr2] = null;
@@ -290,10 +287,10 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 		//a different result selects from a different 256 possible long values for hashMultiplier2. The modifier here
 		//usually refers to a new size of the key and value tables, but where this is called in rehash(), it is
 		//different in each loop iteration there.
-		int idx1 = (int)(-(hashMultiplier2 ^ ((modifier + hashMultiplier2) * hashMultiplier2 | 5L)) >>> 56);
-		int idx2 = (int)(-(hashMultiplier1 ^ ((modifier + hashMultiplier1) * hashMultiplier1 | 7L)) >>> 56) | 256;
-		hashMultiplier1 = Utilities.GOOD_MULTIPLIERS[idx1];
-		hashMultiplier2 = Utilities.GOOD_MULTIPLIERS[idx2];
+		int idx1 = -(hashMultiplier2 ^ ((modifier + hashMultiplier2) * hashMultiplier2 | 5)) >>> 24;
+		int idx2 = (-(hashMultiplier1 ^ ((modifier + hashMultiplier1) * hashMultiplier1 | 7)) >>> 24) | 256;
+		hashMultiplier1 = (int)Utilities.GOOD_MULTIPLIERS[idx1];
+		hashMultiplier2 = (int)Utilities.GOOD_MULTIPLIERS[idx2];
 	}
 
 	/**
@@ -312,9 +309,9 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 		// Save old state as we may need to restore it if the grow() operation fails.
 		K[] oldK = keyTable;
 		V[] oldV = valueTable;
-		long oldH1 = hashMultiplier1;
-		long oldH2 = hashMultiplier2;
-		shift = BitConversion.countLeadingZeros(newSize - 1L);
+		int oldH1 = hashMultiplier1;
+		int oldH2 = hashMultiplier2;
+		mask = -1 >>> Integer.numberOfLeadingZeros(newSize - 1);
 
 		// Already point keyTable and valueTable to the new tables since putSafe operates on them.
 		keyTable = (K[])new Object[newSize];
@@ -342,8 +339,8 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 		// Save old state as we may need to restore it if the grow() operation fails.
 		K[] oldK = keyTable;
 		V[] oldV = valueTable;
-		long oldH1 = hashMultiplier1;
-		long oldH2 = hashMultiplier2;
+		int oldH1 = hashMultiplier1;
+		int oldH2 = hashMultiplier2;
 
 		keyTable = (K[])new Object[oldK.length];
 		valueTable = (V[])new Object[oldV.length];
