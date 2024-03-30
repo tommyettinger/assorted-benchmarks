@@ -17,7 +17,7 @@ public enum JDKMapIdentityFact {
 //JDK_O2O_HASH,FASTUTIL_O2O_HASH,ECLIPSE_O2O_HASH,JDKGDXDS_HASH,CUCKOO_HASH
 //JDK_O2O_HASH,JDKGDXDS_HASH,FASTUTIL_O2O_HASH,ECLIPSE_O2O_HASH
 //JDKGDXDS_HASH,JDKGDXDSQ_HASH,JDK_O2O_HASH
-//JDK_O2O_HASH,JDK_O2O_IDENTITY,JDKGDXDS_HASH,JDKGDXDS_TOSTR,JDKGDXDS_IDENTITY
+//CUCKOO_ORIGINAL,CUCKOO_IDENTITY,JDK_O2O_IDENTITY,JDKGDXDS_IDENTITY
 
 	JDK_O2O_HASH(() -> new java.util.HashMap<>(16, LoadFactor.LOAD_FACTOR)), //
 	JDK_O2O_LINKEDHASH(() -> new java.util.LinkedHashMap<>(16, LoadFactor.LOAD_FACTOR)), //
@@ -74,8 +74,12 @@ public enum JDKMapIdentityFact {
 	JDKGDXDSMX_HASH(() -> new ObjectMapMulXor<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSMX_INDEXED(() -> new OrderedMapMulXor<>(16, LoadFactor.LOAD_FACTOR)),
 
-	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000), //
-	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000); //
+	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000),
+	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000),
+
+	CUCKOO_IDENTITY(() -> new IdentityCuckooMap<>(16, LoadFactor.LOAD_FACTOR)),
+	CUCKOO_ORIGINAL(() -> new CuckooHashMap<>(16, LoadFactor.LOAD_FACTOR)),
+
 	;
 
 	public final Supplier<Map<Object, Object>> maker;
