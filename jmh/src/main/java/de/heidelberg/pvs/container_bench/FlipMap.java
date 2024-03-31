@@ -63,6 +63,7 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	protected static final float DEFAULT_LOAD_FACTOR = 0.45f;
 
 	protected int flipThreshold;
+	protected int loadThreshold;
 	protected float loadFactor;
 	/**
 	 * A bitmask used to confine hash codes to the size of the table. Must be all 1-bits in its low positions, i.e. a
@@ -79,17 +80,19 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	protected K[] keyTable;
 	protected V[] valueTable;
 
+	protected V defaultValue = null;
+
 	private transient V unplacedValue;
 
 	/**
-	 * Constructs an empty <tt>IdentityCuckooMap</tt> with the default initial capacity (16).
+	 * Constructs an empty <tt>FlipMap</tt> with the default initial capacity (16).
 	 */
 	public FlipMap() {
 		this(DEFAULT_START_SIZE, DEFAULT_LOAD_FACTOR);
 	}
 
 	/**
-	 * Constructs an empty <tt>IdentityCuckooMap</tt> with the specified initial capacity.
+	 * Constructs an empty <tt>FlipMap</tt> with the specified initial capacity.
 	 * The given capacity will be rounded to the nearest power of two.
 	 *
 	 * @param initialCapacity the initial capacity.
@@ -99,7 +102,7 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	}
 
 	/**
-	 * Constructs an empty <tt>IdentityCuckooMap</tt> with the specified load factor.
+	 * Constructs an empty <tt>FlipMap</tt> with the specified load factor.
 	 * <p>
 	 * The load factor will cause the Cuckoo hash map to double in size when the number
 	 * of items it contains has filled up more than <tt>loadFactor</tt>% of the available
@@ -130,6 +133,7 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 		keyTable = (K[])new Object[tableSize];
 		valueTable = (V[])new Object[tableSize];
 		this.loadFactor = loadFactor;
+		loadThreshold = (int)(loadFactor * tableSize);
 
 		regenHashFunctions(tableSize);
 	}
@@ -140,6 +144,8 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 		shift = other.shift;
 		flipThreshold = other.flipThreshold;
 		loadFactor = other.loadFactor;
+		loadThreshold = other.loadThreshold;
+		defaultValue = other.defaultValue;
 		hashMultiplier1 = other.hashMultiplier1;
 		hashMultiplier2 = other.hashMultiplier2;
 		keyTable = Arrays.copyOf(other.keyTable, other.keyTable.length);
@@ -149,6 +155,16 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	@Override
 	public boolean containsKey (Object key) {
 		if(key == null) return false;
+		if(flipThreshold == 0){
+			K[] keyTable = this.keyTable;
+			for (int i = (int)(key.hashCode() * hashMultiplier1 >>> shift); ; i = i + 1 & mask) {
+				K other = keyTable[i];
+				if (key.equals(other))
+					return true;
+				if (other == null)
+					return false;
+			}
+		}
 		final int hc = key.hashCode();
 
 		return key == keyTable[(int)(hashMultiplier1 * hc >>> shift) | 1] ||
@@ -157,13 +173,23 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V get (Object key) {
-		return getOrDefault(key, null);
+		return getOrDefault(key, defaultValue);
 	}
 
-	public V getOrDefault (Object key, V defaultValue) {
+	public V getOrDefault (Object key, @Nullable V defaultValue) {
 		if(key == null) return defaultValue;
 
-		int hc = System.identityHashCode(key);
+		if(flipThreshold == 0){
+			K[] keyTable = this.keyTable;
+			for (int i = (int)(key.hashCode() * hashMultiplier1 >>> shift); ; i = i + 1 & mask) {
+				K other = keyTable[i];
+				if (key.equals(other))
+					return valueTable[i];
+				if (other == null)
+					return defaultValue;
+			}
+		}
+		int hc = key.hashCode();
 		int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 		if (key == keyTable[hr1]) {
 			return valueTable[hr1];
@@ -179,11 +205,25 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V put (K key, V value) {
-		if(key == null) throw new NullPointerException("IdentityCuckooMap does not permit null keys.");
+		if(key == null) throw new NullPointerException("FlipMap does not permit null keys.");
+
+		if(flipThreshold == 0) {
+			int i = locateKey(key);
+			if (i >= 0) { // Existing key was found.
+				V oldValue = valueTable[i];
+				valueTable[i] = value;
+				return oldValue;
+			}
+			i = ~i; // Empty space was found.
+			keyTable[i] = key;
+			valueTable[i] = value;
+			if (++size >= loadThreshold) {resize(keyTable.length << 1);}
+			return defaultValue;
+		}
 
 		boolean absent = true;
-		V old = null;
-		int hc = System.identityHashCode(key);
+		V old = defaultValue;
+		int hc = key.hashCode();
 		int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 		if (key == keyTable[hr1]) {
 			old = valueTable[hr1];
@@ -197,16 +237,25 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 		}
 
 		if (absent) {
-			// If we need to grow after adding this item, it's probably best to grow before we add it.
-			if (size() + 1 >= loadFactor * keyTable.length) {
-				grow();
+			// If we need to resize after adding this item, it's probably best to resize before we add it.
+			if (size() + 1 >= loadThreshold) {
+				resize();
 			}
 		}
 		if ((key = putSafe(key, value)) != null) {
 			value = unplacedValue;
 			unplacedValue = null;
 			flip();
-			put(key, value);
+			int i = locateKey(key);
+			if (i >= 0) { // Existing key was found.
+				valueTable[i] = value;
+				return old;
+			}
+			i = ~i; // Empty space was found.
+			keyTable[i] = key;
+			valueTable[i] = value;
+			if (++size >= loadThreshold) {resize(keyTable.length << 1);}
+			return old;
 		}
 
 		if (absent) {
@@ -224,7 +273,7 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	private K putSafe (K key, V value) {
 		int loop = 0;
 		while (loop++ < flipThreshold) {
-			int hc = System.identityHashCode(key);
+			int hc = key.hashCode();
 			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 			K k1 = keyTable[hr1];
 			if (k1 == null || key == k1) {
@@ -254,7 +303,31 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	public V remove (Object key) {
 		if (key == null)
 			return null;
-		int hc = System.identityHashCode(key);
+
+		if(flipThreshold == 0) {
+			int i = locateKey(key);
+			if (i < 0) {return defaultValue;}
+			K[] keyTable = this.keyTable;
+			V[] valueTable = this.valueTable;
+			K rem;
+			V oldValue = valueTable[i];
+			int mask = this.mask, next = i + 1 & mask;
+			while ((rem = keyTable[next]) != null) {
+				int placement = (int)(rem.hashCode() * hashMultiplier1 >>> shift);
+				if ((next - placement & mask) > (i - placement & mask)) {
+					keyTable[i] = rem;
+					valueTable[i] = valueTable[next];
+					i = next;
+				}
+				next = next + 1 & mask;
+			}
+			keyTable[i] = null;
+			valueTable[i] = null;
+			size--;
+			return oldValue;
+		}
+
+		int hc = key.hashCode();
 		int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 		V oldValue = null;
 
@@ -283,6 +356,14 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 		Arrays.fill(valueTable, null);
 	}
 
+	public V getDefaultValue() {
+		return defaultValue;
+	}
+
+	public void setDefaultValue(V defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+
 	private void regenHashFunctions (int modifier) {
 		//This is close to a kind of Xor-Square-Or pattern, or XQO, that (if modifier weren't added) would be a passable
 		//random number generator. The result is used to select one of 256 possible long values for hashMultiplier1, and
@@ -299,22 +380,48 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	 * Double the size of the map until we can successfully manage to re-add all the items
 	 * we currently contain.
 	 */
-	private void grow () {
+	private void resize() {
+		if(size == 0) return;
 		int newSize = keyTable.length;
 		do {
 			newSize <<= 1;
-		} while (!grow(newSize));
+		} while (!resize(newSize));
 	}
 
 	@SuppressWarnings("unchecked")
-	private boolean grow (final int newSize) {
-		// Save old state as we may need to restore it if the grow() operation fails.
+	private boolean resize(final int newSize) {
+		if(size == 0) return true;
+		if(flipThreshold == 0) {
+			int oldCapacity = keyTable.length;
+			loadThreshold = (int)(newSize * loadFactor);
+			mask = newSize - 1;
+			shift = Long.numberOfLeadingZeros(mask);
+
+			hashMultiplier1 = Utilities.GOOD_MULTIPLIERS[(int)(hashMultiplier1 >>> 48 + shift) & 511];
+			K[] oldKeyTable = keyTable;
+			V[] oldValueTable = valueTable;
+
+			keyTable = (K[])new Object[newSize];
+			valueTable = (V[])new Object[newSize];
+
+			if (size > 0) {
+				for (int i = 0; i < oldCapacity; i++) {
+					K key = oldKeyTable[i];
+					if (key != null) {putResize(key, oldValueTable[i]);}
+				}
+			}
+			return true;
+		}
+
+		// Save old state as we may need to restore it if the resize() operation fails.
 		K[] oldK = keyTable;
 		V[] oldV = valueTable;
 		long oldH1 = hashMultiplier1;
 		long oldH2 = hashMultiplier2;
-		shift = Long.numberOfLeadingZeros(newSize - 1L);
+		mask = newSize - 1;
+		shift = Long.numberOfLeadingZeros(mask);
 		flipThreshold = Integer.numberOfTrailingZeros(newSize) + 4;
+		loadThreshold = (int)(loadFactor * newSize);
 
 		// Already point keyTable and valueTable to the new tables since putSafe operates on them.
 		keyTable = (K[])new Object[newSize];
@@ -329,8 +436,10 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 					valueTable = oldV;
 					hashMultiplier1 = oldH1;
 					hashMultiplier2 = oldH2;
-					shift = Long.numberOfLeadingZeros(keyTable.length - 1L);
+					mask = keyTable.length - 1;
+					shift = Long.numberOfLeadingZeros(mask);
 					flipThreshold = Integer.numberOfTrailingZeros(keyTable.length) + 4;
+					loadThreshold = (int)(loadFactor * keyTable.length);
 					return false;
 				}
 			}
@@ -341,7 +450,7 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	@SuppressWarnings("unchecked")
 	private void flip() {
-		// Save old state as we may need to restore it if the grow() operation fails.
+		// Save old state as we may need to restore it if the resize() operation fails.
 		K[] oldK = keyTable;
 		V[] oldV = valueTable;
 
@@ -350,10 +459,12 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 		loadFactor = (float) Math.sqrt(loadFactor);
 		flipThreshold = 0;
+		loadThreshold = (int)(loadFactor * keyTable.length);
+		size = 0;
 
 		for (int i = 0; i < oldK.length; i++) {
 			if (oldK[i] != null) {
-				putResize(oldK[i], oldV[i]);
+				put(oldK[i], oldV[i]);
 			}
 		}
 	}
@@ -448,6 +559,4 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 			}
 		}
 	}
-
-
 }
