@@ -17,8 +17,8 @@
 
 package de.heidelberg.pvs.container_bench;
 
-import com.github.tommyettinger.ds.IdentitySet;
 import com.github.tommyettinger.ds.ObjectList;
+import com.github.tommyettinger.ds.ObjectSet;
 import com.github.tommyettinger.ds.Utilities;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -488,7 +488,7 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	@Override
 	public @NonNull Set<K> keySet () {
-		IdentitySet<K> set = new IdentitySet<>(size);
+		ObjectSet<K> set = new ObjectSet<>(size);
 		for (int i = 0; i < keyTable.length; i++) {
 			if (keyTable[i] != null) {
 				set.add(keyTable[i]);
@@ -510,7 +510,7 @@ public class FlipMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	@Override
 	public @NonNull Set<Entry<K, V>> entrySet () {
-		IdentitySet<Entry<K, V>> set = new IdentitySet<>(size);
+		ObjectSet<Entry<K, V>> set = new ObjectSet<>(size);
 		for (int i = 0; i < keyTable.length; i++) {
 			if (keyTable[i] != null) {
 				set.add(new SimpleImmutableEntry<>(keyTable[i], valueTable[i]));
