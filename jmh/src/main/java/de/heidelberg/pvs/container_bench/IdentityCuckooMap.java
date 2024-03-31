@@ -20,7 +20,6 @@ package de.heidelberg.pvs.container_bench;
 import com.github.tommyettinger.digital.BitConversion;
 import com.github.tommyettinger.ds.IdentitySet;
 import com.github.tommyettinger.ds.ObjectList;
-import com.github.tommyettinger.ds.ObjectSet;
 import com.github.tommyettinger.ds.Utilities;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -65,10 +64,10 @@ import java.util.*;
  */
 public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
-	protected static final int THRESHOLD_LOOP = 8;
 	protected static final int DEFAULT_START_SIZE = 16;
 	protected static final float DEFAULT_LOAD_FACTOR = 0.45f;
 
+	protected int thresholdLoop = 8;
 	protected float loadFactor;
 
 	protected int shift;
@@ -123,8 +122,9 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 
 		size = 0;
 //		int tableSize = Utilities.tableSize(initialCapacity, loadFactor);
-		int tableSize = Math.max(2, 1 << -BitConversion.countLeadingZeros(initialCapacity));
-		shift = BitConversion.countLeadingZeros(tableSize - 1L); // 1L ensures we use the long overload.
+		int tableSize = Math.max(2, 1 << -Integer.numberOfLeadingZeros(initialCapacity));
+		shift = Long.numberOfLeadingZeros(tableSize - 1L);
+		thresholdLoop = Integer.numberOfTrailingZeros(tableSize) + 4;
 
 		keyTable = (K[])new Object[tableSize];
 		valueTable = (V[])new Object[tableSize];
@@ -136,6 +136,7 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 	public IdentityCuckooMap(IdentityCuckooMap<? extends K, ? extends V> other) {
 		size = other.size;
 		shift = other.shift;
+		thresholdLoop = other.thresholdLoop;
 		loadFactor = other.loadFactor;
 		hashMultiplier1 = other.hashMultiplier1;
 		hashMultiplier2 = other.hashMultiplier2;
@@ -153,14 +154,10 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 
 	@Override
 	public V get (Object key) {
-		return get(key, null);
+		return getOrDefault(key, null);
 	}
 
 	public V getOrDefault (Object key, V defaultValue) {
-		return get(key, defaultValue);
-	}
-
-	private V get (Object key, V defaultValue) {
 		if(key == null) return defaultValue;
 
 		int hc = System.identityHashCode(key);
@@ -224,7 +221,7 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 	 */
 	private K putSafe (K key, V value) {
 		int loop = 0;
-		while (loop++ < THRESHOLD_LOOP) {
+		while (loop++ < thresholdLoop) {
 			int hc = System.identityHashCode(key);
 			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 			K k1 = keyTable[hr1];
@@ -314,7 +311,8 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 		V[] oldV = valueTable;
 		long oldH1 = hashMultiplier1;
 		long oldH2 = hashMultiplier2;
-		shift = BitConversion.countLeadingZeros(newSize - 1L);
+		shift = Long.numberOfLeadingZeros(newSize - 1L);
+		thresholdLoop = Integer.numberOfTrailingZeros(newSize) + 4;
 
 		// Already point keyTable and valueTable to the new tables since putSafe operates on them.
 		keyTable = (K[])new Object[newSize];
@@ -329,6 +327,8 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 					valueTable = oldV;
 					hashMultiplier1 = oldH1;
 					hashMultiplier2 = oldH2;
+					shift = Long.numberOfLeadingZeros(keyTable.length - 1L);
+					thresholdLoop = Integer.numberOfTrailingZeros(keyTable.length) + 4;
 					return false;
 				}
 			}
@@ -349,7 +349,7 @@ public class IdentityCuckooMap<K, V> extends AbstractMap<K, V> implements Map<K,
 		valueTable = (V[])new Object[oldV.length];
 
 		RETRIAL:
-		for (int threshold = 0; threshold < THRESHOLD_LOOP; threshold++) {
+		for (int threshold = 0; threshold < thresholdLoop; threshold++) {
 
 			regenHashFunctions(keyTable.length + threshold);
 

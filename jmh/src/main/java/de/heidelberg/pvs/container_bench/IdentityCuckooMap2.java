@@ -63,10 +63,10 @@ import java.util.*;
  */
 public class IdentityCuckooMap2<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
-	protected static final int THRESHOLD_LOOP = 8;
 	protected static final int DEFAULT_START_SIZE = 16;
 	protected static final float DEFAULT_LOAD_FACTOR = 0.45f;
 
+	protected int thresholdLoop;
 	protected float loadFactor;
 
 	protected int mask;
@@ -122,7 +122,7 @@ public class IdentityCuckooMap2<K, V> extends AbstractMap<K, V> implements Map<K
 		size = 0;
 		int tableSize = Math.max(2, 1 << -Integer.numberOfLeadingZeros(initialCapacity));
 		mask = -1 >>> Integer.numberOfLeadingZeros(tableSize - 1);
-
+		thresholdLoop = Integer.numberOfTrailingZeros(tableSize) + 4;
 		keyTable = (K[])new Object[tableSize];
 		valueTable = (V[])new Object[tableSize];
 		this.loadFactor = loadFactor;
@@ -133,6 +133,7 @@ public class IdentityCuckooMap2<K, V> extends AbstractMap<K, V> implements Map<K
 	public IdentityCuckooMap2(IdentityCuckooMap2<? extends K, ? extends V> other) {
 		size = other.size;
 		mask = other.mask;
+		thresholdLoop = other.thresholdLoop;
 		loadFactor = other.loadFactor;
 		hashMultiplier1 = other.hashMultiplier1;
 		hashMultiplier2 = other.hashMultiplier2;
@@ -221,7 +222,7 @@ public class IdentityCuckooMap2<K, V> extends AbstractMap<K, V> implements Map<K
 	 */
 	private K putSafe (K key, V value) {
 		int loop = 0;
-		while (loop++ < THRESHOLD_LOOP) {
+		while (loop++ < thresholdLoop) {
 			int hc = System.identityHashCode(key);
 			int hr1 = (hashMultiplier1 * hc & mask) | 1;
 			K k1 = keyTable[hr1];
@@ -312,6 +313,7 @@ public class IdentityCuckooMap2<K, V> extends AbstractMap<K, V> implements Map<K
 		int oldH1 = hashMultiplier1;
 		int oldH2 = hashMultiplier2;
 		mask = -1 >>> Integer.numberOfLeadingZeros(newSize - 1);
+		thresholdLoop = Integer.numberOfTrailingZeros(newSize) + 4;
 
 		// Already point keyTable and valueTable to the new tables since putSafe operates on them.
 		keyTable = (K[])new Object[newSize];
@@ -326,6 +328,8 @@ public class IdentityCuckooMap2<K, V> extends AbstractMap<K, V> implements Map<K
 					valueTable = oldV;
 					hashMultiplier1 = oldH1;
 					hashMultiplier2 = oldH2;
+					mask = -1 >>> Integer.numberOfLeadingZeros(newSize - 1);
+					thresholdLoop = Integer.numberOfTrailingZeros(keyTable.length) + 4;
 					return false;
 				}
 			}
@@ -346,7 +350,7 @@ public class IdentityCuckooMap2<K, V> extends AbstractMap<K, V> implements Map<K
 		valueTable = (V[])new Object[oldV.length];
 
 		RETRIAL:
-		for (int threshold = 0; threshold < THRESHOLD_LOOP; threshold++) {
+		for (int threshold = 0; threshold < thresholdLoop; threshold++) {
 
 			regenHashFunctions(keyTable.length + threshold);
 
