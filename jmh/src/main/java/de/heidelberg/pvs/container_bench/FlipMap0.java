@@ -17,6 +17,7 @@
 
 package de.heidelberg.pvs.container_bench;
 
+import com.github.tommyettinger.ds.ObjectList;
 import com.github.tommyettinger.ds.ObjectSet;
 import com.github.tommyettinger.ds.Utilities;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -56,7 +57,7 @@ import java.util.*;
  * @param <K> the type of keys maintained by this map
  * @param <V> the type of mapped values
  */
-public class FlipMap2<K, V> extends AbstractMap<K, V> implements Map<K, V> {
+public class FlipMap0<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	protected static final int DEFAULT_START_SIZE = 16;
 	protected static final float DEFAULT_LOAD_FACTOR = 0.45f;
@@ -84,30 +85,24 @@ public class FlipMap2<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	private transient V unplacedValue;
 
 	/**
-	 * Holds cached entrySet(). Note that AbstractMap fields (which we cannot access) are used
-	 * to cache keySet() and values().
+	 * Constructs an empty <tt>FlipMap0</tt> with the default initial capacity (16).
 	 */
-	transient Set<Map.Entry<K,V>> entrySet;
-
-	/**
-	 * Constructs an empty <tt>FlipMap</tt> with the default initial capacity (16).
-	 */
-	public FlipMap2() {
+	public FlipMap0() {
 		this(DEFAULT_START_SIZE, DEFAULT_LOAD_FACTOR);
 	}
 
 	/**
-	 * Constructs an empty <tt>FlipMap</tt> with the specified initial capacity.
+	 * Constructs an empty <tt>FlipMap0</tt> with the specified initial capacity.
 	 * The given capacity will be rounded to the nearest power of two.
 	 *
 	 * @param initialCapacity the initial capacity.
 	 */
-	public FlipMap2(int initialCapacity) {
+	public FlipMap0(int initialCapacity) {
 		this(initialCapacity, DEFAULT_LOAD_FACTOR);
 	}
 
 	/**
-	 * Constructs an empty <tt>FlipMap</tt> with the specified load factor.
+	 * Constructs an empty <tt>FlipMap0</tt> with the specified load factor.
 	 * <p>
 	 * The load factor will cause the Cuckoo hash map to double in size when the number
 	 * of items it contains has filled up more than <tt>loadFactor</tt>% of the available
@@ -115,12 +110,12 @@ public class FlipMap2<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 	 *
 	 * @param loadFactor the load factor.
 	 */
-	public FlipMap2(float loadFactor) {
+	public FlipMap0(float loadFactor) {
 		this(DEFAULT_START_SIZE, loadFactor);
 	}
 
 	@SuppressWarnings("unchecked")
-	public FlipMap2(int initialCapacity, float loadFactor) {
+	public FlipMap0(int initialCapacity, float loadFactor) {
 		if (initialCapacity <= 0) {
 			throw new IllegalArgumentException("initial capacity must be strictly positive");
 		}
@@ -143,7 +138,7 @@ public class FlipMap2<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 		regenHashFunctions(tableSize);
 	}
 
-	public FlipMap2(FlipMap2<? extends K, ? extends V> other) {
+	public FlipMap0(FlipMap0<? extends K, ? extends V> other) {
 		size = other.size;
 		mask = other.mask;
 		shift = other.shift;
@@ -210,7 +205,7 @@ public class FlipMap2<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V put (K key, V value) {
-		if(key == null) throw new NullPointerException("FlipMap does not permit null keys.");
+		if(key == null) throw new NullPointerException("FlipMap0 does not permit null keys.");
 
 		if(flipThreshold == 0) {
 			int i = locateKey(key);
@@ -486,9 +481,42 @@ public class FlipMap2<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 
 	@Override
 	public void putAll (Map<? extends K, ? extends V> m) {
-		for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
+		for (Entry<? extends K, ? extends V> entry : m.entrySet()) {
 			put(entry.getKey(), entry.getValue());
 		}
+	}
+
+	@Override
+	public @NonNull Set<K> keySet () {
+		ObjectSet<K> set = new ObjectSet<>(size);
+		for (int i = 0; i < keyTable.length; i++) {
+			if (keyTable[i] != null) {
+				set.add(keyTable[i]);
+			}
+		}
+		return set;
+	}
+
+	@Override
+	public @NonNull Collection<V> values () {
+		ObjectList<V> values = new ObjectList<>(size);
+		for (int i = 0; i < keyTable.length; i++) {
+			if (keyTable[i] != null) {
+				values.add(valueTable[i]);
+			}
+		}
+		return values;
+	}
+
+	@Override
+	public @NonNull Set<Entry<K, V>> entrySet () {
+		ObjectSet<Entry<K, V>> set = new ObjectSet<>(size);
+		for (int i = 0; i < keyTable.length; i++) {
+			if (keyTable[i] != null) {
+				set.add(new SimpleImmutableEntry<>(keyTable[i], valueTable[i]));
+			}
+		}
+		return set;
 	}
 
 	@Override
@@ -529,251 +557,6 @@ public class FlipMap2<K, V> extends AbstractMap<K, V> implements Map<K, V> {
 				valueTable[i] = value;
 				return;
 			}
-		}
-	}
-
-	@Override
-	public @NonNull Set<Map.Entry<K, V>> entrySet () {
-        Set<Map.Entry<K,V>> entries;
-        return (entries = entrySet) == null ? (entrySet = new EntrySet<>(this)) : entries;
-	}
-
-	public static class Entry<K, V> implements Map.Entry<K, V> {
-		@Nullable public K key;
-		@Nullable public V value;
-
-		public Entry () {
-		}
-
-		public Entry (@Nullable K key, @Nullable V value) {
-			this.key = key;
-			this.value = value;
-		}
-
-		public Entry (Map.Entry<? extends K, ? extends V> entry) {
-			key = entry.getKey();
-			value = entry.getValue();
-		}
-
-		@Override
-		@Nullable
-		public String toString () {
-			return key + "=" + value;
-		}
-
-		/**
-		 * Returns the key corresponding to this entry.
-		 *
-		 * @return the key corresponding to this entry
-		 * @throws IllegalStateException implementations may, but are not
-		 *                               required to, throw this exception if the entry has been
-		 *                               removed from the backing map.
-		 */
-		@Override
-		public K getKey () {
-			Objects.requireNonNull(key);
-			return key;
-		}
-
-		/**
-		 * Returns the value corresponding to this entry.  If the mapping
-		 * has been removed from the backing map (by the iterator's
-		 * {@code remove} operation), the results of this call are undefined.
-		 *
-		 * @return the value corresponding to this entry
-		 * @throws IllegalStateException implementations may, but are not
-		 *                               required to, throw this exception if the entry has been
-		 *                               removed from the backing map.
-		 */
-		@Override
-		@Nullable
-		public V getValue () {
-			return value;
-		}
-
-		/**
-		 * Replaces the value corresponding to this entry with the specified
-		 * value (optional operation).  (Writes through to the map.)  The
-		 * behavior of this call is undefined if the mapping has already been
-		 * removed from the map (by the iterator's {@code remove} operation).
-		 *
-		 * @param value new value to be stored in this entry
-		 * @return old value corresponding to the entry
-		 * @throws UnsupportedOperationException if the {@code put} operation
-		 *                                       is not supported by the backing map
-		 * @throws ClassCastException            if the class of the specified value
-		 *                                       prevents it from being stored in the backing map
-		 * @throws NullPointerException          if the backing map does not permit
-		 *                                       null values, and the specified value is null
-		 * @throws IllegalArgumentException      if some property of this value
-		 *                                       prevents it from being stored in the backing map
-		 * @throws IllegalStateException         implementations may, but are not
-		 *                                       required to, throw this exception if the entry has been
-		 *                                       removed from the backing map.
-		 */
-		@Override
-		@Nullable
-		public V setValue (V value) {
-			V old = this.value;
-			this.value = value;
-			return old;
-		}
-
-		@Override
-		public boolean equals (@Nullable Object o) {
-			if (this == o) {return true;}
-			if (o == null || getClass() != o.getClass()) {return false;}
-
-			Entry<?, ?> entry = (Entry<?, ?>)o;
-
-			if (!Objects.equals(key, entry.key)) {return false;}
-			return Objects.equals(value, entry.value);
-		}
-
-		@Override
-		public int hashCode () {
-			int result = key != null ? key.hashCode() : 0;
-			result = 31 * result + (value != null ? value.hashCode() : 0);
-			return result;
-		}
-	}
-
-
-	public static class EntrySet<K, V> extends AbstractSet<Map.Entry<K, V>> {
-
-		protected final FlipMap2<K, V> map;
-		public EntrySet(FlipMap2<K, V> map) {
-			this.map = map;
-		}
-		/**
-		 * Returns an iterator over the elements contained in this collection.
-		 *
-		 * @return an iterator over the elements contained in this collection
-		 */
-		@Override
-		public Iterator<Map.Entry<K, V>> iterator() {
-			return new EntryIterator<K, V>(map);
-		}
-
-		@Override
-		public int size() {
-			return map.size;
-		}
-	}
-
-	public static class EntryIterator<K, V> implements Iterable<Map.Entry<K, V>>, Iterator<Map.Entry<K, V>> {
-		public boolean hasNext;
-
-		protected final FlipMap2<K, V> map;
-		protected final Entry<K, V> entry;
-		protected int nextIndex, currentIndex;
-		public boolean valid = true;
-
-		public EntryIterator(FlipMap2<K, V> map) {
-			this.map = map;
-			entry = new Entry<>();
-			reset();
-		}
-
-		public void reset () {
-			currentIndex = -1;
-			nextIndex = -1;
-			findNextIndex();
-		}
-
-		protected void findNextIndex () {
-			K[] keyTable = map.keyTable;
-			for (int n = keyTable.length; ++nextIndex < n; ) {
-				if (keyTable[nextIndex] != null) {
-					hasNext = true;
-					return;
-				}
-			}
-			hasNext = false;
-		}
-
-		/**
-		 * Note: the same entry instance is returned each time this method is called.
-		 *
-		 * @return a reused Entry that will have its key and value set to the next pair
-		 */
-		@Override
-		public Map.Entry<K, V> next () {
-			if (!hasNext) {throw new NoSuchElementException();}
-			if (!valid) {throw new RuntimeException("#iterator() cannot be used nested.");}
-			K[] keyTable = map.keyTable;
-			entry.key = keyTable[nextIndex];
-			entry.value = map.valueTable[nextIndex];
-			currentIndex = nextIndex;
-			findNextIndex();
-			return entry;
-		}
-
-		@Override
-		public boolean hasNext () {
-			if (!valid) {throw new RuntimeException("#iterator() cannot be used nested.");}
-			return hasNext;
-		}
-
-		@Override
-		public void remove () {
-			int i = currentIndex;
-			if (i < 0) {throw new IllegalStateException("next must be called before remove.");}
-			K[] keyTable = map.keyTable;
-			V[] valueTable = map.valueTable;
-
-			if(map.flipThreshold == 0) {
-				final long hashMultiplier1 = map.hashMultiplier1;
-				K rem;
-				int mask = map.mask, next = i + 1 & mask, shift = map.shift;
-				while ((rem = keyTable[next]) != null) {
-					int placement = (int)(rem.hashCode() * hashMultiplier1 >>> shift);
-					if ((next - placement & mask) > (i - placement & mask)) {
-						keyTable[i] = rem;
-						valueTable[i] = valueTable[next];
-						i = next;
-					}
-					next = next + 1 & mask;
-				}
-				keyTable[i] = null;
-				valueTable[i] = null;
-				map.size--;
-				if (i != currentIndex) {--nextIndex;}
-				currentIndex = -1;
-				return;
-			}
-			K key = keyTable[i];
-			final long hashMultiplier1 = map.hashMultiplier1, hashMultiplier2 = map.hashMultiplier2;
-			int hc = key.hashCode(), shift = map.shift;
-			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
-
-			if (key == keyTable[hr1]) {
-				keyTable[hr1] = null;
-				valueTable[hr1] = null;
-				map.size--;
-				if (i != currentIndex) {--nextIndex;}
-				currentIndex = -1;
-
-			} else {
-				int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
-				if (key == keyTable[hr2]) {
-					keyTable[hr2] = null;
-					valueTable[hr2] = null;
-					map.size--;
-					if (i != currentIndex) {--nextIndex;}
-					currentIndex = -1;
-				}
-			}
-		}
-
-		/**
-		 * Returns an iterator over elements of type {@code T}.
-		 *
-		 * @return an Iterator.
-		 */
-		@Override
-		public Iterator<Map.Entry<K, V>> iterator() {
-			return this;
 		}
 	}
 }
