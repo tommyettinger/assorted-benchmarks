@@ -37,3 +37,5 @@ java -jar benchmarks.jar "PathfindingBenchmark.+doPath(Gand|Simple)" -wi 6 -i 6 
 java -jar benchmarks.jar "JDKClassMapBench" -p impl=JDKGDXDS_HASH,CUCKOO_IDENTITY,JDKGDXDS_IDENTITY,JDKGDXDS_CLASS,JDKGDXDS_SPEC_CLASS,JDK_O2O_HASH,JDK_O2O_IDENTITY,FASTUTIL_O2O_HASH -p size=1000 -wi 4 -i 5 -f 1 -w 5 -r 5 -p payloadType=CLASS_UNIFORM -p workload=CONTAINS
 java -jar benchmarks.jar "JDKClassMapBench" -p impl=JDKGDXDS_HASH,CUCKOO_IDENTITY,JDKGDXDS_SPEC_CLASS,JDK_O2O_HASH,JDK_O2O_IDENTITY,FASTUTIL_O2O_HASH -p size=10000 -wi 5 -i 5 -f 1 -w 5 -r 5 -p payloadType=CLASS_UNIFORM
 java -jar benchmarks.jar "JDKClassMapBench" -p impl=CUCKOO_IDENTITY,JDK_O2O_IDENTITY -p size=10000 -wi 5 -i 5 -f 1 -w 5 -r 5 -p payloadType=CLASS_UNIFORM
+
+java -jar benchmarks.jar "JDKMapBench" -p impl=FLIP_HASH,JDKGDXDS_HASH,JDK_O2O_HASH,FASTUTIL_O2O_HASH,KOLOBOKE_O2O_HASH -p size=100,1000,10000,100000 -wi 5 -i 5 -f 3 -w 5 -r 5 -p payloadType=VECTOR2_UNIFORM
