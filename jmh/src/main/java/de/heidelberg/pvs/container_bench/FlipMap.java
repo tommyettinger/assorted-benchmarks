@@ -396,33 +396,9 @@ public class FlipMap<K, V> implements Map<K, V> {
 				resize();
 		}
 		// If placing key with cuckoo hashing fails, putFallback falls back to linear probing by calling flip().
-		if (putFallback(key, value)) return old;
-		// Only increase the size if no item was already there.
-		if (absent) size++;
+        putFallback(key, value);
 
-		return old;
-	}
-
-	/**
-	 * A part of {@link #put(Object, Object)} that is used when this is linear-probing.
-	 * @param key key with which the specified value is to be associated; must not be null
-	 * @param value value to be associated with the specified key
-	 * @return the previous value associated with {@code key}, or
-	 * {@link #getDefaultValue()} if there was no mapping for {@code key}.
-	 */
-	@Nullable
-	protected V putLinear(@NonNull K key, @Nullable V value){
-		int i = locateKey(key);
-		if (i >= 0) { // Existing key was found.
-			V oldValue = valueTable[i];
-			valueTable[i] = value;
-			return oldValue;
-		}
-		i = ~i; // Empty space was found.
-		keyTable[i] = key;
-		valueTable[i] = value;
-		if (++size >= loadThreshold) resizeLinear(keyTable.length << 1);
-		return defaultValue;
+        return old;
 	}
 
 	/**
@@ -460,26 +436,58 @@ public class FlipMap<K, V> implements Map<K, V> {
 	}
 
 	/**
+	 * A part of {@link #put(Object, Object)} that is used when this is linear-probing.
+	 * @param key key with which the specified value is to be associated; must not be null
+	 * @param value value to be associated with the specified key
+	 * @return the previous value associated with {@code key}, or
+	 * {@link #getDefaultValue()} if there was no mapping for {@code key}.
+	 */
+	@Nullable
+	protected V putLinear(@NonNull K key, @Nullable V value){
+		int i = locateKey(key);
+		if (i >= 0) { // Existing key was found.
+			V oldValue = valueTable[i];
+			valueTable[i] = value;
+			return oldValue;
+		}
+		i = ~i; // Empty space was found.
+		keyTable[i] = key;
+		valueTable[i] = value;
+		if (++size >= loadThreshold) resizeLinear(keyTable.length << 1);
+		return defaultValue;
+	}
+
+	/**
 	 * Attempts to place the given key and value, but is permitted to fail. If this fails, it starts the
 	 * switch to use linear probing by calling {@link #flip()}, and completes the put operation using
 	 * linear probing.
 	 * @return the key we failed to move because of collisions or {@code null} if successful.
 	 */
-	protected boolean putFallback (K key, @Nullable V value) {
+	protected void putFallback (K key, @Nullable V value) {
 		int loop = 0;
 		while (loop++ < flipThreshold) {
 			int hc = key.hashCode();
 			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 			K k1 = keyTable[hr1];
-			if (k1 == null || key.equals(k1)) {
+			if (k1 == null) {
 				valueTable[hr1] = value;
-				return false;
+				++size;
+				return;
+			}
+			if (key.equals(k1)) {
+				valueTable[hr1] = value;
+				return;
 			}
 			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
 			K k2 = keyTable[hr2];
-			if (k2 == null || key.equals(k2)) {
+			if (k2 == null) {
 				valueTable[hr2] = value;
-				return false;
+				++size;
+				return;
+			}
+			if(key.equals(k2)){
+				valueTable[hr2] = value;
+				return;
 			}
 
 			// Both tables have an item in the required position that doesn't have the same key, we need to move things around.
@@ -493,7 +501,6 @@ public class FlipMap<K, V> implements Map<K, V> {
 		flip();
 		// From this point on, we are using linear probing, not cuckoo hashing.
 		putLinear(key, value);
-		return true;
 	}
 
 	/**
@@ -814,6 +821,100 @@ public class FlipMap<K, V> implements Map<K, V> {
 				return;
 			}
 		}
+	}
+
+	/**
+	 * If {@code key} is present in the map, this returns the value it is mapped to; otherwise, this inserts
+	 * {@code key} into the map with its associated {@code value}. This will never remove or replace values.
+	 * @param key a {@code K} key to look up and either get what it finds or put if it found nothing
+	 * @param value the value to associate with {@code key} if it is not already present
+	 * @return the value associated with {@code key} after this completes (and potentially inserts an entry)
+	 */
+	public V putOrGet(K key, @Nullable V value) {
+		if(key == null) throw new NullPointerException("FlipMap does not permit null keys.");
+
+		if(flipThreshold == 0)
+			return putOrGetLinear(key, value);
+
+		int hc = key.hashCode();
+		int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
+		if (key.equals(keyTable[hr1])) {
+			return valueTable[hr1];
+		} else {
+			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
+			if (key.equals(keyTable[hr2])) {
+				return valueTable[hr2];
+			}
+		}
+
+        // If we need to resize after adding this item, it's probably best to resize before we add it.
+        if (size + 1 >= loadThreshold)
+            resize();
+        // If placing key with cuckoo hashing fails, putOrGetFallback falls back to linear probing by calling flip().
+		return putOrGetFallback(key, value);
+	}
+
+	/**
+	 * A part of {@link #putOrGet(Object, Object)} that is used when this is linear-probing.
+	 * @param key key with which the specified value is to be associated; must not be null
+	 * @param value value to be associated with the specified key
+	 * @return the previous value associated with {@code key}, or
+	 * {@link #getDefaultValue()} if this placed {@code key} into an empty space
+	 */
+	@Nullable
+	protected V putOrGetLinear(@NonNull K key, @Nullable V value){
+		int i = locateKey(key);
+		if (i >= 0) { // Existing key was found.
+			return valueTable[i];
+		}
+		i = ~i; // Empty space was found.
+		keyTable[i] = key;
+		valueTable[i] = value;
+		if (++size >= loadThreshold) resizeLinear(keyTable.length << 1);
+		return defaultValue;
+	}
+
+	/**
+	 * Attempts to place the given key and value, but is permitted to fail. If this fails, it starts the
+	 * switch to use linear probing by calling {@link #flip()}, and completes the put operation using
+	 * linear probing.
+	 * @return the key we failed to move because of collisions or {@code null} if successful.
+	 */
+	protected V putOrGetFallback (K key, @Nullable V value) {
+		int loop = 0;
+		while (loop++ < flipThreshold) {
+			int hc = key.hashCode();
+			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
+			K k1 = keyTable[hr1];
+			if (k1 == null) {
+				valueTable[hr1] = value;
+				++size;
+				return defaultValue;
+			}
+			if(key.equals(k1))
+				return valueTable[hr1];
+
+			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
+			K k2 = keyTable[hr2];
+			if (k2 == null){
+				valueTable[hr2] = value;
+				++size;
+				return defaultValue;
+			}
+			if(key.equals(k2))
+				return valueTable[hr2];
+
+			// Both tables have an item in the required position that doesn't have the same key, we need to move things around.
+			// Prefer always moving from the odd entries for simplicity.
+			V temp = valueTable[hr1];
+			keyTable[hr1] = key;
+			key = k1;
+			valueTable[hr1] = value;
+			value = temp;
+		}
+		flip();
+		// From this point on, we are using linear probing, not cuckoo hashing.
+		return putOrGetLinear(key, value);
 	}
 
 	@Override
