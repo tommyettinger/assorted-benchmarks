@@ -421,7 +421,7 @@ public class FlipMap<K, V> implements Map<K, V> {
 		i = ~i; // Empty space was found.
 		keyTable[i] = key;
 		valueTable[i] = value;
-		if (++size >= loadThreshold) resize(keyTable.length << 1);
+		if (++size >= loadThreshold) resizeLinear(keyTable.length << 1);
 		return defaultValue;
 	}
 
@@ -496,17 +496,43 @@ public class FlipMap<K, V> implements Map<K, V> {
 		return true;
 	}
 
+	/**
+	 * Removes the mapping for a key from this map if it is present
+	 * (optional operation). More formally, if this map contains a mapping
+	 * from key {@code k} to value {@code v} such that
+	 * {@code key.equals(k)}, that mapping is removed.
+	 * (The map can contain at most one such mapping.)
+	 * <br>
+	 * Returns the value to which this map previously associated the key,
+	 * or {@link #getDefaultValue()} if the map contained no mapping for the key.
+	 * <br>
+	 * The {@link #containsKey(Object)} operation (called before remove()) may be
+	 * used to distinguish the case where a given {@code V} is returned because it
+	 * is mapped to {@code key} and the case where it is returned because it is the
+	 * {@link #getDefaultValue()}. If the default value has not been set, it will
+	 * simply be {@code null}.
+	 * <br>
+	 * If {@code key} is {@code null}, this returns {@link #getDefaultValue()}.
+	 * <br>
+	 * The map will not contain a mapping for the specified key once the
+	 * call returns.
+	 *
+	 * @param key key whose mapping is to be removed from the map
+	 * @return the previous value associated with {@code key}, or
+	 *         {@link #getDefaultValue()} if there was no mapping for {@code key}.
+	 */
 	@Override
+	@Nullable
 	public V remove (Object key) {
 		if (key == null)
-			return null;
+			return defaultValue;
 
 		if(flipThreshold == 0)
 			return removeLinear(key);
 
 		int hc = key.hashCode();
 		int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
-		V oldValue = null;
+		V oldValue = defaultValue;
 
 		if (key.equals(keyTable[hr1])) {
 			oldValue = valueTable[hr1];
@@ -526,6 +552,12 @@ public class FlipMap<K, V> implements Map<K, V> {
 		return oldValue;
 	}
 
+	/**
+	 * A part of {@link #remove(Object)} used while this is linear-probing.
+	 * @param key key whose mapping is to be removed from the map; must not be null
+	 * @return the previous value associated with {@code key}, or
+	 * {@link #getDefaultValue()} if there was no mapping for {@code key}
+	 */
 	protected V removeLinear(@NonNull Object key) {
 		int i = locateKey(key);
 		if (i < 0) return defaultValue;
@@ -549,6 +581,10 @@ public class FlipMap<K, V> implements Map<K, V> {
 		return oldValue;
 	}
 
+	/**
+	 * Removes all the mappings from this map.
+	 * The map will be empty after this call returns.
+	 */
 	@Override
 	public void clear () {
 		size = 0;
@@ -604,15 +640,26 @@ public class FlipMap<K, V> implements Map<K, V> {
 		int newSize = keyTable.length;
 		do {
 			newSize <<= 1;
-		} while (!resize(newSize));
+		} while (resize(newSize));
 	}
 
+	/**
+	 * The actual implementation of {@link #resize()}, this changes the key and value tables
+	 * to use {@code newSize} instead of their previous size, changes the hash multipliers by
+	 * calling {@link #regenHashMultipliers(int)}, and then attempts to place all old keys and
+	 * values by calling {@link #putSafe(Object, Object)}. If putSafe() ever fails here, this
+	 * reverts the key/value tables, hash multipliers, and all related state to their values
+	 * before this was called, and returns true to indicate a failure did occur. Otherwise,
+	 * this returns false.
+	 * @param newSize must be a power of two
+	 * @return true if there was a problem; false if nothing went wrong
+	 */
 	@SuppressWarnings("unchecked")
 	protected boolean resize(final int newSize) {
 		if(size == 0) return true;
 		if(flipThreshold == 0) {
 			resizeLinear(newSize);
-			return true;
+			return false;
 		}
 
 		// Save old state as we may need to restore it if the resize() operation fails.
@@ -643,16 +690,24 @@ public class FlipMap<K, V> implements Map<K, V> {
 					shift = BitConversion.countLeadingZeros(newSize - 1L);
 					flipThreshold = BitConversion.countTrailingZeros(keyTable.length) + 4;
 					loadThreshold = (int)(loadFactor * keyTable.length);
-					return false;
+					return true;
 				}
 			}
 		}
 
-		return true;
+		return false;
 	}
 
+	/**
+	 * A part of {@link #resize(int)} used when this is linear-probing.
+	 * Unlike {@link #resize(int)}, this can't enter a failure state during
+	 * normal operation, so it doesn't return anything. It can, like any
+	 * collection, throw an {@link OutOfMemoryError} if too much data is
+	 * placed into it.
+	 * @param newSize must be a power of two
+	 */
 	@SuppressWarnings("unchecked")
-	private void resizeLinear(int newSize) {
+	protected void resizeLinear(int newSize) {
 		int oldCapacity = keyTable.length;
 		loadThreshold = (int)(newSize * loadFactor);
 		mask = newSize - 1;
@@ -748,7 +803,7 @@ public class FlipMap<K, V> implements Map<K, V> {
 
 	/**
 	 * Puts key and value but skips checks for existing keys, and doesn't increment size. Meant for use during
-	 * {@link #resize(int)}, hence the name, when using linear probing.
+	 * {@link #resizeLinear(int)}, hence the name, and only when using linear probing.
 	 */
 	protected void putResizeLinear(@NonNull K key, @Nullable V value) {
 		K[] keyTable = this.keyTable;
@@ -991,7 +1046,7 @@ public class FlipMap<K, V> implements Map<K, V> {
 			}
 		}
 
-		private void removeLinear(int i, final K[] keyTable, final V[] valueTable) {
+		protected void removeLinear(int i, final K[] keyTable, final V[] valueTable) {
 			final long hashMultiplier1 = map.hashMultiplier1;
 			K rem;
 			int mask = map.mask, next = i + 1 & mask, shift = map.shift;
@@ -1097,7 +1152,7 @@ public class FlipMap<K, V> implements Map<K, V> {
     }
 
 
-	protected static class KeyIterator<K> implements Iterable<K>, Iterator<K> {
+	protected static class KeyIterator<K> implements Iterator<K>, Iterable<K> {
 		protected final Iterator<? extends Map.Entry<K, ?>> iter;
 
 		public KeyIterator(FlipMap<K, ?> map) {
@@ -1126,6 +1181,7 @@ public class FlipMap<K, V> implements Map<K, V> {
 			return this;
 		}
 	}
+
 	protected static class ValueIterator<V> implements Iterator<V>, Iterable<V> {
 		protected final Iterator<? extends Map.Entry<?, V>> iter;
 
