@@ -1,3 +1,5 @@
+With String keys:
+
 Benchmark                               (impl)   (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode      Cnt          Score        Error  Units
 JDKMapBench.bench                    FLIP_HASH  STRING_UNIFORM                    100  467505     100    POPULATE  sample  1664340       1624.220 ±     27.441  ns/op
 JDKMapBench.bench                    FLIP_HASH  STRING_UNIFORM                    100  467505     100    CONTAINS  sample  1963225        624.416 ±      1.912  ns/op
@@ -47,3 +49,55 @@ JDKMapBench.bench                 JDK_O2O_HASH  STRING_UNIFORM                  
 JDKMapBench.bench                 JDK_O2O_HASH  STRING_UNIFORM                    100  467505  100000    CONTAINS  sample  2705508       3490.584 ±      5.079  ns/op
 JDKMapBench.bench                 JDK_O2O_HASH  STRING_UNIFORM                    100  467505  100000        COPY  sample    15910    4729042.335 ± 194448.934  ns/op
 JDKMapBench.bench                 JDK_O2O_HASH  STRING_UNIFORM                    100  467505  100000     ITERATE  sample    41411    1812796.614 ±   2158.861  ns/op
+
+With Vector2 keys:
+
+Benchmark                               (impl)    (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode      Cnt         Score        Error  Units
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505     100    POPULATE  sample  2029664      1658.856 ±     14.247  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505     100    CONTAINS  sample  1727559       707.117 ±     10.273  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505     100        COPY  sample  1910849       101.372 ±      5.478  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505     100     ITERATE  sample  2827433       116.241 ±      1.016  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505    1000    POPULATE  sample  1214424     15625.217 ±     55.130  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505    1000    CONTAINS  sample  1784891       686.456 ±      2.905  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505    1000        COPY  sample  2797379       446.632 ±      3.268  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505    1000     ITERATE  sample  2511788       530.387 ±      1.838  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505   10000    POPULATE  sample   393772    190484.066 ±    326.297  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505   10000    CONTAINS  sample  2262498      1065.646 ±      2.521  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505   10000        COPY  sample  1518332      6176.007 ±      9.308  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505   10000     ITERATE  sample  2572883      7302.113 ±      4.697  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505  100000    POPULATE  sample    24851   3021227.467 ±  32504.222  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505  100000    CONTAINS  sample  1641558      1592.479 ±     20.218  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505  100000        COPY  sample  1105199     56489.132 ±     33.516  ns/op
+JDKMapBench.bench                    FLIP_HASH  VECTOR2_UNIFORM                    100  467505  100000     ITERATE  sample   816774     45839.803 ±     28.486  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505     100    POPULATE  sample  1963647      2447.346 ±     18.083  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505     100    CONTAINS  sample  2067472       823.345 ±      2.239  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505     100        COPY  sample  1588491      1551.210 ±     20.717  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505     100     ITERATE  sample  2228349      1111.783 ±      7.954  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505    1000    POPULATE  sample  1281529     29323.138 ±     52.358  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505    1000    CONTAINS  sample  2574490       935.810 ±      2.766  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505    1000        COPY  sample  1819347     20635.765 ±     33.152  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505    1000     ITERATE  sample  1533927     12249.474 ±     13.688  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505   10000    POPULATE  sample   126430    593290.904 ±    885.670  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505   10000    CONTAINS  sample  1997655      1227.257 ±     14.887  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505   10000        COPY  sample   204181    367388.836 ±    442.271  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505   10000     ITERATE  sample   387597    193531.192 ±    129.793  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505  100000    POPULATE  sample     9458   7943794.872 ± 130422.340  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505  100000    CONTAINS  sample  1531285      1565.679 ±      4.763  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505  100000        COPY  sample    12055   6231618.044 ±  44083.569  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  VECTOR2_UNIFORM                    100  467505  100000     ITERATE  sample    35925   2088477.202 ±   2556.303  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505     100    POPULATE  sample  2355223      2045.944 ±     16.113  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505     100    CONTAINS  sample  2491539       962.402 ±      1.551  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505     100        COPY  sample  1703057      1445.600 ±     19.029  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505     100     ITERATE  sample  2841767       879.805 ±      1.442  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505    1000    POPULATE  sample  1712233     21956.418 ±     43.747  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505    1000    CONTAINS  sample  2335140      1031.221 ±      4.118  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505    1000        COPY  sample  2133215     17572.322 ±     30.124  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505    1000     ITERATE  sample  2484631      7559.303 ±      4.826  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505   10000    POPULATE  sample   168502    445420.079 ±    732.840  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505   10000    CONTAINS  sample  2791640      1704.735 ±      2.819  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505   10000        COPY  sample   300917    249303.895 ±    385.815  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505   10000     ITERATE  sample   448130    167327.603 ±     88.808  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505  100000    POPULATE  sample     6883  10918532.779 ± 398881.454  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505  100000    CONTAINS  sample  1460559      3245.345 ±      8.298  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505  100000        COPY  sample    18770   4006399.291 ± 172262.323  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  VECTOR2_UNIFORM                    100  467505  100000     ITERATE  sample    43060   1744039.036 ±   2800.755  ns/op
