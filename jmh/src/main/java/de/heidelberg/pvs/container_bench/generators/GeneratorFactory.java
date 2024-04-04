@@ -28,6 +28,9 @@ public class GeneratorFactory {
 			case VECTOR2_UNIFORM:
 				return new Vector2UniformGenerator();
 
+			case GRIDPOINT2_UNIFORM:
+				return new GridPoint2UniformGenerator();
+
 			case COORD_UNIFORM:
 				return new CoordUniformGenerator();
 

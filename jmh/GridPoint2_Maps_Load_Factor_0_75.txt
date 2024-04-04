@@ -1,0 +1,52 @@
+Benchmarking with GRIDPOINT2_UNIFORM payload, which means it uses a sequence of very dense (x,y) points starting at the origin and spiraling outward.
+This uses a load factor of 0.75f, which is 25-50% higher than recommended for FlipMap. It still does extremely well!
+
+Benchmark                               (impl)       (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode      Cnt          Score        Error  Units
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505     100    POPULATE  sample  1668073       1492.013 ±     24.538  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505     100    CONTAINS  sample  2076915        623.182 ±      1.726  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505     100        COPY  sample  1922685        106.250 ±      5.348  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505     100     ITERATE  sample  2369683        128.298 ±      2.619  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505    1000    POPULATE  sample  1339479      14145.709 ±     52.341  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505    1000    CONTAINS  sample  1828987        700.886 ±      2.040  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505    1000        COPY  sample  2800776        448.956 ±      5.106  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505    1000     ITERATE  sample  2534832        527.738 ±      1.917  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505   10000    POPULATE  sample   548750     136655.418 ±    208.390  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505   10000    CONTAINS  sample  2656738        944.754 ±      2.342  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505   10000        COPY  sample  1499202       3141.953 ±      9.678  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505   10000     ITERATE  sample  2578593       3674.226 ±      4.138  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505  100000    POPULATE  sample    30206    2485472.083 ±  23501.664  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505  100000    CONTAINS  sample  1742022       1413.366 ±      4.911  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505  100000        COPY  sample   960620      51990.631 ±     39.531  ns/op
+JDKMapBench.bench                    FLIP_HASH  GRIDPOINT2_UNIFORM                    100  467505  100000     ITERATE  sample   813245      46023.750 ±     32.093  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505     100    POPULATE  sample  2106179       2296.096 ±     19.332  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505     100    CONTAINS  sample  2034696        631.463 ±      2.038  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505     100        COPY  sample  2118890       2969.642 ±     15.532  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505     100     ITERATE  sample  2242954       1098.997 ±      2.631  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505    1000    POPULATE  sample  1202129      31276.860 ±     58.085  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505    1000    CONTAINS  sample  2457830        540.473 ±      1.841  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505    1000        COPY  sample  1391424      13622.124 ±     44.019  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505    1000     ITERATE  sample  1594405      11765.618 ±      9.307  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505   10000    POPULATE  sample   227418     329757.256 ±    430.686  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505   10000    CONTAINS  sample  1906839       1292.038 ±      3.609  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505   10000        COPY  sample   238318     314701.954 ±    337.711  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505   10000     ITERATE  sample   687539     109053.777 ±    146.480  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505  100000    POPULATE  sample     3951   19029810.733 ± 151224.592  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505  100000    CONTAINS  sample  1622902       2943.156 ±      5.064  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505  100000        COPY  sample     6054   12411797.439 ±  70684.098  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  GRIDPOINT2_UNIFORM                    100  467505  100000     ITERATE  sample    63540    1181454.859 ±   1218.659  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505     100    POPULATE  sample  2515220       1922.799 ±     16.380  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505     100    CONTAINS  sample  1674277        765.698 ±      7.018  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505     100        COPY  sample  1811330       1358.841 ±     19.292  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505     100     ITERATE  sample  2821886        881.674 ±      1.660  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505    1000    POPULATE  sample  2002298      18729.684 ±     36.994  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505    1000    CONTAINS  sample  1667154        771.731 ±      2.643  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505    1000        COPY  sample  1447056      13118.779 ±     50.779  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505    1000     ITERATE  sample  2354336       7993.099 ±     16.984  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505   10000    POPULATE  sample   338411     221614.996 ±    362.351  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505   10000    CONTAINS  sample  2447243       1939.696 ±      2.955  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505   10000        COPY  sample   454636     164847.712 ±    251.584  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505   10000     ITERATE  sample   960271      78074.917 ±     33.414  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505  100000    POPULATE  sample     9759    7712981.635 ± 249655.257  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505  100000    CONTAINS  sample  2281212       4128.159 ±      5.271  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505  100000        COPY  sample    18664    4024191.396 ± 167617.757  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  GRIDPOINT2_UNIFORM                    100  467505  100000     ITERATE  sample    95657     784618.095 ±   1020.113  ns/op
