@@ -233,6 +233,18 @@ public class FlipMap<K, V> implements Map<K, V> {
 		valueTable = Arrays.copyOf(other.valueTable, other.valueTable.length);
 	}
 
+	/**
+	 * Returns {@code true} if this map contains a mapping for the specified
+	 * key. More formally, returns {@code true} if and only if
+	 * this map contains a mapping for a key {@code k} such that
+	 * {@code key.equals(k)}.
+	 * (There can be at most one such mapping.)
+	 * <br>
+	 * If {@code key} is {@code null}, this returns {@code false}.
+	 *
+	 * @param key key whose presence in this map is to be tested
+	 * @return {@code true} if this map contains a mapping for the specified key
+	 */
 	@Override
 	public boolean containsKey (Object key) {
 		if(key == null) return false;
@@ -246,6 +258,11 @@ public class FlipMap<K, V> implements Map<K, V> {
 	}
 
 
+	/**
+	 * A part of {@link #containsKey(Object)} that is used when this is linear-probing.
+	 * @param key an Object that is usually a {@code K}; expected to be non-null
+	 * @return true if {@code key} is present in the key table
+	 */
 	protected boolean containsKeyLinear (@NonNull Object key) {
 		K[] keyTable = this.keyTable;
 		for (int i = (int) (key.hashCode() * hashMultiplier1 >>> shift); ; i = i + 1 & mask) {
@@ -257,12 +274,45 @@ public class FlipMap<K, V> implements Map<K, V> {
 		}
 	}
 
+	/**
+	 * Returns the value to which the specified key is mapped,
+	 * or {@link #getDefaultValue()} if this map contains no mapping for the key.
+	 * <br>
+	 * More formally, if this map contains a mapping from a key
+	 * {@code k} to a value {@code v} such that {@code key.equals(k)},
+	 * then this method returns {@code v}; otherwise
+	 * it returns {@link #getDefaultValue()}.
+	 * (There can be at most one such mapping.)
+	 * <br>
+	 * The {@link #containsKey(Object)} operation may be used to distinguish
+	 * the case where a given {@code V} is returned because it is mapped to
+	 * {@code key} and the case where it is returned because it is the
+	 * {@link #getDefaultValue()}. If the default value has not been set, it will
+	 * simply be {@code null}.
+	 * <br>
+	 * If {@code key} is {@code null}, this returns {@link #getDefaultValue()}.
+	 *
+	 * @param key the key whose associated value is to be returned
+	 * @return the value to which the specified key is mapped, or
+	 * {@link #getDefaultValue()} if this map contains no mapping for the key
+	 */
 	@Override
 	@Nullable
 	public V get (Object key) {
 		return getOrDefault(key, defaultValue);
 	}
 
+	/**
+	 * Returns the value to which the specified key is mapped, or
+	 * {@code defaultValue} if this map contains no mapping for the key.
+	 * <br>
+	 * If {@code key} is {@code null}, this returns {@code defaultValue}.
+	 *
+	 * @param key the key whose associated value is to be returned
+	 * @param defaultValue the default mapping of the key
+	 * @return the value to which the specified key is mapped, or
+	 * {@code defaultValue} if this map contains no mapping for the key
+	 */
 	public V getOrDefault (Object key, @Nullable V defaultValue) {
 		if(key == null) return defaultValue;
 
@@ -281,6 +331,13 @@ public class FlipMap<K, V> implements Map<K, V> {
 		return defaultValue;
 	}
 
+	/**
+	 * A part of {@link #getOrDefault(Object, Object)} that is used when this is linear-probing.
+	 * @param key the key whose associated value is to be returned
+	 * @param defaultValue the default mapping of the key
+	 * @return the value to which the specified key is mapped, or
+	 * {@code defaultValue} if this map contains no mapping for the key
+	 */
 	@Nullable
 	public V getOrDefaultLinear (@NonNull Object key, @Nullable V defaultValue) {
 		K[] keyTable = this.keyTable;
@@ -292,7 +349,24 @@ public class FlipMap<K, V> implements Map<K, V> {
 				return defaultValue;
 		}
 	}
-
+	/**
+	 * Associates the specified value with the specified key in this map.
+	 * If the map previously contained a mapping for
+	 * the key, the old value is replaced by the specified value.  (A map
+	 * {@code m} is said to contain a mapping for a key {@code k} if and only
+	 * if {@link #containsKey(Object) m.containsKey(k)} would return
+	 * {@code true}.)
+	 * <br>
+	 * If {@code key} is {@code null}, this throws a {@link NullPointerException}.
+	 * This map does not permit {@code null} keys, but does permit {@code null}
+	 * values.
+	 *
+	 * @param key key with which the specified value is to be associated
+	 * @param value value to be associated with the specified key
+	 * @return the previous value associated with {@code key}, or
+	 * {@link #getDefaultValue()} if there was no mapping for {@code key}.
+	 * @throws NullPointerException if the specified key is null
+	 */
 	@Override
 	@Nullable
 	public V put (K key, @Nullable V value) {
@@ -329,6 +403,13 @@ public class FlipMap<K, V> implements Map<K, V> {
 		return old;
 	}
 
+	/**
+	 * A part of {@link #put(Object, Object)} that is used when this is linear-probing.
+	 * @param key key with which the specified value is to be associated; must not be null
+	 * @param value value to be associated with the specified key
+	 * @return the previous value associated with {@code key}, or
+	 * {@link #getDefaultValue()} if there was no mapping for {@code key}.
+	 */
 	@Nullable
 	protected V putLinear(@NonNull K key, @Nullable V value){
 		int i = locateKey(key);
@@ -347,9 +428,10 @@ public class FlipMap<K, V> implements Map<K, V> {
 	/**
 	 * Attempts to place the given key and value, but is permitted to fail. If this fails, it returns true,
 	 * and expects the caller to understand that a key was not placed where it should be.
+	 * This is only used when this is cuckoo-hashing.
 	 * @return true if there was a failure at some point, or false if nothing went wrong
 	 */
-	protected boolean putSafe (K key, V value) {
+	protected boolean putSafe (@NonNull K key, @Nullable V value) {
 		int loop = 0;
 		while (loop++ < flipThreshold) {
 			int hc = key.hashCode();
