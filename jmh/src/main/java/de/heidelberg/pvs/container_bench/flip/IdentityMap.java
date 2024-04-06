@@ -263,7 +263,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 	 * Returns {@code true} if this map contains a mapping for the specified
 	 * key. More formally, returns {@code true} if and only if
 	 * this map contains a mapping for a key {@code k} such that
-	 * {@code key.equals(k)}.
+	 * {@code key == (k)}.
 	 * (There can be at most one such mapping.)
 	 * <br>
 	 * If {@code key} is {@code null}, this returns {@code false}.
@@ -279,8 +279,8 @@ public class IdentityMap<K, V> implements Map<K, V> {
 
 		final int hc = System.identityHashCode(key);
 
-		return key.equals(keyTable[(int)(hashMultiplier1 * hc >>> shift) | 1]) ||
-			key.equals(keyTable[(int)(hashMultiplier2 * hc >>> shift) & -2]);
+		return key == (keyTable[(int)(hashMultiplier1 * hc >>> shift) | 1]) ||
+			key == (keyTable[(int)(hashMultiplier2 * hc >>> shift) & -2]);
 	}
 
 
@@ -293,7 +293,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 		K[] keyTable = this.keyTable;
 		for (int i = (int) (System.identityHashCode(key) * hashMultiplier1 >>> shift); ; i = i + 1 & mask) {
 			K other = keyTable[i];
-			if (key.equals(other))
+			if (key == (other))
 				return true;
 			if (other == null)
 				return false;
@@ -305,7 +305,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 	 * or {@link #getDefaultValue()} if this map contains no mapping for the key.
 	 * <br>
 	 * More formally, if this map contains a mapping from a key
-	 * {@code k} to a value {@code v} such that {@code key.equals(k)},
+	 * {@code k} to a value {@code v} such that {@code key == (k)},
 	 * then this method returns {@code v}; otherwise
 	 * it returns {@link #getDefaultValue()}.
 	 * (There can be at most one such mapping.)
@@ -347,11 +347,11 @@ public class IdentityMap<K, V> implements Map<K, V> {
 
 		int hc = System.identityHashCode(key);
 		int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
-		if (key.equals(keyTable[hr1]))
+		if (key == (keyTable[hr1]))
 			return valueTable[hr1];
 
 		int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
-		if (key.equals(keyTable[hr2]))
+		if (key == (keyTable[hr2]))
 			return valueTable[hr2];
 
 		return defaultValue;
@@ -369,7 +369,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 		K[] keyTable = this.keyTable;
 		for (int i = (int)(System.identityHashCode(key) * hashMultiplier1 >>> shift); ; i = i + 1 & mask) {
 			K other = keyTable[i];
-			if (key.equals(other))
+			if (key == (other))
 				return valueTable[i];
 			if (other == null)
 				return defaultValue;
@@ -405,12 +405,12 @@ public class IdentityMap<K, V> implements Map<K, V> {
 		V old = defaultValue;
 		int hc = System.identityHashCode(key);
 		int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
-		if (key.equals(keyTable[hr1])) {
+		if (key == (keyTable[hr1])) {
 			old = valueTable[hr1];
 			absent = false;
 		} else {
 			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
-			if (key.equals(keyTable[hr2])) {
+			if (key == (keyTable[hr2])) {
 				old = valueTable[hr2];
 				absent = false;
 			}
@@ -438,13 +438,13 @@ public class IdentityMap<K, V> implements Map<K, V> {
 			int hc = System.identityHashCode(key);
 			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 			K k1 = keyTable[hr1];
-			if (k1 == null || key.equals(k1)) {
+			if (k1 == null || key == (k1)) {
 				valueTable[hr1] = value;
 				return false;
 			}
 			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
 			K k2 = keyTable[hr2];
-			if (k2 == null || key.equals(k2)) {
+			if (k2 == null || key == (k2)) {
 				valueTable[hr2] = value;
 				return false;
 			}
@@ -498,7 +498,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 				++size;
 				return;
 			}
-			if (key.equals(k1)) {
+			if (key == (k1)) {
 				valueTable[hr1] = value;
 				return;
 			}
@@ -509,7 +509,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 				++size;
 				return;
 			}
-			if(key.equals(k2)){
+			if(key == (k2)){
 				valueTable[hr2] = value;
 				return;
 			}
@@ -532,7 +532,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 	 * Removes the mapping for a key from this map if it is present
 	 * (optional operation). More formally, if this map contains a mapping
 	 * from key {@code k} to value {@code v} such that
-	 * {@code key.equals(k)}, that mapping is removed.
+	 * {@code key == (k)}, that mapping is removed.
 	 * (The map can contain at most one such mapping.)
 	 * <br>
 	 * Returns the value to which this map previously associated the key,
@@ -566,14 +566,14 @@ public class IdentityMap<K, V> implements Map<K, V> {
 		int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 		V oldValue = defaultValue;
 
-		if (key.equals(keyTable[hr1])) {
+		if (key == (keyTable[hr1])) {
 			oldValue = valueTable[hr1];
 			keyTable[hr1] = null;
 			valueTable[hr1] = null;
 			size--;
 		} else {
 			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
-			if (key.equals(keyTable[hr2])) {
+			if (key == (keyTable[hr2])) {
 				oldValue = valueTable[hr2];
 				keyTable[hr2] = null;
 				valueTable[hr2] = null;
@@ -827,7 +827,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 		K[] keyTable = this.keyTable;
 		for (int i = (int)(System.identityHashCode(key) * hashMultiplier1 >>> shift); ; i = i + 1 & mask) {
 			K other = keyTable[i];
-			if (key.equals(other))
+			if (key == (other))
 				return i; // Same key was found.
 			if (other == null)
 				return ~i; // Always negative; means empty space is available at position `i`.
@@ -864,11 +864,11 @@ public class IdentityMap<K, V> implements Map<K, V> {
 
 		int hc = System.identityHashCode(key);
 		int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
-		if (key.equals(keyTable[hr1])) {
+		if (key == (keyTable[hr1])) {
 			return valueTable[hr1];
 		} else {
 			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
-			if (key.equals(keyTable[hr2])) {
+			if (key == (keyTable[hr2])) {
 				return valueTable[hr2];
 			}
 		}
@@ -894,7 +894,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 		int i = (int)(System.identityHashCode(key) * hashMultiplier1 >>> shift);
 		for (; ; i = i + 1 & mask) {
 			K other = keyTable[i];
-			if (key.equals(other))
+			if (key == (other))
 				return valueTable[i]; // Same key was found.
 			if (other == null){
 				i = ~i; // Empty space was found.
@@ -923,7 +923,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 				++size;
 				return defaultValue;
 			}
-			if(key.equals(k1))
+			if(key == (k1))
 				return valueTable[hr1];
 
 			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
@@ -933,7 +933,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 				++size;
 				return defaultValue;
 			}
-			if(key.equals(k2))
+			if(key == (k2))
 				return valueTable[hr2];
 
 			// Both tables have an item in the required position that doesn't have the same key, we need to move things around.
@@ -1049,7 +1049,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 
 			Entry<?, ?> entry = (Entry<?, ?>)o;
 
-			if (!Objects.equals(key, entry.key)) {return false;}
+			if (key != entry.key) {return false;}
 			return Objects.equals(value, entry.value);
 		}
 
@@ -1183,7 +1183,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 			int hc = System.identityHashCode(key), shift = map.shift;
 			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 
-			if (key.equals(keyTable[hr1])) {
+			if (key == (keyTable[hr1])) {
 				keyTable[hr1] = null;
 				valueTable[hr1] = null;
 				map.size--;
@@ -1192,7 +1192,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 
 			} else {
 				int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
-				if (key.equals(keyTable[hr2])) {
+				if (key == (keyTable[hr2])) {
 					keyTable[hr2] = null;
 					valueTable[hr2] = null;
 					map.size--;
@@ -1265,7 +1265,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 			if(o == null) return false;
 			Iterator<K> it = iterator();
 			while (it.hasNext()) {
-				if (it.next().equals(o)) {
+				if (it.next() == (o)) {
 					it.remove();
 					return true;
 				}
