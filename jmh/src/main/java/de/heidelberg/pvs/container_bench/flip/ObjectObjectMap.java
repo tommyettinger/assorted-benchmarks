@@ -261,7 +261,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 	 * is called (and it might never be), this uses cuckoo hashing to resolve collisions; after flip() has been
 	 * called, this uses linear probing. This method is meant as a diagnostic tool if it becomes necessary to
 	 * determine what algorithm is in use.
-	 * 
+	 *
 	 * @return true if {@link #flip()} has been called and has changed the internal algorithm this uses.
 	 */
 	public boolean hasFlipped() {
@@ -493,10 +493,9 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 	}
 
 	/**
-	 * Attempts to place the given key and value, but is permitted to fail. If this fails, it starts the
-	 * switch to use linear probing by calling {@link #flip()}, and completes the put operation using
+	 * Attempts to place the given key and value, but is permitted to fail. If this fails, it switches
+	 * the map to use linear probing by calling {@link #flip()}, and completes the put operation using
 	 * linear probing.
-	 * @return the key we failed to move because of collisions or {@code null} if successful.
 	 */
 	protected void putFallback (K key, @Nullable V value) {
 		int loop = 0;
@@ -828,6 +827,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 
 	/**
 	 * Returns the index of the key if already present, else {@code ~index} for the next empty index.
+	 * Used during linear probing.
 	 *
 	 * @param key a non-null K key
 	 * @return a negative index if the key was not found, or the non-negative index of the existing key if found
@@ -898,15 +898,21 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 	 */
 	@Nullable
 	protected V putOrGetLinear(@NonNull K key, @Nullable V value){
-		int i = locateKey(key);
-		if (i >= 0) { // Existing key was found.
-			return valueTable[i];
+		// this mostly inlines locateKey() manually, but is able to remove some steps it would do.
+		K[] keyTable = this.keyTable;
+		int i = (int)(key.hashCode() * hashMultiplier1 >>> shift);
+		for (; ; i = i + 1 & mask) {
+			K other = keyTable[i];
+			if (key.equals(other))
+				return valueTable[i]; // Same key was found.
+			if (other == null){
+				i = ~i; // Empty space was found.
+				keyTable[i] = key;
+				valueTable[i] = value;
+				if (++size >= loadThreshold) resizeLinear(keyTable.length << 1);
+				return defaultValue;
+			}
 		}
-		i = ~i; // Empty space was found.
-		keyTable[i] = key;
-		valueTable[i] = value;
-		if (++size >= loadThreshold) resizeLinear(keyTable.length << 1);
-		return defaultValue;
 	}
 
 	/**
