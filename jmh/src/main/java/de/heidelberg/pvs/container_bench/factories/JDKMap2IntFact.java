@@ -2,7 +2,6 @@ package de.heidelberg.pvs.container_bench.factories;
 
 import com.github.tommyettinger.ds.*;
 import de.heidelberg.pvs.container_bench.FlipMap0;
-import de.heidelberg.pvs.container_bench.FlipMap;
 import io.timeandspace.smoothie.OptimizationObjective;
 import io.timeandspace.smoothie.SmoothieMap;
 import io.timeandspace.smoothie.SwissTable;
@@ -63,13 +62,13 @@ public enum JDKMap2IntFact {
 	SQUID_INDEXED(() -> new squidpony.squidmath.OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 	ATLANTIS_INDEXED(() -> new IndexedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
-	JDKGDXDS_HASH(() -> new ObjectObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
+	JDKGDXDS_HASH(() -> new com.github.tommyettinger.ds.ObjectObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSQ_HASH(() -> new ObjectObjectQuadMap<>(16, LoadFactor.LOAD_FACTOR)),
 	CUCKOO_HASH(() -> new ObjectObjectCuckooMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDS_INDEXED(() -> new OrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
 	FLIP_HASH0(() -> new FlipMap0<>(16, LoadFactor.LOAD_FACTOR)),
-	FLIP_HASH(() -> new FlipMap<>(16, LoadFactor.LOAD_FACTOR)),
+	FLIP_HASH(() -> new de.heidelberg.pvs.container_bench.flip.ObjectObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 
 	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000),
 	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000)

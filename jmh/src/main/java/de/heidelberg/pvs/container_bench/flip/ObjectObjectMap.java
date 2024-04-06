@@ -15,7 +15,7 @@
  *
  */
 
-package de.heidelberg.pvs.container_bench;
+package de.heidelberg.pvs.container_bench.flip;
 
 
 import com.github.tommyettinger.digital.BitConversion;
@@ -23,7 +23,16 @@ import com.github.tommyettinger.ds.Utilities;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.*;
+import java.util.AbstractCollection;
+import java.util.AbstractSet;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * A {@link Map} that starts using cuckoo hashing and can flip its algorithm
@@ -67,14 +76,29 @@ import java.util.*;
  * thread safety, you'll need to implement your own locking around the map or wrap
  * the instance around a call to {@link Collections#synchronizedMap(Map)}.
  * <br>
- * This is derived from <a href="https://github.com/ivgiuliani/cuckoohash">this Github repo</a>
- * by Ivan Giuliani, at least for the cuckoo hashing part. If you're looking through that repo,
- * it may help to know that where it calls {@code rehash()}, this code calls {@link #flip()}.
+ * This is partly based on <a href="https://github.com/ivgiuliani/cuckoohash">this Github repo</a> by
+ * Ivan Giuliani, which is licensed under the Apache License 2.0. If you're looking through that repo,
+ * it may help to know that where it calls {@code rehash()}, this code calls {@link #flip()}. After
+ * flip() is called, different implementations are used (not present in the cuckoohash repo).
+ * <br>
+ * The concept of a map changing its algorithm when it hits a problem is not new, and in fact the JDK
+ * HashMap can do this (though it switches from an algorithm this doesn't use to another algorithm this
+ * doesn't use). It isn't just a nice-to-have feature in this case; if you ever try to enter three
+ * different keys with the same hashCode() result, then the map this is based on (in Giuliani's
+ * cuckoohash repo) would not terminate on the third put() call. Being able to flip to linear probing
+ * as an alternative implementation gives this a much-needed safeguard. If you want to verify that this
+ * map does not have the same issue, you can put the keys "0q1o", "0oq1", and "0ooo", with any values.
+ * All those keys have the hashCode() 1540191; entering those keys will work here but not in Giuliani's
+ * repo. Other cuckoo hashing implementations use mechanisms such as a "stash" for frequently-colliding
+ * keys; this may work to some extent for a fixed-size stash, but it can fail badly for a resizable
+ * stash if too many keys collide over all bits. The theoretical background behind a stash also seems
+ * to be based on a different model for how hash code generation works (not the way Java does it),
+ * which could explain why the fixed-size stash can fail on JVM implementations.
  *
  * @param <K> the type of keys maintained by this map
  * @param <V> the type of mapped values
  */
-public class FlipMap<K, V> implements Map<K, V> {
+public class ObjectObjectMap<K, V> implements Map<K, V> {
 
 	protected static final int DEFAULT_START_SIZE = 16;
 	protected static final float DEFAULT_LOAD_FACTOR = 0.45f;
@@ -95,9 +119,8 @@ public class FlipMap<K, V> implements Map<K, V> {
 	/**
 	 * Between 0f (exclusive) and 1f (inclusive, if you're careful), this determines how full the backing tables
 	 * can get before this increases their size. Larger values use less memory but make the data structure slower.
-	 * Beware that this should be 0.6 or less while this uses cuckoo hashing; without that guarantee, many
-	 * operations will slow down significantly. While this uses linear probing, this automatically becomes a
-	 * higher value (closer to 1).
+	 * On paper, this should be less than 0.6f while using cuckoo hashing, but in practice, somewhat-higher load
+	 * factors can work without a slowdown (0.75 has been tested and doesn't show signs of slowdown).
 	 */
 	protected float loadFactor;
 	/**
@@ -153,26 +176,26 @@ public class FlipMap<K, V> implements Map<K, V> {
 	protected transient Collection<V> values;
 
 	/**
-	 * Constructs an empty {@code FlipMap} with the default initial capacity (16)
+	 * Constructs an empty {@code ObjectObjectMap} with the default initial capacity (16)
 	 * and the default load factor of {@code 0.45}.
 	 */
-	public FlipMap() {
+	public ObjectObjectMap() {
 		this(DEFAULT_START_SIZE, DEFAULT_LOAD_FACTOR);
 	}
 
 	/**
-	 * Constructs an empty {@code FlipMap} with the specified initial capacity
+	 * Constructs an empty {@code ObjectObjectMap} with the specified initial capacity
 	 * and the default load factor of {@code 0.45}.
 	 * The given capacity will be rounded to the nearest power of two.
 	 *
 	 * @param initialCapacity the initial capacity
 	 */
-	public FlipMap(int initialCapacity) {
+	public ObjectObjectMap(int initialCapacity) {
 		this(initialCapacity, DEFAULT_LOAD_FACTOR);
 	}
 
 	/**
-	 * Constructs an empty {@code FlipMap} with the specified load factor and an initial
+	 * Constructs an empty {@code ObjectObjectMap} with the specified load factor and an initial
 	 * capacity of 16.
 	 * <p>
 	 * The load factor will cause the map to double in size when the number
@@ -181,12 +204,12 @@ public class FlipMap<K, V> implements Map<K, V> {
 	 *
 	 * @param loadFactor the load factor
 	 */
-	public FlipMap(float loadFactor) {
+	public ObjectObjectMap(float loadFactor) {
 		this(DEFAULT_START_SIZE, loadFactor);
 	}
 
 	/**
-	 * Constructs an empty {@code FlipMap} with the specified load factor and initial
+	 * Constructs an empty {@code ObjectObjectMap} with the specified load factor and initial
 	 * capacity.
 	 * <p>
 	 * The load factor will cause the map to double in size when the number
@@ -197,7 +220,7 @@ public class FlipMap<K, V> implements Map<K, V> {
 	 * @param loadFactor the load factor
 	 */
 	@SuppressWarnings("unchecked")
-	public FlipMap(int initialCapacity, float loadFactor) {
+	public ObjectObjectMap(int initialCapacity, float loadFactor) {
 		if (initialCapacity <= 0) {
 			throw new IllegalArgumentException("initial capacity must be strictly positive");
 		}
@@ -219,7 +242,7 @@ public class FlipMap<K, V> implements Map<K, V> {
 		regenHashMultipliers(tableSize);
 	}
 
-	public FlipMap(FlipMap<? extends K, ? extends V> other) {
+	public ObjectObjectMap(ObjectObjectMap<? extends K, ? extends V> other) {
 		size = other.size;
 		mask = other.mask;
 		shift = other.shift;
@@ -231,6 +254,18 @@ public class FlipMap<K, V> implements Map<K, V> {
 		hashMultiplier2 = other.hashMultiplier2;
 		keyTable = Arrays.copyOf(other.keyTable, other.keyTable.length);
 		valueTable = Arrays.copyOf(other.valueTable, other.valueTable.length);
+	}
+
+	/**
+	 * Returns true if the internal algorithm this uses has changed by a call to {@link #flip()}. Before flip()
+	 * is called (and it might never be), this uses cuckoo hashing to resolve collisions; after flip() has been
+	 * called, this uses linear probing. This method is meant as a diagnostic tool if it becomes necessary to
+	 * determine what algorithm is in use.
+	 * 
+	 * @return true if {@link #flip()} has been called and has changed the internal algorithm this uses.
+	 */
+	public boolean hasFlipped() {
+		return flipThreshold == 0;
 	}
 
 	/**
@@ -370,7 +405,7 @@ public class FlipMap<K, V> implements Map<K, V> {
 	@Override
 	@Nullable
 	public V put (K key, @Nullable V value) {
-		if(key == null) throw new NullPointerException("FlipMap does not permit null keys.");
+		if(key == null) throw new NullPointerException("ObjectObjectMap does not permit null keys.");
 
 		if(flipThreshold == 0)
 			return putLinear(key, value);
@@ -831,7 +866,7 @@ public class FlipMap<K, V> implements Map<K, V> {
 	 * @return the value associated with {@code key} after this completes (and potentially inserts an entry)
 	 */
 	public V putOrGet(K key, @Nullable V value) {
-		if(key == null) throw new NullPointerException("FlipMap does not permit null keys.");
+		if(key == null) throw new NullPointerException("ObjectObjectMap does not permit null keys.");
 
 		if(flipThreshold == 0)
 			return putOrGetLinear(key, value);
@@ -1037,8 +1072,8 @@ public class FlipMap<K, V> implements Map<K, V> {
 	 */
 	public static class EntrySet<K, V> extends AbstractSet<Map.Entry<K, V>> {
 
-		protected final FlipMap<K, V> map;
-		public EntrySet(FlipMap<K, V> map) {
+		protected final ObjectObjectMap<K, V> map;
+		public EntrySet(ObjectObjectMap<K, V> map) {
 			this.map = map;
 		}
 		/**
@@ -1083,12 +1118,12 @@ public class FlipMap<K, V> implements Map<K, V> {
 	public static class EntryIterator<K, V> implements Iterable<Map.Entry<K, V>>, Iterator<Map.Entry<K, V>> {
 		public boolean hasNext;
 
-		protected final FlipMap<K, V> map;
+		protected final ObjectObjectMap<K, V> map;
 		protected final Entry<K, V> entry;
 		protected int nextIndex, currentIndex;
 		public boolean valid = true;
 
-		public EntryIterator(FlipMap<K, V> map) {
+		public EntryIterator(ObjectObjectMap<K, V> map) {
 			this.map = map;
 			entry = new Entry<>();
 			reset();
@@ -1202,8 +1237,8 @@ public class FlipMap<K, V> implements Map<K, V> {
 	}
 
 	public static class KeySet<K> extends AbstractSet<K> {
-		protected final FlipMap<K, ?> map;
-		public KeySet(FlipMap<K, ?> map) {
+		protected final ObjectObjectMap<K, ?> map;
+		public KeySet(ObjectObjectMap<K, ?> map) {
 			this.map = map;
 		}
 
@@ -1262,8 +1297,8 @@ public class FlipMap<K, V> implements Map<K, V> {
 
 
 	public static class ValueCollection<V> extends AbstractCollection<V> {
-		protected final FlipMap<?, V> map;
-		public ValueCollection(FlipMap<?, V> map) {
+		protected final ObjectObjectMap<?, V> map;
+		public ValueCollection(ObjectObjectMap<?, V> map) {
 			this.map = map;
 		}
 
@@ -1310,7 +1345,7 @@ public class FlipMap<K, V> implements Map<K, V> {
 	protected static class KeyIterator<K> implements Iterator<K>, Iterable<K> {
 		protected final Iterator<? extends Map.Entry<K, ?>> iter;
 
-		public KeyIterator(FlipMap<K, ?> map) {
+		public KeyIterator(ObjectObjectMap<K, ?> map) {
 			iter = map.entrySet().iterator();
 		}
 
@@ -1340,7 +1375,7 @@ public class FlipMap<K, V> implements Map<K, V> {
 	protected static class ValueIterator<V> implements Iterator<V>, Iterable<V> {
 		protected final Iterator<? extends Map.Entry<?, V>> iter;
 
-		public ValueIterator(FlipMap<?, V> map) {
+		public ValueIterator(ObjectObjectMap<?, V> map) {
 			iter = map.entrySet().iterator();
 		}
 
