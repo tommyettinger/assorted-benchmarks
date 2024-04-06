@@ -1056,6 +1056,28 @@ public class FlipMap<K, V> implements Map<K, V> {
 		public int size() {
 			return map.size;
 		}
+
+		@Override
+		public boolean remove(Object o) {
+			if(o == null) return false;
+			Iterator<Map.Entry<K, V>> it = iterator();
+			while (it.hasNext()) {
+				if (it.next().equals(o)) {
+					it.remove();
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/**
+		 * Always throws an {@link UnsupportedOperationException}.
+		 * @param c ignored
+		 */
+		@Override
+		public boolean addAll(@NonNull Collection<? extends Map.Entry<K, V>> c) {
+			throw new UnsupportedOperationException("Adding to an EntrySet must be done through its connected Map.");
+		}
 	}
 
 	public static class EntryIterator<K, V> implements Iterable<Map.Entry<K, V>>, Iterator<Map.Entry<K, V>> {
@@ -1180,7 +1202,7 @@ public class FlipMap<K, V> implements Map<K, V> {
 	}
 
 	public static class KeySet<K> extends AbstractSet<K> {
-		FlipMap<K, ?> map;
+		protected final FlipMap<K, ?> map;
 		public KeySet(FlipMap<K, ?> map) {
 			this.map = map;
 		}
@@ -1204,6 +1226,29 @@ public class FlipMap<K, V> implements Map<K, V> {
 		public boolean contains(Object k) {
 			return map.containsKey(k);
 		}
+
+		@Override
+		public boolean remove(Object o) {
+			if(o == null) return false;
+			Iterator<K> it = iterator();
+			while (it.hasNext()) {
+				if (it.next().equals(o)) {
+					it.remove();
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/**
+		 * Always throws an {@link UnsupportedOperationException}.
+		 * @param c ignored
+		 */
+		@Override
+		public boolean addAll(@NonNull Collection<? extends K> c) {
+			throw new UnsupportedOperationException("Adding to a KeySet must be done through its connected Map.");
+		}
+
 	}
 
     public @NonNull Set<K> keySet() {
@@ -1217,7 +1262,7 @@ public class FlipMap<K, V> implements Map<K, V> {
 
 
 	public static class ValueCollection<V> extends AbstractCollection<V> {
-		FlipMap<?, V> map;
+		protected final FlipMap<?, V> map;
 		public ValueCollection(FlipMap<?, V> map) {
 			this.map = map;
 		}
@@ -1241,6 +1286,16 @@ public class FlipMap<K, V> implements Map<K, V> {
 		public boolean contains(Object v) {
 			return map.containsValue(v);
 		}
+
+		/**
+		 * Always throws an {@link UnsupportedOperationException}.
+		 * @param c ignored
+		 */
+		@Override
+		public boolean addAll(@NonNull Collection<? extends V> c) {
+			throw new UnsupportedOperationException("Adding to a ValueCollection must be done through its connected Map.");
+		}
+
 	}
 
 	public @NonNull Collection<V> values() {
@@ -1251,7 +1306,6 @@ public class FlipMap<K, V> implements Map<K, V> {
         }
         return vals;
     }
-
 
 	protected static class KeyIterator<K> implements Iterator<K>, Iterable<K> {
 		protected final Iterator<? extends Map.Entry<K, ?>> iter;
