@@ -69,6 +69,8 @@ import java.util.Set;
  * current instance. The default load factor for this map is {@code 0.45}.
  * Beware that this implementation can only guarantee non-amortized O(1) on
  * {@link #get(Object)} iff the load factor is relatively low (generally below 0.60).
+ * The performance is still fine in practice with a load factor of 0.75 (and still
+ * better than HashMap on all tested operations), but the default is safer.
  * For more details, it's helpful to read
  * <a href="http://www.it-c.dk/people/pagh/papers/cuckoo-jour.pdf">the original Cuckoo Hash Map paper</a>.
  * <br>
