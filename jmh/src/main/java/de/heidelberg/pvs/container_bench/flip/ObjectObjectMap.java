@@ -111,8 +111,8 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 	protected int flipThreshold;
 
 	/**
-	 * Simply the size of the {@link #keyTable} times the {@link #loadFactor}, floored. Stored to avoid recalculating;
-	 * this only changes upon {@link #resize(int)}.
+	 * Simply the size of the {@link #keyTable} times the {@link #loadFactor}, floored minus 1. Stored to avoid
+	 * recalculating; this only changes upon {@link #resize(int)}.
 	 */
 	protected int loadThreshold;
 
@@ -237,7 +237,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 		keyTable = (K[])new Object[tableSize];
 		valueTable = (V[])new Object[tableSize];
 		this.loadFactor = loadFactor;
-		loadThreshold = (int)(loadFactor * tableSize);
+		loadThreshold = (int)(loadFactor * tableSize) - 1;
 
 		regenHashMultipliers(tableSize);
 	}
@@ -425,13 +425,12 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 			}
 		}
 
-		if (absent) {
+		if (absent && size >= loadThreshold) {
 			// If we need to resize after adding this item, it's probably best to resize before we add it.
-			if (size() + 1 >= loadThreshold)
-				resize();
+			resize();
 		}
 		// If placing key with cuckoo hashing fails, putFallback falls back to linear probing by calling flip().
-        putFallback(key, value);
+        putFallback(key, value, hc);
 
         return old;
 	}
@@ -488,7 +487,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 		i = ~i; // Empty space was found.
 		keyTable[i] = key;
 		valueTable[i] = value;
-		if (++size >= loadThreshold) resizeLinear(keyTable.length << 1);
+		if (size++ >= loadThreshold) resizeLinear(keyTable.length << 1);
 		return defaultValue;
 	}
 
@@ -497,10 +496,10 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 	 * the map to use linear probing by calling {@link #flip()}, and completes the put operation using
 	 * linear probing.
 	 */
-	protected void putFallback (K key, @Nullable V value) {
+	protected void putFallback (K key, @Nullable V value, int hc) {
 		int loop = 0;
 		while (loop++ < flipThreshold) {
-			int hc = key.hashCode();
+
 			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 			K k1 = keyTable[hr1];
 			if (k1 == null) {
@@ -531,6 +530,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 			key = k1;
 			valueTable[hr1] = value;
 			value = temp;
+			hc = key.hashCode();
 		}
 		flip();
 		// From this point on, we are using linear probing, not cuckoo hashing.
@@ -711,7 +711,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 		mask = newSize - 1;
 		shift = BitConversion.countLeadingZeros(newSize - 1L);
 		flipThreshold = BitConversion.countTrailingZeros(newSize) + 4;
-		loadThreshold = (int)(loadFactor * newSize);
+		loadThreshold = (int)(loadFactor * newSize) - 1;
 
 		// Already point keyTable and valueTable to the new tables since putSafe operates on them.
 		keyTable = (K[])new Object[newSize];
@@ -730,7 +730,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 					mask = keyTable.length - 1;
 					shift = BitConversion.countLeadingZeros(newSize - 1L);
 					flipThreshold = BitConversion.countTrailingZeros(keyTable.length) + 4;
-					loadThreshold = (int)(loadFactor * keyTable.length);
+					loadThreshold = (int)(loadFactor * keyTable.length) - 1;
 					return true;
 				}
 			}
@@ -750,7 +750,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 	@SuppressWarnings("unchecked")
 	protected void resizeLinear(int newSize) {
 		int oldCapacity = keyTable.length;
-		loadThreshold = (int)(newSize * loadFactor);
+		loadThreshold = (int)(newSize * loadFactor) - 1;
 		mask = newSize - 1;
 		shift = BitConversion.countLeadingZeros(newSize - 1L);
 
@@ -788,7 +788,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 
 		loadFactor = (float) Math.sqrt(loadFactor);
 		flipThreshold = 0;
-		loadThreshold = (int)(loadFactor * keyTable.length);
+		loadThreshold = (int)(loadFactor * keyTable.length) - 1;
 		size = 0;
 
 		for (int i = 0; i < oldK.length; i++) {
@@ -883,10 +883,10 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 		}
 
         // If we need to resize after adding this item, it's probably best to resize before we add it.
-        if (size + 1 >= loadThreshold)
+        if (size >= loadThreshold)
             resize();
         // If placing key with cuckoo hashing fails, putOrGetFallback falls back to linear probing by calling flip().
-		return putOrGetFallback(key, value);
+		return putOrGetFallback(key, value, hc);
 	}
 
 	/**
@@ -909,7 +909,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 				i = ~i; // Empty space was found.
 				keyTable[i] = key;
 				valueTable[i] = value;
-				if (++size >= loadThreshold) resizeLinear(keyTable.length << 1);
+				if (size++ >= loadThreshold) resizeLinear(keyTable.length << 1);
 				return defaultValue;
 			}
 		}
@@ -921,10 +921,9 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 	 * linear probing.
 	 * @return the key we failed to move because of collisions or {@code null} if successful.
 	 */
-	protected V putOrGetFallback (K key, @Nullable V value) {
+	protected V putOrGetFallback (K key, @Nullable V value, int hc) {
 		int loop = 0;
 		while (loop++ < flipThreshold) {
-			int hc = key.hashCode();
 			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 			K k1 = keyTable[hr1];
 			if (k1 == null) {
@@ -952,6 +951,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 			key = k1;
 			valueTable[hr1] = value;
 			value = temp;
+			hc = key.hashCode();
 		}
 		flip();
 		// From this point on, we are using linear probing, not cuckoo hashing.
