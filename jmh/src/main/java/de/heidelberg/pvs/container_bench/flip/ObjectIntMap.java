@@ -844,9 +844,9 @@ public class ObjectIntMap<K> {
 		}
 	}
 
-	public boolean containsValue (Object value) {
+	public boolean containsValue (int value) {
 		for (int i = 0; i < keyTable.length; i++) {
-			if (keyTable[i] != null && Objects.equals(valueTable[i], value)) {
+			if (keyTable[i] != null && valueTable[i] == value) {
 				return true;
 			}
 		}
