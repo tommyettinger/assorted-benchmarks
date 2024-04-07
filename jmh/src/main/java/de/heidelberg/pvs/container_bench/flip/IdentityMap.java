@@ -952,6 +952,88 @@ public class IdentityMap<K, V> implements Map<K, V> {
 	}
 
 	@Override
+	public int hashCode () {
+		int h = size;
+		K[] keyTable = this.keyTable;
+		V[] valueTable = this.valueTable;
+		for (int i = 0, n = keyTable.length; i < n; i++) {
+			K key = keyTable[i];
+			if (key != null) {
+				h += System.identityHashCode(key);
+				V value = valueTable[i];
+				if (value != null) {h += value.hashCode();}
+			}
+		}
+		return h;
+	}
+
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	@Override
+	public boolean equals (Object obj) {
+		if (obj == this) {return true;}
+		if (!(obj instanceof Map)) {return false;}
+		Map other = (Map)obj;
+		if (other.size() != size) {return false;}
+		K[] keyTable = this.keyTable;
+		V[] valueTable = this.valueTable;
+		try {
+			for (int i = 0, n = keyTable.length; i < n; i++) {
+				K key = keyTable[i];
+				if (key != null) {
+					V value = valueTable[i];
+					if (value == null) {
+						if (other.getOrDefault(key, Utilities.neverIdentical) != null) {return false;}
+					} else {
+						if (!value.equals(other.get(key))) {return false;}
+					}
+				}
+			}
+		}catch (ClassCastException | NullPointerException unused) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public String toString (String separator) {
+		return toString(separator, false);
+	}
+
+	@Override
+	public String toString () {
+		return toString(", ", true);
+	}
+
+	public String toString (String separator, boolean braces) {
+		if (size == 0) {return braces ? "{}" : "";}
+		StringBuilder buffer = new StringBuilder(32);
+		if (braces) {buffer.append('{');}
+		K[] keyTable = this.keyTable;
+		V[] valueTable = this.valueTable;
+		int i = keyTable.length;
+		while (i-- > 0) {
+			K key = keyTable[i];
+			if (key == null) {continue;}
+			buffer.append(key == this ? "(this)" : key);
+			buffer.append('=');
+			V value = valueTable[i];
+			buffer.append(value == this ? "(this)" : value);
+			break;
+		}
+		while (i-- > 0) {
+			K key = keyTable[i];
+			if (key == null) {continue;}
+			buffer.append(separator);
+			buffer.append(key == this ? "(this)" : key);
+			buffer.append('=');
+			V value = valueTable[i];
+			buffer.append(value == this ? "(this)" : value);
+		}
+		if (braces) {buffer.append('}');}
+		return buffer.toString();
+	}
+
+	@Override
 	public @NonNull Set<Map.Entry<K, V>> entrySet () {
 		Set<Map.Entry<K,V>> entries;
 		return (entries = entrySet) == null ? (entrySet = new EntrySet<>(this)) : entries;

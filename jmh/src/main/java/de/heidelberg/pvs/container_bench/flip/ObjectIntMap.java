@@ -977,6 +977,80 @@ public class ObjectIntMap<K> {
 		return (entries = entrySet) == null ? (entrySet = new EntrySet<>(this)) : entries;
 	}
 
+	@Override
+	public int hashCode () {
+		int h = size;
+		K[] keyTable = this.keyTable;
+		int[] valueTable = this.valueTable;
+		for (int i = 0, n = keyTable.length; i < n; i++) {
+			K key = keyTable[i];
+			if (key != null) {
+				h += key.hashCode() + valueTable[i];
+			}
+		}
+		return h;
+	}
+
+	@Override
+	public boolean equals (Object obj) {
+		if (obj == this) {return true;}
+		if (!(obj instanceof ObjectIntMap)) {return false;}
+		ObjectIntMap other = (ObjectIntMap)obj;
+		if (other.size != size) {return false;}
+		K[] keyTable = this.keyTable;
+		int[] valueTable = this.valueTable;
+		for (int i = 0, n = keyTable.length; i < n; i++) {
+			K key = keyTable[i];
+			if (key != null) {
+				int otherValue = other.getOrDefault(key, Integer.MIN_VALUE);
+				if (otherValue == Integer.MIN_VALUE && !other.containsKey(key))
+					return false;
+				if (otherValue != valueTable[i])
+					return false;
+			}
+		}
+		return true;
+	}
+
+	public String toString (String separator) {
+		return toString(separator, false);
+	}
+
+	@Override
+	public String toString () {
+		return toString(", ", true);
+	}
+
+	public String toString (String separator, boolean braces) {
+		if (size == 0) {return braces ? "{}" : "";}
+		StringBuilder buffer = new StringBuilder(32);
+		if (braces) {buffer.append('{');}
+		K[] keyTable = this.keyTable;
+		int[] valueTable = this.valueTable;
+		int i = keyTable.length;
+		while (i-- > 0) {
+			K key = keyTable[i];
+			if (key == null) {continue;}
+			buffer.append(key == this ? "(this)" : key);
+			buffer.append('=');
+			int value = valueTable[i];
+			buffer.append(value);
+			break;
+		}
+		while (i-- > 0) {
+			K key = keyTable[i];
+			if (key == null) {continue;}
+			buffer.append(separator);
+			buffer.append(key == this ? "(this)" : key);
+			buffer.append('=');
+			int value = valueTable[i];
+			buffer.append(value);
+		}
+		if (braces) {buffer.append('}');}
+		return buffer.toString();
+	}
+
+
 	/**
 	 * Like a {@link Map.Entry} with a mutable key and a mutable int value, so it can be reused.
 	 * @param <K> Should match the {@code K} of a Map that contains this Entry
