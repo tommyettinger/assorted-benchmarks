@@ -19,7 +19,6 @@ package de.heidelberg.pvs.container_bench.flip;
 
 
 import com.github.tommyettinger.digital.BitConversion;
-import com.github.tommyettinger.ds.Utilities;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -221,7 +220,7 @@ public class IdentityMap<K, V> implements Map<K, V> {
 		}
 
 		size = 0;
-		int tableSize = Math.max(2, 1 << -BitConversion.countLeadingZeros(initialCapacity));
+		int tableSize = Utilities.tableSize(initialCapacity, loadFactor);
 		mask = tableSize - 1;
 		shift = BitConversion.countLeadingZeros(tableSize - 1L);
 		flipThreshold = BitConversion.countTrailingZeros(tableSize) + 4;
@@ -615,14 +614,30 @@ public class IdentityMap<K, V> implements Map<K, V> {
 	}
 
 	/**
+	 * Clears the map and reduces the size of the backing arrays to be the specified capacity /
+	 * loadFactor, if they are larger.
+	 */
+	public void clear(int maximumCapacity) {
+		int tableSize = Utilities.tableSize(maximumCapacity, loadFactor);
+		if (keyTable.length <= tableSize) {
+			clear();
+			return;
+		}
+		size = 0;
+		resize(tableSize);
+	}
+
+	/**
 	 * Removes all the mappings from this map.
 	 * The map will be empty after this call returns.
 	 */
-	@Override
-	public void clear () {
+	public void clear() {
+		if (size == 0) {
+			return;
+		}
 		size = 0;
-		Arrays.fill(keyTable, null);
-		Arrays.fill(valueTable, null);
+		Utilities.clearObjectArray(keyTable, 0, keyTable.length);
+		Utilities.clearObjectArray(valueTable, 0, valueTable.length);
 	}
 
 	/**

@@ -20,7 +20,6 @@ package de.heidelberg.pvs.container_bench.flip;
 
 import com.github.tommyettinger.digital.BitConversion;
 import com.github.tommyettinger.ds.PrimitiveCollection;
-import com.github.tommyettinger.ds.Utilities;
 import com.github.tommyettinger.ds.support.util.IntIterator;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -221,7 +220,7 @@ public class ObjectIntMap<K> {
 		}
 
 		size = 0;
-		int tableSize = Math.max(2, 1 << -BitConversion.countLeadingZeros(initialCapacity));
+		int tableSize = Utilities.tableSize(initialCapacity, loadFactor);
 		mask = tableSize - 1;
 		shift = BitConversion.countLeadingZeros(tableSize - 1L);
 		flipThreshold = BitConversion.countTrailingZeros(tableSize) + 4;
@@ -644,13 +643,27 @@ public class ObjectIntMap<K> {
 		return oldValue;
 	}
 
+	public void clearApproximate(int maximumCapacity) {
+		// approximate table size
+		int tableSize = Utilities.tableSize(maximumCapacity, loadFactor);
+		if (keyTable.length <= tableSize) {
+			clear();
+			return;
+		}
+		size = 0;
+		resize(tableSize);
+	}
+
 	/**
 	 * Removes all the mappings from this map.
 	 * The map will be empty after this call returns.
 	 */
-	public void clear () {
+	public void clear() {
+		if (size == 0) {
+			return;
+		}
 		size = 0;
-		Arrays.fill(keyTable, null);
+		Utilities.clearObjectArray(keyTable, 0, keyTable.length);
 	}
 
 	/**
