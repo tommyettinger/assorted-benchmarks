@@ -18,13 +18,14 @@
 package de.heidelberg.pvs.container_bench.flip;
 
 
-import com.github.tommyettinger.digital.BitConversion;
 import com.github.tommyettinger.ds.PrimitiveCollection;
 import com.github.tommyettinger.ds.support.util.IntIterator;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.ObjIntConsumer;
 
 /**
  * An Object-key, int-value map that starts using cuckoo hashing and can flip its
@@ -222,8 +223,8 @@ public class IdentityObjectIntMap<K> {
 		size = 0;
 		int tableSize = Utilities.tableSize(initialCapacity, loadFactor);
 		mask = tableSize - 1;
-		shift = BitConversion.countLeadingZeros(tableSize - 1L);
-		flipThreshold = BitConversion.countTrailingZeros(tableSize) + 4;
+		shift = Long.numberOfLeadingZeros(tableSize - 1L);
+		flipThreshold = Integer.numberOfTrailingZeros(tableSize) + 4;
 
 		keyTable = (K[])new Object[tableSize];
 		valueTable = new int[tableSize];
@@ -741,8 +742,8 @@ public class IdentityObjectIntMap<K> {
 		long oldH1 = hashMultiplier1;
 		long oldH2 = hashMultiplier2;
 		mask = newSize - 1;
-		shift = BitConversion.countLeadingZeros(newSize - 1L);
-		flipThreshold = BitConversion.countTrailingZeros(newSize) + 4;
+		shift = Long.numberOfLeadingZeros(newSize - 1L);
+		flipThreshold = Integer.numberOfTrailingZeros(newSize) + 4;
 		loadThreshold = (int)(loadFactor * newSize) - 1;
 
 		// Already point keyTable and valueTable to the new tables since putSafe operates on them.
@@ -760,8 +761,8 @@ public class IdentityObjectIntMap<K> {
 					hashMultiplier1 = oldH1;
 					hashMultiplier2 = oldH2;
 					mask = keyTable.length - 1;
-					shift = BitConversion.countLeadingZeros(newSize - 1L);
-					flipThreshold = BitConversion.countTrailingZeros(keyTable.length) + 4;
+					shift = Long.numberOfLeadingZeros(newSize - 1L);
+					flipThreshold = Integer.numberOfTrailingZeros(keyTable.length) + 4;
 					loadThreshold = (int)(loadFactor * keyTable.length) - 1;
 					return true;
 				}
@@ -784,7 +785,7 @@ public class IdentityObjectIntMap<K> {
 		int oldCapacity = keyTable.length;
 		loadThreshold = (int)(newSize * loadFactor) - 1;
 		mask = newSize - 1;
-		shift = BitConversion.countLeadingZeros(newSize - 1L);
+		shift = Long.numberOfLeadingZeros(newSize - 1L);
 
 		hashMultiplier1 = Utilities.GOOD_MULTIPLIERS[(int)(hashMultiplier1 >>> 48 + shift) & 511];
 		K[] oldKeyTable = keyTable;
@@ -1063,6 +1064,78 @@ public class IdentityObjectIntMap<K> {
 		return buffer.toString();
 	}
 
+	public Map<K, Integer> toHashMap() {
+		Map<K, Integer> map = new HashMap<>(size);
+		K[] keyTable = this.keyTable;
+		int[] valueTable = this.valueTable;
+		for (int i = 0, n = keyTable.length; i < n; i++) {
+			K k = keyTable[i];
+			if (k != null) {
+				map.put(k, valueTable[i]);
+			}
+		}
+		return map;
+	}
+
+	public Map<K, Integer> toIdentityHashMap() {
+		Map<K, Integer> map = new IdentityHashMap<>(size);
+		K[] keyTable = this.keyTable;
+		int[] valueTable = this.valueTable;
+		for (int i = 0, n = keyTable.length; i < n; i++) {
+			K k = keyTable[i];
+			if (k != null) {
+				map.put(k, valueTable[i]);
+			}
+		}
+		return map;
+	}
+
+	/**
+	 * Of the three toFooBarMap methods, this is recommended
+	 * because it allows keeping the exact structure of an IdentityObjectIntMap
+	 * and only changing the value type.
+	 * @return an IdentityMap (from this package) with the same key references and boxed values
+	 */
+	public Map<K, Integer> toIdentityMap() {
+		IdentityMap<K, Integer> map = new IdentityMap<>(1, loadFactor);
+		map.size = size;
+		map.mask = mask;
+		map.shift = shift;
+		map.flipThreshold = flipThreshold;
+		map.loadFactor = loadFactor;
+		map.loadThreshold = loadThreshold;
+		map.defaultValue = defaultValue;
+		map.hashMultiplier1 = hashMultiplier1;
+		map.hashMultiplier2 = hashMultiplier2;
+		map.keyTable = Arrays.copyOf(keyTable, keyTable.length);
+		map.valueTable = new Integer[valueTable.length];
+		for (int i = 0, n = keyTable.length; i < n; i++) {
+			if(keyTable[i] != null) map.valueTable[i] = valueTable[i];
+		}
+		return map;
+	}
+
+	public void forEach(BiConsumer<? super K, Integer> action) {
+		K[] keyTable = this.keyTable;
+		int[] valueTable = this.valueTable;
+		for (int i = 0, n = keyTable.length; i < n; i++) {
+			K k = keyTable[i];
+			if (k != null) {
+				action.accept(k, valueTable[i]);
+			}
+		}
+	}
+
+	public void forEach(ObjIntConsumer<? super K> action) {
+		K[] keyTable = this.keyTable;
+		int[] valueTable = this.valueTable;
+		for (int i = 0, n = keyTable.length; i < n; i++) {
+			K k = keyTable[i];
+			if (k != null) {
+				action.accept(k, valueTable[i]);
+			}
+		}
+	}
 
 	/**
 	 * Like a {@link Map.Entry} with a mutable key and a mutable int value, so it can be reused.

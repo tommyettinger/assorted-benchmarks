@@ -18,20 +18,10 @@
 package de.heidelberg.pvs.container_bench.flip;
 
 
-import com.github.tommyettinger.digital.BitConversion;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.util.AbstractCollection;
-import java.util.AbstractSet;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A {@link Map} that starts using cuckoo hashing and can flip its algorithm
@@ -232,8 +222,8 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 		size = 0;
 		int tableSize = Utilities.tableSize(initialCapacity, loadFactor);
 		mask = tableSize - 1;
-		shift = BitConversion.countLeadingZeros(tableSize - 1L);
-		flipThreshold = BitConversion.countTrailingZeros(tableSize) + 4;
+		shift = Long.numberOfLeadingZeros(tableSize - 1L);
+		flipThreshold = Integer.numberOfTrailingZeros(tableSize) + 4;
 
 		keyTable = (K[])new Object[tableSize];
 		valueTable = (V[])new Object[tableSize];
@@ -726,8 +716,8 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 		long oldH1 = hashMultiplier1;
 		long oldH2 = hashMultiplier2;
 		mask = newSize - 1;
-		shift = BitConversion.countLeadingZeros(newSize - 1L);
-		flipThreshold = BitConversion.countTrailingZeros(newSize) + 4;
+		shift = Long.numberOfLeadingZeros(newSize - 1L);
+		flipThreshold = Integer.numberOfTrailingZeros(newSize) + 4;
 		loadThreshold = (int)(loadFactor * newSize) - 1;
 
 		// Already point keyTable and valueTable to the new tables since putSafe operates on them.
@@ -745,8 +735,8 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 					hashMultiplier1 = oldH1;
 					hashMultiplier2 = oldH2;
 					mask = keyTable.length - 1;
-					shift = BitConversion.countLeadingZeros(newSize - 1L);
-					flipThreshold = BitConversion.countTrailingZeros(keyTable.length) + 4;
+					shift = Long.numberOfLeadingZeros(newSize - 1L);
+					flipThreshold = Integer.numberOfTrailingZeros(keyTable.length) + 4;
 					loadThreshold = (int)(loadFactor * keyTable.length) - 1;
 					return true;
 				}
@@ -769,7 +759,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 		int oldCapacity = keyTable.length;
 		loadThreshold = (int)(newSize * loadFactor) - 1;
 		mask = newSize - 1;
-		shift = BitConversion.countLeadingZeros(newSize - 1L);
+		shift = Long.numberOfLeadingZeros(newSize - 1L);
 
 		hashMultiplier1 = Utilities.GOOD_MULTIPLIERS[(int)(hashMultiplier1 >>> 48 + shift) & 511];
 		K[] oldKeyTable = keyTable;
