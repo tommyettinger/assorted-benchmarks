@@ -18,8 +18,6 @@
 package de.heidelberg.pvs.container_bench.flip;
 
 
-import com.github.tommyettinger.ds.PrimitiveCollection;
-import com.github.tommyettinger.ds.support.util.IntIterator;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -1065,7 +1063,7 @@ public class ObjectIntMap<K> {
 	}
 
 	/**
-	 * @see #toObjectObjectMap() 
+	 * @see #toObjectObjectMap()
 	 * @return a HashMap with the same keys and boxed values
 	 */
 	public Map<K, Integer> toHashMap() {
@@ -1458,7 +1456,7 @@ public class ObjectIntMap<K> {
 
 		@Override
 		public boolean remove(int item) {
-			IntIterator it = iterator();
+			PrimitiveIterator.OfInt it = iterator();
 			while (it.hasNext()) {
 				if (item == (it.next())) {
 					it.remove();
@@ -1469,7 +1467,7 @@ public class ObjectIntMap<K> {
 		}
 
 
-		public @NonNull IntIterator iterator() {
+		public PrimitiveIterator.@NonNull OfInt iterator() {
 			return new ValueIterator(map);
 		}
 
@@ -1538,7 +1536,7 @@ public class ObjectIntMap<K> {
 		}
 	}
 
-	protected static class ValueIterator implements IntIterator {
+	protected static class ValueIterator implements PrimitiveIterator.OfInt {
 		protected final Iterator<? extends Entry<?>> iter;
 
 		public ValueIterator(ObjectIntMap<?> map) {
