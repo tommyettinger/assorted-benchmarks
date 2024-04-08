@@ -1,0 +1,13 @@
+Benchmark                               (impl)   (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
+JDKMapBench.bench                    FLIP_HASH  STRING_UNIFORM                    100  467505    1000    POPULATE  sample  385306    64948.183 ±  83.432  ns/op
+JDKMapBench.bench                    FLIP_HASH  STRING_UNIFORM                    100  467505    1000    CONTAINS  sample  768413     1043.931 ±   4.522  ns/op
+JDKMapBench.bench                    FLIP_HASH  STRING_UNIFORM                    100  467505    1000        COPY  sample  266171    47205.895 ± 142.651  ns/op
+JDKMapBench.bench                    FLIP_HASH  STRING_UNIFORM                    100  467505    1000     ITERATE  sample  563838    11110.629 ±  18.966  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  STRING_UNIFORM                    100  467505    1000    POPULATE  sample  423757    29641.079 ±  96.127  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  STRING_UNIFORM                    100  467505    1000    CONTAINS  sample  747307     1075.305 ±   3.125  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  STRING_UNIFORM                    100  467505    1000        COPY  sample  525274    16789.175 ±  68.292  ns/op
+JDKMapBench.bench                JDKGDXDS_HASH  STRING_UNIFORM                    100  467505    1000     ITERATE  sample  479114    13055.762 ±   9.549  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  STRING_UNIFORM                    100  467505    1000    POPULATE  sample  530557    23626.558 ±  69.799  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  STRING_UNIFORM                    100  467505    1000    CONTAINS  sample  766005     1043.243 ±   1.002  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  STRING_UNIFORM                    100  467505    1000        COPY  sample  455970    13926.511 ±  85.601  ns/op
+JDKMapBench.bench                 JDK_O2O_HASH  STRING_UNIFORM                    100  467505    1000     ITERATE  sample  810132     7731.560 ±   6.812  ns/op

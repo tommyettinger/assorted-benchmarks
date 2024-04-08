@@ -1,3 +1,5 @@
+Note first that FLIP_HASH is broken here, which I only realized much later. It wasn't inserting any keys, just values.
+
 Benchmarking with GRIDPOINT2_UNIFORM payload, which means it uses a sequence of very dense (x,y) points starting at the origin and spiraling outward.
 This uses a load factor of 0.75f, which is 25-50% higher than recommended for FlipMap. It still does extremely well!
 

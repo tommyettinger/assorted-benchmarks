@@ -1,3 +1,5 @@
+Note first that FLIP_HASH is broken here, which I only realized much later. It wasn't inserting any keys, just values.
+
 With String keys:
 
 Benchmark                               (impl)   (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode      Cnt          Score        Error  Units
@@ -49,6 +51,8 @@ JDKMapBench.bench                 JDK_O2O_HASH  STRING_UNIFORM                  
 JDKMapBench.bench                 JDK_O2O_HASH  STRING_UNIFORM                    100  467505  100000    CONTAINS  sample  2705508       3490.584 ±      5.079  ns/op
 JDKMapBench.bench                 JDK_O2O_HASH  STRING_UNIFORM                    100  467505  100000        COPY  sample    15910    4729042.335 ± 194448.934  ns/op
 JDKMapBench.bench                 JDK_O2O_HASH  STRING_UNIFORM                    100  467505  100000     ITERATE  sample    41411    1812796.614 ±   2158.861  ns/op
+
+FLIP_HASH is also broken here.
 
 With Vector2 keys:
 

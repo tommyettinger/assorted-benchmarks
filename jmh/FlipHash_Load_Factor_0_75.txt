@@ -1,3 +1,5 @@
+Note first that FLIP_HASH is broken here, which I only realized much later. It wasn't inserting any keys, just values.
+
 Benchmark                               (impl)   (payloadType)  (percentageRangeKeys)  (seed)  (size)  (workload)    Mode     Cnt         Score     Error  Units
 JDKMapBench.bench                    FLIP_HASH  STRING_UNIFORM                    100  467505    1000    POPULATE  sample  404630     15629.563 ±  98.079  ns/op
 JDKMapBench.bench                    FLIP_HASH  STRING_UNIFORM                    100  467505    1000    CONTAINS  sample  601904       678.017 ±   3.572  ns/op
