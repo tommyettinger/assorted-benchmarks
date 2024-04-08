@@ -58,8 +58,6 @@ import java.util.*;
  * current instance. The default load factor for this map is {@code 0.45}.
  * Beware that this implementation can only guarantee non-amortized O(1) on
  * {@link #get(Object)} iff the load factor is relatively low (generally below 0.60).
- * The performance is still fine in practice with a load factor of 0.75 (and still
- * better than HashMap on all tested operations), but the default is safer.
  * For more details, it's helpful to read
  * <a href="http://www.it-c.dk/people/pagh/papers/cuckoo-jour.pdf">the original Cuckoo Hash Map paper</a>.
  * <br>
@@ -438,13 +436,23 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 			int hc = key.hashCode();
 			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 			K k1 = keyTable[hr1];
-			if (k1 == null || key.equals(k1)) {
+			if (k1 == null) {
+				keyTable[hr1] = key;
+				valueTable[hr1] = value;
+				return false;
+			}
+			if (key==(k1)) {
 				valueTable[hr1] = value;
 				return false;
 			}
 			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
 			K k2 = keyTable[hr2];
-			if (k2 == null || key.equals(k2)) {
+			if (k2 == null) {
+				keyTable[hr2] = key;
+				valueTable[hr2] = value;
+				return false;
+			}
+			if (key==(k2)) {
 				valueTable[hr2] = value;
 				return false;
 			}
@@ -494,6 +502,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 			K k1 = keyTable[hr1];
 			if (k1 == null) {
+				keyTable[hr1] = key;
 				valueTable[hr1] = value;
 				++size;
 				return;
@@ -505,6 +514,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
 			K k2 = keyTable[hr2];
 			if (k2 == null) {
+				keyTable[hr2] = key;
 				valueTable[hr2] = value;
 				++size;
 				return;
@@ -632,9 +642,6 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 	 * The map will be empty after this call returns.
 	 */
 	public void clear() {
-		if (size == 0) {
-			return;
-		}
 		size = 0;
 		Utilities.clearObjectArray(keyTable, 0, keyTable.length);
 		Utilities.clearObjectArray(valueTable, 0, valueTable.length);
@@ -704,7 +711,6 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 	 */
 	@SuppressWarnings("unchecked")
 	protected boolean resize(final int newSize) {
-		if(size == 0) return true;
 		if(flipThreshold == 0) {
 			resizeLinear(newSize);
 			return false;
@@ -726,19 +732,21 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 
 		regenHashMultipliers(newSize);
 
-		for (int i = 0; i < oldK.length; i++) {
-			if (oldK[i] != null) {
-				if (putSafe(oldK[i], oldV[i])) {
-					// Placing the old key failed for any reason.
-					keyTable = oldK;
-					valueTable = oldV;
-					hashMultiplier1 = oldH1;
-					hashMultiplier2 = oldH2;
-					mask = keyTable.length - 1;
-					shift = Long.numberOfLeadingZeros(newSize - 1L);
-					flipThreshold = Integer.numberOfTrailingZeros(keyTable.length) + 4;
-					loadThreshold = (int)(loadFactor * keyTable.length) - 1;
-					return true;
+		if(size > 0) {
+			for (int i = 0; i < oldK.length; i++) {
+				if (oldK[i] != null) {
+					if (putSafe(oldK[i], oldV[i])) {
+						// Placing the old key failed for any reason.
+						keyTable = oldK;
+						valueTable = oldV;
+						hashMultiplier1 = oldH1;
+						hashMultiplier2 = oldH2;
+						mask = keyTable.length - 1;
+						shift = Long.numberOfLeadingZeros(newSize - 1L);
+						flipThreshold = Integer.numberOfTrailingZeros(keyTable.length) + 4;
+						loadThreshold = (int) (loadFactor * keyTable.length) - 1;
+						return true;
+					}
 				}
 			}
 		}
@@ -913,7 +921,6 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 			if (key.equals(other))
 				return valueTable[i]; // Same key was found.
 			if (other == null){
-				i = ~i; // Empty space was found.
 				keyTable[i] = key;
 				valueTable[i] = value;
 				if (size++ >= loadThreshold) resizeLinear(keyTable.length << 1);
@@ -934,6 +941,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 			int hr1 = (int)(hashMultiplier1 * hc >>> shift) | 1;
 			K k1 = keyTable[hr1];
 			if (k1 == null) {
+				keyTable[hr1] = key;
 				valueTable[hr1] = value;
 				++size;
 				return defaultValue;
@@ -944,6 +952,7 @@ public class ObjectObjectMap<K, V> implements Map<K, V> {
 			int hr2 = (int)(hashMultiplier2 * hc >>> shift) & -2;
 			K k2 = keyTable[hr2];
 			if (k2 == null){
+				keyTable[hr2] = key;
 				valueTable[hr2] = value;
 				++size;
 				return defaultValue;
