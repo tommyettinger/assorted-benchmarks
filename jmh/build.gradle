@@ -4,13 +4,14 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
         gradlePluginPortal()
     }
-    ext.jmh_version = '1.32' // JMH version to use
+    ext.jmh_version = '1.37' // JMH version to use
 }
 
 plugins {
     id 'java'
     id 'eclipse'
     id 'idea'
+//    id "me.champeau.jmh" version "0.7.2" // finds no benchmarks
     // id 'me.champeau.gradle.jmh' version '0.4.5' // did not work
     id "com.github.johnrengelman.shadow" version "8.1.1"
     id 'com.github.ben-manes.versions' version '0.27.0' // for "gradlew dependencyUpdates -Drevision=release"
