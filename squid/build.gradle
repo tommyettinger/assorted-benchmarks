@@ -99,13 +99,14 @@ dependencies {
 //    implementation 'com.github.tommyettinger:gand:9a608d9cec' // from Feb 11 2024; Grid2DDirectedGraph.hash() is simpler
 //    implementation 'com.github.tommyettinger:gand:9844969b11' // from Feb 12 2024; set hashing experiments
 //    implementation 'com.github.tommyettinger:gand:14c44a2788' // from Feb 26 2024; huge changes
-    implementation 'com.github.tommyettinger:gand:3299e2fb29' // from Feb 26 2024; hashing stuff
+//    implementation 'com.github.tommyettinger:gand:3299e2fb29' // from Feb 26 2024; hashing stuff
+    implementation 'com.github.tommyettinger:gand:6ae3b8c94c' // from Jul 5 2024; after the 0.2.0 release, has sort speedup.
 
 
     implementation 'com.github.tommyettinger:atlantis:5574642135'
-    implementation 'com.github.tommyettinger:digital:0.4.7'
-    implementation('com.github.tommyettinger:juniper:0.5.0'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
-    implementation('com.github.tommyettinger:jdkgdxds:1.4.8'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
+    implementation 'com.github.tommyettinger:digital:0.4.8'
+    implementation('com.github.tommyettinger:juniper:0.6.1'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
+    implementation('com.github.tommyettinger:jdkgdxds:1.6.1'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
 
 
     implementation "it.unimi.dsi:fastutil:8.5.9"
