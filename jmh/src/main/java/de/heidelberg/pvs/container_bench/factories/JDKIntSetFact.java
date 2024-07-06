@@ -35,14 +35,7 @@ public enum JDKIntSetFact {
 			new org.apache.commons.collections4.map.HashedMap<Integer, Integer>())), //
 	APACHE_LINKEDHASH(org.apache.commons.collections4.set.ListOrderedSet::new), //
 
-	MAHOUT_HASH(org.apache.mahout.math.set.OpenHashSet::new), //
-
-	JAVOLUTION_HASH(javolution.util.FastSet::new), //
-	JAVOLUTION_SORTED(javolution.util.FastSortedSet::new), //
-
 	AGRONA_HASH(org.agrona.collections.ObjectHashSet::new), //
-
-	CORENLP_ARRAY(edu.stanford.nlp.util.ArraySet::new); //
 	;
 
 	public final Supplier<Set<Integer>> maker;

@@ -46,11 +46,6 @@ public enum JDKMap2IntFact {
 	APACHE_O2O_HASH(() -> new org.apache.commons.collections4.map.HashedMap<>(16, LoadFactor.LOAD_FACTOR)), //
 	APACHE_O2O_LINKEDHASH(() -> new org.apache.commons.collections4.map.LinkedMap<>(16, LoadFactor.LOAD_FACTOR)), //
 
-	MAHOUT_O2O_HASH(() -> new org.apache.mahout.math.map.OpenHashMap<>(16, 0.5f, LoadFactor.LOAD_FACTOR)), //
-
-	JAVOLUTION_HASH(() -> new javolution.util.FastMap<>()), //
-	JAVOLUTION_SORTED(javolution.util.FastSortedMap::new, 1000000), //
-
 	AGRONA_O2O_HASH(() -> new org.agrona.collections.Object2ObjectHashMap<>(16, LoadFactor.LOAD_FACTOR)),
 
 	SMOOTHIE_LG_HASH(() -> SmoothieMap.<Object, Integer>newBuilder().optimizeFor(OptimizationObjective.LOW_GARBAGE).build()),
@@ -71,7 +66,6 @@ public enum JDKMap2IntFact {
 	FLIP_HASH(() -> new de.heidelberg.pvs.container_bench.flip.ObjectObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 
 	GOOGLE_O2O_ARRAY(com.google.api.client.util.ArrayMap::new, 1000000),
-	CORENLP_ARRAY(edu.stanford.nlp.util.ArrayMap::new, 1000000)
 	;
 
 	public final Supplier<Map<Object, Integer>> maker;
