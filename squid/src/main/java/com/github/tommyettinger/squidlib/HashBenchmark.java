@@ -866,18 +866,25 @@ public class HashBenchmark {
                 throw new RuntimeException(e);
             }
             for (int i = 0; i < 4096; i++) {
-                String w = languages[i & 15].sentence(random.nextLong(), len+4>>1, len+6>>1, mid, end, 0.2, len + random.next(5));
-                chars[i] = w.toCharArray();
-                words[i] = new StringBuilder(w);
-                long[] lon = new long[len];
-                int[] inn = new int[len];
-                double[] don = new double[len];
-                for (int j = 0; j < len; j++) {
-                    don[j] = inn[j] = (int)(lon[j] = random.nextLong());
+                String w =  "";
+                try {
+                    w = languages[i & 15].sentence(random.nextLong(), len + 4 >> 1, len + 6 >> 1, mid, end, 0.2, len + random.next(5));
+                    chars[i] = w.toCharArray();
+                    words[i] = new StringBuilder(w);
+                    long[] lon = new long[len];
+                    int[] inn = new int[len];
+                    double[] don = new double[len];
+                    for (int j = 0; j < len; j++) {
+                        don[j] = inn[j] = (int) (lon[j] = random.nextLong());
+                    }
+                    longs[i] = lon;
+                    ints[i] = inn;
+                    doubles[i] = don;
+                } catch (StringIndexOutOfBoundsException ex) {
+                    ex.printStackTrace();
+                    System.out.println("Issue was on index " + i);
+                    System.out.println("Problem String was: \"" + w + '"');
                 }
-                longs[i] = lon;
-                ints[i] = inn;
-                doubles[i] = don;
             }
             idx = 0;
         }
@@ -1838,7 +1845,7 @@ public class HashBenchmark {
      *
      * a) Via the command line from the squidlib-performance module's root folder:
      *    $ mvn clean install
-     *    $ java -jar benchmarks.jar HashBenchmark -wi 5 -i 5 -f 1
+     *    $ java -jar benchmarks.jar "HashBenchmark.+(Terra|Mx|Water)" -wi 5 -i 5 -w 5 -r 5 -f 1
      *
      *    (we requested 8 warmup/measurement iterations, single fork)
      *
@@ -1847,18 +1854,27 @@ public class HashBenchmark {
      *      http://openjdk.java.net/projects/code-tools/jmh/)
      */
 
-    public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder()
-                .include(HashBenchmark.class.getSimpleName())
-                .timeout(TimeValue.seconds(60))
-                .warmupIterations(8)
-                .measurementIterations(8)
-                .forks(1)
-                .build();
+//    public static void main(String[] args) throws RunnerException {
+//        Options opt = new OptionsBuilder()
+//                .include(HashBenchmark.class.getSimpleName())
+//                .timeout(TimeValue.seconds(60))
+//                .warmupIterations(8)
+//                .measurementIterations(8)
+//                .forks(1)
+//                .build();
+//
+//        new Runner(opt).run();
+//    }
 
-        new Runner(opt).run();
+    public static void main(String[] args) {
+        HashBenchmark.BenchmarkState state = new HashBenchmark.BenchmarkState();
+        state.len = 5;
+        for (int i = 1; i <= 5; i++, state.len <<= 1) {
+            state.setup();
+            System.out.println(state.words.length);
+            System.out.println(state.words[1]);
+        }
     }
-
     /**
      * Acts like {@link Arrays#hashCode(char[])} but works on any CharSequence, including StringBuilder (which doesn't
      * have a hashCode() implementation of its own).
