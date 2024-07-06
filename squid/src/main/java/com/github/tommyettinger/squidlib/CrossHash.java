@@ -8259,14 +8259,8 @@ public class CrossHash {
 
         public static long mixStream(long h, long x) {
             x *= C;
-            x ^= x >>> 37;
-            h += x;
-            h *= C;
-//            x *= C;
-//            x ^= x >>> 39;
-//            h += x * C;
-//            h *= C;
-            return h;
+            x ^= x >>> 39;
+            return (x * C + h) * C;
         }
 
         public static long mixStream(long h, long a, long b, long c, long d) {
@@ -8274,34 +8268,18 @@ public class CrossHash {
             b *= C;
             c *= C;
             d *= C;
-            a ^= a >>> 37;
-            b ^= b >>> 37;
-            c ^= c >>> 37;
-            d ^= d >>> 37;
-            h += a;
+            a ^= a >>> 39;
+            b ^= b >>> 39;
+            c ^= c >>> 39;
+            d ^= d >>> 39;
+            h += a * C;
             h *= C;
-            h += b;
+            h += b * C;
             h *= C;
-            h += c;
+            h += c * C;
             h *= C;
-            h += d;
+            h += d * C;
             h *= C;
-//            a *= C;
-//            b *= C;
-//            c *= C;
-//            d *= C;
-//            a ^= a >>> 39;
-//            b ^= b >>> 39;
-//            c ^= c >>> 39;
-//            d ^= d >>> 39;
-//            h += a * C;
-//            h *= C;
-//            h += b * C;
-//            h *= C;
-//            h += c * C;
-//            h *= C;
-//            h += d * C;
-//            h *= C;
             return h;
         }
         public Mx(final CharSequence seed)
@@ -8430,14 +8408,10 @@ public class CrossHash {
 
         public long hash64(final char[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
-
-                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
-            }
-            for (; i < len; i++) {
+            final int len = data.length;
+            final long ll = len + C;
+            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + seed;
+            for (int i = 0; i < len; i++) {
                 h = mixStream(h, data[i]);
             }
             return mix(h);
@@ -8445,14 +8419,10 @@ public class CrossHash {
 
         public long hash64(final CharSequence data) {
             if (data == null) return 0;
-            int i = 0, len = data.length();
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
-
-                h = mixStream(h, data.charAt(  i), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
-                h = mixStream(h, data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
-            }
-            for (; i < len; i++) {
+            final int len = data.length();
+            final long ll = len + C;
+            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + seed;
+            for (int i = 0; i < len; i++) {
                 h = mixStream(h, data.charAt(i));
             }
             return mix(h);
@@ -8460,14 +8430,10 @@ public class CrossHash {
 
         public long hash64(final int[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
-
-                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
-            }
-            for (; i < len; i++) {
+            final int len = data.length;
+            final long ll = len + C;
+            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + seed;
+            for (int i = 0; i < len; i++) {
                 h = mixStream(h, data[i]);
             }
             return mix(h);
@@ -8475,14 +8441,10 @@ public class CrossHash {
 
         public long hash64(final long[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
-
-                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
-            }
-            for (; i < len; i++) {
+            final int len = data.length;
+            final long ll = len + C;
+            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + seed;
+            for (int i = 0; i < len; i++) {
                 h = mixStream(h, data[i]);
             }
             return mix(h);
@@ -8490,14 +8452,10 @@ public class CrossHash {
 
         public long hash64(final double[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
-
-                h = mixStream(h, doubleToRawLongBits(data[  i]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
-                h = mixStream(h, doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
-            }
-            for (; i < len; i++) {
+            final int len = data.length;
+            final long ll = len + C;
+            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + seed;
+            for (int i = 0; i < len; i++) {
                 h = mixStream(h, doubleToRawLongBits(data[i]));
             }
             return mix(h);
@@ -8506,35 +8464,27 @@ public class CrossHash {
         public long hash64(final Object data) {
             if (data == null)
                 return 0;
-            final long h = (data.hashCode() + seed) * 0x9E3779B97F4A7C15L;
-            return h - (h >>> 31) + (h << 33);
+            final long ll = (data.hashCode() + seed) * C;
+            return (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17));
         }
 
         public int hash(final char[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
-
-                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
-            }
-            for (; i < len; i++) {
+            final int len = data.length;
+            final long ll = len + C;
+            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + seed;
+            for (int i = 0; i < len; i++) {
                 h = mixStream(h, data[i]);
             }
-            return (int) mix(h);
+            return (int)mix(h);
         }
 
         public int hash(final CharSequence data) {
             if (data == null) return 0;
-            int i = 0, len = data.length();
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
-
-                h = mixStream(h, data.charAt(  i), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
-                h = mixStream(h, data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
-            }
-            for (; i < len; i++) {
+            final int len = data.length();
+            final long ll = len + C;
+            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + seed;
+            for (int i = 0; i < len; i++) {
                 h = mixStream(h, data.charAt(i));
             }
             return (int)mix(h);
@@ -8542,52 +8492,42 @@ public class CrossHash {
 
         public int hash(final int[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
-
-                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
-            }
-            for (; i < len; i++) {
+            final int len = data.length;
+            final long ll = len + C;
+            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + seed;
+            for (int i = 0; i < len; i++) {
                 h = mixStream(h, data[i]);
             }
-            return (int) mix(h);
+            return (int)mix(h);
         }
 
         public int hash(final long[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
-
-                h = mixStream(h, data[  i], data[i+1], data[i+2], data[i+3]);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
-            }
-            for (; i < len; i++) {
+            final int len = data.length;
+            final long ll = len + C;
+            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + seed;
+            for (int i = 0; i < len; i++) {
                 h = mixStream(h, data[i]);
             }
-            return (int) mix(h);
+            return (int)mix(h);
         }
 
         public int hash(final double[] data) {
             if (data == null) return 0;
-            int i = 0, len = data.length;
-            long h = mixStream(seed, len + 1);
-            for (; i + 7 < len; i += 8) {
-
-                h = mixStream(h, doubleToRawLongBits(data[  i]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
-                h = mixStream(h, doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
-            }
-            for (; i < len; i++) {
+            final int len = data.length;
+            final long ll = len + C;
+            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + seed;
+            for (int i = 0; i < len; i++) {
                 h = mixStream(h, doubleToRawLongBits(data[i]));
             }
             return (int)mix(h);
         }
 
         public int hash(final Object data) {
-            if (data == null) return 0;
-            return (int)((data.hashCode() + seed) * 0x9E3779B97F4A7C15L >>> 32);
+            if (data == null)
+                return 0;
+            final long ll = (data.hashCode() + seed) * C;
+            return (int)(ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17));
         }
 
 
