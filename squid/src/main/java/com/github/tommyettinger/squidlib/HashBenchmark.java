@@ -827,6 +827,78 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doIntWater32     80  avgt   10  42.589 ± 0.109  ns/op
  * HashBenchmark.doIntWater64     80  avgt   10  42.704 ± 0.153  ns/op
  * </pre>
+ * Maybe it's worth looking into Terra again... It seems better on long keys.
+ * <pre>
+ * Benchmark                   (len)  Mode  Cnt    Score    Error  Units
+ * HashBenchmark.doIntHound32     32  avgt   10   25.111 ±  0.766  ns/op
+ * HashBenchmark.doIntHound32     64  avgt   10   41.071 ±  0.133  ns/op
+ * HashBenchmark.doIntHound32    128  avgt   10   67.818 ±  0.185  ns/op
+ * HashBenchmark.doIntHound32    256  avgt   10  112.350 ±  0.854  ns/op
+ * HashBenchmark.doIntHound32    512  avgt   10  231.044 ±  1.665  ns/op
+ * HashBenchmark.doIntHound32   1024  avgt   10  490.584 ±  4.056  ns/op
+ * HashBenchmark.doIntHound64     32  avgt   10   25.184 ±  0.355  ns/op
+ * HashBenchmark.doIntHound64     64  avgt   10   40.881 ±  0.459  ns/op
+ * HashBenchmark.doIntHound64    128  avgt   10   68.274 ±  0.451  ns/op
+ * HashBenchmark.doIntHound64    256  avgt   10  112.963 ±  2.153  ns/op
+ * HashBenchmark.doIntHound64    512  avgt   10  227.676 ±  2.831  ns/op
+ * HashBenchmark.doIntHound64   1024  avgt   10  477.152 ±  2.289  ns/op
+ * HashBenchmark.doIntTempo32     32  avgt   10   20.792 ±  0.111  ns/op
+ * HashBenchmark.doIntTempo32     64  avgt   10   36.799 ±  0.191  ns/op
+ * HashBenchmark.doIntTempo32    128  avgt   10   58.562 ±  0.434  ns/op
+ * HashBenchmark.doIntTempo32    256  avgt   10   92.132 ±  0.896  ns/op
+ * HashBenchmark.doIntTempo32    512  avgt   10  170.060 ±  0.928  ns/op
+ * HashBenchmark.doIntTempo32   1024  avgt   10  382.986 ±  9.601  ns/op
+ * HashBenchmark.doIntTempo64     32  avgt   10   23.699 ±  0.552  ns/op
+ * HashBenchmark.doIntTempo64     64  avgt   10   37.571 ±  0.275  ns/op
+ * HashBenchmark.doIntTempo64    128  avgt   10   58.156 ±  0.361  ns/op
+ * HashBenchmark.doIntTempo64    256  avgt   10   91.493 ±  0.444  ns/op
+ * HashBenchmark.doIntTempo64    512  avgt   10  189.434 ±  1.901  ns/op
+ * HashBenchmark.doIntTempo64   1024  avgt   10  378.290 ±  3.119  ns/op
+ * HashBenchmark.doIntTerra32     32  avgt   10   22.498 ±  0.203  ns/op
+ * HashBenchmark.doIntTerra32     64  avgt   10   34.702 ±  0.254  ns/op
+ * HashBenchmark.doIntTerra32    128  avgt   10   58.120 ±  0.468  ns/op
+ * HashBenchmark.doIntTerra32    256  avgt   10   92.664 ±  3.274  ns/op
+ * HashBenchmark.doIntTerra32    512  avgt   10  186.205 ±  3.118  ns/op
+ * HashBenchmark.doIntTerra32   1024  avgt   10  385.005 ±  2.259  ns/op
+ * HashBenchmark.doIntTerra64     32  avgt   10   22.600 ±  0.214  ns/op
+ * HashBenchmark.doIntTerra64     64  avgt   10   37.319 ±  0.217  ns/op
+ * HashBenchmark.doIntTerra64    128  avgt   10   58.858 ±  0.334  ns/op
+ * HashBenchmark.doIntTerra64    256  avgt   10   94.923 ±  0.850  ns/op
+ * HashBenchmark.doIntTerra64    512  avgt   10  176.121 ±  1.610  ns/op
+ * HashBenchmark.doIntTerra64   1024  avgt   10  378.560 ±  3.853  ns/op
+ * HashBenchmark.doIntWater32     32  avgt   10   21.738 ±  0.806  ns/op
+ * HashBenchmark.doIntWater32     64  avgt   10   36.081 ±  0.174  ns/op
+ * HashBenchmark.doIntWater32    128  avgt   10   60.032 ±  0.475  ns/op
+ * HashBenchmark.doIntWater32    256  avgt   10   98.978 ±  1.852  ns/op
+ * HashBenchmark.doIntWater32    512  avgt   10  195.297 ±  1.079  ns/op
+ * HashBenchmark.doIntWater32   1024  avgt   10  404.474 ±  5.538  ns/op
+ * HashBenchmark.doIntWater64     32  avgt   10   22.040 ±  0.649  ns/op
+ * HashBenchmark.doIntWater64     64  avgt   10   36.600 ±  0.251  ns/op
+ * HashBenchmark.doIntWater64    128  avgt   10   60.831 ±  0.447  ns/op
+ * HashBenchmark.doIntWater64    256  avgt   10   96.613 ±  2.308  ns/op
+ * HashBenchmark.doIntWater64    512  avgt   10  189.429 ±  3.261  ns/op
+ * HashBenchmark.doIntWater64   1024  avgt   10  415.133 ±  3.264  ns/op
+ * HashBenchmark.doIntYolk32      32  avgt   10   21.522 ±  0.471  ns/op
+ * HashBenchmark.doIntYolk32      64  avgt   10   36.243 ±  0.260  ns/op
+ * HashBenchmark.doIntYolk32     128  avgt   10   60.892 ±  0.306  ns/op
+ * HashBenchmark.doIntYolk32     256  avgt   10   97.006 ±  0.672  ns/op
+ * HashBenchmark.doIntYolk32     512  avgt   10  204.748 ±  1.553  ns/op
+ * HashBenchmark.doIntYolk32    1024  avgt   10  408.818 ±  3.247  ns/op
+ * HashBenchmark.doIntYolk64      32  avgt   10   22.023 ±  0.446  ns/op
+ * HashBenchmark.doIntYolk64      64  avgt   10   35.585 ±  0.105  ns/op
+ * HashBenchmark.doIntYolk64     128  avgt   10   60.496 ±  0.418  ns/op
+ * HashBenchmark.doIntYolk64     256  avgt   10   98.597 ±  0.635  ns/op
+ * HashBenchmark.doIntYolk64     512  avgt   10  188.708 ±  3.535  ns/op
+ * HashBenchmark.doIntYolk64    1024  avgt   10  420.261 ± 11.403  ns/op
+ * </pre>
+ * Testing on a larger size, there's definitely a difference:
+ * <pre>
+ * Benchmark                   (len)  Mode  Cnt     Score     Error  Units
+ * HashBenchmark.doIntTerra32   8192  avgt   10  3719.946 ±  51.681  ns/op
+ * HashBenchmark.doIntTerra64   8192  avgt   10  3700.687 ±  60.663  ns/op
+ * HashBenchmark.doIntYolk32    8192  avgt   10  3909.681 ± 110.183  ns/op
+ * HashBenchmark.doIntYolk64    8192  avgt   10  3962.901 ±  55.994  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
