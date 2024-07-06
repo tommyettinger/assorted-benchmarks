@@ -817,6 +817,16 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doTerra64          256  avgt    5   37.653 ±   3.254  ns/op
  * HashBenchmark.doYolk64           256  avgt    5   22.512 ±   2.108  ns/op
  * </pre>
+ * Just a quick try of Mx again after some changes... no, still slower.
+ * <pre>
+ * Benchmark                   (len)  Mode  Cnt   Score   Error  Units
+ * HashBenchmark.doIntMx32        80  avgt   10  73.038 ± 0.189  ns/op
+ * HashBenchmark.doIntMx64        80  avgt   10  72.835 ± 0.165  ns/op
+ * HashBenchmark.doIntTerra32     80  avgt   10  42.820 ± 0.134  ns/op
+ * HashBenchmark.doIntTerra64     80  avgt   10  41.410 ± 0.516  ns/op
+ * HashBenchmark.doIntWater32     80  avgt   10  42.589 ± 0.109  ns/op
+ * HashBenchmark.doIntWater64     80  avgt   10  42.704 ± 0.153  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
