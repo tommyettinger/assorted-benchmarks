@@ -899,6 +899,24 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doIntYolk32    8192  avgt   10  3909.681 ± 110.183  ns/op
  * HashBenchmark.doIntYolk64    8192  avgt   10  3962.901 ±  55.994  ns/op
  * </pre>
+ * Oddly, Terra is still faster on long arrays...
+ * <pre>
+ * Benchmark                    (len)  Mode  Cnt     Score     Error  Units
+ * HashBenchmark.doLongTerra32   8192  avgt   10  5606.300 ± 140.339  ns/op
+ * HashBenchmark.doLongTerra64   8192  avgt   10  5635.817 ± 113.943  ns/op
+ * HashBenchmark.doLongYolk32    8192  avgt   10  6093.706 ±  67.242  ns/op
+ * HashBenchmark.doLongYolk64    8192  avgt   10  6039.756 ± 120.915  ns/op
+ * </pre>
+ * ...But much slower on short Strings. Tempo is only a little better.
+ * <pre>
+ * Benchmark                    (len)  Mode  Cnt   Score   Error  Units
+ * HashBenchmark.doCharTempo32   8192  avgt   10   8.915 ± 0.091  ns/op
+ * HashBenchmark.doCharTempo64   8192  avgt   10   9.548 ± 0.083  ns/op
+ * HashBenchmark.doCharTerra32   8192  avgt   10  10.971 ± 0.055  ns/op
+ * HashBenchmark.doCharTerra64   8192  avgt   10  10.430 ± 0.177  ns/op
+ * HashBenchmark.doCharYolk32    8192  avgt   10   5.676 ± 0.028  ns/op
+ * HashBenchmark.doCharYolk64    8192  avgt   10   5.967 ± 0.142  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
