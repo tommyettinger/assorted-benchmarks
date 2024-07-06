@@ -16,10 +16,8 @@ package net.adoptopenjdk.bumblebench.examples;
 
 import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.math.Vector2;
-import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.io.ByteBufferInput;
-import io.fury.Fury;
-import io.fury.config.Language;
+import org.apache.fury.Fury;
+import org.apache.fury.config.Language;
 import net.adoptopenjdk.bumblebench.core.MiniBench;
 
 import java.util.ArrayList;
