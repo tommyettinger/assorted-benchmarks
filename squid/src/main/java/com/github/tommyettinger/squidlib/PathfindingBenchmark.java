@@ -669,7 +669,7 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * Then I wanted to figure out if the custom hash() in Gand's Grid2DDirectedGraph mattered. It doesn't, really.
  * Tested with a Graal 21 JVM, but many more iterations than usual (and 3 forks):
  * <pre>
- * C:\d\jvm\graal21\bin\java -jar benchmarks.jar "PathfindingBenchmark.doPath.*Gand(D|G2D|GPD|VD)$" -wi 8 -i 8 -f 3 -w 10 -r 1
+ * C:\d\jvm\graal21\bin\java -jar benchmarks.jar "PathfindingBenchmark.doPath.*Gand(D|G2D|GPD|VD)$" -wi 8 -i 8 -f 3 -w 10 -r 10
  *
  * Benchmark                           Mode  Cnt   Score   Error  Units
  * PathfindingBenchmark.doPathGandD    avgt   24  84.131 ± 2.524  ms/op
@@ -808,6 +808,123 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doScanSquadDijkstra         avgt    5  898.153 ± 8.283  ms/op
  * PathfindingBenchmark.doTinyPathGandGradientGrid  avgt    5   26.621 ± 0.384  ms/op
  * PathfindingBenchmark.doTinyPathSquadDijkstra     avgt    5   24.954 ± 0.761  ms/op
+ * </pre>
+ * <br>
+ * Run for 8 hours on everything, using
+ * {@code ~\.jdks\graalvm-jdk-22.0.1\bin\java.exe -jar benchmarks.jar "PathfindingBench" -wi 8 -i 8 -f 3 -w 5 -r 5}
+ * <pre>
+ * Benchmark                                        Mode  Cnt     Score    Error  Units
+ * PathfindingBenchmark.doOneDijkstra               avgt   24     0.421 ±  0.033  ms/op
+ * PathfindingBenchmark.doOneGDXAStarCoord          avgt   24     0.227 ±  0.010  ms/op
+ * PathfindingBenchmark.doOneGDXAStarGP             avgt   24     0.219 ±  0.006  ms/op
+ * PathfindingBenchmark.doOneGandF2D                avgt   24     0.192 ±  0.008  ms/op
+ * PathfindingBenchmark.doOneGandF2UD               avgt   24     0.205 ±  0.008  ms/op
+ * PathfindingBenchmark.doOneGandGPD                avgt   24     0.178 ±  0.005  ms/op
+ * PathfindingBenchmark.doOneGandGPUD               avgt   24     0.185 ±  0.007  ms/op
+ * PathfindingBenchmark.doOneGandGenericF2D         avgt   24     0.197 ±  0.008  ms/op
+ * PathfindingBenchmark.doOneGandGenericF2UD        avgt   24     0.208 ±  0.008  ms/op
+ * PathfindingBenchmark.doOneGandGenericI2D         avgt   24     0.196 ±  0.009  ms/op
+ * PathfindingBenchmark.doOneGandGenericI2UD        avgt   24     0.204 ±  0.008  ms/op
+ * PathfindingBenchmark.doOneGandGradientGrid       avgt   24     0.148 ±  0.009  ms/op
+ * PathfindingBenchmark.doOneGandI2D                avgt   24     0.143 ±  0.005  ms/op
+ * PathfindingBenchmark.doOneGandI2UD               avgt   24     0.148 ±  0.005  ms/op
+ * PathfindingBenchmark.doOneGandVD                 avgt   24     0.127 ±  0.003  ms/op
+ * PathfindingBenchmark.doOneGandVUD                avgt   24     0.136 ±  0.006  ms/op
+ * PathfindingBenchmark.doOneNate                   avgt   24     0.444 ±  0.020  ms/op
+ * PathfindingBenchmark.doOneSimpleGPD              avgt   24     0.138 ±  0.005  ms/op
+ * PathfindingBenchmark.doOneSimpleGPUD             avgt   24     0.137 ±  0.001  ms/op
+ * PathfindingBenchmark.doOneSimpleVD               avgt   24     0.135 ±  0.001  ms/op
+ * PathfindingBenchmark.doOneSimpleVUD              avgt   24     0.142 ±  0.003  ms/op
+ * PathfindingBenchmark.doOneSquadCG                avgt   24     0.109 ±  0.004  ms/op
+ * PathfindingBenchmark.doOneSquadD                 avgt   24     0.148 ±  0.003  ms/op
+ * PathfindingBenchmark.doOneSquadDG                avgt   24     0.111 ±  0.003  ms/op
+ * PathfindingBenchmark.doOneSquadDextra            avgt   24     0.196 ±  0.002  ms/op
+ * PathfindingBenchmark.doOneSquadDijkstra          avgt   24     0.212 ±  0.009  ms/op
+ * PathfindingBenchmark.doOneSquadUD                avgt   24     0.139 ±  0.006  ms/op
+ * PathfindingBenchmark.doOneSquidCG                avgt   24     0.116 ±  0.009  ms/op
+ * PathfindingBenchmark.doOneSquidD                 avgt   24     0.147 ±  0.004  ms/op
+ * PathfindingBenchmark.doOneSquidDG                avgt   24     0.109 ±  0.001  ms/op
+ * PathfindingBenchmark.doOneSquidUD                avgt   24     0.132 ±  0.002  ms/op
+ * PathfindingBenchmark.doPathAStarSearch           avgt   24   413.773 ± 22.647  ms/op
+ * PathfindingBenchmark.doPathDijkstra              avgt   24  1046.723 ± 13.607  ms/op
+ * PathfindingBenchmark.doPathGDXAStarCoord         avgt   24   570.724 ±  6.981  ms/op
+ * PathfindingBenchmark.doPathGDXAStarGP            avgt   24   535.192 ± 32.858  ms/op
+ * PathfindingBenchmark.doPathGandD                 avgt   24   396.468 ±  5.599  ms/op
+ * PathfindingBenchmark.doPathGandF2D               avgt   24   404.510 ±  2.324  ms/op
+ * PathfindingBenchmark.doPathGandF2UD              avgt   24   412.631 ±  4.078  ms/op
+ * PathfindingBenchmark.doPathGandGPD               avgt   24   370.374 ±  4.485  ms/op
+ * PathfindingBenchmark.doPathGandGPUD              avgt   24   380.983 ±  4.503  ms/op
+ * PathfindingBenchmark.doPathGandGenericF2D        avgt   24   392.977 ±  2.376  ms/op
+ * PathfindingBenchmark.doPathGandGenericF2UD       avgt   24   389.593 ±  3.823  ms/op
+ * PathfindingBenchmark.doPathGandGenericI2D        avgt   24   388.924 ±  3.150  ms/op
+ * PathfindingBenchmark.doPathGandGenericI2UD       avgt   24   391.541 ±  6.556  ms/op
+ * PathfindingBenchmark.doPathGandGradientGrid      avgt   24   479.409 ±  7.728  ms/op
+ * PathfindingBenchmark.doPathGandI2D               avgt   24   392.450 ±  4.862  ms/op
+ * PathfindingBenchmark.doPathGandI2UD              avgt   24   392.392 ±  4.415  ms/op
+ * PathfindingBenchmark.doPathGandUD                avgt   24   396.536 ±  5.801  ms/op
+ * PathfindingBenchmark.doPathGandVD                avgt   24   370.076 ±  3.204  ms/op
+ * PathfindingBenchmark.doPathGandVUD               avgt   24   372.792 ±  4.295  ms/op
+ * PathfindingBenchmark.doPathNate                  avgt   24  1258.861 ± 58.152  ms/op
+ * PathfindingBenchmark.doPathSimpleD               avgt   24   383.484 ±  3.056  ms/op
+ * PathfindingBenchmark.doPathSimpleGPD             avgt   24   376.424 ±  2.755  ms/op
+ * PathfindingBenchmark.doPathSimpleGPUD            avgt   24   377.493 ±  4.344  ms/op
+ * PathfindingBenchmark.doPathSimpleUD              avgt   24   378.644 ±  2.937  ms/op
+ * PathfindingBenchmark.doPathSimpleVD              avgt   24   380.612 ±  2.183  ms/op
+ * PathfindingBenchmark.doPathSimpleVUD             avgt   24   374.181 ±  2.579  ms/op
+ * PathfindingBenchmark.doPathSquadCG               avgt   24   397.399 ± 11.676  ms/op
+ * PathfindingBenchmark.doPathSquadD                avgt   24   441.698 ±  6.440  ms/op
+ * PathfindingBenchmark.doPathSquadDG               avgt   24   377.684 ±  3.102  ms/op
+ * PathfindingBenchmark.doPathSquadDextra           avgt   24   555.164 ± 41.317  ms/op
+ * PathfindingBenchmark.doPathSquadDijkstra         avgt   24   531.723 ±  8.635  ms/op
+ * PathfindingBenchmark.doPathSquadUD               avgt   24   429.440 ±  2.586  ms/op
+ * PathfindingBenchmark.doPathSquidCG               avgt   24   382.096 ±  2.697  ms/op
+ * PathfindingBenchmark.doPathSquidD                avgt   24   427.501 ±  5.630  ms/op
+ * PathfindingBenchmark.doPathSquidDG               avgt   24   377.755 ±  3.523  ms/op
+ * PathfindingBenchmark.doPathSquidUD               avgt   24   430.916 ±  2.795  ms/op
+ * PathfindingBenchmark.doPathUpdateD               avgt   24   451.950 ±  5.405  ms/op
+ * PathfindingBenchmark.doPathUpdateUD              avgt   24   462.008 ±  3.327  ms/op
+ * PathfindingBenchmark.doScanDijkstra              avgt   24  1636.448 ±  7.607  ms/op
+ * PathfindingBenchmark.doScanGandGradientGrid      avgt   24   808.388 ± 15.476  ms/op
+ * PathfindingBenchmark.doScanSquadDextra           avgt   24   891.470 ±  9.228  ms/op
+ * PathfindingBenchmark.doScanSquadDijkstra         avgt   24   884.114 ±  6.007  ms/op
+ * PathfindingBenchmark.doTinyPathAStarSearch       avgt   24    23.468 ±  0.970  ms/op
+ * PathfindingBenchmark.doTinyPathDijkstra          avgt   24    40.871 ±  0.343  ms/op
+ * PathfindingBenchmark.doTinyPathGDXAStarCoord     avgt   24    29.935 ±  0.237  ms/op
+ * PathfindingBenchmark.doTinyPathGDXAStarGP        avgt   24    30.321 ±  0.735  ms/op
+ * PathfindingBenchmark.doTinyPathGandD             avgt   24    21.394 ±  0.172  ms/op
+ * PathfindingBenchmark.doTinyPathGandF2D           avgt   24    31.537 ±  0.523  ms/op
+ * PathfindingBenchmark.doTinyPathGandF2UD          avgt   24    33.081 ±  0.330  ms/op
+ * PathfindingBenchmark.doTinyPathGandGPD           avgt   24    20.650 ±  0.178  ms/op
+ * PathfindingBenchmark.doTinyPathGandGPUD          avgt   24    21.237 ±  0.101  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericF2D    avgt   24    21.463 ±  0.292  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericF2UD   avgt   24    21.739 ±  0.161  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericI2D    avgt   24    21.224 ±  0.125  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericI2UD   avgt   24    21.853 ±  0.267  ms/op
+ * PathfindingBenchmark.doTinyPathGandGradientGrid  avgt   24    24.797 ±  0.920  ms/op
+ * PathfindingBenchmark.doTinyPathGandI2D           avgt   24    21.555 ±  0.190  ms/op
+ * PathfindingBenchmark.doTinyPathGandI2UD          avgt   24    21.994 ±  0.201  ms/op
+ * PathfindingBenchmark.doTinyPathGandUD            avgt   24    21.893 ±  0.231  ms/op
+ * PathfindingBenchmark.doTinyPathGandVD            avgt   24    21.422 ±  0.375  ms/op
+ * PathfindingBenchmark.doTinyPathGandVUD           avgt   24    21.438 ±  0.135  ms/op
+ * PathfindingBenchmark.doTinyPathNate              avgt   24    51.112 ±  0.719  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleD           avgt   24    21.558 ±  0.127  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleGPD         avgt   24    21.282 ±  0.255  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleGPUD        avgt   24    21.562 ±  0.381  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleUD          avgt   24    21.877 ±  0.198  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleVD          avgt   24    21.753 ±  0.251  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleVUD         avgt   24    21.662 ±  0.162  ms/op
+ * PathfindingBenchmark.doTinyPathSquadCG           avgt   24    20.604 ±  0.073  ms/op
+ * PathfindingBenchmark.doTinyPathSquadD            avgt   24    22.660 ±  0.206  ms/op
+ * PathfindingBenchmark.doTinyPathSquadDG           avgt   24    20.382 ±  0.199  ms/op
+ * PathfindingBenchmark.doTinyPathSquadDextra       avgt   24    26.417 ±  0.281  ms/op
+ * PathfindingBenchmark.doTinyPathSquadDijkstra     avgt   24    25.988 ±  1.044  ms/op
+ * PathfindingBenchmark.doTinyPathSquadUD           avgt   24    23.051 ±  0.276  ms/op
+ * PathfindingBenchmark.doTinyPathSquidCG           avgt   24    20.839 ±  0.212  ms/op
+ * PathfindingBenchmark.doTinyPathSquidD            avgt   24    22.769 ±  0.324  ms/op
+ * PathfindingBenchmark.doTinyPathSquidDG           avgt   24    20.662 ±  0.127  ms/op
+ * PathfindingBenchmark.doTinyPathSquidUD           avgt   24    23.243 ±  0.154  ms/op
+ * PathfindingBenchmark.doTinyPathUpdateD           avgt   24    23.789 ±  0.215  ms/op
+ * PathfindingBenchmark.doTinyPathUpdateUD          avgt   24    25.068 ±  0.219  ms/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
