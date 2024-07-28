@@ -751,6 +751,33 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doPathSimpleVD         avgt    6  84.966 ±  3.899  ms/op
  * PathfindingBenchmark.doPathSimpleVUD        avgt    6  84.552 ±  3.014  ms/op
  * </pre>
+ * <br>
+ * On a new laptop, Windows 11, 14-core (asymmetrical), 64GB RAM, using Graal 22 (not native)...
+ * <br>
+ * Comparing Gand to SquidSquad using only the One-path benchmark:
+ * <pre>
+ * Benchmark                                  Mode  Cnt  Score   Error  Units
+ * PathfindingBenchmark.doOneGandF2D          avgt    5  0.173 ± 0.005  ms/op
+ * PathfindingBenchmark.doOneGandF2UD         avgt    5  0.180 ± 0.006  ms/op
+ * PathfindingBenchmark.doOneGandGPD          avgt    5  0.139 ± 0.004  ms/op
+ * PathfindingBenchmark.doOneGandGPUD         avgt    5  0.137 ± 0.001  ms/op
+ * PathfindingBenchmark.doOneGandGenericF2D   avgt    5  0.133 ± 0.003  ms/op
+ * PathfindingBenchmark.doOneGandGenericF2UD  avgt    5  0.149 ± 0.002  ms/op
+ * PathfindingBenchmark.doOneGandGenericI2D   avgt    5  0.130 ± 0.003  ms/op
+ * PathfindingBenchmark.doOneGandGenericI2UD  avgt    5  0.136 ± 0.007  ms/op
+ * PathfindingBenchmark.doOneGandI2D          avgt    5  0.135 ± 0.001  ms/op
+ * PathfindingBenchmark.doOneGandI2UD         avgt    5  0.152 ± 0.002  ms/op
+ * PathfindingBenchmark.doOneGandVD           avgt    5  0.126 ± 0.002  ms/op
+ * PathfindingBenchmark.doOneGandVUD          avgt    5  0.138 ± 0.003  ms/op
+ * PathfindingBenchmark.doOneSquadCG          avgt    5  0.119 ± 0.001  ms/op
+ * PathfindingBenchmark.doOneSquadD           avgt    5  0.163 ± 0.002  ms/op
+ * PathfindingBenchmark.doOneSquadDG          avgt    5  0.125 ± 0.001  ms/op
+ * PathfindingBenchmark.doOneSquadDextra      avgt    5  0.225 ± 0.002  ms/op
+ * PathfindingBenchmark.doOneSquadDijkstra    avgt    5  0.287 ± 0.018  ms/op
+ * PathfindingBenchmark.doOneSquadUD          avgt    5  0.138 ± 0.003  ms/op
+ * </pre>
+ * (Some surprises here; Gand's generic pathfinders seem better in general than its non-generic ones, including the
+ * "V" tests, which test Vector2 and actually are also generic. Dextra also is quite a bit better than Dijkstra...)
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -765,8 +792,8 @@ public class PathfindingBenchmark {
 
     @State(Scope.Thread)
     public static class BenchmarkState {
-        public static final int WIDTH = 60;
-        public static final int HEIGHT = 60;
+        public static final int WIDTH = 100;
+        public static final int HEIGHT = 100;
         public DungeonGenerator dungeonGen = new DungeonGenerator(WIDTH, HEIGHT, new StatefulRNG(0x1337BEEFDEAL));
         public char[][] map;
         public double[][] astarMap;

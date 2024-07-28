@@ -19,11 +19,10 @@ sourceSets.main.resources.srcDirs += [ file('src/main/resources').path ]
 sourceSets.test.resources.srcDirs += [ file('src/main/resources').path ]
 
 repositories {
-    mavenLocal()
+//    mavenLocal()
     mavenCentral()
     maven { url "https://plugins.gradle.org/m2/" } // for JMH plugin
     maven { url 'https://jitpack.io' }
-    gradlePluginPortal()
 }
 
 group = 'com.github.tommyettinger'
@@ -70,11 +69,17 @@ dependencies {
 //    implementation('com.github.yellowstonegames.SquidSquad:SquidPath:8d2625c1a3')  { exclude group: 'com.github.tommyettinger', module: 'digital' }
 //    implementation('com.github.yellowstonegames.SquidSquad:SquidText:8d2625c1a3')  { exclude group: 'com.github.tommyettinger', module: 'digital' }
 
-    // Jan 4 2024
-    implementation('com.github.yellowstonegames.SquidSquad:SquidGrid:f09b288412')  { exclude group: 'com.github.tommyettinger', module: 'digital' }
-    implementation('com.github.yellowstonegames.SquidSquad:SquidPlace:f09b288412') { exclude group: 'com.github.tommyettinger', module: 'digital' }
-    implementation('com.github.yellowstonegames.SquidSquad:SquidPath:f09b288412')  { exclude group: 'com.github.tommyettinger', module: 'digital' }
-    implementation('com.github.yellowstonegames.SquidSquad:SquidText:f09b288412')  { exclude group: 'com.github.tommyettinger', module: 'digital' }
+//    // Jan 4 2024
+//    implementation('com.github.yellowstonegames.SquidSquad:SquidGrid:f09b288412')  { exclude group: 'com.github.tommyettinger', module: 'digital' }
+//    implementation('com.github.yellowstonegames.SquidSquad:SquidPlace:f09b288412') { exclude group: 'com.github.tommyettinger', module: 'digital' }
+//    implementation('com.github.yellowstonegames.SquidSquad:SquidPath:f09b288412')  { exclude group: 'com.github.tommyettinger', module: 'digital' }
+//    implementation('com.github.yellowstonegames.SquidSquad:SquidText:f09b288412')  { exclude group: 'com.github.tommyettinger', module: 'digital' }
+
+    // Jul 27 2024
+    implementation 'com.github.yellowstonegames.squidsquad:squidgrid:217b8df04e'
+    implementation 'com.github.yellowstonegames.squidsquad:squidplace:217b8df04e'
+    implementation 'com.github.yellowstonegames.squidsquad:squidpath:217b8df04e'
+    implementation 'com.github.yellowstonegames.squidsquad:squidtext:217b8df04e'
 
     implementation "com.github.tommyettinger:blazingchain:1.4.4.4"
 //    implementation 'com.github.tommyettinger:BlazingChain:dfddeb3dda'
@@ -106,7 +111,7 @@ dependencies {
     implementation 'com.github.tommyettinger:atlantis:5574642135'
     implementation 'com.github.tommyettinger:digital:0.4.8'
     implementation('com.github.tommyettinger:juniper:0.6.1'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
-    implementation('com.github.tommyettinger:jdkgdxds:1.6.1'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
+    implementation('com.github.tommyettinger:jdkgdxds:1.6.2'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
 
 
     implementation "it.unimi.dsi:fastutil:8.5.9"
