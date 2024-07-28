@@ -41,8 +41,10 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.github.tommyettinger.ds.ObjectDeque;
+import com.github.tommyettinger.gand.GradientGrid;
 import com.github.tommyettinger.gand.points.PointF2;
 import com.github.tommyettinger.gand.points.PointI2;
+import com.github.tommyettinger.gand.utils.GridMetric;
 import com.github.yellowstonegames.grid.Region;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
@@ -68,7 +70,9 @@ import squidpony.squidmath.GreasedRegion;
 import squidpony.squidmath.StatefulRNG;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static squidpony.squidgrid.Measurement.CHEBYSHEV;
@@ -840,6 +844,7 @@ public class PathfindingBenchmark {
         public CustomDijkstraMap customDijkstra;
         public com.github.yellowstonegames.path.DijkstraMap squadDijkstra;
         public squid.squad.DextraMap squadDextra;
+        public GradientGrid gradientGrid;
 //        public BitDijkstraMap bitDijkstra;
 //        public CDijkstraMap cDijkstra;
         public StatefulRNG srng;
@@ -1058,6 +1063,8 @@ Nate sweetened at 129572932000
 //            cDijkstra = new CDijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
 //            cDijkstra.setBlockingRequirement(0);
             customDijkstra = new CustomDijkstraMap(map, adj, new StatefulRNG(0x1337BEEF));
+            gradientGrid = new GradientGrid(map, GridMetric.CHEBYSHEV);
+            gradientGrid.setBlockingRequirement(0);
             System.out.printf("Dijkstra maps took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             gg = new GridGraphGP(floors, WIDTH, HEIGHT);
             gg2 = new GridGraphCoord(floors, WIDTH, HEIGHT);
@@ -3610,6 +3617,94 @@ Nate sweetened at 129572932000
         state.gfPath.clear();
         state.gfPath.addAll(algo.findShortestPath(startF, endF, state.gfHeu, com.github.tommyettinger.gand.algorithms.SearchStep::vertex));
         return state.gfPath.size();
+    }
+
+
+    @Benchmark
+    public long doPathGandGradientGrid(BenchmarkState state) {
+        PointI2 r;
+        final ArrayList<PointI2> tgts = new ArrayList<>(1);
+        tgts.add(endI);
+        long scanned = 0;
+        state.srng.setState(1234567890L);
+        final GradientGrid gragri = state.gradientGrid;
+        final int PATH_LENGTH = BenchmarkState.WIDTH * BenchmarkState.HEIGHT;
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            endI.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                endI.y = y;
+                // this should ensure no blatant correlation between R and W
+                // state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                //((StatefulRNG) gragri.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
+                r = state.srng.getRandomElement(state.iFloors);
+                state.giPath.clear();
+                gragri.findPath(state.giPath, PATH_LENGTH, -1, null, null, r, tgts);
+                gragri.clearGoals();
+                gragri.resetMap();
+                scanned += state.giPath.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doTinyPathGandGradientGrid(BenchmarkState state) {
+        PointI2 r;
+        final ArrayList<PointI2> tgts = new ArrayList<>(1);
+        tgts.add(endI);
+        long scanned = 0;
+        final GradientGrid gragri = state.gradientGrid;
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            endI.x = x;
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                endI.y = y;
+                // this should ensure no blatant correlation between R and W
+                //state.srng.setState(x * 0xD1342543DE82EF95L + y * 0xC6BC279692B5C323L);
+                //((StatefulRNG) dextra.rng).setState(((x << 20) | (y << 14)) ^ (x * y));
+                r = state.iNearbyMap[x][y];
+                state.giPath.clear();
+                gragri.findPath(state.giPath, 9, 9, null, null, r, tgts);
+                gragri.clearGoals();
+                gragri.resetMap();
+                scanned += state.giPath.size();
+            }
+        }
+        return scanned;
+    }
+
+    @Benchmark
+    public long doOneGandGradientGrid(BenchmarkState state) {
+        final GradientGrid gragri = state.gradientGrid;
+        final int PATH_LENGTH = BenchmarkState.WIDTH * BenchmarkState.HEIGHT;
+        state.srng.setState(state.highest.hashCode());
+        List<PointI2> end = Collections.singletonList(state.lowestI);
+        state.giPath.clear();
+        gragri.findPath(state.giPath, PATH_LENGTH, -1, null, null, state.highestI, end);
+        gragri.clearGoals();
+        gragri.resetMap();
+        return state.giPath.size();
+    }
+
+    @Benchmark
+    public long doScanGandGradientGrid(BenchmarkState state) {
+        long scanned = 0;
+        final GradientGrid gragri = state.gradientGrid;
+        for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
+            for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
+                if (state.map[x][y] == '#')
+                    continue;
+                gragri.setGoal(x, y);
+                gragri.scan(null, null);
+                gragri.clearGoals();
+                gragri.resetMap();
+                scanned++;
+            }
+        }
+        return scanned;
     }
 
 
