@@ -796,6 +796,19 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathSquadDextra    avgt    5   24.208 ±  0.201  ms/op
  * PathfindingBenchmark.doTinyPathSquadDijkstra  avgt    5   27.494 ±  0.277  ms/op
  * </pre>
+ * <br>
+ * Oddly, GradientGrid seems a little faster than DijkstraMap in SquidSquad, despite being very similar.
+ * <pre>
+ * Benchmark                                        Mode  Cnt    Score   Error  Units
+ * PathfindingBenchmark.doOneGandGradientGrid       avgt    5    0.141 ± 0.003  ms/op
+ * PathfindingBenchmark.doOneSquadDijkstra          avgt    5    0.207 ± 0.002  ms/op
+ * PathfindingBenchmark.doPathGandGradientGrid      avgt    5  501.545 ± 6.320  ms/op
+ * PathfindingBenchmark.doPathSquadDijkstra         avgt    5  533.430 ± 6.036  ms/op
+ * PathfindingBenchmark.doScanGandGradientGrid      avgt    5  824.753 ± 6.801  ms/op
+ * PathfindingBenchmark.doScanSquadDijkstra         avgt    5  898.153 ± 8.283  ms/op
+ * PathfindingBenchmark.doTinyPathGandGradientGrid  avgt    5   26.621 ± 0.384  ms/op
+ * PathfindingBenchmark.doTinyPathSquadDijkstra     avgt    5   24.954 ± 0.761  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
