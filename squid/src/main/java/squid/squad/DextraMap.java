@@ -158,7 +158,7 @@ public class DextraMap {
     protected IntDeque fresh = new IntDeque(256);
 
     /**
-     * The MizuchiRandom used to decide which one of multiple equally-short paths to take; this has its state set
+     * The FlowRandom used to decide which one of multiple equally-short paths to take; this has its state set
      * deterministically before any usage. There will only be one path produced for a given set of parameters, and it
      * will be returned again and again if the same parameters are requested.
      */
