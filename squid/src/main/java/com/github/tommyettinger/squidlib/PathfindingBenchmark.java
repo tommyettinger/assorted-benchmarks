@@ -926,6 +926,21 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathUpdateD           avgt   24    23.789 ±  0.215  ms/op
  * PathfindingBenchmark.doTinyPathUpdateUD          avgt   24    25.068 ±  0.219  ms/op
  * </pre>
+ * <br>
+ * A smaller comparison, just tiny paths with Gand -- F2 pathfinding takes about 40-50% more time
+ * than generic PointF2 items, which suggests the mixing done on generic hash codes is important.
+ * This uses commit hash 86c5773143 .
+ * <pre>
+ * Benchmark                                       Mode  Cnt   Score   Error  Units
+ * PathfindingBenchmark.doTinyPathGandF2D          avgt    8  30.678 ± 0.689  ms/op
+ * PathfindingBenchmark.doTinyPathGandF2UD         avgt    8  31.654 ± 0.804  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericF2D   avgt    8  21.340 ± 0.081  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericF2UD  avgt    8  21.574 ± 0.111  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericI2D   avgt    8  21.614 ± 0.147  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericI2UD  avgt    8  22.385 ± 0.067  ms/op
+ * PathfindingBenchmark.doTinyPathGandI2D          avgt    8  22.035 ± 0.490  ms/op
+ * PathfindingBenchmark.doTinyPathGandI2UD         avgt    8  22.532 ± 0.099  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
