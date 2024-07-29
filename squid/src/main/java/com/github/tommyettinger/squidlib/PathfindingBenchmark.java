@@ -954,6 +954,19 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathGandI2D          avgt    8  21.930 ± 0.142  ms/op
  * PathfindingBenchmark.doTinyPathGandI2UD         avgt    8  21.746 ± 0.091  ms/op
  * </pre>
+ * <br>
+ * Maybe I should roll some changes back to the 0.2.0 Gand release... The performance is very close, though.
+ * <pre>
+ * Benchmark                                       Mode  Cnt   Score   Error  Units
+ * PathfindingBenchmark.doTinyPathGandF2D          avgt    8  21.742 ± 1.539  ms/op
+ * PathfindingBenchmark.doTinyPathGandF2UD         avgt    8  22.200 ± 0.418  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericF2D   avgt    8  21.647 ± 0.130  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericF2UD  avgt    8  21.820 ± 0.109  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericI2D   avgt    8  21.337 ± 0.129  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericI2UD  avgt    8  21.647 ± 0.061  ms/op
+ * PathfindingBenchmark.doTinyPathGandI2D          avgt    8  21.672 ± 0.079  ms/op
+ * PathfindingBenchmark.doTinyPathGandI2UD         avgt    8  21.970 ± 0.158  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
