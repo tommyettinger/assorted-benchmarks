@@ -106,7 +106,8 @@ dependencies {
 //    implementation 'com.github.tommyettinger:gand:14c44a2788' // from Feb 26 2024; huge changes
 //    implementation 'com.github.tommyettinger:gand:3299e2fb29' // from Feb 26 2024; hashing stuff
 //    implementation 'com.github.tommyettinger:gand:6ae3b8c94c' // from Jul 5 2024; after the 0.2.0 release, has sort speedup.
-    implementation 'com.github.tommyettinger:gand:86c5773143' // from Jul 27 2024; has some hashing changes
+//    implementation 'com.github.tommyettinger:gand:86c5773143' // from Jul 27 2024; has hashing changes, less multiplication
+    implementation 'com.github.tommyettinger:gand:e4b064c627' // from Jul 28 2024; more hashing changes, PointF2/3 uses multiplication
 
 
     implementation 'com.github.tommyettinger:atlantis:5574642135'

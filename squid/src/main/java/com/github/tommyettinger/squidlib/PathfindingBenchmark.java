@@ -941,6 +941,19 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathGandI2D          avgt    8  22.035 ± 0.490  ms/op
  * PathfindingBenchmark.doTinyPathGandI2UD         avgt    8  22.532 ± 0.099  ms/op
  * </pre>
+ * <br>
+ * Much better. This uses some multiplication in PointF2.hashCode(), which helps the mixing.
+ * <pre>
+ * Benchmark                                       Mode  Cnt   Score   Error  Units
+ * PathfindingBenchmark.doTinyPathGandF2D          avgt    8  21.660 ± 0.173  ms/op
+ * PathfindingBenchmark.doTinyPathGandF2UD         avgt    8  22.223 ± 0.103  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericF2D   avgt    8  22.120 ± 0.131  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericF2UD  avgt    8  22.225 ± 0.097  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericI2D   avgt    8  21.508 ± 0.063  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericI2UD  avgt    8  21.635 ± 0.167  ms/op
+ * PathfindingBenchmark.doTinyPathGandI2D          avgt    8  21.930 ± 0.142  ms/op
+ * PathfindingBenchmark.doTinyPathGandI2UD         avgt    8  21.746 ± 0.091  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
