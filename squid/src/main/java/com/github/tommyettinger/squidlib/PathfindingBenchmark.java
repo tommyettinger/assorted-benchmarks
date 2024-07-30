@@ -967,6 +967,23 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathGandI2D          avgt    8  21.672 ± 0.079  ms/op
  * PathfindingBenchmark.doTinyPathGandI2UD         avgt    8  21.970 ± 0.158  ms/op
  * </pre>
+ * <br>
+ * Comparing Gand 0.2.0 PointI2 vs. SquidSquad Coord, they are very close:
+ * <pre>
+ * Benchmark                                          Mode  Cnt    Score    Error  Units
+ * PathfindingBenchmark.doOneGandGenericCoordD        avgt    8    0.165 ±  0.026  ms/op
+ * PathfindingBenchmark.doOneGandGenericCoordUD       avgt    8    0.170 ±  0.027  ms/op
+ * PathfindingBenchmark.doOneGandGenericI2D           avgt    8    0.153 ±  0.027  ms/op
+ * PathfindingBenchmark.doOneGandGenericI2UD          avgt    8    0.162 ±  0.032  ms/op
+ * PathfindingBenchmark.doPathGandGenericCoordD       avgt    8  423.537 ± 67.643  ms/op
+ * PathfindingBenchmark.doPathGandGenericCoordUD      avgt    8  419.356 ± 66.939  ms/op
+ * PathfindingBenchmark.doPathGandGenericI2D          avgt    8  442.204 ± 69.822  ms/op
+ * PathfindingBenchmark.doPathGandGenericI2UD         avgt    8  425.530 ± 63.016  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericCoordD   avgt    8   21.557 ±  0.651  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericCoordUD  avgt    8   22.290 ±  0.148  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericI2D      avgt    8   21.605 ±  0.074  ms/op
+ * PathfindingBenchmark.doTinyPathGandGenericI2UD     avgt    8   22.006 ±  0.086  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -1378,6 +1395,7 @@ Nate sweetened at 129572932000
                         gf2DirectedGraph.addEdge(fCenter, fMoved);
                         ggeni2DirectedGraph.addEdge(iCenter, iMoved);
                         ggenf2DirectedGraph.addEdge(fCenter, fMoved);
+                        ggenCoordDirectedGraph.addEdge(squadCenter, squadMoved);
                         updateDirectedGraph.addEdge(squadCenter, squadMoved);
                         gandDirectedGraph.addEdge(squadCenter, squadMoved);
 //                        upgpDirectedGraph.addEdge(gpCenter, gpMoved);
@@ -1398,6 +1416,7 @@ Nate sweetened at 129572932000
                             gf2UndirectedGraph.addEdge(fCenter, fMoved);
                             ggeni2UndirectedGraph.addEdge(iCenter, iMoved);
                             ggenf2UndirectedGraph.addEdge(fCenter, fMoved);
+                            ggenCoordUndirectedGraph.addEdge(squadCenter, squadMoved);
                         }
                     }
                 }
