@@ -713,18 +713,21 @@ public final class NumberTools2 {
      * @return
      */
     public static float sinBhaskaroid(float radians) {
-        //Absolute error:      0.0001498343
-        //Relative error:      0.0000000000
-        //Maximum error:       0.0003550053
-        //Worst input:         -4.2084822655
-        //Worst approx output: 0.8753479123
-        //Correct output:      0.8757029176
-        radians *= TrigTools.PI_INVERSE * 2f;
+        radians = radians * (TrigTools.PI_INVERSE * 2f);
         final int ceil = (int) Math.ceil(radians) & -2;
         radians -= ceil;
         final float x2 = radians * radians, x3 = radians * x2;
         return (((11 * radians - 3 * x3) / (7 + x2)) * (1 - (ceil & 2)));
     }
+
+    public static float sinPade(float radians) {
+        radians = radians * (TrigTools.PI_INVERSE * 2f);
+        final int ceil = (int) Math.ceil(radians) & -2;
+        radians -= ceil;
+        final float x2 = radians * radians;
+        return (radians * (137.9199f + x2 * -35.84f)) / (87.802f + x2 * (13.288f + x2)) * (1 - (ceil & 2));
+    }
+
 
     /**
      * <a href="https://www.nullhardware.com/blog/fixed-point-sine-and-cosine-for-embedded-systems/">From here</a>, by

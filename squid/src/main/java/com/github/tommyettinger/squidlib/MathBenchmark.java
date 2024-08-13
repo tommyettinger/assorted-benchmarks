@@ -454,6 +454,17 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureSmoothlyCosF           avgt    5  5.042 ± 0.149  ns/op
  * MathBenchmark.measureSmoothlySinF           avgt    5  5.010 ± 0.057  ns/op
  * </pre>
+ * Comparing different quality levels for sin().
+ * Note that Pade has better quality than Bhaskara, plus it is faster. Neither Pade nor
+ * Bhaskara use a table. I don't know why Pade is so much faster than Bhaskara, but still
+ * slower than Smoother (which has very high quality, and uses a lookup table).
+ * <pre>
+ * Benchmark                                 Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureBhaskaraSinF         avgt   10  15.339 ± 0.050  ns/op
+ * MathBenchmark.measureDigitalSinF          avgt   10   2.625 ± 0.010  ns/op
+ * MathBenchmark.measureDigitalSmootherSinF  avgt   10   7.902 ± 0.036  ns/op
+ * MathBenchmark.measurePadeSinF             avgt   10   8.277 ± 0.015  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -506,6 +517,7 @@ public class MathBenchmark {
     private int cosWallace = -0x8000;
     private int sinWallace = -0x8000;
     private int sinBhaskara = -0x8000;
+    private int sinPade = -0x8000;
     private int sinBonus = -0x8000;
     private int sinSteadman = -0x8000;
     private int sinHastings = -0x8000;
@@ -949,10 +961,16 @@ public class MathBenchmark {
         return NumberTools2.sinWallaceN(((sinWallace += 0x9E3779B9) >> 24));
     }
 
-//    @Benchmark
+    @Benchmark
     public float measureBhaskaraSinF()
     {
         return NumberTools2.sinBhaskaroid(((sinBhaskara += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measurePadeSinF()
+    {
+        return NumberTools2.sinPade(((sinPade += 0x9E3779B9) >> 24));
     }
 
 //    @Benchmark
