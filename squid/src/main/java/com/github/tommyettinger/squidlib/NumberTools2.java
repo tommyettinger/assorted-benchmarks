@@ -728,12 +728,20 @@ public final class NumberTools2 {
         return (radians * (137.9199f + x2 * -35.84f)) / (87.802f + x2 * (13.288f + x2)) * (1 - (ceil & 2));
     }
 
-    public static float cosPade(float radians) {
-        radians = radians * (TrigTools.PI_INVERSE * 2f) + 1f;
-        final int ceil = (int) Math.ceil(radians) & -2;
-        radians -= ceil;
-        final float x2 = radians * radians;
-        return (radians * (137.9199f + x2 * -35.84f)) / (87.802f + x2 * (13.288f + x2)) * (1 - (ceil & 2));
+//    public static float cosPade(float radians) {
+//        radians = radians * (TrigTools.PI_INVERSE * 2f) + 1f;
+//        final int ceil = (int) Math.ceil(radians) & -2;
+//        radians -= ceil;
+//        final float x2 = radians * radians;
+//        return (radians * (137.9199f + x2 * -35.84f)) / (87.802f + x2 * (13.288f + x2)) * (1 - (ceil & 2));
+//    }
+
+    public static float cosPade(final float radians) {
+        final float i = radians * (TrigTools.PI_INVERSE * 2f);
+        final int ceil = (int) Math.floor(i) | 1;
+        final float r = i - ceil;
+        final float x2 = r * r;
+        return (r * (137.9199f + x2 * -35.84f)) / (87.802f + x2 * (13.288f + x2)) * ((ceil & 2) - 1);
     }
 
     /**

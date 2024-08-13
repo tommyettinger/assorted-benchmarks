@@ -481,6 +481,14 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureDigitalSmootherCosF  avgt   10   6.772 ± 0.025  ns/op
  * MathBenchmark.measurePadeCosF             avgt   10  16.426 ± 0.106  ns/op
  * </pre>
+ * Going back and making it only use final values... Not much difference.
+ * <pre>
+ * Benchmark                                 Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDigitalCosF          avgt   10   2.590 ± 0.016  ns/op
+ * MathBenchmark.measureDigitalSmoothCosF    avgt   10  15.407 ± 0.133  ns/op
+ * MathBenchmark.measureDigitalSmootherCosF  avgt   10   6.857 ± 0.077  ns/op
+ * MathBenchmark.measurePadeCosF             avgt   10  15.330 ± 0.048  ns/op
+ * </pre>
  *
  */
 
