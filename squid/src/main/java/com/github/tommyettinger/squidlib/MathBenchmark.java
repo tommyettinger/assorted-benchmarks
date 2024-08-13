@@ -465,6 +465,14 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureDigitalSmootherSinF  avgt   10   7.902 ± 0.036  ns/op
  * MathBenchmark.measurePadeSinF             avgt   10   8.277 ± 0.015  ns/op
  * </pre>
+ * It is a mystery!
+ * <pre>
+ * Benchmark                                 Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDigitalCosF          avgt   10   2.636 ± 0.007  ns/op
+ * MathBenchmark.measureDigitalSmoothCosF    avgt   10  15.549 ± 0.032  ns/op
+ * MathBenchmark.measureDigitalSmootherCosF  avgt   10   6.876 ± 0.036  ns/op
+ * MathBenchmark.measurePadeCosF             avgt   10  15.394 ± 0.055  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -517,7 +525,6 @@ public class MathBenchmark {
     private int cosWallace = -0x8000;
     private int sinWallace = -0x8000;
     private int sinBhaskara = -0x8000;
-    private int sinPade = -0x8000;
     private int sinBonus = -0x8000;
     private int sinSteadman = -0x8000;
     private int sinHastings = -0x8000;
@@ -526,8 +533,6 @@ public class MathBenchmark {
     private int sinUnrounded = -0x8000;
     private int sinSign = -0x8000;
     private int sinShifty = -0x8000;
-    private int sinDigital = -0x8000;
-    private int sinSmootherDigital = -0x8000;
     private int sinCTools = -0x8000;
     private int sinSmootherCTools = -0x8000;
     private int sinFF = -0x8000;
@@ -536,8 +541,14 @@ public class MathBenchmark {
     private int sinSmoothly = -0x8000;
     private int cosSmoothly = -0x8000;
     private int sinSmootherFF = -0x8000;
+    private int sinDigital = -0x8000;
     private int cosDigital = -0x8000;
+    private int sinSmoothDigital = -0x8000;
+    private int cosSmoothDigital = -0x8000;
+    private int sinSmootherDigital = -0x8000;
     private int cosSmootherDigital = -0x8000;
+    private int sinPade = -0x8000;
+    private int cosPade = -0x8000;
     private int sinDigitalDbl = -0x8000;
     private int sinSmootherDigitalDbl = -0x8000;
     private int cosDigitalDbl = -0x8000;
@@ -967,12 +978,6 @@ public class MathBenchmark {
         return NumberTools2.sinBhaskaroid(((sinBhaskara += 0x9E3779B9) >> 24));
     }
 
-    @Benchmark
-    public float measurePadeSinF()
-    {
-        return NumberTools2.sinPade(((sinPade += 0x9E3779B9) >> 24));
-    }
-
 //    @Benchmark
     public float measureBonusSinF()
     {
@@ -1003,6 +1008,11 @@ public class MathBenchmark {
     public float measureDigitalSinF()
     {
         return TrigTools.sin(((sinDigital += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
+    public float measureDigitalSmoothSinF()
+    {
+        return TrigTools.sinSmooth(((sinSmoothDigital += 0x9E3779B9) >> 24));
     }
     @Benchmark
     public float measureDigitalSmootherSinF()
@@ -1074,9 +1084,26 @@ public class MathBenchmark {
         return TrigTools.cos(((cosDigital += 0x9E3779B9) >> 24));
     }
     @Benchmark
+    public float measureDigitalSmoothCosF()
+    {
+        return TrigTools.cosSmooth(((cosSmoothDigital += 0x9E3779B9) >> 24));
+    }
+    @Benchmark
     public float measureDigitalSmootherCosF()
     {
         return TrigTools.cosSmoother(((cosSmootherDigital += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measurePadeSinF()
+    {
+        return NumberTools2.sinPade(((sinPade += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measurePadeCosF()
+    {
+        return NumberTools2.cosPade(((cosPade += 0x9E3779B9) >> 24));
     }
 //    @Benchmark
 //    public float measureCToolsCosF()

@@ -728,6 +728,13 @@ public final class NumberTools2 {
         return (radians * (137.9199f + x2 * -35.84f)) / (87.802f + x2 * (13.288f + x2)) * (1 - (ceil & 2));
     }
 
+    public static float cosPade(float radians) {
+        radians = radians * (TrigTools.PI_INVERSE * 2f);
+        final int ceil = (int) Math.floor(radians) | 1;
+        radians -= ceil;
+        final float x2 = radians * radians;
+        return (radians * (137.9199f + x2 * -35.84f)) / (87.802f + x2 * (13.288f + x2)) * ((ceil & 2) - 1);
+    }
 
     /**
      * <a href="https://www.nullhardware.com/blog/fixed-point-sine-and-cosine-for-embedded-systems/">From here</a>, by
