@@ -489,6 +489,14 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureDigitalSmootherCosF  avgt   10   6.857 ± 0.077  ns/op
  * MathBenchmark.measurePadeCosF             avgt   10  15.330 ± 0.048  ns/op
  * </pre>
+ * But a ha! Using abs() is an option when implementing cos(), because it is an even function!
+ * <pre>
+ * Benchmark                                 Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDigitalCosF          avgt   10   2.609 ± 0.016  ns/op
+ * MathBenchmark.measureDigitalSmoothCosF    avgt   10  15.318 ± 0.049  ns/op
+ * MathBenchmark.measureDigitalSmootherCosF  avgt   10   6.817 ± 0.019  ns/op
+ * MathBenchmark.measurePadeCosF             avgt   10   8.721 ± 0.046  ns/op
+ * </pre>
  *
  */
 
