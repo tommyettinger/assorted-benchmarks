@@ -22,24 +22,24 @@ package org.apache.fury.meta.zstd;
 import com.github.luben.zstd.Zstd;
 import org.apache.fury.meta.MetaCompressor;
 
-import java.util.Arrays;
-
 
 /** A meta compressor based on {@link Zstd} compression algorithm. */
 public class ZstdMetaCompressor implements MetaCompressor {
     @Override
     public byte[] compress(byte[] data, int offset, int size) {
-        int bound = (int)Zstd.compressBound(size);
-        byte[] compressData = new byte[bound];
-        long amt = Zstd.compressByteArray(compressData, 0, bound, data, offset, size, Zstd.defaultCompressionLevel());
-        return Arrays.copyOf(compressData, (int)amt);
+        byte[] compressData = new byte[size];
+        System.arraycopy(data, offset, compressData, 0, size);
+        return Zstd.compress(compressData);
     }
 
     @Override
     public byte[] decompress(byte[] data, int offset, int size) {
-        byte[] buffer = new byte[(int) Zstd.getFrameContentSize(data, offset, size)];
-        long amt = Zstd.decompressByteArray(buffer, 0, buffer.length, data, offset, size);
-        return Arrays.copyOf(buffer, (int) amt);
+        byte[] decompressData = new byte[size];
+        System.arraycopy(data, offset, decompressData, 0, size);
+
+        byte[] buffer = new byte[(int) Zstd.getFrameContentSize(decompressData)];
+        Zstd.decompress(buffer, decompressData);
+        return buffer;
     }
 
     @Override
