@@ -14,6 +14,7 @@ import com.github.tommyettinger.tantrum.libgdx.QueueSerializer;
 import com.github.tommyettinger.tantrum.libgdx.Vector3Serializer;
 import org.apache.fury.Fury;
 import org.apache.fury.config.Language;
+import org.apache.fury.meta.zstd.ZstdMetaCompressor;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -25,6 +26,8 @@ public class SizeComparisonTest {
      * Small Array<String>
      * Fury bytes length : 53
      * Fury String length: 53
+     * ZStd bytes length : 53
+     * ZStd String length: 53
      * Kryo bytes length : 47
      * Kryo String length: 47
      * JSON bytes length : 33
@@ -33,6 +36,8 @@ public class SizeComparisonTest {
      */
     @Test
     public void testSmallStringArray() {
+        System.out.println("Small Array<String>");
+
         Fury fury = Fury.builder().withLanguage(Language.JAVA).build();
         fury.registerSerializer(Array.class, new ArraySerializer(fury));
         fury.register(Array.class);
@@ -48,6 +53,17 @@ public class SizeComparisonTest {
         byte[] bytesFury = fury.serializeJavaObject(data);
         {
             Array<?> data2 = fury.deserializeJavaObject(bytesFury, Array.class);
+            Assert.assertEquals(data, data2);
+        }
+
+        fury = Fury.builder().withLanguage(Language.JAVA).withMetaCompressor(new ZstdMetaCompressor()).build();
+        fury.registerSerializer(Array.class, new ArraySerializer(fury));
+        fury.register(Array.class);
+
+
+        byte[] bytesZstd = fury.serializeJavaObject(data);
+        {
+            Array<?> data2 = fury.deserializeJavaObject(bytesZstd, Array.class);
             Assert.assertEquals(data, data2);
         }
 
@@ -67,9 +83,10 @@ public class SizeComparisonTest {
             Assert.assertEquals(data, data2);
         }
 
-        System.out.println("Small Array<String>");
         System.out.println("Fury bytes length : " + bytesFury.length);
         System.out.println("Fury String length: " + new String(bytesFury, StandardCharsets.ISO_8859_1).length());
+        System.out.println("ZStd bytes length : " + bytesZstd.length);
+        System.out.println("ZStd String length: " + new String(bytesZstd, StandardCharsets.ISO_8859_1).length());
         System.out.println("Kryo bytes length : " + bytesKryo.length);
         System.out.println("Kryo String length: " + new String(bytesKryo, StandardCharsets.ISO_8859_1).length());
         System.out.println("JSON bytes length : " + text.getBytes(StandardCharsets.ISO_8859_1).length);
@@ -77,8 +94,20 @@ public class SizeComparisonTest {
         System.out.println("JSON data: " + text);
     }
 
+    /**
+     * Fury bytes length : 10072
+     * Fury String length: 10072
+     * ZStd bytes length : 10072
+     * ZStd String length: 10072
+     * Kryo bytes length : 9049
+     * Kryo String length: 9049
+     * JSON bytes length : 8021
+     * JSON String length: 8021
+     */
     @Test
     public void testLargeStringArray() {
+        System.out.println("Large Array<String>");
+
         Fury fury = Fury.builder().withLanguage(Language.JAVA)
                 .requireClassRegistration(true)
                 .build();
@@ -87,15 +116,40 @@ public class SizeComparisonTest {
 
         Json json = new Json();
 
-        Array<String> data = new Array<>(1024);
+        Kryo kryo = new Kryo();
+        kryo.setReferences(true);
+        kryo.register(Array.class, new GdxArraySerializer());
+
+        Array<String> data = new Array<>(true, 1024, String.class);
 
         for (int i = 0; i < 1024; i++) {
             data.add(i + " " + i);
         }
 
-        byte[] bytes = fury.serializeJavaObject(data);
+        byte[] bytesFury = fury.serializeJavaObject(data);
         {
-            Array<?> data2 = fury.deserializeJavaObject(bytes, Array.class);
+            Array<?> data2 = fury.deserializeJavaObject(bytesFury, Array.class);
+            Assert.assertEquals(data, data2);
+        }
+
+        fury = Fury.builder().withLanguage(Language.JAVA).withMetaCompressor(new ZstdMetaCompressor()).build();
+        fury.registerSerializer(Array.class, new ArraySerializer(fury));
+        fury.register(Array.class);
+
+
+        byte[] bytesZstd = fury.serializeJavaObject(data);
+        {
+            Array<?> data2 = fury.deserializeJavaObject(bytesZstd, Array.class);
+            Assert.assertEquals(data, data2);
+        }
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
+        Output output = new Output(baos);
+        kryo.writeObject(output, data);
+        output.close();
+        byte[] bytesKryo = baos.toByteArray();
+        {
+            Array<?> data2 = kryo.readObject(new Input(bytesKryo), Array.class);
             Assert.assertEquals(data, data2);
         }
 
@@ -105,9 +159,12 @@ public class SizeComparisonTest {
             Assert.assertEquals(data, data2);
         }
 
-        System.out.println("Large Array<String>");
-        System.out.println("Fury bytes length : " + bytes.length);
-        System.out.println("Fury String length: " + new String(bytes, StandardCharsets.ISO_8859_1).length());
+        System.out.println("Fury bytes length : " + bytesFury.length);
+        System.out.println("Fury String length: " + new String(bytesFury, StandardCharsets.ISO_8859_1).length());
+        System.out.println("ZStd bytes length : " + bytesZstd.length);
+        System.out.println("ZStd String length: " + new String(bytesZstd, StandardCharsets.ISO_8859_1).length());
+        System.out.println("Kryo bytes length : " + bytesKryo.length);
+        System.out.println("Kryo String length: " + new String(bytesKryo, StandardCharsets.ISO_8859_1).length());
         System.out.println("JSON bytes length : " + text.getBytes(StandardCharsets.ISO_8859_1).length);
         System.out.println("JSON String length: " + text.length());
         System.out.println("JSON data: " + text);

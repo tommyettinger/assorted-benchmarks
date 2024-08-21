@@ -152,6 +152,11 @@
             <artifactId>kryo-serializers</artifactId>
             <version>0.45</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.luben</groupId>
+            <artifactId>zstd-jni</artifactId>
+            <version>1.5.6-3</version>
+        </dependency>
         <!--        Using JitPack-->
         <dependency>
             <groupId>com.github.tommyettinger</groupId>
