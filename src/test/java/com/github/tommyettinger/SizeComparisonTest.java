@@ -9,6 +9,7 @@ import com.cyphercove.gdxtokryo.gdxserializers.utils.GdxArraySerializer;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
+import com.github.luben.zstd.Zstd;
 import com.github.tommyettinger.tantrum.libgdx.ArraySerializer;
 import com.github.tommyettinger.tantrum.libgdx.QueueSerializer;
 import com.github.tommyettinger.tantrum.libgdx.Vector3Serializer;
@@ -23,16 +24,12 @@ import java.nio.charset.StandardCharsets;
 
 public class SizeComparisonTest {
     /**
-     * Small Array<String>
      * Fury bytes length : 53
-     * Fury String length: 53
-     * ZStd bytes length : 53
-     * ZStd String length: 53
+     * Fury compressed   : 62
      * Kryo bytes length : 47
-     * Kryo String length: 47
+     * Kryo compressed   : 56
      * JSON bytes length : 33
-     * JSON String length: 33
-     * JSON data: [Hello,World,!,I,am,a,test,!,yay]
+     * JSON compressed   : 42
      */
     @Test
     public void testSmallStringArray() {
@@ -55,15 +52,9 @@ public class SizeComparisonTest {
             Array<?> data2 = fury.deserializeJavaObject(bytesFury, Array.class);
             Assert.assertEquals(data, data2);
         }
-
-        fury = Fury.builder().withLanguage(Language.JAVA).withMetaCompressor(new ZstdMetaCompressor()).build();
-        fury.registerSerializer(Array.class, new ArraySerializer(fury));
-        fury.register(Array.class);
-
-
-        byte[] bytesZstd = fury.serializeJavaObject(data);
+        byte[] bytesFuryZstd = Zstd.compress(bytesFury);
         {
-            Array<?> data2 = fury.deserializeJavaObject(bytesZstd, Array.class);
+            Array<?> data2 = fury.deserializeJavaObject(Zstd.decompress(bytesFuryZstd, (int)Zstd.getFrameContentSize(bytesFuryZstd)), Array.class);
             Assert.assertEquals(data, data2);
         }
 
@@ -76,33 +67,41 @@ public class SizeComparisonTest {
             Array<?> data2 = kryo.readObject(new Input(bytesKryo), Array.class);
             Assert.assertEquals(data, data2);
         }
+        byte[] bytesKryoZstd = Zstd.compress(bytesKryo);
+        {
+            Array<?> data2 = kryo.readObject(new Input(Zstd.decompress(bytesKryoZstd, (int)Zstd.getFrameContentSize(bytesKryoZstd))), Array.class);
+            Assert.assertEquals(data, data2);
+        }
 
         String text = json.toJson(data, Array.class, String.class);
+        byte[] bytesJson = text.getBytes(StandardCharsets.ISO_8859_1);
         {
             Array<?> data2 = json.fromJson(Array.class, String.class, text);;
             Assert.assertEquals(data, data2);
         }
+        byte[] bytesJsonZstd = Zstd.compress(bytesJson);
+        {
+            String textJsonZstd = new String(Zstd.decompress(bytesJsonZstd, (int)Zstd.getFrameContentSize(bytesJsonZstd)), StandardCharsets.ISO_8859_1);
+            Array<?> data2 = json.fromJson(Array.class, String.class, textJsonZstd);
+            Assert.assertEquals(data, data2);
+        }
 
         System.out.println("Fury bytes length : " + bytesFury.length);
-        System.out.println("Fury String length: " + new String(bytesFury, StandardCharsets.ISO_8859_1).length());
-        System.out.println("ZStd bytes length : " + bytesZstd.length);
-        System.out.println("ZStd String length: " + new String(bytesZstd, StandardCharsets.ISO_8859_1).length());
+        System.out.println("Fury compressed   : " + bytesFuryZstd.length);
         System.out.println("Kryo bytes length : " + bytesKryo.length);
-        System.out.println("Kryo String length: " + new String(bytesKryo, StandardCharsets.ISO_8859_1).length());
-        System.out.println("JSON bytes length : " + text.getBytes(StandardCharsets.ISO_8859_1).length);
-        System.out.println("JSON String length: " + text.length());
-        System.out.println("JSON data: " + text);
+        System.out.println("Kryo compressed   : " + bytesKryoZstd.length);
+        System.out.println("JSON bytes length : " + bytesJson.length);
+        System.out.println("JSON compressed   : " + bytesJsonZstd.length);
+//        System.out.println("JSON data: " + text);
     }
 
     /**
      * Fury bytes length : 10072
-     * Fury String length: 10072
-     * ZStd bytes length : 10072
-     * ZStd String length: 10072
+     * Fury compressed   : 2847
      * Kryo bytes length : 9049
-     * Kryo String length: 9049
+     * Kryo compressed   : 2848
      * JSON bytes length : 8021
-     * JSON String length: 8021
+     * JSON compressed   : 3738
      */
     @Test
     public void testLargeStringArray() {
@@ -131,15 +130,9 @@ public class SizeComparisonTest {
             Array<?> data2 = fury.deserializeJavaObject(bytesFury, Array.class);
             Assert.assertEquals(data, data2);
         }
-
-        fury = Fury.builder().withLanguage(Language.JAVA).withMetaCompressor(new ZstdMetaCompressor()).build();
-        fury.registerSerializer(Array.class, new ArraySerializer(fury));
-        fury.register(Array.class);
-
-
-        byte[] bytesZstd = fury.serializeJavaObject(data);
+        byte[] bytesFuryZstd = Zstd.compress(bytesFury);
         {
-            Array<?> data2 = fury.deserializeJavaObject(bytesZstd, Array.class);
+            Array<?> data2 = fury.deserializeJavaObject(Zstd.decompress(bytesFuryZstd, (int)Zstd.getFrameContentSize(bytesFuryZstd)), Array.class);
             Assert.assertEquals(data, data2);
         }
 
@@ -152,22 +145,32 @@ public class SizeComparisonTest {
             Array<?> data2 = kryo.readObject(new Input(bytesKryo), Array.class);
             Assert.assertEquals(data, data2);
         }
+        byte[] bytesKryoZstd = Zstd.compress(bytesKryo);
+        {
+            Array<?> data2 = kryo.readObject(new Input(Zstd.decompress(bytesKryoZstd, (int)Zstd.getFrameContentSize(bytesKryoZstd))), Array.class);
+            Assert.assertEquals(data, data2);
+        }
 
         String text = json.toJson(data, Array.class, String.class);
+        byte[] bytesJson = text.getBytes(StandardCharsets.ISO_8859_1);
         {
             Array<?> data2 = json.fromJson(Array.class, String.class, text);;
             Assert.assertEquals(data, data2);
         }
+        byte[] bytesJsonZstd = Zstd.compress(bytesJson);
+        {
+            String textJsonZstd = new String(Zstd.decompress(bytesJsonZstd, (int)Zstd.getFrameContentSize(bytesJsonZstd)), StandardCharsets.ISO_8859_1);
+            Array<?> data2 = json.fromJson(Array.class, String.class, textJsonZstd);
+            Assert.assertEquals(data, data2);
+        }
 
         System.out.println("Fury bytes length : " + bytesFury.length);
-        System.out.println("Fury String length: " + new String(bytesFury, StandardCharsets.ISO_8859_1).length());
-        System.out.println("ZStd bytes length : " + bytesZstd.length);
-        System.out.println("ZStd String length: " + new String(bytesZstd, StandardCharsets.ISO_8859_1).length());
+        System.out.println("Fury compressed   : " + bytesFuryZstd.length);
         System.out.println("Kryo bytes length : " + bytesKryo.length);
-        System.out.println("Kryo String length: " + new String(bytesKryo, StandardCharsets.ISO_8859_1).length());
-        System.out.println("JSON bytes length : " + text.getBytes(StandardCharsets.ISO_8859_1).length);
-        System.out.println("JSON String length: " + text.length());
-        System.out.println("JSON data: " + text);
+        System.out.println("Kryo compressed   : " + bytesKryoZstd.length);
+        System.out.println("JSON bytes length : " + bytesJson.length);
+        System.out.println("JSON compressed   : " + bytesJsonZstd.length);
+//        System.out.println("JSON data: " + text);
     }
 
     @Test
