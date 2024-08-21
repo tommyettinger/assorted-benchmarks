@@ -18,6 +18,7 @@ import net.jpountz.lz4.LZ4Factory;
 import net.jpountz.lz4.LZ4FastDecompressor;
 import org.apache.fury.Fury;
 import org.apache.fury.config.Language;
+import org.apache.fury.meta.DeflaterMetaCompressor;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -29,12 +30,15 @@ public class SizeComparisonTest {
      * Fury bytes length : 53
      * Fury with Zstd    : 62
      * Fury with LZ4     : 55
+     * Fury with Deflate : 53
      * Kryo bytes length : 47
      * Kryo with Zstd    : 56
      * Kryo with LZ4     : 49
+     * Kryo with Deflate : 52
      * JSON bytes length : 33
      * JSON with Zstd    : 42
      * JSON with LZ4     : 35
+     * JSON with Deflate : 39
      */
     @Test
     public void testSmallStringArray() {
@@ -56,6 +60,8 @@ public class SizeComparisonTest {
         LZ4Compressor lz4Compressor = lz4Factory.fastCompressor();
         LZ4FastDecompressor lz4Decompressor = lz4Factory.fastDecompressor();
 
+        DeflaterMetaCompressor deflate = new DeflaterMetaCompressor();
+
         byte[] bytesFury = fury.serializeJavaObject(data);
         {
             Array<?> data2 = fury.deserializeJavaObject(bytesFury, Array.class);
@@ -69,6 +75,11 @@ public class SizeComparisonTest {
         byte[] bytesFuryLz4 = lz4Compressor.compress(bytesFury);
         {
             Array<?> data2 = fury.deserializeJavaObject(lz4Decompressor.decompress(bytesFuryLz4, bytesFury.length), Array.class);
+            Assert.assertEquals(data, data2);
+        }
+        byte[] bytesFuryDeflate = deflate.compress(bytesFury, 0, bytesFury.length);
+        {
+            Array<?> data2 = fury.deserializeJavaObject(deflate.decompress(bytesFuryDeflate, 0, bytesFuryDeflate.length), Array.class);
             Assert.assertEquals(data, data2);
         }
 
@@ -91,6 +102,11 @@ public class SizeComparisonTest {
             Array<?> data2 = kryo.readObject(new Input(lz4Decompressor.decompress(bytesKryoLz4, bytesKryo.length)), Array.class);
             Assert.assertEquals(data, data2);
         }
+        byte[] bytesKryoDeflate = deflate.compress(bytesKryo, 0, bytesKryo.length);
+        {
+            Array<?> data2 = kryo.readObject(new Input(deflate.decompress(bytesKryoDeflate, 0, bytesKryoDeflate.length)), Array.class);
+            Assert.assertEquals(data, data2);
+        }
 
         String text = json.toJson(data, Array.class, String.class);
         byte[] bytesJson = text.getBytes(StandardCharsets.ISO_8859_1);
@@ -110,16 +126,25 @@ public class SizeComparisonTest {
             Array<?> data2 = json.fromJson(Array.class, String.class, textJsonLz4);
             Assert.assertEquals(data, data2);
         }
+        byte[] bytesJsonDeflate = deflate.compress(bytesJson, 0, bytesJson.length);
+        {
+            String textJsonLz4 = new String(deflate.decompress(bytesJsonDeflate, 0, bytesJsonDeflate.length), StandardCharsets.ISO_8859_1);
+            Array<?> data2 = json.fromJson(Array.class, String.class, textJsonLz4);
+            Assert.assertEquals(data, data2);
+        }
 
         System.out.println("Fury bytes length : " + bytesFury.length);
         System.out.println("Fury with Zstd    : " + bytesFuryZstd.length);
         System.out.println("Fury with LZ4     : " + bytesFuryLz4.length);
+        System.out.println("Fury with Deflate : " + bytesFuryDeflate.length);
         System.out.println("Kryo bytes length : " + bytesKryo.length);
         System.out.println("Kryo with Zstd    : " + bytesKryoZstd.length);
         System.out.println("Kryo with LZ4     : " + bytesKryoLz4.length);
+        System.out.println("Kryo with Deflate : " + bytesKryoDeflate.length);
         System.out.println("JSON bytes length : " + bytesJson.length);
         System.out.println("JSON with Zstd    : " + bytesJsonZstd.length);
         System.out.println("JSON with LZ4     : " + bytesJsonLz4.length);
+        System.out.println("JSON with Deflate : " + bytesJsonDeflate.length);
 //        System.out.println("JSON data: " + text);
     }
 
@@ -127,12 +152,15 @@ public class SizeComparisonTest {
      * Fury bytes length : 10072
      * Fury with Zstd    : 2847
      * Fury with LZ4     : 8141
+     * Fury with Deflate : 4110
      * Kryo bytes length : 9049
      * Kryo with Zstd    : 2848
      * Kryo with LZ4     : 8038
+     * Kryo with Deflate : 4161
      * JSON bytes length : 8021
      * JSON with Zstd    : 3738
      * JSON with LZ4     : 7922
+     * JSON with Deflate : 3341
      */
     @Test
     public void testLargeStringArray() {
@@ -160,6 +188,8 @@ public class SizeComparisonTest {
         LZ4Compressor lz4Compressor = lz4Factory.fastCompressor();
         LZ4FastDecompressor lz4Decompressor = lz4Factory.fastDecompressor();
 
+        DeflaterMetaCompressor deflate = new DeflaterMetaCompressor();
+
         byte[] bytesFury = fury.serializeJavaObject(data);
         {
             Array<?> data2 = fury.deserializeJavaObject(bytesFury, Array.class);
@@ -173,6 +203,11 @@ public class SizeComparisonTest {
         byte[] bytesFuryLz4 = lz4Compressor.compress(bytesFury);
         {
             Array<?> data2 = fury.deserializeJavaObject(lz4Decompressor.decompress(bytesFuryLz4, bytesFury.length), Array.class);
+            Assert.assertEquals(data, data2);
+        }
+        byte[] bytesFuryDeflate = deflate.compress(bytesFury, 0, bytesFury.length);
+        {
+            Array<?> data2 = fury.deserializeJavaObject(deflate.decompress(bytesFuryDeflate, 0, bytesFuryDeflate.length), Array.class);
             Assert.assertEquals(data, data2);
         }
 
@@ -195,6 +230,11 @@ public class SizeComparisonTest {
             Array<?> data2 = kryo.readObject(new Input(lz4Decompressor.decompress(bytesKryoLz4, bytesKryo.length)), Array.class);
             Assert.assertEquals(data, data2);
         }
+        byte[] bytesKryoDeflate = deflate.compress(bytesKryo, 0, bytesKryo.length);
+        {
+            Array<?> data2 = kryo.readObject(new Input(deflate.decompress(bytesKryoDeflate, 0, bytesKryoDeflate.length)), Array.class);
+            Assert.assertEquals(data, data2);
+        }
 
         String text = json.toJson(data, Array.class, String.class);
         byte[] bytesJson = text.getBytes(StandardCharsets.ISO_8859_1);
@@ -214,16 +254,25 @@ public class SizeComparisonTest {
             Array<?> data2 = json.fromJson(Array.class, String.class, textJsonLz4);
             Assert.assertEquals(data, data2);
         }
+        byte[] bytesJsonDeflate = deflate.compress(bytesJson, 0, bytesJson.length);
+        {
+            String textJsonLz4 = new String(deflate.decompress(bytesJsonDeflate, 0, bytesJsonDeflate.length), StandardCharsets.ISO_8859_1);
+            Array<?> data2 = json.fromJson(Array.class, String.class, textJsonLz4);
+            Assert.assertEquals(data, data2);
+        }
 
         System.out.println("Fury bytes length : " + bytesFury.length);
         System.out.println("Fury with Zstd    : " + bytesFuryZstd.length);
         System.out.println("Fury with LZ4     : " + bytesFuryLz4.length);
+        System.out.println("Fury with Deflate : " + bytesFuryDeflate.length);
         System.out.println("Kryo bytes length : " + bytesKryo.length);
         System.out.println("Kryo with Zstd    : " + bytesKryoZstd.length);
         System.out.println("Kryo with LZ4     : " + bytesKryoLz4.length);
+        System.out.println("Kryo with Deflate : " + bytesKryoDeflate.length);
         System.out.println("JSON bytes length : " + bytesJson.length);
         System.out.println("JSON with Zstd    : " + bytesJsonZstd.length);
         System.out.println("JSON with LZ4     : " + bytesJsonLz4.length);
+        System.out.println("JSON with Deflate : " + bytesJsonDeflate.length);
 //        System.out.println("JSON data: " + text);
     }
 
