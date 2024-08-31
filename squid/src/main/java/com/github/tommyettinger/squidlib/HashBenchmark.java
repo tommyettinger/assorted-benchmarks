@@ -917,12 +917,19 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doCharYolk32    8192  avgt   10   5.676 ± 0.028  ns/op
  * HashBenchmark.doCharYolk64    8192  avgt   10   5.967 ± 0.142  ns/op
  * </pre>
+ * Testing against len=1000 long arrays:
+ * <pre>
+ * Benchmark                      (len)  Mode  Cnt     Score    Error  Units
+ * HashBenchmark.doLongMx64        1000  avgt    5   775.863 ± 19.689  ns/op
+ * HashBenchmark.doLongTritium64   1000  avgt    5  1092.887 ± 22.852  ns/op
+ * HashBenchmark.doLongYolk64      1000  avgt    5   712.643 ± 11.291  ns/o
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @Fork(1)
-@Warmup(iterations = 5)
-@Measurement(iterations = 5)
+@Warmup(iterations = 5, time = 5)
+@Measurement(iterations = 5, time = 5)
 public class HashBenchmark {
     @State(Scope.Thread)
     public static class BenchmarkState {
@@ -1765,6 +1772,66 @@ public class HashBenchmark {
     }
 
     @Benchmark
+    public long doTritium64(BenchmarkState state)
+    {
+        return CrossHash.Tritium.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doTritium32(BenchmarkState state)
+    {
+        return CrossHash.Tritium.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doCharTritium64(BenchmarkState state)
+    {
+        return CrossHash.Tritium.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doCharTritium32(BenchmarkState state)
+    {
+        return CrossHash.Tritium.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doIntTritium64(BenchmarkState state)
+    {
+        return CrossHash.Tritium.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doIntTritium32(BenchmarkState state)
+    {
+        return CrossHash.Tritium.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doLongTritium64(BenchmarkState state)
+    {
+        return CrossHash.Tritium.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doLongTritium32(BenchmarkState state)
+    {
+        return CrossHash.Tritium.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoubleTritium64(BenchmarkState state)
+    {
+        return CrossHash.Tritium.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleTritium32(BenchmarkState state)
+    {
+        return CrossHash.Tritium.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
     public int doJDK32(BenchmarkState state)
     {
         return hashCode(state.words[state.idx = state.idx + 1 & 4095]);
@@ -1938,7 +2005,7 @@ public class HashBenchmark {
      *
      * a) Via the command line from the squidlib-performance module's root folder:
      *    $ mvn clean install
-     *    $ java -jar benchmarks.jar HashBenchmark -wi 5 -i 5 -f 1
+     *    $ java -jar benchmarks.jar "HashBenchmark.doLong(Yolk|Tritium|Mx)"
      *
      *    (we requested 8 warmup/measurement iterations, single fork)
      *
