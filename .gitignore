@@ -145,7 +145,6 @@ sql/
 ClientBin/
 [Ss]tyle[Cc]op.*
 ~$*
-*~
 *.dbmdl
 *.[Pp]ublish.xml
 *.pfx
@@ -240,5 +239,4 @@ squid/benchmarks.jar
 
 **/out/
 **/generated/
-/squid/src/test/resources/word_list.txt.gz
 *.exe

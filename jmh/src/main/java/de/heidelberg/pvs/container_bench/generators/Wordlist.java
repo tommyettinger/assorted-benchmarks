@@ -1,61 +1,23 @@
 package de.heidelberg.pvs.container_bench.generators;
 
 import com.github.tommyettinger.ds.ObjectList;
-import com.github.tommyettinger.ds.ObjectSet;
-import com.github.tommyettinger.random.TrimRandom;
 import com.github.tommyettinger.random.WhiskerRandom;
 
 import java.io.*;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.zip.GZIPInputStream;
 
 public class Wordlist {
-	
+
 	private static final int DEFAULT_SEED = -1;
 
 	/** File name of our input data. */
-	public static final String HUGE_FILENAME = "enwiki-100m.txt.gz";
-	public static final String FILENAME = "word_list.txt.gz";
-
-	public static List<String> loadWiki(int size, int seed) throws IOException {
-
-		// Load the Wikipedia word data.
-		try (InputStream is = ClassLoader.getSystemResourceAsStream(HUGE_FILENAME);
-			InputStream gi = new GZIPInputStream(is);
-			Reader r = new InputStreamReader(gi);
-			BufferedReader reader = new BufferedReader(r)) {
-
-			// Always read twice as much the size
-			final int stop = size << 1;
-			List<String> words = new ArrayList<>(stop);
-
-			String line;
-			Matcher m = Pattern.compile("[\\w–-]+", Pattern.UNICODE_CHARACTER_CLASS).matcher("");
-			while ((line = reader.readLine()) != null && words.size() < stop) {
-				m.reset(line);
-				while (m.find()) {
-					String word = m.group();
-					word.hashCode(); // Precompute hashcode
-					words.add(word);
-				}
-			}
-
-			if (seed != DEFAULT_SEED) {
-				Collections.shuffle(words, new Random(seed));
-			}
-			words.subList(size, words.size()).clear(); // Truncate
-			return words;
-		}
-	}
+	public static final String FILENAME = "../res/word_list.txt";
 
 	public static List<String> loadWords(int size, int seed) throws IOException {
 		// Load the word list
-		try (InputStream is = new FileInputStream(FILENAME);
-			InputStream gi = new GZIPInputStream(is);
-			Reader r = new InputStreamReader(gi);
-			BufferedReader reader = new BufferedReader(r)) {
+		try (InputStream gi = new FileInputStream(FILENAME);
+			 Reader r = new InputStreamReader(gi);
+			 BufferedReader reader = new BufferedReader(r)) {
 
 			// Always read at least the word list in full
 			final int stop = 235971;
@@ -97,11 +59,10 @@ public class Wordlist {
 	public static Set<String> loadWordSet(int size, int seed) throws IOException {
 
 		// Load the word list
-		try (InputStream is = new FileInputStream(FILENAME);
-			InputStream gi = new GZIPInputStream(is);
-			Reader r = new InputStreamReader(gi);
-			BufferedReader reader = new BufferedReader(r)) {
-			
+		try (InputStream gi = new FileInputStream(FILENAME);
+			 Reader r = new InputStreamReader(gi);
+			 BufferedReader reader = new BufferedReader(r)) {
+
 			ArrayList<String> words = new ArrayList<>(size);
 
 			String line;
@@ -125,19 +86,10 @@ public class Wordlist {
 		}
 	}
 
-	public static int[] loadInts(int size, int seed, int mask) throws IOException {
-		List<String> words = loadWords(size, seed);
-		int[] data = new int[words.size()];
-		for (int i = 0; i < data.length; i++) {
-			data[i] = words.get(i).hashCode() & mask;
-		}
-		return data;
-	}
-	public static ObjectSet<String> loadUniqueWords(int size, int seed) throws IOException {
+	public static Set<String> loadUniqueWords(int size, int seed) throws IOException {
 
 		// Load the word list
-		try (InputStream is = new FileInputStream(FILENAME);
-			 InputStream gi = new GZIPInputStream(is);
+		try (InputStream gi = new FileInputStream(FILENAME);
 			 Reader r = new InputStreamReader(gi);
 			 BufferedReader reader = new BufferedReader(r)) {
 
@@ -149,10 +101,10 @@ public class Wordlist {
 			}
 			final int n = words.size();
 			if (seed != DEFAULT_SEED) {
-				final TrimRandom rng = new TrimRandom(seed);
+				final WhiskerRandom rng = new WhiskerRandom(seed);
 				words.shuffle(rng);
 			}
-			ObjectSet<String> set = new ObjectSet<>(size, 0.8f);
+			HashSet<String> set = new HashSet<>(size);
 			for (int i = 0; set.size() < size;) {
 				for (int j = 0; j < n && set.size() < size; j++) {
 					set.add(words.get(j) + (i++));
@@ -161,9 +113,18 @@ public class Wordlist {
 			return set;
 		}
 	}
-	public static ObjectSet<String> generateUniqueWords(int size) {
+
+	public static int[] loadInts(int size, int seed, int mask) throws IOException {
+		List<String> words = loadWords(size, seed);
+		int[] data = new int[words.size()];
+		for (int i = 0; i < data.length; i++) {
+			data[i] = words.get(i).hashCode() & mask;
+		}
+		return data;
+	}
+	public static HashSet<String> generateUniqueWords(int size) {
 		final int numLetters = 3;
-		ObjectSet<String> set = new ObjectSet<>(size, 0.8f);
+		HashSet<String> set = new HashSet<>(size, 0.8f);
 		char[] maker = new char[numLetters];
 		for (int i = 0; set.size() < size; ) {
 			for (int x = 0; x < 26 && set.size() < size; x++) {
