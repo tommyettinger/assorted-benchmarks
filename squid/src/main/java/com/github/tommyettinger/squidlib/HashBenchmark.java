@@ -924,6 +924,42 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doLongTritium64   1000  avgt    5  1092.887 ± 22.852  ns/op
  * HashBenchmark.doLongYolk64      1000  avgt    5   712.643 ± 11.291  ns/o
  * </pre>
+ * OK, finally something that passes tests and is faster: Ax!
+ * <pre>
+ * Benchmark                      (len)  Mode  Cnt     Score    Error  Units
+ * HashBenchmark.doLongAx64        1000  avgt    5   663.773 ± 22.097  ns/op
+ * HashBenchmark.doLongMx64        1000  avgt    5   790.054 ± 40.655  ns/op
+ * HashBenchmark.doLongTritium64   1000  avgt    5  1133.805 ± 36.454  ns/op
+ * HashBenchmark.doLongYolk64      1000  avgt    5   708.943 ± 40.960  ns/op
+ * </pre>
+ * Well, mainly faster on longer input arrays, though it's already 10% faster on length 160.
+ * <pre>
+ * Benchmark                   (len)  Mode  Cnt   Score   Error  Units
+ * HashBenchmark.doLongAx32        5  avgt    5  10.501 ± 0.411  ns/op
+ * HashBenchmark.doLongAx32       10  avgt    5  21.054 ± 0.745  ns/op
+ * HashBenchmark.doLongAx32       20  avgt    5  25.461 ± 0.601  ns/op
+ * HashBenchmark.doLongAx32       40  avgt    5  35.803 ± 0.748  ns/op
+ * HashBenchmark.doLongAx32       80  avgt    5  54.373 ± 1.907  ns/op
+ * HashBenchmark.doLongAx32      160  avgt    5  89.720 ± 1.960  ns/op
+ * HashBenchmark.doLongAx64        5  avgt    5  10.436 ± 0.136  ns/op
+ * HashBenchmark.doLongAx64       10  avgt    5  20.711 ± 0.506  ns/op
+ * HashBenchmark.doLongAx64       20  avgt    5  24.615 ± 0.579  ns/op
+ * HashBenchmark.doLongAx64       40  avgt    5  34.799 ± 0.832  ns/op
+ * HashBenchmark.doLongAx64       80  avgt    5  54.359 ± 3.131  ns/op
+ * HashBenchmark.doLongAx64      160  avgt    5  88.908 ± 7.005  ns/op
+ * HashBenchmark.doLongYolk32      5  avgt    5  12.020 ± 0.608  ns/op
+ * HashBenchmark.doLongYolk32     10  avgt    5  15.387 ± 0.404  ns/op
+ * HashBenchmark.doLongYolk32     20  avgt    5  22.800 ± 0.552  ns/op
+ * HashBenchmark.doLongYolk32     40  avgt    5  38.852 ± 0.377  ns/op
+ * HashBenchmark.doLongYolk32     80  avgt    5  57.894 ± 0.943  ns/op
+ * HashBenchmark.doLongYolk32    160  avgt    5  99.317 ± 2.054  ns/op
+ * HashBenchmark.doLongYolk64      5  avgt    5  12.099 ± 0.339  ns/op
+ * HashBenchmark.doLongYolk64     10  avgt    5  15.899 ± 0.113  ns/op
+ * HashBenchmark.doLongYolk64     20  avgt    5  23.180 ± 0.557  ns/op
+ * HashBenchmark.doLongYolk64     40  avgt    5  39.407 ± 0.500  ns/op
+ * HashBenchmark.doLongYolk64     80  avgt    5  58.520 ± 0.597  ns/op
+ * HashBenchmark.doLongYolk64    160  avgt    5  99.497 ± 0.460  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
