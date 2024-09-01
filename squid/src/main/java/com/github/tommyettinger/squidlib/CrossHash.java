@@ -16643,23 +16643,33 @@ public class CrossHash {
             return mix(h);
         }
 
-        public long hash64(final ByteBuffer data) {
+        public long hash64(final ByteBuffer data, int offsetBytes, int lengthBytes) {
             if (data == null) return 0;
-            int len = data.remaining();
-            final long ll = len;
+            data.position(offsetBytes);
+            data.limit(offsetBytes + lengthBytes);
+            final long ll = lengthBytes;
             long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
-            while(len >= 8){
+            while(lengthBytes >= 64){
                 h *= C;
-                len -= 8;
+                lengthBytes -= 64;
                 h = mixStream(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
                 h = (h << 37 | h >>> 27);
                 h = mixStream(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
             }
-            while(len >= 1){
-                len--;
+            while(lengthBytes >= 8){
+                lengthBytes -= 8;
                 h = mixStream(h, data.getLong());
             }
-            return mix(h);
+            switch (lengthBytes) {
+                case 1: return mix(mixStream(h, data.get()));
+                case 2: return mix(mixStream(h, data.getShort()));
+                case 3: return mix(mixStream(h, data.getShort() | (long) data.get() << 16));
+                case 4: return mix(mixStream(h, data.getInt()));
+                case 5: return mix(mixStream(h, data.getInt() | (long) data.get() << 32));
+                case 6: return mix(mixStream(h, data.getInt() | (long) data.getShort() << 32));
+                case 7: return mix(mixStream(h, data.getInt() | (long) data.getShort() << 32 | (long) data.get() << 48));
+                default: return mix(h);
+            }
         }
 
         public long hash64(final Object data) {
@@ -16778,23 +16788,33 @@ public class CrossHash {
             return (int)mix(h);
         }
 
-        public int hash(final ByteBuffer data) {
+        public int hash(final ByteBuffer data, int offsetBytes, int lengthBytes) {
             if (data == null) return 0;
-            int len = data.remaining();
-            final long ll = len;
+            data.position(offsetBytes);
+            data.limit(offsetBytes + lengthBytes);
+            final long ll = lengthBytes;
             long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
-            while(len >= 8){
+            while (lengthBytes >= 64) {
                 h *= C;
-                len -= 8;
+                lengthBytes -= 64;
                 h = mixStream(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
                 h = (h << 37 | h >>> 27);
                 h = mixStream(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
             }
-            while(len >= 1){
-                len--;
+            while (lengthBytes >= 8) {
+                lengthBytes -= 8;
                 h = mixStream(h, data.getLong());
             }
-            return (int)mix(h);
+            switch (lengthBytes) {
+                case 1: return (int)mix(mixStream(h, data.get()));
+                case 2: return (int)mix(mixStream(h, data.getShort()));
+                case 3: return (int)mix(mixStream(h, data.getShort() | (long) data.get() << 16));
+                case 4: return (int)mix(mixStream(h, data.getInt()));
+                case 5: return (int)mix(mixStream(h, data.getInt() | (long) data.get() << 32));
+                case 6: return (int)mix(mixStream(h, data.getInt() | (long) data.getShort() << 32));
+                case 7: return (int)mix(mixStream(h, data.getInt() | (long) data.getShort() << 32 | (long) data.get() << 48));
+                default: return (int)mix(h);
+            }
         }
 
         public int hash(final Object data) {
