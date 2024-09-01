@@ -1035,6 +1035,23 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doByteYolk64       80  avgt    5  39.061 ± 1.601  ns/op
  * HashBenchmark.doByteYolk64      160  avgt    5  70.994 ± 0.790  ns/op
  * </pre>
+ * With 1000 bytes:
+ * <pre>
+ * Benchmark                     (len)  Mode  Cnt    Score   Error  Units
+ * HashBenchmark.doBufferAx64     1000  avgt    5   96.940 ± 3.098  ns/op
+ * HashBenchmark.doBufferYolk64   1000  avgt    5  123.141 ± 3.773  ns/op
+ * HashBenchmark.doByteAx64       1000  avgt    5  388.092 ± 6.084  ns/op
+ * HashBenchmark.doByteYolk64     1000  avgt    5  359.372 ± 6.741  ns/op
+ * </pre>
+ * Yolk's byte array hash and its long array hash (which is used for the buffer) are different.
+ * That explains why Yolk is slower on ByteBuffer hashing but faster on byte array hashing:
+ * <pre>
+ * Benchmark                     (len)  Mode  Cnt     Score     Error  Units
+ * HashBenchmark.doBufferAx64    10000  avgt    5  1064.290 ±  34.429  ns/op
+ * HashBenchmark.doBufferYolk64  10000  avgt    5  1269.956 ±  28.536  ns/op
+ * HashBenchmark.doByteAx64      10000  avgt    5  4026.635 ±  99.830  ns/op
+ * HashBenchmark.doByteYolk64    10000  avgt    5  3716.037 ± 106.306  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
