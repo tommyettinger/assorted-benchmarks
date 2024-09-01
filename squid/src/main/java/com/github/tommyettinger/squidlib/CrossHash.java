@@ -2,6 +2,7 @@ package com.github.tommyettinger.squidlib;
 
 import squidpony.squidmath.*;
 import java.io.Serializable;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -16642,6 +16643,25 @@ public class CrossHash {
             return mix(h);
         }
 
+        public long hash64(final ByteBuffer data) {
+            if (data == null) return 0;
+            int len = data.remaining();
+            final long ll = len;
+            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            while(len >= 8){
+                h *= C;
+                len -= 8;
+                h = mixStream(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
+                h = (h << 37 | h >>> 27);
+                h = mixStream(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
+            }
+            while(len >= 1){
+                len--;
+                h = mixStream(h, data.getLong());
+            }
+            return mix(h);
+        }
+
         public long hash64(final Object data) {
             if (data == null) return 0;
             return mixStream(seed, data.hashCode() * C);
@@ -16754,6 +16774,25 @@ public class CrossHash {
             while(len >= 1){
                 len--;
                 h = mixStream(h, doubleToRawLongBits(data[i++]));
+            }
+            return (int)mix(h);
+        }
+
+        public int hash(final ByteBuffer data) {
+            if (data == null) return 0;
+            int len = data.remaining();
+            final long ll = len;
+            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            while(len >= 8){
+                h *= C;
+                len -= 8;
+                h = mixStream(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
+                h = (h << 37 | h >>> 27);
+                h = mixStream(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
+            }
+            while(len >= 1){
+                len--;
+                h = mixStream(h, data.getLong());
             }
             return (int)mix(h);
         }

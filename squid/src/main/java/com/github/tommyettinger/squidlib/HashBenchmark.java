@@ -960,6 +960,22 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doLongYolk64     80  avgt    5  58.520 ± 0.597  ns/op
  * HashBenchmark.doLongYolk64    160  avgt    5  99.497 ± 0.460  ns/op
  * </pre>
+ * And running the above 64-bit tests again on Oracle GraalVM 22.0.1+8.1 :
+ * <pre>
+ * Benchmark                   (len)  Mode  Cnt   Score   Error  Units
+ * HashBenchmark.doLongAx64        5  avgt    5  10.067 ± 0.452  ns/op
+ * HashBenchmark.doLongAx64       10  avgt    5  13.333 ± 0.279  ns/op
+ * HashBenchmark.doLongAx64       20  avgt    5  19.988 ± 0.599  ns/op
+ * HashBenchmark.doLongAx64       40  avgt    5  30.885 ± 1.290  ns/op
+ * HashBenchmark.doLongAx64       80  avgt    5  50.938 ± 0.895  ns/op
+ * HashBenchmark.doLongAx64      160  avgt    5  86.614 ± 1.428  ns/op
+ * HashBenchmark.doLongYolk64      5  avgt    5   8.653 ± 0.098  ns/op
+ * HashBenchmark.doLongYolk64     10  avgt    5  12.263 ± 0.105  ns/op
+ * HashBenchmark.doLongYolk64     20  avgt    5  19.370 ± 0.767  ns/op
+ * HashBenchmark.doLongYolk64     40  avgt    5  32.786 ± 0.475  ns/op
+ * HashBenchmark.doLongYolk64     80  avgt    5  56.549 ± 0.889  ns/op
+ * HashBenchmark.doLongYolk64    160  avgt    5  99.217 ± 1.437  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
