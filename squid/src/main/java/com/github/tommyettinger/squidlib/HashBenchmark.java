@@ -1052,6 +1052,14 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doByteAx64      10000  avgt    5  4026.635 ±  99.830  ns/op
  * HashBenchmark.doByteYolk64    10000  avgt    5  3716.037 ± 106.306  ns/op
  * </pre>
+ * The same is true for Graal, though surprisingly ByteBuffer doesn't perform as well there:
+ * <pre>
+ * Benchmark                     (len)  Mode  Cnt     Score    Error  Units
+ * HashBenchmark.doBufferAx64    10000  avgt    5  1187.957 ± 35.496  ns/op
+ * HashBenchmark.doBufferYolk64  10000  avgt    5  1338.758 ± 39.151  ns/op
+ * HashBenchmark.doByteAx64      10000  avgt    5  3878.029 ± 93.453  ns/op
+ * HashBenchmark.doByteYolk64    10000  avgt    5  3665.896 ± 79.322  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
