@@ -44,6 +44,9 @@ import squidpony.FakeLanguageGen;
 import squidpony.squidmath.HashCommon;
 
 import java.io.IOException;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
@@ -993,10 +996,10 @@ public class HashBenchmark {
         public char[][] chars;
         public long[][] longs;
         public int[][] ints;
+        public byte[][] bytes;
         public double[][] doubles;
+        public ByteBuffer[] buffers;
         public int idx;
-        private final int[] intInputs = new int[65536];
-        private final long[] longInputs = new long[65536];
 
         @Setup(Level.Trial)
         public void setup() {
@@ -1012,9 +1015,9 @@ public class HashBenchmark {
             longs = new long[4096][];
             ints = new int[4096][];
             doubles = new double[4096][];
-            for (int i = 0; i < 65536; i++) {
-                intInputs[i] = (int)(longInputs[i] = random.nextLong());
-            }
+            bytes = new byte[4096][];
+            buffers = new ByteBuffer[4096];
+
             try {
                 // 235971 is the number of words in the word list.
                 ObjectList<String> wordSet = Wordlist.loadWordSet(4096 + len, len).order();
@@ -1031,12 +1034,20 @@ public class HashBenchmark {
                 long[] lon = new long[len];
                 int[] inn = new int[len];
                 double[] don = new double[len];
+                ByteBuffer buf = ByteBuffer.allocate(len << 3).order(ByteOrder.LITTLE_ENDIAN);
                 for (int j = 0; j < len; j++) {
-                    don[j] = inn[j] = (int)(lon[j] = random.nextLong());
+                    long r = random.nextLong();
+                    don[j] = inn[j] = (int)(lon[j] = r);
+                    buf.putLong(r);
                 }
                 longs[i] = lon;
                 ints[i] = inn;
                 doubles[i] = don;
+                buffers[i] = buf;
+                bytes[i] = new byte[len];
+                buf.rewind();
+                buf.get(bytes[i], 0, len);
+                buf.rewind();
             }
             idx = 0;
         }
@@ -1397,6 +1408,30 @@ public class HashBenchmark {
     public int doDoubleYolk32(BenchmarkState state)
     {
         return CrossHash.Yolk.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doByteYolk64(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hash64(state.bytes[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doByteYolk32(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hash(state.bytes[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doBufferYolk64(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hash64(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+    }
+
+    @Benchmark
+    public int doBufferYolk32(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hash(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
 
@@ -1941,6 +1976,30 @@ public class HashBenchmark {
     public int doDoubleAx32(BenchmarkState state)
     {
         return CrossHash.Ax.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doByteAx64(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash64(state.bytes[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doByteAx32(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash(state.bytes[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doBufferAx64(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash64(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+    }
+
+    @Benchmark
+    public int doBufferAx32(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
