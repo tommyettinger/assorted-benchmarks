@@ -1832,6 +1832,66 @@ public class HashBenchmark {
     }
 
     @Benchmark
+    public long doAx64(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doAx32(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doCharAx64(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doCharAx32(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doIntAx64(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doIntAx32(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doLongAx64(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doLongAx32(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoubleAx64(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleAx32(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
     public int doJDK32(BenchmarkState state)
     {
         return hashCode(state.words[state.idx = state.idx + 1 & 4095]);
