@@ -4677,6 +4677,12 @@ public class CrossHash {
             return seed - (seed >>> 31) + (seed << 33);
         }
 
+        public long hash64Wrap(final byte[] data, int offsetBytes, int lengthBytes) {
+            if (data == null) return 0;
+            ByteBuffer buf = ByteBuffer.wrap(data, offsetBytes, lengthBytes);
+            return hash64(buf, offsetBytes, lengthBytes);
+        }
+
         public long hash64(final Object data) {
             if (data == null)
                 return 0;
@@ -5118,6 +5124,12 @@ public class CrossHash {
 
             seed = (seed ^ seed << 16) * (lengthBytes ^ b0 ^ seed >>> 32);
             return (int)(seed - (seed >>> 32));
+        }
+
+        public int hashWrap(final byte[] data, int offsetBytes, int lengthBytes) {
+            if (data == null) return 0;
+            ByteBuffer buf = ByteBuffer.wrap(data, offsetBytes, lengthBytes);
+            return hash(buf, offsetBytes, lengthBytes);
         }
 
         public int hash(final Object data) {
@@ -16801,6 +16813,12 @@ public class CrossHash {
             }
         }
 
+        public long hash64Wrap(final byte[] data, int offsetBytes, int lengthBytes) {
+            if (data == null) return 0;
+            ByteBuffer buf = ByteBuffer.wrap(data, offsetBytes, lengthBytes);
+            return hash64(buf, offsetBytes, lengthBytes);
+        }
+
         public long hash64(final Object data) {
             if (data == null) return 0;
             return mixStream(seed, data.hashCode() * C);
@@ -16966,6 +16984,12 @@ public class CrossHash {
                 case 7: return (int)mix(mixStream(h, (data.getInt() & 0xFFFFFFFFL) | (data.getShort() & 0xFFFFL) << 32 | (data.get() & 0xFFL) << 48));
                 default: return (int)mix(h);
             }
+        }
+
+        public int hashWrap(final byte[] data, int offsetBytes, int lengthBytes) {
+            if (data == null) return 0;
+            ByteBuffer buf = ByteBuffer.wrap(data, offsetBytes, lengthBytes);
+            return hash(buf, offsetBytes, lengthBytes);
         }
 
         public int hash(final Object data) {

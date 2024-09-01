@@ -1035,13 +1035,21 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doByteYolk64       80  avgt    5  39.061 ± 1.601  ns/op
  * HashBenchmark.doByteYolk64      160  avgt    5  70.994 ± 0.790  ns/op
  * </pre>
- * With 1000 bytes:
+ * With 1000 bytes on HotSpot OpenJDK 22:
  * <pre>
  * Benchmark                     (len)  Mode  Cnt    Score   Error  Units
  * HashBenchmark.doBufferAx64     1000  avgt    5   96.940 ± 3.098  ns/op
  * HashBenchmark.doBufferYolk64   1000  avgt    5  123.141 ± 3.773  ns/op
  * HashBenchmark.doByteAx64       1000  avgt    5  388.092 ± 6.084  ns/op
  * HashBenchmark.doByteYolk64     1000  avgt    5  359.372 ± 6.741  ns/op
+ * </pre>
+ * 1000 bytes on GraalVM:
+ * <pre>
+ * Benchmark                     (len)  Mode  Cnt    Score   Error  Units
+ * HashBenchmark.doBufferAx64     1000  avgt    5  121.481 ± 1.223  ns/op
+ * HashBenchmark.doBufferYolk64   1000  avgt    5  129.432 ± 3.756  ns/op
+ * HashBenchmark.doByteAx64       1000  avgt    5  378.742 ± 5.824  ns/op
+ * HashBenchmark.doByteYolk64     1000  avgt    5  356.265 ± 4.022  ns/op
  * </pre>
  * Yolk's byte array hash and its long array hash (which is used for the buffer) are different.
  * That explains why Yolk is slower on ByteBuffer hashing but faster on byte array hashing:
@@ -1059,6 +1067,16 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doBufferYolk64  10000  avgt    5  1338.758 ± 39.151  ns/op
  * HashBenchmark.doByteAx64      10000  avgt    5  3878.029 ± 93.453  ns/op
  * HashBenchmark.doByteYolk64    10000  avgt    5  3665.896 ± 79.322  ns/op
+ * </pre>
+ * Testing allocating a temporary ByteBuffer just to hash a large byte array:
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt     Score     Error  Units
+ * HashBenchmark.doBufferAx64        10000  avgt    5  1042.729 ±  90.909  ns/op
+ * HashBenchmark.doBufferWrapAx64    10000  avgt    5  1177.746 ±  57.708  ns/op
+ * HashBenchmark.doBufferWrapYolk64  10000  avgt    5  1537.252 ±  51.707  ns/op
+ * HashBenchmark.doBufferYolk64      10000  avgt    5  1263.996 ± 130.615  ns/op
+ * HashBenchmark.doByteAx64          10000  avgt    5  4048.874 ± 149.810  ns/op
+ * HashBenchmark.doByteYolk64        10000  avgt    5  3643.417 ± 147.210  ns/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
@@ -1513,6 +1531,18 @@ public class HashBenchmark {
     public int doBufferYolk32(BenchmarkState state)
     {
         return CrossHash.Yolk.mu.hash(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+    }
+
+    @Benchmark
+    public long doBufferWrapYolk64(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hash64Wrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
+    }
+
+    @Benchmark
+    public long doBufferWrapYolk32(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hashWrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
     }
 
 
@@ -2081,6 +2111,18 @@ public class HashBenchmark {
     public int doBufferAx32(BenchmarkState state)
     {
         return CrossHash.Ax.mu.hash(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+    }
+
+    @Benchmark
+    public long doBufferWrapAx64(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash64Wrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
+    }
+
+    @Benchmark
+    public long doBufferWrapAx32(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hashWrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
     }
 
     @Benchmark
