@@ -979,6 +979,62 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doLongYolk64     80  avgt    5  56.549 ± 0.889  ns/op
  * HashBenchmark.doLongYolk64    160  avgt    5  99.217 ± 1.437  ns/op
  * </pre>
+ * Benchmarking {@code byte[]} vs. {@link ByteBuffer} for the first time, using GraalVM as above:
+ * <pre>
+ * Benchmark                     (len)  Mode  Cnt   Score    Error  Units
+ * HashBenchmark.doBufferAx64        5  avgt    5   7.474 ±  0.184  ns/op
+ * HashBenchmark.doBufferAx64       10  avgt    5   8.571 ±  0.164  ns/op
+ * HashBenchmark.doBufferAx64       20  avgt    5   7.774 ±  0.117  ns/op
+ * HashBenchmark.doBufferAx64       40  avgt    5  13.544 ±  0.254  ns/op
+ * HashBenchmark.doBufferAx64       80  avgt    5  16.381 ±  0.733  ns/op
+ * HashBenchmark.doBufferAx64      160  avgt    5  25.379 ± 16.586  ns/op
+ * HashBenchmark.doBufferYolk64      5  avgt    5   9.726 ±  4.236  ns/op
+ * HashBenchmark.doBufferYolk64     10  avgt    5   6.863 ±  0.071  ns/op
+ * HashBenchmark.doBufferYolk64     20  avgt    5   7.492 ±  0.068  ns/op
+ * HashBenchmark.doBufferYolk64     40  avgt    5  11.459 ±  0.179  ns/op
+ * HashBenchmark.doBufferYolk64     80  avgt    5  17.740 ±  0.772  ns/op
+ * HashBenchmark.doBufferYolk64    160  avgt    5  22.742 ±  1.800  ns/op
+ * HashBenchmark.doByteAx64          5  avgt    5   9.319 ±  0.324  ns/op
+ * HashBenchmark.doByteAx64         10  avgt    5  11.449 ±  0.172  ns/op
+ * HashBenchmark.doByteAx64         20  avgt    5  17.238 ±  0.063  ns/op
+ * HashBenchmark.doByteAx64         40  avgt    5  24.645 ±  1.040  ns/op
+ * HashBenchmark.doByteAx64         80  avgt    5  42.028 ±  1.115  ns/op
+ * HashBenchmark.doByteAx64        160  avgt    5  62.338 ±  0.830  ns/op
+ * HashBenchmark.doByteYolk64        5  avgt    5   6.961 ±  0.478  ns/op
+ * HashBenchmark.doByteYolk64       10  avgt    5   9.670 ±  0.105  ns/op
+ * HashBenchmark.doByteYolk64       20  avgt    5  15.467 ±  0.684  ns/op
+ * HashBenchmark.doByteYolk64       40  avgt    5  21.484 ±  0.652  ns/op
+ * HashBenchmark.doByteYolk64       80  avgt    5  35.650 ±  1.175  ns/op
+ * HashBenchmark.doByteYolk64      160  avgt    5  65.361 ±  1.467  ns/op
+ * </pre>
+ * The same benchmark as above, but on HotSpot OpenJDK 22:
+ * <pre>
+ * Benchmark                     (len)  Mode  Cnt   Score   Error  Units
+ * HashBenchmark.doBufferAx64        5  avgt    5  10.643 ± 0.230  ns/op
+ * HashBenchmark.doBufferAx64       10  avgt    5  12.183 ± 0.165  ns/op
+ * HashBenchmark.doBufferAx64       20  avgt    5  12.282 ± 0.096  ns/op
+ * HashBenchmark.doBufferAx64       40  avgt    5  15.480 ± 1.583  ns/op
+ * HashBenchmark.doBufferAx64       80  avgt    5  26.074 ± 0.443  ns/op
+ * HashBenchmark.doBufferAx64      160  avgt    5  26.925 ± 2.616  ns/op
+ * HashBenchmark.doBufferYolk64      5  avgt    5  10.451 ± 0.286  ns/op
+ * HashBenchmark.doBufferYolk64     10  avgt    5  10.195 ± 0.109  ns/op
+ * HashBenchmark.doBufferYolk64     20  avgt    5  11.117 ± 0.467  ns/op
+ * HashBenchmark.doBufferYolk64     40  avgt    5  15.935 ± 0.620  ns/op
+ * HashBenchmark.doBufferYolk64     80  avgt    5  23.620 ± 0.206  ns/op
+ * HashBenchmark.doBufferYolk64    160  avgt    5  27.723 ± 2.154  ns/op
+ * HashBenchmark.doByteAx64          5  avgt    5   9.745 ± 0.233  ns/op
+ * HashBenchmark.doByteAx64         10  avgt    5  18.048 ± 0.206  ns/op
+ * HashBenchmark.doByteAx64         20  avgt    5  19.394 ± 0.111  ns/op
+ * HashBenchmark.doByteAx64         40  avgt    5  25.330 ± 0.567  ns/op
+ * HashBenchmark.doByteAx64         80  avgt    5  42.681 ± 1.369  ns/op
+ * HashBenchmark.doByteAx64        160  avgt    5  76.613 ± 5.676  ns/op
+ * HashBenchmark.doByteYolk64        5  avgt    5   8.857 ± 0.110  ns/op
+ * HashBenchmark.doByteYolk64       10  avgt    5  10.520 ± 0.096  ns/op
+ * HashBenchmark.doByteYolk64       20  avgt    5  17.433 ± 1.281  ns/op
+ * HashBenchmark.doByteYolk64       40  avgt    5  24.314 ± 4.854  ns/op
+ * HashBenchmark.doByteYolk64       80  avgt    5  39.061 ± 1.601  ns/op
+ * HashBenchmark.doByteYolk64      160  avgt    5  70.994 ± 0.790  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
