@@ -4624,6 +4624,59 @@ public class CrossHash {
             return seed - (seed >>> 31) + (seed << 33);
         }
 
+        public long hash64(final ByteBuffer data, int offsetBytes, int lengthBytes) {
+            if (data == null) return 0;
+            data.position(offsetBytes);
+            data.limit(offsetBytes + lengthBytes);
+            long seed = this.seed, a = this.seed + b4, b = this.seed + b3, c = this.seed + b2, d = this.seed + b1;
+            for (int i = 31; i < lengthBytes; i+=32) {
+                a ^= data.getLong() * b1; a = (a << 23 | a >>> 41) * b3;
+                b ^= data.getLong() * b2; b = (b << 25 | b >>> 39) * b4;
+                c ^= data.getLong() * b3; c = (c << 29 | c >>> 35) * b5;
+                d ^= data.getLong() * b4; d = (d << 31 | d >>> 33) * b1;
+                seed += a + b + c + d;
+            }
+            seed += b5;
+
+            switch (lengthBytes & 31) {
+                case	0:	seed = wow(b1 - seed, b4 + seed); break;
+                case	1:	seed = wow(seed, (data.get() & 0xFFL) ^ b1);	break;
+                case	2:	seed = wow(seed, (data.getShort() & 0xFFFFL) ^ b1);	break;
+                case	3:	seed = wow(seed, (((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b1);	break;
+                case	4:	seed = wow(seed, (data.getInt() & 0xFFFFFFFFL) ^ b1);	break;
+                case	5:	seed = wow(seed, (((data.getInt() & 0xFFFFFFFFL) << 8) | (data.get() & 0xFFL)) ^ b1);	break;
+                case	6:	seed = wow(seed, (((data.getInt() & 0xFFFFFFFFL) << 16) | (data.getShort() & 0xFFFFL)) ^ b1);	break;
+                case	7:	seed = wow(seed, (((data.getInt() & 0xFFFFFFFFL) << 24) | ((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b1);	break;
+                case	8:	seed = wow(seed, data.getLong() ^ b1);	break;
+                case	9:	seed = wow(data.getLong() + seed, (data.get() & 0xFFL) ^ b2);	break;
+                case	10:	seed = wow(data.getLong() + seed, (data.getShort() & 0xFFFFL) ^ b2);	break;
+                case	11:	seed = wow(data.getLong() + seed, (((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b2);	break;
+                case	12:	seed = wow(data.getLong() + seed, (data.getInt() & 0xFFFFFFFFL) ^ b2);	break;
+                case	13:	seed = wow(data.getLong() + seed, (((data.getInt() & 0xFFFFFFFFL) << 8) | (data.get() & 0xFFL)) ^ b2);	break;
+                case	14:	seed = wow(data.getLong() + seed, (((data.getInt() & 0xFFFFFFFFL) << 16) | (data.getShort() & 0xFFFFL)) ^ b2);	break;
+                case	15:	seed = wow(data.getLong() + seed, (((data.getInt() & 0xFFFFFFFFL) << 24) | ((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b2);	break;
+                case	16:	seed = wow(data.getLong() + seed, data.getLong() + b2);	break;
+                case	17:	seed = wow(data.getLong() + seed, (data.getInt() & 0xFFFFFFFFL) + b2) + wow((data.getInt() & 0xFFFFFFFFL) ^ seed, (data.get() & 0xFFL) ^ b3);	break;
+                case	18:	seed = wow(data.getLong() + seed, (data.getInt() & 0xFFFFFFFFL) + b2) + wow((data.getInt() & 0xFFFFFFFFL) ^ seed, (data.getShort() & 0xFFFFL) ^ b3);	break;
+                case	19:	seed = wow(data.getLong() + seed, (data.getInt() & 0xFFFFFFFFL) + b2) + wow((data.getInt() & 0xFFFFFFFFL) ^ seed, (((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b3);	break;
+                case	20:	seed = wow(data.getLong() + seed, (data.getInt() & 0xFFFFFFFFL) + b2) + wow((data.getInt() & 0xFFFFFFFFL) ^ seed, (data.getInt() & 0xFFFFFFFFL) ^ b3);	break;
+                case	21:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow((data.getShort() & 0xFFFFL) ^ seed, (((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b3);	break;
+                case	22:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow((data.getShort() & 0xFFFFL) ^ seed, ((data.getInt() & 0xFFFFFFFFL) << 16) ^ b3);	break;
+                case	23:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(b4 + seed, (((data.getInt() & 0xFFFFFFFFL) << 24) | ((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b3);	break;
+                case	24:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() + seed, seed ^ b3);	break;
+                case	25:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (data.get() & 0xFFL) ^ b4);	break;
+                case	26:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (data.getShort() & 0xFFFFL) ^ b4);	break;
+                case	27:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b4);	break;
+                case	28:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (data.getInt() & 0xFFFFFFFFL) ^ b4);	break;
+                case	29:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (((data.getInt() & 0xFFFFFFFFL) << 8) | (data.get() & 0xFFL)) ^ b4);	break;
+                case	30:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (((data.getInt() & 0xFFFFFFFFL) << 16) | (data.getShort() & 0xFFFFL)) ^ b4);	break;
+                case	31:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (((data.getInt() & 0xFFFFFFFFL) << 24) | ((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b4);	break;
+            }
+
+            seed = (seed ^ seed << 16) * (lengthBytes ^ b0 ^ seed >>> 32);
+            return seed - (seed >>> 31) + (seed << 33);
+        }
+
         public long hash64(final Object data) {
             if (data == null)
                 return 0;
@@ -5011,6 +5064,60 @@ public class CrossHash {
                 case 3: seed = mum(seed ^ hash(data[len-3]), b2 ^ hash(data[len-2])) ^ mum(seed ^ hash(data[len-1]), b4); break;
             }
             return (int) mum(seed ^ seed << 16, len ^ b0);
+        }
+
+
+        public int hash(final ByteBuffer data, int offsetBytes, int lengthBytes) {
+            if (data == null) return 0;
+            data.position(offsetBytes);
+            data.limit(offsetBytes + lengthBytes);
+            long seed = this.seed, a = this.seed + b4, b = this.seed + b3, c = this.seed + b2, d = this.seed + b1;
+            for (int i = 31; i < lengthBytes; i+=32) {
+                a ^= data.getLong() * b1; a = (a << 23 | a >>> 41) * b3;
+                b ^= data.getLong() * b2; b = (b << 25 | b >>> 39) * b4;
+                c ^= data.getLong() * b3; c = (c << 29 | c >>> 35) * b5;
+                d ^= data.getLong() * b4; d = (d << 31 | d >>> 33) * b1;
+                seed += a + b + c + d;
+            }
+            seed += b5;
+
+            switch (lengthBytes & 31) {
+                case	0:	seed = wow(b1 - seed, b4 + seed); break;
+                case	1:	seed = wow(seed, (data.get() & 0xFFL) ^ b1);	break;
+                case	2:	seed = wow(seed, (data.getShort() & 0xFFFFL) ^ b1);	break;
+                case	3:	seed = wow(seed, (((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b1);	break;
+                case	4:	seed = wow(seed, (data.getInt() & 0xFFFFFFFFL) ^ b1);	break;
+                case	5:	seed = wow(seed, (((data.getInt() & 0xFFFFFFFFL) << 8) | (data.get() & 0xFFL)) ^ b1);	break;
+                case	6:	seed = wow(seed, (((data.getInt() & 0xFFFFFFFFL) << 16) | (data.getShort() & 0xFFFFL)) ^ b1);	break;
+                case	7:	seed = wow(seed, (((data.getInt() & 0xFFFFFFFFL) << 24) | ((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b1);	break;
+                case	8:	seed = wow(seed, data.getLong() ^ b1);	break;
+                case	9:	seed = wow(data.getLong() + seed, (data.get() & 0xFFL) ^ b2);	break;
+                case	10:	seed = wow(data.getLong() + seed, (data.getShort() & 0xFFFFL) ^ b2);	break;
+                case	11:	seed = wow(data.getLong() + seed, (((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b2);	break;
+                case	12:	seed = wow(data.getLong() + seed, (data.getInt() & 0xFFFFFFFFL) ^ b2);	break;
+                case	13:	seed = wow(data.getLong() + seed, (((data.getInt() & 0xFFFFFFFFL) << 8) | (data.get() & 0xFFL)) ^ b2);	break;
+                case	14:	seed = wow(data.getLong() + seed, (((data.getInt() & 0xFFFFFFFFL) << 16) | (data.getShort() & 0xFFFFL)) ^ b2);	break;
+                case	15:	seed = wow(data.getLong() + seed, (((data.getInt() & 0xFFFFFFFFL) << 24) | ((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b2);	break;
+                case	16:	seed = wow(data.getLong() + seed, data.getLong() + b2);	break;
+                case	17:	seed = wow(data.getLong() + seed, (data.getInt() & 0xFFFFFFFFL) + b2) + wow((data.getInt() & 0xFFFFFFFFL) ^ seed, (data.get() & 0xFFL) ^ b3);	break;
+                case	18:	seed = wow(data.getLong() + seed, (data.getInt() & 0xFFFFFFFFL) + b2) + wow((data.getInt() & 0xFFFFFFFFL) ^ seed, (data.getShort() & 0xFFFFL) ^ b3);	break;
+                case	19:	seed = wow(data.getLong() + seed, (data.getInt() & 0xFFFFFFFFL) + b2) + wow((data.getInt() & 0xFFFFFFFFL) ^ seed, (((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b3);	break;
+                case	20:	seed = wow(data.getLong() + seed, (data.getInt() & 0xFFFFFFFFL) + b2) + wow((data.getInt() & 0xFFFFFFFFL) ^ seed, (data.getInt() & 0xFFFFFFFFL) ^ b3);	break;
+                case	21:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow((data.getShort() & 0xFFFFL) ^ seed, (((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b3);	break;
+                case	22:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow((data.getShort() & 0xFFFFL) ^ seed, ((data.getInt() & 0xFFFFFFFFL) << 16) ^ b3);	break;
+                case	23:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(b4 + seed, (((data.getInt() & 0xFFFFFFFFL) << 24) | ((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b3);	break;
+                case	24:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() + seed, seed ^ b3);	break;
+                case	25:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (data.get() & 0xFFL) ^ b4);	break;
+                case	26:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (data.getShort() & 0xFFFFL) ^ b4);	break;
+                case	27:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b4);	break;
+                case	28:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (data.getInt() & 0xFFFFFFFFL) ^ b4);	break;
+                case	29:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (((data.getInt() & 0xFFFFFFFFL) << 8) | (data.get() & 0xFFL)) ^ b4);	break;
+                case	30:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (((data.getInt() & 0xFFFFFFFFL) << 16) | (data.getShort() & 0xFFFFL)) ^ b4);	break;
+                case	31:	seed = wow(data.getLong() + seed, data.getLong() + b2) + wow(data.getLong() ^ seed, (((data.getInt() & 0xFFFFFFFFL) << 24) | ((data.getShort() & 0xFFFFL) << 8) | (data.get() & 0xFFL)) ^ b4);	break;
+            }
+
+            seed = (seed ^ seed << 16) * (lengthBytes ^ b0 ^ seed >>> 32);
+            return (int)(seed - (seed >>> 32));
         }
 
         public int hash(final Object data) {
