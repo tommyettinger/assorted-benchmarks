@@ -4625,7 +4625,7 @@ public class CrossHash {
         }
 
         public long hash64(final ByteBuffer data, int offsetBytes, int lengthBytes) {
-            if (data == null) return 0;
+            if (data == null || lengthBytes < 0) return 0;
             data.position(offsetBytes);
             data.limit(offsetBytes + lengthBytes);
             long seed = this.seed, a = this.seed + b4, b = this.seed + b3, c = this.seed + b2, d = this.seed + b1;
@@ -5074,7 +5074,7 @@ public class CrossHash {
 
 
         public int hash(final ByteBuffer data, int offsetBytes, int lengthBytes) {
-            if (data == null) return 0;
+            if (data == null || lengthBytes < 0) return 0;
             data.position(offsetBytes);
             data.limit(offsetBytes + lengthBytes);
             long seed = this.seed, a = this.seed + b4, b = this.seed + b3, c = this.seed + b2, d = this.seed + b1;
@@ -16520,9 +16520,9 @@ public class CrossHash {
             return (x * C + h) * C;
         }
 
-        public static long mixStream(long h, long a, long b, long c, long d) {
-            return h
-             + ((a << 29 | a >>> 35) - c) * Q
+        public static long mixStreamBulk(long a, long b, long c, long d) {
+            return
+               ((a << 29 | a >>> 35) - c) * Q
              + ((b << 29 | b >>> 35) - d) * R
              + ((c << 29 | c >>> 35) - b) * S
              + ((d << 29 | d >>> 35) - a) * T;
@@ -16667,9 +16667,9 @@ public class CrossHash {
             while(len >= 8){
                 h *= C;
                 len -= 8;
-                h = mixStream(h, data[i  ], data[i+1], data[i+2], data[i+3]);
+                h += mixStreamBulk(data[i  ], data[i+1], data[i+2], data[i+3]);
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+                h += mixStreamBulk(data[i+4], data[i+5], data[i+6], data[i+7]);
                 i += 8;
             }
             while(len >= 1){
@@ -16689,9 +16689,9 @@ public class CrossHash {
             while(len >= 8){
                 h *= C;
                 len -= 8;
-                h = mixStream(h, data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+                h += mixStreamBulk(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
+                h += mixStreamBulk(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
                 i += 8;
             }
             while(len >= 1){
@@ -16712,9 +16712,9 @@ public class CrossHash {
             while(len >= 8){
                 h *= C;
                 len -= 8;
-                h = mixStream(h, data[i  ], data[i+1], data[i+2], data[i+3]);
+                h += mixStreamBulk(data[i  ], data[i+1], data[i+2], data[i+3]);
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+                h += mixStreamBulk(data[i+4], data[i+5], data[i+6], data[i+7]);
                 i += 8;
             }
             while(len >= 1){
@@ -16734,9 +16734,9 @@ public class CrossHash {
             while(len >= 8){
                 h *= C;
                 len -= 8;
-                h = mixStream(h, data[i  ], data[i+1], data[i+2], data[i+3]);
+                h += mixStreamBulk(data[i  ], data[i+1], data[i+2], data[i+3]);
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+                h += mixStreamBulk(data[i+4], data[i+5], data[i+6], data[i+7]);
                 i += 8;
             }
             while(len >= 1){
@@ -16756,9 +16756,9 @@ public class CrossHash {
             while(len >= 8){
                 h *= C;
                 len -= 8;
-                h = mixStream(h, doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
+                h += mixStreamBulk(doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
+                h += mixStreamBulk(doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
                 i += 8;
             }
             while(len >= 1){
@@ -16778,9 +16778,9 @@ public class CrossHash {
             while(len >= 8){
                 h *= C;
                 len -= 8;
-                h = mixStream(h, data[i  ], data[i+1], data[i+2], data[i+3]);
+                h += mixStreamBulk(data[i  ], data[i+1], data[i+2], data[i+3]);
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+                h += mixStreamBulk(data[i+4], data[i+5], data[i+6], data[i+7]);
                 i += 8;
             }
             while(len >= 1){
@@ -16791,17 +16791,18 @@ public class CrossHash {
         }
 
         public long hash64(final ByteBuffer data, int offsetBytes, int lengthBytes) {
-            if (data == null) return 0;
+            if (data == null || lengthBytes < 0) return 0;
             data.position(offsetBytes);
             data.limit(offsetBytes + lengthBytes);
             final long ll = lengthBytes;
+            //noinspection ConstantValue
             long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
             while(lengthBytes >= 64){
                 h *= C;
                 lengthBytes -= 64;
-                h = mixStream(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
+                h += mixStreamBulk(data.getLong(), data.getLong(), data.getLong(), data.getLong());
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
+                h += mixStreamBulk(data.getLong(), data.getLong(), data.getLong(), data.getLong());
             }
             while(lengthBytes >= 8){
                 lengthBytes -= 8;
@@ -16840,9 +16841,9 @@ public class CrossHash {
             while(len >= 8){
                 h *= C;
                 len -= 8;
-                h = mixStream(h, data[i  ], data[i+1], data[i+2], data[i+3]);
+                h += mixStreamBulk(data[i  ], data[i+1], data[i+2], data[i+3]);
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+                h += mixStreamBulk(data[i+4], data[i+5], data[i+6], data[i+7]);
                 i += 8;
             }
             while(len >= 1){
@@ -16862,9 +16863,9 @@ public class CrossHash {
             while(len >= 8){
                 h *= C;
                 len -= 8;
-                h = mixStream(h, data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+                h += mixStreamBulk(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
+                h += mixStreamBulk(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
                 i += 8;
             }
             while(len >= 1){
@@ -16885,9 +16886,9 @@ public class CrossHash {
             while(len >= 8){
                 h *= C;
                 len -= 8;
-                h = mixStream(h, data[i  ], data[i+1], data[i+2], data[i+3]);
+                h += mixStreamBulk(data[i  ], data[i+1], data[i+2], data[i+3]);
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+                h += mixStreamBulk(data[i+4], data[i+5], data[i+6], data[i+7]);
                 i += 8;
             }
             while(len >= 1){
@@ -16907,9 +16908,9 @@ public class CrossHash {
             while(len >= 8){
                 h *= C;
                 len -= 8;
-                h = mixStream(h, data[i  ], data[i+1], data[i+2], data[i+3]);
+                h += mixStreamBulk(data[i  ], data[i+1], data[i+2], data[i+3]);
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+                h += mixStreamBulk(data[i+4], data[i+5], data[i+6], data[i+7]);
                 i += 8;
             }
             while(len >= 1){
@@ -16929,9 +16930,9 @@ public class CrossHash {
             while(len >= 8){
                 h *= C;
                 len -= 8;
-                h = mixStream(h, doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
+                h += mixStreamBulk(doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
+                h += mixStreamBulk(doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
                 i += 8;
             }
             while(len >= 1){
@@ -16951,9 +16952,9 @@ public class CrossHash {
             while(len >= 8){
                 h *= C;
                 len -= 8;
-                h = mixStream(h, data[i  ], data[i+1], data[i+2], data[i+3]);
+                h += mixStreamBulk(data[i  ], data[i+1], data[i+2], data[i+3]);
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, data[i+4], data[i+5], data[i+6], data[i+7]);
+                h += mixStreamBulk(data[i+4], data[i+5], data[i+6], data[i+7]);
                 i += 8;
             }
             while(len >= 1){
@@ -16964,17 +16965,18 @@ public class CrossHash {
         }
 
         public int hash(final ByteBuffer data, int offsetBytes, int lengthBytes) {
-            if (data == null) return 0;
+            if (data == null || lengthBytes < 0) return 0;
             data.position(offsetBytes);
             data.limit(offsetBytes + lengthBytes);
             final long ll = lengthBytes;
+            //noinspection ConstantValue
             long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
             while (lengthBytes >= 64) {
                 h *= C;
                 lengthBytes -= 64;
-                h = mixStream(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
+                h += mixStreamBulk(data.getLong(), data.getLong(), data.getLong(), data.getLong());
                 h = (h << 37 | h >>> 27);
-                h = mixStream(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
+                h += mixStreamBulk(data.getLong(), data.getLong(), data.getLong(), data.getLong());
             }
             while (lengthBytes >= 8) {
                 lengthBytes -= 8;
