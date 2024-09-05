@@ -1089,6 +1089,27 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doByteAx64          10000  avgt    5  3560.461 ± 123.745  ns/op
  * HashBenchmark.doByteYolk64        10000  avgt    5  3699.877 ±  52.637  ns/op
  * </pre>
+ * Comparing long arrays with ByteBuffers that have 8x as many byte items as the arrays have longs:
+ * (Thus, the same amount of data for a long hash on 1250 items and a Buffer on 10000...)
+ * (Also, on OpenJDK HotSpot 22.)
+ *
+ * <pre>
+ * java -jar benchmarks.jar -p len=1250,10000 "HashBenchmark.do(Buffer|BufferWrap|Long)(Yolk|Ax)64" -wi 10 -i 10
+ * 
+ * Benchmark                         (len)  Mode  Cnt     Score     Error  Units
+ * HashBenchmark.doBufferAx64         1250  avgt   10   115.970 ±   2.786  ns/op
+ * HashBenchmark.doBufferAx64        10000  avgt   10  1047.194 ±  14.392  ns/op
+ * HashBenchmark.doBufferWrapAx64     1250  avgt   10   136.961 ±   1.969  ns/op
+ * HashBenchmark.doBufferWrapAx64    10000  avgt   10  1117.839 ±  15.913  ns/op
+ * HashBenchmark.doBufferWrapYolk64   1250  avgt   10   170.220 ±   2.836  ns/op
+ * HashBenchmark.doBufferWrapYolk64  10000  avgt   10  1595.932 ±  20.962  ns/op
+ * HashBenchmark.doBufferYolk64       1250  avgt   10   155.576 ±   1.817  ns/op
+ * HashBenchmark.doBufferYolk64      10000  avgt   10  1268.190 ±  15.347  ns/op
+ * HashBenchmark.doLongAx64           1250  avgt   10   808.920 ±  12.690  ns/op
+ * HashBenchmark.doLongAx64          10000  avgt   10  6319.043 ± 121.933  ns/op
+ * HashBenchmark.doLongYolk64         1250  avgt   10   909.723 ±  14.600  ns/op
+ * HashBenchmark.doLongYolk64        10000  avgt   10  7329.857 ± 149.097  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
