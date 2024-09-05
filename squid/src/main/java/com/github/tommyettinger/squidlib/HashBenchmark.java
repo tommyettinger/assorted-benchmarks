@@ -1078,6 +1078,17 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doByteAx64          10000  avgt    5  4048.874 ± 149.810  ns/op
  * HashBenchmark.doByteYolk64        10000  avgt    5  3643.417 ± 147.210  ns/op
  * </pre>
+ * Getting consistent results out of this is tricky, but the ByteBuffer approach is very good.
+ * This is on OpenJDK HotSpot 22:
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt     Score     Error  Units
+ * HashBenchmark.doBufferAx64        10000  avgt    5  1044.079 ±  78.031  ns/op
+ * HashBenchmark.doBufferWrapAx64    10000  avgt    5  1298.438 ±  45.266  ns/op
+ * HashBenchmark.doBufferWrapYolk64  10000  avgt    5  1481.765 ±  66.504  ns/op
+ * HashBenchmark.doBufferYolk64      10000  avgt    5  1263.114 ±  50.253  ns/op
+ * HashBenchmark.doByteAx64          10000  avgt    5  3560.461 ± 123.745  ns/op
+ * HashBenchmark.doByteYolk64        10000  avgt    5  3699.877 ±  52.637  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
