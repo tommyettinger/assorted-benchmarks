@@ -16521,11 +16521,17 @@ public class CrossHash {
         }
 
         public static long mixStream(long h, long a, long b, long c, long d) {
-            h += ((a << 29 | a >>> 35) - c) * Q;
-            h += ((b << 29 | b >>> 35) - d) * R;
-            h += ((c << 29 | c >>> 35) - b) * S;
-            h += ((d << 29 | d >>> 35) - a) * T;
-            return h;
+            return h
+             + ((a << 29 | a >>> 35) - c) * Q
+             + ((b << 29 | b >>> 35) - d) * R
+             + ((c << 29 | c >>> 35) - b) * S
+             + ((d << 29 | d >>> 35) - a) * T;
+            
+//            h += ((a << 29 | a >>> 35) - c) * Q;
+//            h += ((b << 29 | b >>> 35) - d) * R;
+//            h += ((c << 29 | c >>> 35) - b) * S;
+//            h += ((d << 29 | d >>> 35) - a) * T;
+//            return h;
         }
         public Ax(final CharSequence seed)
         {
@@ -16802,13 +16808,13 @@ public class CrossHash {
                 h = mixStream(h, data.getLong());
             }
             switch (lengthBytes) {
-                case 1: return mix(mixStream(h, (data.get() & 0xFFL)));
-                case 2: return mix(mixStream(h, (data.getShort() & 0xFFFFL)));
-                case 3: return mix(mixStream(h, (data.getShort() & 0xFFFFL) | (data.get() & 0xFFL) << 16));
-                case 4: return mix(mixStream(h, (data.getInt() & 0xFFFFFFFFL)));
-                case 5: return mix(mixStream(h, (data.getInt() & 0xFFFFFFFFL) | (data.get() & 0xFFL) << 32));
-                case 6: return mix(mixStream(h, (data.getInt() & 0xFFFFFFFFL) | (data.getShort() & 0xFFFFL) << 32));
-                case 7: return mix(mixStream(h, (data.getInt() & 0xFFFFFFFFL) | (data.getShort() & 0xFFFFL) << 32 | (data.get() & 0xFFL) << 48));
+                case 1: return mix(mixStream(h, (data.get())));
+                case 2: return mix(mixStream(h, (data.getShort())));
+                case 3: return mix(mixStream(h, (data.getShort()) ^ ((long)data.get()) << 16));
+                case 4: return mix(mixStream(h, (data.getInt())));
+                case 5: return mix(mixStream(h, (data.getInt()) ^ ((long)data.get()) << 32));
+                case 6: return mix(mixStream(h, (data.getInt()) ^ ((long)data.getShort()) << 32));
+                case 7: return mix(mixStream(h, (data.getInt()) ^ ((long)data.getShort()) << 32 ^ ((long)data.get()) << 48));
                 default: return mix(h);
             }
         }
@@ -16975,13 +16981,13 @@ public class CrossHash {
                 h = mixStream(h, data.getLong());
             }
             switch (lengthBytes) {
-                case 1: return (int)mix(mixStream(h, (data.get() & 0xFFL)));
-                case 2: return (int)mix(mixStream(h, (data.getShort() & 0xFFFFL)));
-                case 3: return (int)mix(mixStream(h, (data.getShort() & 0xFFFFL) | (data.get() & 0xFFL) << 16));
-                case 4: return (int)mix(mixStream(h, (data.getInt() & 0xFFFFFFFFL)));
-                case 5: return (int)mix(mixStream(h, (data.getInt() & 0xFFFFFFFFL) | (data.get() & 0xFFL) << 32));
-                case 6: return (int)mix(mixStream(h, (data.getInt() & 0xFFFFFFFFL) | (data.getShort() & 0xFFFFL) << 32));
-                case 7: return (int)mix(mixStream(h, (data.getInt() & 0xFFFFFFFFL) | (data.getShort() & 0xFFFFL) << 32 | (data.get() & 0xFFL) << 48));
+                case 1: return  (int)mix(mixStream(h, (data.get())));
+                case 2: return  (int)mix(mixStream(h, (data.getShort())));
+                case 3: return  (int)mix(mixStream(h, (data.getShort()) ^ ((long)data.get()) << 16));
+                case 4: return  (int)mix(mixStream(h, (data.getInt())));
+                case 5: return  (int)mix(mixStream(h, (data.getInt()) ^ ((long)data.get()) << 32));
+                case 6: return  (int)mix(mixStream(h, (data.getInt()) ^ ((long)data.getShort()) << 32));
+                case 7: return  (int)mix(mixStream(h, (data.getInt()) ^ ((long)data.getShort()) << 32 ^ ((long)data.get()) << 48));
                 default: return (int)mix(h);
             }
         }
