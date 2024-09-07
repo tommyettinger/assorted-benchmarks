@@ -16484,8 +16484,6 @@ public class CrossHash {
 
     public static final class Ax {
 
-        public static final long A = 0x3C79AC492BA7B653L;
-        public static final long B = 0x1C69B3F74AC4AE35L;
         public static final long C = 0xBEA225F9EB34556DL;
         public static final long Q = 0xD1B92B09B92266DDL;
         public static final long R = 0x9995988B72E0D285L;
@@ -16494,24 +16492,43 @@ public class CrossHash {
         public final long seed;
 
         public Ax(){
-            this.seed = 0xC4CEB9FE1A85EC53L;
+            this(0xC4CEB9FE1A85EC53L);
         }
         public Ax(long seed)
         {
-            this.seed = seed;
+            this.seed = forward(seed);
+        }
+
+        public static long forward(long x) {
+            return x ^ (x << 29 | x >>> 64-29) ^ (x << 47 | x >>> 64-47);
+        }
+
+        public static long reverse(long x) {
+            x ^= x ^ (x << 29 | x >>> 64-29) ^ (x << 47 | x >>> 64-47);
+            x ^= x ^ (x << 58 | x >>> 64-58) ^ (x << 30 | x >>> 64-30);
+            x ^= x ^ (x << 52 | x >>> 64-52) ^ (x << 60 | x >>> 64-60);
+            x ^= x ^ (x << 40 | x >>> 64-40) ^ (x << 56 | x >>> 64-56);
+            x ^= x ^ (x << 16 | x >>> 64-16) ^ (x << 48 | x >>> 64-48);
+            return x;
         }
 
         /**
-         * This is the Moremur unary hash by Pelle Evensen.
-         * @param state any long
+         * Gets a different result (usually) from accessing the field {@link #seed}, because the field was altered using
+         * {@link #forward(long)} to mix it up somewhat, and this undoes that alteration using {@link #reverse(long)}
+         * and returns the original parameter passed to {@link #Ax(long)}.
+         * @return the original seed value passed to {@link #Ax(long)}
+         */
+        public long getSeed() {
+            return reverse(seed);
+        }
+        /**
+         * @param x any long
          * @return any long
          */
-        public static long mix(long state) {
-            state ^= state >>> 27;
-            state *= A;
-            state ^= state >>> 33;
-            state *= B;
-            return state ^ state >>> 27;
+        public static long mix(long x) {
+            x ^= (x << 23 | x >>> 64-23) ^ (x << 43 | x >>> 64-43);
+            x *= C;
+            return x ^ (x << 11 | x >>> 64-11) ^ (x << 50 | x >>> 64-50);
         }
 
         public static long mixStream(long h, long x) {
@@ -16660,9 +16677,7 @@ public class CrossHash {
         public long hash64(final char[] data) {
             if (data == null) return 0;
             int len = data.length;
-            final long ll = len;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = len ^ seed;
             int i = 0;
             while(len >= 8){
                 h *= C;
@@ -16682,9 +16697,7 @@ public class CrossHash {
         public long hash64(final CharSequence data) {
             if (data == null) return 0;
             int len = data.length();
-            final long ll = len;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = len ^ seed;
             int i = 0;
             while(len >= 8){
                 h *= C;
@@ -16705,9 +16718,7 @@ public class CrossHash {
         public long hash64(final int[] data) {
             if (data == null) return 0;
             int len = data.length;
-            final long ll = len;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = len ^ seed;
             int i = 0;
             while(len >= 8){
                 h *= C;
@@ -16727,9 +16738,7 @@ public class CrossHash {
         public long hash64(final long[] data) {
             if (data == null) return 0;
             int len = data.length;
-            final long ll = len;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = len ^ seed;
             int i = 0;
             while(len >= 8){
                 h *= C;
@@ -16749,9 +16758,7 @@ public class CrossHash {
         public long hash64(final double[] data) {
             if (data == null) return 0;
             int len = data.length;
-            final long ll = len;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = len ^ seed;
             int i = 0;
             while(len >= 8){
                 h *= C;
@@ -16771,9 +16778,7 @@ public class CrossHash {
         public long hash64(final byte[] data) {
             if (data == null) return 0;
             int len = data.length;
-            final long ll = len;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = len ^ seed;
             int i = 0;
             while(len >= 8){
                 h *= C;
@@ -16794,9 +16799,7 @@ public class CrossHash {
             if (data == null || lengthBytes < 0) return 0;
             data.position(offsetBytes);
             data.limit(offsetBytes + lengthBytes);
-            final long ll = lengthBytes;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = lengthBytes ^ seed;
             while(lengthBytes >= 64){
                 h *= C;
                 lengthBytes -= 64;
@@ -16834,9 +16837,7 @@ public class CrossHash {
         public int hash(final char[] data) {
             if (data == null) return 0;
             int len = data.length;
-            final long ll = len;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = len ^ seed;
             int i = 0;
             while(len >= 8){
                 h *= C;
@@ -16856,9 +16857,7 @@ public class CrossHash {
         public int hash(final CharSequence data) {
             if (data == null) return 0;
             int len = data.length();
-            final long ll = len;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = len ^ seed;
             int i = 0;
             while(len >= 8){
                 h *= C;
@@ -16879,9 +16878,7 @@ public class CrossHash {
         public int hash(final int[] data) {
             if (data == null) return 0;
             int len = data.length;
-            final long ll = len;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = len ^ seed;
             int i = 0;
             while(len >= 8){
                 h *= C;
@@ -16901,9 +16898,7 @@ public class CrossHash {
         public int hash(final long[] data) {
             if (data == null) return 0;
             int len = data.length;
-            final long ll = len;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = len ^ seed;
             int i = 0;
             while(len >= 8){
                 h *= C;
@@ -16923,9 +16918,7 @@ public class CrossHash {
         public int hash(final double[] data) {
             if (data == null) return 0;
             int len = data.length;
-            final long ll = len;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = len ^ seed;
             int i = 0;
             while(len >= 8){
                 h *= C;
@@ -16945,9 +16938,7 @@ public class CrossHash {
         public int hash(final byte[] data) {
             if (data == null) return 0;
             int len = data.length;
-            final long ll = len;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = len ^ seed;
             int i = 0;
             while(len >= 8){
                 h *= C;
@@ -16968,9 +16959,7 @@ public class CrossHash {
             if (data == null || lengthBytes < 0) return 0;
             data.position(offsetBytes);
             data.limit(offsetBytes + lengthBytes);
-            final long ll = lengthBytes;
-            //noinspection ConstantValue
-            long h = (ll ^ (ll << 3 | ll >>> 61) ^ (ll << 47 | ll >>> 17)) + (seed ^ (seed << 23 | seed >>> 41) | (seed << 56 | seed >> 8));
+            long h = lengthBytes ^ seed;
             while (lengthBytes >= 64) {
                 h *= C;
                 lengthBytes -= 64;

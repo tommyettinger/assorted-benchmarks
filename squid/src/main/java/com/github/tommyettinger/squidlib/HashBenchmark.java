@@ -1095,7 +1095,7 @@ import java.util.concurrent.TimeUnit;
  *
  * <pre>
  * java -jar benchmarks.jar -p len=1250,10000 "HashBenchmark.do(Buffer|BufferWrap|Long)(Yolk|Ax)64" -wi 10 -i 10
- * 
+ *
  * Benchmark                         (len)  Mode  Cnt     Score     Error  Units
  * HashBenchmark.doBufferAx64         1250  avgt   10   115.970 ±   2.786  ns/op
  * HashBenchmark.doBufferAx64        10000  avgt   10  1047.194 ±  14.392  ns/op
