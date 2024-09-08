@@ -1166,6 +1166,29 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doLongYolk64                  2500  avgt   10   1814.269 ±  38.653  ns/op
  * HashBenchmark.doLongYolk64                 20000  avgt   10  13995.504 ± 342.701  ns/op
  * </pre>
+ * Testing a way that takes long (as well as int, short, and byte) items from a byte array:
+ * (Ax only, OpenJDK HotSpot 22.)
+ * (The benchmarks here seem odd, since doBufferWrapAx64 should call the same code as doBufferAx64 plus some extra,
+ * but doBufferWrapAx64 is somehow faster here... Take these with a grain of salt.)
+ * <pre>
+ * Benchmark                       (len)  Mode  Cnt     Score    Error  Units
+ * HashBenchmark.doBufferAx64         25  avgt   10    13.274 ±  0.092  ns/op
+ * HashBenchmark.doBufferAx64        200  avgt   10    36.837 ±  0.428  ns/op
+ * HashBenchmark.doBufferAx64       2500  avgt   10   206.762 ±  3.066  ns/op
+ * HashBenchmark.doBufferAx64      20000  avgt   10  1960.376 ± 57.763  ns/op
+ * HashBenchmark.doBufferWrapAx64     25  avgt   10     9.453 ±  0.034  ns/op
+ * HashBenchmark.doBufferWrapAx64    200  avgt   10    26.898 ±  0.161  ns/op
+ * HashBenchmark.doBufferWrapAx64   2500  avgt   10   219.806 ±  1.377  ns/op
+ * HashBenchmark.doBufferWrapAx64  20000  avgt   10  2258.194 ± 22.558  ns/op
+ * HashBenchmark.doBulkAx64           25  avgt   10    17.544 ±  0.538  ns/op
+ * HashBenchmark.doBulkAx64          200  avgt   10    65.859 ±  0.749  ns/op
+ * HashBenchmark.doBulkAx64         2500  avgt   10   479.861 ± 11.119  ns/op
+ * HashBenchmark.doBulkAx64        20000  avgt   10  4111.542 ± 43.382  ns/op
+ * HashBenchmark.doByteAx64           25  avgt   10    21.704 ±  0.172  ns/op
+ * HashBenchmark.doByteAx64          200  avgt   10    78.064 ±  0.239  ns/op
+ * HashBenchmark.doByteAx64         2500  avgt   10   854.119 ±  6.881  ns/op
+ * HashBenchmark.doByteAx64        20000  avgt   10  6931.408 ± 48.926  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -2223,6 +2246,12 @@ public class HashBenchmark {
     public long doBufferWrapAx32(BenchmarkState state)
     {
         return CrossHash.Ax.mu.hashWrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
+    }
+
+    @Benchmark
+    public long doBulkAx64(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hashBulk64(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
     }
 
     @Benchmark
