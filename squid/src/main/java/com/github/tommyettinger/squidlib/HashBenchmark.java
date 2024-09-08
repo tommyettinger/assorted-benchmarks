@@ -1141,6 +1141,31 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doLongYolk64         2500  avgt   10   1809.490 ±  26.239  ns/op
  * HashBenchmark.doLongYolk64        20000  avgt   10  14395.476 ± 325.631  ns/op
  * </pre>
+ * Making sure to test alternate versions, like reading 32 bits at a time instead of 64...
+ * (Yolk only, OpenJDK HotSpot 22.)
+ * <pre>
+ * Benchmark                                  (len)  Mode  Cnt      Score     Error  Units
+ * HashBenchmark.doBufferAlternateYolk64         25  avgt   10     14.553 ±   0.076  ns/op
+ * HashBenchmark.doBufferAlternateYolk64        200  avgt   10     45.494 ±   0.937  ns/op
+ * HashBenchmark.doBufferAlternateYolk64       2500  avgt   10    409.128 ±   9.475  ns/op
+ * HashBenchmark.doBufferAlternateYolk64      20000  avgt   10   3272.988 ± 104.363  ns/op
+ * HashBenchmark.doBufferWrapAlternateYolk64     25  avgt   10     10.789 ±   0.071  ns/op
+ * HashBenchmark.doBufferWrapAlternateYolk64    200  avgt   10     37.672 ±   0.130  ns/op
+ * HashBenchmark.doBufferWrapAlternateYolk64   2500  avgt   10    432.682 ±   4.913  ns/op
+ * HashBenchmark.doBufferWrapAlternateYolk64  20000  avgt   10   3670.656 ±  48.739  ns/op
+ * HashBenchmark.doBufferWrapYolk64              25  avgt   10      8.710 ±   0.029  ns/op
+ * HashBenchmark.doBufferWrapYolk64             200  avgt   10     32.085 ±   0.376  ns/op
+ * HashBenchmark.doBufferWrapYolk64            2500  avgt   10    318.889 ±   2.662  ns/op
+ * HashBenchmark.doBufferWrapYolk64           20000  avgt   10   3064.281 ±  64.851  ns/op
+ * HashBenchmark.doBufferYolk64                  25  avgt   10     12.184 ±   0.067  ns/op
+ * HashBenchmark.doBufferYolk64                 200  avgt   10     40.338 ±   1.046  ns/op
+ * HashBenchmark.doBufferYolk64                2500  avgt   10    279.753 ±   3.451  ns/op
+ * HashBenchmark.doBufferYolk64               20000  avgt   10   2404.930 ±  38.074  ns/op
+ * HashBenchmark.doLongYolk64                    25  avgt   10     28.995 ±   0.120  ns/op
+ * HashBenchmark.doLongYolk64                   200  avgt   10    110.983 ±   1.364  ns/op
+ * HashBenchmark.doLongYolk64                  2500  avgt   10   1814.269 ±  38.653  ns/op
+ * HashBenchmark.doLongYolk64                 20000  avgt   10  13995.504 ± 342.701  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
