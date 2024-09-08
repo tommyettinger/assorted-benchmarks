@@ -1190,6 +1190,42 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doByteAx64         2500  avgt   10   854.119 ±  6.881  ns/op
  * HashBenchmark.doByteAx64        20000  avgt   10  6931.408 ± 48.926  ns/op
  * </pre>
+ * The simpler mode used for 32-bit-and-under items in Yolk is faster than Ax, which currently treats them as 64-bit.
+ * <pre>
+ * Benchmark                   (len)  Mode  Cnt      Score     Error  Units
+ * HashBenchmark.doAx64           25  avgt   10     30.361 ±   0.367  ns/op
+ * HashBenchmark.doAx64          200  avgt   10     82.094 ±   2.684  ns/op
+ * HashBenchmark.doAx64         2500  avgt   10    287.840 ±   3.061  ns/op
+ * HashBenchmark.doAx64        20000  avgt   10    732.488 ±   4.143  ns/op
+ * HashBenchmark.doCharAx64       25  avgt   10     26.343 ±   0.112  ns/op
+ * HashBenchmark.doCharAx64      200  avgt   10     65.076 ±   1.591  ns/op
+ * HashBenchmark.doCharAx64     2500  avgt   10    207.156 ±   1.429  ns/op
+ * HashBenchmark.doCharAx64    20000  avgt   10    571.368 ±   4.915  ns/op
+ * HashBenchmark.doCharYolk64     25  avgt   10     18.278 ±   0.200  ns/op
+ * HashBenchmark.doCharYolk64    200  avgt   10     58.468 ±   0.552  ns/op
+ * HashBenchmark.doCharYolk64   2500  avgt   10    208.933 ±   1.045  ns/op
+ * HashBenchmark.doCharYolk64  20000  avgt   10    590.367 ±   5.058  ns/op
+ * HashBenchmark.doIntAx64        25  avgt   10     18.695 ±   0.081  ns/op
+ * HashBenchmark.doIntAx64       200  avgt   10     77.742 ±   1.011  ns/op
+ * HashBenchmark.doIntAx64      2500  avgt   10   1140.050 ±  16.039  ns/op
+ * HashBenchmark.doIntAx64     20000  avgt   10   8954.535 ±  95.706  ns/op
+ * HashBenchmark.doIntYolk64      25  avgt   10     15.212 ±   0.153  ns/op
+ * HashBenchmark.doIntYolk64     200  avgt   10     73.235 ±   0.572  ns/op
+ * HashBenchmark.doIntYolk64    2500  avgt   10   1124.670 ±  26.689  ns/op
+ * HashBenchmark.doIntYolk64   20000  avgt   10   8874.647 ±  86.721  ns/op
+ * HashBenchmark.doLongAx64       25  avgt   10     22.629 ±   0.209  ns/op
+ * HashBenchmark.doLongAx64      200  avgt   10     92.600 ±   1.186  ns/op
+ * HashBenchmark.doLongAx64     2500  avgt   10   1674.427 ±  47.306  ns/op
+ * HashBenchmark.doLongAx64    20000  avgt   10  12409.782 ± 264.716  ns/op
+ * HashBenchmark.doLongYolk64     25  avgt   10     23.062 ±   0.841  ns/op
+ * HashBenchmark.doLongYolk64    200  avgt   10    111.066 ±   0.671  ns/op
+ * HashBenchmark.doLongYolk64   2500  avgt   10   1830.581 ±  37.866  ns/op
+ * HashBenchmark.doLongYolk64  20000  avgt   10  13951.028 ± 308.861  ns/op
+ * HashBenchmark.doYolk64         25  avgt   10     25.641 ±   0.100  ns/op
+ * HashBenchmark.doYolk64        200  avgt   10     63.470 ±   0.214  ns/op
+ * HashBenchmark.doYolk64       2500  avgt   10    217.280 ±   2.212  ns/op
+ * HashBenchmark.doYolk64      20000  avgt   10    582.954 ±   2.449  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
