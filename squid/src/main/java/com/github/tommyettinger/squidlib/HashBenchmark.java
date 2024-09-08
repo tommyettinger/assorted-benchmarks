@@ -33,6 +33,7 @@ package com.github.tommyettinger.squidlib;
 
 import com.github.tommyettinger.ds.ObjectList;
 import com.github.tommyettinger.random.WhiskerRandom;
+import com.github.yellowstonegames.text.Language;
 import de.heidelberg.pvs.container_bench.generators.Wordlist;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
@@ -1214,9 +1215,9 @@ public class HashBenchmark {
         @Setup(Level.Trial)
         public void setup() {
             WhiskerRandom random = new WhiskerRandom(1000L);
-            FakeLanguageGen[] languages = new FakeLanguageGen[16];
+            Language[] languages = new Language[16];
             for (int i = 0; i < 16; i++) {
-                languages[i] = FakeLanguageGen.randomLanguage(random.nextLong()).addAccents(0.8, 0.6);
+                languages[i] = Language.randomLanguage(random.nextLong());//.addAccents(0.8, 0.6);
             }
             final String[] mid = {",", ",", ",", ";"}, end = {".", ".", ".", "!", "?", "..."};
             strings = new String[4096][len];
@@ -1237,8 +1238,10 @@ public class HashBenchmark {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            double totalLength = 0.0;
             for (int i = 0; i < 4096; i++) {
-                String w = languages[i & 15].sentence(random.nextLong(), len+4>>1, len+6>>1, mid, end, 0.2, len + random.next(5));
+                String w = languages[i & 15].sentence(random.nextLong(), len+4, len+6, mid, end, 0.2, len + random.next(5));
+                totalLength += w.length();
                 chars[i] = w.toCharArray();
                 words[i] = new StringBuilder(w);
                 long[] lon = new long[len];
@@ -1259,6 +1262,11 @@ public class HashBenchmark {
                 buf.get(bytes[i], 0, len);
                 buf.rewind();
             }
+            System.out.println("Average char[] or word length: " + (totalLength / 4096.0) + " with len: " + len);
+//            System.out.println("First three sentences:");
+//            System.out.println(words[0]);
+//            System.out.println(words[1]);
+//            System.out.println(words[2]);
             idx = 0;
         }
 

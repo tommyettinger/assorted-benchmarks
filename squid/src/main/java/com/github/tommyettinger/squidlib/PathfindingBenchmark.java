@@ -41,7 +41,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.github.tommyettinger.ds.ObjectDeque;
-import com.github.tommyettinger.gand.GradientGrid;
+import com.github.tommyettinger.gand.GradientGridI2;
 import com.github.tommyettinger.gand.points.PointF2;
 import com.github.tommyettinger.gand.points.PointI2;
 import com.github.tommyettinger.gand.utils.GridMetric;
@@ -70,7 +70,6 @@ import squidpony.squidmath.GreasedRegion;
 import squidpony.squidmath.StatefulRNG;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -1032,7 +1031,7 @@ public class PathfindingBenchmark {
         public CustomDijkstraMap customDijkstra;
         public com.github.yellowstonegames.path.DijkstraMap squadDijkstra;
         public squid.squad.DextraMap squadDextra;
-        public GradientGrid gradientGrid;
+        public GradientGridI2 gradientGrid;
 //        public BitDijkstraMap bitDijkstra;
 //        public CDijkstraMap cDijkstra;
         public StatefulRNG srng;
@@ -1258,7 +1257,7 @@ Nate sweetened at 129572932000
 //            cDijkstra = new CDijkstraMap(map, com.github.yellowstonegames.grid.Measurement.CHEBYSHEV);
 //            cDijkstra.setBlockingRequirement(0);
             customDijkstra = new CustomDijkstraMap(map, adj, new StatefulRNG(0x1337BEEF));
-            gradientGrid = new GradientGrid(map, GridMetric.CHEBYSHEV);
+            gradientGrid = new GradientGridI2(map, GridMetric.CHEBYSHEV);
             gradientGrid.setBlockingRequirement(0);
             System.out.printf("Dijkstra maps took %g\n", (double)(-previousTime + (previousTime = System.nanoTime())));
             gg = new GridGraphGP(floors, WIDTH, HEIGHT);
@@ -3919,7 +3918,7 @@ Nate sweetened at 129572932000
         tgts.add(endI);
         long scanned = 0;
         state.srng.setState(1234567890L);
-        final GradientGrid gragri = state.gradientGrid;
+        final GradientGridI2 gragri = state.gradientGrid;
         final int PATH_LENGTH = BenchmarkState.WIDTH * BenchmarkState.HEIGHT;
         for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
             endI.x = x;
@@ -3947,7 +3946,7 @@ Nate sweetened at 129572932000
         final ArrayList<PointI2> tgts = new ArrayList<>(1);
         tgts.add(endI);
         long scanned = 0;
-        final GradientGrid gragri = state.gradientGrid;
+        final GradientGridI2 gragri = state.gradientGrid;
         for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
             endI.x = x;
             for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
@@ -3970,7 +3969,7 @@ Nate sweetened at 129572932000
 
     @Benchmark
     public long doOneGandGradientGrid(BenchmarkState state) {
-        final GradientGrid gragri = state.gradientGrid;
+        final GradientGridI2 gragri = state.gradientGrid;
         final int PATH_LENGTH = BenchmarkState.WIDTH * BenchmarkState.HEIGHT;
         state.srng.setState(state.highest.hashCode());
         List<PointI2> end = Collections.singletonList(state.lowestI);
@@ -3984,7 +3983,7 @@ Nate sweetened at 129572932000
     @Benchmark
     public long doScanGandGradientGrid(BenchmarkState state) {
         long scanned = 0;
-        final GradientGrid gragri = state.gradientGrid;
+        final GradientGridI2 gragri = state.gradientGrid;
         for (int x = 1; x < BenchmarkState.WIDTH - 1; x++) {
             for (int y = 1; y < BenchmarkState.HEIGHT - 1; y++) {
                 if (state.map[x][y] == '#')
