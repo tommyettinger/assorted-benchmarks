@@ -1591,6 +1591,12 @@ public class HashBenchmark {
     }
 
     @Benchmark
+    public long doBufferAlternateYolk64(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hashAlternate64(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+    }
+
+    @Benchmark
     public int doBufferYolk32(BenchmarkState state)
     {
         return CrossHash.Yolk.mu.hash(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
@@ -1600,6 +1606,12 @@ public class HashBenchmark {
     public long doBufferWrapYolk64(BenchmarkState state)
     {
         return CrossHash.Yolk.mu.hash64Wrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
+    }
+
+    @Benchmark
+    public long doBufferWrapAlternateYolk64(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hashAlternate64Wrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
     }
 
     @Benchmark

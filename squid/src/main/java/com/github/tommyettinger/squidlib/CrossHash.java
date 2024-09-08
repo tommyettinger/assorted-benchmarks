@@ -4683,6 +4683,44 @@ public class CrossHash {
             return hash64(buf, offsetBytes, lengthBytes);
         }
 
+        public long hashAlternate64(final ByteBuffer data, int offsetBytes, int lengthBytes) {
+            if (data == null || lengthBytes < 0) return 0;
+            data.position(offsetBytes);
+            data.limit(offsetBytes + lengthBytes);
+            long seed = this.seed;
+            for (int i = 15; i < lengthBytes; i+=16) {
+                seed = mum(
+                        mum(data.getInt() ^ b1, data.getInt() ^ b2) + seed,
+                        mum(data.getInt() ^ b3, data.getInt() ^ b4));
+            }
+
+            switch (lengthBytes & 15) {
+                case 1:  seed = mum(b2 ^ seed, data.get() ^ b1); break;
+                case 2:  seed = mum(b3 ^ seed, data.getShort() ^ b4); break;
+                case 3:  seed = mum(data.getShort() ^ seed, data.get() ^ b2); break;
+                case 4:  seed = mum(data.getShort() ^ seed, data.getShort() ^ b3); break;
+                case 5:  seed = mum(data.getInt() ^ seed, data.get() ^ b1); break;
+                case 6:  seed = mum(data.getInt() ^ seed, data.getShort() ^ b1); break;
+                case 7:  seed = mum(data.getInt() ^ seed, ((long) data.getShort() << 8 ^ data.get()) ^ b1); break;
+                case 8:  seed = mum(data.getInt() ^ seed, data.getInt() ^ b0); break;
+                case 9:  seed = mum(data.getInt() ^ seed, data.getInt() ^ b2) ^ mum(seed ^ b4, data.get() ^ b3); break;
+                case 10: seed = mum(data.getInt() ^ seed, data.getInt() ^ b2) ^ mum(seed, data.getShort() ^ b3); break;
+                case 11: seed = mum(data.getInt() ^ seed, data.getInt() ^ b2) ^ mum(seed, (((long) data.getShort() << 8) ^ data.get()) ^ b3); break;
+                case 12: seed = mum(data.getInt() ^ seed, data.getInt() ^ b2) ^ mum(seed ^ data.getInt(), b4); break;
+                case 13: seed = mum(data.getInt() ^ seed, data.getInt() ^ b2) ^ mum(seed ^ data.getInt(), (data.get()) ^ b4); break;
+                case 14: seed = mum(data.getInt() ^ seed, data.getInt() ^ b2) ^ mum(seed ^ data.getInt(), (data.getShort()) ^ b4); break;
+                case 15: seed = mum(data.getInt() ^ seed, data.getInt() ^ b2) ^ mum(seed ^ data.getInt(), ((long) data.getShort() << 8 ^ data.get()) ^ b4); break;
+            }
+            seed = (seed ^ seed << 16) * (lengthBytes ^ b0);
+            return seed - (seed >>> 31) + (seed << 33);
+        }
+
+        public long hashAlternate64Wrap(final byte[] data, int offsetBytes, int lengthBytes) {
+            if (data == null) return 0;
+            ByteBuffer buf = ByteBuffer.wrap(data, offsetBytes, lengthBytes);
+            return hashAlternate64(buf, offsetBytes, lengthBytes);
+        }
+
         public long hash64(final Object data) {
             if (data == null)
                 return 0;
