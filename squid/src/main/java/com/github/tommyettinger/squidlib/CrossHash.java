@@ -16833,6 +16833,36 @@ public class CrossHash {
             return mix(h);
         }
 
+        private static long read8(byte[] data, int position) {
+            return
+                    data[position  ];
+        }
+        private static long read16(byte[] data, int position) {
+            return
+                    data[position  ]      ^
+                    data[position+1] << 8;
+        }
+
+        private static long read32(byte[] data, int position) {
+            return
+                    data[position  ]       ^
+                    data[position+1] << 8  ^
+                    data[position+2] << 16 ^
+                    data[position+3] << 24;
+        }
+
+        private static long read64(byte[] data, int position) {
+            return
+                    (long)data[position  ]       ^
+                    (long)data[position+1] << 8  ^
+                    (long)data[position+2] << 16 ^
+                    (long)data[position+3] << 24 ^
+                    (long)data[position+4] << 32 ^
+                    (long)data[position+5] << 40 ^
+                    (long)data[position+6] << 48 ^
+                    (long)data[position+7] << 56;
+        }
+
         public long hash64(final ByteBuffer data, int offsetBytes, int lengthBytes) {
             if (data == null || lengthBytes < 0) return 0;
             data.position(offsetBytes);
@@ -16857,6 +16887,35 @@ public class CrossHash {
                 case 5: return mix(mixStream(h, (data.getInt()) ^ ((long)data.get()) << 32));
                 case 6: return mix(mixStream(h, (data.getInt()) ^ ((long)data.getShort()) << 32));
                 case 7: return mix(mixStream(h, (data.getInt()) ^ ((long)data.getShort()) << 32 ^ ((long)data.get()) << 48));
+                default: return mix(h);
+            }
+        }
+
+
+        public long hashBulk64(final byte[] data, int offsetBytes, int lengthBytes) {
+            if (data == null || lengthBytes < 0) return 0;
+            long h = lengthBytes ^ seed;
+            while(lengthBytes >= 64){
+                h *= C;
+                lengthBytes -= 64;
+                h += mixStreamBulk(read64(data, offsetBytes), read64(data, offsetBytes + 8), read64(data, offsetBytes + 16), read64(data, offsetBytes + 24));
+                h = (h << 37 | h >>> 27);
+                h += mixStreamBulk(read64(data, offsetBytes + 32), read64(data, offsetBytes + 40), read64(data, offsetBytes + 48), read64(data, offsetBytes + 56));
+                offsetBytes += 64;
+            }
+            while(lengthBytes >= 8){
+                lengthBytes -= 8;
+                h = mixStream(h, read64(data, offsetBytes));
+                offsetBytes += 8;
+            }
+            switch (lengthBytes) {
+                case 1: return mix(mixStream(h, read8(data, offsetBytes)));
+                case 2: return mix(mixStream(h, read16(data, offsetBytes)));
+                case 3: return mix(mixStream(h, read16(data, offsetBytes) ^ read8(data, offsetBytes + 2) << 16));
+                case 4: return mix(mixStream(h, read32(data, offsetBytes)));
+                case 5: return mix(mixStream(h, read32(data, offsetBytes) ^ read8(data, offsetBytes + 4) << 32));
+                case 6: return mix(mixStream(h, read32(data, offsetBytes) ^ read16(data, offsetBytes + 4) << 32));
+                case 7: return mix(mixStream(h, read32(data, offsetBytes) ^ read16(data, offsetBytes + 4) << 32 ^ read8(data, offsetBytes + 6) << 48));
                 default: return mix(h);
             }
         }
