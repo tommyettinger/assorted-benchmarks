@@ -3,10 +3,7 @@ package com.github.tommyettinger.squidlib;
 import squidpony.squidmath.*;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static com.github.tommyettinger.squidlib.CrossHash.Water.b0;
 import static com.github.tommyettinger.squidlib.CrossHash.Water.b1;
@@ -16520,13 +16517,39 @@ public class CrossHash {
         }
     }
 
+    /**
+     * Of the hashes here that are known to pass SMHasher testing, this is the fastest on larger long arrays, as well
+     * as the fastest on ByteBuffer inputs. It is not as fast as {@link Yolk} on item types smaller than long, such as
+     * int or char.
+     */
     public static final class Ax {
 
+        /**
+         * A long constant used as a multiplier by the MX3 unary hash.
+         * Used in {@link #mix(long)} and {@link #mixStream(long, long)}, as well as when hashing one Object.
+         */
         public static final long C = 0xBEA225F9EB34556DL;
+        /**
+         * A 64-bit probable prime, found with {@link java.math.BigInteger#probablePrime(int, Random)}.
+         */
         public static final long Q = 0xD1B92B09B92266DDL;
+        /**
+         * A 64-bit probable prime, found with {@link java.math.BigInteger#probablePrime(int, Random)}.
+         */
         public static final long R = 0x9995988B72E0D285L;
+        /**
+         * A 64-bit probable prime, found with {@link java.math.BigInteger#probablePrime(int, Random)}.
+         */
         public static final long S = 0x8FADF5E286E31587L;
+        /**
+         * A 64-bit probable prime, found with {@link java.math.BigInteger#probablePrime(int, Random)}.
+         */
         public static final long T = 0xFCF8B405D3D0783BL;
+        /**
+         * The (unchangeable) 64-bit seed that should have at least some attempt to randomize any patterns present
+         * between similar initial provided seeds. You can use {@link #forward(long)} to randomize sequential seeds and
+         * even that very minimal scrambling is enough.
+         */
         public final long seed;
 
         public Ax(){
@@ -16537,16 +16560,28 @@ public class CrossHash {
             this.seed = forward(seed);
         }
 
+        /**
+         * A very minimalist way to scramble inputs to be used as seeds; can be inverted using {@link #reverse(long)}.
+         * This simply performs the XOR-rotate-XOR-rotate operation on x, using left rotations of 29 and 47.
+         * @param x any long
+         * @return a slightly scrambled version of x
+         */
         public static long forward(long x) {
-            return x ^ (x << 29 | x >>> 64-29) ^ (x << 47 | x >>> 64-47);
+            return x ^ (x << 29 | x >>> 35) ^ (x << 47 | x >>> 17);
         }
 
+        /**
+         * Unscrambles the result of {@link #forward(long)} to get its original argument back.
+         * Used by {@link #getSeed()} to obtain the original, unscrambled seed value.
+         * @param x a long produced by {@link #forward(long)} or obtained from {@link #seed}
+         * @return the original long that was provided to {@link #forward(long)}, before scrambling
+         */
         public static long reverse(long x) {
-            x ^= x ^ (x << 29 | x >>> 64-29) ^ (x << 47 | x >>> 64-47);
-            x ^= x ^ (x << 58 | x >>> 64-58) ^ (x << 30 | x >>> 64-30);
-            x ^= x ^ (x << 52 | x >>> 64-52) ^ (x << 60 | x >>> 64-60);
-            x ^= x ^ (x << 40 | x >>> 64-40) ^ (x << 56 | x >>> 64-56);
-            x ^= x ^ (x << 16 | x >>> 64-16) ^ (x << 48 | x >>> 64-48);
+            x ^= x ^ (x << 29 | x >>> 35) ^ (x << 47 | x >>> 17);
+            x ^= x ^ (x << 58 | x >>>  6) ^ (x << 30 | x >>> 34);
+            x ^= x ^ (x << 52 | x >>> 12) ^ (x << 60 | x >>>  4);
+            x ^= x ^ (x << 40 | x >>> 24) ^ (x << 56 | x >>>  8);
+            x ^= x ^ (x << 16 | x >>> 48) ^ (x << 48 | x >>> 16);
             return x;
         }
 
@@ -16560,34 +16595,56 @@ public class CrossHash {
             return reverse(seed);
         }
         /**
+         * A medium-quality, but fast, way to scramble a 64-bit input and get a 64-bit output.
+         * This is reversible, which allows all outputs to be possible for the hashing functions to produce.
+         * However, this also allows the seed to be recovered if a zero-length input is supplied. That's why this
+         * is a non-cryptographic hashing algorithm!
          * @param x any long
          * @return any long
          */
         public static long mix(long x) {
-            x ^= (x << 23 | x >>> 64-23) ^ (x << 43 | x >>> 64-43);
+            x ^= (x << 23 | x >>> 41) ^ (x << 43 | x >>> 21);
             x *= C;
-            return x ^ (x << 11 | x >>> 64-11) ^ (x << 50 | x >>> 64-50);
+            return x ^ (x << 11 | x >>> 53) ^ (x << 50 | x >>> 14);
         }
 
+        /**
+         * A low-to-medium-quality and fast way to combine two 64-bit inputs to get one 64-bit result.
+         * This is not reversible unless you know one of the parameters in full.
+         * @param h any long, typically a counter; will be scrambled much less
+         * @param x any long, typically an item being hashed; will be scrambled much more
+         * @return any long
+         */
         public static long mixStream(long h, long x) {
             x *= C;
             x ^= x >>> 39;
             return (x * C + h) * C;
         }
 
+        /**
+         * Performs part of the hashing step applied to four 64-bit inputs at once, and typically added to a running
+         * hash value directly. This uses four 64-bit primes as multipliers; the exact numbers don't matter as long as
+         * they are odd and have sufficiently well-distributed bits (close to 32 '1' bits, and so on). If this is only
+         * added to a running total, the result won't have very random low-order bits, so performing bitwise rotations
+         * after at least some calls to this (or xorshifting right) is critical to keeping the hash high-quality.
+         * @param a any long, typically an item being hashed
+         * @param b any long, typically an item being hashed
+         * @param c any long, typically an item being hashed
+         * @param d any long, typically an item being hashed
+         * @return any long
+         */
         public static long mixStreamBulk(long a, long b, long c, long d) {
             return
                ((a << 29 | a >>> 35) - c) * Q
              + ((b << 29 | b >>> 35) - d) * R
              + ((c << 29 | c >>> 35) - b) * S
              + ((d << 29 | d >>> 35) - a) * T;
-            
-//            h += ((a << 29 | a >>> 35) - c) * Q;
-//            h += ((b << 29 | b >>> 35) - d) * R;
-//            h += ((c << 29 | c >>> 35) - b) * S;
-//            h += ((d << 29 | d >>> 35) - a) * T;
-//            return h;
         }
+
+        /**
+         * Hashes {@code seed} using {@link Water#hash64(CharSequence)} and sends that to {@link #Ax(long)}.
+         * @param seed any CharSequence, such as a String, to be hashed and used as a seed
+         */
         public Ax(final CharSequence seed)
         {
             this(Water.hash64(seed));
