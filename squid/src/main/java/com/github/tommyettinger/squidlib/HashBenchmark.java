@@ -1226,6 +1226,27 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doYolk64       2500  avgt   10    217.280 ±   2.212  ns/op
  * HashBenchmark.doYolk64      20000  avgt   10    582.954 ±   2.449  ns/op
  * </pre>
+ * OK, at large sizes... Ax is faster on ints than Yolk on ints, and Ax is faster on longs
+ * than Yolk is on longs, and I'm not sure why. I may need to test with much larger sizes.
+ * <pre>
+ * Benchmark                   (len)  Mode  Cnt      Score     Error  Units
+ * HashBenchmark.doIntAx64        25  avgt   10     19.713 ±   0.090  ns/op
+ * HashBenchmark.doIntAx64       200  avgt   10     82.802 ±   1.221  ns/op
+ * HashBenchmark.doIntAx64      2500  avgt   10   1202.430 ±  34.880  ns/op
+ * HashBenchmark.doIntAx64     20000  avgt   10   9241.906 ± 361.751  ns/op
+ * HashBenchmark.doIntYolk64      25  avgt   10     15.857 ±   0.109  ns/op
+ * HashBenchmark.doIntYolk64     200  avgt   10     77.719 ±   1.542  ns/op
+ * HashBenchmark.doIntYolk64    2500  avgt   10   1142.293 ±  15.726  ns/op
+ * HashBenchmark.doIntYolk64   20000  avgt   10   9313.271 ± 145.519  ns/op
+ * HashBenchmark.doLongAx64       25  avgt   10     22.222 ±   0.118  ns/op
+ * HashBenchmark.doLongAx64      200  avgt   10     93.498 ±   1.346  ns/op
+ * HashBenchmark.doLongAx64     2500  avgt   10   1695.925 ±  30.734  ns/op
+ * HashBenchmark.doLongAx64    20000  avgt   10  12360.235 ± 357.016  ns/op
+ * HashBenchmark.doLongYolk64     25  avgt   10     25.127 ±   0.425  ns/op
+ * HashBenchmark.doLongYolk64    200  avgt   10    110.969 ±   1.701  ns/op
+ * HashBenchmark.doLongYolk64   2500  avgt   10   1867.374 ±  34.525  ns/op
+ * HashBenchmark.doLongYolk64  20000  avgt   10  14245.380 ± 289.513  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -1298,11 +1319,7 @@ public class HashBenchmark {
                 buf.get(bytes[i], 0, len);
                 buf.rewind();
             }
-            System.out.println("Average char[] or word length: " + (totalLength / 4096.0) + " with len: " + len);
-//            System.out.println("First three sentences:");
-//            System.out.println(words[0]);
-//            System.out.println(words[1]);
-//            System.out.println(words[2]);
+//            System.out.println("Average char[] or word length: " + (totalLength / 4096.0) + " with len: " + len);
             idx = 0;
         }
 
