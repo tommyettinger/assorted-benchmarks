@@ -15,13 +15,18 @@ public class Main extends ApplicationAdapter {
     public void create() {
         editing = PixmapMaker.make(256, 256);
 ////Took       19,553,720,600 nanoseconds
-//        PaletteReducer pr = new PaletteReducer(); //Knoll, sorting network on RGBA colors
+////Took       23,457,996,900 nanoseconds
+        PaletteReducer pr = new PaletteReducer(); //Knoll, float sorting network on RGBA colors
 ////Took       18,315,058,900 nanoseconds
-//        PaletteReducer2 pr = new PaletteReducer2(); // Knoll, sorting network on palette indices
-//Took       24,236,118,300 nanoseconds
-        PaletteReducer3 pr = new PaletteReducer3(); // Knoll, insertion sort on palette indices
+////Took       22,931,361,200 nanoseconds
+//        PaletteReducer2 pr = new PaletteReducer2(); // Knoll, float sorting network on palette indices
+////Took       24,236,118,300 nanoseconds
+//        PaletteReducer3 pr = new PaletteReducer3(); // Knoll, insertion sort on palette indices
 ////Took        1,781,769,900 nanoseconds
 //        PaletteReducer2 pr = new PaletteReducer2(); // Oceanic
+//Took       22,524,058,100 nanoseconds
+//Took       21,715,316,100 nanoseconds
+//        PaletteReducer4 pr = new PaletteReducer4(); // Knoll, int sorting network on palette indices
         for (int i = 0; i < 1000; i++) {
             PixmapMaker.alter(editing, seed *= 0x12312345);
             long startTime = System.nanoTime();
