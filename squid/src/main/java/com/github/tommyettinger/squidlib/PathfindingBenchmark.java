@@ -42,8 +42,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.github.tommyettinger.ds.ObjectDeque;
 import com.github.tommyettinger.gand.GradientGridI2;
-import com.github.tommyettinger.gand.points.PointF2;
-import com.github.tommyettinger.gand.points.PointI2;
+import com.github.tommyettinger.gdcrux.PointF2;
+import com.github.tommyettinger.gdcrux.PointI2;
 import com.github.tommyettinger.gand.utils.GridMetric;
 import com.github.yellowstonegames.grid.Region;
 import org.openjdk.jmh.annotations.*;
@@ -983,6 +983,14 @@ import static squidpony.squidgrid.Measurement.CHEBYSHEV;
  * PathfindingBenchmark.doTinyPathGandGenericI2D      avgt    8   21.605 ±  0.074  ms/op
  * PathfindingBenchmark.doTinyPathGandGenericI2UD     avgt    8   22.006 ±  0.086  ms/op
  * </pre>
+ * Just testing tiny paths with Vector2, there's not much difference at all:
+ * <pre>
+ * Benchmark                                 Mode  Cnt   Score   Error  Units
+ * PathfindingBenchmark.doTinyPathGandVD     avgt    5  44.759 ± 2.162  ms/op
+ * PathfindingBenchmark.doTinyPathGandVUD    avgt    5  45.374 ± 0.760  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleVD   avgt    5  45.570 ± 0.429  ms/op
+ * PathfindingBenchmark.doTinyPathSimpleVUD  avgt    5  46.589 ± 1.886  ms/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -997,8 +1005,8 @@ public class PathfindingBenchmark {
 
     @State(Scope.Thread)
     public static class BenchmarkState {
-        public static final int WIDTH = 100;
-        public static final int HEIGHT = 100;
+        public static final int WIDTH = 128;
+        public static final int HEIGHT = 128;
         public DungeonGenerator dungeonGen = new DungeonGenerator(WIDTH, HEIGHT, new StatefulRNG(0x1337BEEFDEAL));
         public char[][] map;
         public double[][] astarMap;
