@@ -1250,6 +1250,7 @@ import java.util.concurrent.TimeUnit;
  * </pre>
  * Wow. When hashing a very large String, if it is stored and hashed as a ByteBuffer instead
  * of a char array or String, the difference is considerable; roughly a 60% reduction in time spent!
+ * (This uses UTF-8 bytes of the 20000-char Strings.)
  * <pre>
  * Benchmark                         (len)  Mode  Cnt     Score     Error  Units
  * HashBenchmark.doAx64              20000  avgt    5  7120.321 ± 171.413  ns/op
@@ -1260,6 +1261,41 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doCharBufferYolk64  20000  avgt    5  2851.040 ± 151.302  ns/op
  * HashBenchmark.doCharYolk64        20000  avgt    5  7855.400 ± 425.857  ns/op
  * HashBenchmark.doYolk64            20000  avgt    5  7581.749 ±  94.350  ns/op
+ * </pre>
+ * This is the same as above, but uses UTF-16 bytes of the 20000-char Strings...
+ * This means a length-40002 byte array gets wrapped in a ByteBuffer.
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt     Score     Error  Units
+ * HashBenchmark.doAx64              20000  avgt    5  7106.168 ± 127.270  ns/op
+ * HashBenchmark.doBufferAx64        20000  avgt    5  2139.157 ±  88.410  ns/op
+ * HashBenchmark.doBufferYolk64      20000  avgt    5  2229.927 ±  86.184  ns/op
+ * HashBenchmark.doCharAx64          20000  avgt    5  7424.782 ± 485.992  ns/op
+ * HashBenchmark.doCharBufferAx64    20000  avgt    5  2350.442 ±  74.643  ns/op
+ * HashBenchmark.doCharBufferYolk64  20000  avgt    5  2881.526 ±  96.224  ns/op
+ * HashBenchmark.doCharYolk64        20000  avgt    5  7836.879 ± 175.292  ns/op
+ * HashBenchmark.doYolk64            20000  avgt    5  7604.604 ± 250.226  ns/op
+ * </pre>
+ * And this is merely a length-20000 byte array wrapped, but with nearly the same time...
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt     Score     Error  Units
+ * HashBenchmark.doAx64              20000  avgt    5  7190.543 ± 202.408  ns/op
+ * HashBenchmark.doBufferAx64        20000  avgt    5  2063.398 ± 211.655  ns/op
+ * HashBenchmark.doBufferYolk64      20000  avgt    5  2197.525 ±  79.838  ns/op
+ * HashBenchmark.doCharAx64          20000  avgt    5  7555.863 ± 502.415  ns/op
+ * HashBenchmark.doCharBufferAx64    20000  avgt    5  2330.224 ±  47.621  ns/op
+ * HashBenchmark.doCharBufferYolk64  20000  avgt    5  2856.445 ± 124.695  ns/op
+ * HashBenchmark.doCharYolk64        20000  avgt    5  7822.263 ± 221.723  ns/op
+ * HashBenchmark.doYolk64            20000  avgt    5  7559.864 ± 462.447  ns/op
+ * </pre>
+ * There was a measuring mistake! The older CharBuffer benchmarks only ran on len bytes,
+ * even if there were twice as many in the buffer! This still doesn't explain why these
+ * numbers are so different...
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt      Score     Error  Units
+ * HashBenchmark.doCharAx64          20000  avgt    5   7507.814 ± 382.248  ns/op
+ * HashBenchmark.doCharBufferAx64    20000  avgt    5  27302.470 ± 182.157  ns/op
+ * HashBenchmark.doCharBufferYolk64  20000  avgt    5  27434.689 ± 612.079  ns/op
+ * HashBenchmark.doCharYolk64        20000  avgt    5   7885.818 ± 275.933  ns/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
@@ -1286,11 +1322,11 @@ public class HashBenchmark {
         @Setup(Level.Trial)
         public void setup() {
             WhiskerRandom random = new WhiskerRandom(1000L);
-            Language[] languages = new Language[16];
-            for (int i = 0; i < 16; i++) {
-                languages[i] = Language.randomLanguage(random.nextLong());//.addAccents(0.8, 0.6);
-            }
-            final String[] mid = {",", ",", ",", ";"}, end = {".", ".", ".", "!", "?", "..."};
+//            Language[] languages = new Language[16];
+//            for (int i = 0; i < 16; i++) {
+//                languages[i] = Language.randomLanguage(random.nextLong());//.addAccents(0.8, 0.6);
+//            }
+//            final String[] mid = {",", ",", ",", ";"}, end = {".", ".", ".", "!", "?", "..."};
             strings = new String[4096][len];
             words = new String[4096];
             chars = new char[4096][];
@@ -1330,7 +1366,9 @@ public class HashBenchmark {
                 chars[i] = con;
                 words[i] = String.valueOf(con);
                 buffers[i] = buf;
-                cbuffers[i] = ByteBuffer.wrap(words[i].getBytes(StandardCharsets.UTF_8));
+                byte[] utf = words[i].getBytes(StandardCharsets.UTF_16);
+//                if(i == 0) System.out.println("utf has length " + utf.length);
+                cbuffers[i] = ByteBuffer.wrap(utf);
                 bytes[i] = new byte[len];
                 buf.rewind();
                 buf.get(bytes[i], 0, len);
@@ -1713,25 +1751,25 @@ public class HashBenchmark {
     @Benchmark
     public long doBufferYolk64(BenchmarkState state)
     {
-        return CrossHash.Yolk.mu.hash64(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+        return CrossHash.Yolk.mu.hash64(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark
     public int doBufferYolk32(BenchmarkState state)
     {
-        return CrossHash.Yolk.mu.hash(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+        return CrossHash.Yolk.mu.hash(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark
     public long doCharBufferYolk64(BenchmarkState state)
     {
-        return CrossHash.Yolk.mu.hash64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+        return CrossHash.Yolk.mu.hash64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark
     public int doCharBufferYolk32(BenchmarkState state)
     {
-        return CrossHash.Yolk.mu.hash(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+        return CrossHash.Yolk.mu.hash(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark
@@ -2318,13 +2356,13 @@ public class HashBenchmark {
     @Benchmark
     public long doBufferAx64(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash64(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+        return CrossHash.Ax.mu.hashBulk64(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark
     public int doBufferAx32(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+        return CrossHash.Ax.mu.hashBulk(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark
@@ -2342,13 +2380,13 @@ public class HashBenchmark {
     @Benchmark
     public long doCharBufferAx64(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+        return CrossHash.Ax.mu.hashBulk64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark
     public int doCharBufferAx32(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+        return CrossHash.Ax.mu.hashBulk(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark

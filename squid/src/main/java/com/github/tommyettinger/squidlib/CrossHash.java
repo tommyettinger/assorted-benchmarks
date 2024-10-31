@@ -4620,6 +4620,9 @@ public class CrossHash {
             seed = (seed ^ seed << 16) * (len ^ b0);
             return seed - (seed >>> 31) + (seed << 33);
         }
+        public long hash64(final ByteBuffer data) {
+            return hash64(data, 0, data.limit());
+        }
 
         public long hash64(final ByteBuffer data, int start, int length) {
             if (data == null || start < 0 || length < 0 || start >= data.limit())
@@ -5109,6 +5112,9 @@ public class CrossHash {
         }
 
 
+        public int hash(final ByteBuffer data) {
+            return hash(data, 0, data.limit());
+        }
         public int hash(final ByteBuffer data, int start, int length) {
             if (data == null || start < 0 || length < 0 || start >= data.limit())
                 return 0;
@@ -16922,12 +16928,36 @@ public class CrossHash {
                     (long)data[position+7] << 56;
         }
 
-        public long hash64(final ByteBuffer data, int start, int length) {
+
+        /**
+         * A hashing function that operates on a {@link ByteBuffer}, hashing everything from index 0 to just before index
+         * {@link ByteBuffer#limit()}. The {@link ByteBuffer#limit() limit} must be set on data; this will not read
+         * past the limit.
+         * <br>
+         * This is likely to significantly outperform {@link #hash64(byte[])} on all but
+         * the smallest sequences of bytes (under 20 bytes).
+         * @param data an input ByteBuffer
+         * @return the 64-bit hash of data
+         */
+        public long hashBulk64(final ByteBuffer data) {
+            return hashBulk64(data, 0, data.limit());
+        }
+
+        /**
+         * A hashing function that operates on a {@link ByteBuffer}, using the given {@code start} index (measured in bytes)
+         * and {@code length} (also in bytes). The {@link ByteBuffer#limit() limit} must be set on data; this will not read
+         * past the limit.
+         * @param data an input ByteBuffer
+         * @param start the starting index, measured in bytes
+         * @param length the number of bytes to hash
+         * @return the 64-bit hash of data
+         */
+        public long hashBulk64(final ByteBuffer data, int start, int length) {
             if (data == null || start < 0 || length < 0 || start >= data.limit())
                 return 0;
             int len = Math.min(length, data.limit() - start);
             data.position(start);
-            long h = len ^ seed;
+            long h = len ^ forward(seed);
             while(len >= 64){
                 h *= C;
                 len -= 64;
@@ -16940,15 +16970,69 @@ public class CrossHash {
                 h = mixStream(h, data.getLong());
             }
             switch (len) {
-                case 1: return  mix(mixStream(h, (data.get())));
-                case 2: return  mix(mixStream(h, (data.getShort())));
-                case 3: return  mix(mixStream(h, (data.getShort()) ^ ((long)data.get()) << 16));
-                case 4: return  mix(mixStream(h, (data.getInt())));
-                case 5: return  mix(mixStream(h, (data.getInt()) ^ ((long)data.get()) << 32));
-                case 6: return  mix(mixStream(h, (data.getInt()) ^ ((long)data.getShort()) << 32));
-                case 7: return  mix(mixStream(h, (data.getInt()) ^ ((long)data.getShort()) << 32 ^ ((long)data.get()) << 48));
-                default: return mix(h);
+                case 1:  h = mix(mixStream(h, (data.get()))); break;
+                case 2:  h = mix(mixStream(h, (data.getShort()))); break;
+                case 3:  h = mix(mixStream(h, (data.getShort()) ^ ((long)data.get()) << 16)); break;
+                case 4:  h = mix(mixStream(h, (data.getInt()))); break;
+                case 5:  h = mix(mixStream(h, (data.getInt()) ^ ((long)data.get()) << 32)); break;
+                case 6:  h = mix(mixStream(h, (data.getInt()) ^ ((long)data.getShort()) << 32)); break;
+                case 7:  h = mix(mixStream(h, (data.getInt()) ^ ((long)data.getShort()) << 32 ^ ((long)data.get()) << 48)); break;
+                default: h = mix(h); break;
             }
+            return h;
+        }
+
+        /**
+         * A hashing function that operates on a {@link ByteBuffer}, hashing everything from index 0 to just before index
+         * {@link ByteBuffer#limit()}. The {@link ByteBuffer#limit() limit} must be set on data; this will not read
+         * past the limit.
+         * <br>
+         * This is likely to significantly outperform {@link #hash(byte[])} on all but
+         * the smallest sequences of bytes (under 20 bytes).
+         * @param data an input ByteBuffer
+         * @return the 32-bit hash of data
+         */
+        public int hashBulk(final ByteBuffer data) {
+            return hashBulk(data, 0, data.limit());
+        }
+
+        /**
+         * A hashing function that operates on a {@link ByteBuffer}, using the given {@code start} index (measured in bytes)
+         * and {@code length} (also in bytes). The {@link ByteBuffer#limit() limit} must be set on data; this will not read
+         * past the limit.
+         * @param data an input ByteBuffer
+         * @param start the starting index, measured in bytes
+         * @param length the number of bytes to hash
+         * @return the 32-bit hash of data
+         */
+        public int hashBulk(final ByteBuffer data, int start, int length) {
+            if (data == null || start < 0 || length < 0 || start >= data.limit())
+                return 0;
+            int len = Math.min(length, data.limit() - start);
+            data.position(start);
+            long h = len ^ forward(seed);
+            while(len >= 64){
+                h *= C;
+                len -= 64;
+                h += mixStreamBulk(data.getLong(), data.getLong(), data.getLong(), data.getLong());
+                h = (h << 37 | h >>> 27);
+                h += mixStreamBulk(data.getLong(), data.getLong(), data.getLong(), data.getLong());
+            }
+            while(len >= 8){
+                len -= 8;
+                h = mixStream(h, data.getLong());
+            }
+            switch (len) {
+                case 1:  h = mix(mixStream(h, (data.get()))); break;
+                case 2:  h = mix(mixStream(h, (data.getShort()))); break;
+                case 3:  h = mix(mixStream(h, (data.getShort()) ^ ((long)data.get()) << 16)); break;
+                case 4:  h = mix(mixStream(h, (data.getInt()))); break;
+                case 5:  h = mix(mixStream(h, (data.getInt()) ^ ((long)data.get()) << 32)); break;
+                case 6:  h = mix(mixStream(h, (data.getInt()) ^ ((long)data.getShort()) << 32)); break;
+                case 7:  h = mix(mixStream(h, (data.getInt()) ^ ((long)data.getShort()) << 32 ^ ((long)data.get()) << 48)); break;
+                default: h = mix(h); break;
+            }
+            return (int) h;
         }
 
 
@@ -16983,7 +17067,7 @@ public class CrossHash {
         public long hash64Wrap(final byte[] data, int offsetBytes, int lengthBytes) {
             if (data == null) return 0;
             ByteBuffer buf = ByteBuffer.wrap(data, offsetBytes, lengthBytes);
-            return hash64(buf, offsetBytes, lengthBytes);
+            return hashBulk64(buf, offsetBytes, lengthBytes);
         }
 
         public long hash64(final Object data) {
@@ -17144,7 +17228,7 @@ public class CrossHash {
         public int hashWrap(final byte[] data, int offsetBytes, int lengthBytes) {
             if (data == null) return 0;
             ByteBuffer buf = ByteBuffer.wrap(data, offsetBytes, lengthBytes);
-            return hash(buf, offsetBytes, lengthBytes);
+            return hashBulk(buf, offsetBytes, lengthBytes);
         }
 
         public int hash(final Object data) {
