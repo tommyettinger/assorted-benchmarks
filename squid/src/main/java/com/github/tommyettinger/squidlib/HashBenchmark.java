@@ -1290,12 +1290,22 @@ import java.util.concurrent.TimeUnit;
  * There was a measuring mistake! The older CharBuffer benchmarks only ran on len bytes,
  * even if there were twice as many in the buffer! This still doesn't explain why these
  * numbers are so different...
+ * (What explains it is that these were using ByteBuffer.hashCode(), not Ax or Yolk!)
  * <pre>
  * Benchmark                         (len)  Mode  Cnt      Score     Error  Units
  * HashBenchmark.doCharAx64          20000  avgt    5   7507.814 ± 382.248  ns/op
  * HashBenchmark.doCharBufferAx64    20000  avgt    5  27302.470 ± 182.157  ns/op
  * HashBenchmark.doCharBufferYolk64  20000  avgt    5  27434.689 ± 612.079  ns/op
  * HashBenchmark.doCharYolk64        20000  avgt    5   7885.818 ± 275.933  ns/op
+ * </pre>
+ * That looks more like it. This uses UTF-16 bytes of a 20000-length String, and
+ * hashing the bytes as a ByteBuffer is faster.
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt     Score     Error  Units
+ * HashBenchmark.doCharAx64          20000  avgt    5  7641.837 ± 350.154  ns/op
+ * HashBenchmark.doCharBufferAx64    20000  avgt    5  5146.448 ± 175.106  ns/op
+ * HashBenchmark.doCharBufferYolk64  20000  avgt    5  5582.446 ± 172.072  ns/op
+ * HashBenchmark.doCharYolk64        20000  avgt    5  7822.574 ± 215.856  ns/op
  * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
