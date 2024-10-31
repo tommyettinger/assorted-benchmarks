@@ -1248,6 +1248,19 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doLongYolk64   2500  avgt   10   1867.374 ±  34.525  ns/op
  * HashBenchmark.doLongYolk64  20000  avgt   10  14245.380 ± 289.513  ns/op
  * </pre>
+ * Wow. When hashing a very large String, if it is stored and hashed as a ByteBuffer instead
+ * of a char array or String, the difference is considerable; roughly a 60% reduction in time spent!
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt     Score     Error  Units
+ * HashBenchmark.doAx64              20000  avgt    5  7120.321 ± 171.413  ns/op
+ * HashBenchmark.doBufferAx64        20000  avgt    5  2162.599 ± 169.154  ns/op
+ * HashBenchmark.doBufferYolk64      20000  avgt    5  2221.551 ±  87.519  ns/op
+ * HashBenchmark.doCharAx64          20000  avgt    5  7605.395 ± 118.727  ns/op
+ * HashBenchmark.doCharBufferAx64    20000  avgt    5  2699.417 ± 121.512  ns/op
+ * HashBenchmark.doCharBufferYolk64  20000  avgt    5  2851.040 ± 151.302  ns/op
+ * HashBenchmark.doCharYolk64        20000  avgt    5  7855.400 ± 425.857  ns/op
+ * HashBenchmark.doYolk64            20000  avgt    5  7581.749 ±  94.350  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -2518,7 +2531,7 @@ public class HashBenchmark {
      *
      * a) Via the command line from the squidlib-performance module's root folder:
      *    $ mvn clean install
-     *    $ java -jar benchmarks.jar "HashBenchmark.doLong(Yolk|Tritium|Mx)"
+     *    $ java -jar benchmarks.jar "HashBenchmark.do(Char)?(Buffer)?(Yolk|Ax)64"
      *
      *    (we requested 8 warmup/measurement iterations, single fork)
      *
