@@ -48,6 +48,7 @@ import java.io.IOException;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
@@ -1260,13 +1261,13 @@ public class HashBenchmark {
         @Param({ "5", "10", "20", "40", "80", "160" })
         public int len;
         public String[][] strings;
-        public CharSequence[] words;
+        public String[] words;
         public char[][] chars;
         public long[][] longs;
         public int[][] ints;
         public byte[][] bytes;
         public double[][] doubles;
-        public ByteBuffer[] buffers;
+        public ByteBuffer[] buffers, cbuffers;
         public int idx;
 
         @Setup(Level.Trial)
@@ -1278,13 +1279,14 @@ public class HashBenchmark {
             }
             final String[] mid = {",", ",", ",", ";"}, end = {".", ".", ".", "!", "?", "..."};
             strings = new String[4096][len];
-            words = new CharSequence[4096];
+            words = new String[4096];
             chars = new char[4096][];
             longs = new long[4096][];
             ints = new int[4096][];
             doubles = new double[4096][];
             bytes = new byte[4096][];
             buffers = new ByteBuffer[4096];
+            cbuffers = new ByteBuffer[4096];
 
             try {
                 // 235971 is the number of words in the word list.
@@ -1295,25 +1297,27 @@ public class HashBenchmark {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            double totalLength = 0.0;
             for (int i = 0; i < 4096; i++) {
-                String w = languages[i & 15].sentence(random.nextLong(), len+4, len+6, mid, end, 0.2, len + random.next(5));
-                totalLength += w.length();
-                chars[i] = w.toCharArray();
-                words[i] = new StringBuilder(w);
+//                String w = languages[i & 15].sentence(random.nextLong(), len+4, len+6, mid, end, 0.2, len + random.next(5));
+
                 long[] lon = new long[len];
                 int[] inn = new int[len];
                 double[] don = new double[len];
+                char[] con = new char[len];
                 ByteBuffer buf = ByteBuffer.allocate(len << 3).order(ByteOrder.LITTLE_ENDIAN);
                 for (int j = 0; j < len; j++) {
                     long r = random.nextLong();
                     don[j] = inn[j] = (int)(lon[j] = r);
                     buf.putLong(r);
+                    con[j] = (char) (random.nextInt('~' - 31) + 32);
                 }
                 longs[i] = lon;
                 ints[i] = inn;
                 doubles[i] = don;
+                chars[i] = con;
+                words[i] = String.valueOf(con);
                 buffers[i] = buf;
+                cbuffers[i] = ByteBuffer.wrap(words[i].getBytes(StandardCharsets.UTF_8));
                 bytes[i] = new byte[len];
                 buf.rewind();
                 buf.get(bytes[i], 0, len);
@@ -1700,15 +1704,21 @@ public class HashBenchmark {
     }
 
     @Benchmark
-    public long doBufferAlternateYolk64(BenchmarkState state)
-    {
-        return CrossHash.Yolk.mu.hashAlternate64(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
-    }
-
-    @Benchmark
     public int doBufferYolk32(BenchmarkState state)
     {
         return CrossHash.Yolk.mu.hash(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+    }
+
+    @Benchmark
+    public long doCharBufferYolk64(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hash64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+    }
+
+    @Benchmark
+    public int doCharBufferYolk32(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hash(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
@@ -1718,16 +1728,23 @@ public class HashBenchmark {
     }
 
     @Benchmark
+    public long doBufferWrapYolk32(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hashWrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
+    }
+
+    @Benchmark
+    public long doBufferAlternateYolk64(BenchmarkState state)
+    {
+        return CrossHash.Yolk.mu.hashAlternate64(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+    }
+
+    @Benchmark
     public long doBufferWrapAlternateYolk64(BenchmarkState state)
     {
         return CrossHash.Yolk.mu.hashAlternate64Wrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
     }
 
-    @Benchmark
-    public long doBufferWrapYolk32(BenchmarkState state)
-    {
-        return CrossHash.Yolk.mu.hashWrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
-    }
 
 
     @Benchmark
@@ -2307,6 +2324,18 @@ public class HashBenchmark {
     public long doBufferWrapAx32(BenchmarkState state)
     {
         return CrossHash.Ax.mu.hashWrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
+    }
+
+    @Benchmark
+    public long doCharBufferAx64(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+    }
+
+    @Benchmark
+    public int doCharBufferAx32(BenchmarkState state)
+    {
+        return CrossHash.Ax.mu.hash(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
