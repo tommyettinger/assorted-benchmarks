@@ -1,4 +1,4 @@
-~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseShenandoahGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGetPut|JDKGDXDSIntSet|GDXIntSet).bench" -p impl=DEFAULT -p size=200000 -wi 5 -i 5 -f 1 -w 5 -r 5
+~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseShenandoahGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGetPut|JDKGDXDSIntSet|GDXIntSet)\.bench" -p impl=DEFAULT -p size=200000 -wi 5 -i 5 -f 1 -w 5 -r 5
 
 Benchmark            (seed)  (size)       (workload)    Mode    Cnt         Score       Error  Units
 GDXIntSet.bench          -1  200000              ADD  sample  40364    619766.309 ±  1437.146  ns/op
@@ -19,3 +19,31 @@ JDKGetPut.bench          -1  200000         CONTAINS  sample  18158   1376836.40
 JDKGetPut.bench          -1  200000    ADD_OR_REMOVE  sample   9798   2552150.796 ±  8227.376  ns/op
 JDKGetPut.bench          -1  200000  ADD_THEN_REMOVE  sample   6171   4055284.260 ± 13383.843  ns/op
 JDKGetPut.bench          -1  200000  REMOVE_THEN_ADD  sample   6108   4100005.470 ± 11559.466  ns/op
+
+~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseShenandoahGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGetPut|JDKGDXDSIntSet|GDXIntSet|FastutilIntSet)\.bench" -p impl=DEFAULT -p size=200000 -wi 5 -i 5 -f 1 -w 5 -r 5
+
+Benchmark                      (impl)  (seed)  (size)       (workload)    Mode    Cnt         Score       Error  Units
+FastutilIntSet.bench          DEFAULT      -1  200000              ADD  sample  42325    591102.663 ±  1342.866  ns/op
+FastutilIntSet.bench          DEFAULT      -1  200000           REMOVE  sample  94966    263619.889 ±   495.802  ns/op
+FastutilIntSet.bench          DEFAULT      -1  200000         CONTAINS  sample  39457    634424.563 ±  1698.413  ns/op
+FastutilIntSet.bench          DEFAULT      -1  200000    ADD_OR_REMOVE  sample  16444   1521780.449 ±  3634.916  ns/op
+FastutilIntSet.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample   5405   4630552.629 ± 18680.632  ns/op
+FastutilIntSet.bench          DEFAULT      -1  200000  REMOVE_THEN_ADD  sample   5472   4576235.789 ± 11709.781  ns/op
+GDXIntSet.bench               DEFAULT      -1  200000              ADD  sample  39738    629782.805 ±  1423.730  ns/op
+GDXIntSet.bench               DEFAULT      -1  200000           REMOVE  sample  53684    466149.429 ±   862.298  ns/op
+GDXIntSet.bench               DEFAULT      -1  200000         CONTAINS  sample  39789    629060.322 ±  1301.074  ns/op
+GDXIntSet.bench               DEFAULT      -1  200000    ADD_OR_REMOVE  sample  16500   1516119.257 ±  4509.848  ns/op
+GDXIntSet.bench               DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  11864   2108927.655 ±  7032.199  ns/op
+GDXIntSet.bench               DEFAULT      -1  200000  REMOVE_THEN_ADD  sample  11642   2149663.797 ±  7439.895  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  200000              ADD  sample  45021    555703.825 ±  1199.124  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  200000           REMOVE  sample  62391    400819.082 ±   735.866  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  200000         CONTAINS  sample  43011    581600.740 ±  1070.400  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  200000    ADD_OR_REMOVE  sample  16575   1509309.278 ±  3873.142  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  11968   2089703.358 ±  4674.680  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  200000  REMOVE_THEN_ADD  sample  11841   2114032.045 ±  6983.329  ns/op
+JDKGetPut.bench               DEFAULT      -1  200000              ADD  sample  11854   2112522.539 ±  7904.276  ns/op
+JDKGetPut.bench               DEFAULT      -1  200000           REMOVE  sample  47827    522783.356 ±  1327.093  ns/op
+JDKGetPut.bench               DEFAULT      -1  200000         CONTAINS  sample  18122   1379097.456 ±  3452.755  ns/op
+JDKGetPut.bench               DEFAULT      -1  200000    ADD_OR_REMOVE  sample   9735   2569230.831 ±  7649.770  ns/op
+JDKGetPut.bench               DEFAULT      -1  200000  ADD_THEN_REMOVE  sample   5923   4227239.353 ± 16741.051  ns/op
+JDKGetPut.bench               DEFAULT      -1  200000  REMOVE_THEN_ADD  sample   6089   4109449.060 ± 15516.164  ns/op
