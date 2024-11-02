@@ -1,3 +1,5 @@
+~\.jdks\graalvm-jdk-22.0.1\bin\java.exe -jar benchmarks.jar "(JDKGetPut|JDKGDXDSIntSet|GDXIntSet).bench" -p impl=DEFAULT -p size=200000 -wi 5 -i 5 -f 1 -w 5 -r 5
+
 Benchmark             (size)       (workload)    Cnt         Score       Error  Units
 GDXIntSet.bench       200000              ADD  33498    746752.902 ±  2095.462  ns/op
 GDXIntSet.bench       200000           REMOVE  60490    413873.520 ±   891.347  ns/op

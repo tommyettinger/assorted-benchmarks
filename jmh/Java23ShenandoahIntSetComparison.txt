@@ -1,0 +1,21 @@
+~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseShenandoahGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGetPut|JDKGDXDSIntSet|GDXIntSet).bench" -p impl=DEFAULT -p size=200000 -wi 5 -i 5 -f 1 -w 5 -r 5
+
+Benchmark            (seed)  (size)       (workload)    Mode    Cnt         Score       Error  Units
+GDXIntSet.bench          -1  200000              ADD  sample  40364    619766.309 ±  1437.146  ns/op
+GDXIntSet.bench          -1  200000           REMOVE  sample  53424    468540.435 ±   882.382  ns/op
+GDXIntSet.bench          -1  200000         CONTAINS  sample  39153    638627.187 ±  1381.511  ns/op
+GDXIntSet.bench          -1  200000    ADD_OR_REMOVE  sample  16406   1525845.885 ±  4152.277  ns/op
+GDXIntSet.bench          -1  200000  ADD_THEN_REMOVE  sample  11683   2142728.283 ±  6217.168  ns/op
+GDXIntSet.bench          -1  200000  REMOVE_THEN_ADD  sample  11560   2163233.838 ±  5632.282  ns/op
+JDKGDXDSIntSet.bench     -1  200000              ADD  sample  44848    557812.618 ±  1141.854  ns/op
+JDKGDXDSIntSet.bench     -1  200000           REMOVE  sample  62911    397687.770 ±   780.430  ns/op
+JDKGDXDSIntSet.bench     -1  200000         CONTAINS  sample  43056    581036.962 ±  1182.492  ns/op
+JDKGDXDSIntSet.bench     -1  200000    ADD_OR_REMOVE  sample  16316   1532893.858 ±  4446.564  ns/op
+JDKGDXDSIntSet.bench     -1  200000  ADD_THEN_REMOVE  sample  11985   2087530.074 ±  5075.681  ns/op
+JDKGDXDSIntSet.bench     -1  200000  REMOVE_THEN_ADD  sample  12084   2070301.574 ±  6548.842  ns/op
+JDKGetPut.bench          -1  200000              ADD  sample  12308   2033079.951 ±  6414.907  ns/op
+JDKGetPut.bench          -1  200000           REMOVE  sample  48242    518396.169 ±  1308.837  ns/op
+JDKGetPut.bench          -1  200000         CONTAINS  sample  18158   1376836.406 ±  3478.427  ns/op
+JDKGetPut.bench          -1  200000    ADD_OR_REMOVE  sample   9798   2552150.796 ±  8227.376  ns/op
+JDKGetPut.bench          -1  200000  ADD_THEN_REMOVE  sample   6171   4055284.260 ± 13383.843  ns/op
+JDKGetPut.bench          -1  200000  REMOVE_THEN_ADD  sample   6108   4100005.470 ± 11559.466  ns/op

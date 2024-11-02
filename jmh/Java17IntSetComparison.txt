@@ -1,3 +1,6 @@
+(java is Java 17, HotSpot.)
+java -jar benchmarks.jar "JDKGetPut|JDKGDXDSIntSet|GDXIntSet" -p impl=DEFAULT -p size=200000 -wi 5 -i 5 -f 1 -w 5 -r 5
+
 Benchmark                         (impl)       (payloadType)  (seed)  (size)       (workload)    Mode     Cnt         Score       Error  Units
 d.h.p.c.b.i.GDXIntSet.bench       DEFAULT                N/A      -1  200000              ADD  sample   39499    633531.643 ±  1812.821  ns/op
 d.h.p.c.b.i.GDXIntSet.bench       DEFAULT                N/A      -1  200000           REMOVE  sample   54996    454690.521 ±  1004.864  ns/op
