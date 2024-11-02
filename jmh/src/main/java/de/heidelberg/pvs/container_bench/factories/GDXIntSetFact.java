@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.IntSet;
 import java.util.function.Supplier;
 
 public enum GDXIntSetFact {
-	GDX_I_HASH(() -> new IntSet(16, LoadFactor.LOAD_FACTOR)), //
+	DEFAULT(() -> new IntSet(16, LoadFactor.LOAD_FACTOR))
 	;
 
 	public final Supplier<IntSet> maker;

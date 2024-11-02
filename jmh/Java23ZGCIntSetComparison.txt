@@ -1,0 +1,19 @@
+Benchmark                      (impl)  (seed)  (size)       (workload)    Mode    Cnt         Score       Error  Units
+GDXIntSet.bench               DEFAULT      -1  200000              ADD  sample  39189    638467.123 ±  1897.391  ns/op
+GDXIntSet.bench               DEFAULT      -1  200000           REMOVE  sample  38790    645036.594 ±  5084.823  ns/op
+GDXIntSet.bench               DEFAULT      -1  200000         CONTAINS  sample  33437    748085.241 ±  4437.117  ns/op
+GDXIntSet.bench               DEFAULT      -1  200000    ADD_OR_REMOVE  sample  13320   1878462.808 ± 16619.418  ns/op
+GDXIntSet.bench               DEFAULT      -1  200000  ADD_THEN_REMOVE  sample   9160   2732256.699 ± 26956.959  ns/op
+GDXIntSet.bench               DEFAULT      -1  200000  REMOVE_THEN_ADD  sample   9279   2696088.816 ± 26055.834  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  200000              ADD  sample  42006    595924.974 ±  1641.194  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  200000           REMOVE  sample  50036    499787.844 ±  1022.666  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  200000         CONTAINS  sample  43100    580057.392 ±  1314.089  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  200000    ADD_OR_REMOVE  sample  17701   1413886.395 ±  4735.263  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12194   2051475.083 ±  6481.755  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  200000  REMOVE_THEN_ADD  sample  11789   2122649.418 ±  6594.200  ns/op
+JDKGetPut.bench               DEFAULT      -1  200000              ADD  sample  11185   2236793.008 ± 10031.509  ns/op
+JDKGetPut.bench               DEFAULT      -1  200000           REMOVE  sample  43539    575019.064 ±  1508.646  ns/op
+JDKGetPut.bench               DEFAULT      -1  200000         CONTAINS  sample  19368   1291693.099 ±  4721.507  ns/op
+JDKGetPut.bench               DEFAULT      -1  200000    ADD_OR_REMOVE  sample   9735   2568441.925 ± 13935.432  ns/op
+JDKGetPut.bench               DEFAULT      -1  200000  ADD_THEN_REMOVE  sample   5492   4553052.294 ± 27482.410  ns/op
+JDKGetPut.bench               DEFAULT      -1  200000  REMOVE_THEN_ADD  sample   6193   4040279.717 ± 18017.778  ns/op

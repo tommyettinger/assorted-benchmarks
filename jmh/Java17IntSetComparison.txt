@@ -1,0 +1,19 @@
+Benchmark                         (impl)       (payloadType)  (seed)  (size)       (workload)    Mode     Cnt         Score       Error  Units
+d.h.p.c.b.i.GDXIntSet.bench       DEFAULT                N/A      -1  200000              ADD  sample   39499    633531.643 ±  1812.821  ns/op
+d.h.p.c.b.i.GDXIntSet.bench       DEFAULT                N/A      -1  200000           REMOVE  sample   54996    454690.521 ±  1004.864  ns/op
+d.h.p.c.b.i.GDXIntSet.bench       DEFAULT                N/A      -1  200000         CONTAINS  sample   40815    612771.196 ±  1626.697  ns/op
+d.h.p.c.b.i.GDXIntSet.bench       DEFAULT                N/A      -1  200000    ADD_OR_REMOVE  sample   16048   1558070.493 ±  4209.746  ns/op
+d.h.p.c.b.i.GDXIntSet.bench       DEFAULT                N/A      -1  200000  ADD_THEN_REMOVE  sample   11240   2225833.634 ±  7442.597  ns/op
+d.h.p.c.b.i.GDXIntSet.bench       DEFAULT                N/A      -1  200000  REMOVE_THEN_ADD  sample   11735   2131995.400 ±  6435.273  ns/op
+d.h.p.c.b.i.JDKGDXDSIntSet.bench  DEFAULT                N/A      -1  200000              ADD  sample   40348    620173.083 ±  1610.466  ns/op
+d.h.p.c.b.i.JDKGDXDSIntSet.bench  DEFAULT                N/A      -1  200000           REMOVE  sample   46625    536085.095 ±  1408.636  ns/op
+d.h.p.c.b.i.JDKGDXDSIntSet.bench  DEFAULT                N/A      -1  200000         CONTAINS  sample   47123    530574.529 ±  1139.723  ns/op
+d.h.p.c.b.i.JDKGDXDSIntSet.bench  DEFAULT                N/A      -1  200000    ADD_OR_REMOVE  sample   17431   1434831.902 ±  4388.644  ns/op
+d.h.p.c.b.i.JDKGDXDSIntSet.bench  DEFAULT                N/A      -1  200000  ADD_THEN_REMOVE  sample   12675   1975047.412 ±  7338.756  ns/op
+d.h.p.c.b.i.JDKGDXDSIntSet.bench  DEFAULT                N/A      -1  200000  REMOVE_THEN_ADD  sample   11616   2152649.873 ±  6576.883  ns/op
+d.h.p.c.b.i.JDKGetPut.bench       DEFAULT                N/A      -1  200000              ADD  sample   10381   2410368.949 ± 11628.190  ns/op
+d.h.p.c.b.i.JDKGetPut.bench       DEFAULT                N/A      -1  200000           REMOVE  sample   39768    628396.958 ±  2046.339  ns/op
+d.h.p.c.b.i.JDKGetPut.bench       DEFAULT                N/A      -1  200000         CONTAINS  sample   19323   1295132.603 ±  5819.017  ns/op
+d.h.p.c.b.i.JDKGetPut.bench       DEFAULT                N/A      -1  200000    ADD_OR_REMOVE  sample   10600   2359231.662 ± 10583.057  ns/op
+d.h.p.c.b.i.JDKGetPut.bench       DEFAULT                N/A      -1  200000  ADD_THEN_REMOVE  sample    6293   3978837.998 ± 21274.434  ns/op
+d.h.p.c.b.i.JDKGetPut.bench       DEFAULT                N/A      -1  200000  REMOVE_THEN_ADD  sample    6131   4081264.822 ± 16679.143  ns/op

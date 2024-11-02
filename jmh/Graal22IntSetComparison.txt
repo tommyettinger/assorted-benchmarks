@@ -1,0 +1,19 @@
+Benchmark             (size)       (workload)    Cnt         Score       Error  Units
+GDXIntSet.bench       200000              ADD  33498    746752.902 ±  2095.462  ns/op
+GDXIntSet.bench       200000           REMOVE  60490    413873.520 ±   891.347  ns/op
+GDXIntSet.bench       200000         CONTAINS  41486    603273.238 ±  1407.509  ns/op
+GDXIntSet.bench       200000    ADD_OR_REMOVE  16423   1522969.268 ±  4277.025  ns/op
+GDXIntSet.bench       200000  ADD_THEN_REMOVE  11124   2249788.939 ±  7566.346  ns/op
+GDXIntSet.bench       200000  REMOVE_THEN_ADD  11268   2220673.227 ±  5572.280  ns/op
+JDKGDXDSIntSet.bench  200000              ADD  40621    615310.864 ±  1742.755  ns/op
+JDKGDXDSIntSet.bench  200000           REMOVE  68962    362916.962 ±   755.932  ns/op
+JDKGDXDSIntSet.bench  200000         CONTAINS  40282    621144.541 ±  1410.859  ns/op
+JDKGDXDSIntSet.bench  200000    ADD_OR_REMOVE  17824   1403727.167 ±  3717.675  ns/op
+JDKGDXDSIntSet.bench  200000  ADD_THEN_REMOVE  12361   2022199.276 ±  8461.354  ns/op
+JDKGDXDSIntSet.bench  200000  REMOVE_THEN_ADD  12343   2027463.420 ±  6354.854  ns/op
+JDKGetPut.bench       200000              ADD  12428   2013308.581 ±  8296.741  ns/op
+JDKGetPut.bench       200000           REMOVE  74015    337983.005 ±  1254.735  ns/op
+JDKGetPut.bench       200000         CONTAINS  20417   1225155.990 ±  6015.818  ns/op
+JDKGetPut.bench       200000    ADD_OR_REMOVE  11426   2189213.418 ± 11952.985  ns/op
+JDKGetPut.bench       200000  ADD_THEN_REMOVE   7319   3416557.042 ± 14996.924  ns/op
+JDKGetPut.bench       200000  REMOVE_THEN_ADD   7159   3493111.024 ± 15373.743  ns/op
