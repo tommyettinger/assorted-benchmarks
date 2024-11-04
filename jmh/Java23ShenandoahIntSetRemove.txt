@@ -1,0 +1,41 @@
+Just testing remove().
+
+This version has the same code for JDKGDXDSIntSetAlt and JDKGDXDSIntSet, as a control.
+
+~\.jdks\temurin-23\bin\java.exe -jar benchmarks.jar "(JDKGDXDSIntSet|JDKGDXDSIntSetAlt|GDXIntSet|FastutilIntSet|JDKGetPut)\.bench" -p impl=DEFAULT -p size=1000,10000,100000 -p workload=REMOVE -wi 5 -i 5 -f 1 -w 5 -r 5
+
+Benchmark                         (impl)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
+FastutilIntSet.bench             DEFAULT      -1    1000      REMOVE  sample  709583     1155.912 ±  17.310  ns/op
+FastutilIntSet.bench             DEFAULT      -1   10000      REMOVE  sample  572889    11056.617 ±  39.809  ns/op
+FastutilIntSet.bench             DEFAULT      -1  100000      REMOVE  sample  156058   160228.981 ± 231.367  ns/op
+GDXIntSet.bench                  DEFAULT      -1    1000      REMOVE  sample  851164     1883.635 ±  12.841  ns/op
+GDXIntSet.bench                  DEFAULT      -1   10000      REMOVE  sample  568862    22042.410 ±  40.602  ns/op
+GDXIntSet.bench                  DEFAULT      -1  100000      REMOVE  sample  124664   200630.279 ± 262.586  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1    1000      REMOVE  sample  774741     2046.482 ±   8.022  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1   10000      REMOVE  sample  379877    16749.668 ±  71.858  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  100000      REMOVE  sample  101062   247742.383 ± 381.906  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    1000      REMOVE  sample  850263     1906.113 ±  20.526  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   10000      REMOVE  sample  380402    16649.912 ±  55.614  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  100000      REMOVE  sample   97103   257425.805 ± 394.895  ns/op
+JDKGetPut.bench                  DEFAULT      -1    1000      REMOVE  sample  634271     2607.145 ±  46.600  ns/op
+JDKGetPut.bench                  DEFAULT      -1   10000      REMOVE  sample  633174    19964.680 ± 106.148  ns/op
+JDKGetPut.bench                  DEFAULT      -1  100000      REMOVE  sample   96773   258547.882 ± 859.047  ns/op
+
+This version doesn't test JDKGetPut, but does use a different remove() implementation for JDKGDXDSIntSetAlt.
+The new version is closely modeled after Fastutil's version.
+
+~\.jdks\temurin-23\bin\java.exe -jar benchmarks.jar "(JDKGDXDSIntSet|JDKGDXDSIntSetAlt|GDXIntSet|FastutilIntSet)\.bench" -p impl=DEFAULT -p size=1000,10000,100000 -p workload=REMOVE -wi 5 -i 5 -f 1 -w 5 -r 5
+
+Benchmark                         (impl)  (seed)  (size)  (workload)    Mode     Cnt         Score     Error  Units
+FastutilIntSet.bench             DEFAULT      -1    1000      REMOVE  sample  724112      1117.917 ±  12.486  ns/op
+FastutilIntSet.bench             DEFAULT      -1   10000      REMOVE  sample  584089     10811.985 ±  39.622  ns/op
+FastutilIntSet.bench             DEFAULT      -1  100000      REMOVE  sample  157951    158373.134 ± 214.716  ns/op
+GDXIntSet.bench                  DEFAULT      -1    1000      REMOVE  sample  846113      1892.398 ±  12.387  ns/op
+GDXIntSet.bench                  DEFAULT      -1   10000      REMOVE  sample  587066     21352.809 ±  38.575  ns/op
+GDXIntSet.bench                  DEFAULT      -1  100000      REMOVE  sample  127049    196792.444 ± 326.185  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1    1000      REMOVE  sample  950169      1684.904 ±  11.821  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1   10000      REMOVE  sample  386107     16420.457 ±  66.191  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  100000      REMOVE  sample  102076    245266.905 ± 436.017  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    1000      REMOVE  sample  945347      1696.856 ±  13.149  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   10000      REMOVE  sample  417190     15286.798 ± 142.096  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  100000      REMOVE  sample  126044    198336.896 ± 275.530  ns/op

@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.google.guava:guava:33.0.0-jre'
     implementation 'com.koloboke:koloboke-impl-jdk8:1.0.0'
     implementation 'net.sf.trove4j:core:3.1.0'
-    implementation 'it.unimi.dsi:fastutil:8.5.9'
+    implementation 'it.unimi.dsi:fastutil:8.5.15'
     implementation 'com.carrotsearch:hppc:0.9.1'
     implementation 'org.eclipse.collections:eclipse-collections:11.1.0'
     implementation 'org.agrona:agrona:1.17.1'
