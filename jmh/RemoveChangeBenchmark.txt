@@ -1,0 +1,27 @@
+Just Alt. Shenandoah, Java 23.
+
+Benchmark                         (impl)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    1000      REMOVE  sample  934952     1703.490 ±   8.993  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   10000      REMOVE  sample  398991    15928.947 ±  63.685  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  100000      REMOVE  sample  133763   186901.466 ± 278.718  ns/op
+
+Just the regular IntSet. Shenandoah, Java 23.
+
+Benchmark                      (impl)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
+JDKGDXDSIntSet.bench          DEFAULT      -1    1000      REMOVE  sample  871597     1837.834 ±  15.525  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1   10000      REMOVE  sample  384194    16477.972 ±  47.836  ns/op
+JDKGDXDSIntSet.bench          DEFAULT      -1  100000      REMOVE  sample  100897   247737.008 ± 450.132  ns/op
+
+Just Alt again, but with some inlining for remove().
+
+Benchmark                         (impl)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    1000      REMOVE  sample  500482     1634.350 ±  20.466  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   10000      REMOVE  sample  457534    13844.909 ±  52.836  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  100000      REMOVE  sample  133423   187448.955 ± 370.103  ns/op
+
+Just Alt, with the above inlining, and a different place() method that uses a variable shift.
+
+Benchmark                         (impl)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    1000      REMOVE  sample  495646     1681.526 ±  25.557  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   10000      REMOVE  sample  478278    13216.875 ±  33.821  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  100000      REMOVE  sample  143939   173731.938 ± 261.043  ns/op

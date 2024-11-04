@@ -185,25 +185,9 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 	 * @return an index between 0 and {@link #mask} (both inclusive)
 	 */
 	protected int place (int item) {
-		return BitConversion.imul(item, hashMultiplier) >>> shift;
-	}
-
-	/**
-	 * Returns the index of the key if already present, else {@code ~index} for the next empty index.
-	 * While this can be overridden to compare for equality differently than {@code ==} between ints, that
-	 * isn't recommended because this has to treat zero keys differently, and it finds those with {@code ==}.
-	 */
-	protected int locateKey (int key) {
-		int[] keyTable = this.keyTable;
-		for (int i = place(key); ; i = i + 1 & mask) {
-			int other = keyTable[i];
-			if (other == 0) {
-				return ~i; // Empty space is available.
-			}
-			if (other == key) {
-				return i; // Same key was found.
-			}
-		}
+		item *= 0xB45ED;
+		return (item ^ item >>> (item >>> 28) + 4) & mask;
+//		return BitConversion.imul(item, hashMultiplier) >>> shift;
 	}
 
 	/**
@@ -287,9 +271,18 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 			return true;
 		}
 
-		int pos = locateKey(key);
-		if (pos < 0) {return false;}
+		int pos;
 		int[] keyTable = this.keyTable;
+		for (int i = place(key); ; i = i + 1 & mask) {
+			int other = keyTable[i];
+			if (other == 0) {
+				return false; // Nothing is present.
+			}
+			if (other == key) {
+				pos = i; // Same key was found.
+				break;
+			}
+		}
 		int mask = this.mask, last, slot;
 		size--;
 		for (;;) {
