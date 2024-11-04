@@ -32,3 +32,10 @@ Benchmark                         (impl)  (seed)  (size)  (workload)    Mode    
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1    1000      REMOVE  sample  496688     1671.939 ±  29.484  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1   10000      REMOVE  sample  437548    14523.919 ±  62.808  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  100000      REMOVE  sample  148416   168410.720 ± 243.643  ns/op
+
+Just Alt again, but with a xor-rotate-rotate and mask, using two different variable rotates. Not good...
+
+Benchmark                         (impl)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    1000      REMOVE  sample  875974     1825.909 ±   9.863  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   10000      REMOVE  sample  696407    18013.213 ±  50.541  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  100000      REMOVE  sample   97290   256959.591 ± 439.718  ns/op
