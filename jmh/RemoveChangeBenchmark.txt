@@ -25,3 +25,10 @@ Benchmark                         (impl)  (seed)  (size)  (workload)    Mode    
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1    1000      REMOVE  sample  495646     1681.526 ±  25.557  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1   10000      REMOVE  sample  478278    13216.875 ±  33.821  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  100000      REMOVE  sample  143939   173731.938 ± 261.043  ns/op
+
+Just Alt again, with the inlining and a different place() that uses the hashing family (which it should) via multiplication, and a xorshift + mask.
+
+Benchmark                         (impl)  (seed)  (size)  (workload)    Mode     Cnt        Score     Error  Units
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    1000      REMOVE  sample  496688     1671.939 ±  29.484  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   10000      REMOVE  sample  437548    14523.919 ±  62.808  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  100000      REMOVE  sample  148416   168410.720 ± 243.643  ns/op
