@@ -209,3 +209,14 @@ JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sampl
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  55245   452803.143 ±  870.597  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12143  2060755.179 ± 6860.891  ns/op
 
+Using a XOR-Rotate-XOR-Rotate step and a mask seems like an all-around improvement, but it isn't a hash family...
+
+~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGDXDSIntSet|JDKGDXDSIntSetAlt)\.bench" -p impl=DEFAULT -p size=200000 -p workload=ADD,REMOVE,ADD_THEN_REMOVE -wi 5 -i 5 -f 1 -w 5 -r 5
+
+Benchmark                         (impl)  (seed)  (size)       (workload)    Mode    Cnt         Score      Error  Units
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000              ADD  sample  40824    612636.607 ± 1539.345  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000           REMOVE  sample  49513    504979.448 ± 1154.502  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12223   2046029.912 ± 7300.038  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample  44072    567779.561 ± 1297.854  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  57978    431377.423 ±  895.267  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  13228   1890993.272 ± 6874.631  ns/op
