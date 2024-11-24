@@ -96,4 +96,47 @@ JDKGetPut.bench               DEFAULT      -1  200000    ADD_OR_REMOVE  sample  
 JDKGetPut.bench               DEFAULT      -1  200000  ADD_THEN_REMOVE  sample    5422   4614118.315 ± 34850.089  ns/op
 JDKGetPut.bench               DEFAULT      -1  200000  REMOVE_THEN_ADD  sample    5256   4760493.394 ± 25382.847  ns/op
 
+Here, I'm testing JDKGDXDSIntSetAlt, which makes some important changes to remove(), with JDKGDXDSIntSet. What this means
+is JDKGDXDSIntSetAlt can shrink the key table to half its current capacity if enough items have been removed. This sounds
+like it could be useful, and it does speed up remove(), but it slows down the benchmarks ADD_THEN_REMOVE and
+REMOVE_THEN_ADD. By about a factor of two. I'm not quite sure why this happens.
 
+~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGDXDSIntSet|JDKGDXDSIntSetAlt)\.bench" -p impl=DEFAULT -p size=8000,40000,200000 -wi 5 -i 5 -f 1 -w 5 -r 5
+
+Benchmark                         (impl)  (seed)  (size)       (workload)    Mode     Cnt         Score       Error  Units
+JDKGDXDSIntSet.bench             DEFAULT      -1    8000              ADD  sample  408323     15550.033 ±    49.549  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1    8000           REMOVE  sample  598962     16793.350 ±    37.710  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1    8000         CONTAINS  sample  389772     16424.417 ±   117.504  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1    8000    ADD_OR_REMOVE  sample  417528     30146.611 ±    71.547  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1    8000  ADD_THEN_REMOVE  sample  482922     51767.830 ±   108.931  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1    8000  REMOVE_THEN_ADD  sample  439065     56928.174 ±    78.252  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1   40000              ADD  sample  243899    102540.435 ±   156.164  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1   40000           REMOVE  sample  269440     92802.839 ±   122.642  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1   40000         CONTAINS  sample  241187    103620.980 ±   147.352  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1   40000    ADD_OR_REMOVE  sample   69246    361431.681 ±   663.888  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1   40000  ADD_THEN_REMOVE  sample   80199    312150.163 ±   492.690  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1   40000  REMOVE_THEN_ADD  sample   82663    302548.600 ±   521.919  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000              ADD  sample   40763    613673.029 ±  1644.688  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000           REMOVE  sample   49510    505148.983 ±  1203.094  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000         CONTAINS  sample   42762    585304.159 ±  1225.849  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000    ADD_OR_REMOVE  sample   17500   1428673.331 ±  4524.053  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sample   12252   2041374.255 ±  6342.287  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000  REMOVE_THEN_ADD  sample   12399   2016777.869 ±  6508.144  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    8000              ADD  sample  408352     15711.092 ±    93.037  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    8000           REMOVE  sample  427330     14962.450 ±    69.781  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    8000         CONTAINS  sample  398350     16055.857 ±    66.902  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    8000    ADD_OR_REMOVE  sample  662126     18998.774 ±    52.006  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    8000  ADD_THEN_REMOVE  sample  157533    158649.187 ±   297.381  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    8000  REMOVE_THEN_ADD  sample  158565    157464.183 ±   304.123  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   40000              ADD  sample  256998     97364.237 ±   171.336  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   40000           REMOVE  sample  358215     69766.542 ±   116.930  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   40000         CONTAINS  sample  249996    100003.520 ±   186.806  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   40000    ADD_OR_REMOVE  sample   70623    354140.409 ±   756.178  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   40000  ADD_THEN_REMOVE  sample   26112    958608.471 ±  2424.256  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   40000  REMOVE_THEN_ADD  sample   26124    957509.654 ±  2462.936  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample   41693    600102.695 ±  1820.052  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample   79290    315497.880 ±   818.085  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000         CONTAINS  sample   43648    572920.176 ±  1439.860  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000    ADD_OR_REMOVE  sample   17078   1464498.561 ±  4241.372  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample    5208   4806481.401 ± 18819.892  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  REMOVE_THEN_ADD  sample    5341   4687325.585 ± 21235.961  ns/op

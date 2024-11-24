@@ -70,7 +70,7 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 	 * {@link #mask} can also be used to mask the low bits of a number, which may be faster for some hashcodes, if
 	 * {@link #place(int)} is overridden.
 	 */
-	protected int shift;
+	protected transient int shift;
 
 	/**
 	 * Used by {@link #place(int)} to mix hashCode() results. Changes on every call to {@link #resize(int)} by default.
@@ -84,7 +84,9 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 	 * minus 1. If {@link #place(int)} is overridden, this can be used instead of {@link #shift} to isolate usable bits of a
 	 * hash.
 	 */
-	protected int mask;
+	protected transient int mask;
+
+	protected final transient int minCapacity;
 
 	@Nullable protected transient IntSetIterator iterator1;
 	@Nullable protected transient IntSetIterator iterator2;
@@ -117,8 +119,9 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 		this.loadFactor = loadFactor;
 
 		int tableSize = tableSize(initialCapacity, loadFactor);
-		threshold = (int)(tableSize * loadFactor);
+		minCapacity = Math.max(tableSize, 64);
 		mask = tableSize - 1;
+		threshold = Math.min((int)(tableSize * (double)loadFactor + 1), mask);
 		shift = BitConversion.countLeadingZeros(mask) + 32;
 
 		keyTable = new int[tableSize];
@@ -185,12 +188,7 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 	 * @return an index between 0 and {@link #mask} (both inclusive)
 	 */
 	protected int place (int item) {
-//		item *= 0xB45ED;
-//		return (item ^ item >>> (item >>> 28) + 4) & mask;
-//		return BitConversion.imul(item, hashMultiplier) >>> shift;
-//		final int h = BitConversion.imul(item, hashMultiplier);
-//		return (h ^ h >>> 16) & mask;
-		return (item ^ (item << 16 - hashMultiplier | item >>> 16 + hashMultiplier) ^ (item << hashMultiplier | item >>> -hashMultiplier)) & mask;
+		return BitConversion.imul(item, hashMultiplier) >>> shift;
 	}
 
 	/**
@@ -275,6 +273,7 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 		}
 
 		int pos;
+		int mask = this.mask;
 		int[] keyTable = this.keyTable;
 		for (int i = place(key); ; i = i + 1 & mask) {
 			int other = keyTable[i];
@@ -286,13 +285,15 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 				break;
 			}
 		}
-		int mask = this.mask, last, slot;
+		int last, slot;
 		size--;
 		for (;;) {
 			pos = ((last = pos) + 1) & mask;
 			for (;;) {
 				if ((key = keyTable[pos]) == 0) {
 					keyTable[last] = 0;
+					if(mask >= minCapacity && size < (threshold >>> 2))
+						resize(keyTable.length >>> 1);
 					return true;
 				}
 				slot = place(key);
@@ -382,8 +383,8 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 
 	protected void resize (int newSize) {
 		int oldCapacity = keyTable.length;
-		threshold = (int)(newSize * loadFactor);
 		mask = newSize - 1;
+		threshold = Math.min((int)(newSize * (double)loadFactor + 1), mask);
 		shift = BitConversion.countLeadingZeros(mask) + 32;
 
 		hashMultiplier = Utilities.GOOD_MULTIPLIERS[BitConversion.imul(hashMultiplier, shift) >>> 5 & 511];
