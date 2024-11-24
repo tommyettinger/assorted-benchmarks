@@ -86,8 +86,6 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 	 */
 	protected transient int mask;
 
-	protected final transient int minCapacity;
-
 	@Nullable protected transient IntSetIterator iterator1;
 	@Nullable protected transient IntSetIterator iterator2;
 
@@ -119,7 +117,6 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 		this.loadFactor = loadFactor;
 
 		int tableSize = tableSize(initialCapacity, loadFactor);
-		minCapacity = Math.max(tableSize, 64);
 		mask = tableSize - 1;
 		threshold = Math.min((int)(tableSize * (double)loadFactor + 1), mask);
 		shift = BitConversion.countLeadingZeros(mask) + 32;
@@ -188,7 +185,7 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 	 * @return an index between 0 and {@link #mask} (both inclusive)
 	 */
 	protected int place (int item) {
-		return BitConversion.imul(item, hashMultiplier) >>> shift;
+		return BitConversion.imul(item, hashMultiplier) & mask;
 	}
 
 	/**
@@ -203,6 +200,7 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 			return true;
 		}
 		int[] keyTable = this.keyTable;
+
 		for (int i = place(key); ; i = i + 1 & mask) {
 			int other = keyTable[i];
 			if (key == other)
@@ -292,8 +290,8 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 			for (;;) {
 				if ((key = keyTable[pos]) == 0) {
 					keyTable[last] = 0;
-					if(mask >= minCapacity && size < (threshold >>> 2))
-						resize(keyTable.length >>> 1);
+//					if(mask >= minCapacity && size < (threshold >>> 2))
+//						resize(keyTable.length >>> 1);
 					return true;
 				}
 				slot = place(key);

@@ -199,7 +199,7 @@ public abstract class AbstractIntSetBenchmark<T> {
 					self.add(words[i]);
 				}
 			}
-		}, //
+		},
 		;
 
 		public <T> void init(AbstractIntSetBenchmark<T> self) throws InterruptedException {
@@ -207,9 +207,6 @@ public abstract class AbstractIntSetBenchmark<T> {
 		}
 
 		abstract public <T> void run(AbstractIntSetBenchmark<T> self) throws InterruptedException;
-
-		//
-		;
 
 		private static boolean failIfInterrupted() throws InterruptedException {
 			if (Thread.interrupted()) {
