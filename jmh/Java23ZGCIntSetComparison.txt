@@ -170,3 +170,17 @@ JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sampl
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  56486    442831.425 ± 1001.374  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12366   2021758.572 ± 5695.048  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  REMOVE_THEN_ADD  sample  12794   1955823.832 ± 5848.646  ns/op
+
+Mixing here is just too complex, and it slows down remove() relative to before.
+
+~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGDXDSIntSet|JDKGDXDSIntSetAlt)\.bench" -p impl=DEFAULT -p size=200000 -p workload=ADD,REMOVE,ADD_THEN_REMOVE,REMOVE_THEN_ADD -wi 5 -i 5 -f 1 -w 5 -r 5
+
+Benchmark                         (impl)  (seed)  (size)       (workload)    Mode    Cnt         Score      Error  Units
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000              ADD  sample  40655    615564.647 ± 1403.066  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000           REMOVE  sample  48802    512724.671 ± 1236.017  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12137   2060834.381 ± 6655.280  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000  REMOVE_THEN_ADD  sample  12520   1999181.373 ± 7091.470  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample  41961    595573.113 ± 1456.327  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  48553    515190.813 ± 1029.971  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12288   2036846.500 ± 6799.794  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  REMOVE_THEN_ADD  sample  13161   1901004.298 ± 5892.261  ns/op
