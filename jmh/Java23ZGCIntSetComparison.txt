@@ -156,3 +156,17 @@ JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sampl
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  57689   433590.345 ±  882.530  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12874  1944535.912 ± 5181.595  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  REMOVE_THEN_ADD  sample  12769  1960561.194 ± 6525.857  ns/op
+
+This tests a hash without multiplication, which just xorshifts the int item by 16 right, adds hashMultiplier, and masks.
+
+~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGDXDSIntSet|JDKGDXDSIntSetAlt)\.bench" -p impl=DEFAULT -p size=200000 -p workload=ADD,REMOVE,ADD_THEN_REMOVE,REMOVE_THEN_ADD -wi 5 -i 5 -f 1 -w 5 -r 5
+
+Benchmark                         (impl)  (seed)  (size)       (workload)    Mode    Cnt         Score      Error  Units
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000              ADD  sample  40443    618290.139 ± 2022.866  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000           REMOVE  sample  49600    504256.723 ±  963.890  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12343   2027490.631 ± 5619.143  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000  REMOVE_THEN_ADD  sample  12629   1980644.493 ± 4722.375  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample  41979    596169.097 ± 1567.466  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  56486    442831.425 ± 1001.374  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12366   2021758.572 ± 5695.048  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  REMOVE_THEN_ADD  sample  12794   1955823.832 ± 5848.646  ns/op
