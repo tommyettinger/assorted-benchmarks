@@ -314,3 +314,17 @@ JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sampl
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample  43858    569996.766 ± 1432.809  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  58827    425406.001 ± 1147.726  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  13501   1853333.815 ± 5784.882  ns/op
+
+Testing:
+return (item ^ item >>> 23 ^ item >>> 11) & mask;
+
+About the same from a slightly different set of shifts.
+
+Benchmark                         (impl)  (seed)  (size)       (workload)    Mode    Cnt         Score      Error  Units
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000              ADD  sample  41031    609885.451 ± 1710.429  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000           REMOVE  sample  49264    507843.606 ± 1189.129  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12281   2036670.880 ± 5606.715  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample  42825    584162.051 ± 1582.323  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  58771    425503.467 ± 1025.522  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  13416   1864581.877 ± 5187.353  ns/op
+

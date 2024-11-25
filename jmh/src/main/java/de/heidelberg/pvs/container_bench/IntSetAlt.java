@@ -185,7 +185,7 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 	 * @return an index between 0 and {@link #mask} (both inclusive)
 	 */
 	protected int place (int item) {
-		return (item ^ item >>> 21 ^ item >>> 11) & mask;
+		return (item ^ item >>> 23 ^ item >>> 11) & mask;
 	}
 
 	/**
