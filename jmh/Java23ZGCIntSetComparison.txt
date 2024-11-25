@@ -320,6 +320,8 @@ return (item ^ item >>> 23 ^ item >>> 11) & mask;
 
 About the same from a slightly different set of shifts.
 
+~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGDXDSIntSet|JDKGDXDSIntSetAlt)\.bench" -p impl=DEFAULT -p size=200000 -p workload=ADD,REMOVE,ADD_THEN_REMOVE -wi 5 -i 5 -f 1 -w 5 -r 5
+
 Benchmark                         (impl)  (seed)  (size)       (workload)    Mode    Cnt         Score      Error  Units
 JDKGDXDSIntSet.bench             DEFAULT      -1  200000              ADD  sample  41031    609885.451 ± 1710.429  ns/op
 JDKGDXDSIntSet.bench             DEFAULT      -1  200000           REMOVE  sample  49264    507843.606 ± 1189.129  ns/op
@@ -328,3 +330,29 @@ JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sampl
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  58771    425503.467 ± 1025.522  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  13416   1864581.877 ± 5187.353  ns/op
 
+Testing:
+return (item ^ (item << 9 | item >>> 23) ^ (item << 21 | item >>> 11)) & mask;
+
+A more robust benchmark of a xor-rotate-rotate with the same right-shifts as above.
+
+~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGDXDSIntSet|JDKGDXDSIntSetAlt)\.bench" -p impl=DEFAULT -p size=8000,40000,200000 -p workload=ADD,REMOVE,ADD_THEN_REMOVE -wi 8 -i 8 -f 1 -w 8 -r 8
+
+Benchmark                         (impl)  (seed)  (size)       (workload)    Mode      Cnt        Score      Error  Units
+JDKGDXDSIntSet.bench             DEFAULT      -1    8000              ADD  sample  1048381    15518.359 ±   48.782  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1    8000           REMOVE  sample  1781226    16875.029 ±   24.260  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1    8000  ADD_THEN_REMOVE  sample  1226249    52164.929 ±   53.132  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1   40000              ADD  sample   633546   100997.096 ±   96.738  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1   40000           REMOVE  sample   701230    91219.614 ±  110.658  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1   40000  ADD_THEN_REMOVE  sample   210321   304280.161 ±  427.055  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000              ADD  sample   103516   618220.819 ± 1029.109  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000           REMOVE  sample   129503   494457.705 ±  834.561  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sample    31722  2018113.352 ± 4773.370  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    8000              ADD  sample  1055462    15475.564 ±   42.087  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    8000           REMOVE  sample  1171195    13862.050 ±   32.867  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1    8000  ADD_THEN_REMOVE  sample   912155    70164.164 ±   69.008  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   40000              ADD  sample   775520    82501.232 ±   95.829  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   40000           REMOVE  sample   848303    75339.584 ±   81.033  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1   40000  ADD_THEN_REMOVE  sample   214120   298935.004 ±  403.921  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample   112378   569369.468 ± 1028.803  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample   150234   426032.346 ±  685.629  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample    33590  1906843.902 ± 4130.689  ns/op
