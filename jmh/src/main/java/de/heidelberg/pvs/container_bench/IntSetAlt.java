@@ -185,7 +185,7 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 	 * @return an index between 0 and {@link #mask} (both inclusive)
 	 */
 	protected int place (int item) {
-		return BitConversion.imul(item ^ item >>> 16, hashMultiplier) & mask;
+		return BitConversion.imul(item, hashMultiplier) >>> shift;
 	}
 
 	/**
@@ -194,7 +194,7 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 	@Override
 	public boolean add (int key) {
 		if (key == 0) {
-			if (hasZeroValue) {return false;}
+			if (hasZeroValue) return false;
 			hasZeroValue = true;
 			size++;
 			return true;
@@ -264,10 +264,12 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 	@Override
 	public boolean remove (int key) {
 		if (key == 0) {
-			if (!hasZeroValue) {return false;}
-			hasZeroValue = false;
-			size--;
-			return true;
+			if (hasZeroValue) {
+				hasZeroValue = false;
+				size--;
+				return true;
+			}
+			return false;
 		}
 
 		int pos;

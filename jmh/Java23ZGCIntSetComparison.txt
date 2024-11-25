@@ -232,3 +232,17 @@ JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sampl
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample  42918   582460.973 ± 1443.304  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  56118   446145.959 ± 1032.009  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  11564  2162419.160 ± 7015.515  ns/op
+
+This brings the Alt test back to what the non-Alt test uses for place(), with other optimizations remaining.
+There's some significant slowdown after a lot of entries have been added or removed, and I'm not sure why. It could be
+some kind of deoptimization due to branch prediction failure.
+
+~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGDXDSIntSet|JDKGDXDSIntSetAlt)\.bench" -p impl=DEFAULT -p size=200000 -p workload=ADD,REMOVE,ADD_THEN_REMOVE -wi 5 -i 5 -f 1 -w 5 -r 5
+
+Benchmark                         (impl)  (seed)  (size)       (workload)    Mode    Cnt         Score      Error  Units
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000              ADD  sample  40879    612057.706 ± 1492.504  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000           REMOVE  sample  49386    506836.654 ± 1044.613  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12318   2031158.783 ± 6095.634  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample  40952    611001.299 ± 1575.823  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  51568    485035.229 ± 1030.386  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12605   1985069.290 ± 7150.496  ns/op
