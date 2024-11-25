@@ -297,3 +297,20 @@ JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sampl
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample  41293    605370.385 ±  1788.039  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  54838    456301.378 ±  1156.842  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  11909   2099336.373 ±  7241.572  ns/op
+
+Testing:
+return (item ^ item >>> 21 ^ item >>> 11) & mask;
+
+Not a family! But still all-around faster. This is a tiny bit better than the xor-rotate-rotate one. It should be noted
+that this doesn't have issues with a common use of int sets, where a point's x goes in the upper bits and y in the lower
+bits. It might have issues, sort-of, with 3D points organized in 10-bit sections.
+
+~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGDXDSIntSet|JDKGDXDSIntSetAlt)\.bench" -p impl=DEFAULT -p size=200000 -p workload=ADD,REMOVE,ADD_THEN_REMOVE -wi 5 -i 5 -f 1 -w 5 -r 5
+
+Benchmark                         (impl)  (seed)  (size)       (workload)    Mode    Cnt         Score      Error  Units
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000              ADD  sample  40775    613569.562 ± 1682.657  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000           REMOVE  sample  49662    504198.634 ± 1127.700  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12356   2026535.117 ± 7077.091  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample  43858    569996.766 ± 1432.809  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  58827    425406.001 ± 1147.726  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  13501   1853333.815 ± 5784.882  ns/op
