@@ -185,7 +185,7 @@ public class IntSetAlt implements PrimitiveSet.SetOfInt {
 	 * @return an index between 0 and {@link #mask} (both inclusive)
 	 */
 	protected int place (int item) {
-		return (item ^ Utilities.GOOD_MULTIPLIERS[item >>> 23]) & mask;
+		return (item ^ Utilities.GOOD_MULTIPLIERS[item + hashMultiplier >>> 23]) & mask;
 	}
 
 	/**

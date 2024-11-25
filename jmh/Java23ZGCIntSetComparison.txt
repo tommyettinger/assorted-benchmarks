@@ -284,3 +284,16 @@ JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sampl
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample  42581    587148.208 ± 1450.889  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  61593    405910.920 ±  857.122  ns/op
 JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  11712   2137984.175 ± 6910.286  ns/op
+
+Testing:
+return (item ^ Utilities.GOOD_MULTIPLIERS[item + hashMultiplier >>> 23]) & mask;
+
+~\.jdks\temurin-23\bin\java.exe -Xms8G -Xmx8G -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(JDKGDXDSIntSet|JDKGDXDSIntSetAlt)\.bench" -p impl=DEFAULT -p size=200000 -p workload=ADD,REMOVE,ADD_THEN_REMOVE -wi 5 -i 5 -f 1 -w 5 -r 5
+
+Benchmark                         (impl)  (seed)  (size)       (workload)    Mode    Cnt         Score       Error  Units
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000              ADD  sample  40421    618754.679 ±  1625.966  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000           REMOVE  sample  50269    497664.917 ±  1357.564  ns/op
+JDKGDXDSIntSet.bench             DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  12123   2063140.807 ± 33321.612  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000              ADD  sample  41293    605370.385 ±  1788.039  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000           REMOVE  sample  54838    456301.378 ±  1156.842  ns/op
+JDKGDXDSIntSetAlt.bench          DEFAULT      -1  200000  ADD_THEN_REMOVE  sample  11909   2099336.373 ±  7241.572  ns/op
