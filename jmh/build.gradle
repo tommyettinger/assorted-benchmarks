@@ -90,8 +90,10 @@ dependencies {
     //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
 //    implementation 'com.github.tommyettinger:jdkgdxds:3a9f925cd0'
     implementation 'com.github.tommyettinger:digital:0.5.4'
-    implementation('com.github.tommyettinger:juniper:0.6.2')
-    implementation('com.github.tommyettinger:jdkgdxds:8a19710f55') {
+    implementation('com.github.tommyettinger:juniper:0.6.2') {
+        exclude group: 'com.github.tommyettinger', module: 'digital'
+    }
+    implementation('com.github.tommyettinger:jdkgdxds:666e393d26') {
         exclude group: 'com.github.tommyettinger', module: 'digital'
     }
 
