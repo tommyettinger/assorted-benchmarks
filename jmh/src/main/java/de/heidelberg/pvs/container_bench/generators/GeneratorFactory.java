@@ -13,6 +13,9 @@ public class GeneratorFactory {
 			case INTEGER_UNIFORM:
 				return new IntegerUniformGenerator();
 
+			case LONG_UNIFORM:
+				return new LongUniformGenerator();
+
 			case STRING_UNIFORM:
 				return new StringUniformGenerator();
 

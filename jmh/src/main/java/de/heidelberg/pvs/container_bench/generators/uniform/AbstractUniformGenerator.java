@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench.generators.uniform;
 
-import com.github.tommyettinger.random.WhiskerRandom;
+import com.github.tommyettinger.random.AceRandom;
 import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
 
 /**
@@ -12,13 +12,13 @@ import de.heidelberg.pvs.container_bench.generators.ElementGenerator;
  */
 public abstract class AbstractUniformGenerator<T> implements ElementGenerator<T> {
 
-	WhiskerRandom generator;
+	public AceRandom generator;
 	
 	@Override
 	public void init(int size, int seed) {
 		// FIXME: size has no influence here so we should think in a better
 		// way of handling this common initialization
-		generator = new WhiskerRandom(seed);
+		generator = new AceRandom(seed);
 	}
 	
 	@Override
