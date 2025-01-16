@@ -45,4 +45,6 @@ java -jar benchmarks.jar "JDKMapBench" -p impl=FLIP_HASH,JDKGDXDS_HASH,JDK_O2O_H
 java -jar benchmarks.jar "(JDKGetPut|JDKGDXDSIntSet|GDXIntSet|FastutilIntSet)Bench" -p impl=DEFAULT -p size=200000 -wi 5 -i 5 -f 1 -w 5 -r 5
 java -jar benchmarks.jar "(JDKGetPut|JDKGDXDSIntSet|JDKGDXDSIntSetAlt|GDXIntSet|FastutilIntSet)Bench" -p impl=DEFAULT -p size=200000 -p workload=REMOVE -wi 5 -i 5 -f 1 -w 5 -r 5
 
-java -jar benchmarks.jar "(FastUtil|GDX|JDK|JDKGDXDSMap)Long2ObjBench" -p size=10000 -wi 5 -i 5 -f 1 -w 4 -r 4
+java -jar benchmarks.jar "(Fastutil|GDX|JDK|JDKGDXDSMap)Long2ObjBench" -p payloadType=LONG_UNIFORM -p size=10000 -wi 5 -i 5 -f 1 -w 4 -r 4
+java -Xms8G -Xmx8G -XX:+UseZGC -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -jar benchmarks.jar "(Fastutil|GDX|JDK|JDKGDXDS)MapLong2ObjBench" -p payloadType=LONG_UNIFORM -p size=10000 -wi 5 -i 5 -f 1 -w 4 -r 4
+java -Xms8G -Xmx8G -jar benchmarks.jar "(Fastutil|GDX|JDK|JDKGDXDS)MapLong2ObjBench" -p payloadType=LONG_UNIFORM -p size=100000 -p workload=POPULATE,CONTAINS -wi 5 -i 5 -f 1 -w 5 -r 5

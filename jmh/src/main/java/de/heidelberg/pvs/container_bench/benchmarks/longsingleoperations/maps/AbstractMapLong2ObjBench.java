@@ -1,6 +1,6 @@
 package de.heidelberg.pvs.container_bench.benchmarks.longsingleoperations.maps;
 
-import de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.AbstractIntSingleOperationsBench;
+import de.heidelberg.pvs.container_bench.benchmarks.longsingleoperations.AbstractLongSingleOperationsBench;
 import de.heidelberg.pvs.container_bench.generators.*;
 import de.heidelberg.pvs.container_bench.generators.uniform.LongUniformGenerator;
 import org.openjdk.jmh.annotations.Benchmark;
@@ -14,7 +14,7 @@ import java.io.IOException;
  * @author diego.costa
  *
  */
-public abstract class AbstractMapLong2ObjBench extends AbstractIntSingleOperationsBench {
+public abstract class AbstractMapLong2ObjBench extends AbstractLongSingleOperationsBench {
 
 	protected ElementGenerator<String> valuesGenerator;
 	protected LongElementGenerator keyGenerator;
