@@ -23,3 +23,13 @@ FASTUTIL_L2O_PRIMITIVE_LINKEDHASH  100000    CONTAINS         182.360  ns/op
                JDK_O2O_LINKEDHASH  100000    CONTAINS          79.941  ns/op
                      JDK_O2O_TREE  100000    POPULATE    18913837.983  ns/op
                      JDK_O2O_TREE  100000    CONTAINS         342.973  ns/op
+
+Also trying a little one-off test that only should work for uniformly-distributed keys:
+
+                        (impl)     (size)  (workload)           Score  Units
+   JDKGDXDS_L2O_PRIMITIVE_HASH     100000    POPULATE     3097244.642  ns/op
+   JDKGDXDS_L2O_PRIMITIVE_HASH     100000    CONTAINS         177.591  ns/op
+JDKGDXDS_L2O_PRIMITIVE_ORDERED     100000    POPULATE     3428118.119  ns/op
+JDKGDXDS_L2O_PRIMITIVE_ORDERED     100000    CONTAINS         178.404  ns/op
+JDKGDXDS_L2O_PRIMITIVE_UNMIXED     100000    POPULATE     2890115.268  ns/op
+JDKGDXDS_L2O_PRIMITIVE_UNMIXED     100000    CONTAINS         154.978  ns/op
