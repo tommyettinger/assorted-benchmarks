@@ -1,7 +1,6 @@
 package de.heidelberg.pvs.container_bench.benchmarks.longsingleoperations;
 
-import de.heidelberg.pvs.container_bench.generators.IntPayloadType;
-import de.heidelberg.pvs.container_bench.generators.PayloadType;
+import de.heidelberg.pvs.container_bench.generators.LongPayloadType;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
@@ -39,7 +38,7 @@ public abstract class AbstractLongSingleOperationsBench {
 	public int seed;
 
 	@Param()
-	public PayloadType payloadType = PayloadType.LONG_UNIFORM;
+	public LongPayloadType payloadType = LongPayloadType.LONG_NO_ZERO;
 
 	/**
 	 * Blackhole object responsible for consuming any return from our tested methods

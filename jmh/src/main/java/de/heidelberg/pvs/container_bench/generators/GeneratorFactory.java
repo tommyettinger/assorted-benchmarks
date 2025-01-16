@@ -58,4 +58,20 @@ public class GeneratorFactory {
 		}
 	}
 
+
+	public static LongElementGenerator buildRandomGenerator(LongPayloadType payloadType) {
+
+		switch (payloadType) {
+
+			case LONG_UNIFORM:
+				return new LongUniformGenerator();
+
+			case LONG_NO_ZERO:
+				return new LongNoZeroGenerator();
+
+			default:
+				throw new IllegalArgumentException("Payload type not specified");
+		}
+	}
+
 }

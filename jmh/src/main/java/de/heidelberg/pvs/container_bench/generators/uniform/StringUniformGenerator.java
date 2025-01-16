@@ -7,7 +7,7 @@ public class StringUniformGenerator extends AbstractUniformGenerator<String> {
 	public String[] generateArray(int arraySize) {
 		String[] strings = new String[arraySize];
 		for (int i = 0; i < arraySize; i++) {
-			strings[i] = "" + generator.nextLong();
+			strings[i] = generator.nextLong() + "_" + i;
 		}
 		return strings;
 	}

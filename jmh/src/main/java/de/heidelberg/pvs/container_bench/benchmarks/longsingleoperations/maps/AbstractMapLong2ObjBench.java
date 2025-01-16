@@ -28,10 +28,10 @@ public abstract class AbstractMapLong2ObjBench extends AbstractLongSingleOperati
 	@SuppressWarnings("unchecked")
 	public void generatorSetup() throws IOException {
 		valuesGenerator =
-				(ElementGenerator<String>) GeneratorFactory.buildRandomGenerator(PayloadType.STRING_DICTIONARY);
+				(ElementGenerator<String>) GeneratorFactory.buildRandomGenerator(PayloadType.STRING_UNIFORM);
 		valuesGenerator.init(size, seed);
 
-		keyGenerator = new LongUniformGenerator();
+		keyGenerator = GeneratorFactory.buildRandomGenerator(payloadType);
 		keyGenerator.init(size, seed);
 		
 		values = valuesGenerator.generateArray(size);

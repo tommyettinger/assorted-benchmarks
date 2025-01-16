@@ -1,0 +1,23 @@
+With a standard size of 100 thousand keys:
+
+Benchmark                                                       (impl)  (payloadType)  (seed)  (size)  (workload)    Mode     Cnt       Score   Error  Units
+GDXMapLong2ObjBench.bench                                 GDX_L2O_HASH   LONG_NO_ZERO  467505  100000    CONTAINS  sample  757971      31.603 ± 2.252  ns/op
+JDKGDXDSMapLong2ObjBench.bench             JDKGDXDS_L2O_PRIMITIVE_HASH   LONG_NO_ZERO  467505  100000    CONTAINS  sample  761403      32.417 ± 2.805  ns/op
+JDKGDXDSMapLong2ObjBench.bench          JDKGDXDS_L2O_PRIMITIVE_ORDERED   LONG_NO_ZERO  467505  100000    CONTAINS  sample  754058      32.853 ± 2.656  ns/op
+JDKGDXDSMapLong2ObjBench.bench          JDKGDXDS_L2O_PRIMITIVE_UNMIXED   LONG_NO_ZERO  467505  100000    CONTAINS  sample  770518      31.943 ± 2.171  ns/op
+JDKMapLong2ObjBench.bench                                 JDK_O2O_HASH   LONG_NO_ZERO  467505  100000    CONTAINS  sample  959429      32.080 ± 1.290  ns/op
+JDKMapLong2ObjBench.bench                       JDK_O2O_CONCURRENTHASH   LONG_NO_ZERO  467505  100000    CONTAINS  sample  903065      31.775 ± 1.044  ns/op
+JDKMapLong2ObjBench.bench                           JDK_O2O_LINKEDHASH   LONG_NO_ZERO  467505  100000    CONTAINS  sample  955732      33.174 ± 1.841  ns/op
+JDKMapLong2ObjBench.bench                                 JDK_O2O_TREE   LONG_NO_ZERO  467505  100000    CONTAINS  sample  691554     169.795 ± 4.492  ns/op
+
+With a larger map, 8 million keys:
+
+Benchmark                                                       (impl)  (payloadType)  (seed)   (size)  (workload)    Mode     Cnt       Score   Error  Units
+GDXMapLong2ObjBench.bench                                 GDX_L2O_HASH   LONG_NO_ZERO  467505  8000000    CONTAINS  sample  526247     115.261 ± 6.728  ns/op
+JDKGDXDSMapLong2ObjBench.bench             JDKGDXDS_L2O_PRIMITIVE_HASH   LONG_NO_ZERO  467505  8000000    CONTAINS  sample  528182     114.000 ± 6.172  ns/op
+JDKGDXDSMapLong2ObjBench.bench          JDKGDXDS_L2O_PRIMITIVE_ORDERED   LONG_NO_ZERO  467505  8000000    CONTAINS  sample  527480     110.866 ± 4.417  ns/op
+JDKGDXDSMapLong2ObjBench.bench          JDKGDXDS_L2O_PRIMITIVE_UNMIXED   LONG_NO_ZERO  467505  8000000    CONTAINS  sample  531495     113.586 ± 6.411  ns/op
+JDKMapLong2ObjBench.bench                                 JDK_O2O_HASH   LONG_NO_ZERO  467505  8000000    CONTAINS  sample  659168     118.346 ± 4.984  ns/op
+JDKMapLong2ObjBench.bench                       JDK_O2O_CONCURRENTHASH   LONG_NO_ZERO  467505  8000000    CONTAINS  sample  634477     118.584 ± 4.118  ns/op
+JDKMapLong2ObjBench.bench                           JDK_O2O_LINKEDHASH   LONG_NO_ZERO  467505  8000000    CONTAINS  sample  647307     117.412 ± 3.618  ns/op
+JDKMapLong2ObjBench.bench                                 JDK_O2O_TREE   LONG_NO_ZERO  467505  8000000    CONTAINS  sample  863380     240.906 ± 5.101  ns/op
