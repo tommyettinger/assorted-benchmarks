@@ -508,7 +508,16 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureJoltSinF             avgt    5  3.736 ± 0.057  ns/op
  * MathBenchmark.measureMathSinF             avgt    5  6.288 ± 0.035  ns/op
  * </pre>
- *
+ * Testing in degrees, oddly Jolt performs much better for cos() than sin()...
+ * <pre>
+ * Benchmark                           Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalCosDeg  avgt    5  0.693 ± 0.020  ns/op
+ * MathBenchmark.measureDigitalSinDeg  avgt    5  0.691 ± 0.015  ns/op
+ * MathBenchmark.measureJoltCosDeg     avgt    5  2.291 ± 0.017  ns/op
+ * MathBenchmark.measureJoltSinDeg     avgt    5  3.162 ± 0.026  ns/op
+ * MathBenchmark.measureMathCosDeg     avgt    5  6.116 ± 0.033  ns/op
+ * MathBenchmark.measureMathSinDeg     avgt    5  6.301 ± 0.040  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -600,6 +609,10 @@ public class MathBenchmark {
     private int sinLerp = -0x8000;
     private int sinJolt = -0x8000;
     private int cosJolt = -0x8000;
+    private int sinJoltDeg = -0x8000;
+    private int cosJoltDeg = -0x8000;
+    private int sinJoltTurns = -0x8000;
+    private int cosJoltTurns = -0x8000;
     private int mathCosDeg = -0x8000;
     private int mathSinDeg = -0x8000;
     private int sinNickDeg = -0x8000;
@@ -1256,14 +1269,24 @@ public class MathBenchmark {
     }
 
     @Benchmark
-    public float measureDigitalSinDegF()
+    public float measureDigitalSinDeg()
     {
         return TrigTools.sinDeg(((sinDigitalDeg += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
-    public float measureDigitalCosDegF() {
+    public float measureDigitalCosDeg() {
         return TrigTools.cosDeg(((cosDigitalDeg += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureJoltSinDeg() {
+        return NumberTools2.sinDegJolt(((sinJoltDeg += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureJoltCosDeg() {
+        return NumberTools2.cosDegJolt(((cosJoltDeg += 0x9E3779B9) >> 24));
     }
 
     @Benchmark

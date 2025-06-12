@@ -1041,6 +1041,104 @@ public final class NumberTools2 {
         }
         return s;
     }
+
+    public static float sinDegJolt(float angle) {
+        // Implementation based on sinf.c from the cephes library, combines sinf and cosf in a single function, changes octants to quadrants and vectorizes it
+        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+        int bits = BitConversion.floatToIntBits(angle);
+        int sinSign = bits & 0x80000000;
+        float x = BitConversion.intBitsToFloat(bits ^ sinSign);
+        int quadrant = (int)(0.011111111f * x + 0.5f);
+        x = (x - quadrant * 90f) * (PI2 / 360f);
+        float x2 = x * x, s;
+        switch ((sinSign >>> 30 ^ quadrant) & 3) {
+            case 0:
+                s = ((-1.9515295891e-4f * x2 + 8.3321608736e-3f) * x2 - 1.6666654611e-1f) * x2 * x + x;
+                break;
+            case 1:
+                s = ((2.443315711809948e-5f * x2 - (1.388731625493765e-3f)) * x2 + (4.166664568298827e-2f)) * x2 * x2 - 0.5f * x2 + 1f;
+                break;
+            case 2:
+                s = (((1.9515295891e-4f * x2 - 8.3321608736e-3f) * x2 + 1.6666654611e-1f) * x2 * x - x);
+                break;
+            default:
+                s = (((-2.443315711809948e-5f * x2 + 1.388731625493765e-3f) * x2 - 4.166664568298827e-2f) * x2 * x2 + 0.5f * x2 - 1f);
+        }
+        return s;
+    }
+
+    public static float cosDegJolt(float angle) {
+        // Implementation based on sinf.c from the cephes library, combines sinf and cosf in a single function, changes octants to quadrants and vectorizes it
+        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+        float x = Math.abs(angle);
+        int quadrant = (int)(0.011111111f * x + 0.5f);
+        x = (x - quadrant * 90f) * (PI2 / 360f);
+        float x2 = x * x, s;
+        switch (quadrant & 3) {
+            case 3:
+                s = ((-1.9515295891e-4f * x2 + 8.3321608736e-3f) * x2 - 1.6666654611e-1f) * x2 * x + x;
+                break;
+            case 0:
+                s = ((2.443315711809948e-5f * x2 - (1.388731625493765e-3f)) * x2 + (4.166664568298827e-2f)) * x2 * x2 - 0.5f * x2 + 1f;
+                break;
+            case 1:
+                s = (((1.9515295891e-4f * x2 - 8.3321608736e-3f) * x2 + 1.6666654611e-1f) * x2 * x - x);
+                break;
+            default:
+                s = (((-2.443315711809948e-5f * x2 + 1.388731625493765e-3f) * x2 - 4.166664568298827e-2f) * x2 * x2 + 0.5f * x2 - 1f);
+        }
+        return s;
+    }
+
+    public static float sinTurnsJolt(float angle) {
+        // Implementation based on sinf.c from the cephes library, combines sinf and cosf in a single function, changes octants to quadrants and vectorizes it
+        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+        int bits = BitConversion.floatToIntBits(angle);
+        int sinSign = bits & 0x80000000;
+        float x = BitConversion.intBitsToFloat(bits ^ sinSign);
+        int quadrant = (int)(4 * x + 0.5f);
+        x = (x - quadrant * 0.25f) * PI2;
+        float x2 = x * x, s;
+        switch ((sinSign >>> 30 ^ quadrant) & 3) {
+            case 0:
+                s = ((-1.9515295891e-4f * x2 + 8.3321608736e-3f) * x2 - 1.6666654611e-1f) * x2 * x + x;
+                break;
+            case 1:
+                s = ((2.443315711809948e-5f * x2 - (1.388731625493765e-3f)) * x2 + (4.166664568298827e-2f)) * x2 * x2 - 0.5f * x2 + 1f;
+                break;
+            case 2:
+                s = (((1.9515295891e-4f * x2 - 8.3321608736e-3f) * x2 + 1.6666654611e-1f) * x2 * x - x);
+                break;
+            default:
+                s = (((-2.443315711809948e-5f * x2 + 1.388731625493765e-3f) * x2 - 4.166664568298827e-2f) * x2 * x2 + 0.5f * x2 - 1f);
+        }
+        return s;
+    }
+
+    public static float cosTurnsJolt(float angle) {
+        // Implementation based on sinf.c from the cephes library, combines sinf and cosf in a single function, changes octants to quadrants and vectorizes it
+        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+        float x = Math.abs(angle);
+        int quadrant = (int)(4 * x + 0.5f);
+        x = (x - quadrant * 0.25f) * PI2;
+        float x2 = x * x, s;
+        switch (quadrant & 3) {
+            case 3:
+                s = ((-1.9515295891e-4f * x2 + 8.3321608736e-3f) * x2 - 1.6666654611e-1f) * x2 * x + x;
+                break;
+            case 0:
+                s = ((2.443315711809948e-5f * x2 - (1.388731625493765e-3f)) * x2 + (4.166664568298827e-2f)) * x2 * x2 - 0.5f * x2 + 1f;
+                break;
+            case 1:
+                s = (((1.9515295891e-4f * x2 - 8.3321608736e-3f) * x2 + 1.6666654611e-1f) * x2 * x - x);
+                break;
+            default:
+                s = (((-2.443315711809948e-5f * x2 + 1.388731625493765e-3f) * x2 - 4.166664568298827e-2f) * x2 * x2 + 0.5f * x2 - 1f);
+        }
+        return s;
+    }
+
+
     public static void main(String[] args) {
         for (int i = 0; i < 360; i++) {
             double r = Math.toRadians(i);
