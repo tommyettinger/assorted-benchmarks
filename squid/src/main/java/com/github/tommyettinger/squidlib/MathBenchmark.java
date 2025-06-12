@@ -528,6 +528,16 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathCosDeg     avgt    5  6.137 ± 0.043  ns/op
  * MathBenchmark.measureMathSinDeg     avgt    5  6.338 ± 0.075  ns/op
  * </pre>
+ * Math.copySign() is a pessimization here.
+ * <pre>
+ * Benchmark                           Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalCosDeg  avgt    5  0.691 ± 0.030  ns/op
+ * MathBenchmark.measureDigitalSinDeg  avgt    5  0.691 ± 0.011  ns/op
+ * MathBenchmark.measureJoltCosDeg     avgt    5  2.279 ± 0.025  ns/op
+ * MathBenchmark.measureJoltSinDeg     avgt    5  2.847 ± 0.041  ns/op
+ * MathBenchmark.measureMathCosDeg     avgt    5  6.202 ± 0.317  ns/op
+ * MathBenchmark.measureMathSinDeg     avgt    5  6.322 ± 0.190  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
