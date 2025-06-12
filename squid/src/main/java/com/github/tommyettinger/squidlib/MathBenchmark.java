@@ -518,6 +518,16 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathCosDeg     avgt    5  6.116 ± 0.033  ns/op
  * MathBenchmark.measureMathSinDeg     avgt    5  6.301 ± 0.040  ns/op
  * </pre>
+ * Some speedup for sinDeg with Jolt...
+ * <pre>
+ * Benchmark                           Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalCosDeg  avgt    5  0.692 ± 0.012  ns/op
+ * MathBenchmark.measureDigitalSinDeg  avgt    5  0.689 ± 0.010  ns/op
+ * MathBenchmark.measureJoltCosDeg     avgt    5  2.288 ± 0.015  ns/op
+ * MathBenchmark.measureJoltSinDeg     avgt    5  2.668 ± 0.021  ns/op
+ * MathBenchmark.measureMathCosDeg     avgt    5  6.137 ± 0.043  ns/op
+ * MathBenchmark.measureMathSinDeg     avgt    5  6.338 ± 0.075  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
