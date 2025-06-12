@@ -587,6 +587,8 @@ public class MathBenchmark {
     private int sinSplit = -0x8000;
     private int sinTT2 = -0x8000;
     private int sinLerp = -0x8000;
+    private int sinJolt = -0x8000;
+    private int cosJolt = -0x8000;
     private int mathCosDeg = -0x8000;
     private int mathSinDeg = -0x8000;
     private int sinNickDeg = -0x8000;
@@ -1120,6 +1122,18 @@ public class MathBenchmark {
     }
 
     @Benchmark
+    public float measureJoltSinF()
+    {
+        return NumberTools2.sinJolt(((sinJolt += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureJoltCosF()
+    {
+        return NumberTools2.cosJolt(((cosJolt += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
     public float measurePadeSinF()
     {
         return NumberTools2.sinPade(((sinPade += 0x9E3779B9) >> 24));
@@ -1231,13 +1245,13 @@ public class MathBenchmark {
     }
 
     @Benchmark
-    public float measureDigitalSinDeg()
+    public float measureDigitalSinDegF()
     {
         return TrigTools.sinDeg(((sinDigitalDeg += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
-    public float measureDigitalCosDeg() {
+    public float measureDigitalCosDegF() {
         return TrigTools.cosDeg(((cosDigitalDeg += 0x9E3779B9) >> 24));
     }
 

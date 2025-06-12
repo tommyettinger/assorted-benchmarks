@@ -17,8 +17,6 @@
 
 package com.github.tommyettinger.squidlib;
 
-import com.github.tommyettinger.digital.TrigTools;
-
 public final class TrigTools2 {
 
     /**
@@ -160,7 +158,7 @@ public final class TrigTools2 {
      * <br>
      * A quick way to get a random unit vector is to get a random 14-bit number, as with
      * {@code int angle = random.nextInt() >>> 18;}, look up angle in this table to get y, then look up
-     * {@code (angle + TrigTools.SIN_TO_COS) & TrigTools.TABLE_MASK} (or {@code (angle + 4096) & 16383}) to get x.
+     * {@code (angle + TrigTools2.SIN_TO_COS) & TrigTools2.TABLE_MASK} (or {@code (angle + 4096) & 16383}) to get x.
      * Note that if {@link #SIN_BITS} changes, this table will be a different size, and so will {@link #SIN_TO_COS}.
      * Elements 0 and 16384 are identical to allow wrapping.
      */
@@ -173,7 +171,7 @@ public final class TrigTools2 {
      * <br>
      * A quick way to get a random unit vector is to get a random 14-bit number, as with
      * {@code int angle = random.nextInt() >>> 18;}, look up angle in this table to get y, then look up
-     * {@code (angle + TrigTools.SIN_TO_COS) & TrigTools.TABLE_MASK} (or {@code (angle + 4096) & 16383}) to get x.
+     * {@code (angle + TrigTools2.SIN_TO_COS) & TrigTools2.TABLE_MASK} (or {@code (angle + 4096) & 16383}) to get x.
      * Note that if {@link #SIN_BITS} changes, this table will be a different size, and so will {@link #SIN_TO_COS}.
      * Elements 0 and 16384 are identical to allow wrapping.
      */
@@ -269,11 +267,11 @@ public final class TrigTools2 {
         //Mean relative error:     0.0000341421
         //Maximum abs. error:     17.9890136719
         //Maximum rel. error:      0.0575221963
-        radians *= TrigTools.PI_INVERSE;
+        radians *= TrigTools2.PI_INVERSE;
         radians += 0.5f;
         radians -= (int)(radians + 16384.0) - 16384;
         radians -= 0.5f;
-        radians *= TrigTools.PI;
+        radians *= TrigTools2.PI;
         final float x2 = radians * radians, x4 = x2 * x2;
         return radians * ((0.0010582010582010583f) * x4 - (0.1111111111111111f) * x2 + 1f)
                 / ((0.015873015873015872f) * x4 - (0.4444444444444444f) * x2 + 1f);
@@ -337,7 +335,7 @@ public final class TrigTools2 {
         degrees += 0.5f;
         degrees -= (int)(degrees + 16384.0) - 16384;
         degrees -= 0.5f;
-        degrees *= TrigTools.PI;
+        degrees *= TrigTools2.PI;
         final float x2 = degrees * degrees, x4 = x2 * x2;
         return degrees * ((0.0010582010582010583f) * x4 - (0.1111111111111111f) * x2 + 1f)
                 / ((0.015873015873015872f) * x4 - (0.4444444444444444f) * x2 + 1f);
@@ -393,7 +391,7 @@ public final class TrigTools2 {
         turns += 0.5f;
         turns -= (int)(turns + 16384.0) - 16384;
         turns -= 0.5f;
-        turns *= TrigTools.PI;
+        turns *= TrigTools2.PI;
         final float x2 = turns * turns, x4 = x2 * x2;
         return turns * ((0.0010582010582010583f) * x4 - (0.1111111111111111f) * x2 + 1f)
                 / ((0.015873015873015872f) * x4 - (0.4444444444444444f) * x2 + 1f);
@@ -445,11 +443,11 @@ public final class TrigTools2 {
      * @return a double approximation of tan()
      */
     public static double tan(double radians) {
-        radians *= TrigTools.PI_INVERSE_D;
+        radians *= TrigTools2.PI_INVERSE_D;
         radians += 0.5;
         radians -= Math.floor(radians);
         radians -= 0.5;
-        radians *= TrigTools.PI_D;
+        radians *= TrigTools2.PI_D;
         final double x2 = radians * radians, x4 = x2 * x2;
         return radians * ((0.0010582010582010583) * x4 - (0.1111111111111111) * x2 + 1.0)
                 / ((0.015873015873015872) * x4 - (0.4444444444444444) * x2 + 1.0);
@@ -507,7 +505,7 @@ public final class TrigTools2 {
         degrees += 0.5;
         degrees -= Math.floor(degrees);
         degrees -= 0.5;
-        degrees *= TrigTools.PI_D;
+        degrees *= TrigTools2.PI_D;
         final double x2 = degrees * degrees, x4 = x2 * x2;
         return degrees * ((0.0010582010582010583) * x4 - (0.1111111111111111) * x2 + 1.0)
                 / ((0.015873015873015872) * x4 - (0.4444444444444444) * x2 + 1.0);
@@ -563,7 +561,7 @@ public final class TrigTools2 {
         turns += 0.5;
         turns -= Math.floor(turns);
         turns -= 0.5;
-        turns *= TrigTools.PI_D;
+        turns *= TrigTools2.PI_D;
         final double x2 = turns * turns, x4 = x2 * x2;
         return turns * ((0.0010582010582010583) * x4 - (0.1111111111111111) * x2 + 1.0)
                 / ((0.015873015873015872) * x4 - (0.4444444444444444) * x2 + 1.0);
@@ -574,7 +572,7 @@ public final class TrigTools2 {
      * This takes an input in radians, and takes and returns floats.
      * This was updated more recently than the 7th century, and has better precision than the original. You may want to
      * use this if you notice statistical issues with the tabular approximation of sin(); in particular, only 16384
-     * outputs are possible from {@link TrigTools#sin(float)}, and about half of those are duplicates, so if you need
+     * outputs are possible from {@link TrigTools2#sin(float)}, and about half of those are duplicates, so if you need
      * more possible results in-between the roughly 8192 possible sin() returns, you can use this or {@link #sinSmoother(float)}.
      * <br>
      * Credit to <a href="https://math.stackexchange.com/a/3886664">This Stack Exchange answer by WimC</a>.
@@ -586,7 +584,7 @@ public final class TrigTools2 {
         //Mean relative error:     0.0000075369
         //Maximum abs. error:      0.0003550053
         //Maximum rel. error:      1.0000000000
-        radians = radians * (TrigTools.PI_INVERSE * 2f);
+        radians = radians * (TrigTools2.PI_INVERSE * 2f);
         final int ceil = (int) Math.ceil(radians) & -2;
         radians -= ceil;
         final float x2 = radians * radians, x3 = radians * x2;
@@ -598,7 +596,7 @@ public final class TrigTools2 {
      * century. This takes an input in radians, and takes and returns floats.
      * This was updated more recently than the 7th century, and has better precision than the original. You may want to
      * use this if you notice statistical issues with the tabular approximation of cos(); in particular, only 16384
-     * outputs are possible from {@link TrigTools#cos(float)}, and about half of those are duplicates, so if you need
+     * outputs are possible from {@link TrigTools2#cos(float)}, and about half of those are duplicates, so if you need
      * more possible results in-between the roughly 8192 possible cos() returns, you can use this or {@link #cosSmoother(float)}.
      * <br>
      * Credit to <a href="https://math.stackexchange.com/a/3886664">This Stack Exchange answer by WimC</a>.
@@ -612,7 +610,7 @@ public final class TrigTools2 {
         //Worst input:      5.77527666
         //Worst approx output: 0.87340844
         //Correct output:      0.87376356
-        radians = radians * (TrigTools.PI_INVERSE * 2f) + 1f;
+        radians = radians * (TrigTools2.PI_INVERSE * 2f) + 1f;
         final int ceil = (int) Math.ceil(radians) & -2;
         radians -= ceil;
         final float x2 = radians * radians, x3 = radians * x2;
@@ -624,7 +622,7 @@ public final class TrigTools2 {
      * This takes an input in radians, and takes and returns doubles.
      * This was updated more recently than the 7th century, and has better precision than the original. You may want to
      * use this if you notice statistical issues with the tabular approximation of sin(); in particular, only 16384
-     * outputs are possible from {@link TrigTools#sin(float)}, and about half of those are duplicates, so if you need
+     * outputs are possible from {@link TrigTools2#sin(float)}, and about half of those are duplicates, so if you need
      * more possible results in-between the roughly 8192 possible sin() returns, you can use this or {@link #sinSmoother(double)}.
      * <br>
      * Credit to <a href="https://math.stackexchange.com/a/3886664">This Stack Exchange answer by WimC</a>.
@@ -638,7 +636,7 @@ public final class TrigTools2 {
         //Worst input:      -5.21563292
         //Worst approx output: 0.87566801
         //Correct output:      0.87602272
-        radians = radians * (TrigTools.PI_INVERSE_D * 2.0);
+        radians = radians * (TrigTools2.PI_INVERSE_D * 2.0);
         final long ceil = (long) Math.ceil(radians) & -2L;
         radians -= ceil;
         final double x2 = radians * radians, x3 = radians * x2;
@@ -650,7 +648,7 @@ public final class TrigTools2 {
      * century. This takes an input in radians, and takes and returns doubles.
      * This was updated more recently than the 7th century, and has better precision than the original. You may want to
      * use this if you notice statistical issues with the tabular approximation of cos(); in particular, only 16384
-     * outputs are possible from {@link TrigTools#cos(float)}, and about half of those are duplicates, so if you need
+     * outputs are possible from {@link TrigTools2#cos(float)}, and about half of those are duplicates, so if you need
      * more possible results in-between the roughly 8192 possible cos() returns, you can use this or {@link #cosSmoother(double)}.
      * <br>
      * Credit to <a href="https://math.stackexchange.com/a/3886664">This Stack Exchange answer by WimC</a>.
@@ -659,7 +657,7 @@ public final class TrigTools2 {
      */
     public static double cosSmooth(double radians) {
         //
-        radians = radians * (TrigTools.PI_INVERSE_D * 2.0) + 1.0;
+        radians = radians * (TrigTools2.PI_INVERSE_D * 2.0) + 1.0;
         final long ceil = (long) Math.ceil(radians) & -2L;
         radians -= ceil;
         final double x2 = radians * radians, x3 = radians * x2;
@@ -671,7 +669,7 @@ public final class TrigTools2 {
      * This takes an input in degrees, and takes and returns floats.
      * This was updated more recently than the 7th century, and has better precision than the original. You may want to
      * use this if you notice statistical issues with the tabular approximation of sinDeg(); in particular, only 16384
-     * outputs are possible from {@link TrigTools#sinDeg(float)}, and about half of those are duplicates, so if you need
+     * outputs are possible from {@link TrigTools2#sinDeg(float)}, and about half of those are duplicates, so if you need
      * more possible results in-between the roughly 8192 possible sinDeg() returns, you can use this or {@link #sinSmootherDeg(float)}.
      * <br>
      * Credit to <a href="https://math.stackexchange.com/a/3886664">This Stack Exchange answer by WimC</a>.
@@ -695,7 +693,7 @@ public final class TrigTools2 {
      * century. This takes an input in degrees, and takes and returns floats.
      * This was updated more recently than the 7th century, and has better precision than the original. You may want to
      * use this if you notice statistical issues with the tabular approximation of cosDeg(); in particular, only 16384
-     * outputs are possible from {@link TrigTools#cosDeg(float)}, and about half of those are duplicates, so if you need
+     * outputs are possible from {@link TrigTools2#cosDeg(float)}, and about half of those are duplicates, so if you need
      * more possible results in-between the roughly 8192 possible cosDeg() returns, you can use this or {@link #cosSmootherDeg(float)}.
      * <br>
      * Credit to <a href="https://math.stackexchange.com/a/3886664">This Stack Exchange answer by WimC</a>.
@@ -716,7 +714,7 @@ public final class TrigTools2 {
      * This takes an input in degrees, and takes and returns doubles.
      * This was updated more recently than the 7th century, and has better precision than the original. You may want to
      * use this if you notice statistical issues with the tabular approximation of sinDeg(); in particular, only 16384
-     * outputs are possible from {@link TrigTools#sinDeg(float)}, and about half of those are duplicates, so if you need
+     * outputs are possible from {@link TrigTools2#sinDeg(float)}, and about half of those are duplicates, so if you need
      * more possible results in-between the roughly 8192 possible sinDeg() returns, you can use this or {@link #sinSmootherDeg(double)}.
      * <br>
      * Credit to <a href="https://math.stackexchange.com/a/3886664">This Stack Exchange answer by WimC</a>.
@@ -737,7 +735,7 @@ public final class TrigTools2 {
      * century. This takes an input in degrees, and takes and returns doubles.
      * This was updated more recently than the 7th century, and has better precision than the original. You may want to
      * use this if you notice statistical issues with the tabular approximation of cosDeg(); in particular, only 16384
-     * outputs are possible from {@link TrigTools#cosDeg(float)}, and about half of those are duplicates, so if you need
+     * outputs are possible from {@link TrigTools2#cosDeg(float)}, and about half of those are duplicates, so if you need
      * more possible results in-between the roughly 8192 possible cosDeg() returns, you can use this or {@link #cosSmootherDeg(double)}.
      * <br>
      * Credit to <a href="https://math.stackexchange.com/a/3886664">This Stack Exchange answer by WimC</a>.
@@ -758,7 +756,7 @@ public final class TrigTools2 {
      * This takes an input in turns, and takes and returns floats.
      * This was updated more recently than the 7th century, and has better precision than the original. You may want to
      * use this if you notice statistical issues with the tabular approximation of sinTurns(); in particular, only 16384
-     * outputs are possible from {@link TrigTools#sinTurns(float)}, and about half of those are duplicates, so if you
+     * outputs are possible from {@link TrigTools2#sinTurns(float)}, and about half of those are duplicates, so if you
      * need more possible results in-between the roughly 8192 possible sinTurns() returns, you can use this or {@link #sinSmootherTurns(float)}.
      * <br>
      * Credit to <a href="https://math.stackexchange.com/a/3886664">This Stack Exchange answer by WimC</a>.
@@ -784,7 +782,7 @@ public final class TrigTools2 {
      * century. This takes an input in turns, and takes and returns floats.
      * This was updated more recently than the 7th century, and has better precision than the original. You may want to
      * use this if you notice statistical issues with the tabular approximation of cosTurns(); in particular, only 16384
-     * outputs are possible from {@link TrigTools#cosTurns(float)}, and about half of those are duplicates, so if you
+     * outputs are possible from {@link TrigTools2#cosTurns(float)}, and about half of those are duplicates, so if you
      * need more possible results in-between the roughly 8192 possible cosTurns() returns, you can use this or {@link #cosSmootherTurns(float)}.
      * <br>
      * Credit to <a href="https://math.stackexchange.com/a/3886664">This Stack Exchange answer by WimC</a>.
@@ -805,7 +803,7 @@ public final class TrigTools2 {
      * This takes an input in turns, and takes and returns doubles.
      * This was updated more recently than the 7th century, and has better precision than the original. You may want to
      * use this if you notice statistical issues with the tabular approximation of sinTurns(); in particular, only 16384
-     * outputs are possible from {@link TrigTools#sinTurns(float)}, and about half of those are duplicates, so if you
+     * outputs are possible from {@link TrigTools2#sinTurns(float)}, and about half of those are duplicates, so if you
      * need more possible results in-between the roughly 8192 possible sinTurns() returns, you can use this or {@link #sinSmootherTurns(double)}.
      * <br>
      * Credit to <a href="https://math.stackexchange.com/a/3886664">This Stack Exchange answer by WimC</a>.
@@ -826,7 +824,7 @@ public final class TrigTools2 {
      * century. This takes an input in turns, and takes and returns doubles.
      * This was updated more recently than the 7th century, and has better precision than the original. You may want to
      * use this if you notice statistical issues with the tabular approximation of cosTurns(); in particular, only 16384
-     * outputs are possible from {@link TrigTools#cosTurns(float)}, and about half of those are duplicates, so if you
+     * outputs are possible from {@link TrigTools2#cosTurns(float)}, and about half of those are duplicates, so if you
      * need more possible results in-between the roughly 8192 possible cosTurns() returns, you can use this or {@link #cosSmootherTurns(double)}.
      * <br>
      * Credit to <a href="https://math.stackexchange.com/a/3886664">This Stack Exchange answer by WimC</a>.
