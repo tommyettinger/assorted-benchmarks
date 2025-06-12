@@ -538,6 +538,16 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathCosDeg     avgt    5  6.202 ± 0.317  ns/op
  * MathBenchmark.measureMathSinDeg     avgt    5  6.322 ± 0.190  ns/op
  * </pre>
+ * Still haven't beaten signum...
+ * <pre>
+ * Benchmark                           Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalCosDeg  avgt    5  0.687 ± 0.008  ns/op
+ * MathBenchmark.measureDigitalSinDeg  avgt    5  0.689 ± 0.010  ns/op
+ * MathBenchmark.measureJoltCosDeg     avgt    5  2.286 ± 0.014  ns/op
+ * MathBenchmark.measureJoltSinDeg     avgt    5  2.805 ± 0.047  ns/op
+ * MathBenchmark.measureMathCosDeg     avgt    5  6.172 ± 0.281  ns/op
+ * MathBenchmark.measureMathSinDeg     avgt    5  6.310 ± 0.164  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
