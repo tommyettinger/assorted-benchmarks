@@ -497,6 +497,17 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureDigitalSmootherCosF  avgt   10   6.817 ± 0.019  ns/op
  * MathBenchmark.measurePadeCosF             avgt   10   8.721 ± 0.046  ns/op
  * </pre>
+ * New computer! 14 cores (6 higher speed, 8 lower). The results will be different now!
+ * <br>
+ * Testing sin() implementations on Java 23, including the 2-ULP precise sin() from Jolt physics:
+ * <pre>
+ * Benchmark                                 Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalSinF          avgt    5  0.688 ± 0.008  ns/op
+ * MathBenchmark.measureDigitalSmoothSinF    avgt    5  2.623 ± 0.020  ns/op
+ * MathBenchmark.measureDigitalSmootherSinF  avgt    5  1.171 ± 0.012  ns/op
+ * MathBenchmark.measureJoltSinF             avgt    5  3.736 ± 0.057  ns/op
+ * MathBenchmark.measureMathSinF             avgt    5  6.288 ± 0.035  ns/op
+ * </pre>
  *
  */
 
