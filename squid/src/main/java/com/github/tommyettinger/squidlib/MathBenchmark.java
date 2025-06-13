@@ -548,7 +548,7 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathCosDeg     avgt    5  6.172 ± 0.281  ns/op
  * MathBenchmark.measureMathSinDeg     avgt    5  6.310 ± 0.164  ns/op
  * </pre>
- * I don't know how to speed up sinJolt any more...
+ * I don't know how to speed up sinJolt any further...
  * <pre>
  * Benchmark                           Mode  Cnt  Score   Error  Units
  * MathBenchmark.measureDigitalCosDeg  avgt    5  0.692 ± 0.013  ns/op
@@ -558,6 +558,14 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathCosDeg     avgt    5  6.161 ± 0.319  ns/op
  * MathBenchmark.measureMathSinDeg     avgt    5  6.292 ± 0.087  ns/op
  * </pre>
+ * Testing atan2(), Jolt appears to be a clear improvement -- more precise and a little faster, to boot!
+ * <pre>
+ * Benchmark                               Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalAtan2Float  avgt    5  4.598 ± 0.028  ns/op
+ * MathBenchmark.measureJoltAtan2Float     avgt    5  4.466 ± 0.046  ns/op
+ * MathBenchmark.measureMathAtan2Float     avgt    5  7.951 ± 0.048  ns/op
+ * </pre>
+ *
  */
 
 @State(Scope.Thread)
@@ -710,7 +718,12 @@ public class MathBenchmark {
     private int atan2BaselineY = -0x8000;
     private int atan2BaselineXF = -0x4000;
     private int atan2BaselineYF = -0x8000;
-    
+
+    private int atan2DigitalXF = -0x4000;
+    private int atan2DigitalYF = -0x8000;
+    private int atan2JoltXF = -0x4000;
+    private int atan2JoltYF = -0x8000;
+
     private int npotHC = 0;
     private int npotM = 0;
     private int npotCLZ = 0;
@@ -1370,6 +1383,13 @@ public class MathBenchmark {
     {
         return Math.atan2(((mathAtan2Y += 0x9E3779B9) >> 24), ((mathAtan2X += 0x9E3779B9) >> 24));
     }
+
+    @Benchmark
+    public double measureMathAtan2Float()
+    {
+        return (float)Math.atan2(((mathAtan2Y += 0x9E3779B9) >> 24), ((mathAtan2X += 0x9E3779B9) >> 24));
+    }
+
     @Benchmark
     public double measureMathAtan2_()
     {
@@ -1478,6 +1498,21 @@ public class MathBenchmark {
     {
         return (MathUtils.radiansToDegrees * MathUtils.atan2(((atan2DegGdxY += 0x9E3779B9) >> 24), ((atan2DegGdxX += 0x9E3779B9) >> 24)) + 360f) % 360f;
     }
+
+
+    @Benchmark
+    public float measureDigitalAtan2Float()
+    {
+        return TrigTools.atan2(((atan2DigitalYF += 0x9E3779B9) >> 24), ((atan2DigitalXF += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureJoltAtan2Float()
+    {
+        return NumberTools2.atan2Jolt(((atan2JoltYF += 0x9E3779B9) >> 24), ((atan2JoltXF += 0x9E3779B9) >> 24));
+    }
+
+
     @Benchmark
     public double measureAtan2Baseline()
     {

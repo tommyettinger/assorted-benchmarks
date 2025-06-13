@@ -1132,6 +1132,61 @@ public final class NumberTools2 {
         return s;
     }
 
+    public static float atan2Jolt(final float y, float x) {
+        double n = y / x;
+        if (n != n)
+            n = (y == x ? 1.0 : -1.0); // if both y and x are infinite, n would be NaN
+        else if (n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
+        if (x > 0)
+            return (float) atanJolt(n);
+        else if (x < 0) {
+            if (y >= 0) return (float) (atanJolt(n) + Math.PI);
+            return (float) (atanJolt(n) - Math.PI);
+        } else if (y > 0) return x + HALF_PI;
+        else if (y < 0) return x - HALF_PI;
+        return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
+    }
+
+    public static float atanJolt(float n) {
+        // Implementation based on atanf.c from the cephes library
+        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+        float m = Math.abs(n), x, y;
+
+        if(m > 2.414213562373095f){
+            x = -1f / m;
+            y = HALF_PI;
+        } else if(m > 0.4142135623730950f){
+            x = (m - 1f) / (m + 1f);
+            y = QUARTER_PI;
+        } else {
+            x = m;
+            y = 0f;
+        }
+        float z = x * x;
+        return Math.copySign(y + (((8.05374449538e-2f * z - 1.38776856032e-1f) * z + 1.99777106478e-1f)
+                * z - 3.33329491539e-1f) * z * x + x, n);
+    }
+
+
+    public static double atanJolt(double n) {
+        // Implementation based on atanf.c from the cephes library
+        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+        double m = Math.abs(n), x, y;
+        if(m > 2.414213562373095){
+            x = -1. / m;
+            y = HALF_PI_D;
+        } else if(m > 0.4142135623730950){
+            x = (m - 1.) / (m + 1.);
+            y = QUARTER_PI_D;
+        } else {
+            x = m;
+            y = 0.;
+        }
+        double z = x * x;
+        return Math.copySign(y + (((8.05374449538e-2 * z - 1.38776856032e-1) * z + 1.99777106478e-1)
+                * z - 3.33329491539e-1) * z * x + x, n);
+    }
+
 
     public static void main(String[] args) {
         for (int i = 0; i < 360; i++) {
