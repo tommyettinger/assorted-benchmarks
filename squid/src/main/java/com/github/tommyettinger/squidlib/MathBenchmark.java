@@ -565,7 +565,15 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureJoltAtan2Float     avgt    5  4.466 ± 0.046  ns/op
  * MathBenchmark.measureMathAtan2Float     avgt    5  7.951 ± 0.048  ns/op
  * </pre>
- *
+ * The atan2() varieties that avoid casting float to double and back are faster.
+ * <pre>
+ * Benchmark                               Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalAtan2Float  avgt    5  4.628 ± 0.048  ns/op
+ * MathBenchmark.measureJoltAtan2Double    avgt    5  3.889 ± 0.044  ns/op
+ * MathBenchmark.measureJoltAtan2Float     avgt    5  3.672 ± 0.025  ns/op
+ * MathBenchmark.measureMathAtan2          avgt    5  7.570 ± 0.078  ns/op
+ * MathBenchmark.measureMathAtan2Float     avgt    5  7.962 ± 0.156  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -723,6 +731,8 @@ public class MathBenchmark {
     private int atan2DigitalYF = -0x8000;
     private int atan2JoltXF = -0x4000;
     private int atan2JoltYF = -0x8000;
+    private int atan2JoltX = -0x4000;
+    private int atan2JoltY = -0x8000;
 
     private int npotHC = 0;
     private int npotM = 0;
@@ -1512,6 +1522,11 @@ public class MathBenchmark {
         return NumberTools2.atan2Jolt(((atan2JoltYF += 0x9E3779B9) >> 24), ((atan2JoltXF += 0x9E3779B9) >> 24));
     }
 
+    @Benchmark
+    public double measureJoltAtan2Double()
+    {
+        return NumberTools2.atan2Jolt((double) ((atan2JoltY += 0x9E3779B9) >> 24), (double) ((atan2JoltX += 0x9E3779B9) >> 24));
+    }
 
     @Benchmark
     public double measureAtan2Baseline()

@@ -1132,17 +1132,34 @@ public final class NumberTools2 {
         return s;
     }
 
-    public static float atan2Jolt(final float y, float x) {
+    public static double atan2Jolt(final double y, double x) {
         double n = y / x;
         if (n != n)
             n = (y == x ? 1.0 : -1.0); // if both y and x are infinite, n would be NaN
+        else if (n - n != n - n) x = 0.0; // if n is infinite, y is infinitely larger than x.
+        if (x > 0)
+            return atanJolt(n);
+        else if (x < 0) {
+            if (y >= 0) return (atanJolt(n) + Math.PI);
+            return (atanJolt(n) - Math.PI);
+        } else if (y > 0)
+            return x + HALF_PI_D;
+        else if (y < 0) return x - HALF_PI_D;
+        return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
+    }
+
+    public static float atan2Jolt(final float y, float x) {
+        float n = y / x;
+        if (n != n)
+            n = (y == x ? 1f : -1f); // if both y and x are infinite, n would be NaN
         else if (n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
         if (x > 0)
-            return (float) atanJolt(n);
+            return atanJolt(n);
         else if (x < 0) {
-            if (y >= 0) return (float) (atanJolt(n) + Math.PI);
-            return (float) (atanJolt(n) - Math.PI);
-        } else if (y > 0) return x + HALF_PI;
+            if (y >= 0) return atanJolt(n) + TrigTools.PI;
+            return atanJolt(n) - TrigTools.PI;
+        } else if (y > 0)
+            return x + HALF_PI;
         else if (y < 0) return x - HALF_PI;
         return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
     }
