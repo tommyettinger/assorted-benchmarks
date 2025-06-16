@@ -1001,6 +1001,29 @@ public final class NumberTools2 {
         int quadrant = (int)(0.6366197723675814 * x + 0.5);
         x = ((x - quadrant * 1.5703125f) - quadrant * 0.0004837512969970703125f) - quadrant * 7.549789948768648e-8f;
         float x2 = x * x, s;
+        switch ((quadrant ^ (BitConversion.floatToIntBits(angle) >>> 30 & 2)) & 3) {
+            case 0:
+                s = ((-1.9515295891e-4f * x2 + 8.3321608736e-3f) * x2 - 1.6666654611e-1f) * x2 * x + x;
+                break;
+            case 1:
+                s = ((2.443315711809948e-5f * x2 - (1.388731625493765e-3f)) * x2 + (4.166664568298827e-2f)) * x2 * x2 - 0.5f * x2 + 1f;
+                break;
+            case 2:
+                s = (((1.9515295891e-4f * x2 - 8.3321608736e-3f) * x2 + 1.6666654611e-1f) * x2 * x - x);
+                break;
+            default:
+                s = (((-2.443315711809948e-5f * x2 + 1.388731625493765e-3f) * x2 - 4.166664568298827e-2f) * x2 * x2 + 0.5f * x2 - 1f);
+        }
+        return s;
+    }
+
+    public static float sinJoltOld(float angle) {
+        // Implementation based on sinf.c from the cephes library, combines sinf and cosf in a single function, changes octants to quadrants and vectorizes it
+        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+        float x = Math.abs(angle);
+        int quadrant = (int)(0.6366197723675814 * x + 0.5);
+        x = ((x - quadrant * 1.5703125f) - quadrant * 0.0004837512969970703125f) - quadrant * 7.549789948768648e-8f;
+        float x2 = x * x, s;
         switch (quadrant & 3) {
             case 0:
                 s = ((-1.9515295891e-4f * x2 + 8.3321608736e-3f) * x2 - 1.6666654611e-1f) * x2 * x + x;

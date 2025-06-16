@@ -678,6 +678,7 @@ public class MathBenchmark {
     private int sinTT2 = -0x8000;
     private int sinLerp = -0x8000;
     private int sinJolt = -0x8000;
+    private int sinJoltOld = -0x8000;
     private int cosJolt = -0x8000;
     private int sinJoltDeg = -0x8000;
     private int cosJoltDeg = -0x8000;
@@ -1226,6 +1227,12 @@ public class MathBenchmark {
     public float measureJoltSinF()
     {
         return NumberTools2.sinJolt(((sinJolt += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureJoltSinOldF()
+    {
+        return NumberTools2.sinJoltOld(((sinJoltOld += 0x9E3779B9) >> 24));
     }
 
     @Benchmark
