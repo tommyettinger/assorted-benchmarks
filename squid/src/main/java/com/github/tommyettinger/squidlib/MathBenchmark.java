@@ -574,6 +574,20 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathAtan2          avgt    5  7.570 ± 0.078  ns/op
  * MathBenchmark.measureMathAtan2Float     avgt    5  7.962 ± 0.156  ns/op
  * </pre>
+ * Using a better strategy to decorrelate inputs to atan2, across the board:
+ * (This hurts digital a lot for some reason, since it seems to deoptimize early. Even before it
+ * deoptimizes, though, Jolt's constant speed is better.)
+ * <pre>
+ * Benchmark                                Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureAtan2Baseline       avgt    5  0.641 ± 0.005  ns/op
+ * MathBenchmark.measureAtan2BaselineFloat  avgt    5  0.644 ± 0.008  ns/op
+ * MathBenchmark.measureDigitalAtan2Float   avgt    5  5.477 ± 0.033  ns/op
+ * MathBenchmark.measureJoltAtan2Double     avgt    5  4.010 ± 0.029  ns/op
+ * MathBenchmark.measureJoltAtan2Float      avgt    5  3.987 ± 0.025  ns/op
+ * MathBenchmark.measureMathAtan2           avgt    5  7.965 ± 0.091  ns/op
+ * MathBenchmark.measureMathAtan2Float      avgt    5  8.523 ± 0.038  ns/op
+ * MathBenchmark.measureMathAtan2_          avgt    5  9.118 ± 0.315  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
