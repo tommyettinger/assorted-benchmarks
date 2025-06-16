@@ -1391,152 +1391,152 @@ public class MathBenchmark {
     @Benchmark
     public double measureMathAtan2()
     {
-        return Math.atan2(((mathAtan2Y += 0x9E3779B9) >> 24), ((mathAtan2X += 0x9E3779B9) >> 24));
+        return Math.atan2(((mathAtan2Y += 0x9E3779B9) >> 24), ((mathAtan2X += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public double measureMathAtan2Float()
     {
-        return (float)Math.atan2(((mathAtan2Y += 0x9E3779B9) >> 24), ((mathAtan2X += 0x9E3779B9) >> 24));
+        return (float)Math.atan2(((mathAtan2Y += 0x9E3779B9) >> 24), ((mathAtan2X += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public double measureMathAtan2_()
     {
-        final double z = Math.atan2(((mathAtan2_Y += 0x9E3779B9) >> 24), ((mathAtan2_X += 0x9E3779B9) >> 24)) * 0.15915494309189535 + 1.0;
+        final double z = Math.atan2(((mathAtan2_Y += 0x9E3779B9) >> 24), ((mathAtan2_X += 0x7F4A7C15) >> 24)) * 0.15915494309189535 + 1.0;
         return z - (int)z;
     }
 
     @Benchmark
     public double measureSquidAtan2()
     {
-        return NumberTools.atan2(((atan2SquidY += 0x9E3779B9) >> 24), ((atan2SquidX += 0x9E3779B9) >> 24));
+        return NumberTools.atan2(((atan2SquidY += 0x9E3779B9) >> 24), ((atan2SquidX += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureSquidAtan2Float()
     {
-        return NumberTools.atan2(((atan2SquidYF += 0x9E3779B9) >> 24), ((atan2SquidXF += 0x9E3779B9) >> 24));
+        return NumberTools.atan2(((atan2SquidYF += 0x9E3779B9) >> 24), ((atan2SquidXF += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureGdxAtan2()
     {
-        return MathUtils.atan2(((atan2GdxY += 0x9E3779B9) >> 24), ((atan2GdxX += 0x9E3779B9) >> 24));
+        return MathUtils.atan2(((atan2GdxY += 0x9E3779B9) >> 24), ((atan2GdxX += 0x7F4A7C15) >> 24));
     }
  
     @Benchmark
     public float measureGtAtan2()
     {
-        return GtMathUtils.atan2(((atan2GtY += 0x9E3779B9) >> 24), ((atan2GtX += 0x9E3779B9) >> 24));
+        return GtMathUtils.atan2(((atan2GtY += 0x9E3779B9) >> 24), ((atan2GtX += 0x7F4A7C15) >> 24));
     }
  
     @Benchmark
     public float measureNtAtan2()
     {
-        return NumberTools2.atan2_nt(((atan2NtY += 0x9E3779B9) >> 24), ((atan2NtX += 0x9E3779B9) >> 24));
+        return NumberTools2.atan2_nt(((atan2NtY += 0x9E3779B9) >> 24), ((atan2NtX += 0x7F4A7C15) >> 24));
     }
  
     @Benchmark
     public float measureImuliAtan2()
     {
-        return NumberTools2.atan2_quartic(((atan2ImY += 0x9E3779B9) >> 24), ((atan2ImX += 0x9E3779B9) >> 24));
+        return NumberTools2.atan2_quartic(((atan2ImY += 0x9E3779B9) >> 24), ((atan2ImX += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureHighPrecisionAtan2()
     {
-        return NumberTools2.atan2HP(((atan2HPY += 0x9E3779B9) >> 24), ((atan2HPX += 0x9E3779B9) >> 24));
+        return NumberTools2.atan2HP(((atan2HPY += 0x9E3779B9) >> 24), ((atan2HPX += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureRemezAtan2()
     {
-        return NumberTools2.atan2Remez(((atan2RmY += 0x9E3779B9) >> 24), ((atan2RmX += 0x9E3779B9) >> 24));
+        return NumberTools2.atan2Remez(((atan2RmY += 0x9E3779B9) >> 24), ((atan2RmX += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureGeneralAtan2()
     {
-        return NumberTools2.atan2General(((atan2GeY += 0x9E3779B9) >> 24), ((atan2GeX += 0x9E3779B9) >> 24));
+        return NumberTools2.atan2General(((atan2GeY += 0x9E3779B9) >> 24), ((atan2GeX += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureSimpleAtan2()
     {
-        return NumberTools2.atan2Simple(((atan2SiY += 0x9E3779B9) >> 24), ((atan2SiX += 0x9E3779B9) >> 24));
+        return NumberTools2.atan2Simple(((atan2SiY += 0x9E3779B9) >> 24), ((atan2SiX += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureFunkyAtan2()
     {
-        return NumberTools2.atan2Funky(((atan2FnY += 0x9E3779B9) >> 24), ((atan2FnX += 0x9E3779B9) >> 24));
+        return NumberTools2.atan2Funky(((atan2FnY += 0x9E3779B9) >> 24), ((atan2FnX += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureImuliAtan2_()
     {
-        return NumberTools2.atan2_imuli_(((atan2Im_Y += 0x9E3779B9) >> 24), ((atan2Im_X += 0x9E3779B9) >> 24));
+        return NumberTools2.atan2_imuli_(((atan2Im_Y += 0x9E3779B9) >> 24), ((atan2Im_X += 0x7F4A7C15) >> 24));
     }
  
     @Benchmark
     public float measureSquidAtan2_()
     {
-        return NumberTools.atan2_(((atan2_SquidYF += 0x9E3779B9) >> 24), ((atan2_SquidXF += 0x9E3779B9) >> 24));
+        return NumberTools.atan2_(((atan2_SquidYF += 0x9E3779B9) >> 24), ((atan2_SquidXF += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureSimpleAtan2_()
     {
-        return NumberTools2.atan2Simple_(((atan2Si_Y += 0x9E3779B9) >> 24), ((atan2Si_X += 0x9E3779B9) >> 24));
+        return NumberTools2.atan2Simple_(((atan2Si_Y += 0x9E3779B9) >> 24), ((atan2Si_X += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureFunkyAtan2_()
     {
-        return NumberTools2.atan2Funky_(((atan2Fn_Y += 0x9E3779B9) >> 24), ((atan2Fn_X += 0x9E3779B9) >> 24));
+        return NumberTools2.atan2Funky_(((atan2Fn_Y += 0x9E3779B9) >> 24), ((atan2Fn_X += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureSquidAtan2DegFloat()
     {
-        return NumberTools.atan2Degrees360(((atan2DegSquidYF += 0x9E3779B9) >> 24), ((atan2DegSquidXF += 0x9E3779B9) >> 24));
+        return NumberTools.atan2Degrees360(((atan2DegSquidYF += 0x9E3779B9) >> 24), ((atan2DegSquidXF += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureGdxAtan2Deg()
     {
-        return (MathUtils.radiansToDegrees * MathUtils.atan2(((atan2DegGdxY += 0x9E3779B9) >> 24), ((atan2DegGdxX += 0x9E3779B9) >> 24)) + 360f) % 360f;
+        return (MathUtils.radiansToDegrees * MathUtils.atan2(((atan2DegGdxY += 0x9E3779B9) >> 24), ((atan2DegGdxX += 0x7F4A7C15) >> 24)) + 360f) % 360f;
     }
 
 
     @Benchmark
     public float measureDigitalAtan2Float()
     {
-        return TrigTools.atan2(((atan2DigitalYF += 0x9E3779B9) >> 24), ((atan2DigitalXF += 0x9E3779B9) >> 24));
+        return TrigTools.atan2(((atan2DigitalYF += 0x9E3779B9) >> 24), ((atan2DigitalXF += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public float measureJoltAtan2Float()
     {
-        return NumberTools2.atan2Jolt(((atan2JoltYF += 0x9E3779B9) >> 24), ((atan2JoltXF += 0x9E3779B9) >> 24));
+        return NumberTools2.atan2Jolt(((atan2JoltYF += 0x9E3779B9) >> 24), ((atan2JoltXF += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public double measureJoltAtan2Double()
     {
-        return NumberTools2.atan2Jolt((double) ((atan2JoltY += 0x9E3779B9) >> 24), (double) ((atan2JoltX += 0x9E3779B9) >> 24));
+        return NumberTools2.atan2Jolt((double) ((atan2JoltY += 0x9E3779B9) >> 24), (double) ((atan2JoltX += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
     public double measureAtan2Baseline()
     {
-        return ((atan2BaselineY += 0x9E3779B9) >> 24) + ((atan2BaselineX += 0x9E3779B9) >> 24);
+        return ((atan2BaselineY += 0x9E3779B9) >> 24) + ((atan2BaselineX += 0x7F4A7C15) >> 24);
     }
     @Benchmark
     public float measureAtan2BaselineFloat()
     {
-        return ((atan2BaselineYF += 0x9E3779B9) >> 24) + ((atan2BaselineXF += 0x9E3779B9) >> 24);
+        return ((atan2BaselineYF += 0x9E3779B9) >> 24) + ((atan2BaselineXF += 0x7F4A7C15) >> 24);
     }
     
     @Benchmark

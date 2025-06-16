@@ -1132,6 +1132,68 @@ public final class NumberTools2 {
         return s;
     }
 
+//    void Vec4::SinCos(Vec4 &outSin, Vec4 &outCos) const
+//    {
+//        // Implementation based on sinf.c from the cephes library, combines sinf and cosf in a single function, changes octants to quadrants and vectorizes it
+//        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+//
+//        // Make argument positive and remember sign for sin only since cos is symmetric around x (highest bit of a float is the sign bit)
+//        UVec4 sin_sign = UVec4::sAnd(ReinterpretAsInt(), UVec4::sReplicate(0x80000000U));
+//        Vec4 x = Vec4::sXor(*this, sin_sign.ReinterpretAsFloat());
+//
+//        // x / (PI / 2) rounded to nearest int gives us the quadrant closest to x
+//        UVec4 quadrant = (0.6366197723675814f * x + Vec4::sReplicate(0.5f)).ToInt();
+//
+//        // Make x relative to the closest quadrant.
+//        // This does x = x - quadrant * PI / 2 using a two step Cody-Waite argument reduction.
+//        // This improves the accuracy of the result by avoiding loss of significant bits in the subtraction.
+//        // We start with x = x - quadrant * PI / 2, PI / 2 in hexadecimal notation is 0x3fc90fdb, we remove the lowest 16 bits to
+//        // get 0x3fc90000 (= 1.5703125) this means we can now multiply with a number of up to 2^16 without losing any bits.
+//        // This leaves us with: x = (x - quadrant * 1.5703125) - quadrant * (PI / 2 - 1.5703125).
+//        // PI / 2 - 1.5703125 in hexadecimal is 0x39fdaa22, stripping the lowest 12 bits we get 0x39fda000 (= 0.0004837512969970703125)
+//        // This leaves uw with: x = ((x - quadrant * 1.5703125) - quadrant * 0.0004837512969970703125) - quadrant * (PI / 2 - 1.5703125 - 0.0004837512969970703125)
+//        // See: https://stackoverflow.com/questions/42455143/sine-cosine-modular-extended-precision-arithmetic
+//        // After this we have x in the range [-PI / 4, PI / 4].
+//        Vec4 float_quadrant = quadrant.ToFloat();
+//        x = ((x - float_quadrant * 1.5703125f) - float_quadrant * 0.0004837512969970703125f) - float_quadrant * 7.549789948768648e-8f;
+//
+//        // Calculate x2 = x^2
+//        Vec4 x2 = x * x;
+//
+//        // Taylor expansion:
+//        // Cos(x) = 1 - x^2/2! + x^4/4! - x^6/6! + x^8/8! + ... = (((x2/8!- 1/6!) * x2 + 1/4!) * x2 - 1/2!) * x2 + 1
+//        Vec4 taylor_cos = ((2.443315711809948e-5f * x2 - Vec4::sReplicate(1.388731625493765e-3f)) * x2 + Vec4::sReplicate(4.166664568298827e-2f)) * x2 * x2 - 0.5f * x2 + Vec4::sOne();
+//        // Sin(x) = x - x^3/3! + x^5/5! - x^7/7! + ... = ((-x2/7! + 1/5!) * x2 - 1/3!) * x2 * x + x
+//        Vec4 taylor_sin = ((-1.9515295891e-4f * x2 + Vec4::sReplicate(8.3321608736e-3f)) * x2 - Vec4::sReplicate(1.6666654611e-1f)) * x2 * x + x;
+//
+//        // The lowest 2 bits of quadrant indicate the quadrant that we are in.
+//        // Let x be the original input value and x' our value that has been mapped to the range [-PI / 4, PI / 4].
+//        // since cos(x) = sin(x - PI / 2) and since we want to use the Taylor expansion as close as possible to 0,
+//        // we can alternate between using the Taylor expansion for sin and cos according to the following table:
+//        //
+//        // quadrant  sin(x)      cos(x)
+//        // XXX00b    sin(x')     cos(x')
+//        // XXX01b    cos(x')    -sin(x')
+//        // XXX10b   -sin(x')    -cos(x')
+//        // XXX11b   -cos(x')     sin(x')
+//        //
+//        // So: sin_sign = bit2, cos_sign = bit1 ^ bit2, bit1 determines if we use sin or cos Taylor expansion
+//        UVec4 bit1 = quadrant.LogicalShiftLeft<31>();
+//        UVec4 bit2 = UVec4::sAnd(quadrant.LogicalShiftLeft<30>(), UVec4::sReplicate(0x80000000U));
+//
+//        // Select which one of the results is sin and which one is cos
+//        Vec4 s = Vec4::sSelect(taylor_sin, taylor_cos, bit1);
+//        Vec4 c = Vec4::sSelect(taylor_cos, taylor_sin, bit1);
+//
+//        // Update the signs
+//        sin_sign = UVec4::sXor(sin_sign, bit2);
+//        UVec4 cos_sign = UVec4::sXor(bit1, bit2);
+//
+//        // Correct the signs
+//        outSin = Vec4::sXor(s, sin_sign.ReinterpretAsFloat());
+//        outCos = Vec4::sXor(c, cos_sign.ReinterpretAsFloat());
+//    }
+
     public static double atan2Jolt(final double y, double x) {
         double n = y / x;
         if (n != n)
@@ -1202,6 +1264,181 @@ public final class NumberTools2 {
         double z = x * x;
         return Math.copySign(y + (((8.05374449538e-2 * z - 1.38776856032e-1) * z + 1.99777106478e-1)
                 * z - 3.33329491539e-1) * z * x + x, n);
+    }
+
+    public static double atan2DegJolt(final double y, double x) {
+        double n = y / x;
+        if (n != n)
+            n = (y == x ? 1.0 : -1.0); // if both y and x are infinite, n would be NaN
+        else if (n - n != n - n) x = 0.0; // if n is infinite, y is infinitely larger than x.
+        if (x > 0)
+            return atanDegJolt(n);
+        else if (x < 0) {
+            if (y >= 0) return (atanDegJolt(n) + 180.0);
+            return (atanDegJolt(n) - 180.0);
+        } else if (y > 0)
+            return x + 90.0;
+        else if (y < 0) return x - 90.0;
+        return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
+    }
+
+    public static float atan2DegJolt(final float y, float x) {
+        float n = y / x;
+        if (n != n)
+            n = (y == x ? 1f : -1f); // if both y and x are infinite, n would be NaN
+        else if (n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
+        if (x > 0)
+            return atanDegJolt(n);
+        else if (x < 0) {
+            if (y >= 0) return atanDegJolt(n) + 180f;
+            return atanDegJolt(n) - 180f;
+        } else if (y > 0)
+            return x + 90f;
+        else if (y < 0) return x - 90f;
+        return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
+    }
+
+
+    public static double atan2Deg360Jolt(final double y, double x) {
+        double n = y / x;
+        if (n != n)
+            n = (y == x ? 1.0 : -1.0); // if both y and x are infinite, n would be NaN
+        else if (n - n != n - n) x = 0.0; // if n is infinite, y is infinitely larger than x.
+        if (x > 0) {
+            if (y >= 0) return atanDegJolt(n);
+            else return (atanDegJolt(n) + 360.0);
+        } else if (x < 0) return (atanDegJolt(n) + 180.0);
+        else if (y > 0) return x + 90.0;
+        else if (y < 0) return x + 270.0;
+        return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
+    }
+
+    public static float atan2Deg360Jolt(final float y, float x) {
+        float n = y / x;
+        if (n != n)
+            n = (y == x ? 1f : -1f); // if both y and x are infinite, n would be NaN
+        else if (n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
+        if (x > 0) {
+            if (y >= 0) return atanDegJolt(n);
+            else return atanDegJolt(n) + 360f;
+        } else if (x < 0) return atanDegJolt(n) + 180f;
+        else if (y > 0) return x + 90f;
+        else if (y < 0) return x + 270f;
+        return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
+    }
+
+    public static float atanDegJolt(float n) {
+        // Implementation based on atanf.c from the cephes library
+        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+        float m = Math.abs(n), x, y;
+
+        if(m > 2.414213562373095f){
+            x = -1f / m;
+            y = 90f;
+        } else if(m > 0.4142135623730950f){
+            x = (m - 1f) / (m + 1f);
+            y = 45f;
+        } else {
+            x = m;
+            y = 0f;
+        }
+        float z = x * x;
+        return Math.copySign(y + ((((8.05374449538e-2f * z - 1.38776856032e-1f) * z + 1.99777106478e-1f)
+                * z - 3.33329491539e-1f) * z * x + x) * 57.29577951308232f, n);
+    }
+
+
+    public static double atanDegJolt(double n) {
+        // Implementation based on atanf.c from the cephes library
+        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+        double m = Math.abs(n), x, y;
+        if(m > 2.414213562373095){
+            x = -1. / m;
+            y = 90.0;
+        } else if(m > 0.4142135623730950){
+            x = (m - 1.) / (m + 1.);
+            y = 45.0;
+        } else {
+            x = m;
+            y = 0.;
+        }
+        double z = x * x;
+        return Math.copySign(y + ((((8.05374449538e-2 * z - 1.38776856032e-1) * z + 1.99777106478e-1)
+                * z - 3.33329491539e-1) * z * x + x) * 57.29577951308232, n);
+    }
+
+    public static double atan2TurnsJolt(final double y, double x) {
+        double n = y / x;
+        if (n != n)
+            n = (y == x ? 1.0 : -1.0); // if both y and x are infinite, n would be NaN
+        else if (n - n != n - n) x = 0.0; // if n is infinite, y is infinitely larger than x.
+        if (x > 0) {
+            if (y >= 0)
+                return atanTurnsJolt(n);
+            else
+                return atanTurnsJolt(n) + 1.0;
+        } else if (x < 0) {
+            return atanTurnsJolt(n) + 0.5;
+        } else if (y > 0) return x + 0.25;
+        else if (y < 0) return x + 0.75;
+        return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
+    }
+
+    public static float atan2TurnsJolt(final float y, float x) {
+        float n = y / x;
+        if (n != n)
+            n = (y == x ? 1f : -1f); // if both y and x are infinite, n would be NaN
+        else if (n - n != n - n) x = 0f; // if n is infinite, y is infinitely larger than x.
+        if (x > 0) {
+            if (y >= 0)
+                return atanTurnsJolt(n);
+            else
+                return atanTurnsJolt(n) + 1.0f;
+        } else if (x < 0) {
+            return atanTurnsJolt(n) + 0.5f;
+        } else if (y > 0) return x + 0.25f;
+        else if (y < 0) return x + 0.75f;
+        return x + y; // returns 0 for 0,0 or NaN if either y or x is NaN
+    }
+
+    public static float atanTurnsJolt(float n) {
+        // Implementation based on atanf.c from the cephes library
+        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+        float m = Math.abs(n), x, y;
+
+        if(m > 2.414213562373095f){
+            x = -1f / m;
+            y = 0.25f;
+        } else if(m > 0.4142135623730950f){
+            x = (m - 1f) / (m + 1f);
+            y = 0.125f;
+        } else {
+            x = m;
+            y = 0f;
+        }
+        float z = x * x;
+        return Math.copySign(y + ((((8.05374449538e-2f * z - 1.38776856032e-1f) * z + 1.99777106478e-1f)
+                * z - 3.33329491539e-1f) * z * x + x) * 0.15915494309189535f, n);
+    }
+
+
+    public static double atanTurnsJolt(double n) {
+        // Implementation based on atanf.c from the cephes library
+        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+        double m = Math.abs(n), x, y;
+        if(m > 2.414213562373095){
+            x = -1. / m;
+            y = 0.25;
+        } else if(m > 0.4142135623730950){
+            x = (m - 1.) / (m + 1.);
+            y = 0.125;
+        } else {
+            x = m;
+            y = 0.;
+        }
+        double z = x * x;
+        return Math.copySign(y + ((((8.05374449538e-2 * z - 1.38776856032e-1) * z + 1.99777106478e-1)
+                * z - 3.33329491539e-1) * z * x + x) * 0.15915494309189535, n);
     }
 
 
