@@ -1512,6 +1512,49 @@ public final class NumberTools2 {
                 * z - 3.33329491539e-1) * z * x + x, a);
     }
 
+    private static float aEdmn(float x) {
+        final float x2 = x * x;
+        return (45.210185257899f - 18.617417552712f * x + x2) /
+                (45.210185141956f - 22.384922725383f * x + 2.0175735681637f * x2);
+    }
+
+    /**
+     * <a href="https://dsp.stackexchange.com/a/89160">By "emacs drives me nuts" on Stack Exchange</a>.
+     * @param n between -1 and 1 inclusive
+     * @return the arcsine of n
+     */
+    public static float asinEdmn(float n) {
+        float x = Math.min(1f, Math.abs(n)), r;
+        if(x <= 0.5f){
+            r = n * aEdmn(2f * x * x);
+        } else {
+            final float z = 1f - x;
+            r = Math.copySign(TrigTools.HALF_PI - (float) Math.sqrt(z + z) * aEdmn(z), n);
+        }
+        return r;
+    }
+
+    private static double aEdmn(double x) {
+        final double x2 = x * x;
+        return (45.210185257899 - 18.617417552712 * x + x2) /
+                (45.210185141956 - 22.384922725383 * x + 2.0175735681637 * x2);
+    }
+    /**
+     * <a href="https://dsp.stackexchange.com/a/89160">By "emacs drives me nuts" on Stack Exchange</a>.
+     * @param n between -1 and 1 inclusive
+     * @return the arcsine of n
+     */
+    public static double asinEdmn(double n) {
+        double x = Math.min(1.0, Math.abs(n)), r;
+        if(x <= 0.5){
+            r = n * aEdmn(2 * x * x);
+        } else {
+            final double z = 1 - x;
+            r = Math.copySign(TrigTools.HALF_PI_D - Math.sqrt(z + z) * aEdmn(z), n);
+        }
+        return r;
+    }
+
     public static float acosJolt(float n) {
         float a = Math.min(1f, Math.abs(n)), z, x, r;
         if(a <= 0.5f){

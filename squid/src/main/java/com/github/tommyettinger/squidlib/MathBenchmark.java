@@ -606,6 +606,16 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathASin     avgt    5  8.462 ± 0.025  ns/op
  * MathBenchmark.measureSquidASin    avgt    5  4.611 ± 0.036  ns/op
  * </pre>
+ * This asin approximation by "Emacs drives me nuts" is a little less precise, but the same speed as Jolt...
+ * <pre>
+ * Benchmark                         Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalASin  avgt    5  4.552 ± 0.070  ns/op
+ * MathBenchmark.measureEdmnASin     avgt    5  6.939 ± 0.063  ns/op
+ * MathBenchmark.measureIdenASin     avgt    5  9.148 ± 0.105  ns/op
+ * MathBenchmark.measureJoltASin     avgt    5  6.941 ± 0.051  ns/op
+ * MathBenchmark.measureMathASin     avgt    5  8.455 ± 0.010  ns/op
+ * MathBenchmark.measureSquidASin    avgt    5  4.462 ± 0.050  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -646,6 +656,7 @@ public class MathBenchmark {
     private int asinDigital = -0x8000;
     private int asinJolt = -0x8000;
     private int asinIden = -0x8000;
+    private int asinEdmn = -0x8000;
     private int cosOld = -0x8000;
     private int sinOld = -0x8000;
     private int sinNick = -0x8000;
@@ -857,6 +868,11 @@ public class MathBenchmark {
         return NumberTools2.asinIdentity(arcInputs[asinIden++ & 0xFFFF]);
     }
 
+    @Benchmark
+    public double measureEdmnASin()
+    {
+        return NumberTools2.asinEdmn(arcInputs[asinEdmn++ & 0xFFFF]);
+    }
 
     //@Benchmark
     public double measureCosApproxOld() {
