@@ -588,6 +588,15 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathAtan2Float      avgt    5  8.523 ± 0.038  ns/op
  * MathBenchmark.measureMathAtan2_          avgt    5  9.118 ± 0.315  ns/op
  * </pre>
+ * Unlike other Jolt trig methods, asin() seems like less of a gain on speed here.
+ * It is much more precise, though, than digital or SquidLib's versions.
+ * <pre>
+ * Benchmark                         Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalASin  avgt    5  4.596 ± 0.069  ns/op
+ * MathBenchmark.measureJoltASin     avgt    5  7.161 ± 0.015  ns/op
+ * MathBenchmark.measureMathASin     avgt    5  8.411 ± 0.068  ns/op
+ * MathBenchmark.measureSquidASin    avgt    5  4.426 ± 0.091  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -625,6 +634,8 @@ public class MathBenchmark {
     private int mathASin = -0x8000;
     private int asinChristensen = -0x8000;
     private int asinSquid = -0x8000;
+    private int asinDigital = -0x8000;
+    private int asinJolt = -0x8000;
     private int cosOld = -0x8000;
     private int sinOld = -0x8000;
     private int sinNick = -0x8000;
@@ -806,7 +817,7 @@ public class MathBenchmark {
         return Math.asin(arcInputs[mathASin++ & 0xFFFF]);
     }
 
-    @Benchmark
+//    @Benchmark
     public double measureChristensenASin()
     {
         return asin(arcInputs[asinChristensen++ & 0xFFFF]);
@@ -816,6 +827,18 @@ public class MathBenchmark {
     public double measureSquidASin()
     {
         return NumberTools.asin(arcInputs[asinSquid++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public double measureDigitalASin()
+    {
+        return TrigTools.asin(arcInputs[asinDigital++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public double measureJoltASin()
+    {
+        return NumberTools2.asinJolt(arcInputs[asinJolt++ & 0xFFFF]);
     }
 
 
