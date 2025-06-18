@@ -1492,6 +1492,26 @@ public final class NumberTools2 {
         return Math.copySign(r, n);
     }
 
+    public static double asinIdentity(double n) {
+        // Implementation based on atanf.c from the cephes library
+        // Original implementation by Stephen L. Moshier (See: http://www.moshier.net/)
+        double a = n / Math.sqrt(1 - n * n);
+        double m = Math.abs(a), x, y;
+        if(m > 2.414213562373095){
+            x = -1. / m;
+            y = HALF_PI_D;
+        } else if(m > 0.4142135623730950){
+            x = (m - 1.) / (m + 1.);
+            y = QUARTER_PI_D;
+        } else {
+            x = m;
+            y = 0.;
+        }
+        double z = x * x;
+        return Math.copySign(y + (((8.05374449538e-2 * z - 1.38776856032e-1) * z + 1.99777106478e-1)
+                * z - 3.33329491539e-1) * z * x + x, a);
+    }
+
     public static float acosJolt(float n) {
         float a = Math.min(1f, Math.abs(n)), z, x, r;
         if(a <= 0.5f){

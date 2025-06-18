@@ -597,6 +597,15 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathASin     avgt    5  8.411 ± 0.068  ns/op
  * MathBenchmark.measureSquidASin    avgt    5  4.426 ± 0.091  ns/op
  * </pre>
+ * OK, using the identity for {@code asin(x) = atan(x / (1 - x * x))}... doesn't help at all.
+ * <pre>
+ * Benchmark                         Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalASin  avgt    5  4.543 ± 0.048  ns/op
+ * MathBenchmark.measureIdenASin     avgt    5  9.081 ± 0.037  ns/op
+ * MathBenchmark.measureJoltASin     avgt    5  6.938 ± 0.033  ns/op
+ * MathBenchmark.measureMathASin     avgt    5  8.462 ± 0.025  ns/op
+ * MathBenchmark.measureSquidASin    avgt    5  4.611 ± 0.036  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -636,6 +645,7 @@ public class MathBenchmark {
     private int asinSquid = -0x8000;
     private int asinDigital = -0x8000;
     private int asinJolt = -0x8000;
+    private int asinIden = -0x8000;
     private int cosOld = -0x8000;
     private int sinOld = -0x8000;
     private int sinNick = -0x8000;
@@ -839,6 +849,12 @@ public class MathBenchmark {
     public double measureJoltASin()
     {
         return NumberTools2.asinJolt(arcInputs[asinJolt++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public double measureIdenASin()
+    {
+        return NumberTools2.asinIdentity(arcInputs[asinIden++ & 0xFFFF]);
     }
 
 
