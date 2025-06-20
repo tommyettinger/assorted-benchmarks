@@ -616,6 +616,24 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathASin     avgt    5  8.455 ± 0.010  ns/op
  * MathBenchmark.measureSquidASin    avgt    5  4.462 ± 0.050  ns/op
  * </pre>
+ * Testing every tan() we have; some of these are very inaccurate.
+ * DigitalSmootherTan, measureDivideTan, LerpTan, and TableTan are tabular.
+ * The most accurate appear to be MathTan, JoltTan, and DigitalSmootherTan in order of most to least accurate.
+ * The simplest tabular results (which only divide a table-lookup sine by a table-lookup cosine) are wildly inaccurate.
+ * DigitalSmootherTan performs 4 lookups and is only 2 ULPs less accurate than JoltTan in the -1 to 1 range. It also
+ * appears to take half the time to be nearly as accurate, but it is still tabular and likely needs the table(s) it uses
+ * in processor cache to perform well.
+ * <pre>
+ * Benchmark                                Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureDigitalSmootherTan  avgt    5  1.876 ± 0.044  ns/op
+ * MathBenchmark.measureDigitalTan          avgt    5  3.033 ± 0.014  ns/op
+ * MathBenchmark.measureDivideTan           avgt    5  1.353 ± 0.012  ns/op
+ * MathBenchmark.measureJoltTan             avgt    5  3.750 ± 0.017  ns/op
+ * MathBenchmark.measureLerpTan             avgt    5  2.010 ± 0.017  ns/op
+ * MathBenchmark.measureMathTan             avgt    5  9.050 ± 0.071  ns/op
+ * MathBenchmark.measureSoontsTan           avgt    5  2.779 ± 0.023  ns/op
+ * MathBenchmark.measureTableTan            avgt    5  0.867 ± 0.006  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -730,6 +748,9 @@ public class MathBenchmark {
     private int tanSoo = -0x8000;
     private int tanLer = -0x8000;
     private int tanTab = -0x8000;
+    private int tanDig = -0x8000;
+    private int tanDSm = -0x8000;
+    private int tanJlt = -0x8000;
     private int baseline = -0x8000;
     private int mathAtan2X = -0x4000;
     private int mathAtan2Y = -0x8000;
@@ -1461,6 +1482,21 @@ public class MathBenchmark {
     public float measureTableTan()
     {
         return NumberTools2.tanTable(((tanTab += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureDigitalTan() {
+        return TrigTools.tan(((tanDig += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureDigitalSmootherTan() {
+        return TrigTools.tanSmoother(((tanDSm += 0x9E3779B9) >> 24));
+    }
+
+    @Benchmark
+    public float measureJoltTan() {
+        return NumberTools2.tanJolt(((tanJlt += 0x9E3779B9) >> 24));
     }
 
 

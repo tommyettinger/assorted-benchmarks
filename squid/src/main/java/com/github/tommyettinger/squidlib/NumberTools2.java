@@ -1155,6 +1155,31 @@ public final class NumberTools2 {
         return s;
     }
 
+    public static float tanJolt(float angle) {
+        float x = Math.abs(angle);
+        int quadrant = (int)(0.6366197723675814f * x + 0.5f);
+        x = ((x - quadrant * 1.5703125f) - quadrant * 0.0004837512969970703125f) - quadrant * 7.549789948768648e-8f;
+        float x2 = x * x;
+        float p = (((((9.38540185543e-3f * x2 + (3.11992232697e-3f)) * x2 + (2.44301354525e-2f)) * x2
+                + (5.34112807005e-2f)) * x2 + (1.33387994085e-1f)) * x2 + (3.33331568548e-1f)) * x2 * x + x;
+        if((quadrant & 1) == 1)
+            return -Math.signum(angle) / p;
+        return Math.signum(angle) * p;
+    }
+
+    public static double tanJolt(double angle) {
+        double x = Math.abs(angle);
+        int quadrant = (int)(0.6366197723675814 * x + 0.5);
+        x = ((x - quadrant * 1.5703125) - quadrant * 0.0004837512969970703125) - quadrant * 7.549789948768648e-8;
+        double x2 = x * x;
+        double p = (((((9.38540185543e-3 * x2 + (3.11992232697e-3)) * x2 + (2.44301354525e-2)) * x2
+                + (5.34112807005e-2)) * x2 + (1.33387994085e-1)) * x2 + (3.33331568548e-1)) * x2 * x + x;
+        if((quadrant & 1) == 1)
+            return -Math.signum(angle) / p;
+        return Math.signum(angle) * p;
+    }
+
+
 //    void Vec4::SinCos(Vec4 &outSin, Vec4 &outCos) const
 //    {
 //        // Implementation based on sinf.c from the cephes library, combines sinf and cosf in a single function, changes octants to quadrants and vectorizes it
