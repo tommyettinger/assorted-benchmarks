@@ -1,0 +1,6945 @@
+/*
+ * Copyright (c) 2022-2023 See AUTHORS file.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package com.github.tommyettinger.digital;
+
+import java.nio.ByteBuffer;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+
+import static com.github.tommyettinger.digital.BitConversion.doubleToRawLongBits;
+import static com.github.tommyettinger.digital.BitConversion.floatToRawIntBits;
+import static com.github.tommyettinger.digital.MathTools.EPSILON;
+import static com.github.tommyettinger.digital.MathTools.EPSILON_D;
+
+/**
+ * 64-bit and 32-bit hashing functions that we can rely on staying the same cross-platform.
+ * Two families of algorithm are available here. One is faster at hashing small arrays, and
+ * uses the names {@link #hash64} and {@link #hash}. It is based on Wang Yi's wyhash, but
+ * uses at most 64-bit math. The other family is newer, and is faster at hashing larger arrays;
+ * it uses the names {@link #hashBulk64} and {@link #hashBulk}. It is based loosely on Jon
+ * Maiga's MX3 hash, though the algorithm is rather different. Wyhash and MX3 were designed
+ * foremost for speed and also general-purpose usability, but not cryptographic security.
+ * The "Bulk" functions here pass the stringent SMHasher 3 test battery, but the older family
+ * based on Wyhash only passes SMHasher 2. That means the "Bulk" functions can be used with
+ * more confidence as a source of randomness and avoiding collisions than the non-"Bulk"
+ * functions can. New code may want to prefer "Bulk" functions even if keys may sometimes be
+ * small, both because the statistical quality is somewhat better, and because some extra
+ * methods are available.
+ * <br>
+ * These extra methods include {@link #hashBulk(ByteBuffer)} and its overloads, which all
+ * can be used to hash a ByteBuffer more efficiently than a simple {@code byte[]} can be
+ * hashed here. There are also various {@link #hashBulk(HashFunction, Object[])} instance
+ * methods, with overloads that take {@link HashFunction} and {@link HashFunction64}, plus
+ * various {@link #hashBulk(long, SeededHashFunction, Object[])} static methods, with
+ * overloads that take {@link SeededHashFunction} and {@link SeededHashFunction64}. These
+ * "HashFunction-related" types are functional interfaces defined in this class. These allow
+ * you to connect bulk-hashing functions with other hash functions to hash multidimensional
+ * arrays or arrays of types this doesn't provide a hash function for. Because no APIs
+ * introduced in Java 8 are used here, you can use these functional interfaces on RoboVM
+ * as long as you use language level 8 (or higher, as it eventually becomes an option).
+ * <br>
+ * The Wyhash-related family is based on an early version of wyhash,
+ * <a href="https://github.com/wangyi-fudan/wyhash/blob/version_1/wyhash.h">source here</a>,
+ * but has diverged significantly. Variations on wyhash are used depending on the types being
+ * hashed.
+ * <a href="https://github.com/tommyettinger/waterhash">Code for the variations is here.</a>
+ * <br>
+ * The newer algorithm present here in the {@link #hashBulk} and {@link #hashBulk64} methods is
+ * based very loosely on the <a href="https://github.com/jonmaiga/mx3">MX3 hash</a>. This
+ * modified algorithm, called Ax, is faster at hashing large arrays of longs than any of the
+ * Wyhash variants I've tried, and also passes the SMHasher 3 test suite. It does best with
+ * larger array sizes, so the name includes "Bulk", but it tends to be faster starting at lengths
+ * of maybe 20 long items.
+ * The main source for the Ax code used in testing <a href="https://github.com/tommyettinger/axhash">is in this small repo</a>.
+ * That repo contains code compatible with both C and C++; for the C++ code used to test with SMHasher 3,
+ * <a href="https://github.com/tommyettinger/smhasher-with-junk/blob/master/smhasher3/hashes/ax.cpp">it is here</a>.
+ * <br>
+ * This provides an object-based API and a static API, where a Hasher object is
+ * instantiated with a seed, and the static methods take a seed as their first argument.
+ * Any hash that this returns is always 0 when given null to hash. Arrays with
+ * identical elements of identical types will hash identically. Arrays with identical
+ * numerical values but different types will sometimes hash differently. This class
+ * always provides 64-bit hashes via hash64() and 32-bit hashes via hash(). The additional
+ * hashBulk64() and hashBulk() methods use the Ax algorithm instead of one based on
+ * Wyhash, as mentioned before, and can hash ByteBuffer objects as well as arrays. They
+ * also provide some alternative options to hash arrays of some type using a user-provided
+ * hash for that type. Predefined functional interfaces are present in this class, such as
+ * {@link HashFunction64} for member {@link #hash64} methods, {@link HashFunction} for member
+ * {@link #hash} methods, {@link SeededHashFunction64} for static hash64 methods such as
+ * the one referenced in the {@link #longArrayHash64} constant, and {@link SeededHashFunction}
+ * for static hash methods such as the one referenced in the {@link #longArrayHash} constant.
+ * Using the static seeded variants is preferred when passing in a hash function, because the
+ * constants don't have any name clash. That means if you were to try to use
+ * {@code int result = Hasher.alpha.hashBulk(Hasher.alpha::hash, data);}, that would probably fail to compile
+ * because Java can't infer which hash() method is intended (the one with one argument of the
+ * correct type, or that argument as well as two ints). You can make hashBulk with a HashFunction
+ * work by casting {@code Hasher.alpha::hash} to the correct type, like so (where data is a {@code long[][]}):
+ * {@code int result = Hasher.alpha.hashBulk((Hasher.HashFunction64<long[]>)Hasher.alpha::hash, data);}
+ * Or, you can use the static variants:
+ * {@code int result = Hasher.hashBulk(seed, Hasher.longArrayHash, data);}
+ * You could also use longArrayHashBulk:
+ * {@code int result = Hasher.hashBulk(seed, Hasher.longArrayHashBulk, data);}
+ * Or you could do everything in 64-bit:
+ * {@code long result = Hasher.hashBulk64(seed, Hasher.longArrayHashBulk64, data);}
+ * <br>
+ * The hash64() and hash() methods use 64-bit math even when producing
+ * 32-bit hashes, for GWT reasons. GWT doesn't have the same behavior as desktop and
+ * Android applications when using ints because it treats ints mostly like doubles,
+ * sometimes, due to it using JavaScript. If we use mainly longs, though, GWT emulates
+ * the longs with a more complex technique behind-the-scenes, that behaves the same on
+ * the web as it does on desktop or on a phone. Since Hasher is supposed to be stable
+ * cross-platform, this is the way we need to go, despite it being slightly slower.
+ * <br>
+ * This class also provides static {@link #randomize1(long)}, {@link #randomize2(long)}, and
+ * {@link #randomize3(long)} methods, which are unary hashes (hashes of one item, a number) with variants such as
+ * {@link #randomize1Bounded(long, int)} and {@link #randomize2Float(long)}. The randomize1()
+ * methods are faster but more sensitive to patterns in their input; they are meant to
+ * work well on sequential inputs, like 1, 2, 3, etc. with relatively-short sequences
+ * (ideally under a million, but if statistical quality isn't a concern, they can handle any
+ * length). The randomize2() methods are more-involved, but should be able to handle most
+ * kinds of input pattern across even rather-large sequences (billions) while returning
+ * random results. The randomize3() methods are likely complete overkill for many cases, but
+ * provide extremely strong randomization for any possible input pattern, using the MX3 unary
+ * hash with an extra XOR at the beginning to prevent a fixed point at 0.
+ * <br>
+ * There are also 428 predefined instances of Hasher that you can either
+ * select from the array {@link #predefined} or select by hand, such as {@link #omega}.
+ * The predefined instances are named after the 24 greek letters, then the same letters
+ * with a trailing underscore, then
+ * <a href="https://en.wikipedia.org/wiki/List_of_demons_in_the_Ars_Goetia">72 names of demons from the Ars Goetia</a>,
+ * then the names of those demons with trailing underscores, then the names of 118 chemical elements, then those names
+ * with trailing underscores. The greek letters are traditional, the demons are perfectly fitting for video games, and
+ * chemistry has been closely linked with computing for many years now.
+ *
+ * @author Tommy Ettinger
+ */
+@SuppressWarnings("ShiftOutOfRange")
+public class AdzeHasher {
+
+    /**
+     * A functional interface type for 32-bit hash() functions that take one item, typically of an array type.
+     * @param <T> typically an array type, such as {@code int[]}
+     */
+    public interface HashFunction<T> {
+        int hash(T data);
+    }
+
+    /**
+     * A functional interface type for 64-bit hash64() functions that take one item, typically of an array type.
+     * @param <T> typically an array type, such as {@code int[]}
+     */
+    public interface HashFunction64<T> {
+        long hash64(T data);
+    }
+
+    /**
+     * A functional interface type for 32-bit hash() functions that take a long seed and one item, typically of an
+     * array type.
+     * @param <T> typically an array type, such as {@code int[]}
+     */
+    public interface SeededHashFunction<T> {
+        int hash(long seed, T data);
+    }
+
+    /**
+     * A functional interface type for 64-bit hash64() functions that take a long seed and one item, typically of an
+     * array type.
+     * @param <T> typically an array type, such as {@code int[]}
+     */
+    public interface SeededHashFunction64<T> {
+        long hash64(long seed, T data);
+    }
+
+    /**
+     * The seed used by all non-static hash() and hash64() methods in this class (the methods that don't take a seed).
+     * You can create many different Hasher objects, all with different seeds, and get very different hashes as a result
+     * of any calls on them. Because making this field hidden in some way doesn't meaningfully contribute to security,
+     * and only makes it harder to use this class, {@code seed} is public (and final, so it can't be accidentally
+     * modified, but still can if needed via reflection).
+     */
+    public final long seed;
+
+    /**
+     * Creates a new Hasher seeded, arbitrarily, with the constant 0xC4CEB9FE1A85EC53L, or -4265267296055464877L .
+     */
+    public AdzeHasher() {
+        this(0xC4CEB9FE1A85EC53L);
+    }
+
+    /**
+     * Initializes this Hasher with the given seed, verbatim; it is recommended to use {@link #randomize3(long)} on the
+     * seed if you don't know if it is adequately-random. If the seed is the same for two different Hasher instances,
+     * and they are given the same inputs, they will produce the same results. If the seed is even slightly different,
+     * the results of the two Hashers given the same input should be significantly different.
+     *
+     * @param seed a long that will be used to change the output of hash() and hash64() methods on the new Hasher
+     */
+    public AdzeHasher(long seed) {
+        this.seed = seed;
+    }
+
+    /**
+     * Fast static randomizing method that takes its state as a parameter; state is expected to change between calls to
+     * this. It is recommended that you use {@code randomize1(++state)} or {@code randomize1(--state)}
+     * to produce a sequence of different numbers, and you may have slightly worse quality with increments or decrements
+     * other than 1. All longs are accepted by this method, and all longs can be produced. This returns 0L when given
+     * 0xBFEA1C7849140B5DL .
+     * <br>
+     * You have a choice between different randomize strengths in this class. {@code randomize1()} is simpler, and will
+     * behave well when the inputs are sequential, while {@code randomize2()} is a completely different algorithm, Pelle
+     * Evensen's <a href="https://mostlymangling.blogspot.com/2020/01/nasam-not-another-strange-acronym-mixer.html">xNASAM</a>;
+     * it will have excellent quality for most patterns in input but will be about 30% slower than {@code randomize1()},
+     * though this is rarely detectable. {@code randomize3()} is the slowest and most robust; it
+     * uses MX3 by Jon Maiga, which the aforementioned author of xNASAM now recommends for any unary hashing. All
+     * randomizeN methods will produce all long outputs if given all possible longs as input. Technically-speaking,
+     * {@code randomize1(long)}, {@code randomize2(long)}, and {@code randomize3(long)} are bijective functions, which
+     * means they are reversible; it is, however, somewhat harder to reverse the xor-rotate-xor-rotate stage used in
+     * randomize2() (reversing randomize3() is easy, but takes more steps), and the methods that produce any output
+     * other than a full-range long are not reversible (such as {@link #randomize1Bounded(long, int)} and
+     * {@link #randomize2Double(long)}).
+     *
+     * @param state any long; subsequent calls should change by an odd number, such as with {@code ++state}
+     * @return any long
+     */
+    public static long randomize1(long state) {
+        return (state = ((state = (((state * 0x632BE59BD9B4E019L) ^ 0x9E3779B97F4A7C15L) * 0xC6BC279692B5CC83L)) ^ state >>> 27) * 0xAEF17502108EF2D9L) ^ state >>> 25;
+    }
+
+    /**
+     * Mid-quality static randomizing method that takes its state as a parameter; state is expected to change between
+     * calls to this. It is suggested that you use {@code DiverRNG.randomize(++state)} or
+     * {@code DiverRNG.randomize(--state)} to produce a sequence of different numbers, but any increments are allowed
+     * (even-number increments won't be able to produce all outputs, but their quality will be fine for the numbers they
+     * can produce). All longs are accepted by this method, and all longs can be produced. This returns 0L when given
+     * 0xD1B54A32D192ED03L .
+     * <br>
+     * You have a choice between different randomize strengths in this class. {@code randomize1()} is simpler, and will
+     * behave well when the inputs are sequential, while {@code randomize2()} is a completely different algorithm, Pelle
+     * Evensen's <a href="https://mostlymangling.blogspot.com/2020/01/nasam-not-another-strange-acronym-mixer.html">xNASAM</a>;
+     * it will have excellent quality for most patterns in input but will be about 30% slower than
+     * {@code randomize1()}, though this is rarely detectable. {@code randomize3()} is the slowest and most robust; it
+     * uses MX3 by Jon Maiga, which the aforementioned author of xNASAM now recommends for any unary hashing. All
+     * randomizeN methods will produce all long outputs if given all possible longs as input. Technically-speaking,
+     * {@code randomize1(long)}, {@code randomize2(long)}, and {@code randomize3(long)} are bijective functions, which
+     * means they are reversible; it is, however, somewhat harder to reverse the xor-rotate-xor-rotate stage used in
+     * randomize2() (reversing randomize3() is easy, but takes more steps), and the methods that produce any output
+     * other than a full-range long are not reversible (such as {@link #randomize1Bounded(long, int)} and
+     * {@link #randomize2Double(long)}).
+     *
+     * @param state any long; subsequent calls should change by an odd number, such as with {@code ++state}
+     * @return any long
+     */
+    public static long randomize2(long state) {
+        state ^= 0xD1B54A32D192ED03L;
+        return (state = ((state = (state ^ (state << 39 | state >>> 25) ^ (state << 17 | state >>> 47)) * 0x9E6C63D0676A9A99L) ^ state >>> 23 ^ state >>> 51) * 0x9E6D62D06F6A9A9BL) ^ state >>> 23 ^ state >>> 51;
+        // older Pelican mixer
+//        return (state = ((state = (state ^ (state << 41 | state >>> 23) ^ (state << 17 | state >>> 47) ^ 0xD1B54A32D192ED03L) * 0xAEF17502108EF2D9L) ^ state >>> 43 ^ state >>> 31 ^ state >>> 23) * 0xDB4F0B9175AE2165L) ^ state >>> 28;
+    }
+
+    /**
+     * Very thorough static randomizing method that takes its state as a parameter; state is expected to change between
+     * calls to this. It is suggested that you use {@code randomize3(++state)} or {@code randomize3(--state)}
+     * to produce a sequence of different numbers, but any odd-number increment should work well, as could another
+     * source of different longs, such as a flawed random number generator. All longs are accepted by this method, and
+     * all longs can be produced. This returns 0L when given 0xABC98388FB8FAC03L .
+     * <br>
+     * You have a choice between different randomize strengths in this class. {@code randomize1()} is simpler, and will
+     * behave well when the inputs are sequential, while {@code randomize2()} is a completely different algorithm, Pelle
+     * Evensen's <a href="https://mostlymangling.blogspot.com/2020/01/nasam-not-another-strange-acronym-mixer.html">xNASAM</a>;
+     * it will have excellent quality for most patterns in input but will be about 30% slower than
+     * {@code randomize1()}, though this is rarely detectable. {@code randomize3()} is the slowest and most robust; it
+     * uses MX3 by Jon Maiga, which the aforementioned author of xNASAM now recommends for any unary hashing. All
+     * randomizeN methods will produce all long outputs if given all possible longs as input. Technically-speaking,
+     * {@code randomize1(long)}, {@code randomize2(long)}, and {@code randomize3(long)} are bijective functions, which
+     * means they are reversible; it is, however, somewhat harder to reverse the xor-rotate-xor-rotate stage used in
+     * randomize2() (reversing randomize3() is easy, but takes more steps), and the methods that produce any output
+     * other than a full-range long are not reversible (such as {@link #randomize1Bounded(long, int)} and
+     * {@link #randomize2Double(long)}).
+     *
+     * @param state any long; subsequent calls should change by an odd number, such as with {@code ++state}
+     * @return any long
+     */
+    public static long randomize3(long state) {
+        state ^= 0xABC98388FB8FAC03L;
+        state ^= state >>> 32;
+        state *= 0xBEA225F9EB34556DL;
+        state ^= state >>> 29;
+        state *= 0xBEA225F9EB34556DL;
+        state ^= state >>> 32;
+        state *= 0xBEA225F9EB34556DL;
+        return state ^ state >>> 29;
+    }
+
+
+    /**
+     * A somewhat-experimental randomizing method that is meant to be easier for a human to memorize, while still being
+     * a bijection that can pass tests for randomness. This is based closely on the HornRandom generator in the juniper
+     * library, which passes 64TB of PractRand tests, but with modifications to how it handles its initial state so it
+     * works better as a "stateless" generator that can operate on any counter. The "H" in the name is for "Horn",
+     * so-called because a horn fits on a ram, and this is meant to fit in a human's memory (RAM). It isn't yet clear
+     * where it fits between {@link #randomize1(long)} and {@link #randomize3(long)}, but it seems to pass tests well.
+     * <br>
+     * This is inspired by the <a href="https://arxiv.org/abs/2004.06278">Squares generator</a>, which uses a
+     * roughly-similar concept as a stateless hash on a simple counter, but shares no code with Squares. The use of
+     * squaring as a primitive turns out to be good for efficiency reasons, so we use the bijective
+     *<a href="https://github.com/skeeto/hash-prospector/issues/23">Xor-Square-Or</a> operation instead of... whatever
+     * it is that Squares uses, which is not bijective in any case.
+     * <br>
+     * While several of the building blocks of this method do not have fix-points (where the input and output are the
+     * same), the method as a whole may have some over the full input range. The input is expected to be a simple
+     * counter that adds or subtracts 1, but other values (or more exotic update patterns) should all work well. It can
+     * be noted that to invert the output of randomizeH() and get back to the initial state is always possible, but
+     * takes over 30 times as many arithmetic operations as the non-inverted function. This produces each output exactly
+     * once if given every {@code long} as an input exactly once. It returns 0L when given 0x80341AC54EB04A96L .
+     * <br>
+     * For memorization purposes, if anyone wants to try, all constants here are either 7L (for XOR and OR with any
+     * constant, the number is 7L), 5555555555555555555L (for multiplication by a constant, the number is nineteen '5'
+     * digits repeated as a base-10 long), or 27 (for the one bitwise rotation, it's a right rotation by 27, and for the
+     * one right shift, it's also by 27). The operation we use twice here, xor-square-or, isn't that hard to remember,
+     * but the order matters: {@code x ^= x * x | 7L;}. This is equivalent to {@code x = x ^ ((x * x) | 7L);}, to make
+     * the grouping explicit.
+     * <br>
+     * This starts by changing state with {@code state = (state ^ 7L) * 5555555555555555555L;} because normally, the
+     * easiest way to cause a pattern in a generator that starts with a multiplication is to give it inputs that are
+     * multiples of the {@link MathTools#modularMultiplicativeInverse(long)} of the multiplier. The multiplier here is
+     * 5555555555555555555L, and its inverse is 0x6FD41CEB07C4CCCBL . The XOR before the multiplier means that in order
+     * to cause a pattern in the inputs, you would need to repeatedly add 0x6FD41CEB07C4CCCBL and then XOR with 7L
+     * before passing the input in here, which would be very unusual to encounter in any coding situation. This is in
+     * part because there is a type of basic random number generator that could use 0x6FD41CEB07C4CCCBL as a multiplier
+     * (an "XLCG"), but it requires a specific number to be XORed in with it during assignment, and 7 isn't a match.
+     * <br>
+     * Random number generators like {@code xoshiro256**} can have issues because they end with a single multiplication,
+     * in that case by 9, and any cases where the modular multiplicative inverse of 9 is used to process the output of
+     * the {@code **} scrambler end up "descrambling" it to some extent. Because Xoshiro without a scrambler has
+     * low-quality low-order bits, those bits end up failing statistical tests when not just the modular multiplicative
+     * inverse of 9 is used, but any multiplier that shares its low byte (0x39).
+     *
+     @param state any long; subsequent calls should change by an odd number, such as with {@code ++state}
+     * @return any long
+     */
+    public static long randomizeH(long state) {
+        // Intentionally NOT an XLCG, nor is its inverse, but this is bijective.
+        state = (state ^ 7L) * 5555555555555555555L;
+        // Xor-Square-Or with orConstant 7.
+        state ^= state * state | 7L;
+        // Bitwise right rotation by 27.
+        state = (state >>> 27 | state << -27);
+        // Xor-Square-Or with orConstant 7.
+        state ^= state * state | 7L;
+        // Right xor-shift by 27.
+        return state ^ state >>> 27;
+    }
+
+    /**
+     * Fast static randomizing method that takes its state as a parameter and limits output to an int between 0
+     * (inclusive) and bound (exclusive); state is expected to change between calls to this. It is recommended that you
+     * use {@code randomize1Bounded(++state, bound)} or {@code randomize1Bounded(--state, bound)} to
+     * produce a sequence of different numbers. All longs are accepted
+     * by this method, but not all ints between 0 and bound are guaranteed to be produced with equal likelihood (for any
+     * odd-number values for bound, this isn't possible for most generators). The bound can be negative.
+     * <br>
+     * You have a choice between different randomize strengths in this class. {@code randomize1()} is simpler, and will
+     * behave well when the inputs are sequential, while {@code randomize2()} is a completely different algorithm, Pelle
+     * Evensen's <a href="https://mostlymangling.blogspot.com/2020/01/nasam-not-another-strange-acronym-mixer.html">xNASAM</a>;
+     * it will have excellent quality for most patterns in input but will be about 30% slower than
+     * {@code randomize1()}, though this is rarely detectable. {@code randomize3()} is the slowest and most robust; it
+     * uses MX3 by Jon Maiga, which the aforementioned author of xNASAM now recommends for any unary hashing. All
+     * randomizeN methods will produce all long outputs if given all possible longs as input. Technically-speaking,
+     * {@code randomize1(long)}, {@code randomize2(long)}, and {@code randomize3(long)} are bijective functions, which
+     * means they are reversible; it is, however, somewhat harder to reverse the xor-rotate-xor-rotate stage used in
+     * randomize2() (reversing randomize3() is easy, but takes more steps), and the methods that produce any output
+     * other than a full-range long are not reversible (such as {@code randomize1Bounded(long, int)} and
+     * {@link #randomize2Double(long)}).
+     *
+     * @param state any long; subsequent calls should change by an odd number, such as with {@code ++state}
+     * @param bound the outer exclusive bound, as an int
+     * @return an int between 0 (inclusive) and bound (exclusive)
+     */
+    public static int randomize1Bounded(long state, int bound) {
+        return (bound = (int) ((bound * (((state = ((state = (((state * 0x632BE59BD9B4E019L) ^ 0x9E3779B97F4A7C15L) * 0xC6BC279692B5CC83L)) ^ state >>> 27) * 0xAEF17502108EF2D9L) ^ state >>> 25) & 0xFFFFFFFFL)) >> 32)) + (bound >>> 31);
+    }
+
+    /**
+     * Mid-quality static randomizing method that takes its state as a parameter and limits output to an int between 0
+     * (inclusive) and bound (exclusive); state is expected to change between calls to this. It is suggested that you
+     * use {@code randomize2Bounded(++state, bound)} or {@code randomize2Bounded(--state, bound)} to produce a sequence
+     * of numbers, but any increments are allowed (even-number increments won't be able to produce all outputs,
+     * but their quality will be fine for the numbers they can produce). All longs are accepted by this method, but not
+     * all ints between 0 and bound are guaranteed to be produced with equal likelihood (for any odd-number values for
+     * bound, this isn't possible for most generators). The bound can be negative.
+     * <br>
+     * You have a choice between different randomize strengths in this class. {@code randomize1()} is simpler, and will
+     * behave well when the inputs are sequential, while {@code randomize2()} is a completely different algorithm, Pelle
+     * Evensen's <a href="https://mostlymangling.blogspot.com/2020/01/nasam-not-another-strange-acronym-mixer.html">xNASAM</a>;
+     * it will have excellent quality for most patterns in input but will be about 30% slower than
+     * {@code randomize1()}, though this is rarely detectable. {@code randomize3()} is the slowest and most robust; it
+     * uses MX3 by Jon Maiga, which the aforementioned author of xNASAM now recommends for any unary hashing. All
+     * randomizeN methods will produce all long outputs if given all possible longs as input. Technically-speaking,
+     * {@code randomize1(long)}, {@code randomize2(long)}, and {@code randomize3(long)} are bijective functions, which
+     * means they are reversible; it is, however, somewhat harder to reverse the xor-rotate-xor-rotate stage used in
+     * randomize2() (reversing randomize3() is easy, but takes more steps), and the methods that produce any output
+     * other than a full-range long are not reversible (such as {@link #randomize1Bounded(long, int)} and
+     * {@link #randomize2Double(long)}).
+     *
+     * @param state any long; subsequent calls should change by an odd number, such as with {@code ++state}
+     * @param bound the outer exclusive bound, as an int
+     * @return an int between 0 (inclusive) and bound (exclusive)
+     */
+
+    public static int randomize2Bounded(long state, int bound) {
+        state ^= 0xD1B54A32D192ED03L;
+        return (bound = (int) ((bound * (((state = ((state = (state ^ (state << 39 | state >>> 25) ^ (state << 17 | state >>> 47)) * 0x9E6C63D0676A9A99L) ^ state >>> 23 ^ state >>> 51) * 0x9E6D62D06F6A9A9BL) ^ state >>> 23 ^ state >>> 51) & 0xFFFFFFFFL)) >> 32)) + (bound >>> 31);
+    }
+
+    /**
+     * Very thorough static randomizing method that takes its state as a parameter and limits output to an int between 0
+     * (inclusive) and bound (exclusive); state is expected to change between calls to this. It is suggested that you
+     * use {@code randomize3Bounded(++state, bound)} or {@code randomize3Bounded(--state, bound)} to produce a sequence
+     * of numbers, but any increments are allowed (even-number increments won't be able to produce all outputs,
+     * but their quality will be fine for the numbers they can produce). All longs are accepted by this method, but not
+     * all ints between 0 and bound are guaranteed to be produced with equal likelihood (for any odd-number values for
+     * bound, this isn't possible for most generators). The bound can be negative.
+     * <br>
+     * You have a choice between different randomize strengths in this class. {@code randomize1()} is simpler, and will
+     * behave well when the inputs are sequential, while {@code randomize2()} is a completely different algorithm, Pelle
+     * Evensen's <a href="https://mostlymangling.blogspot.com/2020/01/nasam-not-another-strange-acronym-mixer.html">xNASAM</a>;
+     * it will have excellent quality for most patterns in input but will be about 30% slower than
+     * {@code randomize1()}, though this is rarely detectable. {@code randomize3()} is the slowest and most robust; it
+     * uses MX3 by Jon Maiga, which the aforementioned author of xNASAM now recommends for any unary hashing. All
+     * randomizeN methods will produce all long outputs if given all possible longs as input. Technically-speaking,
+     * {@code randomize1(long)}, {@code randomize2(long)}, and {@code randomize3(long)} are bijective functions, which
+     * means they are reversible; it is, however, somewhat harder to reverse the xor-rotate-xor-rotate stage used in
+     * randomize2() (reversing randomize3() is easy, but takes more steps), and the methods that produce any output
+     * other than a full-range long are not reversible (such as {@link #randomize1Bounded(long, int)} and
+     * {@link #randomize2Double(long)}).
+     *
+     * @param state any long; subsequent calls should change by an odd number, such as with {@code ++state}
+     * @param bound the outer exclusive bound, as an int
+     * @return an int between 0 (inclusive) and bound (exclusive)
+     */
+
+    public static int randomize3Bounded(long state, int bound) {
+        state ^= 0xABC98388FB8FAC03L;
+        state ^= state >>> 32;
+        state *= 0xBEA225F9EB34556DL;
+        state ^= state >>> 29;
+        state *= 0xBEA225F9EB34556DL;
+        state ^= state >>> 32;
+        state *= 0xBEA225F9EB34556DL;
+        return (bound = (int) ((bound * ((state ^ state >>> 29) & 0xFFFFFFFFL)) >> 32)) + (bound >>> 31);
+    }
+
+    /**
+     * Good, fast, static randomizing method that takes its state as a parameter and limits output to an int between 0
+     * (inclusive) and bound (exclusive); state is expected to change between calls to this. It is suggested that you
+     * use {@code randomize3Bounded(++state, bound)} or {@code randomize3Bounded(--state, bound)} to produce a sequence
+     * of numbers, but any increments are allowed (even-number increments won't be able to produce all outputs,
+     * but their quality will be fine for the numbers they can produce). All longs are accepted by this method, but not
+     * all ints between 0 and bound are guaranteed to be produced with equal likelihood (for any odd-number values for
+     * bound, this isn't possible for most generators). The bound can be negative.
+     *
+     * @param state any long; subsequent calls should change by an odd number, such as with {@code ++state}
+     * @param bound the outer exclusive bound, as an int
+     * @return an int between 0 (inclusive) and bound (exclusive)
+     */
+    public static long randomizeHBounded(long state, int bound) {
+        state = (state ^ 7L) * 5555555555555555555L;
+        state ^= state * state | 7L;
+        state = (state >>> 27 | state << -27);
+        state ^= state * state | 7L;
+        return (bound = (int) ((bound * ((state ^ state >>> 27) & 0xFFFFFFFFL)) >> 32)) + (bound >>> 31);
+    }
+
+    /**
+     * Returns a random float that is deterministic based on state; if state is the same on two calls to this, this will
+     * return the same float. This is expected to be called with a changing variable, e.g.
+     * {@code randomize1Float(++state)}, where the increment for state should generally be 1. The period is 2 to the 64
+     * if you increment or decrement by 1, but there are only 2 to the 30 possible floats between 0 and 1, and this can
+     * only return 2 to the 24 of them (a requirement for the returned values to be uniform).
+     * <br>
+     * You have a choice between different randomize strengths in this class. {@code randomize1()} is simpler, and will
+     * behave well when the inputs are sequential, while {@code randomize2()} is a completely different algorithm, Pelle
+     * Evensen's <a href="https://mostlymangling.blogspot.com/2020/01/nasam-not-another-strange-acronym-mixer.html">xNASAM</a>;
+     * it will have excellent quality for most patterns in input but will be about 30% slower than
+     * {@code randomize1()}, though this is rarely detectable. {@code randomize3()} is the slowest and most robust; it
+     * uses MX3 by Jon Maiga, which the aforementioned author of xNASAM now recommends for any unary hashing. All
+     * randomizeN methods will produce all long outputs if given all possible longs as input. Technically-speaking,
+     * {@code randomize1(long)}, {@code randomize2(long)}, and {@code randomize3(long)} are bijective functions, which
+     * means they are reversible; it is, however, somewhat harder to reverse the xor-rotate-xor-rotate stage used in
+     * randomize2() (reversing randomize3() is easy, but takes more steps), and the methods that produce any output
+     * other than a full-range long are not reversible (such as {@link #randomize1Bounded(long, int)} and
+     * {@link #randomize2Double(long)}).
+     *
+     * @param state a variable that should be different every time you want a different random result;
+     *              using {@code randomize1Float(++state)} is recommended to go forwards or
+     *              {@code randomize1Float(--state)} to generate numbers in reverse order
+     * @return a pseudo-random float between 0f (inclusive) and 1f (exclusive), determined by {@code state}
+     */
+    public static float randomize1Float(long state) {
+        return ((((state = (((state * 0x632BE59BD9B4E019L) ^ 0x9E3779B97F4A7C15L) * 0xC6BC279692B5CC83L)) ^ state >>> 27) * 0xAEF17502108EF2D9L) >>> 40) * EPSILON;
+    }
+
+    /**
+     * Returns a random float that is deterministic based on state; if state is the same on two calls to this, this will
+     * return the same float. This is expected to be called with a changing variable, e.g.
+     * {@code randomize2Float(++state)}, where the increment for state can be any value and should usually be odd
+     * (even-number increments reduce the period). The period is 2 to the 64 if you increment or decrement by any odd
+     * number, but there are only 2 to the 30 possible floats between 0 and 1, and this can only return 2 to the 24 of
+     * them (a requirement for the returned values to be uniform).
+     * <br>
+     * You have a choice between different randomize strengths in this class. {@code randomize1()} is simpler, and will
+     * behave well when the inputs are sequential, while {@code randomize2()} is a completely different algorithm, Pelle
+     * Evensen's <a href="https://mostlymangling.blogspot.com/2020/01/nasam-not-another-strange-acronym-mixer.html">xNASAM</a>;
+     * it will have excellent quality for most patterns in input but will be about 30% slower than
+     * {@code randomize1()}, though this is rarely detectable. {@code randomize3()} is the slowest and most robust; it
+     * uses MX3 by Jon Maiga, which the aforementioned author of xNASAM now recommends for any unary hashing. All
+     * randomizeN methods will produce all long outputs if given all possible longs as input. Technically-speaking,
+     * {@code randomize1(long)}, {@code randomize2(long)}, and {@code randomize3(long)} are bijective functions, which
+     * means they are reversible; it is, however, somewhat harder to reverse the xor-rotate-xor-rotate stage used in
+     * randomize2() (reversing randomize3() is easy, but takes more steps), and the methods that produce any output
+     * other than a full-range long are not reversible (such as {@link #randomize1Bounded(long, int)} and
+     * {@link #randomize2Double(long)}).
+     *
+     * @param state a variable that should be different every time you want a different random result;
+     *              using {@code randomize2Float(++state)} is recommended to go forwards or
+     *              {@code randomize2Float(--state)} to generate numbers in reverse order
+     * @return a pseudo-random float between 0f (inclusive) and 1f (exclusive), determined by {@code state}
+     */
+    public static float randomize2Float(long state) {
+        state ^= 0xD1B54A32D192ED03L;
+        return ((((state = (state ^ (state << 39 | state >>> 25) ^ (state << 17 | state >>> 47)) * 0x9E6C63D0676A9A99L) ^ state >>> 23 ^ state >>> 51) * 0x9E6D62D06F6A9A9BL) >>> 40) * EPSILON;
+    }
+
+    /**
+     * Returns a random float that is deterministic based on state; if state is the same on two calls to this, this will
+     * return the same float. This is expected to be called with a changing variable, e.g.
+     * {@code randomize3Float(++state)}, where the increment for state can be any value and should usually be odd
+     * (even-number increments reduce the period). The period is 2 to the 64 if you increment or decrement by any odd
+     * number, but there are only 2 to the 30 possible floats between 0 and 1, and this can only return 2 to the 24 of
+     * them (a requirement for the returned values to be uniform).
+     * <br>
+     * You have a choice between different randomize strengths in this class. {@code randomize1()} is simpler, and will
+     * behave well when the inputs are sequential, while {@code randomize2()} is a completely different algorithm, Pelle
+     * Evensen's <a href="https://mostlymangling.blogspot.com/2020/01/nasam-not-another-strange-acronym-mixer.html">xNASAM</a>;
+     * it will have excellent quality for most patterns in input but will be about 30% slower than
+     * {@code randomize1()}, though this is rarely detectable. {@code randomize3()} is the slowest and most robust; it
+     * uses MX3 by Jon Maiga, which the aforementioned author of xNASAM now recommends for any unary hashing. All
+     * randomizeN methods will produce all long outputs if given all possible longs as input. Technically-speaking,
+     * {@code randomize1(long)}, {@code randomize2(long)}, and {@code randomize3(long)} are bijective functions, which
+     * means they are reversible; it is, however, somewhat harder to reverse the xor-rotate-xor-rotate stage used in
+     * randomize2() (reversing randomize3() is easy, but takes more steps), and the methods that produce any output
+     * other than a full-range long are not reversible (such as {@link #randomize1Bounded(long, int)} and
+     * {@link #randomize2Double(long)}).
+     *
+     * @param state a variable that should be different every time you want a different random result;
+     *              using {@code randomize3Float(++state)} is recommended to go forwards or
+     *              {@code randomize3Float(--state)} to generate numbers in reverse order
+     * @return a pseudo-random float between 0f (inclusive) and 1f (exclusive), determined by {@code state}
+     */
+    public static float randomize3Float(long state) {
+        state ^= 0xABC98388FB8FAC03L;
+        state ^= state >>> 32;
+        state *= 0xBEA225F9EB34556DL;
+        state ^= state >>> 29;
+        state *= 0xBEA225F9EB34556DL;
+        state ^= state >>> 32;
+        state *= 0xBEA225F9EB34556DL;
+        return (state >>> 40) * EPSILON;
+    }
+
+    /**
+     * Returns a random float that is deterministic based on state; if state is the same on two calls to this, this will
+     * return the same float. This is expected to be called with a changing variable, e.g.
+     * {@code randomizeHFloat(++state)}, where the increment for state can be any value and should usually be odd
+     * (even-number increments reduce the period). The period is 2 to the 64 if you increment or decrement by any odd
+     * number, but there are only 2 to the 30 possible floats between 0 and 1, and this can only return 2 to the 24 of
+     * them (a requirement for the returned values to be uniform).
+     *
+     * @param state a variable that should be different every time you want a different random result;
+     *              using {@code randomizeHFloat(++state)} is recommended to go forwards or
+     *              {@code randomizeHFloat(--state)} to generate numbers in reverse order
+     * @return a pseudo-random float between 0f (inclusive) and 1f (exclusive), determined by {@code state}
+     */
+    public static float randomizeHFloat(long state) {
+        state = (state ^ 7L) * 5555555555555555555L;
+        state ^= state * state | 7L;
+        state = (state >>> 27 | state << -27);
+        state ^= state * state | 7L;
+        return (state >>> 40) * EPSILON;
+    }
+
+    /**
+     * Returns a random double that is deterministic based on state; if state is the same on two calls to this, this
+     * will return the same float. This is expected to be called with a changing variable, e.g.
+     * {@code randomize1Double(++state)}, where the increment for state should generally be 1. The period is 2 to the 64
+     * if you increment or decrement by 1, but there are only 2 to the 62 possible doubles between 0 and 1.
+     * <br>
+     * You have a choice between different randomize strengths in this class. {@code randomize1()} is simpler, and will
+     * behave well when the inputs are sequential, while {@code randomize2()} is a completely different algorithm, Pelle
+     * Evensen's <a href="https://mostlymangling.blogspot.com/2020/01/nasam-not-another-strange-acronym-mixer.html">xNASAM</a>;
+     * it will have excellent quality for most patterns in input but will be about 30% slower than
+     * {@code randomize1()}, though this is rarely detectable. {@code randomize3()} is the slowest and most robust; it
+     * uses MX3 by Jon Maiga, which the aforementioned author of xNASAM now recommends for any unary hashing. All
+     * randomizeN methods will produce all long outputs if given all possible longs as input. Technically-speaking,
+     * {@code randomize1(long)}, {@code randomize2(long)}, and {@code randomize3(long)} are bijective functions, which
+     * means they are reversible; it is, however, somewhat harder to reverse the xor-rotate-xor-rotate stage used in
+     * randomize2() (reversing randomize3() is easy, but takes more steps), and the methods that produce any output
+     * other than a full-range long are not reversible (such as {@link #randomize1Bounded(long, int)} and
+     * {@link #randomize2Double(long)}).
+     *
+     * @param state a variable that should be different every time you want a different random result;
+     *              using {@code randomize1Double(++state)} is recommended to go forwards or
+     *              {@code randomize1Double(--state)} to generate numbers in reverse order
+     * @return a pseudo-random double between 0.0 (inclusive) and 1.0 (exclusive), determined by {@code state}
+     */
+    public static double randomize1Double(long state) {
+        return (((state = ((state = (((state * 0x632BE59BD9B4E019L) ^ 0x9E3779B97F4A7C15L) * 0xC6BC279692B5CC83L)) ^ state >>> 27) * 0xAEF17502108EF2D9L) ^ state >>> 25) & 0x1FFFFFFFFFFFFFL) * EPSILON_D;
+    }
+
+    /**
+     * Returns a random double that is deterministic based on state; if state is the same on two calls to this, this
+     * will return the same float. This is expected to be called with a changing variable, e.g.
+     * {@code randomize2Double(++state)}, where the increment for state can be any number but should usually be odd
+     * (even-number increments reduce the period). The period is 2 to the 64 if you increment or decrement by 1, but
+     * there are only 2 to the 62 possible doubles between 0 and 1.
+     * <br>
+     * You have a choice between different randomize strengths in this class. {@code randomize1()} is simpler, and will
+     * behave well when the inputs are sequential, while {@code randomize2()} is a completely different algorithm, Pelle
+     * Evensen's <a href="https://mostlymangling.blogspot.com/2020/01/nasam-not-another-strange-acronym-mixer.html">xNASAM</a>;
+     * it will have excellent quality for most patterns in input but will be about 30% slower than
+     * {@code randomize1()}, though this is rarely detectable. {@code randomize3()} is the slowest and most robust; it
+     * uses MX3 by Jon Maiga, which the aforementioned author of xNASAM now recommends for any unary hashing. All
+     * randomizeN methods will produce all long outputs if given all possible longs as input. Technically-speaking,
+     * {@code randomize1(long)}, {@code randomize2(long)}, and {@code randomize3(long)} are bijective functions, which
+     * means they are reversible; it is, however, somewhat harder to reverse the xor-rotate-xor-rotate stage used in
+     * randomize2() (reversing randomize3() is easy, but takes more steps), and the methods that produce any output
+     * other than a full-range long are not reversible (such as {@link #randomize1Bounded(long, int)} and
+     * {@code randomize2Double(long)}).
+     *
+     * @param state a variable that should be different every time you want a different random result;
+     *              using {@code randomizeDouble(++state)} is recommended to go forwards or
+     *              {@code randomizeDouble(--state)} to generate numbers in reverse order
+     * @return a pseudo-random double between 0.0 (inclusive) and 1.0 (exclusive), determined by {@code state}
+     */
+    public static double randomize2Double(long state) {
+        state ^= 0xD1B54A32D192ED03L;
+        return (((state = ((state = (state ^ (state << 39 | state >>> 25) ^ (state << 17 | state >>> 47)) * 0x9E6C63D0676A9A99L) ^ state >>> 23 ^ state >>> 51) * 0x9E6D62D06F6A9A9BL) ^ state >>> 23) >>> 11) * EPSILON_D;
+    }
+
+    /**
+     * Returns a random double that is deterministic based on state; if state is the same on two calls to this, this
+     * will return the same float. This is expected to be called with a changing variable, e.g.
+     * {@code randomize3Double(++state)}, where the increment for state can be any number but should usually be odd
+     * (even-number increments reduce the period). The period is 2 to the 64 if you increment or decrement by 1, but
+     * there are only 2 to the 62 possible doubles between 0 and 1.
+     * <br>
+     * You have a choice between different randomize strengths in this class. {@code randomize1()} is simpler, and will
+     * behave well when the inputs are sequential, while {@code randomize2()} is a completely different algorithm, Pelle
+     * Evensen's <a href="https://mostlymangling.blogspot.com/2020/01/nasam-not-another-strange-acronym-mixer.html">xNASAM</a>;
+     * it will have excellent quality for most patterns in input but will be about 30% slower than
+     * {@code randomize1()}, though this is rarely detectable. {@code randomize3()} is the slowest and most robust; it
+     * uses MX3 by Jon Maiga, which the aforementioned author of xNASAM now recommends for any unary hashing. All
+     * randomizeN methods will produce all long outputs if given all possible longs as input. Technically-speaking,
+     * {@code randomize1(long)}, {@code randomize2(long)}, and {@code randomize3(long)} are bijective functions, which
+     * means they are reversible; it is, however, somewhat harder to reverse the xor-rotate-xor-rotate stage used in
+     * randomize2() (reversing randomize3() is easy, but takes more steps), and the methods that produce any output
+     * other than a full-range long are not reversible (such as {@link #randomize1Bounded(long, int)} and
+     * {@link #randomize2Double(long)}).
+     *
+     * @param state a variable that should be different every time you want a different random result;
+     *              using {@code randomize3Double(++state)} is recommended to go forwards or
+     *              {@code randomize3Double(--state)} to generate numbers in reverse order
+     * @return a pseudo-random double between 0.0 (inclusive) and 1.0 (exclusive), determined by {@code state}
+     */
+    public static double randomize3Double(long state) {
+        state ^= 0xABC98388FB8FAC03L;
+        state ^= state >>> 32;
+        state *= 0xBEA225F9EB34556DL;
+        state ^= state >>> 29;
+        state *= 0xBEA225F9EB34556DL;
+        state ^= state >>> 32;
+        state *= 0xBEA225F9EB34556DL;
+        return (state >>> 11 ^ state >>> 40) * EPSILON_D;
+    }
+
+    /**
+     * Returns a random double that is deterministic based on state; if state is the same on two calls to this, this
+     * will return the same float. This is expected to be called with a changing variable, e.g.
+     * {@code randomizeHDouble(++state)}, where the increment for state can be any number but should usually be odd
+     * (even-number increments reduce the period). The period is 2 to the 64 if you increment or decrement by 1, but
+     * there are only 2 to the 62 possible doubles between 0 and 1.
+     *
+     * @param state a variable that should be different every time you want a different random result;
+     *              using {@code randomizeHDouble(++state)} is recommended to go forwards or
+     *              {@code randomizeHDouble(--state)} to generate numbers in reverse order
+     * @return a pseudo-random double between 0.0 (inclusive) and 1.0 (exclusive), determined by {@code state}
+     */
+    public static double randomizeHDouble(long state) {
+        state = (state ^ 7L) * 5555555555555555555L;
+        state ^= state * state | 7L;
+        state = (state >>> 27 | state << -27);
+        state ^= state * state | 7L;
+        return (state >>> 11 ^ state >>> 38) * EPSILON_D;
+    }
+
+    /**
+     * Constructs a Hasher by hashing {@code seed} with {@link #hash64(long, CharSequence)}, and then running the result
+     * through {@link #randomize3(long)}. This is the same as calling the constructor {@link #AdzeHasher(long)} and
+     * passing it {@code AdzeHasher.randomize3(AdzeHasher.hash64(1L, seed))} .
+     *
+     * @param seed a CharSequence, such as a String, that will be used to seed the Hasher.
+     */
+    public AdzeHasher(final CharSequence seed) {
+        this(randomize3(hash64(1L, seed)));
+    }
+
+    /**
+     * Big constant 0.
+     */
+    public static final long b0 = 0xA0761D6478BD642FL;
+    /**
+     * Big constant 1.
+     */
+    public static final long b1 = 0xE7037ED1A0B428DBL;
+    /**
+     * Big constant 2.
+     */
+    public static final long b2 = 0x8EBC6AF09C88C6E3L;
+    /**
+     * Big constant 3.
+     */
+    public static final long b3 = 0x589965CC75374CC3L;
+    /**
+     * Big constant 4.
+     */
+    public static final long b4 = 0x1D8E4E27C47D124FL;
+    /**
+     * Big constant 5.
+     */
+    public static final long b5 = 0xEB44ACCAB455D165L;
+
+    /**
+     * A long constant used as a multiplier by the MX3 unary hash.
+     * Used in {@link #mix(long)}, as well as when hashing one Object.
+     */
+    public static final long C = 0xBEA225F9EB34556DL;
+    /** A 64-bit probable prime close to a "harmonious number" (See {@link MathTools#GOLDEN_LONGS}). */
+    public static final long Q = 0x9E3779B97F4A7C55L;
+    /** A 64-bit probable prime close to a "harmonious number" (See {@link MathTools#GOLDEN_LONGS}). */
+    public static final long R = 0xC13FA9A902A63293L;
+    /** A 64-bit probable prime close to a "harmonious number" (See {@link MathTools#GOLDEN_LONGS}). */
+    public static final long S = 0xD1B54A32D192ED2DL;
+    /** A 64-bit probable prime close to a "harmonious number" (See {@link MathTools#GOLDEN_LONGS}). */
+    public static final long T = 0xDB4F0B9175AE2169L;
+    /** A 64-bit probable prime close to a "harmonious number" (See {@link MathTools#GOLDEN_LONGS}). */
+    public static final long U = 0xE19B01AA9D42C66DL;
+    /** A 64-bit probable prime close to a "harmonious number" (See {@link MathTools#GOLDEN_LONGS}). */
+    public static final long V = 0xE60E2B722B53AEF3L;
+
+    /**
+     * Takes two arguments that are technically longs, and should be very different, and uses them to get a result
+     * that is technically a long and mixes the bits of the inputs. The arguments and result are only technically
+     * longs because their lower 32 bits matter much more than their upper 32, and giving just any long won't work.
+     * Used by {@link #hash64(int[])}, {@link #hash(int[])}, and other hashes that use 32-bit or smaller items.
+     * <br>
+     * This is very similar to wyhash's mum function, but doesn't use 128-bit math because it expects that its
+     * arguments are only relevant in their lower 32 bits (allowing their product to fit in 64 bits).
+     *
+     * @param a a long that should probably only hold an int's worth of data
+     * @param b a long that should probably only hold an int's worth of data
+     * @return a sort-of randomized output dependent on both inputs
+     */
+    public static long mum(final long a, final long b) {
+        final long n = a * b;
+        return n ^ (n >>> 30);
+    }
+
+    /**
+     * A slower but higher-quality variant on {@link #mum(long, long)} that can take two arbitrary longs (with any
+     * of their 64 bits containing relevant data) instead of mum's 32-bit sections of its inputs, and outputs a
+     * 64-bit result that can have any of its bits used.
+     * Used by {@link #hash64(long[])}, {@link #hash(long[])}, and other hashes that use 64-bit items.
+     * <br>
+     * This was changed so that it distributes bits from both inputs a little better on July 6, 2019.
+     *
+     * @param a any long
+     * @param b any long
+     * @return a sort-of randomized output dependent on both inputs
+     */
+    public static long wow(final long a, final long b) {
+        final long n = (a ^ (b << 39 | b >>> 25)) * (b ^ (a << 39 | a >>> 25));
+        return n ^ (n >>> 32);
+    }
+
+    /**
+     * A medium-quality, but fast, way to scramble a 64-bit input and get a 64-bit output.
+     * Used by {@link #hashBulk64} and {@link #hashBulk}.
+     * <br>
+     * This is reversible, which allows all outputs to be possible for the hashing functions to produce.
+     * However, this also allows the seed to be recovered if a zero-length input is supplied. That's why this
+     * is a non-cryptographic hashing algorithm!
+     * @param x any long
+     * @return any long
+     */
+    public static long mix(long x) {
+        x ^= (x << 23 | x >>> 41) ^ (x << 43 | x >>> 21);
+        x *= C;
+        return x ^ (x << 11 | x >>> 53) ^ (x << 50 | x >>> 14);
+    }
+
+    /**
+     * Performs part of the hashing step applied to two 64-bit inputs at once, and typically added to a running
+     * hash value directly.
+     * Used by {@link #hashBulk64} and {@link #hashBulk}.
+     * <br>
+     * This is not reversible unless you know one of the parameters in full.
+     * @param a any long, typically an item being hashed; mixed with b
+     * @param b any long, typically an item being hashed; mixed with a
+     * @return any long
+     */
+    public static long mixMultiple(long a, long b) {
+        return ((a << 28 | a >>> 36) + b) * Q
+             + ((b << 29 | b >>> 35) + a) * R;
+    }
+
+    /**
+     * Performs part of the hashing step applied to three 64-bit inputs at once, and typically added to a running
+     * hash value directly.
+     * Used by {@link #hashBulk64} and {@link #hashBulk}.
+     * <br>
+     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the other three
+     * are known in full. This uses four 64-bit primes as multipliers; the exact numbers don't matter as long as
+     * they are odd and have sufficiently well-distributed bits (close to 32 '1' bits, and so on). If this is only
+     * added to a running total, the result won't have very random low-order bits, so performing bitwise rotations
+     * after at least some calls to this (or xorshifting right) is critical to keeping the hash high-quality.
+     * @param a any long, typically an item being hashed; mixed with b and c
+     * @param b any long, typically an item being hashed; mixed with c and a
+     * @param c any long, typically an item being hashed; mixed with a and b
+     * @return any long
+     */
+    public static long mixMultiple(long a, long b, long c) {
+        return ((a << 28 | a >>> 36) + b) * Q
+             + ((b << 29 | b >>> 35) + c) * R
+             + ((c << 27 | c >>> 37) + a) * T;
+    }
+
+    /**
+     * Performs part of the hashing step applied to four 64-bit inputs at once, and typically added to a running
+     * hash value directly.
+     * Used by {@link #hashBulk64} and {@link #hashBulk}.
+     * <br>
+     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the other three
+     * are known in full. This uses four 64-bit primes as multipliers; the exact numbers don't matter as long as
+     * they are odd and have sufficiently well-distributed bits (close to 32 '1' bits, and so on). If this is only
+     * added to a running total, the result won't have very random low-order bits, so performing bitwise rotations
+     * after at least some calls to this (or xorshifting right) is critical to keeping the hash high-quality.
+     * @param a any long, typically an item being hashed; mixed with b and d
+     * @param b any long, typically an item being hashed; mixed with c and a
+     * @param c any long, typically an item being hashed; mixed with d and b
+     * @param d any long, typically an item being hashed; mixed with a and c
+     * @return any long
+     */
+    public static long mixMultiple(long a, long b, long c, long d) {
+        return ((a << 28 | a >>> 36) + b) * Q
+             + ((b << 29 | b >>> 35) + c) * R
+             + ((c << 27 | c >>> 37) + d) * S
+             + ((d << 25 | d >>> 39) + a) * T;
+    }
+
+    /**
+     * Performs part of the hashing step applied to five 64-bit inputs at once, and typically added to a running
+     * hash value directly.
+     * Used by {@link #hashBulk64} and {@link #hashBulk}.
+     * <br>
+     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the other three
+     * are known in full. This uses four 64-bit primes as multipliers; the exact numbers don't matter as long as
+     * they are odd and have sufficiently well-distributed bits (close to 32 '1' bits, and so on). If this is only
+     * added to a running total, the result won't have very random low-order bits, so performing bitwise rotations
+     * after at least some calls to this (or xorshifting right) is critical to keeping the hash high-quality.
+     * @param a any long, typically an item being hashed; mixed with b and e
+     * @param b any long, typically an item being hashed; mixed with c and a
+     * @param c any long, typically an item being hashed; mixed with d and b
+     * @param d any long, typically an item being hashed; mixed with e and c
+     * @param e any long, typically an item being hashed; mixed with a and d
+     * @return any long
+     */
+    public static long mixMultiple(long a, long b, long c, long d, long e) {
+        return ((a << 28 | a >>> 36) + b) * Q
+             + ((b << 29 | b >>> 35) + c) * R
+             + ((c << 27 | c >>> 37) + d) * S
+             + ((d << 25 | d >>> 39) + e) * T
+             + ((e << 26 | e >>> 38) + a) * U;
+    }
+
+    /**
+     * Performs part of the hashing step applied to six 64-bit inputs at once, and typically added to a running
+     * hash value directly.
+     * Used by {@link #hashBulk64} and {@link #hashBulk}.
+     * <br>
+     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the other three
+     * are known in full. This uses four 64-bit primes as multipliers; the exact numbers don't matter as long as
+     * they are odd and have sufficiently well-distributed bits (close to 32 '1' bits, and so on). If this is only
+     * added to a running total, the result won't have very random low-order bits, so performing bitwise rotations
+     * after at least some calls to this (or xorshifting right) is critical to keeping the hash high-quality.
+     * @param a any long, typically an item being hashed; mixed with b and f
+     * @param b any long, typically an item being hashed; mixed with c and a
+     * @param c any long, typically an item being hashed; mixed with d and b
+     * @param d any long, typically an item being hashed; mixed with e and c
+     * @param e any long, typically an item being hashed; mixed with f and d
+     * @param f any long, typically an item being hashed; mixed with a and e
+     * @return any long
+     */
+    public static long mixMultiple(long a, long b, long c, long d, long e, long f) {
+        return ((a << 28 | a >>> 36) + b) * Q
+             + ((b << 29 | b >>> 35) + c) * R
+             + ((c << 27 | c >>> 37) + d) * S
+             + ((d << 25 | d >>> 39) + e) * T
+             + ((e << 26 | e >>> 38) + f) * U
+             + ((f << 30 | f >>> 34) + a) * V;
+    }
+
+
+    /**
+     * A very minimalist way to scramble inputs to be used as seeds; can be inverted using {@link #reverse(long)}.
+     * This simply performs the XOR-rotate-XOR-rotate operation on x, using left rotations of 29 and 47.
+     * @param x any long
+     * @return a slightly scrambled version of x
+     */
+    public static long forward(long x) {
+        return x ^ (x << 29 | x >>> 35) ^ (x << 47 | x >>> 17);
+    }
+
+    /**
+     * Unscrambles the result of {@link #forward(long)} to get its original argument back.
+     * @param x a long produced by {@link #forward(long)} or obtained from {@link #seed}
+     * @return the original long that was provided to {@link #forward(long)}, before scrambling
+     */
+    public static long reverse(long x) {
+        x ^= x ^ (x << 29 | x >>> 35) ^ (x << 47 | x >>> 17);
+        x ^= x ^ (x << 58 | x >>>  6) ^ (x << 30 | x >>> 34);
+        x ^= x ^ (x << 52 | x >>> 12) ^ (x << 60 | x >>>  4);
+        x ^= x ^ (x << 40 | x >>> 24) ^ (x << 56 | x >>>  8);
+        x ^= x ^ (x << 16 | x >>> 48) ^ (x << 48 | x >>> 16);
+        return x;
+    }
+
+
+    public static final AdzeHasher alpha = new AdzeHasher("alpha"), beta = new AdzeHasher("beta"), gamma = new AdzeHasher("gamma"),
+            delta = new AdzeHasher("delta"), epsilon = new AdzeHasher("epsilon"), zeta = new AdzeHasher("zeta"),
+            eta = new AdzeHasher("eta"), theta = new AdzeHasher("theta"), iota = new AdzeHasher("iota"),
+            kappa = new AdzeHasher("kappa"), lambda = new AdzeHasher("lambda"), mu = new AdzeHasher("mu"),
+            nu = new AdzeHasher("nu"), xi = new AdzeHasher("xi"), omicron = new AdzeHasher("omicron"), pi = new AdzeHasher("pi"),
+            rho = new AdzeHasher("rho"), sigma = new AdzeHasher("sigma"), tau = new AdzeHasher("tau"),
+            upsilon = new AdzeHasher("upsilon"), phi = new AdzeHasher("phi"), chi = new AdzeHasher("chi"), psi = new AdzeHasher("psi"),
+            omega = new AdzeHasher("omega"),
+            alpha_ = new AdzeHasher("ALPHA"), beta_ = new AdzeHasher("BETA"), gamma_ = new AdzeHasher("GAMMA"),
+            delta_ = new AdzeHasher("DELTA"), epsilon_ = new AdzeHasher("EPSILON"), zeta_ = new AdzeHasher("ZETA"),
+            eta_ = new AdzeHasher("ETA"), theta_ = new AdzeHasher("THETA"), iota_ = new AdzeHasher("IOTA"),
+            kappa_ = new AdzeHasher("KAPPA"), lambda_ = new AdzeHasher("LAMBDA"), mu_ = new AdzeHasher("MU"),
+            nu_ = new AdzeHasher("NU"), xi_ = new AdzeHasher("XI"), omicron_ = new AdzeHasher("OMICRON"), pi_ = new AdzeHasher("PI"),
+            rho_ = new AdzeHasher("RHO"), sigma_ = new AdzeHasher("SIGMA"), tau_ = new AdzeHasher("TAU"),
+            upsilon_ = new AdzeHasher("UPSILON"), phi_ = new AdzeHasher("PHI"), chi_ = new AdzeHasher("CHI"), psi_ = new AdzeHasher("PSI"),
+            omega_ = new AdzeHasher("OMEGA"),
+            baal = new AdzeHasher("baal"), agares = new AdzeHasher("agares"), vassago = new AdzeHasher("vassago"), samigina = new AdzeHasher("samigina"),
+            marbas = new AdzeHasher("marbas"), valefor = new AdzeHasher("valefor"), amon = new AdzeHasher("amon"), barbatos = new AdzeHasher("barbatos"),
+            paimon = new AdzeHasher("paimon"), buer = new AdzeHasher("buer"), gusion = new AdzeHasher("gusion"), sitri = new AdzeHasher("sitri"),
+            beleth = new AdzeHasher("beleth"), leraje = new AdzeHasher("leraje"), eligos = new AdzeHasher("eligos"), zepar = new AdzeHasher("zepar"),
+            botis = new AdzeHasher("botis"), bathin = new AdzeHasher("bathin"), sallos = new AdzeHasher("sallos"), purson = new AdzeHasher("purson"),
+            marax = new AdzeHasher("marax"), ipos = new AdzeHasher("ipos"), aim = new AdzeHasher("aim"), naberius = new AdzeHasher("naberius"),
+            glasya_labolas = new AdzeHasher("glasya_labolas"), bune = new AdzeHasher("bune"), ronove = new AdzeHasher("ronove"), berith = new AdzeHasher("berith"),
+            astaroth = new AdzeHasher("astaroth"), forneus = new AdzeHasher("forneus"), foras = new AdzeHasher("foras"), asmoday = new AdzeHasher("asmoday"),
+            gaap = new AdzeHasher("gaap"), furfur = new AdzeHasher("furfur"), marchosias = new AdzeHasher("marchosias"), stolas = new AdzeHasher("stolas"),
+            phenex = new AdzeHasher("phenex"), halphas = new AdzeHasher("halphas"), malphas = new AdzeHasher("malphas"), raum = new AdzeHasher("raum"),
+            focalor = new AdzeHasher("focalor"), vepar = new AdzeHasher("vepar"), sabnock = new AdzeHasher("sabnock"), shax = new AdzeHasher("shax"),
+            vine = new AdzeHasher("vine"), bifrons = new AdzeHasher("bifrons"), vual = new AdzeHasher("vual"), haagenti = new AdzeHasher("haagenti"),
+            crocell = new AdzeHasher("crocell"), furcas = new AdzeHasher("furcas"), balam = new AdzeHasher("balam"), alloces = new AdzeHasher("alloces"),
+            caim = new AdzeHasher("caim"), murmur = new AdzeHasher("murmur"), orobas = new AdzeHasher("orobas"), gremory = new AdzeHasher("gremory"),
+            ose = new AdzeHasher("ose"), amy = new AdzeHasher("amy"), orias = new AdzeHasher("orias"), vapula = new AdzeHasher("vapula"),
+            zagan = new AdzeHasher("zagan"), valac = new AdzeHasher("valac"), andras = new AdzeHasher("andras"), flauros = new AdzeHasher("flauros"),
+            andrealphus = new AdzeHasher("andrealphus"), kimaris = new AdzeHasher("kimaris"), amdusias = new AdzeHasher("amdusias"), belial = new AdzeHasher("belial"),
+            decarabia = new AdzeHasher("decarabia"), seere = new AdzeHasher("seere"), dantalion = new AdzeHasher("dantalion"), andromalius = new AdzeHasher("andromalius"),
+            baal_ = new AdzeHasher("BAAL"), agares_ = new AdzeHasher("AGARES"), vassago_ = new AdzeHasher("VASSAGO"), samigina_ = new AdzeHasher("SAMIGINA"),
+            marbas_ = new AdzeHasher("MARBAS"), valefor_ = new AdzeHasher("VALEFOR"), amon_ = new AdzeHasher("AMON"), barbatos_ = new AdzeHasher("BARBATOS"),
+            paimon_ = new AdzeHasher("PAIMON"), buer_ = new AdzeHasher("BUER"), gusion_ = new AdzeHasher("GUSION"), sitri_ = new AdzeHasher("SITRI"),
+            beleth_ = new AdzeHasher("BELETH"), leraje_ = new AdzeHasher("LERAJE"), eligos_ = new AdzeHasher("ELIGOS"), zepar_ = new AdzeHasher("ZEPAR"),
+            botis_ = new AdzeHasher("BOTIS"), bathin_ = new AdzeHasher("BATHIN"), sallos_ = new AdzeHasher("SALLOS"), purson_ = new AdzeHasher("PURSON"),
+            marax_ = new AdzeHasher("MARAX"), ipos_ = new AdzeHasher("IPOS"), aim_ = new AdzeHasher("AIM"), naberius_ = new AdzeHasher("NABERIUS"),
+            glasya_labolas_ = new AdzeHasher("GLASYA_LABOLAS"), bune_ = new AdzeHasher("BUNE"), ronove_ = new AdzeHasher("RONOVE"), berith_ = new AdzeHasher("BERITH"),
+            astaroth_ = new AdzeHasher("ASTAROTH"), forneus_ = new AdzeHasher("FORNEUS"), foras_ = new AdzeHasher("FORAS"), asmoday_ = new AdzeHasher("ASMODAY"),
+            gaap_ = new AdzeHasher("GAAP"), furfur_ = new AdzeHasher("FURFUR"), marchosias_ = new AdzeHasher("MARCHOSIAS"), stolas_ = new AdzeHasher("STOLAS"),
+            phenex_ = new AdzeHasher("PHENEX"), halphas_ = new AdzeHasher("HALPHAS"), malphas_ = new AdzeHasher("MALPHAS"), raum_ = new AdzeHasher("RAUM"),
+            focalor_ = new AdzeHasher("FOCALOR"), vepar_ = new AdzeHasher("VEPAR"), sabnock_ = new AdzeHasher("SABNOCK"), shax_ = new AdzeHasher("SHAX"),
+            vine_ = new AdzeHasher("VINE"), bifrons_ = new AdzeHasher("BIFRONS"), vual_ = new AdzeHasher("VUAL"), haagenti_ = new AdzeHasher("HAAGENTI"),
+            crocell_ = new AdzeHasher("CROCELL"), furcas_ = new AdzeHasher("FURCAS"), balam_ = new AdzeHasher("BALAM"), alloces_ = new AdzeHasher("ALLOCES"),
+            caim_ = new AdzeHasher("CAIM"), murmur_ = new AdzeHasher("MURMUR"), orobas_ = new AdzeHasher("OROBAS"), gremory_ = new AdzeHasher("GREMORY"),
+            ose_ = new AdzeHasher("OSE"), amy_ = new AdzeHasher("AMY"), orias_ = new AdzeHasher("ORIAS"), vapula_ = new AdzeHasher("VAPULA"),
+            zagan_ = new AdzeHasher("ZAGAN"), valac_ = new AdzeHasher("VALAC"), andras_ = new AdzeHasher("ANDRAS"), flauros_ = new AdzeHasher("FLAUROS"),
+            andrealphus_ = new AdzeHasher("ANDREALPHUS"), kimaris_ = new AdzeHasher("KIMARIS"), amdusias_ = new AdzeHasher("AMDUSIAS"), belial_ = new AdzeHasher("BELIAL"),
+            decarabia_ = new AdzeHasher("DECARABIA"), seere_ = new AdzeHasher("SEERE"), dantalion_ = new AdzeHasher("DANTALION"), andromalius_ = new AdzeHasher("ANDROMALIUS"),
+            hydrogen = new AdzeHasher("hydrogen"), helium = new AdzeHasher("helium"), lithium = new AdzeHasher("lithium"), beryllium = new AdzeHasher("beryllium"), boron = new AdzeHasher("boron"), carbon = new AdzeHasher("carbon"), nitrogen = new AdzeHasher("nitrogen"), oxygen = new AdzeHasher("oxygen"), fluorine = new AdzeHasher("fluorine"), neon = new AdzeHasher("neon"), sodium = new AdzeHasher("sodium"), magnesium = new AdzeHasher("magnesium"), aluminium = new AdzeHasher("aluminium"), silicon = new AdzeHasher("silicon"), phosphorus = new AdzeHasher("phosphorus"), sulfur = new AdzeHasher("sulfur"), chlorine = new AdzeHasher("chlorine"), argon = new AdzeHasher("argon"), potassium = new AdzeHasher("potassium"), calcium = new AdzeHasher("calcium"), scandium = new AdzeHasher("scandium"), titanium = new AdzeHasher("titanium"), vanadium = new AdzeHasher("vanadium"), chromium = new AdzeHasher("chromium"), manganese = new AdzeHasher("manganese"), iron = new AdzeHasher("iron"), cobalt = new AdzeHasher("cobalt"), nickel = new AdzeHasher("nickel"), copper = new AdzeHasher("copper"), zinc = new AdzeHasher("zinc"), gallium = new AdzeHasher("gallium"), germanium = new AdzeHasher("germanium"), arsenic = new AdzeHasher("arsenic"), selenium = new AdzeHasher("selenium"), bromine = new AdzeHasher("bromine"), krypton = new AdzeHasher("krypton"), rubidium = new AdzeHasher("rubidium"), strontium = new AdzeHasher("strontium"), yttrium = new AdzeHasher("yttrium"), zirconium = new AdzeHasher("zirconium"), niobium = new AdzeHasher("niobium"), molybdenum = new AdzeHasher("molybdenum"), technetium = new AdzeHasher("technetium"), ruthenium = new AdzeHasher("ruthenium"), rhodium = new AdzeHasher("rhodium"), palladium = new AdzeHasher("palladium"), silver = new AdzeHasher("silver"), cadmium = new AdzeHasher("cadmium"), indium = new AdzeHasher("indium"), tin = new AdzeHasher("tin"), antimony = new AdzeHasher("antimony"), tellurium = new AdzeHasher("tellurium"), iodine = new AdzeHasher("iodine"), xenon = new AdzeHasher("xenon"), caesium = new AdzeHasher("caesium"), barium = new AdzeHasher("barium"), lanthanum = new AdzeHasher("lanthanum"), cerium = new AdzeHasher("cerium"), praseodymium = new AdzeHasher("praseodymium"), neodymium = new AdzeHasher("neodymium"), promethium = new AdzeHasher("promethium"), samarium = new AdzeHasher("samarium"), europium = new AdzeHasher("europium"), gadolinium = new AdzeHasher("gadolinium"), terbium = new AdzeHasher("terbium"), dysprosium = new AdzeHasher("dysprosium"), holmium = new AdzeHasher("holmium"), erbium = new AdzeHasher("erbium"), thulium = new AdzeHasher("thulium"), ytterbium = new AdzeHasher("ytterbium"), lutetium = new AdzeHasher("lutetium"), hafnium = new AdzeHasher("hafnium"), tantalum = new AdzeHasher("tantalum"), tungsten = new AdzeHasher("tungsten"), rhenium = new AdzeHasher("rhenium"), osmium = new AdzeHasher("osmium"), iridium = new AdzeHasher("iridium"), platinum = new AdzeHasher("platinum"), gold = new AdzeHasher("gold"), mercury = new AdzeHasher("mercury"), thallium = new AdzeHasher("thallium"), lead = new AdzeHasher("lead"), bismuth = new AdzeHasher("bismuth"), polonium = new AdzeHasher("polonium"), astatine = new AdzeHasher("astatine"), radon = new AdzeHasher("radon"), francium = new AdzeHasher("francium"), radium = new AdzeHasher("radium"), actinium = new AdzeHasher("actinium"), thorium = new AdzeHasher("thorium"), protactinium = new AdzeHasher("protactinium"), uranium = new AdzeHasher("uranium"), neptunium = new AdzeHasher("neptunium"), plutonium = new AdzeHasher("plutonium"), americium = new AdzeHasher("americium"), curium = new AdzeHasher("curium"), berkelium = new AdzeHasher("berkelium"), californium = new AdzeHasher("californium"), einsteinium = new AdzeHasher("einsteinium"), fermium = new AdzeHasher("fermium"), mendelevium = new AdzeHasher("mendelevium"), nobelium = new AdzeHasher("nobelium"), lawrencium = new AdzeHasher("lawrencium"), rutherfordium = new AdzeHasher("rutherfordium"), dubnium = new AdzeHasher("dubnium"), seaborgium = new AdzeHasher("seaborgium"), bohrium = new AdzeHasher("bohrium"), hassium = new AdzeHasher("hassium"), meitnerium = new AdzeHasher("meitnerium"), darmstadtium = new AdzeHasher("darmstadtium"), roentgenium = new AdzeHasher("roentgenium"), copernicium = new AdzeHasher("copernicium"), nihonium = new AdzeHasher("nihonium"), flerovium = new AdzeHasher("flerovium"), moscovium = new AdzeHasher("moscovium"), livermorium = new AdzeHasher("livermorium"), tennessine = new AdzeHasher("tennessine"), oganesson = new AdzeHasher("oganesson"),
+            hydrogen_ = new AdzeHasher("HYDROGEN"), helium_ = new AdzeHasher("HELIUM"), lithium_ = new AdzeHasher("LITHIUM"), beryllium_ = new AdzeHasher("BERYLLIUM"), boron_ = new AdzeHasher("BORON"), carbon_ = new AdzeHasher("CARBON"), nitrogen_ = new AdzeHasher("NITROGEN"), oxygen_ = new AdzeHasher("OXYGEN"), fluorine_ = new AdzeHasher("FLUORINE"), neon_ = new AdzeHasher("NEON"), sodium_ = new AdzeHasher("SODIUM"), magnesium_ = new AdzeHasher("MAGNESIUM"), aluminium_ = new AdzeHasher("ALUMINIUM"), silicon_ = new AdzeHasher("SILICON"), phosphorus_ = new AdzeHasher("PHOSPHORUS"), sulfur_ = new AdzeHasher("SULFUR"), chlorine_ = new AdzeHasher("CHLORINE"), argon_ = new AdzeHasher("ARGON"), potassium_ = new AdzeHasher("POTASSIUM"), calcium_ = new AdzeHasher("CALCIUM"), scandium_ = new AdzeHasher("SCANDIUM"), titanium_ = new AdzeHasher("TITANIUM"), vanadium_ = new AdzeHasher("VANADIUM"), chromium_ = new AdzeHasher("CHROMIUM"), manganese_ = new AdzeHasher("MANGANESE"), iron_ = new AdzeHasher("IRON"), cobalt_ = new AdzeHasher("COBALT"), nickel_ = new AdzeHasher("NICKEL"), copper_ = new AdzeHasher("COPPER"), zinc_ = new AdzeHasher("ZINC"), gallium_ = new AdzeHasher("GALLIUM"), germanium_ = new AdzeHasher("GERMANIUM"), arsenic_ = new AdzeHasher("ARSENIC"), selenium_ = new AdzeHasher("SELENIUM"), bromine_ = new AdzeHasher("BROMINE"), krypton_ = new AdzeHasher("KRYPTON"), rubidium_ = new AdzeHasher("RUBIDIUM"), strontium_ = new AdzeHasher("STRONTIUM"), yttrium_ = new AdzeHasher("YTTRIUM"), zirconium_ = new AdzeHasher("ZIRCONIUM"), niobium_ = new AdzeHasher("NIOBIUM"), molybdenum_ = new AdzeHasher("MOLYBDENUM"), technetium_ = new AdzeHasher("TECHNETIUM"), ruthenium_ = new AdzeHasher("RUTHENIUM"), rhodium_ = new AdzeHasher("RHODIUM"), palladium_ = new AdzeHasher("PALLADIUM"), silver_ = new AdzeHasher("SILVER"), cadmium_ = new AdzeHasher("CADMIUM"), indium_ = new AdzeHasher("INDIUM"), tin_ = new AdzeHasher("TIN"), antimony_ = new AdzeHasher("ANTIMONY"), tellurium_ = new AdzeHasher("TELLURIUM"), iodine_ = new AdzeHasher("IODINE"), xenon_ = new AdzeHasher("XENON"), caesium_ = new AdzeHasher("CAESIUM"), barium_ = new AdzeHasher("BARIUM"), lanthanum_ = new AdzeHasher("LANTHANUM"), cerium_ = new AdzeHasher("CERIUM"), praseodymium_ = new AdzeHasher("PRASEODYMIUM"), neodymium_ = new AdzeHasher("NEODYMIUM"), promethium_ = new AdzeHasher("PROMETHIUM"), samarium_ = new AdzeHasher("SAMARIUM"), europium_ = new AdzeHasher("EUROPIUM"), gadolinium_ = new AdzeHasher("GADOLINIUM"), terbium_ = new AdzeHasher("TERBIUM"), dysprosium_ = new AdzeHasher("DYSPROSIUM"), holmium_ = new AdzeHasher("HOLMIUM"), erbium_ = new AdzeHasher("ERBIUM"), thulium_ = new AdzeHasher("THULIUM"), ytterbium_ = new AdzeHasher("YTTERBIUM"), lutetium_ = new AdzeHasher("LUTETIUM"), hafnium_ = new AdzeHasher("HAFNIUM"), tantalum_ = new AdzeHasher("TANTALUM"), tungsten_ = new AdzeHasher("TUNGSTEN"), rhenium_ = new AdzeHasher("RHENIUM"), osmium_ = new AdzeHasher("OSMIUM"), iridium_ = new AdzeHasher("IRIDIUM"), platinum_ = new AdzeHasher("PLATINUM"), gold_ = new AdzeHasher("GOLD"), mercury_ = new AdzeHasher("MERCURY"), thallium_ = new AdzeHasher("THALLIUM"), lead_ = new AdzeHasher("LEAD"), bismuth_ = new AdzeHasher("BISMUTH"), polonium_ = new AdzeHasher("POLONIUM"), astatine_ = new AdzeHasher("ASTATINE"), radon_ = new AdzeHasher("RADON"), francium_ = new AdzeHasher("FRANCIUM"), radium_ = new AdzeHasher("RADIUM"), actinium_ = new AdzeHasher("ACTINIUM"), thorium_ = new AdzeHasher("THORIUM"), protactinium_ = new AdzeHasher("PROTACTINIUM"), uranium_ = new AdzeHasher("URANIUM"), neptunium_ = new AdzeHasher("NEPTUNIUM"), plutonium_ = new AdzeHasher("PLUTONIUM"), americium_ = new AdzeHasher("AMERICIUM"), curium_ = new AdzeHasher("CURIUM"), berkelium_ = new AdzeHasher("BERKELIUM"), californium_ = new AdzeHasher("CALIFORNIUM"), einsteinium_ = new AdzeHasher("EINSTEINIUM"), fermium_ = new AdzeHasher("FERMIUM"), mendelevium_ = new AdzeHasher("MENDELEVIUM"), nobelium_ = new AdzeHasher("NOBELIUM"), lawrencium_ = new AdzeHasher("LAWRENCIUM"), rutherfordium_ = new AdzeHasher("RUTHERFORDIUM"), dubnium_ = new AdzeHasher("DUBNIUM"), seaborgium_ = new AdzeHasher("SEABORGIUM"), bohrium_ = new AdzeHasher("BOHRIUM"), hassium_ = new AdzeHasher("HASSIUM"), meitnerium_ = new AdzeHasher("MEITNERIUM"), darmstadtium_ = new AdzeHasher("DARMSTADTIUM"), roentgenium_ = new AdzeHasher("ROENTGENIUM"), copernicium_ = new AdzeHasher("COPERNICIUM"), nihonium_ = new AdzeHasher("NIHONIUM"), flerovium_ = new AdzeHasher("FLEROVIUM"), moscovium_ = new AdzeHasher("MOSCOVIUM"), livermorium_ = new AdzeHasher("LIVERMORIUM"), tennessine_ = new AdzeHasher("TENNESSINE"), oganesson_ = new AdzeHasher("OGANESSON");
+
+    /**
+     * Has a length of 428, which may be relevant if automatically choosing a predefined hash functor.
+     */
+    public static final AdzeHasher[] predefined = new AdzeHasher[]{alpha, beta, gamma, delta, epsilon, zeta, eta, theta, iota,
+            kappa, lambda, mu, nu, xi, omicron, pi, rho, sigma, tau, upsilon, phi, chi, psi, omega,
+            alpha_, beta_, gamma_, delta_, epsilon_, zeta_, eta_, theta_, iota_,
+            kappa_, lambda_, mu_, nu_, xi_, omicron_, pi_, rho_, sigma_, tau_, upsilon_, phi_, chi_, psi_, omega_,
+            baal, agares, vassago, samigina, marbas, valefor, amon, barbatos,
+            paimon, buer, gusion, sitri, beleth, leraje, eligos, zepar,
+            botis, bathin, sallos, purson, marax, ipos, aim, naberius,
+            glasya_labolas, bune, ronove, berith, astaroth, forneus, foras, asmoday,
+            gaap, furfur, marchosias, stolas, phenex, halphas, malphas, raum,
+            focalor, vepar, sabnock, shax, vine, bifrons, vual, haagenti,
+            crocell, furcas, balam, alloces, caim, murmur, orobas, gremory,
+            ose, amy, orias, vapula, zagan, valac, andras, flauros,
+            andrealphus, kimaris, amdusias, belial, decarabia, seere, dantalion, andromalius,
+            baal_, agares_, vassago_, samigina_, marbas_, valefor_, amon_, barbatos_,
+            paimon_, buer_, gusion_, sitri_, beleth_, leraje_, eligos_, zepar_,
+            botis_, bathin_, sallos_, purson_, marax_, ipos_, aim_, naberius_,
+            glasya_labolas_, bune_, ronove_, berith_, astaroth_, forneus_, foras_, asmoday_,
+            gaap_, furfur_, marchosias_, stolas_, phenex_, halphas_, malphas_, raum_,
+            focalor_, vepar_, sabnock_, shax_, vine_, bifrons_, vual_, haagenti_,
+            crocell_, furcas_, balam_, alloces_, caim_, murmur_, orobas_, gremory_,
+            ose_, amy_, orias_, vapula_, zagan_, valac_, andras_, flauros_,
+            andrealphus_, kimaris_, amdusias_, belial_, decarabia_, seere_, dantalion_, andromalius_,
+
+            hydrogen, helium, lithium, beryllium, boron, carbon, nitrogen, oxygen, fluorine, neon,
+            sodium, magnesium, aluminium, silicon, phosphorus, sulfur, chlorine, argon, potassium,
+            calcium, scandium, titanium, vanadium, chromium, manganese, iron, cobalt, nickel,
+            copper, zinc, gallium, germanium, arsenic, selenium, bromine, krypton, rubidium,
+            strontium, yttrium, zirconium, niobium, molybdenum, technetium, ruthenium, rhodium,
+            palladium, silver, cadmium, indium, tin, antimony, tellurium, iodine, xenon, caesium,
+            barium, lanthanum, cerium, praseodymium, neodymium, promethium, samarium, europium,
+            gadolinium, terbium, dysprosium, holmium, erbium, thulium, ytterbium, lutetium, hafnium,
+            tantalum, tungsten, rhenium, osmium, iridium, platinum, gold, mercury, thallium, lead,
+            bismuth, polonium, astatine, radon, francium, radium, actinium, thorium, protactinium,
+            uranium, neptunium, plutonium, americium, curium, berkelium, californium, einsteinium,
+            fermium, mendelevium, nobelium, lawrencium, rutherfordium, dubnium, seaborgium, bohrium,
+            hassium, meitnerium, darmstadtium, roentgenium, copernicium, nihonium, flerovium, moscovium,
+            livermorium, tennessine, oganesson,
+
+            hydrogen_, helium_, lithium_, beryllium_, boron_, carbon_, nitrogen_, oxygen_, fluorine_, neon_,
+            sodium_, magnesium_, aluminium_, silicon_, phosphorus_, sulfur_, chlorine_, argon_, potassium_,
+            calcium_, scandium_, titanium_, vanadium_, chromium_, manganese_, iron_, cobalt_, nickel_,
+            copper_, zinc_, gallium_, germanium_, arsenic_, selenium_, bromine_, krypton_, rubidium_,
+            strontium_, yttrium_, zirconium_, niobium_, molybdenum_, technetium_, ruthenium_, rhodium_,
+            palladium_, silver_, cadmium_, indium_, tin_, antimony_, tellurium_, iodine_, xenon_, caesium_,
+            barium_, lanthanum_, cerium_, praseodymium_, neodymium_, promethium_, samarium_, europium_,
+            gadolinium_, terbium_, dysprosium_, holmium_, erbium_, thulium_, ytterbium_, lutetium_, hafnium_,
+            tantalum_, tungsten_, rhenium_, osmium_, iridium_, platinum_, gold_, mercury_, thallium_, lead_,
+            bismuth_, polonium_, astatine_, radon_, francium_, radium_, actinium_, thorium_, protactinium_,
+            uranium_, neptunium_, plutonium_, americium_, curium_, berkelium_, californium_, einsteinium_,
+            fermium_, mendelevium_, nobelium_, lawrencium_, rutherfordium_, dubnium_, seaborgium_, bohrium_,
+            hassium_, meitnerium_, darmstadtium_, roentgenium_, copernicium_, nihonium_, flerovium_, moscovium_,
+            livermorium_, tennessine_, oganesson_,
+
+    };
+
+    public long hash64(final boolean[] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final boolean[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum((data[i - 3] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b1, (data[i - 2] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b2) - seed,
+                    mum((data[i - 1] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b3, (data[i] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[len - 1] ? 0x9E3779B9L : 0x7F4A7C15L));
+                break;
+            case 2:
+                seed = mum((data[len - 2] ? 0x9E3779B9L : 0x7F4A7C15L) - seed, b0 ^ (data[len - 1] ? 0x9E3779B9L : 0x7F4A7C15L));
+                break;
+            case 3:
+                seed = mum((data[len - 3] ? 0x9E3779B9L : 0x7F4A7C15L) - seed, b2 ^ (data[len - 2] ? 0x9E3779B9L : 0x7F4A7C15L)) + mum(seed ^ b5, b4 ^ (data[len - 1] ? 0x9E3779B9 : 0x7F4A7C15));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final byte[] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final byte[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[start + len - 1]));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum(b5 ^ seed, b4 ^ (data[start + len - 1]));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final short[] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final short[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[start + len - 1]));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum(b5 ^ seed, b4 ^ (data[start + len - 1]));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final char[] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+
+    /**
+     * This method changed in 0.2.1, from taking a start index and end index, to taking a start index and length.
+     * Taking the length matches the behavior of more methods in the JVM.
+     * @param data a char array
+     * @param start the start index
+     * @param length how many items to hash (this will hash fewer if there aren't enough items in the array)
+     * @return a 64-bit hash of data
+     */
+    public long hash64(final char[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[start + len - 1]));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum(b5 ^ seed, b4 ^ (data[start + len - 1]));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final CharSequence data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length());
+    }
+
+    /**
+     * This method changed in 0.2.1, from taking a start index and end index, to taking a start index and length.
+     * Taking the length matches the behavior of more methods in the JVM.
+     * @param data  the String or other CharSequence to hash
+     * @param start the start index
+     * @param length how many items to hash (this will hash fewer if there aren't enough items in the CharSequence)
+     * @return a 64-bit hash of data
+     */
+    public long hash64(final CharSequence data, final int start, final int length) {
+        if (data == null || start < 0 || length < 0 || start >= length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length());
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data.charAt(i - 3) ^ b1, data.charAt(i - 2) ^ b2) - seed,
+                    mum(data.charAt(i - 1) ^ b3, data.charAt(i) ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data.charAt(start + len - 1)));
+                break;
+            case 2:
+                seed = mum(data.charAt(start + len - 2) - seed, b0 ^ data.charAt(start + len - 1));
+                break;
+            case 3:
+                seed = mum(data.charAt(start + len - 3) - seed, b2 ^ data.charAt(start + len - 2)) + mum(b5 ^ seed, b4 ^ (data.charAt(start + len - 1)));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final int[] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final int[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum((data[start + len - 1] >>> 16) - seed, b3 ^ (data[start + len - 1] & 0xFFFFL));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum((data[start + len - 1] >>> 16) ^ seed, b4 ^ (data[start + len - 1] & 0xFFFFL));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final int[] data, final int length) {
+        return hash64(data, 0, length);
+    }
+
+    public long hash64(final long[] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final long[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= data[i - 3] * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= data[i - 2] * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= data[i - 1] * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= data[i] * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ data[start + len - 1]);
+                break;
+            case 2:
+                seed = wow(seed + data[start + len - 2], b2 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = wow(seed + data[start + len - 3], b2 + data[start + len - 2]) + wow(seed + data[start + len - 1], seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final float[] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final float[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        int n;
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(floatToRawIntBits(data[i - 3]) ^ b1, floatToRawIntBits(data[i - 2]) ^ b2) - seed,
+                    mum(floatToRawIntBits(data[i - 1]) ^ b3, floatToRawIntBits(data[i]) ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                n = floatToRawIntBits(data[start + len - 1]);
+                seed = mum((n >>> 16) - seed, b3 ^ (n & 0xFFFFL));
+                break;
+            case 2:
+                seed = mum(floatToRawIntBits(data[start + len - 2]) - seed, b0 ^ floatToRawIntBits(data[start + len - 1]));
+                break;
+            case 3:
+                n = floatToRawIntBits(data[start + len - 1]);
+                seed = mum(floatToRawIntBits(data[start + len - 3]) - seed, b2 ^ floatToRawIntBits(data[start + len - 2])) + mum((n >>> 16) ^ seed, b4 ^ (n & 0xFFFFL));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final double[] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final double[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= doubleToRawLongBits(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= doubleToRawLongBits(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= doubleToRawLongBits(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= doubleToRawLongBits(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ doubleToRawLongBits(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + doubleToRawLongBits(data[start + len - 2]), b2 ^ doubleToRawLongBits(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + doubleToRawLongBits(data[start + len - 3]), b2 + doubleToRawLongBits(data[start + len - 2])) + wow(seed + doubleToRawLongBits(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final byte[][] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final byte[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final char[][] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final char[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final float[][] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final float[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final double[][] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final double[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final int[][] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final int[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final long[][] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final long[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final CharSequence[] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final CharSequence[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final CharSequence[]... data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final CharSequence[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final Iterable<? extends CharSequence> data) {
+        if (data == null) return 0;
+        long seed = this.seed;
+        final Iterator<? extends CharSequence> it = data.iterator();
+        int len = 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        while (it.hasNext()) {
+            ++len;
+            a ^= hash64(it.next()) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            if(it.hasNext()) {
+                ++len;
+                b ^= hash64(it.next()) * b2;
+                b = (b << 25 | b >>> 39) * b4;
+            }
+            if(it.hasNext()) {
+                ++len;
+                c ^= hash64(it.next()) * b3;
+                c = (c << 29 | c >>> 35) * b5;
+            }
+            if(it.hasNext()) {
+                ++len;
+                d ^= hash64(it.next()) * b4;
+                d = (d << 31 | d >>> 33) * b1;
+            }
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        seed = wow(b1 - seed, b4 + seed);
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final List<? extends CharSequence> data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.size());
+    }
+    public long hash64(final List<? extends CharSequence> data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.size())
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.size() - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data.get(i - 3)) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data.get(i - 2)) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data.get(i - 1)) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data.get(i)) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data.get(start + len - 1)));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data.get(start + len - 2)), b2 ^ hash64(data.get(start + len - 1)));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data.get(start + len - 3)), b2 + hash64(data.get(start + len - 2))) + wow(seed + hash64(data.get(start + len - 1)), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final Object[] data) {
+        if (data == null) return 0;
+        return hash64(data, 0, data.length);
+    }
+    public long hash64(final Object[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public long hash64(final Object data) {
+        if (data == null)
+            return 0;
+        return wow(data.hashCode() ^ b4, b5 - seed) ^ seed;
+    }
+
+    public int hash(final boolean[] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final boolean[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum((data[i - 3] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b1, (data[i - 2] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b2) - seed,
+                    mum((data[i - 1] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b3, (data[i] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[len - 1] ? 0x9E3779B9L : 0x7F4A7C15L));
+                break;
+            case 2:
+                seed = mum((data[len - 2] ? 0x9E3779B9L : 0x7F4A7C15L) - seed, b0 ^ (data[len - 1] ? 0x9E3779B9L : 0x7F4A7C15L));
+                break;
+            case 3:
+                seed = mum((data[len - 3] ? 0x9E3779B9L : 0x7F4A7C15L) - seed, b2 ^ (data[len - 2] ? 0x9E3779B9L : 0x7F4A7C15L)) + mum(seed ^ b5, b4 ^ (data[len - 1] ? 0x9E3779B9 : 0x7F4A7C15));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final byte[] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final byte[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[start + len - 1]));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum(b5 ^ seed, b4 ^ (data[start + len - 1]));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final short[] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final short[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[start + len - 1]));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum(b5 ^ seed, b4 ^ (data[start + len - 1]));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final char[] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    /**
+     * This method changed in 0.2.1, from taking a start index and end index, to taking a start index and length.
+     * Taking the length matches the behavior of more methods in the JVM.
+     * @param data a char array
+     * @param start the start index
+     * @param length how many items to hash (this will hash fewer if there aren't enough items in the array)
+     * @return a 32-bit hash of data
+     */
+    public int hash(final char[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[start + len - 1]));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum(b5 ^ seed, b4 ^ (data[start + len - 1]));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final CharSequence data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length());
+    }
+
+    /**
+     * This method changed in 0.2.1, from taking a start index and end index, to taking a start index and length.
+     * Taking the length matches the behavior of more methods in the JVM.
+     * @param data  the String or other CharSequence to hash
+     * @param start the start index
+     * @param length how many items to hash (this will hash fewer if there aren't enough items in the CharSequence)
+     * @return a 32-bit hash of data
+     */
+    public int hash(final CharSequence data, final int start, final int length) {
+        if (data == null || start < 0 || length < 0 || start >= length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length());
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data.charAt(i - 3) ^ b1, data.charAt(i - 2) ^ b2) - seed,
+                    mum(data.charAt(i - 1) ^ b3, data.charAt(i) ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data.charAt(start + len - 1)));
+                break;
+            case 2:
+                seed = mum(data.charAt(start + len - 2) - seed, b0 ^ data.charAt(start + len - 1));
+                break;
+            case 3:
+                seed = mum(data.charAt(start + len - 3) - seed, b2 ^ data.charAt(start + len - 2)) + mum(b5 ^ seed, b4 ^ (data.charAt(start + len - 1)));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final int[] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final int[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum((data[start + len - 1] >>> 16) - seed, b3 ^ (data[start + len - 1] & 0xFFFFL));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum((data[start + len - 1] >>> 16) ^ seed, b4 ^ (data[start + len - 1] & 0xFFFFL));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final int[] data, final int length) {
+        return hash(data, 0, length);
+    }
+
+    public int hash(final long[] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final long[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= data[i - 3] * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= data[i - 2] * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= data[i - 1] * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= data[i] * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ data[start + len - 1]);
+                break;
+            case 2:
+                seed = wow(seed + data[start + len - 2], b2 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = wow(seed + data[start + len - 3], b2 + data[start + len - 2]) + wow(seed + data[start + len - 1], seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final float[] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final float[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        int n;
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(floatToRawIntBits(data[i - 3]) ^ b1, floatToRawIntBits(data[i - 2]) ^ b2) - seed,
+                    mum(floatToRawIntBits(data[i - 1]) ^ b3, floatToRawIntBits(data[i]) ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                n = floatToRawIntBits(data[start + len - 1]);
+                seed = mum((n >>> 16) - seed, b3 ^ (n & 0xFFFFL));
+                break;
+            case 2:
+                seed = mum(floatToRawIntBits(data[start + len - 2]) - seed, b0 ^ floatToRawIntBits(data[start + len - 1]));
+                break;
+            case 3:
+                n = floatToRawIntBits(data[start + len - 1]);
+                seed = mum(floatToRawIntBits(data[start + len - 3]) - seed, b2 ^ floatToRawIntBits(data[start + len - 2])) + mum((n >>> 16) ^ seed, b4 ^ (n & 0xFFFFL));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final double[] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final double[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= doubleToRawLongBits(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= doubleToRawLongBits(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= doubleToRawLongBits(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= doubleToRawLongBits(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ doubleToRawLongBits(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + doubleToRawLongBits(data[start + len - 2]), b2 ^ doubleToRawLongBits(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + doubleToRawLongBits(data[start + len - 3]), b2 + doubleToRawLongBits(data[start + len - 2])) + wow(seed + doubleToRawLongBits(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final byte[][] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final byte[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final char[][] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final char[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final float[][] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final float[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final double[][] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final double[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final int[][] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final int[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final long[][] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final long[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final CharSequence[] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final CharSequence[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final CharSequence[]... data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final CharSequence[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final Iterable<? extends CharSequence> data) {
+        if (data == null) return 0;
+        long seed = this.seed;
+        final Iterator<? extends CharSequence> it = data.iterator();
+        int len = 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        while (it.hasNext()) {
+            ++len;
+            a ^= hash64(it.next()) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            if(it.hasNext()) {
+                ++len;
+                b ^= hash64(it.next()) * b2;
+                b = (b << 25 | b >>> 39) * b4;
+            }
+            if(it.hasNext()) {
+                ++len;
+                c ^= hash64(it.next()) * b3;
+                c = (c << 29 | c >>> 35) * b5;
+            }
+            if(it.hasNext()) {
+                ++len;
+                d ^= hash64(it.next()) * b4;
+                d = (d << 31 | d >>> 33) * b1;
+            }
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        seed = wow(b1 - seed, b4 + seed);
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final List<? extends CharSequence> data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.size());
+    }
+    public int hash(final List<? extends CharSequence> data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.size())
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.size() - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data.get(i - 3)) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data.get(i - 2)) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data.get(i - 1)) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data.get(i)) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data.get(start + len - 1)));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data.get(start + len - 2)), b2 ^ hash64(data.get(start + len - 1)));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data.get(start + len - 3)), b2 + hash64(data.get(start + len - 2))) + wow(seed + hash64(data.get(start + len - 1)), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final Object[] data) {
+        if (data == null) return 0;
+        return hash(data, 0, data.length);
+    }
+    public int hash(final Object[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long seed = this.seed;
+        final int len = Math.min(length, data.length - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(data[start + len - 2]), b2 ^ hash64(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(data[start + len - 3]), b2 + hash64(data[start + len - 2])) + wow(seed + hash64(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public int hash(final Object data) {
+        if (data == null) return 0;
+        return (int)(mum(data.hashCode() ^ b2, b3 - seed) ^ seed);
+    }
+
+
+    public static long hash64(long seed, final boolean[] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final boolean[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum((data[i - 3] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b1, (data[i - 2] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b2) - seed,
+                    mum((data[i - 1] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b3, (data[i] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[len - 1] ? 0x9E3779B9L : 0x7F4A7C15L));
+                break;
+            case 2:
+                seed = mum((data[len - 2] ? 0x9E3779B9L : 0x7F4A7C15L) - seed, b0 ^ (data[len - 1] ? 0x9E3779B9L : 0x7F4A7C15L));
+                break;
+            case 3:
+                seed = mum((data[len - 3] ? 0x9E3779B9L : 0x7F4A7C15L) - seed, b2 ^ (data[len - 2] ? 0x9E3779B9L : 0x7F4A7C15L)) + mum(seed ^ b5, b4 ^ (data[len - 1] ? 0x9E3779B9 : 0x7F4A7C15));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final byte[] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final byte[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[start + len - 1]));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum(b5 ^ seed, b4 ^ (data[start + len - 1]));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final short[] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final short[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[start + len - 1]));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum(b5 ^ seed, b4 ^ (data[start + len - 1]));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final char[] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+
+    /**
+     * This method changed in 0.2.1, from taking a start index and end index, to taking a start index and length.
+     * Taking the length matches the behavior of more methods in the JVM.
+     * @param seed the seed to use for this hash, as a long
+     * @param data a char array
+     * @param start the start index
+     * @param length how many items to hash (this will hash fewer if there aren't enough items in the array)
+     * @return a 64-bit hash of data
+     */
+    public static long hash64(long seed, final char[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[start + len - 1]));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum(b5 ^ seed, b4 ^ (data[start + len - 1]));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final CharSequence data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length());
+    }
+
+    /**
+     * This method changed in 0.2.1, from taking a start index and end index, to taking a start index and length.
+     * Taking the length matches the behavior of more methods in the JVM.
+     * @param seed the seed to use for this hash, as a long
+     * @param data  the String or other CharSequence to hash
+     * @param start the start index
+     * @param length how many items to hash (this will hash fewer if there aren't enough items in the array)
+     * @return a 64-bit hash of data
+     */
+    public static long hash64(long seed, final CharSequence data, final int start, final int length) {
+        if (data == null || start < 0 || length < 0 || start >= length)
+            return 0;
+        final int len = Math.min(length, data.length());
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data.charAt(i - 3) ^ b1, data.charAt(i - 2) ^ b2) - seed,
+                    mum(data.charAt(i - 1) ^ b3, data.charAt(i) ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data.charAt(start + len - 1)));
+                break;
+            case 2:
+                seed = mum(data.charAt(start + len - 2) - seed, b0 ^ data.charAt(start + len - 1));
+                break;
+            case 3:
+                seed = mum(data.charAt(start + len - 3) - seed, b2 ^ data.charAt(start + len - 2)) + mum(b5 ^ seed, b4 ^ (data.charAt(start + len - 1)));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final int[] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final int[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum((data[start + len - 1] >>> 16) - seed, b3 ^ (data[start + len - 1] & 0xFFFFL));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum((data[start + len - 1] >>> 16) ^ seed, b4 ^ (data[start + len - 1] & 0xFFFFL));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45);
+    }
+
+    public static long hash64(long seed, final int[] data, final int length) {
+        return hash64(seed, data, 0, length);
+    }
+
+    public static long hash64(long seed, final long[] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final long[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= data[i - 3] * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= data[i - 2] * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= data[i - 1] * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= data[i] * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ data[start + len - 1]);
+                break;
+            case 2:
+                seed = wow(seed + data[start + len - 2], b2 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = wow(seed + data[start + len - 3], b2 + data[start + len - 2]) + wow(seed + data[start + len - 1], seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final float[] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final float[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        final int len = Math.min(length, data.length - start);
+        int n;
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(floatToRawIntBits(data[i - 3]) ^ b1, floatToRawIntBits(data[i - 2]) ^ b2) - seed,
+                    mum(floatToRawIntBits(data[i - 1]) ^ b3, floatToRawIntBits(data[i]) ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                n = floatToRawIntBits(data[start + len - 1]);
+                seed = mum((n >>> 16) - seed, b3 ^ (n & 0xFFFFL));
+                break;
+            case 2:
+                seed = mum(floatToRawIntBits(data[start + len - 2]) - seed, b0 ^ floatToRawIntBits(data[start + len - 1]));
+                break;
+            case 3:
+                n = floatToRawIntBits(data[start + len - 1]);
+                seed = mum(floatToRawIntBits(data[start + len - 3]) - seed, b2 ^ floatToRawIntBits(data[start + len - 2])) + mum((n >>> 16) ^ seed, b4 ^ (n & 0xFFFFL));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final double[] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final double[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= doubleToRawLongBits(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= doubleToRawLongBits(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= doubleToRawLongBits(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= doubleToRawLongBits(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ doubleToRawLongBits(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + doubleToRawLongBits(data[start + len - 2]), b2 ^ doubleToRawLongBits(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + doubleToRawLongBits(data[start + len - 3]), b2 + doubleToRawLongBits(data[start + len - 2])) + wow(seed + doubleToRawLongBits(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final byte[][] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final byte[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final char[][] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final char[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final float[][] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final float[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final double[][] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final double[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+
+    }
+
+    public static long hash64(long seed, final int[][] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final int[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final long[][] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final long[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final CharSequence[] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final CharSequence[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final CharSequence[]... data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final CharSequence[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final Iterable<? extends CharSequence> data) {
+        if (data == null) return 0;
+        final Iterator<? extends CharSequence> it = data.iterator();
+        int len = 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        while (it.hasNext()) {
+            ++len;
+            a ^= hash64(seed, it.next()) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            if(it.hasNext()) {
+                ++len;
+                b ^= hash64(seed, it.next()) * b2;
+                b = (b << 25 | b >>> 39) * b4;
+            }
+            if(it.hasNext()) {
+                ++len;
+                c ^= hash64(seed, it.next()) * b3;
+                c = (c << 29 | c >>> 35) * b5;
+            }
+            if(it.hasNext()) {
+                ++len;
+                d ^= hash64(seed, it.next()) * b4;
+                d = (d << 31 | d >>> 33) * b1;
+            }
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        seed = wow(b1 - seed, b4 + seed);
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final List<? extends CharSequence> data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.size());
+    }
+    public static long hash64(long seed, final List<? extends CharSequence> data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.size())
+            return 0;
+        final int len = Math.min(length, data.size() - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data.get(i - 3)) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data.get(i - 2)) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data.get(i - 1)) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data.get(i)) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data.get(start + len - 1)));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data.get(start + len - 2)), b2 ^ hash64(seed, data.get(start + len - 1)));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data.get(start + len - 3)), b2 + hash64(seed, data.get(start + len - 2))) + wow(seed + hash64(seed, data.get(start + len - 1)), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final Object[] data) {
+        if (data == null) return 0;
+        return hash64(seed, data, 0, data.length);
+    }
+    public static long hash64(long seed, final Object[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static long hash64(long seed, final Object data) {
+        if (data == null)
+            return 0;
+        return wow(data.hashCode() ^ b4, b5 - seed) ^ seed;
+    }
+
+    public static int hash(long seed, final boolean[] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final boolean[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum((data[i - 3] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b1, (data[i - 2] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b2) - seed,
+                    mum((data[i - 1] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b3, (data[i] ? 0x9E3779B9L : 0x7F4A7C15L) ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[len - 1] ? 0x9E3779B9L : 0x7F4A7C15L));
+                break;
+            case 2:
+                seed = mum((data[len - 2] ? 0x9E3779B9L : 0x7F4A7C15L) - seed, b0 ^ (data[len - 1] ? 0x9E3779B9L : 0x7F4A7C15L));
+                break;
+            case 3:
+                seed = mum((data[len - 3] ? 0x9E3779B9L : 0x7F4A7C15L) - seed, b2 ^ (data[len - 2] ? 0x9E3779B9L : 0x7F4A7C15L)) + mum(seed ^ b5, b4 ^ (data[len - 1] ? 0x9E3779B9 : 0x7F4A7C15));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final byte[] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final byte[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[start + len - 1]));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum(b5 ^ seed, b4 ^ (data[start + len - 1]));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final short[] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final short[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[start + len - 1]));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum(b5 ^ seed, b4 ^ (data[start + len - 1]));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final char[] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final char[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data[start + len - 1]));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum(b5 ^ seed, b4 ^ (data[start + len - 1]));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final CharSequence data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length());
+    }
+
+    /**
+     * This method changed in 0.2.1, from taking a start index and end index, to taking a start index and length.
+     * Taking the length matches the behavior of more methods in the JVM.
+     * @param data  the String or other CharSequence to hash
+     * @param start the start index
+     * @param length how many items to hash (this will hash fewer if there aren't enough items in the CharSequence)
+     * @return a 32-bit hash of data
+     */
+    public static int hash(long seed, final CharSequence data, final int start, final int length) {
+        if (data == null || start < 0 || length < 0 || start >= length)
+            return 0;
+        final int len = Math.min(length, data.length());
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data.charAt(i - 3) ^ b1, data.charAt(i - 2) ^ b2) - seed,
+                    mum(data.charAt(i - 1) ^ b3, data.charAt(i) ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum(b5 - seed, b3 ^ (data.charAt(start + len - 1)));
+                break;
+            case 2:
+                seed = mum(data.charAt(start + len - 2) - seed, b0 ^ data.charAt(start + len - 1));
+                break;
+            case 3:
+                seed = mum(data.charAt(start + len - 3) - seed, b2 ^ data.charAt(start + len - 2)) + mum(b5 ^ seed, b4 ^ (data.charAt(start + len - 1)));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+
+    }
+
+    public static int hash(long seed, final int[] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final int[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(data[i - 3] ^ b1, data[i - 2] ^ b2) - seed,
+                    mum(data[i - 1] ^ b3, data[i] ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = mum((data[start + len - 1] >>> 16) - seed, b3 ^ (data[start + len - 1] & 0xFFFFL));
+                break;
+            case 2:
+                seed = mum(data[start + len - 2] - seed, b0 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = mum(data[start + len - 3] - seed, b2 ^ data[start + len - 2]) + mum((data[start + len - 1] >>> 16) ^ seed, b4 ^ (data[start + len - 1] & 0xFFFFL));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final int[] data, final int length) {
+        return hash(seed, data, 0, length);
+    }
+
+    public static int hash(long seed, final long[] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final long[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= data[i - 3] * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= data[i - 2] * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= data[i - 1] * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= data[i] * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ data[start + len - 1]);
+                break;
+            case 2:
+                seed = wow(seed + data[start + len - 2], b2 ^ data[start + len - 1]);
+                break;
+            case 3:
+                seed = wow(seed + data[start + len - 3], b2 + data[start + len - 2]) + wow(seed + data[start + len - 1], seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final float[] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final float[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        final int len = Math.min(length, data.length - start);
+        int n;
+        for (int i = start + 3; i < len; i += 4) {
+            seed = mum(
+                    mum(floatToRawIntBits(data[i - 3]) ^ b1, floatToRawIntBits(data[i - 2]) ^ b2) - seed,
+                    mum(floatToRawIntBits(data[i - 1]) ^ b3, floatToRawIntBits(data[i]) ^ b4));
+        }
+        switch (len & 3) {
+            case 0:
+                seed = mum(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                n = floatToRawIntBits(data[start + len - 1]);
+                seed = mum((n >>> 16) - seed, b3 ^ (n & 0xFFFFL));
+                break;
+            case 2:
+                seed = mum(floatToRawIntBits(data[start + len - 2]) - seed, b0 ^ floatToRawIntBits(data[start + len - 1]));
+                break;
+            case 3:
+                n = floatToRawIntBits(data[start + len - 1]);
+                seed = mum(floatToRawIntBits(data[start + len - 3]) - seed, b2 ^ floatToRawIntBits(data[start + len - 2])) + mum((n >>> 16) ^ seed, b4 ^ (n & 0xFFFFL));
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final double[] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final double[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= doubleToRawLongBits(data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= doubleToRawLongBits(data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= doubleToRawLongBits(data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= doubleToRawLongBits(data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ doubleToRawLongBits(data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + doubleToRawLongBits(data[start + len - 2]), b2 ^ doubleToRawLongBits(data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + doubleToRawLongBits(data[start + len - 3]), b2 + doubleToRawLongBits(data[start + len - 2])) + wow(seed + doubleToRawLongBits(data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+
+    }
+
+    public static int hash(long seed, final byte[][] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final byte[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final char[][] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final char[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final float[][] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final float[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final double[][] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final double[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final int[][] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final int[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final long[][] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final long[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final CharSequence[] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final CharSequence[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final CharSequence[]... data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final CharSequence[][] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final Iterable<? extends CharSequence> data) {
+        if (data == null) return 0;
+        final Iterator<? extends CharSequence> it = data.iterator();
+        int len = 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        while (it.hasNext()) {
+            ++len;
+            a ^= hash64(seed, it.next()) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            if(it.hasNext()) {
+                ++len;
+                b ^= hash64(seed, it.next()) * b2;
+                b = (b << 25 | b >>> 39) * b4;
+            }
+            if(it.hasNext()) {
+                ++len;
+                c ^= hash64(seed, it.next()) * b3;
+                c = (c << 29 | c >>> 35) * b5;
+            }
+            if(it.hasNext()) {
+                ++len;
+                d ^= hash64(seed, it.next()) * b4;
+                d = (d << 31 | d >>> 33) * b1;
+            }
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        seed = wow(b1 - seed, b4 + seed);
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final List<? extends CharSequence> data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.size());
+    }
+    public static int hash(long seed, final List<? extends CharSequence> data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.size())
+            return 0;
+        final int len = Math.min(length, data.size() - start);
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data.get(i - 3)) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data.get(i - 2)) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data.get(i - 1)) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data.get(i)) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data.get(start + len - 1)));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data.get(start + len - 2)), b2 ^ hash64(seed, data.get(start + len - 1)));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data.get(start + len - 3)), b2 + hash64(seed, data.get(start + len - 2))) + wow(seed + hash64(seed, data.get(start + len - 1)), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final Object[] data) {
+        if (data == null) return 0;
+        return hash(seed, data, 0, data.length);
+    }
+    public static int hash(long seed, final Object[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        long a = seed + b4, b = a ^ b3, c = b - b2, d = c ^ b1;
+        final int len = Math.min(length, data.length - start);
+        for (int i = start + 3; i < len; i += 4) {
+            a ^= hash64(seed, data[i - 3]) * b1;
+            a = (a << 23 | a >>> 41) * b3;
+            b ^= hash64(seed, data[i - 2]) * b2;
+            b = (b << 25 | b >>> 39) * b4;
+            c ^= hash64(seed, data[i - 1]) * b3;
+            c = (c << 29 | c >>> 35) * b5;
+            d ^= hash64(seed, data[i]) * b4;
+            d = (d << 31 | d >>> 33) * b1;
+            seed += a + b + c + d;
+        }
+        seed += b5;
+        switch (len & 3) {
+            case 0:
+                seed = wow(b1 - seed, b4 + seed);
+                break;
+            case 1:
+                seed = wow(seed, b1 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 2:
+                seed = wow(seed + hash64(seed, data[start + len - 2]), b2 ^ hash64(seed, data[start + len - 1]));
+                break;
+            case 3:
+                seed = wow(seed + hash64(seed, data[start + len - 3]), b2 + hash64(seed, data[start + len - 2])) + wow(seed + hash64(seed, data[start + len - 1]), seed ^ b3);
+                break;
+        }
+        seed = (seed ^ len) * (seed << 16 ^ b0);
+        return (int)(seed ^ (seed << 33 | seed >>> 31) ^ (seed << 19 | seed >>> 45));
+    }
+
+    public static int hash(long seed, final Object data) {
+        if (data == null)
+            return 0;
+        return (int)(mum(data.hashCode() ^ b2, b3 - seed) ^ seed);
+    }
+
+    // bulk hashing section, member functions
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(long[])} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final long[] data) {
+        if (data == null) return 0;
+        return hashBulk64(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(long[], int, int)} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final long[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(long[])} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final long[] data) {
+        if (data == null) return 0;
+        return hashBulk(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(long[], int, int)} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final long[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(int[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final int[] data) {
+        if (data == null) return 0;
+        return hashBulk64(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(int[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final int[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(int[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final int[] data) {
+        if (data == null) return 0;
+        return hashBulk(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(int[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final int[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(short[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final short[] data) {
+        if (data == null) return 0;
+        return hashBulk64(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(short[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final short[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(short[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final short[] data) {
+        if (data == null) return 0;
+        return hashBulk(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(short[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final short[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(byte[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * If you are expecting mostly inputs larger than about 100 bytes, you should consider wrapping any byte arrays you
+     * have using {@link ByteBuffer#wrap(byte[])}  and passing them to
+     * {@link #hashBulk64(ByteBuffer)} instead, which
+     * will generally be much faster but may accumulate garbage references to ByteBuffers.
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final byte[] data) {
+        if (data == null) return 0;
+        return hashBulk64(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(byte[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * If you are expecting mostly inputs larger than about 100 bytes, you should consider wrapping any byte arrays you
+     * have using {@link ByteBuffer#wrap(byte[], int, int)}  and passing them to
+     * {@link #hashBulk64(ByteBuffer, int, int)} instead, which
+     * will generally be much faster but may accumulate garbage references to ByteBuffers.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final byte[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(byte[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * If you are expecting mostly inputs larger than about 100 bytes, you should consider wrapping any byte arrays you
+     * have using {@link ByteBuffer#wrap(byte[])}  and passing them to
+     * {@link #hashBulk(ByteBuffer)} instead, which
+     * will generally be much faster but may accumulate garbage references to ByteBuffers.
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final byte[] data) {
+        if (data == null) return 0;
+        return hashBulk(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(byte[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * If you are expecting mostly inputs larger than about 100 bytes, you should consider wrapping any byte arrays you
+     * have using {@link ByteBuffer#wrap(byte[], int, int)}  and passing them to
+     * {@link #hashBulk(ByteBuffer, int, int)} instead, which
+     * will generally be much faster but may accumulate garbage references to ByteBuffers.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final byte[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(float[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final float[] data) {
+        if (data == null) return 0;
+        return hashBulk64(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(float[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final float[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(floatToRawIntBits(data[i  ]), floatToRawIntBits(data[i+1]), floatToRawIntBits(data[i+2]), floatToRawIntBits(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(floatToRawIntBits(data[i+4]), floatToRawIntBits(data[i+5]), floatToRawIntBits(data[i+6]), floatToRawIntBits(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, floatToRawIntBits(data[i++]));
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(float[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final float[] data) {
+        if (data == null) return 0;
+        return hashBulk(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(float[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final float[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(floatToRawIntBits(data[i  ]), floatToRawIntBits(data[i+1]), floatToRawIntBits(data[i+2]), floatToRawIntBits(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(floatToRawIntBits(data[i+4]), floatToRawIntBits(data[i+5]), floatToRawIntBits(data[i+6]), floatToRawIntBits(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, floatToRawIntBits(data[i++]));
+        }
+        return (int)mix(h);
+    }
+    
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(double[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final double[] data) {
+        if (data == null) return 0;
+        return hashBulk64(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(double[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final double[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, doubleToRawLongBits(data[i++]));
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(double[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final double[] data) {
+        if (data == null) return 0;
+        return hashBulk(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(double[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final double[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, doubleToRawLongBits(data[i++]));
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(char[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final char[] data) {
+        if (data == null) return 0;
+        return hashBulk64(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(char[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final char[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(char[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final char[] data) {
+        if (data == null) return 0;
+        return hashBulk(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(char[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final char[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(boolean[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final boolean[] data) {
+        if (data == null) return 0;
+        return hashBulk64(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(boolean[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final boolean[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ] ? -1L : 0L, data[i+1] ? -1L : 0L, data[i+2] ? -1L : 0L, data[i+3] ? -1L : 0L);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4] ? -1L : 0L, data[i+5] ? -1L : 0L, data[i+6] ? -1L : 0L, data[i+7] ? -1L : 0L);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++] ? -1L : 0L);
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(boolean[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final boolean[] data) {
+        if (data == null) return 0;
+        return hashBulk(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(boolean[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final boolean[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8) {
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ] ? -1L : 0L, data[i+1] ? -1L : 0L, data[i+2] ? -1L : 0L, data[i+3] ? -1L : 0L);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4] ? -1L : 0L, data[i+5] ? -1L : 0L, data[i+6] ? -1L : 0L, data[i+7] ? -1L : 0L);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++] ? -1L : 0L);
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(CharSequence)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final CharSequence data) {
+        if (data == null) return 0;
+        return hashBulk64(data, 0, data.length());
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(CharSequence, int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final CharSequence data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length())
+            return 0;
+        int len = Math.min(length, data.length() - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data.charAt(i++));
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(CharSequence)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final CharSequence data) {
+        if (data == null) return 0;
+        return hashBulk(data, 0, data.length());
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(CharSequence, int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final CharSequence data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length())
+            return 0;
+        int len = Math.min(length, data.length() - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data.charAt(i++));
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(CharSequence)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays. This overload uses the more common
+     * String type, rather than CharSequence, to better support hashing arrays of String in other methods.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final String data) {
+        if (data == null) return 0;
+        return hashBulk64(data, 0, data.length());
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(CharSequence, int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays. This overload uses the more common
+     * String type, rather than CharSequence, to better support hashing arrays of String in other methods.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final String data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length())
+            return 0;
+        int len = Math.min(length, data.length() - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data.charAt(i++));
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(CharSequence)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays. This overload uses the more common
+     * String type, rather than CharSequence, to better support hashing arrays of String in other methods.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final String data) {
+        if (data == null) return 0;
+        return hashBulk(data, 0, data.length());
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(CharSequence, int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays. This overload uses the more common
+     * String type, rather than CharSequence, to better support hashing arrays of String in other methods.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final String data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length())
+            return 0;
+        int len = Math.min(length, data.length() - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data.charAt(i++));
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(Object[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array; null items are tolerated
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final Object[] data) {
+        if (data == null) return 0;
+        return hashBulk64(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(Object[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array; null items are tolerated
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final Object[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(Objects.hashCode(data[i  ]), Objects.hashCode(data[i+1]), Objects.hashCode(data[i+2]), Objects.hashCode(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(Objects.hashCode(data[i+4]), Objects.hashCode(data[i+5]), Objects.hashCode(data[i+6]), Objects.hashCode(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, Objects.hashCode(data[i++]));
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(Object[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array; null items are tolerated
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final Object[] data) {
+        if (data == null) return 0;
+        return hashBulk(data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(Object[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data input array; null items are tolerated
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final Object[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(Objects.hashCode(data[i  ]), Objects.hashCode(data[i+1]), Objects.hashCode(data[i+2]), Objects.hashCode(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(Objects.hashCode(data[i+4]), Objects.hashCode(data[i+5]), Objects.hashCode(data[i+6]), Objects.hashCode(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, Objects.hashCode(data[i++]));
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that operates on a {@link ByteBuffer}, hashing everything from index 0 to just before index
+     * {@link ByteBuffer#limit()}. The {@link ByteBuffer#limit() limit} must be set on data; this will not read
+     * past the limit.
+     * <br>
+     * This is likely to significantly outperform {@link #hash64(byte[])} on all but
+     * the smallest sequences of bytes (under 20 bytes).
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data an input ByteBuffer
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final ByteBuffer data) {
+        return hashBulk64(data, 0, data.limit());
+    }
+
+    /**
+     * A hashing function that operates on a {@link ByteBuffer}, using the given {@code start} index (measured in bytes)
+     * and {@code length} (also in bytes). The {@link ByteBuffer#limit() limit} must be set on data; this will not read
+     * past the limit.
+     * <br>
+     * This is likely to significantly outperform {@link #hash64(byte[], int, int)}
+     * on all but the smallest sequences of bytes (under 20 bytes).
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data an input ByteBuffer
+     * @param start the starting index, measured in bytes
+     * @param length the number of bytes to hash
+     * @return the 64-bit hash of data
+     */
+    public long hashBulk64(final ByteBuffer data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.limit())
+            return 0;
+        int len = Math.min(length, data.limit() - start);
+        data.position(start);
+        long h = len ^ forward(seed);
+        while(len >= 64){
+            len -= 64;
+            h *= C;
+            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong());
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong());
+        }
+        while(len >= 8){
+            len -= 8;
+            h = mixMultiple(h, data.getLong());
+        }
+        switch (len) {
+            case 1:  h = mix(mixMultiple(h, (data.get()))); break;
+            case 2:  h = mix(mixMultiple(h, (data.getShort()))); break;
+            case 3:  h = mix(mixMultiple(h, (data.getShort()) ^ ((long)data.get()) << 16)); break;
+            case 4:  h = mix(mixMultiple(h, (data.getInt()))); break;
+            case 5:  h = mix(mixMultiple(h, (data.getInt()) ^ ((long)data.get()) << 32)); break;
+            case 6:  h = mix(mixMultiple(h, (data.getInt()) ^ ((long)data.getShort()) << 32)); break;
+            case 7:  h = mix(mixMultiple(h, (data.getInt()) ^ ((long)data.getShort()) << 32 ^ ((long)data.get()) << 48)); break;
+            default: h = mix(h); break;
+        }
+        return h;
+    }
+
+    /**
+     * A hashing function that operates on a {@link ByteBuffer}, hashing everything from index 0 to just before index
+     * {@link ByteBuffer#limit()}. The {@link ByteBuffer#limit() limit} must be set on data; this will not read
+     * past the limit.
+     * <br>
+     * This is likely to significantly outperform {@link #hash(byte[])} on all but
+     * the smallest sequences of bytes (under 20 bytes).
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data an input ByteBuffer
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final ByteBuffer data) {
+        return hashBulk(data, 0, data.limit());
+    }
+
+    /**
+     * A hashing function that operates on a {@link ByteBuffer}, using the given {@code start} index (measured in bytes)
+     * and {@code length} (also in bytes). The {@link ByteBuffer#limit() limit} must be set on data; this will not read
+     * past the limit.
+     * <br>
+     * This is likely to significantly outperform {@link #hash(byte[], int, int)}
+     * on all but the smallest sequences of bytes (under 20 bytes).
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param data an input ByteBuffer
+     * @param start the starting index, measured in bytes
+     * @param length the number of bytes to hash
+     * @return the 32-bit hash of data
+     */
+    public int hashBulk(final ByteBuffer data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.limit())
+            return 0;
+        int len = Math.min(length, data.limit() - start);
+        data.position(start);
+        long h = len ^ forward(seed);
+        while(len >= 64){
+            len -= 64;
+            h *= C;
+            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong());
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong());
+        }
+        while(len >= 8){
+            len -= 8;
+            h = mixMultiple(h, data.getLong());
+        }
+        switch (len) {
+            case 1:  h = mix(mixMultiple(h, (data.get()))); break;
+            case 2:  h = mix(mixMultiple(h, (data.getShort()))); break;
+            case 3:  h = mix(mixMultiple(h, (data.getShort()) ^ ((long)data.get()) << 16)); break;
+            case 4:  h = mix(mixMultiple(h, (data.getInt()))); break;
+            case 5:  h = mix(mixMultiple(h, (data.getInt()) ^ ((long)data.get()) << 32)); break;
+            case 6:  h = mix(mixMultiple(h, (data.getInt()) ^ ((long)data.getShort()) << 32)); break;
+            case 7:  h = mix(mixMultiple(h, (data.getInt()) ^ ((long)data.getShort()) << 32 ^ ((long)data.get()) << 48)); break;
+            default: h = mix(h); break;
+        }
+        return (int) h;
+    }
+
+    // member functions, function parameter section
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link HashFunction64} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash64} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param function typically a method reference to a {@link #hash64} method here
+     * @param data input array
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 64-bit hash of data
+     */
+    public <T> long hashBulk64(final HashFunction64<T> function, final T[] data) {
+        if (data == null) return 0;
+        return hashBulk64(function, data, 0, data.length);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link HashFunction64} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash64} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param function typically a method reference to a {@link #hash64} method here
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 64-bit hash of data
+     */
+    public <T> long hashBulk64(final HashFunction64<T> function, final T[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(function.hash64(data[i  ]), function.hash64(data[i+1]), function.hash64(data[i+2]), function.hash64(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(function.hash64(data[i+4]), function.hash64(data[i+5]), function.hash64(data[i+6]), function.hash64(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, function.hash64(data[i++]));
+        }
+        return mix(h);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link HashFunction} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param function typically a method reference to a {@link #hash} method here
+     * @param data input array
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 64-bit hash of data
+     */
+    public <T> long hashBulk64(final HashFunction<T> function, final T[] data) {
+        if (data == null) return 0;
+        return hashBulk64(function, data, 0, data.length);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link HashFunction} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param function typically a method reference to a {@link #hash} method here
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 64-bit hash of data
+     */
+    public <T> long hashBulk64(final HashFunction<T> function, final T[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(function.hash(data[i  ]), function.hash(data[i+1]), function.hash(data[i+2]), function.hash(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(function.hash(data[i+4]), function.hash(data[i+5]), function.hash(data[i+6]), function.hash(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, function.hash(data[i++]));
+        }
+        return mix(h);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link HashFunction64} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash64} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param function typically a method reference to a {@link #hash64} method here
+     * @param data input array
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 32-bit hash of data
+     */
+    public <T> int hashBulk(final HashFunction64<T> function, final T[] data) {
+        if (data == null) return 0;
+        return hashBulk(function, data, 0, data.length);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link HashFunction64} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash64} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param function typically a method reference to a {@link #hash64} method here
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 32-bit hash of data
+     */
+    public <T> int hashBulk(final HashFunction64<T> function, final T[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(function.hash64(data[i  ]), function.hash64(data[i+1]), function.hash64(data[i+2]), function.hash64(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(function.hash64(data[i+4]), function.hash64(data[i+5]), function.hash64(data[i+6]), function.hash64(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, function.hash64(data[i++]));
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link HashFunction} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param function typically a method reference to a {@link #hash} method here
+     * @param data input array
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 32-bit hash of data
+     */
+    public <T> int hashBulk(final HashFunction<T> function, final T[] data) {
+        if (data == null) return 0;
+        return hashBulk(function, data, 0, data.length);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link HashFunction} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param function typically a method reference to a {@link #hash} method here
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 32-bit hash of data
+     */
+    public <T> int hashBulk(final HashFunction<T> function, final T[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(function.hash(data[i  ]), function.hash(data[i+1]), function.hash(data[i+2]), function.hash(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(function.hash(data[i+4]), function.hash(data[i+5]), function.hash(data[i+6]), function.hash(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, function.hash(data[i++]));
+        }
+        return (int)mix(h);
+    }
+
+    // bulk hashing section, seeded static functions
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(long[])} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final long[] data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(long[], int, int)} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final long[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(long[])} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final long[] data) {
+        if (data == null) return 0;
+        return hashBulk(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(long[], int, int)} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final long[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(int[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final int[] data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(int[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final int[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(int[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final int[] data) {
+        if (data == null) return 0;
+        return hashBulk(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(int[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final int[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(short[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final short[] data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(short[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final short[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(short[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final short[] data) {
+        if (data == null) return 0;
+        return hashBulk(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(short[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final short[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(byte[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * If you are expecting mostly inputs larger than about 100 bytes, you should consider wrapping any byte arrays you
+     * have using {@link ByteBuffer#wrap(byte[])} and passing them to
+     * {@link #hashBulk64(long, ByteBuffer)} instead, which
+     * will generally be much faster but may accumulate garbage references to ByteBuffers.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final byte[] data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(byte[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * If you are expecting mostly inputs larger than about 100 bytes, you should consider wrapping any byte arrays you
+     * have using {@link ByteBuffer#wrap(byte[], int, int)}  and passing them to
+     * {@link #hashBulk64(long, ByteBuffer, int, int)} instead, which
+     * will generally be much faster but may accumulate garbage references to ByteBuffers.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final byte[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(byte[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * If you are expecting mostly inputs larger than about 100 bytes, you should consider wrapping any byte arrays you
+     * have using {@link ByteBuffer#wrap(byte[])}  and passing them to
+     * {@link #hashBulk(long, ByteBuffer)} instead, which
+     * will generally be much faster but may accumulate garbage references to ByteBuffers.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final byte[] data) {
+        if (data == null) return 0;
+        return hashBulk(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(byte[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * If you are expecting mostly inputs larger than about 100 bytes, you should consider wrapping any byte arrays you
+     * have using {@link ByteBuffer#wrap(byte[], int, int)}  and passing them to
+     * {@link #hashBulk(long, ByteBuffer, int, int)} instead, which
+     * will generally be much faster but may accumulate garbage references to ByteBuffers.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final byte[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(float[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final float[] data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(float[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final float[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(floatToRawIntBits(data[i  ]), floatToRawIntBits(data[i+1]), floatToRawIntBits(data[i+2]), floatToRawIntBits(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(floatToRawIntBits(data[i+4]), floatToRawIntBits(data[i+5]), floatToRawIntBits(data[i+6]), floatToRawIntBits(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, floatToRawIntBits(data[i++]));
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(float[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final float[] data) {
+        if (data == null) return 0;
+        return hashBulk(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(float[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final float[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(floatToRawIntBits(data[i  ]), floatToRawIntBits(data[i+1]), floatToRawIntBits(data[i+2]), floatToRawIntBits(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(floatToRawIntBits(data[i+4]), floatToRawIntBits(data[i+5]), floatToRawIntBits(data[i+6]), floatToRawIntBits(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, floatToRawIntBits(data[i++]));
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(double[])} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final double[] data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(double[], int, int)} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final double[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, doubleToRawLongBits(data[i++]));
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(double[])} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final double[] data) {
+        if (data == null) return 0;
+        return hashBulk(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(double[], int, int)} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final double[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, doubleToRawLongBits(data[i++]));
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(char[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final char[] data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(char[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final char[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(char[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final char[] data) {
+        if (data == null) return 0;
+        return hashBulk(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(char[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final char[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++]);
+        }
+        return (int)mix(h);
+    }
+    
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(boolean[])} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final boolean[] data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(boolean[], int, int)} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final boolean[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ] ? -1L : 0L, data[i+1] ? -1L : 0L, data[i+2] ? -1L : 0L, data[i+3] ? -1L : 0L);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4] ? -1L : 0L, data[i+5] ? -1L : 0L, data[i+6] ? -1L : 0L, data[i+7] ? -1L : 0L);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++] ? -1L : 0L);
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(boolean[])} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final boolean[] data) {
+        if (data == null) return 0;
+        return hashBulk(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(boolean[], int, int)} on longer input arrays
+     * (length 50 and up). It is probably a little slower on the smallest input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final boolean[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data[i  ] ? -1L : 0L, data[i+1] ? -1L : 0L, data[i+2] ? -1L : 0L, data[i+3] ? -1L : 0L);
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data[i+4] ? -1L : 0L, data[i+5] ? -1L : 0L, data[i+6] ? -1L : 0L, data[i+7] ? -1L : 0L);
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data[i++] ? -1L : 0L);
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(CharSequence)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final CharSequence data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, data, 0, data.length());
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(CharSequence, int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final CharSequence data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length())
+            return 0;
+        int len = Math.min(length, data.length() - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data.charAt(i++));
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(CharSequence)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final CharSequence data) {
+        if (data == null) return 0;
+        return hashBulk(seed, data, 0, data.length());
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(CharSequence, int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final CharSequence data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length())
+            return 0;
+        int len = Math.min(length, data.length() - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data.charAt(i++));
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(CharSequence)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays. This overload uses the more common
+     * String type, rather than CharSequence, to better support hashing arrays of String in other methods.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final String data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, data, 0, data.length());
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(CharSequence, int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays. This overload uses the more common
+     * String type, rather than CharSequence, to better support hashing arrays of String in other methods.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final String data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length())
+            return 0;
+        int len = Math.min(length, data.length() - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data.charAt(i++));
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(CharSequence)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays. This overload uses the more common
+     * String type, rather than CharSequence, to better support hashing arrays of String in other methods.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final String data) {
+        if (data == null) return 0;
+        return hashBulk(seed, data, 0, data.length());
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(CharSequence, int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays. This overload uses the more common
+     * String type, rather than CharSequence, to better support hashing arrays of String in other methods.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final String data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length())
+            return 0;
+        int len = Math.min(length, data.length() - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, data.charAt(i++));
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(Object[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array; null items are tolerated
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final Object[] data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash64(Object[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array; null items are tolerated
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final Object[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(Objects.hashCode(data[i  ]), Objects.hashCode(data[i+1]), Objects.hashCode(data[i+2]), Objects.hashCode(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(Objects.hashCode(data[i+4]), Objects.hashCode(data[i+5]), Objects.hashCode(data[i+6]), Objects.hashCode(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, Objects.hashCode(data[i++]));
+        }
+        return mix(h);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(Object[])} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array; null items are tolerated
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final Object[] data) {
+        if (data == null) return 0;
+        return hashBulk(seed, data, 0, data.length);
+    }
+
+    /**
+     * A hashing function that is likely to outperform {@link #hash(Object[], int, int)} on much longer input arrays
+     * (length 5000 and up). It is probably a little slower on smaller input arrays.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data input array; null items are tolerated
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final Object[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(Objects.hashCode(data[i  ]), Objects.hashCode(data[i+1]), Objects.hashCode(data[i+2]), Objects.hashCode(data[i+3]));
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(Objects.hashCode(data[i+4]), Objects.hashCode(data[i+5]), Objects.hashCode(data[i+6]), Objects.hashCode(data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, Objects.hashCode(data[i++]));
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * A hashing function that operates on a {@link ByteBuffer}, hashing everything from index 0 to just before index
+     * {@link ByteBuffer#limit()}. The {@link ByteBuffer#limit() limit} must be set on data; this will not read
+     * past the limit.
+     * <br>
+     * This is likely to significantly outperform {@link #hash64(byte[])} on all but
+     * the smallest sequences of bytes (under 20 bytes).
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data an input ByteBuffer
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final ByteBuffer data) {
+        return hashBulk64(seed, data, 0, data.limit());
+    }
+
+    /**
+     * A hashing function that operates on a {@link ByteBuffer}, using the given {@code start} index (measured in bytes)
+     * and {@code length} (also in bytes). The {@link ByteBuffer#limit() limit} must be set on data; this will not read
+     * past the limit.
+     * <br>
+     * This is likely to significantly outperform {@link #hash64(byte[], int, int)}
+     * on all but the smallest sequences of bytes (under 20 bytes).
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data an input ByteBuffer
+     * @param start the starting index, measured in bytes
+     * @param length the number of bytes to hash
+     * @return the 64-bit hash of data
+     */
+    public static long hashBulk64(final long seed, final ByteBuffer data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.limit())
+            return 0;
+        int len = Math.min(length, data.limit() - start);
+        data.position(start);
+        long h = len ^ forward(seed);
+        while(len >= 64){
+            len -= 64;
+            h *= C;
+            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong());
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong());
+        }
+        while(len >= 8){
+            len -= 8;
+            h = mixMultiple(h, data.getLong());
+        }
+        switch (len) {
+            case 1:  h = mix(mixMultiple(h, (data.get()))); break;
+            case 2:  h = mix(mixMultiple(h, (data.getShort()))); break;
+            case 3:  h = mix(mixMultiple(h, (data.getShort()) ^ ((long)data.get()) << 16)); break;
+            case 4:  h = mix(mixMultiple(h, (data.getInt()))); break;
+            case 5:  h = mix(mixMultiple(h, (data.getInt()) ^ ((long)data.get()) << 32)); break;
+            case 6:  h = mix(mixMultiple(h, (data.getInt()) ^ ((long)data.getShort()) << 32)); break;
+            case 7:  h = mix(mixMultiple(h, (data.getInt()) ^ ((long)data.getShort()) << 32 ^ ((long)data.get()) << 48)); break;
+            default: h = mix(h); break;
+        }
+        return h;
+    }
+
+    /**
+     * A hashing function that operates on a {@link ByteBuffer}, hashing everything from index 0 to just before index
+     * {@link ByteBuffer#limit()}. The {@link ByteBuffer#limit() limit} must be set on data; this will not read
+     * past the limit.
+     * <br>
+     * This is likely to significantly outperform {@link #hash(byte[])} on all but
+     * the smallest sequences of bytes (under 20 bytes).
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data an input ByteBuffer
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final ByteBuffer data) {
+        return hashBulk(seed, data, 0, data.limit());
+    }
+
+    /**
+     * A hashing function that operates on a {@link ByteBuffer}, using the given {@code start} index (measured in bytes)
+     * and {@code length} (also in bytes). The {@link ByteBuffer#limit() limit} must be set on data; this will not read
+     * past the limit.
+     * <br>
+     * This is likely to significantly outperform {@link #hash(byte[], int, int)}
+     * on all but the smallest sequences of bytes (under 20 bytes).
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param data an input ByteBuffer
+     * @param start the starting index, measured in bytes
+     * @param length the number of bytes to hash
+     * @return the 32-bit hash of data
+     */
+    public static int hashBulk(final long seed, final ByteBuffer data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.limit())
+            return 0;
+        int len = Math.min(length, data.limit() - start);
+        data.position(start);
+        long h = len ^ forward(seed);
+        while(len >= 64){
+            len -= 64;
+            h *= C;
+            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong());
+            h = (h << 37 | h >>> 27);
+            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong());
+        }
+        while(len >= 8){
+            len -= 8;
+            h = mixMultiple(h, data.getLong());
+        }
+        switch (len) {
+            case 1:  h = mix(mixMultiple(h, (data.get()))); break;
+            case 2:  h = mix(mixMultiple(h, (data.getShort()))); break;
+            case 3:  h = mix(mixMultiple(h, (data.getShort()) ^ ((long)data.get()) << 16)); break;
+            case 4:  h = mix(mixMultiple(h, (data.getInt()))); break;
+            case 5:  h = mix(mixMultiple(h, (data.getInt()) ^ ((long)data.get()) << 32)); break;
+            case 6:  h = mix(mixMultiple(h, (data.getInt()) ^ ((long)data.getShort()) << 32)); break;
+            case 7:  h = mix(mixMultiple(h, (data.getInt()) ^ ((long)data.getShort()) << 32 ^ ((long)data.get()) << 48)); break;
+            default: h = mix(h); break;
+        }
+        return (int) h;
+    }
+
+    // seeded static functions, function parameter section
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link SeededHashFunction64} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash64} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param function typically a method reference to a {@link #hash64} method here
+     * @param data input array
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 64-bit hash of data
+     */
+    public static <T> long hashBulk64(final long seed, final SeededHashFunction64<T> function, final T[] data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, function, data, 0, data.length);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link SeededHashFunction64} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash64} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param function typically a method reference to a {@link #hash64} method here
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 64-bit hash of data
+     */
+    public static <T> long hashBulk64(final long seed, final SeededHashFunction64<T> function, final T[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(function.hash64(seed, data[i  ]), function.hash64(seed, data[i+1]), function.hash64(seed, data[i+2]), function.hash64(seed, data[i+3])); h = (h << 37 | h >>> 27);
+            h += mixMultiple(function.hash64(seed, data[i+4]), function.hash64(seed, data[i+5]), function.hash64(seed, data[i+6]), function.hash64(seed, data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, function.hash64(seed, data[i++]));
+        }
+        return mix(h);
+    }
+    
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link SeededHashFunction} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash64} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param function typically a method reference to a {@link #hash64} method here
+     * @param data input array
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 64-bit hash of data
+     */
+    public static <T> long hashBulk64(final long seed, final SeededHashFunction<T> function, final T[] data) {
+        if (data == null) return 0;
+        return hashBulk64(seed, function, data, 0, data.length);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link SeededHashFunction} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param function typically a method reference to a {@link #hash} method here
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 64-bit hash of data
+     */
+    public static <T> long hashBulk64(final long seed, final SeededHashFunction<T> function, final T[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(function.hash(seed, data[i  ]), function.hash(seed, data[i+1]), function.hash(seed, data[i+2]), function.hash(seed, data[i+3])); h = (h << 37 | h >>> 27);
+            h += mixMultiple(function.hash(seed, data[i+4]), function.hash(seed, data[i+5]), function.hash(seed, data[i+6]), function.hash(seed, data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, function.hash(seed, data[i++]));
+        }
+        return mix(h);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link SeededHashFunction64} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash64} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param function typically a method reference to a {@link #hash64} method here
+     * @param data input array
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 64-bit hash of data
+     */
+    public static <T> int hashBulk(final long seed, final SeededHashFunction64<T> function, final T[] data) {
+        if (data == null) return 0;
+        return hashBulk(seed, function, data, 0, data.length);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link SeededHashFunction64} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash64} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param function typically a method reference to a {@link #hash64} method here
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 64-bit hash of data
+     */
+    public static <T> int hashBulk(final long seed, final SeededHashFunction64<T> function, final T[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(function.hash64(seed, data[i  ]), function.hash64(seed, data[i+1]), function.hash64(seed, data[i+2]), function.hash64(seed, data[i+3])); h = (h << 37 | h >>> 27);
+            h += mixMultiple(function.hash64(seed, data[i+4]), function.hash64(seed, data[i+5]), function.hash64(seed, data[i+6]), function.hash64(seed, data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, function.hash64(seed, data[i++]));
+        }
+        return (int)mix(h);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link SeededHashFunction} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash64} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param function typically a method reference to a {@link #hash64} method here
+     * @param data input array
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 64-bit hash of data
+     */
+    public static <T> int hashBulk(final long seed, final SeededHashFunction<T> function, final T[] data) {
+        if (data == null) return 0;
+        return hashBulk(seed, function, data, 0, data.length);
+    }
+
+    /**
+     * Meant to handle hashing larger 2D arrays (or higher dimensions), this lets you pass a {@link SeededHashFunction} as
+     * the first parameter, and then this uses that function to get a hash for each T item in data. T is usually an
+     * array type, and function is usually a method reference to a {@link #hash} method here.
+     * <br>
+     * The 'hashBulk' methods pass more tests for statistical quality than the 'non-bulk' methods here.
+     * @param seed any long seed
+     * @param function typically a method reference to a {@link #hash} method here
+     * @param data input array
+     * @param start starting index in data
+     * @param length how many items to use from data
+     * @param <T> typically an array type, often of primitive items; may be more than one-dimensional
+     * @return the 64-bit hash of data
+     */
+    public static <T> int hashBulk(final long seed, final SeededHashFunction<T> function, final T[] data, int start, int length) {
+        if (data == null || start < 0 || length < 0 || start >= data.length)
+            return 0;
+        int len = Math.min(length, data.length - start);
+        long h = len ^ forward(seed);
+        int i = start;
+        while(len >= 8){
+            len -= 8;
+            h *= C;
+            h += mixMultiple(function.hash(seed, data[i  ]), function.hash(seed, data[i+1]), function.hash(seed, data[i+2]), function.hash(seed, data[i+3])); h = (h << 37 | h >>> 27);
+            h += mixMultiple(function.hash(seed, data[i+4]), function.hash(seed, data[i+5]), function.hash(seed, data[i+6]), function.hash(seed, data[i+7]));
+            i += 8;
+        }
+        while(len >= 1){
+            len--;
+            h = mixMultiple(h, function.hash(seed, data[i++]));
+        }
+        return (int)mix(h);
+    }
+
+    // predefined HashFunction instances, to avoid lots of casting
+
+    public static final SeededHashFunction64<boolean[]> booleanArrayHash64 = AdzeHasher::hash64;
+    public static final SeededHashFunction64<byte[]> byteArrayHash64 = AdzeHasher::hash64;
+    public static final SeededHashFunction64<short[]> shortArrayHash64 = AdzeHasher::hash64;
+    public static final SeededHashFunction64<int[]> intArrayHash64 = AdzeHasher::hash64;
+    public static final SeededHashFunction64<long[]> longArrayHash64 = AdzeHasher::hash64;
+    public static final SeededHashFunction64<float[]> floatArrayHash64 = AdzeHasher::hash64;
+    public static final SeededHashFunction64<double[]> doubleArrayHash64 = AdzeHasher::hash64;
+    public static final SeededHashFunction64<char[]> charArrayHash64 = AdzeHasher::hash64;
+    public static final SeededHashFunction64<CharSequence> charSequenceHash64 = AdzeHasher::hash64;
+    public static final SeededHashFunction64<Object[]> objectArrayHash64 = AdzeHasher::hash64;
+
+    public static final SeededHashFunction<boolean[]> booleanArrayHash = AdzeHasher::hash;
+    public static final SeededHashFunction<byte[]> byteArrayHash = AdzeHasher::hash;
+    public static final SeededHashFunction<short[]> shortArrayHash = AdzeHasher::hash;
+    public static final SeededHashFunction<int[]> intArrayHash = AdzeHasher::hash;
+    public static final SeededHashFunction<long[]> longArrayHash = AdzeHasher::hash;
+    public static final SeededHashFunction<float[]> floatArrayHash = AdzeHasher::hash;
+    public static final SeededHashFunction<double[]> doubleArrayHash = AdzeHasher::hash;
+    public static final SeededHashFunction<char[]> charArrayHash = AdzeHasher::hash;
+    public static final SeededHashFunction<CharSequence> charSequenceHash = AdzeHasher::hash;
+    public static final SeededHashFunction<Object[]> objectArrayHash = AdzeHasher::hash;
+
+    public static final SeededHashFunction64<boolean[]> booleanArrayHashBulk64 = AdzeHasher::hashBulk64;
+    public static final SeededHashFunction64<byte[]> byteArrayHashBulk64 = AdzeHasher::hashBulk64;
+    public static final SeededHashFunction64<short[]> shortArrayHashBulk64 = AdzeHasher::hashBulk64;
+    public static final SeededHashFunction64<int[]> intArrayHashBulk64 = AdzeHasher::hashBulk64;
+    public static final SeededHashFunction64<long[]> longArrayHashBulk64 = AdzeHasher::hashBulk64;
+    public static final SeededHashFunction64<float[]> floatArrayHashBulk64 = AdzeHasher::hashBulk64;
+    public static final SeededHashFunction64<double[]> doubleArrayHashBulk64 = AdzeHasher::hashBulk64;
+    public static final SeededHashFunction64<char[]> charArrayHashBulk64 = AdzeHasher::hashBulk64;
+    public static final SeededHashFunction64<CharSequence> charSequenceHashBulk64 = AdzeHasher::hashBulk64;
+    public static final SeededHashFunction64<String> stringHashBulk64 = AdzeHasher::hashBulk64;
+    public static final SeededHashFunction64<Object[]> objectArrayHashBulk64 = AdzeHasher::hashBulk64;
+    public static final SeededHashFunction64<ByteBuffer> byteBufferHashBulk64 = AdzeHasher::hashBulk64;
+
+    public static final SeededHashFunction64<boolean[][]> booleanArray2DHashBulk64 = (long seed, boolean[][] data) -> hashBulk64(seed, booleanArrayHashBulk64, data);
+    public static final SeededHashFunction64<byte[][]> byteArray2DHashBulk64 = (long seed, byte[][] data) -> hashBulk64(seed, byteArrayHashBulk64, data);
+    public static final SeededHashFunction64<short[][]> shortArray2DHashBulk64 = (long seed, short[][] data) -> hashBulk64(seed, shortArrayHashBulk64, data);
+    public static final SeededHashFunction64<int[][]> intArray2DHashBulk64 = (long seed, int[][] data) -> hashBulk64(seed, intArrayHashBulk64, data);
+    public static final SeededHashFunction64<long[][]> longArray2DHashBulk64 = (long seed, long[][] data) -> hashBulk64(seed, longArrayHashBulk64, data);
+    public static final SeededHashFunction64<float[][]> floatArray2DHashBulk64 = (long seed, float[][] data) -> hashBulk64(seed, floatArrayHashBulk64, data);
+    public static final SeededHashFunction64<double[][]> doubleArray2DHashBulk64 = (long seed, double[][] data) -> hashBulk64(seed, doubleArrayHashBulk64, data);
+    public static final SeededHashFunction64<char[][]> charArray2DHashBulk64 = (long seed, char[][] data) -> hashBulk64(seed, charArrayHashBulk64, data);
+    public static final SeededHashFunction64<CharSequence[]> charSequenceArrayHashBulk64 = (long seed, CharSequence[] data) -> hashBulk64(seed, charSequenceHashBulk64, data);
+    public static final SeededHashFunction64<String[]> stringArrayHashBulk64 = (long seed, String[] data) -> hashBulk64(seed, stringHashBulk64, data);
+    public static final SeededHashFunction64<Object[][]> objectArray2DHashBulk64 = (long seed, Object[][] data) -> hashBulk64(seed, objectArrayHashBulk64, data);
+    public static final SeededHashFunction64<ByteBuffer[]> byteBufferArrayHashBulk64 = (long seed, ByteBuffer[] data) -> hashBulk64(seed, byteBufferHashBulk64, data);
+
+    public static final SeededHashFunction64<boolean[][][]> booleanArray3DHashBulk64 = (long seed, boolean[][][] data) -> hashBulk64(seed, booleanArray2DHashBulk64, data);
+    public static final SeededHashFunction64<byte[][][]> byteArray3DHashBulk64 = (long seed, byte[][][] data) -> hashBulk64(seed, byteArray2DHashBulk64, data);
+    public static final SeededHashFunction64<short[][][]> shortArray3DHashBulk64 = (long seed, short[][][] data) -> hashBulk64(seed, shortArray2DHashBulk64, data);
+    public static final SeededHashFunction64<int[][][]> intArray3DHashBulk64 = (long seed, int[][][] data) -> hashBulk64(seed, intArray2DHashBulk64, data);
+    public static final SeededHashFunction64<long[][][]> longArray3DHashBulk64 = (long seed, long[][][] data) -> hashBulk64(seed, longArray2DHashBulk64, data);
+    public static final SeededHashFunction64<float[][][]> floatArray3DHashBulk64 = (long seed, float[][][] data) -> hashBulk64(seed, floatArray2DHashBulk64, data);
+    public static final SeededHashFunction64<double[][][]> doubleArray3DHashBulk64 = (long seed, double[][][] data) -> hashBulk64(seed, doubleArray2DHashBulk64, data);
+    public static final SeededHashFunction64<char[][][]> charArray3DHashBulk64 = (long seed, char[][][] data) -> hashBulk64(seed, charArray2DHashBulk64, data);
+    public static final SeededHashFunction64<CharSequence[][]> charSequenceArray2DHashBulk64 = (long seed, CharSequence[][] data) -> hashBulk64(seed, charSequenceArrayHashBulk64, data);
+    public static final SeededHashFunction64<String[][]> stringArray2DHashBulk64 = (long seed, String[][] data) -> hashBulk64(seed, stringArrayHashBulk64, data);
+    public static final SeededHashFunction64<Object[][][]> objectArray3DHashBulk64 = (long seed, Object[][][] data) -> hashBulk64(seed, objectArray2DHashBulk64, data);
+    public static final SeededHashFunction64<ByteBuffer[][]> byteBufferArray2DHashBulk64 = (long seed, ByteBuffer[][] data) -> hashBulk64(seed, byteBufferArrayHashBulk64, data);
+
+    public static final SeededHashFunction64<CharSequence[][][]> charSequenceArray3DHashBulk64 = (long seed, CharSequence[][][] data) -> hashBulk64(seed, charSequenceArray2DHashBulk64, data);
+    public static final SeededHashFunction64<String[][][]> stringArray3DHashBulk64 = (long seed, String[][][] data) -> hashBulk64(seed, stringArray2DHashBulk64, data);
+    public static final SeededHashFunction64<ByteBuffer[][][]> byteBufferArray3DHashBulk64 = (long seed, ByteBuffer[][][] data) -> hashBulk64(seed, byteBufferArray2DHashBulk64, data);
+
+    public static final SeededHashFunction<boolean[]> booleanArrayHashBulk = AdzeHasher::hashBulk;
+    public static final SeededHashFunction<byte[]> byteArrayHashBulk = AdzeHasher::hashBulk;
+    public static final SeededHashFunction<short[]> shortArrayHashBulk = AdzeHasher::hashBulk;
+    public static final SeededHashFunction<int[]> intArrayHashBulk = AdzeHasher::hashBulk;
+    public static final SeededHashFunction<long[]> longArrayHashBulk = AdzeHasher::hashBulk;
+    public static final SeededHashFunction<float[]> floatArrayHashBulk = AdzeHasher::hashBulk;
+    public static final SeededHashFunction<double[]> doubleArrayHashBulk = AdzeHasher::hashBulk;
+    public static final SeededHashFunction<char[]> charArrayHashBulk = AdzeHasher::hashBulk;
+    public static final SeededHashFunction<CharSequence> charSequenceHashBulk = AdzeHasher::hashBulk;
+    public static final SeededHashFunction<String> stringHashBulk = AdzeHasher::hashBulk;
+    public static final SeededHashFunction<Object[]> objectArrayHashBulk = AdzeHasher::hashBulk;
+    public static final SeededHashFunction<ByteBuffer> byteBufferHashBulk = AdzeHasher::hashBulk;
+
+    public static final SeededHashFunction<boolean[][]> booleanArray2DHashBulk = (long seed, boolean[][] data) -> hashBulk(seed, booleanArrayHashBulk, data);
+    public static final SeededHashFunction<byte[][]> byteArray2DHashBulk = (long seed, byte[][] data) -> hashBulk(seed, byteArrayHashBulk, data);
+    public static final SeededHashFunction<short[][]> shortArray2DHashBulk = (long seed, short[][] data) -> hashBulk(seed, shortArrayHashBulk, data);
+    public static final SeededHashFunction<int[][]> intArray2DHashBulk = (long seed, int[][] data) -> hashBulk(seed, intArrayHashBulk, data);
+    public static final SeededHashFunction<long[][]> longArray2DHashBulk = (long seed, long[][] data) -> hashBulk(seed, longArrayHashBulk, data);
+    public static final SeededHashFunction<float[][]> floatArray2DHashBulk = (long seed, float[][] data) -> hashBulk(seed, floatArrayHashBulk, data);
+    public static final SeededHashFunction<double[][]> doubleArray2DHashBulk = (long seed, double[][] data) -> hashBulk(seed, doubleArrayHashBulk, data);
+    public static final SeededHashFunction<char[][]> charArray2DHashBulk = (long seed, char[][] data) -> hashBulk(seed, charArrayHashBulk, data);
+    public static final SeededHashFunction<CharSequence[]> charSequenceArrayHashBulk = (long seed, CharSequence[] data) -> hashBulk(seed, charSequenceHashBulk, data);
+    public static final SeededHashFunction<String[]> stringArrayHashBulk = (long seed, String[] data) -> hashBulk(seed, stringHashBulk, data);
+    public static final SeededHashFunction<Object[][]> objectArray2DHashBulk = (long seed, Object[][] data) -> hashBulk(seed, objectArrayHashBulk, data);
+    public static final SeededHashFunction<ByteBuffer[]> byteBufferArrayHashBulk = (long seed, ByteBuffer[] data) -> hashBulk(seed, byteBufferHashBulk, data);
+
+    public static final SeededHashFunction<boolean[][][]> booleanArray3DHashBulk = (long seed, boolean[][][] data) -> hashBulk(seed, booleanArray2DHashBulk, data);
+    public static final SeededHashFunction<byte[][][]> byteArray3DHashBulk = (long seed, byte[][][] data) -> hashBulk(seed, byteArray2DHashBulk, data);
+    public static final SeededHashFunction<short[][][]> shortArray3DHashBulk = (long seed, short[][][] data) -> hashBulk(seed, shortArray2DHashBulk, data);
+    public static final SeededHashFunction<int[][][]> intArray3DHashBulk = (long seed, int[][][] data) -> hashBulk(seed, intArray2DHashBulk, data);
+    public static final SeededHashFunction<long[][][]> longArray3DHashBulk = (long seed, long[][][] data) -> hashBulk(seed, longArray2DHashBulk, data);
+    public static final SeededHashFunction<float[][][]> floatArray3DHashBulk = (long seed, float[][][] data) -> hashBulk(seed, floatArray2DHashBulk, data);
+    public static final SeededHashFunction<double[][][]> doubleArray3DHashBulk = (long seed, double[][][] data) -> hashBulk(seed, doubleArray2DHashBulk, data);
+    public static final SeededHashFunction<char[][][]> charArray3DHashBulk = (long seed, char[][][] data) -> hashBulk(seed, charArray2DHashBulk, data);
+    public static final SeededHashFunction<CharSequence[][]> charSequenceArray2DHashBulk = (long seed, CharSequence[][] data) -> hashBulk(seed, charSequenceArrayHashBulk, data);
+    public static final SeededHashFunction<String[][]> stringArray2DHashBulk = (long seed, String[][] data) -> hashBulk(seed, stringArrayHashBulk, data);
+    public static final SeededHashFunction<Object[][][]> objectArray3DHashBulk = (long seed, Object[][][] data) -> hashBulk(seed, objectArray2DHashBulk, data);
+    public static final SeededHashFunction<ByteBuffer[][]> byteBufferArray2DHashBulk = (long seed, ByteBuffer[][] data) -> hashBulk(seed, byteBufferArrayHashBulk, data);
+
+    public static final SeededHashFunction<CharSequence[][][]> charSequenceArray3DHashBulk = (long seed, CharSequence[][][] data) -> hashBulk(seed, charSequenceArray2DHashBulk, data);
+    public static final SeededHashFunction<String[][][]> stringArray3DHashBulk = (long seed, String[][][] data) -> hashBulk(seed, stringArray2DHashBulk, data);
+    public static final SeededHashFunction<ByteBuffer[][][]> byteBufferArray3DHashBulk = (long seed, ByteBuffer[][][] data) -> hashBulk(seed, byteBufferArray2DHashBulk, data);
+
+    // normal Java Object stuff
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AdzeHasher hasher = (AdzeHasher) o;
+
+        return seed == hasher.seed;
+    }
+
+    /**
+     * Produces a String that holds the entire seed of this Hasher. A Hasher is immutable, so to load the serialized
+     * state you must create a new Hasher with {@link #deserializeFromString(CharSequence)}.
+     * @return a String holding the seed of this Hasher, to be loaded by {@link #deserializeFromString(CharSequence)}
+     */
+    public String serializeToString() {
+        return appendSerialized(new StringBuilder(11)).toString();
+    }
+    /**
+     * Appends the textual form of this Hasher to the given StringBuilder, StringBuffer, CharBuffer, or similar.
+     * You can recover this state from such a textual form by calling {@link #deserializeFromString(CharSequence)} to
+     * create a new Hasher.
+     * @param sb an Appendable CharSequence that will be modified
+     * @return {@code sb}, for chaining
+     * @param <T> any type that is both a CharSequence and an Appendable, such as StringBuilder, StringBuffer, or CharBuffer
+     */
+    public <T extends CharSequence & Appendable> T appendSerialized(T sb) {
+        Base.SIMPLE64.appendUnsigned(sb, seed);
+        return sb;
+    }
+
+    /**
+     * Given a String or other CharSequence produced by {@link #serializeToString()}, this creates a new Hasher with the
+     * seed stored in the start of that CharSequence.
+     *
+     * @param data a String or other CharSequence produced by {@link #serializeToString()}
+     * @return a new Hasher with a seed loaded from the given String or other CharSequence
+     */
+    public static AdzeHasher deserializeFromString(CharSequence data) {
+        return deserializeFromString(data, 0);
+    }
+    /**
+     * Given a String or other CharSequence produced by {@link #serializeToString()} or
+     * {@link #appendSerialized(CharSequence)} and an offset to indicate where to
+     * read 11 chars from that CharSequence, this creates a new Hasher with the seed stored in that CharSequence.
+     * @param data a String or other CharSequence produced by {@link #serializeToString()}
+     * @param offset where to start reading the 11 chars of a serialized state from data
+     * @return a new Hasher with a seed loaded from the given String or other CharSequence
+     */
+    public static AdzeHasher deserializeFromString(CharSequence data, int offset) {
+        if(data == null || offset < 0 || data.length() - offset < 11) return AdzeHasher.hydrogen;
+        return new AdzeHasher(Base.SIMPLE64.readLong(data, offset, offset + 11));
+    }
+
+    /**
+     * This shouldn't ever be necessary, because a Hasher is entirely immutable, but if for some reason you need a
+     * duplicate of an existing Hasher, this exists. Normally you can just reference an existing Hasher, though!
+     * @return a new Hasher with the same seed as this one
+     */
+    public AdzeHasher copy() {
+        return new AdzeHasher(seed);
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (seed ^ (seed >>> 32));
+    }
+
+    @Override
+    public String toString() {
+        return "Hasher{" +
+                "seed=" + seed +
+                '}';
+    }
+}
