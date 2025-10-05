@@ -52,7 +52,8 @@ dependencies {
 
     //implementation 'com.github.SquidPony.SquidLib:squidlib-util:v3.0.3'
 //    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:2ae5e83d1a' // lacks Ripple FOV opt
-    implementation 'com.github.yellowstonegames.SquidLib:squidlib-util:6295afbd45' // Dec 2 2022
+//    implementation 'com.github.yellowstonegames.squidlib:squidlib-util:6295afbd45' // Dec 2 2022
+    implementation 'com.squidpony:squidlib-util:3.0.6' // latest release
     // Mar 18 2023
 //    implementation 'com.github.yellowstonegames.SquidSquad:SquidGrid:6919164a35'
 //    implementation 'com.github.yellowstonegames.SquidSquad:SquidPlace:6919164a35'
@@ -76,10 +77,15 @@ dependencies {
 //    implementation('com.github.yellowstonegames.SquidSquad:SquidText:f09b288412')  { exclude group: 'com.github.tommyettinger', module: 'digital' }
 
     // Jul 27 2024
-    implementation 'com.github.yellowstonegames.squidsquad:squidgrid:fa55957446'
-    implementation 'com.github.yellowstonegames.squidsquad:squidplace:fa55957446'
-    implementation 'com.github.yellowstonegames.squidsquad:squidpath:fa55957446'
-    implementation 'com.github.yellowstonegames.squidsquad:squidtext:fa55957446'
+//    implementation 'com.github.yellowstonegames.squidsquad:squidgrid:fa55957446'
+//    implementation 'com.github.yellowstonegames.squidsquad:squidplace:fa55957446'
+//    implementation 'com.github.yellowstonegames.squidsquad:squidpath:fa55957446'
+//    implementation 'com.github.yellowstonegames.squidsquad:squidtext:fa55957446'
+
+    implementation 'com.squidpony:squidgrid:4.0.1'
+    implementation 'com.squidpony:squidplace:4.0.1'
+    implementation 'com.squidpony:squidpath:4.0.1'
+    implementation 'com.squidpony:squidtext:4.0.1'
 
     implementation "com.github.tommyettinger:blazingchain:1.4.4.4"
 //    implementation 'com.github.tommyettinger:BlazingChain:dfddeb3dda'
@@ -114,9 +120,9 @@ dependencies {
 
 
     implementation 'com.github.tommyettinger:atlantis:5574642135'
-    implementation 'com.github.tommyettinger:digital:0.5.2'
-    implementation('com.github.tommyettinger:juniper:0.6.1'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
-    implementation('com.github.tommyettinger:jdkgdxds:1.6.5'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
+    implementation 'com.github.tommyettinger:digital:0.9.4'
+    implementation('com.github.tommyettinger:juniper:0.8.4'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
+    implementation('com.github.tommyettinger:jdkgdxds:1.12.4'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
 
 
     implementation "it.unimi.dsi:fastutil:8.5.9"
