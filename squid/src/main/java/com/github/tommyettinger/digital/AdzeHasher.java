@@ -917,12 +917,12 @@ public class AdzeHasher {
 
     /**
      * A very minimalist way to scramble inputs to be used as seeds; can be inverted using {@link #reverse(long)}.
-     * This simply performs the XOR-rotate-XOR-rotate operation on x, using left rotations of 29 and 47.
+     * This simply performs the XOR-rotate-XOR-rotate operation on x, using left rotations of 23 and 56.
      * @param x any long
      * @return a slightly scrambled version of x
      */
     public static long forward(long x) {
-        return x ^ (x << 29 | x >>> 35) ^ (x << 47 | x >>> 17);
+        return x ^ (x << 23 | x >>> 43) ^ (x << 56 | x >>> 8);
     }
 
     /**
@@ -931,11 +931,10 @@ public class AdzeHasher {
      * @return the original long that was provided to {@link #forward(long)}, before scrambling
      */
     public static long reverse(long x) {
-        x ^= x ^ (x << 29 | x >>> 35) ^ (x << 47 | x >>> 17);
-        x ^= x ^ (x << 58 | x >>>  6) ^ (x << 30 | x >>> 34);
-        x ^= x ^ (x << 52 | x >>> 12) ^ (x << 60 | x >>>  4);
-        x ^= x ^ (x << 40 | x >>> 24) ^ (x << 56 | x >>>  8);
-        x ^= x ^ (x << 16 | x >>> 48) ^ (x << 48 | x >>> 16);
+        x = x ^ (x << 23 | x >>> 43) ^ (x << 56 | x >>>  8);
+        x = x ^ (x << 46 | x >>> 18) ^ (x << 48 | x >>> 16);
+        x = x ^ (x << 28 | x >>> 36) ^ (x << 32 | x >>> 32);
+        x = (x << 8 | x >>> 56);
         return x;
     }
 
@@ -4109,19 +4108,24 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long ln = len, h = ln ^ (ln << 3 | ln >>> 61) ^ (ln << 47 | ln >>> 17) ^ forward(seed);
         int i = start;
         while(len >= 8){
             len -= 8;
             h *= C;
             h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
-            h = (h << 37 | h >>> 27);
+            h ^= h >>> 25;
             h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
             i += 8;
         }
-        while(len >= 1){
+        while(len >= 4){
             len--;
             h = mixMultiple(h, data[i++]);
+        }
+        switch (len) {
+            case 1: h = mixMultiple(h, data[i]); break;
+            case 2: h = mixMultiple(h, data[i], data[i+1]); break;
+            case 3: h = mixMultiple(h, data[i], data[i+1], data[i+2]); break;
         }
         return mix(h);
     }
@@ -4153,7 +4157,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long ln = len, h = ln ^ (ln << 3 | ln >>> 61) ^ (ln << 47 | ln >>> 17) ^ forward(seed);
         int i = start;
         while(len >= 8){
             len -= 8;
@@ -4163,9 +4167,14 @@ public class AdzeHasher {
             h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
             i += 8;
         }
-        while(len >= 1){
+        while(len >= 4){
             len--;
             h = mixMultiple(h, data[i++]);
+        }
+        switch (len) {
+            case 1: h = mixMultiple(h, data[i]); break;
+            case 2: h = mixMultiple(h, data[i], data[i+1]); break;
+            case 3: h = mixMultiple(h, data[i], data[i+1], data[i+2]); break;
         }
         return (int)mix(h);
     }
