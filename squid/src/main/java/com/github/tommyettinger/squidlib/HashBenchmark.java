@@ -31,6 +31,8 @@
 
 package com.github.tommyettinger.squidlib;
 
+import com.github.tommyettinger.digital.AdzeHasher;
+import com.github.tommyettinger.digital.Hasher;
 import com.github.tommyettinger.ds.ObjectList;
 import com.github.tommyettinger.random.WhiskerRandom;
 import com.github.yellowstonegames.text.Language;
@@ -2294,115 +2296,211 @@ public class HashBenchmark {
     @Benchmark
     public long doAx64(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+        return Hasher.mu.hashBulk64(state.words[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public int doAx32(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+        return Hasher.mu.hashBulk(state.words[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public long doCharAx64(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+        return Hasher.mu.hashBulk64(state.chars[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public int doCharAx32(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+        return Hasher.mu.hashBulk(state.chars[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public long doIntAx64(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+        return Hasher.mu.hashBulk64(state.ints[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public int doIntAx32(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+        return Hasher.mu.hashBulk(state.ints[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public long doLongAx64(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+        return Hasher.mu.hashBulk64(state.longs[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public int doLongAx32(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+        return Hasher.mu.hashBulk(state.longs[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public long doDoubleAx64(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+        return Hasher.mu.hashBulk64(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public int doDoubleAx32(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+        return Hasher.mu.hashBulk(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public long doByteAx64(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash64(state.bytes[state.idx = state.idx + 1 & 4095]);
+        return Hasher.mu.hashBulk64(state.bytes[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public int doByteAx32(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hash(state.bytes[state.idx = state.idx + 1 & 4095]);
+        return Hasher.mu.hashBulk(state.bytes[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public long doBufferAx64(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hashBulk64(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+        return Hasher.mu.hashBulk64(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark
     public int doBufferAx32(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hashBulk(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
-    }
-
-    @Benchmark
-    public long doBufferWrapAx64(BenchmarkState state)
-    {
-        return CrossHash.Ax.mu.hash64Wrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
-    }
-
-    @Benchmark
-    public long doBufferWrapAx32(BenchmarkState state)
-    {
-        return CrossHash.Ax.mu.hashWrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
+        return Hasher.mu.hashBulk(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark
     public long doCharBufferAx64(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hashBulk64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+        return Hasher.mu.hashBulk64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark
     public int doCharBufferAx32(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hashBulk(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+        return Hasher.mu.hashBulk(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+    }
+
+//    @Benchmark
+//    public long doBufferWrapAx64(BenchmarkState state)
+//    {
+//        return Hasher.mu.hash64Wrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
+//    }
+//
+//    @Benchmark
+//    public long doBufferWrapAx32(BenchmarkState state)
+//    {
+//        return Hasher.mu.hashWrap(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
+//    }
+//
+//    @Benchmark
+//    public long doBulkAx64(BenchmarkState state)
+//    {
+//        return Hasher.mu.hashBulk64(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
+//    }
+
+    @Benchmark
+    public long doAdze64(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk64(state.words[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
-    public long doBulkAx64(BenchmarkState state)
+    public int doAdze32(BenchmarkState state)
     {
-        return CrossHash.Ax.mu.hashBulk64(state.bytes[state.idx = state.idx + 1 & 4095], 0, state.len);
+        return AdzeHasher.mu.hashBulk(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doCharAdze64(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk64(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doCharAdze32(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doIntAdze64(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk64(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doIntAdze32(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doLongAdze64(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk64(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doLongAdze32(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoubleAdze64(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleAdze32(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doByteAdze64(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk64(state.bytes[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doByteAdze32(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk(state.bytes[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doBufferAdze64(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk64(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+    }
+
+    @Benchmark
+    public int doBufferAdze32(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+    }
+
+    @Benchmark
+    public long doCharBufferAdze64(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+    }
+
+    @Benchmark
+    public int doCharBufferAdze32(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark
@@ -2579,7 +2677,7 @@ public class HashBenchmark {
      *
      * a) Via the command line from the squidlib-performance module's root folder:
      *    $ mvn clean install
-     *    $ java -jar benchmarks.jar "HashBenchmark.do(Char)?(Buffer)?(Yolk|Ax)64"
+     *    $ java -jar benchmarks.jar "HashBenchmark.do(Char)?(Buffer)?(Adze|Ax)64"
      *
      *    (we requested 8 warmup/measurement iterations, single fork)
      *
