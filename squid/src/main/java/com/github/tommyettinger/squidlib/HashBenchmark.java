@@ -1325,6 +1325,22 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doLongAdze64        20000  avgt    5  12978.482 ± 2840.261  ns/op
  * HashBenchmark.doLongAx64          20000  avgt    5  12754.222 ± 1482.521  ns/op
  * </pre>
+ * Of course with small inputs, it's the reverse, except for buffers... Still small.
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt   Score   Error  Units
+ * HashBenchmark.doAdze64               20  avgt    5  18.733 ± 0.783  ns/op
+ * HashBenchmark.doAx64                 20  avgt    5  22.027 ± 0.975  ns/op
+ * HashBenchmark.doBufferAdze64         20  avgt    5  30.154 ± 0.908  ns/op
+ * HashBenchmark.doBufferAx64           20  avgt    5  29.319 ± 1.112  ns/op
+ * HashBenchmark.doCharAdze64           20  avgt    5  14.257 ± 0.469  ns/op
+ * HashBenchmark.doCharAx64             20  avgt    5  14.673 ± 0.312  ns/op
+ * HashBenchmark.doCharBufferAdze64     20  avgt    5  13.929 ± 1.131  ns/op
+ * HashBenchmark.doCharBufferAx64       20  avgt    5  13.022 ± 0.504  ns/op
+ * HashBenchmark.doIntAdze64            20  avgt    5  14.297 ± 0.140  ns/op
+ * HashBenchmark.doIntAx64              20  avgt    5  14.764 ± 0.833  ns/op
+ * HashBenchmark.doLongAdze64           20  avgt    5  15.447 ± 0.606  ns/op
+ * HashBenchmark.doLongAx64             20  avgt    5  16.379 ± 0.846  ns/op
+ * </pre>
  *
  */
 @BenchmarkMode(Mode.AverageTime)
