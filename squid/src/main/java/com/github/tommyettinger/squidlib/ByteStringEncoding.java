@@ -18,7 +18,6 @@ package com.github.tommyettinger.squidlib;
 
 import com.github.tommyettinger.ds.ObjectIntMap;
 import com.github.tommyettinger.ds.ObjectSet;
-import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -405,7 +404,7 @@ public final class ByteStringEncoding {
         }
 
         @Override
-        protected int place(@NonNull Object item) {
+        protected int place(Object item) {
             return item.hashCode() & mask;
         }
     }
@@ -424,7 +423,7 @@ public final class ByteStringEncoding {
         }
 
         @Override
-        protected int place(@NonNull Object item) {
+        protected int place(Object item) {
             return item.hashCode() & mask;
         }
 

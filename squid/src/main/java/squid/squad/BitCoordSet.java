@@ -1,7 +1,6 @@
 package squid.squad;
 
 import com.github.yellowstonegames.grid.Coord;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.*;
 
@@ -9,8 +8,8 @@ public class BitCoordSet extends AbstractCollection<Coord> {
     public BitSet bits;
     public int width;
     public int height;
-    protected transient @Nullable CoordIterator iterator1;
-    protected transient @Nullable CoordIterator iterator2;
+    protected transient CoordIterator iterator1;
+    protected transient CoordIterator iterator2;
 
     public BitCoordSet(int width, int height){
         this.width = width;

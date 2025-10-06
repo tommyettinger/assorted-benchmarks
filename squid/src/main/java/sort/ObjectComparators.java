@@ -18,7 +18,6 @@
 package sort;
 
 import com.github.tommyettinger.function.ObjToFloatFunction;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.Comparator;
 import java.util.List;
@@ -169,7 +168,7 @@ public final class ObjectComparators {
 	 * @param items the List to be sorted
 	 * @param c     a Comparator to alter the sort order; if null, the natural order will be used
 	 */
-	public static <K> void sort (List<K> items, final @Nullable Comparator<? super K> c) {
+	public static <K> void sort (List<K> items, final Comparator<? super K> c) {
 		sort(items, 0, items.size(), c);
 	}
 
@@ -188,7 +187,7 @@ public final class ObjectComparators {
 	 * @param to    the index of the last element (exclusive) to be sorted.
 	 * @param c     a Comparator to alter the sort order; if null, the natural order will be used
 	 */
-	public static <K> void sort (List<K> items, final int from, final int to, final @Nullable Comparator<? super K> c) {
+	public static <K> void sort (List<K> items, final int from, final int to, final Comparator<? super K> c) {
 		if (to <= 0) {
 			return;
 		}
@@ -344,7 +343,7 @@ public final class ObjectComparators {
 	 * @param items the List to be sorted
 	 * @param c     a Comparator to alter the sort order; if null, the natural order will be used
 	 */
-	public static <K> void sort (K[] items, final @Nullable Comparator<? super K> c) {
+	public static <K> void sort (K[] items, final Comparator<? super K> c) {
 		sort(items, 0, items.length, c);
 	}
 
@@ -363,7 +362,7 @@ public final class ObjectComparators {
 	 * @param to    the index of the last element (exclusive) to be sorted.
 	 * @param c     a Comparator to alter the sort order; if null, the natural order will be used
 	 */
-	public static <K> void sort (K[] items, final int from, final int to, final @Nullable Comparator<? super K> c) {
+	public static <K> void sort (K[] items, final int from, final int to, final Comparator<? super K> c) {
 		if (to <= 0) {
 			return;
 		}
