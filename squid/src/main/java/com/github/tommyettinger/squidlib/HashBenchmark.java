@@ -1309,6 +1309,23 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doCharBufferYolk64  20000  avgt    5  5582.446 ± 172.072  ns/op
  * HashBenchmark.doCharYolk64        20000  avgt    5  7822.574 ± 215.856  ns/op
  * </pre>
+ * Comparing Ax to Adze on large inputs, the performance is quite close, but Ax is better.
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt      Score      Error  Units
+ * HashBenchmark.doAdze64            20000  avgt    5  14128.651 ±  116.223  ns/op
+ * HashBenchmark.doAx64              20000  avgt    5  14161.751 ±  243.352  ns/op
+ * HashBenchmark.doBufferAdze64      20000  avgt    5  15352.146 ± 1338.521  ns/op
+ * HashBenchmark.doBufferAx64        20000  avgt    5  15183.154 ± 2100.821  ns/op
+ * HashBenchmark.doCharAdze64        20000  avgt    5   7346.841 ±  230.003  ns/op
+ * HashBenchmark.doCharAx64          20000  avgt    5   7015.774 ±  628.099  ns/op
+ * HashBenchmark.doCharBufferAdze64  20000  avgt    5   4993.215 ±  408.230  ns/op
+ * HashBenchmark.doCharBufferAx64    20000  avgt    5   4692.201 ±  165.453  ns/op
+ * HashBenchmark.doIntAdze64         20000  avgt    5   9236.952 ±  544.263  ns/op
+ * HashBenchmark.doIntAx64           20000  avgt    5   9121.477 ±  390.880  ns/op
+ * HashBenchmark.doLongAdze64        20000  avgt    5  12978.482 ± 2840.261  ns/op
+ * HashBenchmark.doLongAx64          20000  avgt    5  12754.222 ± 1482.521  ns/op
+ * </pre>
+ *
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
