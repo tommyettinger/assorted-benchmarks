@@ -751,6 +751,8 @@ public class AdzeHasher {
     public static final long U = 0xE19B01AA9D42C66DL;
     /** A 64-bit probable prime close to a "harmonious number" (See {@link MathTools#GOLDEN_LONGS}). */
     public static final long V = 0xE60E2B722B53AEF3L;
+    /** A 64-bit probable prime close to a "harmonious number" (See {@link MathTools#GOLDEN_LONGS}). */
+    public static final long W = 0xE95E1DD17D35802BL;
 
     /**
      * Takes two arguments that are technically longs, and should be very different, and uses them to get a result
@@ -823,8 +825,8 @@ public class AdzeHasher {
      * hash value directly.
      * Used by {@link #hashBulk64} and {@link #hashBulk}.
      * <br>
-     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the other three
-     * are known in full. This uses four 64-bit primes as multipliers; the exact numbers don't matter as long as
+     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the others
+     * are known in full. This uses three 64-bit primes as multipliers; the exact numbers don't matter as long as
      * they are odd and have sufficiently well-distributed bits (close to 32 '1' bits, and so on). If this is only
      * added to a running total, the result won't have very random low-order bits, so performing bitwise rotations
      * after at least some calls to this (or xorshifting right) is critical to keeping the hash high-quality.
@@ -844,7 +846,7 @@ public class AdzeHasher {
      * hash value directly.
      * Used by {@link #hashBulk64} and {@link #hashBulk}.
      * <br>
-     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the other three
+     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the others
      * are known in full. This uses four 64-bit primes as multipliers; the exact numbers don't matter as long as
      * they are odd and have sufficiently well-distributed bits (close to 32 '1' bits, and so on). If this is only
      * added to a running total, the result won't have very random low-order bits, so performing bitwise rotations
@@ -867,8 +869,8 @@ public class AdzeHasher {
      * hash value directly.
      * Used by {@link #hashBulk64} and {@link #hashBulk}.
      * <br>
-     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the other three
-     * are known in full. This uses four 64-bit primes as multipliers; the exact numbers don't matter as long as
+     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the others
+     * are known in full. This uses five 64-bit primes as multipliers; the exact numbers don't matter as long as
      * they are odd and have sufficiently well-distributed bits (close to 32 '1' bits, and so on). If this is only
      * added to a running total, the result won't have very random low-order bits, so performing bitwise rotations
      * after at least some calls to this (or xorshifting right) is critical to keeping the hash high-quality.
@@ -892,8 +894,8 @@ public class AdzeHasher {
      * hash value directly.
      * Used by {@link #hashBulk64} and {@link #hashBulk}.
      * <br>
-     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the other three
-     * are known in full. This uses four 64-bit primes as multipliers; the exact numbers don't matter as long as
+     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the others
+     * are known in full. This uses six 64-bit primes as multipliers; the exact numbers don't matter as long as
      * they are odd and have sufficiently well-distributed bits (close to 32 '1' bits, and so on). If this is only
      * added to a running total, the result won't have very random low-order bits, so performing bitwise rotations
      * after at least some calls to this (or xorshifting right) is critical to keeping the hash high-quality.
@@ -912,6 +914,35 @@ public class AdzeHasher {
              + ((d << 25 | d >>> 39) + e) * T
              + ((e << 26 | e >>> 38) + f) * U
              + ((f << 30 | f >>> 34) + a) * V;
+    }
+
+    /**
+     * Performs part of the hashing step applied to seven 64-bit inputs at once, and typically added to a running
+     * hash value directly.
+     * Used by {@link #hashBulk64} and {@link #hashBulk}.
+     * <br>
+     * This is not reversible under normal circumstances. It may be possible to recover one parameter if the others
+     * are known in full. This uses seven 64-bit primes as multipliers; the exact numbers don't matter as long as
+     * they are odd and have sufficiently well-distributed bits (close to 32 '1' bits, and so on). If this is only
+     * added to a running total, the result won't have very random low-order bits, so performing bitwise rotations
+     * after at least some calls to this (or xorshifting right) is critical to keeping the hash high-quality.
+     * @param a any long, typically an item being hashed; mixed with b and g
+     * @param b any long, typically an item being hashed; mixed with c and a
+     * @param c any long, typically an item being hashed; mixed with d and b
+     * @param d any long, typically an item being hashed; mixed with e and c
+     * @param e any long, typically an item being hashed; mixed with f and d
+     * @param f any long, typically an item being hashed; mixed with g and e
+     * @param g any long, typically an item being hashed; mixed with a and f
+     * @return any long
+     */
+    public static long mixMultiple(long a, long b, long c, long d, long e, long f, long g) {
+        return ((a << 28 | a >>> 36) + b) * Q
+             + ((b << 29 | b >>> 35) + c) * R
+             + ((c << 27 | c >>> 37) + d) * S
+             + ((d << 25 | d >>> 39) + e) * T
+             + ((e << 26 | e >>> 38) + f) * U
+             + ((f << 30 | f >>> 34) + g) * V
+             + ((g << 23 | g >>> 41) + a) * W;
     }
 
 
@@ -4110,17 +4141,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3], data[i+4], data[i+5], data[i+6]);
             h ^= h >>> 25;
-            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
-            i += 8;
+            h += mixMultiple(data[i+7], data[i+8], data[i+9], data[i+10], data[i+11], data[i+12], data[i+13]);
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, data[i++]);
+            len -= 4;
+            h = mixMultiple(h, data[i  ], data[i+1], data[i+2], data[i+3]);
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, data[i]); break;
@@ -4159,17 +4191,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3]);
+            h += mixMultiple(data[i  ], data[i+1], data[i+2], data[i+3], data[i+4], data[i+5], data[i+6]);
             h ^= h >>> 25;
-            h += mixMultiple(data[i+4], data[i+5], data[i+6], data[i+7]);
-            i += 8;
+            h += mixMultiple(data[i+7], data[i+8], data[i+9], data[i+10], data[i+11], data[i+12], data[i+13]);
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, data[i++]);
+            len -= 4;
+            h = mixMultiple(h, data[i  ], data[i+1], data[i+2], data[i+3]);
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, data[i]); break;
