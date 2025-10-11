@@ -6089,17 +6089,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(floatToRawIntBits(data[i  ]), floatToRawIntBits(data[i+1]), floatToRawIntBits(data[i+2]), floatToRawIntBits(data[i+3]));
-            h ^= h >>> 25;
-            h += mixMultiple(floatToRawIntBits(data[i+4]), floatToRawIntBits(data[i+5]), floatToRawIntBits(data[i+6]), floatToRawIntBits(data[i+7]));
-            i += 8;
+            h += mixMultiple(floatToRawIntBits(data[i  ]), floatToRawIntBits(data[i+1]), floatToRawIntBits(data[i+2]), floatToRawIntBits(data[i+3]), floatToRawIntBits(data[i+4]), floatToRawIntBits(data[i+5]), floatToRawIntBits(data[i+6]));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(floatToRawIntBits(data[i+7]), floatToRawIntBits(data[i+8]), floatToRawIntBits(data[i+9]), floatToRawIntBits(data[i+10]), floatToRawIntBits(data[i+11]), floatToRawIntBits(data[i+12]), floatToRawIntBits(data[i+13]));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, floatToRawIntBits(data[i++]));
+            len -= 4;
+            h = mixMultiple(h, floatToRawIntBits(data[i  ]), floatToRawIntBits(data[i+1]), floatToRawIntBits(data[i+2]), floatToRawIntBits(data[i+3]));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, floatToRawIntBits(data[i])); break;
@@ -6140,17 +6141,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(floatToRawIntBits(data[i  ]), floatToRawIntBits(data[i+1]), floatToRawIntBits(data[i+2]), floatToRawIntBits(data[i+3]));
-            h ^= h >>> 25;
-            h += mixMultiple(floatToRawIntBits(data[i+4]), floatToRawIntBits(data[i+5]), floatToRawIntBits(data[i+6]), floatToRawIntBits(data[i+7]));
-            i += 8;
+            h += mixMultiple(floatToRawIntBits(data[i  ]), floatToRawIntBits(data[i+1]), floatToRawIntBits(data[i+2]), floatToRawIntBits(data[i+3]), floatToRawIntBits(data[i+4]), floatToRawIntBits(data[i+5]), floatToRawIntBits(data[i+6]));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(floatToRawIntBits(data[i+7]), floatToRawIntBits(data[i+8]), floatToRawIntBits(data[i+9]), floatToRawIntBits(data[i+10]), floatToRawIntBits(data[i+11]), floatToRawIntBits(data[i+12]), floatToRawIntBits(data[i+13]));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, floatToRawIntBits(data[i++]));
+            len -= 4;
+            h = mixMultiple(h, floatToRawIntBits(data[i  ]), floatToRawIntBits(data[i+1]), floatToRawIntBits(data[i+2]), floatToRawIntBits(data[i+3]));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, floatToRawIntBits(data[i])); break;
@@ -6191,17 +6193,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
-            h ^= h >>> 25;
-            h += mixMultiple(doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
-            i += 8;
+            h += mixMultiple(doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]), doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(doubleToRawLongBits(data[i+7]), doubleToRawLongBits(data[i+8]), doubleToRawLongBits(data[i+9]), doubleToRawLongBits(data[i+10]), doubleToRawLongBits(data[i+11]), doubleToRawLongBits(data[i+12]), doubleToRawLongBits(data[i+13]));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, doubleToRawLongBits(data[i++]));
+            len -= 4;
+            h = mixMultiple(h, doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, doubleToRawLongBits(data[i])); break;
@@ -6242,17 +6245,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
-            h ^= h >>> 25;
-            h += mixMultiple(doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]), doubleToRawLongBits(data[i+7]));
-            i += 8;
+            h += mixMultiple(doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]), doubleToRawLongBits(data[i+4]), doubleToRawLongBits(data[i+5]), doubleToRawLongBits(data[i+6]));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(doubleToRawLongBits(data[i+7]), doubleToRawLongBits(data[i+8]), doubleToRawLongBits(data[i+9]), doubleToRawLongBits(data[i+10]), doubleToRawLongBits(data[i+11]), doubleToRawLongBits(data[i+12]), doubleToRawLongBits(data[i+13]));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, doubleToRawLongBits(data[i++]));
+            len -= 4;
+            h = mixMultiple(h, doubleToRawLongBits(data[i  ]), doubleToRawLongBits(data[i+1]), doubleToRawLongBits(data[i+2]), doubleToRawLongBits(data[i+3]));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, doubleToRawLongBits(data[i])); break;
@@ -6397,17 +6401,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(data[i  ] ? C : 0L, data[i+1] ? C : 0L, data[i+2] ? C : 0L, data[i+3] ? C : 0L);
-            h ^= h >>> 25;
-            h += mixMultiple(data[i+4] ? C : 0L, data[i+5] ? C : 0L, data[i+6] ? C : 0L, data[i+7] ? C : 0L);
-            i += 8;
+            h += mixMultiple(data[i  ] ? C : 0L, data[i+1] ? C : 0L, data[i+2] ? C : 0L, data[i+3] ? C : 0L, data[i+4] ? C : 0L, data[i+5] ? C : 0L, data[i+6] ? C : 0L);
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(data[i+7] ? C : 0L, data[i+8] ? C : 0L, data[i+9] ? C : 0L, data[i+10] ? C : 0L, data[i+11] ? C : 0L, data[i+12] ? C : 0L, data[i+13] ? C : 0L);
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, data[i++] ? C : 0L);
+            len -= 4;
+            h = mixMultiple(h, data[i  ] ? C : 0L, data[i+1] ? C : 0L, data[i+2] ? C : 0L, data[i+3] ? C : 0L);
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, data[i] ? C : 0L); break;
@@ -6448,17 +6453,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(data[i  ] ? C : 0L, data[i+1] ? C : 0L, data[i+2] ? C : 0L, data[i+3] ? C : 0L);
-            h ^= h >>> 25;
-            h += mixMultiple(data[i+4] ? C : 0L, data[i+5] ? C : 0L, data[i+6] ? C : 0L, data[i+7] ? C : 0L);
-            i += 8;
+            h += mixMultiple(data[i  ] ? C : 0L, data[i+1] ? C : 0L, data[i+2] ? C : 0L, data[i+3] ? C : 0L, data[i+4] ? C : 0L, data[i+5] ? C : 0L, data[i+6] ? C : 0L);
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(data[i+7] ? C : 0L, data[i+8] ? C : 0L, data[i+9] ? C : 0L, data[i+10] ? C : 0L, data[i+11] ? C : 0L, data[i+12] ? C : 0L, data[i+13] ? C : 0L);
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, data[i++] ? C : 0L);
+            len -= 4;
+            h = mixMultiple(h, data[i  ] ? C : 0L, data[i+1] ? C : 0L, data[i+2] ? C : 0L, data[i+3] ? C : 0L);
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, data[i] ? C : 0L); break;
@@ -6499,17 +6505,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length() - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
-            h ^= h >>> 25;
-            h += mixMultiple(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
-            i += 8;
+            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3), data.charAt(i+4), data.charAt(i+5), data.charAt(i+6));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(data.charAt(i+7), data.charAt(i+8), data.charAt(i+9), data.charAt(i+10), data.charAt(i+11), data.charAt(i+12), data.charAt(i+13));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, data.charAt(i++));
+            len -= 4;
+            h = mixMultiple(h, data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, data.charAt(i)); break;
@@ -6550,17 +6557,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length() - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
-            h ^= h >>> 25;
-            h += mixMultiple(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
-            i += 8;
+            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3), data.charAt(i+4), data.charAt(i+5), data.charAt(i+6));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(data.charAt(i+7), data.charAt(i+8), data.charAt(i+9), data.charAt(i+10), data.charAt(i+11), data.charAt(i+12), data.charAt(i+13));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, data.charAt(i++));
+            len -= 4;
+            h = mixMultiple(h, data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, data.charAt(i)); break;
@@ -6603,17 +6611,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length() - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
-            h ^= h >>> 25;
-            h += mixMultiple(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
-            i += 8;
+            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3), data.charAt(i+4), data.charAt(i+5), data.charAt(i+6));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(data.charAt(i+7), data.charAt(i+8), data.charAt(i+9), data.charAt(i+10), data.charAt(i+11), data.charAt(i+12), data.charAt(i+13));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, data.charAt(i++));
+            len -= 4;
+            h = mixMultiple(h, data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, data.charAt(i)); break;
@@ -6656,17 +6665,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length() - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
-            h ^= h >>> 25;
-            h += mixMultiple(data.charAt(i+4), data.charAt(i+5), data.charAt(i+6), data.charAt(i+7));
-            i += 8;
+            h += mixMultiple(data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3), data.charAt(i+4), data.charAt(i+5), data.charAt(i+6));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(data.charAt(i+7), data.charAt(i+8), data.charAt(i+9), data.charAt(i+10), data.charAt(i+11), data.charAt(i+12), data.charAt(i+13));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, data.charAt(i++));
+            len -= 4;
+            h = mixMultiple(h, data.charAt(i  ), data.charAt(i+1), data.charAt(i+2), data.charAt(i+3));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, data.charAt(i)); break;
@@ -6707,17 +6717,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(Objects.hashCode(data[i  ]), Objects.hashCode(data[i+1]), Objects.hashCode(data[i+2]), Objects.hashCode(data[i+3]));
-            h ^= h >>> 25;
-            h += mixMultiple(Objects.hashCode(data[i+4]), Objects.hashCode(data[i+5]), Objects.hashCode(data[i+6]), Objects.hashCode(data[i+7]));
-            i += 8;
+            h += mixMultiple(Objects.hashCode(data[i  ]), Objects.hashCode(data[i+1]), Objects.hashCode(data[i+2]), Objects.hashCode(data[i+3]), Objects.hashCode(data[i+4]), Objects.hashCode(data[i+5]), Objects.hashCode(data[i+6]));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(Objects.hashCode(data[i+7]), Objects.hashCode(data[i+8]), Objects.hashCode(data[i+9]), Objects.hashCode(data[i+10]), Objects.hashCode(data[i+11]), Objects.hashCode(data[i+12]), Objects.hashCode(data[i+13]));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, Objects.hashCode(data[i++]));
+            len -= 4;
+            h = mixMultiple(h, Objects.hashCode(data[i  ]), Objects.hashCode(data[i+1]), Objects.hashCode(data[i+2]), Objects.hashCode(data[i+3]));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, Objects.hashCode(data[i])); break;
@@ -6758,17 +6769,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(Objects.hashCode(data[i  ]), Objects.hashCode(data[i+1]), Objects.hashCode(data[i+2]), Objects.hashCode(data[i+3]));
-            h ^= h >>> 25;
-            h += mixMultiple(Objects.hashCode(data[i+4]), Objects.hashCode(data[i+5]), Objects.hashCode(data[i+6]), Objects.hashCode(data[i+7]));
-            i += 8;
+            h += mixMultiple(Objects.hashCode(data[i  ]), Objects.hashCode(data[i+1]), Objects.hashCode(data[i+2]), Objects.hashCode(data[i+3]), Objects.hashCode(data[i+4]), Objects.hashCode(data[i+5]), Objects.hashCode(data[i+6]));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(Objects.hashCode(data[i+7]), Objects.hashCode(data[i+8]), Objects.hashCode(data[i+9]), Objects.hashCode(data[i+10]), Objects.hashCode(data[i+11]), Objects.hashCode(data[i+12]), Objects.hashCode(data[i+13]));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, Objects.hashCode(data[i++]));
+            len -= 4;
+            h = mixMultiple(h, Objects.hashCode(data[i  ]), Objects.hashCode(data[i+1]), Objects.hashCode(data[i+2]), Objects.hashCode(data[i+3]));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, Objects.hashCode(data[i])); break;
