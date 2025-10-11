@@ -5268,16 +5268,16 @@ public class AdzeHasher {
         int len = Math.min(length, data.limit() - start);
         data.position(start);
         long h = len ^ forward(seed);
-        while(len >= 64){
-            len -= 64;
+        while(len >= 112){
+            len -= 112;
             h *= C;
-            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong());
-            h ^= h >>> 25;
-            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong());
+            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong(), data.getLong(), data.getLong(), data.getLong());
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong(), data.getLong(), data.getLong(), data.getLong());
         }
-        while(len >= 31){
-            len -= 8;
-            h = mixMultiple(h, data.getLong());
+        while(len >= 32){
+            len -= 32;
+            h = mixMultiple(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
         }
         switch (len) {
             case 1 :  h = mixMultiple(h, data.get()); break;
@@ -5310,6 +5310,7 @@ public class AdzeHasher {
             case 28:  h = mixMultiple(h, data.getLong(), data.getLong(), data.getLong(), data.getInt()); break;
             case 29:  h = mixMultiple(h, data.getLong(), data.getLong(), data.getLong(), data.getInt(), data.get()); break;
             case 30:  h = mixMultiple(h, data.getLong(), data.getLong(), data.getLong(), data.getInt(), data.getShort()); break;
+            case 31:  h = mixMultiple(h, data.getLong(), data.getLong(), data.getLong(), data.getInt(), data.getShort(), data.get()); break;
         }
         return mix(h);
     }
@@ -5350,16 +5351,16 @@ public class AdzeHasher {
         int len = Math.min(length, data.limit() - start);
         data.position(start);
         long h = len ^ forward(seed);
-        while(len >= 64){
-            len -= 64;
+        while(len >= 112){
+            len -= 112;
             h *= C;
-            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong());
-            h ^= h >>> 25;
-            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong());
+            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong(), data.getLong(), data.getLong(), data.getLong());
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(data.getLong(), data.getLong(), data.getLong(), data.getLong(), data.getLong(), data.getLong(), data.getLong());
         }
-        while(len >= 31){
-            len -= 8;
-            h = mixMultiple(h, data.getLong());
+        while(len >= 32){
+            len -= 32;
+            h = mixMultiple(h, data.getLong(), data.getLong(), data.getLong(), data.getLong());
         }
         switch (len) {
             case 1 :  h = mixMultiple(h, data.get()); break;
@@ -5392,6 +5393,7 @@ public class AdzeHasher {
             case 28:  h = mixMultiple(h, data.getLong(), data.getLong(), data.getLong(), data.getInt()); break;
             case 29:  h = mixMultiple(h, data.getLong(), data.getLong(), data.getLong(), data.getInt(), data.get()); break;
             case 30:  h = mixMultiple(h, data.getLong(), data.getLong(), data.getLong(), data.getInt(), data.getShort()); break;
+            case 31:  h = mixMultiple(h, data.getLong(), data.getLong(), data.getLong(), data.getInt(), data.getShort(), data.get()); break;
         }
         return (int) mix(h);
     }
@@ -5433,17 +5435,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(function.hash64(data[i  ]), function.hash64(data[i+1]), function.hash64(data[i+2]), function.hash64(data[i+3]));
-            h ^= h >>> 25;
-            h += mixMultiple(function.hash64(data[i+4]), function.hash64(data[i+5]), function.hash64(data[i+6]), function.hash64(data[i+7]));
-            i += 8;
+            h += mixMultiple(function.hash64(data[i  ]), function.hash64(data[i+1]), function.hash64(data[i+2]), function.hash64(data[i+3]), function.hash64(data[i+4]), function.hash64(data[i+5]), function.hash64(data[i+6]));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(function.hash64(data[i+7]), function.hash64(data[i+8]), function.hash64(data[i+9]), function.hash64(data[i+10]), function.hash64(data[i+11]), function.hash64(data[i+12]), function.hash64(data[i+13]));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, function.hash64(data[i++]));
+            len -= 4;
+            h = mixMultiple(h, function.hash64(data[i  ]), function.hash64(data[i+1]), function.hash64(data[i+2]), function.hash64(data[i+3]));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, function.hash64(data[i])); break;
@@ -5488,17 +5491,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(function.hash(data[i  ]), function.hash(data[i+1]), function.hash(data[i+2]), function.hash(data[i+3]));
-            h ^= h >>> 25;
-            h += mixMultiple(function.hash(data[i+4]), function.hash(data[i+5]), function.hash(data[i+6]), function.hash(data[i+7]));
-            i += 8;
+            h += mixMultiple(function.hash(data[i  ]), function.hash(data[i+1]), function.hash(data[i+2]), function.hash(data[i+3]), function.hash(data[i+4]), function.hash(data[i+5]), function.hash(data[i+6]));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(function.hash(data[i+7]), function.hash(data[i+8]), function.hash(data[i+9]), function.hash(data[i+10]), function.hash(data[i+11]), function.hash(data[i+12]), function.hash(data[i+13]));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, function.hash(data[i++]));
+            len -= 4;
+            h = mixMultiple(h, function.hash(data[i  ]), function.hash(data[i+1]), function.hash(data[i+2]), function.hash(data[i+3]));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, function.hash(data[i])); break;
@@ -5543,17 +5547,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(function.hash64(data[i  ]), function.hash64(data[i+1]), function.hash64(data[i+2]), function.hash64(data[i+3]));
-            h ^= h >>> 25;
-            h += mixMultiple(function.hash64(data[i+4]), function.hash64(data[i+5]), function.hash64(data[i+6]), function.hash64(data[i+7]));
-            i += 8;
+            h += mixMultiple(function.hash64(data[i  ]), function.hash64(data[i+1]), function.hash64(data[i+2]), function.hash64(data[i+3]), function.hash64(data[i+4]), function.hash64(data[i+5]), function.hash64(data[i+6]));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(function.hash64(data[i+7]), function.hash64(data[i+8]), function.hash64(data[i+9]), function.hash64(data[i+10]), function.hash64(data[i+11]), function.hash64(data[i+12]), function.hash64(data[i+13]));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, function.hash64(data[i++]));
+            len -= 4;
+            h = mixMultiple(h, function.hash64(data[i  ]), function.hash64(data[i+1]), function.hash64(data[i+2]), function.hash64(data[i+3]));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, function.hash64(data[i])); break;
@@ -5598,17 +5603,18 @@ public class AdzeHasher {
         int len = Math.min(length, data.length - start);
         long h = len ^ forward(seed);
         int i = start;
-        while(len >= 8){
-            len -= 8;
+        while(len >= 14){
+            len -= 14;
             h *= C;
-            h += mixMultiple(function.hash(data[i  ]), function.hash(data[i+1]), function.hash(data[i+2]), function.hash(data[i+3]));
-            h ^= h >>> 25;
-            h += mixMultiple(function.hash(data[i+4]), function.hash(data[i+5]), function.hash(data[i+6]), function.hash(data[i+7]));
-            i += 8;
+            h += mixMultiple(function.hash(data[i  ]), function.hash(data[i+1]), function.hash(data[i+2]), function.hash(data[i+3]), function.hash(data[i+4]), function.hash(data[i+5]), function.hash(data[i+6]));
+            h = (h << 39 | h >>> 25);
+            h += mixMultiple(function.hash(data[i+7]), function.hash(data[i+8]), function.hash(data[i+9]), function.hash(data[i+10]), function.hash(data[i+11]), function.hash(data[i+12]), function.hash(data[i+13]));
+            i += 14;
         }
         while(len >= 4){
-            len--;
-            h = mixMultiple(h, function.hash(data[i++]));
+            len -= 4;
+            h = mixMultiple(h, function.hash(data[i  ]), function.hash(data[i+1]), function.hash(data[i+2]), function.hash(data[i+3]));
+            i += 4;
         }
         switch (len) {
             case 1: h = mixMultiple(h, function.hash(data[i])); break;
