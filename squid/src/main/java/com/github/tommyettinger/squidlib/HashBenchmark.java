@@ -1357,6 +1357,23 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doLongAdze64        20000  avgt    5  12553.431 ± 1015.714  ns/op
  * HashBenchmark.doLongAx64          20000  avgt    5  12323.924 ± 1139.987  ns/op
  * </pre>
+ * Oddly, on small inputs, the newer Adze (in batches of 14 numbers instead of 8) is slower...
+ * <pre>
+ * Benchmark                         (len)  Mode  Cnt   Score   Error  Units
+ * HashBenchmark.doAdze64               20  avgt    5  21.160 ± 0.723  ns/op
+ * HashBenchmark.doAx64                 20  avgt    5  22.732 ± 0.999  ns/op
+ * HashBenchmark.doBufferAdze64         20  avgt    5  39.467 ± 1.098  ns/op
+ * HashBenchmark.doBufferAx64           20  avgt    5  31.910 ± 1.012  ns/op
+ * HashBenchmark.doCharAdze64           20  avgt    5  17.005 ± 0.959  ns/op
+ * HashBenchmark.doCharAx64             20  avgt    5  14.868 ± 0.367  ns/op
+ * HashBenchmark.doCharBufferAdze64     20  avgt    5  15.899 ± 0.685  ns/op
+ * HashBenchmark.doCharBufferAx64       20  avgt    5  13.836 ± 0.731  ns/op
+ * HashBenchmark.doIntAdze64            20  avgt    5  16.880 ± 0.493  ns/op
+ * HashBenchmark.doIntAx64              20  avgt    5  15.084 ± 0.483  ns/op
+ * HashBenchmark.doLongAdze64           20  avgt    5  17.018 ± 0.944  ns/op
+ * HashBenchmark.doLongAx64             20  avgt    5  15.656 ± 0.532  ns/op
+ * </pre>
+ *
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
