@@ -33,6 +33,7 @@ package com.github.tommyettinger.squidlib;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.github.tommyettinger.digital.BitConversion;
+import com.github.tommyettinger.digital.Distributor;
 import com.github.tommyettinger.digital.TrigTools;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
@@ -648,11 +649,12 @@ public class MathBenchmark {
     private final double[] inputs = new double[65536];
     private final float[] floatInputs = new float[65536];
     private final int[] intInputs = new int[65536];
+    private final long[] longInputs = new long[65536];
     private final double[] arcInputs = new double[65536];
     {
         for (int i = 0; i < 65536; i++) {
             intInputs[i] = (int)(floatInputs[i] = (float) (inputs[i] =
-                    (DiverRNG.determine(i) >> 10) * 0x1p-41
+                    ((longInputs[i] = DiverRNG.determine(i)) >> 10) * 0x1p-41
             ));
             arcInputs[i] = (DiverRNG.determine(~i) >> 10) * 0x1p-53;
         }
@@ -662,6 +664,14 @@ public class MathBenchmark {
         return (a * (1.0 + (a *= a) * (-0.141514171442891431 + a * -0.719110791477959357)))
                 / (1.0 + a * (-0.439110389941411144 + a * -0.471306172023844527));
     }
+
+    private int normalZiggurat = -0x8000;
+    private int normalFZiggurat = -0x8000;
+    private int normalFRough = -0x8000;
+    private int normalFRougher = -0x8000;
+    private int probitL = -0x8000;
+    private int probitI = -0x8000;
+    private int probitF = -0x8000;
 
     private int mathCos = -0x8000;
     private int mathSin = -0x8000;
@@ -1719,6 +1729,42 @@ public class MathBenchmark {
     @Benchmark
     public int measureFloorBitArithmetic(){
         return bitFloorArithmetic(((floorBfr += 0x9E3779B9) * 0x1p-24f));
+    }
+
+
+    @Benchmark
+    public double measureNormalDZiggurat() {
+        return Distributor.normal(longInputs[normalZiggurat++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public double measureNormalDProbitL() {
+        return Distributor.probitL(longInputs[probitL++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public float measureNormalFZiggurat() {
+        return Distributor.normalF(intInputs[normalFZiggurat++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public float measureNormalFRough() {
+        return RoughMath.normalRough(intInputs[normalFRough++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public float measureNormalFRougher() {
+        return RoughMath.normalRougher(intInputs[normalFRougher++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public float measureNormalFProbitI() {
+        return Distributor.probitI(intInputs[probitI++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public float measureNormalFProbitF() {
+        return Distributor.probitF(floatInputs[probitF++ & 0xFFFF]);
     }
 
     /*
