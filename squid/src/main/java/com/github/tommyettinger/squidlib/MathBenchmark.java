@@ -635,6 +635,18 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureSoontsTan           avgt    5  2.779 ± 0.023  ns/op
  * MathBenchmark.measureTableTan            avgt    5  0.867 ± 0.006  ns/op
  * </pre>
+ * <br>
+ * Comparing normal-distributing methods of varying quality:
+ * <pre>
+ * Benchmark                             Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureNormalDProbitL   avgt    5  11.146 ± 0.182  ns/op
+ * MathBenchmark.measureNormalDZiggurat  avgt    5   2.383 ± 0.025  ns/op
+ * MathBenchmark.measureNormalFProbitF   avgt    5   5.586 ± 0.031  ns/op
+ * MathBenchmark.measureNormalFProbitI   avgt    5   8.563 ± 0.061  ns/op
+ * MathBenchmark.measureNormalFRough     avgt    5   1.829 ± 0.040  ns/op
+ * MathBenchmark.measureNormalFRougher   avgt    5   1.159 ± 0.048  ns/op
+ * MathBenchmark.measureNormalFZiggurat  avgt    5  12.669 ± 0.117  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -1749,12 +1761,12 @@ public class MathBenchmark {
 
     @Benchmark
     public float measureNormalFRough() {
-        return RoughMath.normalRough(intInputs[normalFRough++ & 0xFFFF]);
+        return RoughMath.normalRough(longInputs[normalFRough++ & 0xFFFF]);
     }
 
     @Benchmark
     public float measureNormalFRougher() {
-        return RoughMath.normalRougher(intInputs[normalFRougher++ & 0xFFFF]);
+        return RoughMath.normalRougher(longInputs[normalFRougher++ & 0xFFFF]);
     }
 
     @Benchmark
