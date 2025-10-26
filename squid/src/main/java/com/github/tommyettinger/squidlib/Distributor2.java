@@ -471,8 +471,8 @@ public final class Distributor2 {
 				/* If idx is 0, then the bottom 7 bits of state must all be 0,
 				 * and u must be on the larger side. */
 				do {
-					x = RoughMath.logRough((((state = BitConversion.imul(state ^ 0xFE62A9C5, 0xABC98383)) >>> 8) + 1) * 0x1p-24f) * INV_R_F;
-					y = RoughMath.logRough((((state = BitConversion.imul(state ^ 0xFE62A9C5, 0xABC98383)) >>> 8) + 1) * 0x1p-24f);
+					x = RoughMath.logRough((((state = (state ^ 0xFE62A9C5) * 0xFFF98383) >>> 8)  ) * 0x1p-24f) * INV_R_F;
+					y = RoughMath.logRough((((state = (state ^ 0xFE62A9C5) * 0xFFF98383) >>> 8)  ) * 0x1p-24f);
 				} while (-(y + y) < x * x);
 				return (Integer.bitCount(state) & 1) == 0 ?
 					x - R_F :
@@ -485,7 +485,7 @@ public final class Distributor2 {
 			y = u * u;
 			f0 = RoughMath.expRough(-0.5f * (ZIG_TABLE_F[idx]     * ZIG_TABLE_F[idx]     - y));
 			f1 = RoughMath.expRough(-0.5f * (ZIG_TABLE_F[idx + 1] * ZIG_TABLE_F[idx + 1] - y));
-			if (f1 + (((state = BitConversion.imul(state ^ 0xFE62A9C5, 0xABC98383)) >>> 8) * 0x1p-24f) * (f0 - f1) < 1f)
+			if (f1 + (((state = (state ^ 0xFE62A9C5) * 0xFFF98383) >>> 8) * 0x1p-24f) * (f0 - f1) < 1f)
 				break;
 		}
 		/* (Zero-indexed) bit 8 isn't used in the calculations for idx
