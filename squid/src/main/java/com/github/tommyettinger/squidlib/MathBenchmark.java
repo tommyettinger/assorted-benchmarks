@@ -675,6 +675,19 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureNormalFZiggurat2  avgt    5  10.099 ± 0.219  ns/op
  * MathBenchmark.measureNormalFZiggurat3  avgt    5   2.556 ± 0.027  ns/op
  * </pre>
+ * Small changes don't really affect Ziggurat, but using longs really helps for some unclear reason.
+ * <pre>
+ * Benchmark                              Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureNormalDProbitL    avgt    5  11.119 ± 0.204  ns/op
+ * MathBenchmark.measureNormalDZiggurat   avgt    5   2.369 ± 0.022  ns/op
+ * MathBenchmark.measureNormalFProbitF    avgt    5   5.636 ± 0.071  ns/op
+ * MathBenchmark.measureNormalFProbitI    avgt    5   8.587 ± 0.052  ns/op
+ * MathBenchmark.measureNormalFRough      avgt    5   1.818 ± 0.091  ns/op
+ * MathBenchmark.measureNormalFRougher    avgt    5   1.170 ± 0.020  ns/op
+ * MathBenchmark.measureNormalFZiggurat   avgt    5  12.646 ± 0.082  ns/op
+ * MathBenchmark.measureNormalFZiggurat2  avgt    5  10.724 ± 0.128  ns/op
+ * MathBenchmark.measureNormalFZiggurat3  avgt    5   2.629 ± 0.009  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)

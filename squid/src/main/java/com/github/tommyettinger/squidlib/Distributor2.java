@@ -552,8 +552,8 @@ public final class Distributor2 {
 				/* If idx is 0, then the bottom 7 bits of state must all be 0,
 				 * and u must be on the larger side. */
 				do {
-					x = RoughMath.logRough((((state = (state ^ 0xF1357AEA2E62A9C5L) * 0xABC98388FB8FAC03L) >>> 40) + 1) * 0x1p-24f) * INV_R_F;
-					y = RoughMath.logRough((((state = (state ^ 0xF1357AEA2E62A9C5L) * 0xABC98388FB8FAC03L) >>> 40) + 1) * 0x1p-24f);
+					x = RoughMath.logRough((((state = (state ^ 0xF1357AEA2E62A9C5L) * 0xABC98388FB8FAC03L) >>> 40)  ) * 0x1p-24f) * INV_R_F;
+					y = RoughMath.logRough((((state = (state ^ 0xF1357AEA2E62A9C5L) * 0xABC98388FB8FAC03L) >>> 40)  ) * 0x1p-24f);
 				} while (-(y + y) < x * x);
 				return (Long.bitCount(state) & 1) == 0 ?
 					x - R_F :
@@ -571,6 +571,6 @@ public final class Distributor2 {
 		}
 		/* (Zero-indexed) bit 8 isn't used in the calculations for idx
 		 * or u, so we use bit 8 as a sign bit here. */
-		return Math.copySign(u, 128 - (state & 256));
+		return Math.copySign(u, 128L - (state & 256L));
 	}
 }
