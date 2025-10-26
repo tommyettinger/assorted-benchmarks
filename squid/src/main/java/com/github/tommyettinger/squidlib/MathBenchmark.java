@@ -647,6 +647,19 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureNormalFRougher   avgt    5   1.159 ± 0.048  ns/op
  * MathBenchmark.measureNormalFZiggurat  avgt    5  12.669 ± 0.117  ns/op
  * </pre>
+ * Adding in an alternative to Distributor.normalF() in Distributor2, using RoughMath on floats:
+ * <pre>
+ * Benchmark                              Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureNormalDProbitL    avgt    5  11.165 ± 0.446  ns/op
+ * MathBenchmark.measureNormalDZiggurat   avgt    5   2.353 ± 0.012  ns/op
+ * MathBenchmark.measureNormalFProbitF    avgt    5   5.667 ± 0.030  ns/op
+ * MathBenchmark.measureNormalFProbitI    avgt    5   8.580 ± 0.049  ns/op
+ * MathBenchmark.measureNormalFRough      avgt    5   1.854 ± 0.047  ns/op
+ * MathBenchmark.measureNormalFRougher    avgt    5   1.159 ± 0.044  ns/op
+ * MathBenchmark.measureNormalFZiggurat   avgt    5  12.934 ± 0.256  ns/op
+ * MathBenchmark.measureNormalFZiggurat2  avgt    5  10.118 ± 0.093  ns/op
+ * </pre>
+ * I certainly don't know why the float version is 4x slower than the double version...
  */
 
 @State(Scope.Thread)

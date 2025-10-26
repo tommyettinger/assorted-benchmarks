@@ -2091,7 +2091,7 @@ Nate sweetened at 129572932000
 
         @Override
         public Array<Connection<GridPoint2>> getConnections(GridPoint2 fromNode) {
-            Array<Connection<GridPoint2>> conn = new Array<>(false, 8, Connection.class);
+            Array<Connection<GridPoint2>> conn = new Array<>(false, 8);
             if (indices[fromNode.x][fromNode.y] == -1)
                 return conn;
             for (int i = 0; i < 8; i++) {
@@ -2131,7 +2131,7 @@ Nate sweetened at 129572932000
 
         @Override
         public Array<Connection<Coord>> getConnections(Coord fromNode) {
-            Array<Connection<Coord>> conn = new Array<>(false, 8, Connection.class);
+            Array<Connection<Coord>> conn = new Array<>(false, 8);
             if (map[fromNode.x][fromNode.y] == -1)
                 return conn;
             for (int i = 0; i < 8; i++) {
