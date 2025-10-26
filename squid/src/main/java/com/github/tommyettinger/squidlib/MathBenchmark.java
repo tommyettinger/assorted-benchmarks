@@ -693,6 +693,7 @@ public class MathBenchmark {
     private int normalZiggurat = -0x8000;
     private int normalFZiggurat = -0x8000;
     private int normalFZiggurat2 = -0x8000;
+    private int normalFZiggurat3 = -0x8000;
     private int normalFRough = -0x8000;
     private int normalFRougher = -0x8000;
     private int probitL = -0x8000;
@@ -1776,6 +1777,11 @@ public class MathBenchmark {
     @Benchmark
     public float measureNormalFZiggurat2() {
         return Distributor2.normalF(intInputs[normalFZiggurat2++ & 0xFFFF]);
+    }
+
+    @Benchmark
+    public float measureNormalFZiggurat3() {
+        return Distributor2.normalF(longInputs[normalFZiggurat3++ & 0xFFFF]);
     }
 
     @Benchmark
