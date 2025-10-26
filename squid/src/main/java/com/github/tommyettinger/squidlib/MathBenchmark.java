@@ -660,6 +660,21 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureNormalFZiggurat2  avgt    5  10.118 ± 0.093  ns/op
  * </pre>
  * I certainly don't know why the float version is 4x slower than the double version...
+ * <br>
+ * Well, now I know... Something in the int-based math, likely BitConversion.imul(), is slowing down Distributor.normalF
+ * by a 4x factor, somehow...
+ * <pre>
+ * Benchmark                              Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureNormalDProbitL    avgt    5  11.104 ± 0.194  ns/op
+ * MathBenchmark.measureNormalDZiggurat   avgt    5   2.380 ± 0.021  ns/op
+ * MathBenchmark.measureNormalFProbitF    avgt    5   5.580 ± 0.039  ns/op
+ * MathBenchmark.measureNormalFProbitI    avgt    5   8.582 ± 0.090  ns/op
+ * MathBenchmark.measureNormalFRough      avgt    5   1.829 ± 0.022  ns/op
+ * MathBenchmark.measureNormalFRougher    avgt    5   1.146 ± 0.031  ns/op
+ * MathBenchmark.measureNormalFZiggurat   avgt    5  12.916 ± 0.175  ns/op
+ * MathBenchmark.measureNormalFZiggurat2  avgt    5  10.099 ± 0.219  ns/op
+ * MathBenchmark.measureNormalFZiggurat3  avgt    5   2.556 ± 0.027  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
