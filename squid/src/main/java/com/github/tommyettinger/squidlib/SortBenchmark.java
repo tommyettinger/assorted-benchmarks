@@ -33,6 +33,7 @@ package com.github.tommyettinger.squidlib;
 
 import com.badlogic.gdx.utils.Sort;
 import com.github.tommyettinger.ds.ObjectList;
+import com.github.tommyettinger.ds.support.sort.ObjectComparators;
 import com.github.tommyettinger.random.WhiskerRandom;
 import com.github.yellowstonegames.text.Language;
 import it.unimi.dsi.fastutil.Swapper;
@@ -44,7 +45,6 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
 import sort.GrailSort;
-import sort.ObjectComparators;
 import sort.SortingNetwork;
 
 import java.util.Arrays;
@@ -242,6 +242,42 @@ import java.util.concurrent.TimeUnit;
  * SortBenchmark.doNetworkSort          2560  avgt    5     31365.447 ±    2933.582  ns/op
  * SortBenchmark.doNetworkSort        655360  avgt    5  43048194.273 ± 1232113.309  ns/op
  * </pre>
+ * <br>
+ * Testing on a newer laptop, 14 cores (6 high-power, 8 low-power), running Windows 11 and using Java 21:
+ * <pre>
+ * Benchmark                                   (len)  Mode  Cnt          Score          Error  Units
+ * SortBenchmark.doDSSort                         10  avgt    5         13.667 ±        3.552  ns/op
+ * SortBenchmark.doDSSort                       2560  avgt    5      12416.053 ±     9200.018  ns/op
+ * SortBenchmark.doDSSort                     655360  avgt    5   31503884.972 ±  1162891.463  ns/op
+ * SortBenchmark.doEttingerSort                   10  avgt    5         20.650 ±        5.524  ns/op
+ * SortBenchmark.doEttingerSort                 2560  avgt    5      15392.274 ±     9318.182  ns/op
+ * SortBenchmark.doEttingerSort               655360  avgt    5   28065454.009 ±  2489941.310  ns/op
+ * SortBenchmark.doFastUtilMergeSort              10  avgt    5         16.736 ±        3.283  ns/op
+ * SortBenchmark.doFastUtilMergeSort            2560  avgt    5      12244.880 ±     8092.382  ns/op
+ * SortBenchmark.doFastUtilMergeSort          655360  avgt    5   29941269.771 ±  4899589.795  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort      10  avgt    5         17.556 ±        2.947  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort    2560  avgt    5     103691.461 ±    18230.677  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort  655360  avgt    5   37127223.295 ±  6815492.132  ns/op
+ * SortBenchmark.doFastUtilQuickSort              10  avgt    5         17.649 ±        2.547  ns/op
+ * SortBenchmark.doFastUtilQuickSort            2560  avgt    5     102896.493 ±    19407.837  ns/op
+ * SortBenchmark.doFastUtilQuickSort          655360  avgt    5  125416328.638 ± 18769105.048  ns/op
+ * SortBenchmark.doGDXSort                        10  avgt    5         16.228 ±        1.614  ns/op
+ * SortBenchmark.doGDXSort                      2560  avgt    5      11660.267 ±     8242.570  ns/op
+ * SortBenchmark.doGDXSort                    655360  avgt    5   21300313.625 ±  2275226.806  ns/op
+ * SortBenchmark.doGrailSort                      10  avgt    5         15.982 ±        3.151  ns/op
+ * SortBenchmark.doGrailSort                    2560  avgt    5     266054.562 ±   194898.374  ns/op
+ * SortBenchmark.doGrailSort                  655360  avgt    5  527479238.000 ± 56801550.348  ns/op
+ * SortBenchmark.doJDKSort                        10  avgt    5         16.214 ±        2.199  ns/op
+ * SortBenchmark.doJDKSort                      2560  avgt    5       7786.178 ±     4283.577  ns/op
+ * SortBenchmark.doJDKSort                    655360  avgt    5   21939387.232 ±  2163434.786  ns/op
+ * SortBenchmark.doNetworkSort                    10  avgt    5         13.529 ±        3.196  ns/op
+ * SortBenchmark.doNetworkSort                  2560  avgt    5      13467.183 ±     8928.664  ns/op
+ * SortBenchmark.doNetworkSort                655360  avgt    5   31520516.939 ±  1873418.682  ns/op
+ * SortBenchmark.doParallelJDKSort                10  avgt    5         16.456 ±        1.910  ns/op
+ * SortBenchmark.doParallelJDKSort              2560  avgt    5       7578.079 ±     2018.174  ns/op
+ * SortBenchmark.doParallelJDKSort            655360  avgt    5    3838810.276 ±  4885968.328  ns/op
+ * </pre>
+ * I might try to update GrailSort if there's a newer one, because it seems impossibly slow...
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -252,7 +288,7 @@ public class SortBenchmark {
     @State(Scope.Thread)
     public static class BenchmarkState {
 
-        @Param({ "10", "40", "160", "640", "2560" })
+        @Param({ "10", "2560", "655360" })
         public int len;
         public String[] words;
         public ObjectList<String> wordList;
@@ -366,7 +402,9 @@ public class SortBenchmark {
                 .timeout(TimeValue.seconds(60))
                 .warmupIterations(5).warmupTime(TimeValue.seconds(5))
                 .measurementIterations(5).measurementTime(TimeValue.seconds(5))
+                .timeUnit(TimeUnit.NANOSECONDS)
                 .forks(1)
+                .shouldDoGC(true)
                 .build();
 
         new Runner(opt).run();

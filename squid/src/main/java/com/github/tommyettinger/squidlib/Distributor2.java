@@ -494,15 +494,15 @@ public final class Distributor2 {
 	}
 
 	/**
-	 * Given an int where all bits are sufficiently (independently) random, this produces a normal-distributed float
+	 * Given a long where all bits are sufficiently (independently) random, this produces a normal-distributed float
 	 * (Gaussian) variable as if by a normal distribution with mean (mu) 0.0 and standard deviation (sigma) 1.0.
-	 * This uses the Ziggurat algorithm, and takes one {@code int} input to produce one {@code float} value.
+	 * This uses the Ziggurat algorithm, and takes one {@code long} input to produce one {@code float} value.
 	 * Note that no additive counters are considered sufficiently random for this, and linear congruential generators
 	 * might not be random enough either if they return the low-order bits without changes.
 	 * Patterns between different {@code state} values provided to this will generally not be preserved in the
 	 * output, but this may not be true all the time for patterns on all bits.
 	 * <br>
-	 * The range this can produce is from -6.127281f to 6.158781f, both inclusive. This was tested exhaustively.
+	 * The range this can produce is from -6.127281f to 6.158781f, both inclusive.
 	 * <br>
 	 * From <a href="https://github.com/camel-cdr/cauldron/blob/7d5328441b1a1bc8143f627aebafe58b29531cb9/cauldron/random.h#L2013-L2265">Cauldron</a>,
 	 * MIT-licensed. This in turn is based on Doornik's form of the Ziggurat method:
@@ -511,7 +511,7 @@ public final class Distributor2 {
 	 *      "An improved ziggurat method to generate normal random samples."
 	 *      University of Oxford: 77.
 	 *
-	 * @param state an int that should be sufficiently random; quasi-random longs may not be enough
+	 * @param state a long that should be sufficiently random; quasi-random longs may not be enough
 	 * @return a normal-distributed float with mean (mu) 0.0 and standard deviation (sigma) 1.0
 	 */
 	public static float normalF(long state) {
