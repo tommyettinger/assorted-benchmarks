@@ -278,6 +278,51 @@ import java.util.concurrent.TimeUnit;
  * SortBenchmark.doParallelJDKSort            655360  avgt    5    3838810.276 ±  4885968.328  ns/op
  * </pre>
  * I might try to update GrailSort if there's a newer one, because it seems impossibly slow...
+ * <br>
+ * Updated GrailSort to the latest code, which is nearly unchanged, but I also enabled the "StaticOOP" and
+ * "DynamicOOP" sorts in the GrailSort class. Don't use GrailSort. I see no possible way it can be seen as
+ * an improvement over what the JDK offers in terms of features, and it takes at least 10x as much time as
+ * almost any other sort here to operate on larger arrays (where performance matters). It's only even
+ * borderline-effective for tiny arrays, where everything just uses insertion sort anyway, and error is the
+ * dominant factor in the timing differences.
+ * <br>
+ * Benchmark                                   (len)  Mode  Cnt          Score          Error  Units
+ * SortBenchmark.doDSSort                         10  avgt    5         13.547 ±        3.245  ns/op
+ * SortBenchmark.doDSSort                       2560  avgt    5       9462.054 ±     9050.933  ns/op
+ * SortBenchmark.doDSSort                     655360  avgt    5   30305485.976 ±  2977695.228  ns/op
+ * SortBenchmark.doEttingerSort                   10  avgt    5         20.614 ±        5.021  ns/op
+ * SortBenchmark.doEttingerSort                 2560  avgt    5      12154.138 ±     9842.950  ns/op
+ * SortBenchmark.doEttingerSort               655360  avgt    5   27886327.810 ±  1534905.397  ns/op
+ * SortBenchmark.doFastUtilMergeSort              10  avgt    5         16.712 ±        3.268  ns/op
+ * SortBenchmark.doFastUtilMergeSort            2560  avgt    5      10363.480 ±     8345.045  ns/op
+ * SortBenchmark.doFastUtilMergeSort          655360  avgt    5   29313668.632 ±  2078460.491  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort      10  avgt    5         17.610 ±        2.958  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort    2560  avgt    5      94574.403 ±    30897.431  ns/op
+ * SortBenchmark.doFastUtilParallelQuickSort  655360  avgt    5   37139042.810 ±  2157682.225  ns/op
+ * SortBenchmark.doFastUtilQuickSort              10  avgt    5         17.669 ±        2.476  ns/op
+ * SortBenchmark.doFastUtilQuickSort            2560  avgt    5      95344.113 ±    30542.092  ns/op
+ * SortBenchmark.doFastUtilQuickSort          655360  avgt    5  125315525.439 ±  5411689.844  ns/op
+ * SortBenchmark.doGDXSort                        10  avgt    5         16.081 ±        1.939  ns/op
+ * SortBenchmark.doGDXSort                      2560  avgt    5       8519.050 ±     8620.571  ns/op
+ * SortBenchmark.doGDXSort                    655360  avgt    5   21288262.596 ±   978450.065  ns/op
+ * SortBenchmark.doGrailDynamicSort               10  avgt    5         12.792 ±        3.766  ns/op
+ * SortBenchmark.doGrailDynamicSort             2560  avgt    5     170097.964 ±   133534.091  ns/op
+ * SortBenchmark.doGrailDynamicSort           655360  avgt    5  326062142.750 ± 29799911.448  ns/op
+ * SortBenchmark.doGrailSort                      10  avgt    5         15.698 ±        3.318  ns/op
+ * SortBenchmark.doGrailSort                    2560  avgt    5     223050.833 ±   211694.158  ns/op
+ * SortBenchmark.doGrailSort                  655360  avgt    5  525242476.000 ± 44585710.867  ns/op
+ * SortBenchmark.doGrailStaticSort                10  avgt    5        131.113 ±        2.443  ns/op
+ * SortBenchmark.doGrailStaticSort              2560  avgt    5     160915.407 ±   112824.654  ns/op
+ * SortBenchmark.doGrailStaticSort            655360  avgt    5  479212443.636 ± 19589156.099  ns/op
+ * SortBenchmark.doJDKSort                        10  avgt    5         15.817 ±        2.119  ns/op
+ * SortBenchmark.doJDKSort                      2560  avgt    5       7382.401 ±      175.982  ns/op
+ * SortBenchmark.doJDKSort                    655360  avgt    5   21256732.485 ±  1974446.020  ns/op
+ * SortBenchmark.doNetworkSort                    10  avgt    5         13.549 ±        3.149  ns/op
+ * SortBenchmark.doNetworkSort                  2560  avgt    5       9388.766 ±     8587.651  ns/op
+ * SortBenchmark.doNetworkSort                655360  avgt    5   31302688.888 ±  1502424.267  ns/op
+ * SortBenchmark.doParallelJDKSort                10  avgt    5         15.906 ±        1.995  ns/op
+ * SortBenchmark.doParallelJDKSort              2560  avgt    5       6440.488 ±      220.996  ns/op
+ * SortBenchmark.doParallelJDKSort            655360  avgt    5    4469533.620 ±  1611106.446  ns/op
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
@@ -339,6 +384,18 @@ public class SortBenchmark {
     public void doGrailSort(BenchmarkState state)
     {
         state.grail.grailSortInPlace(state.words, 0, state.words.length);
+    }
+
+    @Benchmark
+    public void doGrailStaticSort(BenchmarkState state)
+    {
+        state.grail.grailSortStaticOOP(state.words, 0, state.words.length);
+    }
+
+    @Benchmark
+    public void doGrailDynamicSort(BenchmarkState state)
+    {
+        state.grail.grailSortDynamicOOP(state.words, 0, state.words.length);
     }
 
     @Benchmark
