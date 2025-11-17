@@ -827,8 +827,10 @@ public class MathBenchmark {
     private int atan2SquidYF = -0x8000;
     private int atan2GdxX = -0x4000;
     private int atan2GdxY = -0x8000;
-    private int atan2GtX = -0x4000;
-    private int atan2GtY = -0x8000;
+    private int atan2GtOldX = -0x4000;
+    private int atan2GtOldY = -0x8000;
+    private int atan2GtImuliX = -0x4000;
+    private int atan2GtImuliY = -0x8000;
     private int atan2NtX = -0x4000;
     private int atan2NtY = -0x8000;
     private int atan2ImX = -0x4000;
@@ -1577,20 +1579,20 @@ public class MathBenchmark {
         return (float)Math.atan2(((mathAtan2Y += 0x9E3779B9) >> 24), ((mathAtan2X += 0x7F4A7C15) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public double measureMathAtan2_()
     {
         final double z = Math.atan2(((mathAtan2_Y += 0x9E3779B9) >> 24), ((mathAtan2_X += 0x7F4A7C15) >> 24)) * 0.15915494309189535 + 1.0;
         return z - (int)z;
     }
 
-    @Benchmark
+//    @Benchmark
     public double measureSquidAtan2()
     {
         return NumberTools.atan2(((atan2SquidY += 0x9E3779B9) >> 24), ((atan2SquidX += 0x7F4A7C15) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureSquidAtan2Float()
     {
         return NumberTools.atan2(((atan2SquidYF += 0x9E3779B9) >> 24), ((atan2SquidXF += 0x7F4A7C15) >> 24));
@@ -1603,12 +1605,18 @@ public class MathBenchmark {
     }
  
     @Benchmark
-    public float measureGtAtan2()
+    public float measureGtOldAtan2()
     {
-        return GtMathUtils.atan2(((atan2GtY += 0x9E3779B9) >> 24), ((atan2GtX += 0x7F4A7C15) >> 24));
+        return GtMathUtils.atan2GtOld(((atan2GtOldY += 0x9E3779B9) >> 24), ((atan2GtOldX += 0x7F4A7C15) >> 24));
     }
- 
+
     @Benchmark
+    public float measureGtImumitan2()
+    {
+        return GtMathUtils.atan2GtImuli(((atan2GtImuliY += 0x9E3779B9) >> 24), ((atan2GtImuliX += 0x7F4A7C15) >> 24));
+    }
+
+//    @Benchmark
     public float measureNtAtan2()
     {
         return NumberTools2.atan2_nt(((atan2NtY += 0x9E3779B9) >> 24), ((atan2NtX += 0x7F4A7C15) >> 24));
@@ -1626,25 +1634,25 @@ public class MathBenchmark {
         return NumberTools2.atan2HP(((atan2HPY += 0x9E3779B9) >> 24), ((atan2HPX += 0x7F4A7C15) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureRemezAtan2()
     {
         return NumberTools2.atan2Remez(((atan2RmY += 0x9E3779B9) >> 24), ((atan2RmX += 0x7F4A7C15) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureGeneralAtan2()
     {
         return NumberTools2.atan2General(((atan2GeY += 0x9E3779B9) >> 24), ((atan2GeX += 0x7F4A7C15) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureSimpleAtan2()
     {
         return NumberTools2.atan2Simple(((atan2SiY += 0x9E3779B9) >> 24), ((atan2SiX += 0x7F4A7C15) >> 24));
     }
 
-    @Benchmark
+//    @Benchmark
     public float measureFunkyAtan2()
     {
         return NumberTools2.atan2Funky(((atan2FnY += 0x9E3779B9) >> 24), ((atan2FnX += 0x7F4A7C15) >> 24));
@@ -1691,6 +1699,12 @@ public class MathBenchmark {
     public float measureDigitalAtan2Float()
     {
         return TrigTools.atan2(((atan2DigitalYF += 0x9E3779B9) >> 24), ((atan2DigitalXF += 0x7F4A7C15) >> 24));
+    }
+
+    @Benchmark
+    public float measureDigitalPreciseAtan2Float()
+    {
+        return TrigTools.atan2Precise(((atan2DigitalYF += 0x9E3779B9) >> 24), ((atan2DigitalXF += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
@@ -1836,18 +1850,19 @@ public class MathBenchmark {
 mvn clean install
 java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
      */
-    public static void main2(String[] args) throws RunnerException {
+    public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(MathBenchmark.class.getSimpleName())
                 .timeout(TimeValue.seconds(60))
-                .warmupIterations(5)
-                .measurementIterations(5)
+                .warmupIterations(5).warmupTime(TimeValue.seconds(5))
+                .measurementIterations(5).measurementTime(TimeValue.seconds(5))
+                .timeUnit(TimeUnit.NANOSECONDS)
                 .forks(1)
                 .build();
 
         new Runner(opt).run();
     }
-    public static void main(String[] args)
+    public static void main2(String[] args)
     {
         MathBenchmark u = new MathBenchmark();
         double  cosFError = 0.0, cosNickError = 0.0, cosBitError = 0.0, cosBitFError = 0.0, cosGdxError = 0.0,
@@ -1954,8 +1969,8 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
             u.atan2SquidYF = j;
             u.atan2GdxX = i;
             u.atan2GdxY = j;
-            u.atan2GtX = i;
-            u.atan2GtY = j;
+            u.atan2GtOldX = i;
+            u.atan2GtOldY = j;
             u.atan2NtX = i;
             u.atan2NtY = j;
             u.atan2ImX = i;
@@ -1986,7 +2001,7 @@ java -jar benchmarks.jar MathBenchmark -wi 5 -i 5 -f 1
             maxSquidError = Math.max(maxSquidError, temp);
             atan2GDXError += temp = Math.abs(u.measureGdxAtan2() - at);
             maxGDXError = Math.max(maxGDXError, temp);
-            atan2GtError += Math.abs(u.measureGtAtan2() - at);
+            atan2GtError += Math.abs(u.measureGtOldAtan2() - at);
             atan2NtError += Math.abs(u.measureNtAtan2() - at);
             atan2ImError += Math.abs(u.measureImuliAtan2() - at);
             atan2GeError += Math.abs(u.measureGeneralAtan2() - at);
