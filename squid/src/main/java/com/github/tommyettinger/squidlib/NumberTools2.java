@@ -91,6 +91,30 @@ public final class NumberTools2 {
         if(x < 0) z = TrigTools.PI - z;
         return Math.copySign(z, y);
     }
+    public static float atan2imuliJolt(float y, float x)
+    {
+        if (y == 0f && x >= 0f) return 0f;
+        float ay = Math.abs(y), ax = Math.abs(x);
+        boolean invert = ay > ax;
+        float m = invert ? ax/ay : ay/ax;
+        float a, b;
+        if (m > 2.414213562373095f) {
+            a = -1f / m;
+            b = HALF_PI;
+        } else if (m > 0.4142135623730950f) {
+            a = (m - 1f) / (m + 1f);
+            b = QUARTER_PI;
+        } else {
+            a = m;
+            b = 0f;
+        }
+        float s = a * a;
+        b += (((8.05374449538e-2f * s - 1.38776856032e-1f) * s + 1.99777106478e-1f)
+                * s - 3.33329491539e-1f) * s * a + a;
+        if(invert) b = HALF_PI - b;
+        if(x < 0) b = TrigTools.PI - b;
+        return Math.copySign(b, y);
+    }
 
 
     static public float atan2_nt(float y, float x)

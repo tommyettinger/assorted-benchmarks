@@ -729,6 +729,14 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureMathAtan2                 avgt    5  21.755 ± 0.070  ns/op
  * MathBenchmark.measureMathAtan2Float            avgt    5  24.186 ± 0.126  ns/op
  * </pre>
+ * The Jolt atan in imuli's atan2 is only a little faster, oddly.
+ * <pre>
+ * Benchmark                               Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureGtImuliAtan2       avgt    5   2.362 ± 0.013  ns/op
+ * MathBenchmark.measureImuliAtan2         avgt    5   2.562 ± 0.021  ns/op
+ * MathBenchmark.measureImuliJoltAtan2     avgt    5  13.804 ± 0.168  ns/op
+ * MathBenchmark.measureImuliSheet11Atan2  avgt    5   3.020 ± 0.017  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -878,6 +886,8 @@ public class MathBenchmark {
     private int atan2ImY = -0x8000;
     private int atan2ImS11X = -0x4000;
     private int atan2ImS11Y = -0x8000;
+    private int atan2ImJX = -0x4000;
+    private int atan2ImJY = -0x8000;
     private int atan2HPX = -0x4000;
     private int atan2HPY = -0x8000;
     private int atan2RmX = -0x4000;
@@ -1675,6 +1685,12 @@ public class MathBenchmark {
     public float measureImuliSheet11Atan2()
     {
         return NumberTools2.atan2imuliSheet11(((atan2ImS11Y += 0x9E3779B9) >> 24), ((atan2ImS11X += 0x7F4A7C15) >> 24));
+    }
+
+    @Benchmark
+    public float measureImuliJoltAtan2()
+    {
+        return NumberTools2.atan2imuliJolt(((atan2ImJY += 0x9E3779B9) >> 24), ((atan2ImJX += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
