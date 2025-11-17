@@ -688,6 +688,27 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureNormalFZiggurat2  avgt    5  10.724 ± 0.128  ns/op
  * MathBenchmark.measureNormalFZiggurat3  avgt    5   2.629 ± 0.009  ns/op
  * </pre>
+ * <br>
+ * Testing atan2() again! The hardware is different, and the JDK is now 21.
+ * <br>
+ * <pre>
+ * Benchmark                                      Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDigitalAtan2Float         avgt    5   7.114 ± 0.065  ns/op
+ * MathBenchmark.measureDigitalPreciseAtan2Float  avgt    5  14.881 ± 0.081  ns/op
+ * MathBenchmark.measureGdxAtan2                  avgt    5   7.128 ± 0.065  ns/op
+ * MathBenchmark.measureGtOldAtan2                avgt    5   8.164 ± 0.081  ns/op
+ * MathBenchmark.measureHighPrecisionAtan2        avgt    5   6.897 ± 0.051  ns/op
+ * MathBenchmark.measureImuliAtan2                avgt    5   2.560 ± 0.014  ns/op
+ * MathBenchmark.measureJoltAtan2Float            avgt    5  14.880 ± 0.120  ns/op
+ * MathBenchmark.measureMathAtan2                 avgt    5  21.833 ± 0.077  ns/op
+ * MathBenchmark.measureMathAtan2Float            avgt    5  24.132 ± 0.100  ns/op
+ * </pre>
+ * The quality of these approximations is pretty wildly different; imuli's atan2_quartic is by far the fastest here,
+ * but also has quite a bit higher error than digital or Gdx atan2(), or even GtOld's tabular one. The Gt (gdx-tween)
+ * current code uses imuli's approximation also, but cuts a corner when both inputs are 0 and will (incorrectly?) return
+ * NaN in that case. GtImuliAtan2, with the cut-corner, wasn't tested here because of some typo...
+ * Despite its name, I don't actually know how precise HighPrecisionAtan2 is, though I will
+ * investigate it in digital's PrecisionTest.
  */
 
 @State(Scope.Thread)
@@ -1611,7 +1632,7 @@ public class MathBenchmark {
     }
 
     @Benchmark
-    public float measureGtImumitan2()
+    public float measureGtImuliAtan2()
     {
         return GtMathUtils.atan2GtImuli(((atan2GtImuliY += 0x9E3779B9) >> 24), ((atan2GtImuliX += 0x7F4A7C15) >> 24));
     }
