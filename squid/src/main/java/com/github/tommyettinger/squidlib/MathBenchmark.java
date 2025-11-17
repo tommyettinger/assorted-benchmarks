@@ -737,6 +737,15 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureImuliJoltAtan2     avgt    5  13.804 ± 0.168  ns/op
  * MathBenchmark.measureImuliSheet11Atan2  avgt    5   3.020 ± 0.017  ns/op
  * </pre>
+ * OK... now the Jolt one is a reasonable speed, but... why? Sheet13 is a bit faster and has almost as high quality...
+ * <pre>
+ * Benchmark                               Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureGtImuliAtan2       avgt    5  2.304 ± 0.010  ns/op
+ * MathBenchmark.measureImuliAtan2         avgt    5  2.562 ± 0.031  ns/op
+ * MathBenchmark.measureImuliJoltAtan2     avgt    5  3.827 ± 0.031  ns/op
+ * MathBenchmark.measureImuliSheet11Atan2  avgt    5  3.012 ± 0.044  ns/op
+ * MathBenchmark.measureImuliSheet13Atan2  avgt    5  3.628 ± 0.029  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -886,6 +895,8 @@ public class MathBenchmark {
     private int atan2ImY = -0x8000;
     private int atan2ImS11X = -0x4000;
     private int atan2ImS11Y = -0x8000;
+    private int atan2ImS13X = -0x4000;
+    private int atan2ImS13Y = -0x8000;
     private int atan2ImJX = -0x4000;
     private int atan2ImJY = -0x8000;
     private int atan2HPX = -0x4000;
@@ -1685,6 +1696,12 @@ public class MathBenchmark {
     public float measureImuliSheet11Atan2()
     {
         return NumberTools2.atan2imuliSheet11(((atan2ImS11Y += 0x9E3779B9) >> 24), ((atan2ImS11X += 0x7F4A7C15) >> 24));
+    }
+
+    @Benchmark
+    public float measureImuliSheet13Atan2()
+    {
+        return NumberTools2.atan2imuliSheet13(((atan2ImS13Y += 0x9E3779B9) >> 24), ((atan2ImS13X += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
