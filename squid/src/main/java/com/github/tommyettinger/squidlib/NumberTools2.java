@@ -70,6 +70,29 @@ public final class NumberTools2 {
         return Math.copySign(z, y);
     }
 
+    /**
+     * Credit to imuli and Nic Taylor; imuli commented on
+     * <a href="https://www.dsprelated.com/showarticle/1052.php">Taylor's article</a> with very useful info.
+     * Uses the "Sheet 11" algorithm from "Approximations for Digital Computers," by RAND Corporation (1955)
+     * for its atan() approximation.
+     * @param y
+     * @param x
+     * @return
+     */
+    public static float atan2imuliSheet11(float y, float x)
+    {
+        if (y == 0f && x >= 0f) return 0f;
+        float ay = Math.abs(y), ax = Math.abs(x);
+        boolean invert = ay > ax;
+        float z = invert ? ax/ay : ay/ax;
+        float s = z * z;
+        z = (((((-0.0117212f * s + 0.05265332f) * s - 0.11643287f) * s + 0.19354346f) * s - 0.33262347f) * s + 0.99997726f) * z;
+        if(invert) z = HALF_PI - z;
+        if(x < 0) z = TrigTools.PI - z;
+        return Math.copySign(z, y);
+    }
+
+
     static public float atan2_nt(float y, float x)
     {
         if (x != 0.0f)

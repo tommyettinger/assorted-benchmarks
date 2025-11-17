@@ -709,6 +709,26 @@ import java.util.concurrent.TimeUnit;
  * NaN in that case. GtImuliAtan2, with the cut-corner, wasn't tested here because of some typo...
  * Despite its name, I don't actually know how precise HighPrecisionAtan2 is, though I will
  * investigate it in digital's PrecisionTest.
+ * <br>
+ * It looks like the quadrant-based approach imuli used is fastest here, but I wonder if it has some corner case issues.
+ * Even with the same "sheet 11" approximation (or at least the same constants), it's quite a lot faster than the sheet
+ * 11 approximation used in digital and libGDX. Even though ImuliSheet11Atan2 is about as precise as DigitalAtan2Float,
+ * it takes less than half the time. It also barely takes any more time than the original approach by imuli, while
+ * having about 1/50 the error in general...
+ * <pre>
+ * Benchmark                                      Mode  Cnt   Score   Error  Units
+ * MathBenchmark.measureDigitalAtan2Float         avgt    5   7.089 ± 0.022  ns/op
+ * MathBenchmark.measureDigitalPreciseAtan2Float  avgt    5  15.926 ± 0.093  ns/op
+ * MathBenchmark.measureGdxAtan2                  avgt    5   7.088 ± 0.108  ns/op
+ * MathBenchmark.measureGtImuliAtan2              avgt    5   2.348 ± 0.022  ns/op
+ * MathBenchmark.measureGtOldAtan2                avgt    5   8.257 ± 0.507  ns/op
+ * MathBenchmark.measureHighPrecisionAtan2        avgt    5   6.893 ± 0.094  ns/op
+ * MathBenchmark.measureImuliAtan2                avgt    5   2.447 ± 0.007  ns/op
+ * MathBenchmark.measureImuliSheet11Atan2         avgt    5   2.995 ± 0.025  ns/op
+ * MathBenchmark.measureJoltAtan2Float            avgt    5  14.933 ± 0.093  ns/op
+ * MathBenchmark.measureMathAtan2                 avgt    5  21.755 ± 0.070  ns/op
+ * MathBenchmark.measureMathAtan2Float            avgt    5  24.186 ± 0.126  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -856,6 +876,8 @@ public class MathBenchmark {
     private int atan2NtY = -0x8000;
     private int atan2ImX = -0x4000;
     private int atan2ImY = -0x8000;
+    private int atan2ImS11X = -0x4000;
+    private int atan2ImS11Y = -0x8000;
     private int atan2HPX = -0x4000;
     private int atan2HPY = -0x8000;
     private int atan2RmX = -0x4000;
@@ -1647,6 +1669,12 @@ public class MathBenchmark {
     public float measureImuliAtan2()
     {
         return NumberTools2.atan2_quartic(((atan2ImY += 0x9E3779B9) >> 24), ((atan2ImX += 0x7F4A7C15) >> 24));
+    }
+
+    @Benchmark
+    public float measureImuliSheet11Atan2()
+    {
+        return NumberTools2.atan2imuliSheet11(((atan2ImS11Y += 0x9E3779B9) >> 24), ((atan2ImS11X += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
