@@ -808,6 +808,36 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureSquidAtan2DegFloat        avgt    5  3.424 ± 0.042  ns/op
  * MathBenchmark.measureSquidAtan2_               avgt    5  3.450 ± 0.019  ns/op
  * </pre>
+ * With OpenJDK 25 (Azul Zulu):
+ * <pre>
+ * Benchmark                                      Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureAtan2Baseline             avgt    5  0.644 ± 0.002  ns/op
+ * MathBenchmark.measureAtan2BaselineFloat        avgt    5  0.641 ± 0.007  ns/op
+ * MathBenchmark.measureDigitalAtan2Float         avgt    5  4.741 ± 0.022  ns/op
+ * MathBenchmark.measureDigitalDeg360Atan2Float   avgt    5  4.825 ± 0.006  ns/op
+ * MathBenchmark.measureDigitalDegAtan2Float      avgt    5  5.482 ± 0.029  ns/op
+ * MathBenchmark.measureDigitalFiniteAtan2Float   avgt    5  3.675 ± 0.025  ns/op
+ * MathBenchmark.measureDigitalPreciseAtan2Float  avgt    5  3.967 ± 0.039  ns/op
+ * MathBenchmark.measureFunkyAtan2_               avgt    5  3.469 ± 0.018  ns/op
+ * MathBenchmark.measureGdxAtan2                  avgt    5  5.468 ± 0.052  ns/op
+ * MathBenchmark.measureGdxAtan2Deg               avgt    5  5.470 ± 0.020  ns/op
+ * MathBenchmark.measureGdxAtan2Deg360            avgt    5  4.817 ± 0.032  ns/op
+ * MathBenchmark.measureGtImuliAtan2              avgt    5  2.350 ± 0.085  ns/op
+ * MathBenchmark.measureGtOldAtan2                avgt    5  2.407 ± 0.014  ns/op
+ * MathBenchmark.measureHighPrecisionAtan2        avgt    5  5.752 ± 0.043  ns/op
+ * MathBenchmark.measureImuliAtan2                avgt    5  2.517 ± 0.022  ns/op
+ * MathBenchmark.measureImuliAtan2_               avgt    5  2.219 ± 0.022  ns/op
+ * MathBenchmark.measureImuliJoltAtan2            avgt    5  3.854 ± 0.032  ns/op
+ * MathBenchmark.measureImuliSheet11Atan2         avgt    5  3.060 ± 0.056  ns/op
+ * MathBenchmark.measureImuliSheet13Atan2         avgt    5  3.686 ± 0.026  ns/op
+ * MathBenchmark.measureJoltAtan2Double           avgt    5  4.285 ± 0.034  ns/op
+ * MathBenchmark.measureJoltAtan2Float            avgt    5  3.849 ± 0.065  ns/op
+ * MathBenchmark.measureMathAtan2                 avgt    5  7.934 ± 0.079  ns/op
+ * MathBenchmark.measureMathAtan2Float            avgt    5  8.498 ± 0.013  ns/op
+ * MathBenchmark.measureSimpleAtan2_              avgt    5  4.432 ± 0.042  ns/op
+ * MathBenchmark.measureSquidAtan2DegFloat        avgt    5  3.482 ± 0.026  ns/op
+ * MathBenchmark.measureSquidAtan2_               avgt    5  3.467 ± 0.019  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
