@@ -82,10 +82,10 @@ dependencies {
 //    implementation 'com.github.yellowstonegames.squidsquad:squidpath:fa55957446'
 //    implementation 'com.github.yellowstonegames.squidsquad:squidtext:fa55957446'
 
-    implementation 'com.squidpony:squidgrid:4.0.1'
-    implementation 'com.squidpony:squidplace:4.0.1'
-    implementation 'com.squidpony:squidpath:4.0.1'
-    implementation 'com.squidpony:squidtext:4.0.1'
+    implementation 'com.squidpony:squidgrid:4.0.3'
+    implementation 'com.squidpony:squidplace:4.0.3'
+    implementation 'com.squidpony:squidpath:4.0.3'
+    implementation 'com.squidpony:squidtext:4.0.3'
 
     implementation "com.github.tommyettinger:blazingchain:1.4.4.4"
 //    implementation 'com.github.tommyettinger:BlazingChain:dfddeb3dda'
@@ -116,13 +116,14 @@ dependencies {
 //    implementation 'com.github.tommyettinger:gand:86c5773143' // from Jul 27 2024; has hashing changes, less multiplication
 //    implementation 'com.github.tommyettinger:gand:e4b064c627' // from Jul 28 2024; more hashing changes, PointF2/3 uses multiplication
 //    implementation 'com.github.tommyettinger:gand:2bf517e30e' // from September 2024; Crux update, xi()/yi()
-    implementation 'com.github.tommyettinger:gand:0.3.5' // from October 23 2024; gdcrux usage
+//    implementation 'com.github.tommyettinger:gand:0.3.5' // from October 23 2024; gdcrux usage
+    implementation 'com.github.tommyettinger:gand:0.3.6' // from November 2025; updates
 
 
     implementation 'com.github.tommyettinger:atlantis:5574642135'
-    implementation 'com.github.tommyettinger:digital:0.9.4'
-    implementation('com.github.tommyettinger:juniper:0.8.4'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
-    implementation('com.github.tommyettinger:jdkgdxds:1.13.0'){
+    implementation 'com.github.tommyettinger:digital:0.9.6'
+    implementation('com.github.tommyettinger:juniper:0.8.5'){ exclude group: 'com.github.tommyettinger', module: 'digital' }
+    implementation('com.github.tommyettinger:jdkgdxds:1.13.1'){
         exclude group: 'com.github.tommyettinger', module: 'digital'
     }
 

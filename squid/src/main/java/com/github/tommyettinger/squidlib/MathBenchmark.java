@@ -746,6 +746,38 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureImuliSheet11Atan2  avgt    5  3.012 ± 0.044  ns/op
  * MathBenchmark.measureImuliSheet13Atan2  avgt    5  3.628 ± 0.029  ns/op
  * </pre>
+ * <br>
+ * Benchmarking all atan2() approximations on Graal 22:
+ * (Graal 24 and later issue a ton of warnings because JMH uses sun.misc.Unsafe...)
+ * <pre>
+ * Benchmark                                      Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureAtan2Baseline             avgt    5  0.735 ± 0.077  ns/op
+ * MathBenchmark.measureAtan2BaselineFloat        avgt    5  0.769 ± 0.069  ns/op
+ * MathBenchmark.measureDigitalAtan2Float         avgt    5  4.786 ± 0.064  ns/op
+ * MathBenchmark.measureDigitalDeg360Atan2Float   avgt    5  4.787 ± 0.022  ns/op
+ * MathBenchmark.measureDigitalDegAtan2Float      avgt    5  4.796 ± 0.058  ns/op
+ * MathBenchmark.measureDigitalFiniteAtan2Float   avgt    5  3.543 ± 0.019  ns/op
+ * MathBenchmark.measureDigitalPreciseAtan2Float  avgt    5  3.800 ± 0.019  ns/op
+ * MathBenchmark.measureFunkyAtan2_               avgt    5  3.379 ± 0.240  ns/op
+ * MathBenchmark.measureGdxAtan2                  avgt    5  4.749 ± 0.033  ns/op
+ * MathBenchmark.measureGdxAtan2Deg               avgt    5  4.799 ± 0.030  ns/op
+ * MathBenchmark.measureGdxAtan2Deg360            avgt    5  4.789 ± 0.022  ns/op
+ * MathBenchmark.measureGtImuliAtan2              avgt    5  2.280 ± 0.006  ns/op
+ * MathBenchmark.measureGtOldAtan2                avgt    5  2.761 ± 0.048  ns/op
+ * MathBenchmark.measureHighPrecisionAtan2        avgt    5  4.976 ± 0.032  ns/op
+ * MathBenchmark.measureImuliAtan2                avgt    5  2.385 ± 0.028  ns/op
+ * MathBenchmark.measureImuliAtan2_               avgt    5  2.138 ± 0.019  ns/op
+ * MathBenchmark.measureImuliJoltAtan2            avgt    5  3.812 ± 0.024  ns/op
+ * MathBenchmark.measureImuliSheet11Atan2         avgt    5  2.882 ± 0.035  ns/op
+ * MathBenchmark.measureImuliSheet13Atan2         avgt    5  3.554 ± 0.146  ns/op
+ * MathBenchmark.measureJoltAtan2Double           avgt    5  4.040 ± 0.019  ns/op
+ * MathBenchmark.measureJoltAtan2Float            avgt    5  3.800 ± 0.025  ns/op
+ * MathBenchmark.measureMathAtan2                 avgt    5  7.273 ± 0.103  ns/op
+ * MathBenchmark.measureMathAtan2Float            avgt    5  7.690 ± 0.383  ns/op
+ * MathBenchmark.measureSimpleAtan2_              avgt    5  4.305 ± 0.044  ns/op
+ * MathBenchmark.measureSquidAtan2DegFloat        avgt    5  3.342 ± 0.009  ns/op
+ * MathBenchmark.measureSquidAtan2_               avgt    5  3.350 ± 0.022  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -921,6 +953,12 @@ public class MathBenchmark {
     private int atan2DegSquidYF = -0x8000;
     private int atan2DegGdxX = -0x4000;
     private int atan2DegGdxY = -0x8000;
+    private int atan2Deg360GdxX = -0x4000;
+    private int atan2Deg360GdxY = -0x8000;
+    private int atan2DegDigitalX = -0x4000;
+    private int atan2DegDigitalY = -0x8000;
+    private int atan2Deg360DigitalX = -0x4000;
+    private int atan2Deg360DigitalY = -0x8000;
     private int atan2BaselineX = -0x4000;
     private int atan2BaselineY = -0x8000;
     private int atan2BaselineXF = -0x4000;
@@ -928,6 +966,10 @@ public class MathBenchmark {
 
     private int atan2DigitalXF = -0x4000;
     private int atan2DigitalYF = -0x8000;
+    private int atan2DigitalXPrecise = -0x4000;
+    private int atan2DigitalYPrecise = -0x8000;
+    private int atan2DigitalXFinite = -0x4000;
+    private int atan2DigitalYFinite = -0x8000;
     private int atan2JoltXF = -0x4000;
     private int atan2JoltYF = -0x8000;
     private int atan2JoltX = -0x4000;
@@ -1773,7 +1815,13 @@ public class MathBenchmark {
     @Benchmark
     public float measureGdxAtan2Deg()
     {
-        return (MathUtils.radiansToDegrees * MathUtils.atan2(((atan2DegGdxY += 0x9E3779B9) >> 24), ((atan2DegGdxX += 0x7F4A7C15) >> 24)) + 360f) % 360f;
+        return MathUtils.atan2Deg(((atan2DegGdxY += 0x9E3779B9) >> 24), ((atan2DegGdxX += 0x7F4A7C15) >> 24));
+    }
+
+    @Benchmark
+    public float measureGdxAtan2Deg360()
+    {
+        return MathUtils.atan2Deg360(((atan2Deg360GdxY += 0x9E3779B9) >> 24), ((atan2Deg360GdxX += 0x7F4A7C15) >> 24));
     }
 
 
@@ -1786,7 +1834,25 @@ public class MathBenchmark {
     @Benchmark
     public float measureDigitalPreciseAtan2Float()
     {
-        return TrigTools.atan2Precise(((atan2DigitalYF += 0x9E3779B9) >> 24), ((atan2DigitalXF += 0x7F4A7C15) >> 24));
+        return TrigTools.atan2Precise(((atan2DigitalYPrecise += 0x9E3779B9) >> 24), ((atan2DigitalXPrecise += 0x7F4A7C15) >> 24));
+    }
+
+    @Benchmark
+    public float measureDigitalFiniteAtan2Float()
+    {
+        return TrigTools.atan2Finite(((atan2DigitalYFinite += 0x9E3779B9) >> 24), ((atan2DigitalXFinite += 0x7F4A7C15) >> 24));
+    }
+
+    @Benchmark
+    public float measureDigitalDegAtan2Float()
+    {
+        return TrigTools.atan2Deg(((atan2DegDigitalY += 0x9E3779B9) >> 24), ((atan2DegDigitalX += 0x7F4A7C15) >> 24));
+    }
+
+    @Benchmark
+    public float measureDigitalDeg360Atan2Float()
+    {
+        return TrigTools.atan2Deg360(((atan2Deg360DigitalY += 0x9E3779B9) >> 24), ((atan2Deg360DigitalX += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
