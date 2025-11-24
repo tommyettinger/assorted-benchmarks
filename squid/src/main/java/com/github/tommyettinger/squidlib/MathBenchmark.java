@@ -853,6 +853,15 @@ import java.util.concurrent.TimeUnit;
  * MathBenchmark.measureImuliSheet13Atan2CopySign  avgt   10  3.682 ± 0.005  ns/op
  * </pre>
  * The copySign() call is responsible for about 10% of the time taken.
+ * <br>
+ * Testing some restructuring of the imuli code; it was already pretty close to optimal in the original!
+ * <pre>
+ * Benchmark                                       Mode  Cnt  Score   Error  Units
+ * MathBenchmark.measureImuliSheet13Atan2          avgt   10  3.678 ± 0.011  ns/op
+ * MathBenchmark.measureImuliSheet13Atan2Alt       avgt   10  3.213 ± 0.021  ns/op
+ * MathBenchmark.measureImuliSheet13Atan2AltB      avgt   10  3.171 ± 0.014  ns/op
+ * MathBenchmark.measureImuliSheet13Atan2CopySign  avgt   10  3.674 ± 0.013  ns/op
+ * </pre>
  */
 
 @State(Scope.Thread)
@@ -1006,6 +1015,8 @@ public class MathBenchmark {
     private int atan2ImS13Y = -0x8000;
     private int atan2ImS13AX = -0x4000;
     private int atan2ImS13AY = -0x8000;
+    private int atan2ImS13BX = -0x4000;
+    private int atan2ImS13BY = -0x8000;
     private int atan2ImS13CX = -0x4000;
     private int atan2ImS13CY = -0x8000;
     private int atan2ImJX = -0x4000;
@@ -1829,6 +1840,12 @@ public class MathBenchmark {
     public float measureImuliSheet13Atan2Alt()
     {
         return NumberTools2.atan2imuliSheet13Alt(((atan2ImS13AY += 0x9E3779B9) >> 24), ((atan2ImS13AX += 0x7F4A7C15) >> 24));
+    }
+
+    @Benchmark
+    public float measureImuliSheet13Atan2AltB()
+    {
+        return NumberTools2.atan2imuliSheet13AltB(((atan2ImS13BY += 0x9E3779B9) >> 24), ((atan2ImS13BX += 0x7F4A7C15) >> 24));
     }
 
     @Benchmark
