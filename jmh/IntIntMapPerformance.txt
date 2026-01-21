@@ -163,3 +163,14 @@ JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIFO
 JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5297   4725283.860 ±  8433.302  ns/op
 JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3596   6957049.166 ± 17881.104  ns/op
 JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5218   4796277.844 ±  9979.360  ns/op
+
+// XORing with a constant first instead is fine, though!
+Benchmark                                               (impl)       (payloadType)  (seed)  (size)  (workload)    Mode   Cnt         Score       Error  Units
+GDXMapInt2IntBench.bench                          GDX_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4313   5802937.011 ± 12985.788  ns/op
+GDXMapInt2IntBench.bench                          GDX_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5663   4420272.574 ±  7947.610  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3757   6664197.451 ± 17113.926  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5427   4609083.059 ±  8820.341  ns/op
+JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4192   5970473.038 ± 11596.029  ns/op
+JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5673   4413888.733 ±  8224.763  ns/op
+JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3627   6903272.143 ± 17828.474  ns/op
+JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5207   4810920.733 ±  9698.311  ns/op
