@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.IntIntMap;
 import java.util.function.Supplier;
 
 public enum GDXMapInt2IntFact {
-	GDX_O2I_HASH(() -> new IntIntMap(16, LoadFactor.LOAD_FACTOR)), //
+	GDX_I2I_HASH(() -> new IntIntMap(16, LoadFactor.LOAD_FACTOR)), //
 	;
 
 	public final Supplier<IntIntMap> maker;

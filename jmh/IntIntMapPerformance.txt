@@ -1,0 +1,22 @@
+Benchmark                            (payloadType)  (size)        (workload)     Cnt         Score       Error  Units
+JDKGDXDSMapInt2IntBench.bench      INTEGER_UNIFORM  200000          POPULATE    3758   6661829.007 ± 17033.849  ns/op
+JDKGDXDSMapInt2IntBench.bench      INTEGER_UNIFORM  200000       ITERATE_KEY   16313   1533716.730 ±  1715.323  ns/op
+JDKGDXDSMapInt2IntBench.bench      INTEGER_UNIFORM  200000  ITERATE_KEYVALUE   16410   1524890.754 ±  1779.094  ns/op
+JDKGDXDSMapInt2IntBench.bench      INTEGER_UNIFORM  200000              COPY    9493   2634444.250 ±  5001.205  ns/op
+JDKGDXDSMapInt2IntBench.bench      INTEGER_UNIFORM  200000          CONTAINS  948568       172.545 ±     2.329  ns/op
+JDKGDXDSMapInt2IntBench.bench   INTEGER_DICTIONARY  200000          POPULATE    5434   4605530.641 ±  9181.544  ns/op
+JDKGDXDSMapInt2IntBench.bench   INTEGER_DICTIONARY  200000       ITERATE_KEY   28972    863711.624 ±   883.787  ns/op
+JDKGDXDSMapInt2IntBench.bench   INTEGER_DICTIONARY  200000  ITERATE_KEYVALUE   29068    860634.623 ±   820.933  ns/op
+JDKGDXDSMapInt2IntBench.bench   INTEGER_DICTIONARY  200000              COPY   15460   1618145.201 ±  2628.659  ns/op
+JDKGDXDSMapInt2IntBench.bench   INTEGER_DICTIONARY  200000          CONTAINS  899364       169.380 ±     2.498  ns/op
+RobinHoodMapInt2IntBench.bench     INTEGER_UNIFORM  200000          POPULATE    3284   7623611.401 ± 16624.134  ns/op
+RobinHoodMapInt2IntBench.bench     INTEGER_UNIFORM  200000       ITERATE_KEY   15908   1572771.951 ±  2071.571  ns/op
+RobinHoodMapInt2IntBench.bench     INTEGER_UNIFORM  200000  ITERATE_KEYVALUE   15543   1609608.754 ±  1901.350  ns/op
+RobinHoodMapInt2IntBench.bench     INTEGER_UNIFORM  200000              COPY   20310   1231965.173 ±  3217.224  ns/op
+RobinHoodMapInt2IntBench.bench     INTEGER_UNIFORM  200000          CONTAINS  839892       177.886 ±     3.068  ns/op
+RobinHoodMapInt2IntBench.bench  INTEGER_DICTIONARY  200000          POPULATE    4369   5724181.094 ± 10881.989  ns/op
+RobinHoodMapInt2IntBench.bench  INTEGER_DICTIONARY  200000       ITERATE_KEY   25501    981302.441 ±  1319.940  ns/op
+RobinHoodMapInt2IntBench.bench  INTEGER_DICTIONARY  200000  ITERATE_KEYVALUE   27915    896397.678 ±  1018.473  ns/op
+RobinHoodMapInt2IntBench.bench  INTEGER_DICTIONARY  200000              COPY   19790   1264275.003 ±  2239.755  ns/op
+RobinHoodMapInt2IntBench.bench  INTEGER_DICTIONARY  200000          CONTAINS  685055       177.015 ±     3.048  ns/op
+

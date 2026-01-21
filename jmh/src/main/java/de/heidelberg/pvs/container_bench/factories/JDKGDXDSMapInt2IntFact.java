@@ -5,7 +5,7 @@ import com.github.tommyettinger.ds.IntIntMap;
 import java.util.function.Supplier;
 
 public enum JDKGDXDSMapInt2IntFact {
-	GDX_O2I_HASH(() -> new IntIntMap(16, LoadFactor.LOAD_FACTOR)), //
+	JDKGDXDS_I2I_HASH(() -> new IntIntMap(16, LoadFactor.LOAD_FACTOR)), //
 	;
 
 	public final Supplier<IntIntMap> maker;
