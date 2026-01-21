@@ -142,3 +142,13 @@ JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONA
 JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3613   6935329.515 ± 20967.922  ns/op
 JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5210   4804282.521 ±  9849.314  ns/op
 
+// Adding hashMultiplier in UNCHANGING has very little effect on speed, but likely doesn't improve distribution.
+Benchmark                                               (impl)       (payloadType)  (seed)  (size)  (workload)    Mode   Cnt        Score       Error  Units
+GDXMapInt2IntBench.bench                          GDX_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4302  5817896.703 ± 12298.166  ns/op
+GDXMapInt2IntBench.bench                          GDX_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5687  4401013.354 ±  8071.693  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3775  6631956.751 ± 17351.665  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5390  4640815.115 ±  8843.054  ns/op
+JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4182  5986730.055 ± 12438.313  ns/op
+JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5627  4444459.175 ±  8293.633  ns/op
+JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3632  6890631.330 ± 18025.177  ns/op
+JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5194  4817902.256 ± 10082.467  ns/op
