@@ -130,3 +130,15 @@ JDKGDXDSMapInt2IntBench.bench           JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIF
 JDKGDXDSMapInt2IntBench.bench           JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5773   4335480.129 ±  8101.269  ns/op
 JDKGDXDSMapInt2IntBench.bench              JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3627   6904401.451 ± 17988.974  ns/op
 JDKGDXDSMapInt2IntBench.bench              JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5215   4799439.107 ±  8934.559  ns/op
+
+// Just removing the final modifier from place() in UNCHANGING, no real difference...
+Benchmark                                               (impl)       (payloadType)  (seed)  (size)  (workload)    Mode   Cnt         Score       Error  Units
+GDXMapInt2IntBench.bench                          GDX_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4306   5814643.931 ± 11481.052  ns/op
+GDXMapInt2IntBench.bench                          GDX_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5641   4438497.776 ±  8432.085  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3759   6657829.525 ± 17114.907  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5360   4666467.343 ±  8678.191  ns/op
+JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4320   5794808.415 ± 11769.253  ns/op
+JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5766   4340420.950 ±  8322.197  ns/op
+JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3613   6935329.515 ± 20967.922  ns/op
+JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5210   4804282.521 ±  9849.314  ns/op
+
