@@ -108,3 +108,25 @@ JDKGDXDSMapInt2IntBench.bench           JDKGDXDS_I2I_HASH     INTEGER_UNIFORM  4
 JDKGDXDSMapInt2IntBench.bench           JDKGDXDS_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5348  4679099.453 ±  9741.483  ns/op
 RobinHoodMapInt2IntBench.bench                RH_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3391  7388775.729 ± 15706.959  ns/op
 RobinHoodMapInt2IntBench.bench                RH_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  4639  5396574.917 ±  9924.360  ns/op
+
+// Undid the mix() changes to IntIntTable; trying more jdkgdxds types, including one that doesn't change hashMultiplier:
+Benchmark                                                (impl)       (payloadType)  (seed)  (size)  (workload)    Mode   Cnt         Score       Error  Units
+JDKGDXDSMapInt2IntBench.bench                 JDKGDXDS_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3733   6704062.440 ± 15349.164  ns/op
+JDKGDXDSMapInt2IntBench.bench                 JDKGDXDS_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5428   4611560.230 ±  8431.264  ns/op
+JDKGDXDSMapInt2IntBench.bench           JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4307   5814893.485 ± 12229.593  ns/op
+JDKGDXDSMapInt2IntBench.bench           JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5781   4329333.129 ±  8109.009  ns/op
+JDKGDXDSMapInt2IntBench.bench              JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3583   6982510.531 ± 21090.548  ns/op
+JDKGDXDSMapInt2IntBench.bench              JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5184   4829433.679 ±  9171.280  ns/op
+RobinHoodMapInt2IntBench.bench                      RH_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3068   8160631.155 ± 27648.142  ns/op
+RobinHoodMapInt2IntBench.bench                      RH_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  4360   5742022.694 ± 11642.475  ns/op
+
+// Just comparing libGDX's IntIntMap to jdkgdxds, with and without hashMultiplier changing:
+Benchmark                                                (impl)       (payloadType)  (seed)  (size)  (workload)    Mode   Cnt         Score       Error  Units
+GDXMapInt2IntBench.bench                           GDX_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4313   5799890.415 ± 11252.807  ns/op
+GDXMapInt2IntBench.bench                           GDX_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5648   4429710.142 ±  8097.945  ns/op
+JDKGDXDSMapInt2IntBench.bench                 JDKGDXDS_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3757   6665854.603 ± 16463.256  ns/op
+JDKGDXDSMapInt2IntBench.bench                 JDKGDXDS_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5353   4679909.171 ±  9090.121  ns/op
+JDKGDXDSMapInt2IntBench.bench           JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4309   5812154.608 ± 12094.219  ns/op
+JDKGDXDSMapInt2IntBench.bench           JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5773   4335480.129 ±  8101.269  ns/op
+JDKGDXDSMapInt2IntBench.bench              JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3627   6904401.451 ± 17988.974  ns/op
+JDKGDXDSMapInt2IntBench.bench              JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5215   4799439.107 ±  8934.559  ns/op
