@@ -90,11 +90,11 @@ dependencies {
     //implementation 'com.github.tommyettinger:atlantis:ec51e910cc' // older, used Fibonacci hashing
     //implementation 'com.github.tommyettinger:atlantis:24d7a1d83b' // has IndexedSetCustom
 //    implementation 'com.github.tommyettinger:jdkgdxds:3a9f925cd0'
-    implementation 'com.github.tommyettinger:digital:0.6.0'
-    implementation('com.github.tommyettinger:juniper:0.6.2') {
+    implementation 'com.github.tommyettinger:digital:0.9.9'
+    implementation('com.github.tommyettinger:juniper:0.9.0') {
         exclude group: 'com.github.tommyettinger', module: 'digital'
     }
-    implementation('com.github.tommyettinger:jdkgdxds:1.7.2') {
+    implementation('com.github.tommyettinger:jdkgdxds:2.0.1') {
         exclude group: 'com.github.tommyettinger', module: 'digital'
     }
 
