@@ -101,3 +101,10 @@ RobinHoodMapInt2IntBench.bench                      RH_I2I_HASH  INTEGER_DICTION
 RobinHoodMapInt2IntBench.bench                      RH_I2I_HASH  INTEGER_DICTIONARY  467505  200000  ITERATE_KEYVALUE  sample   28425      880674.512 ±       738.288  ns/op
 RobinHoodMapInt2IntBench.bench                      RH_I2I_HASH  INTEGER_DICTIONARY  467505  200000              COPY  sample   20194     1238233.132 ±      1989.603  ns/op
 RobinHoodMapInt2IntBench.bench                      RH_I2I_HASH  INTEGER_DICTIONARY  467505  200000          CONTAINS  sample  711515         172.275 ±         4.046  ns/op
+
+// Trying a weaker/faster mix() function in IntIntTable, just benchmarking POPULATE...
+Benchmark                                          (impl)       (payloadType)  (seed)  (size)  (workload)    Mode   Cnt        Score       Error  Units
+JDKGDXDSMapInt2IntBench.bench           JDKGDXDS_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3726  6719836.479 ± 15358.923  ns/op
+JDKGDXDSMapInt2IntBench.bench           JDKGDXDS_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5348  4679099.453 ±  9741.483  ns/op
+RobinHoodMapInt2IntBench.bench                RH_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3391  7388775.729 ± 15706.959  ns/op
+RobinHoodMapInt2IntBench.bench                RH_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  4639  5396574.917 ±  9924.360  ns/op

@@ -39,21 +39,24 @@ import java.util.Iterator;
  */
 public class IntIntTable implements Iterable<IntIntTable.Entry> {
 	public static int mix(int i) {
-		i ^= i >>> 17;
-		i = BitConversion.imul(i, 0x9E485565);
-		i ^= i >>> 16;
-		i = BitConversion.imul(i, 0xEF1D6B47);
-		i ^= i >>> 16;
-		return i;
+//		i ^= i >>> 17;
+//		i = BitConversion.imul(i, 0x9E485565);
+//		i ^= i >>> 16;
+//		i = BitConversion.imul(i, 0xEF1D6B47);
+//		i ^= i >>> 16;
+//		return i;
+		return BitConversion.imul(i ^ i >>> 16, 0x9E3779B1);
 	}
 
 	public static int unmix(int i) {
-		i ^= i >>> 16;
-		i = BitConversion.imul(i, 0xEB00CE77);
-		i ^= i >>> 16;
-		i = BitConversion.imul(i, 0x88CCD46D);
-		i ^= i >>> 17;
-		return i;
+//		i ^= i >>> 16;
+//		i = BitConversion.imul(i, 0xEB00CE77);
+//		i ^= i >>> 16;
+//		i = BitConversion.imul(i, 0x88CCD46D);
+//		i ^= i >>> 17;
+//		return i;
+		i = BitConversion.imul(i, 0x0E8B2F51);
+		return i ^ i >>> 16;
 	}
 
 
