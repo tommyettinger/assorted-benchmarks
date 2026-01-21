@@ -152,3 +152,14 @@ JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIFO
 JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5627  4444459.175 ±  8293.633  ns/op
 JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3632  6890631.330 ± 18025.177  ns/op
 JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5194  4817902.256 ± 10082.467  ns/op
+
+// XORing hashMultiplier first, instead of adding it after, ruins performance!
+Benchmark                                               (impl)       (payloadType)  (seed)  (size)  (workload)    Mode   Cnt         Score       Error  Units
+GDXMapInt2IntBench.bench                          GDX_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4290   5835478.586 ± 13347.703  ns/op
+GDXMapInt2IntBench.bench                          GDX_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5667   4418246.132 ±  8676.450  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3737   6699753.873 ± 16535.776  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5425   4615779.002 ±  9459.045  ns/op
+JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3624   6906755.673 ± 15698.346  ns/op
+JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5297   4725283.860 ±  8433.302  ns/op
+JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3596   6957049.166 ± 17881.104  ns/op
+JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5218   4796277.844 ±  9979.360  ns/op
