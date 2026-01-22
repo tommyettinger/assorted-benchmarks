@@ -174,3 +174,14 @@ JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIFO
 JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5673   4413888.733 ±  8224.763  ns/op
 JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3627   6903272.143 ± 17828.474  ns/op
 JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5207   4810920.733 ±  9698.311  ns/op
+
+// Try a different, smaller multiplier and use JDK 21 instead of 17:
+Benchmark                                               (impl)       (payloadType)  (seed)  (size)  (workload)    Mode   Cnt         Score       Error  Units
+GDXMapInt2IntBench.bench                          GDX_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4405   5683501.737 ± 12153.839  ns/op
+GDXMapInt2IntBench.bench                          GDX_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5747   4354559.733 ±  8145.564  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3762   6654678.218 ± 17943.365  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5346   4682440.548 ±  9606.741  ns/op
+JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4275   5858389.513 ± 11775.849  ns/op
+JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5552   4509346.305 ±  8881.116  ns/op
+JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3618   6922403.025 ± 17541.842  ns/op
+JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5231   4780071.934 ±  9483.582  ns/op
