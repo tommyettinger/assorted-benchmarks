@@ -29,6 +29,6 @@ public class IntIntMapUnchanging extends IntIntMap{
 
     @Override
     protected int place(int item) {
-        return BitConversion.imul(item ^ 0x9E3779CD, 0x31A6C2EB) >>> shift;
+        return BitConversion.imul(item ^ 0x9E3779CD, 0x60BB491B) >>> shift;
     }
 }

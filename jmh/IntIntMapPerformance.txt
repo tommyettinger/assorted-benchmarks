@@ -185,3 +185,14 @@ JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIFO
 JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5552   4509346.305 ±  8881.116  ns/op
 JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3618   6922403.025 ± 17541.842  ns/op
 JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5231   4780071.934 ±  9483.582  ns/op
+
+// Back to the previous, larger multiplier, and testing on GraalVM 22. GraalVM is a bit faster!
+Benchmark                                               (impl)       (payloadType)  (seed)  (size)  (workload)    Mode   Cnt         Score       Error  Units
+GDXMapInt2IntBench.bench                          GDX_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4515   5546114.637 ± 12202.931  ns/op
+GDXMapInt2IntBench.bench                          GDX_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  6241   4009670.286 ±  7136.186  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_HASH     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3688   6788753.492 ± 28889.789  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_HASH  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5873   4261059.106 ±  8639.334  ns/op
+JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING     INTEGER_UNIFORM  467505  200000    POPULATE  sample  4527   5524469.821 ± 11078.343  ns/op
+JDKGDXDSMapInt2IntBench.bench          JDKGDXDS_I2I_UNCHANGING  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  6179   4051542.590 ±  7649.663  ns/op
+JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000    POPULATE  sample  3517   7120997.905 ± 28780.470  ns/op
+JDKGDXDSMapInt2IntBench.bench             JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000    POPULATE  sample  5333   4696387.732 ± 10073.037  ns/op
