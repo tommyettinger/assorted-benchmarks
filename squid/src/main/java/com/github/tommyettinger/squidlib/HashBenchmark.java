@@ -33,6 +33,7 @@ package com.github.tommyettinger.squidlib;
 
 import com.github.tommyettinger.digital.AdzeHasher;
 import com.github.tommyettinger.digital.Hasher;
+import com.github.tommyettinger.digital.HasherA5;
 import com.github.tommyettinger.ds.ObjectList;
 import com.github.tommyettinger.random.WhiskerRandom;
 import com.github.yellowstonegames.text.Language;
@@ -1373,6 +1374,33 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doLongAdze64           20  avgt    5  17.018 ± 0.944  ns/op
  * HashBenchmark.doLongAx64             20  avgt    5  15.656 ± 0.532  ns/op
  * </pre>
+ * Trying out a5hash32 for the first time, it's almost always slower than both existing hashes in Hasher.
+ * <pre>
+ * Benchmark                          (len)  Mode  Cnt   Score   Error  Units
+ * HashBenchmark.doAFive32               20  avgt    5  19.475 ± 0.820  ns/op
+ * HashBenchmark.doAx32                  20  avgt    5  20.025 ± 0.426  ns/op
+ * HashBenchmark.doBufferAFive32         20  avgt    5  40.429 ± 0.582  ns/op
+ * HashBenchmark.doBufferAx32            20  avgt    5  31.630 ± 2.783  ns/op
+ * HashBenchmark.doByteAFive32           20  avgt    5  16.324 ± 0.140  ns/op
+ * HashBenchmark.doByteAx32              20  avgt    5  14.889 ± 0.825  ns/op
+ * HashBenchmark.doByteDigital32         20  avgt    5  11.493 ± 0.242  ns/op
+ * HashBenchmark.doCharAFive32           20  avgt    5  16.062 ± 0.291  ns/op
+ * HashBenchmark.doCharAx32              20  avgt    5  14.825 ± 1.626  ns/op
+ * HashBenchmark.doCharBufferAFive32     20  avgt    5  21.347 ± 0.652  ns/op
+ * HashBenchmark.doCharBufferAx32        20  avgt    5  13.433 ± 1.057  ns/op
+ * HashBenchmark.doCharDigital32         20  avgt    5  11.478 ± 0.208  ns/op
+ * HashBenchmark.doDigital32             20  avgt    5  17.866 ± 1.350  ns/op
+ * HashBenchmark.doDoubleAFive32         20  avgt    5  22.689 ± 0.403  ns/op
+ * HashBenchmark.doDoubleAx32            20  avgt    5  16.544 ± 0.247  ns/op
+ * HashBenchmark.doDoubleDigital32       20  avgt    5  17.497 ± 0.533  ns/op
+ * HashBenchmark.doIntAFive32            20  avgt    5  16.157 ± 0.171  ns/op
+ * HashBenchmark.doIntAx32               20  avgt    5  14.857 ± 1.060  ns/op
+ * HashBenchmark.doIntDigital32          20  avgt    5  12.479 ± 0.199  ns/op
+ * HashBenchmark.doLongAFive32           20  avgt    5  28.532 ± 0.516  ns/op
+ * HashBenchmark.doLongAx32              20  avgt    5  16.637 ± 1.254  ns/op
+ * HashBenchmark.doLongDigital32         20  avgt    5  18.022 ± 0.317  ns/op
+ * </pre>
+ *
  *
  */
 @BenchmarkMode(Mode.AverageTime)
@@ -2359,6 +2387,78 @@ public class HashBenchmark {
     }
 
     @Benchmark
+    public long doDigital64(BenchmarkState state)
+    {
+        return Hasher.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDigital32(BenchmarkState state)
+    {
+        return Hasher.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doCharDigital64(BenchmarkState state)
+    {
+        return Hasher.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doCharDigital32(BenchmarkState state)
+    {
+        return Hasher.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doIntDigital64(BenchmarkState state)
+    {
+        return Hasher.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doIntDigital32(BenchmarkState state)
+    {
+        return Hasher.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doLongDigital64(BenchmarkState state)
+    {
+        return Hasher.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doLongDigital32(BenchmarkState state)
+    {
+        return Hasher.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doDoubleDigital64(BenchmarkState state)
+    {
+        return Hasher.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleDigital32(BenchmarkState state)
+    {
+        return Hasher.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public long doByteDigital64(BenchmarkState state)
+    {
+        return Hasher.mu.hash64(state.bytes[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doByteDigital32(BenchmarkState state)
+    {
+        return Hasher.mu.hash(state.bytes[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
     public long doAx64(BenchmarkState state)
     {
         return Hasher.mu.hashBulk64(state.words[state.idx = state.idx + 1 & 4095]);
@@ -2566,6 +2666,54 @@ public class HashBenchmark {
     public int doCharBufferAdze32(BenchmarkState state)
     {
         return AdzeHasher.mu.hashBulk(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+    }
+
+    @Benchmark
+    public int doAFive32(BenchmarkState state)
+    {
+        return HasherA5.mu.hashA5(state.words[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doCharAFive32(BenchmarkState state)
+    {
+        return HasherA5.mu.hashA5(state.chars[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doIntAFive32(BenchmarkState state)
+    {
+        return HasherA5.mu.hashA5(state.ints[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doLongAFive32(BenchmarkState state)
+    {
+        return HasherA5.mu.hashA5(state.longs[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doDoubleAFive32(BenchmarkState state)
+    {
+        return HasherA5.mu.hashA5(state.doubles[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doByteAFive32(BenchmarkState state)
+    {
+        return HasherA5.mu.hashA5(state.bytes[state.idx = state.idx + 1 & 4095]);
+    }
+
+    @Benchmark
+    public int doBufferAFive32(BenchmarkState state)
+    {
+        return HasherA5.mu.hashA5(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+    }
+
+    @Benchmark
+    public int doCharBufferAFive32(BenchmarkState state)
+    {
+        return HasherA5.mu.hashA5(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
     @Benchmark
