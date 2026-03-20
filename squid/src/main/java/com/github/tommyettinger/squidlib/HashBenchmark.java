@@ -1606,7 +1606,7 @@ public class HashBenchmark {
                 chars[i] = con;
                 words[i] = String.valueOf(con);
                 buffers[i] = buf;
-                byte[] utf = words[i].getBytes(StandardCharsets.UTF_16);
+                byte[] utf = words[i].getBytes(StandardCharsets.UTF_8);
 //                if(i == 0) System.out.println("utf has length " + utf.length);
                 cbuffers[i] = ByteBuffer.wrap(utf);
                 bytes[i] = new byte[len];
@@ -1991,25 +1991,25 @@ public class HashBenchmark {
     @Benchmark
     public long doBufferYolk64(BenchmarkState state)
     {
-        return CrossHash.Yolk.mu.hash64(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+        return CrossHash.Yolk.mu.hash64(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public int doBufferYolk32(BenchmarkState state)
     {
-        return CrossHash.Yolk.mu.hash(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+        return CrossHash.Yolk.mu.hash(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public long doCharBufferYolk64(BenchmarkState state)
     {
-        return CrossHash.Yolk.mu.hash64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+        return CrossHash.Yolk.mu.hash64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public int doCharBufferYolk32(BenchmarkState state)
     {
-        return CrossHash.Yolk.mu.hash(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+        return CrossHash.Yolk.mu.hash(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
@@ -2668,25 +2668,25 @@ public class HashBenchmark {
     @Benchmark
     public long doBufferAx64(BenchmarkState state)
     {
-        return Hasher.mu.hashBulk64(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+        return Hasher.mu.hashBulk64(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public int doBufferAx32(BenchmarkState state)
     {
-        return Hasher.mu.hashBulk(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+        return Hasher.mu.hashBulk(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public long doCharBufferAx64(BenchmarkState state)
     {
-        return Hasher.mu.hashBulk64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+        return Hasher.mu.hashBulk64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public int doCharBufferAx32(BenchmarkState state)
     {
-        return Hasher.mu.hashBulk(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+        return Hasher.mu.hashBulk(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
 //    @Benchmark
@@ -2782,50 +2782,50 @@ public class HashBenchmark {
     @Benchmark
     public long doBufferAdze64(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk64(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+        return AdzeHasher.mu.hashBulk64(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public int doBufferAdze32(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+        return AdzeHasher.mu.hashBulk(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public long doCharBufferAdze64(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+        return AdzeHasher.mu.hashBulk64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public int doCharBufferAdze32(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+        return AdzeHasher.mu.hashBulk(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
 
     @Benchmark
     public long doBufferOldAdze64(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk64Old(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+        return AdzeHasher.mu.hashBulk64Old(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public int doBufferOldAdze32(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulkOld(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+        return AdzeHasher.mu.hashBulkOld(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public long doCharBufferOldAdze64(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk64Old(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+        return AdzeHasher.mu.hashBulk64Old(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public int doCharBufferOldAdze32(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulkOld(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+        return AdzeHasher.mu.hashBulkOld(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
@@ -2867,13 +2867,13 @@ public class HashBenchmark {
     @Benchmark
     public int doBufferAFive32(BenchmarkState state)
     {
-        return HasherA5.mu.hashA5(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+        return HasherA5.mu.hashA5(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public int doCharBufferAFive32(BenchmarkState state)
     {
-        return HasherA5.mu.hashA5(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+        return HasherA5.mu.hashA5(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
