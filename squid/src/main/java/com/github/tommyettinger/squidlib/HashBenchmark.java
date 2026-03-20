@@ -1537,6 +1537,21 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doCharBufferYolk64              80  avgt    5   30.790 ±  0.594  ns/op
  * HashBenchmark.doCharBufferYolk64             160  avgt    5   55.024 ± 12.754  ns/op
  * </pre>
+ * Trying a more manageable comparison between 32-bit hashes of 5 bytes at a time.
+ * Here, OldAdze is faster than the current Adze...
+ * <pre>
+ * Benchmark                            (len)  Mode  Cnt  Score   Error  Units
+ * HashBenchmark.doBufferAFive32            5  avgt    5  5.729 ± 1.123  ns/op
+ * HashBenchmark.doBufferAdze32             5  avgt    5  7.607 ± 0.222  ns/op
+ * HashBenchmark.doBufferAx32               5  avgt    5  5.436 ± 0.325  ns/op
+ * HashBenchmark.doBufferOldAdze32          5  avgt    5  5.812 ± 0.186  ns/op
+ * HashBenchmark.doBufferYolk32             5  avgt    5  5.636 ± 0.811  ns/op
+ * HashBenchmark.doCharBufferAFive32        5  avgt    5  6.137 ± 0.071  ns/op
+ * HashBenchmark.doCharBufferAdze32         5  avgt    5  7.847 ± 0.282  ns/op
+ * HashBenchmark.doCharBufferAx32           5  avgt    5  5.554 ± 0.708  ns/op
+ * HashBenchmark.doCharBufferOldAdze32      5  avgt    5  5.745 ± 0.091  ns/op
+ * HashBenchmark.doCharBufferYolk32         5  avgt    5  5.508 ± 1.032  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
