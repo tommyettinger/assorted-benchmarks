@@ -1577,7 +1577,30 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doBufferOldAdze32      5  avgt    5    5.896 ±  0.098  ns/op
  * HashBenchmark.doBufferOldAdze32   5000  avgt    5  525.161 ±  6.057  ns/op
  * </pre>
- *
+ * Adze is looking good in general, and especially on large keys!
+ * <pre>
+ * Benchmark                            (len)  Mode  Cnt    Score    Error  Units
+ * HashBenchmark.doBufferAFive32            5  avgt   10    5.932 ±  0.411  ns/op
+ * HashBenchmark.doBufferAFive32         5000  avgt   10  754.852 ± 14.206  ns/op
+ * HashBenchmark.doBufferAdze32             5  avgt   10    5.814 ±  0.115  ns/op
+ * HashBenchmark.doBufferAdze32          5000  avgt   10  455.806 ± 26.528  ns/op
+ * HashBenchmark.doBufferAx32               5  avgt   10    5.710 ±  0.311  ns/op
+ * HashBenchmark.doBufferAx32            5000  avgt   10  550.990 ±  5.763  ns/op
+ * HashBenchmark.doBufferOldAdze32          5  avgt   10    5.605 ±  0.337  ns/op
+ * HashBenchmark.doBufferOldAdze32       5000  avgt   10  530.815 ±  4.399  ns/op
+ * HashBenchmark.doBufferYolk32             5  avgt   10    5.639 ±  0.197  ns/op
+ * HashBenchmark.doBufferYolk32          5000  avgt   10  518.301 ± 23.518  ns/op
+ * HashBenchmark.doCharBufferAFive32        5  avgt   10    5.904 ±  0.073  ns/op
+ * HashBenchmark.doCharBufferAFive32     5000  avgt   10  720.878 ± 17.936  ns/op
+ * HashBenchmark.doCharBufferAdze32         5  avgt   10    5.630 ±  0.397  ns/op
+ * HashBenchmark.doCharBufferAdze32      5000  avgt   10  436.662 ±  3.470  ns/op
+ * HashBenchmark.doCharBufferAx32           5  avgt   10    5.484 ±  0.298  ns/op
+ * HashBenchmark.doCharBufferAx32        5000  avgt   10  512.467 ±  5.532  ns/op
+ * HashBenchmark.doCharBufferOldAdze32      5  avgt   10    5.891 ±  0.032  ns/op
+ * HashBenchmark.doCharBufferOldAdze32   5000  avgt   10  484.673 ± 17.494  ns/op
+ * HashBenchmark.doCharBufferYolk32         5  avgt   10    5.738 ±  0.082  ns/op
+ * HashBenchmark.doCharBufferYolk32      5000  avgt   10  491.265 ± 27.507  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
