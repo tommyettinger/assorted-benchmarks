@@ -1552,6 +1552,21 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doCharBufferOldAdze32      5  avgt    5  5.745 ± 0.091  ns/op
  * HashBenchmark.doCharBufferYolk32         5  avgt    5  5.508 ± 1.032  ns/op
  * </pre>
+ * Results are completely different for 5000 bytes at a time! Adze is the fastest here for ByteBuffer, but everything
+ * seems oddly slower for CharBuffer.
+ * <pre>
+ * Benchmark                            (len)  Mode  Cnt    Score    Error  Units
+ * HashBenchmark.doBufferAFive32         5000  avgt    5  735.173 ± 22.727  ns/op
+ * HashBenchmark.doBufferAdze32          5000  avgt    5  461.982 ±  8.169  ns/op
+ * HashBenchmark.doBufferAx32            5000  avgt    5  541.793 ± 50.990  ns/op
+ * HashBenchmark.doBufferOldAdze32       5000  avgt    5  526.999 ±  3.446  ns/op
+ * HashBenchmark.doBufferYolk32          5000  avgt    5  529.135 ± 11.515  ns/op
+ * HashBenchmark.doCharBufferAFive32     5000  avgt    5  776.569 ± 32.097  ns/op
+ * HashBenchmark.doCharBufferAdze32      5000  avgt    5  626.763 ± 22.287  ns/op
+ * HashBenchmark.doCharBufferAx32        5000  avgt    5  608.666 ± 29.686  ns/op
+ * HashBenchmark.doCharBufferOldAdze32   5000  avgt    5  639.644 ±  4.971  ns/op
+ * HashBenchmark.doCharBufferYolk32      5000  avgt    5  689.638 ± 72.942  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
