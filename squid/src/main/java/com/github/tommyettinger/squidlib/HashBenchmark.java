@@ -1638,7 +1638,7 @@ public class HashBenchmark {
                 buffers[i] = buf;
                 byte[] utf = words[i].getBytes(StandardCharsets.UTF_8);
 //                if(i == 0) System.out.println("utf has length " + utf.length);
-                cbuffers[i] = ByteBuffer.wrap(utf);
+                cbuffers[i] = ByteBuffer.wrap(utf).order(ByteOrder.LITTLE_ENDIAN);
                 bytes[i] = new byte[len];
                 buf.rewind();
                 buf.get(bytes[i], 0, len);
