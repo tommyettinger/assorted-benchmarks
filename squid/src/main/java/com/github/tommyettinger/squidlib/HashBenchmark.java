@@ -2668,6 +2668,31 @@ public class HashBenchmark {
         return AdzeHasher.mu.hashBulk(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
     }
 
+
+    @Benchmark
+    public long doBufferOldAdze64(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk64Old(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+    }
+
+    @Benchmark
+    public int doBufferOldAdze32(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulkOld(state.buffers[state.idx = state.idx + 1 & 4095].rewind());
+    }
+
+    @Benchmark
+    public long doCharBufferOldAdze64(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulk64Old(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+    }
+
+    @Benchmark
+    public int doCharBufferOldAdze32(BenchmarkState state)
+    {
+        return AdzeHasher.mu.hashBulkOld(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind());
+    }
+
     @Benchmark
     public int doAFive32(BenchmarkState state)
     {
