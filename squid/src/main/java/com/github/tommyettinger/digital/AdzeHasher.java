@@ -5280,22 +5280,55 @@ public class AdzeHasher {
             h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 24));
             start += 32;
         }
-        if (len != 0) {
-            long h0 = h, h1 = h + V, h2 = h + W;
-
-            for (; len >= 8; len -= 8, start += 8) {
-                h0 += data.getInt(start);
-                h0 *= Q;
-                h1 += data.getInt(start + 4);
-                h1 *= R;
-            }
-
-            if (len >= 4) {
-                h2 += data.getInt(start) ^ ((long)data.getInt(start + len - 4) << 32);
-            } else if (len > 0) {
-                h2 += data.get(start) ^ (data.get(start + (len >> 1)) << 8) ^ (data.get(start + len - 1) << 16);
-            }
-            h = mixMultiple(h0, h1, h2);
+//        if (len != 0) {
+//            long h0 = h, h1 = h + V, h2 = h + W;
+//
+//            for (; len >= 8; len -= 8, start += 8) {
+//                h0 += data.getInt(start);
+//                h0 *= Q;
+//                h1 += data.getInt(start + 4);
+//                h1 *= R;
+//            }
+//
+//            if (len >= 4) {
+//                h2 += data.getInt(start) ^ ((long)data.getInt(start + len - 4) << 32);
+//            } else if (len > 0) {
+//                h2 += data.get(start) ^ (data.get(start + (len >> 1)) << 8) ^ (data.get(start + len - 1) << 16);
+//            }
+//            h = mixMultiple(h0, h1, h2);
+//        }
+        switch (len) {
+            case 1 :  h = mixMultiple(h, data.get(start)); break;
+            case 2 :  h = mixMultiple(h, data.getShort(start)); break;
+            case 3 :  h = mixMultiple(h, data.getShort(start), data.get(start + 2)); break;
+            case 4 :  h = mixMultiple(h, data.getInt(start)); break;
+            case 5 :  h = mixMultiple(h, data.getInt(start), data.get(start + 4)); break;
+            case 6 :  h = mixMultiple(h, data.getInt(start), data.getShort(start + 4)); break;
+            case 7 :  h = mixMultiple(h, data.getInt(start), data.getInt(start + 3)); break;
+            case 8 :  h = mixMultiple(h, data.getLong(start)); break;
+            case 9 :  h = mixMultiple(h, data.getLong(start), data.get(start + 8)); break;
+            case 10:  h = mixMultiple(h, data.getLong(start), data.getShort(start + 8)); break;
+            case 11:  h = mixMultiple(h, data.getLong(start), data.getInt(start + 7)); break;
+            case 12:  h = mixMultiple(h, data.getLong(start), data.getInt(start + 8)); break;
+            case 13:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 5)); break;
+            case 14:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 6)); break;
+            case 15:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 7)); break;
+            case 16:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8)); break;
+            case 17:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.get(start + 16)); break;
+            case 18:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getShort(start + 16)); break;
+            case 19:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getInt(start + 15)); break;
+            case 20:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getInt(start + 16)); break;
+            case 21:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 13)); break;
+            case 22:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 14)); break;
+            case 23:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 15)); break;
+            case 24:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16)); break;
+            case 25:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.get(start + 24)); break;
+            case 26:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getShort(start + 24)); break;
+            case 27:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getInt(start + 23)); break;
+            case 28:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getInt(start + 24)); break;
+            case 29:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 21)); break;
+            case 30:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 22)); break;
+            case 31:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 23)); break;
         }
         return mix(h);
     }
@@ -5348,22 +5381,55 @@ public class AdzeHasher {
             h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 24));
             start += 32;
         }
-        if (len != 0) {
-            long h0 = h, h1 = h + V, h2 = h + W;
-
-            for (; len >= 8; len -= 8, start += 8) {
-                h0 += data.getInt(start);
-                h0 *= Q;
-                h1 += data.getInt(start + 4);
-                h1 *= R;
-            }
-
-            if (len >= 4) {
-                h2 += data.getInt(start) ^ ((long)data.getInt(start + len - 4) << 32);
-            } else if (len > 0) {
-                h2 += data.get(start) ^ (data.get(start + (len >> 1)) << 8) ^ (data.get(start + len - 1) << 16);
-            }
-            h = mixMultiple(h0, h1, h2);
+//        if (len != 0) {
+//            long h0 = h, h1 = h + V, h2 = h + W;
+//
+//            for (; len >= 8; len -= 8, start += 8) {
+//                h0 += data.getInt(start);
+//                h0 *= Q;
+//                h1 += data.getInt(start + 4);
+//                h1 *= R;
+//            }
+//
+//            if (len >= 4) {
+//                h2 += data.getInt(start) ^ ((long)data.getInt(start + len - 4) << 32);
+//            } else if (len > 0) {
+//                h2 += data.get(start) ^ (data.get(start + (len >> 1)) << 8) ^ (data.get(start + len - 1) << 16);
+//            }
+//            h = mixMultiple(h0, h1, h2);
+//        }
+        switch (len) {
+            case 1 :  h = mixMultiple(h, data.get(start)); break;
+            case 2 :  h = mixMultiple(h, data.getShort(start)); break;
+            case 3 :  h = mixMultiple(h, data.getShort(start), data.get(start + 2)); break;
+            case 4 :  h = mixMultiple(h, data.getInt(start)); break;
+            case 5 :  h = mixMultiple(h, data.getInt(start), data.get(start + 4)); break;
+            case 6 :  h = mixMultiple(h, data.getInt(start), data.getShort(start + 4)); break;
+            case 7 :  h = mixMultiple(h, data.getInt(start), data.getInt(start + 3)); break;
+            case 8 :  h = mixMultiple(h, data.getLong(start)); break;
+            case 9 :  h = mixMultiple(h, data.getLong(start), data.get(start + 8)); break;
+            case 10:  h = mixMultiple(h, data.getLong(start), data.getShort(start + 8)); break;
+            case 11:  h = mixMultiple(h, data.getLong(start), data.getInt(start + 7)); break;
+            case 12:  h = mixMultiple(h, data.getLong(start), data.getInt(start + 8)); break;
+            case 13:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 5)); break;
+            case 14:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 6)); break;
+            case 15:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 7)); break;
+            case 16:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8)); break;
+            case 17:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.get(start + 16)); break;
+            case 18:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getShort(start + 16)); break;
+            case 19:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getInt(start + 15)); break;
+            case 20:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getInt(start + 16)); break;
+            case 21:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 13)); break;
+            case 22:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 14)); break;
+            case 23:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 15)); break;
+            case 24:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16)); break;
+            case 25:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.get(start + 24)); break;
+            case 26:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getShort(start + 24)); break;
+            case 27:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getInt(start + 23)); break;
+            case 28:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getInt(start + 24)); break;
+            case 29:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 21)); break;
+            case 30:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 22)); break;
+            case 31:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 23)); break;
         }
         return (int) mix(h);
     }
@@ -6810,22 +6876,55 @@ public class AdzeHasher {
             h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 24));
             start += 32;
         }
-        if (len != 0) {
-            long h0 = h, h1 = h + V, h2 = h + W;
-
-            for (; len >= 8; len -= 8, start += 8) {
-                h0 += data.getInt(start);
-                h0 *= Q;
-                h1 += data.getInt(start + 4);
-                h1 *= R;
-            }
-
-            if (len >= 4) {
-                h2 += data.getInt(start) ^ ((long)data.getInt(start + len - 4) << 32);
-            } else if (len > 0) {
-                h2 += data.get(start) ^ (data.get(start + (len >> 1)) << 8) ^ (data.get(start + len - 1) << 16);
-            }
-            h = mixMultiple(h0, h1, h2);
+//        if (len != 0) {
+//            long h0 = h, h1 = h + V, h2 = h + W;
+//
+//            for (; len >= 8; len -= 8, start += 8) {
+//                h0 += data.getInt(start);
+//                h0 *= Q;
+//                h1 += data.getInt(start + 4);
+//                h1 *= R;
+//            }
+//
+//            if (len >= 4) {
+//                h2 += data.getInt(start) ^ ((long)data.getInt(start + len - 4) << 32);
+//            } else if (len > 0) {
+//                h2 += data.get(start) ^ (data.get(start + (len >> 1)) << 8) ^ (data.get(start + len - 1) << 16);
+//            }
+//            h = mixMultiple(h0, h1, h2);
+//        }
+        switch (len) {
+            case 1 :  h = mixMultiple(h, data.get(start)); break;
+            case 2 :  h = mixMultiple(h, data.getShort(start)); break;
+            case 3 :  h = mixMultiple(h, data.getShort(start), data.get(start + 2)); break;
+            case 4 :  h = mixMultiple(h, data.getInt(start)); break;
+            case 5 :  h = mixMultiple(h, data.getInt(start), data.get(start + 4)); break;
+            case 6 :  h = mixMultiple(h, data.getInt(start), data.getShort(start + 4)); break;
+            case 7 :  h = mixMultiple(h, data.getInt(start), data.getInt(start + 3)); break;
+            case 8 :  h = mixMultiple(h, data.getLong(start)); break;
+            case 9 :  h = mixMultiple(h, data.getLong(start), data.get(start + 8)); break;
+            case 10:  h = mixMultiple(h, data.getLong(start), data.getShort(start + 8)); break;
+            case 11:  h = mixMultiple(h, data.getLong(start), data.getInt(start + 7)); break;
+            case 12:  h = mixMultiple(h, data.getLong(start), data.getInt(start + 8)); break;
+            case 13:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 5)); break;
+            case 14:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 6)); break;
+            case 15:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 7)); break;
+            case 16:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8)); break;
+            case 17:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.get(start + 16)); break;
+            case 18:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getShort(start + 16)); break;
+            case 19:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getInt(start + 15)); break;
+            case 20:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getInt(start + 16)); break;
+            case 21:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 13)); break;
+            case 22:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 14)); break;
+            case 23:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 15)); break;
+            case 24:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16)); break;
+            case 25:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.get(start + 24)); break;
+            case 26:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getShort(start + 24)); break;
+            case 27:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getInt(start + 23)); break;
+            case 28:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getInt(start + 24)); break;
+            case 29:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 21)); break;
+            case 30:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 22)); break;
+            case 31:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 23)); break;
         }
         return mix(h);
     }
@@ -6880,22 +6979,55 @@ public class AdzeHasher {
             h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 24));
             start += 32;
         }
-        if (len != 0) {
-            long h0 = h, h1 = h + V, h2 = h + W;
-
-            for (; len >= 8; len -= 8, start += 8) {
-                h0 += data.getInt(start);
-                h0 *= Q;
-                h1 += data.getInt(start + 4);
-                h1 *= R;
-            }
-
-            if (len >= 4) {
-                h2 += data.getInt(start) ^ ((long)data.getInt(start + len - 4) << 32);
-            } else if (len > 0) {
-                h2 += data.get(start) ^ (data.get(start + (len >> 1)) << 8) ^ (data.get(start + len - 1) << 16);
-            }
-            h = mixMultiple(h0, h1, h2);
+//        if (len != 0) {
+//            long h0 = h, h1 = h + V, h2 = h + W;
+//
+//            for (; len >= 8; len -= 8, start += 8) {
+//                h0 += data.getInt(start);
+//                h0 *= Q;
+//                h1 += data.getInt(start + 4);
+//                h1 *= R;
+//            }
+//
+//            if (len >= 4) {
+//                h2 += data.getInt(start) ^ ((long)data.getInt(start + len - 4) << 32);
+//            } else if (len > 0) {
+//                h2 += data.get(start) ^ (data.get(start + (len >> 1)) << 8) ^ (data.get(start + len - 1) << 16);
+//            }
+//            h = mixMultiple(h0, h1, h2);
+//        }
+        switch (len) {
+            case 1 :  h = mixMultiple(h, data.get(start)); break;
+            case 2 :  h = mixMultiple(h, data.getShort(start)); break;
+            case 3 :  h = mixMultiple(h, data.getShort(start), data.get(start + 2)); break;
+            case 4 :  h = mixMultiple(h, data.getInt(start)); break;
+            case 5 :  h = mixMultiple(h, data.getInt(start), data.get(start + 4)); break;
+            case 6 :  h = mixMultiple(h, data.getInt(start), data.getShort(start + 4)); break;
+            case 7 :  h = mixMultiple(h, data.getInt(start), data.getInt(start + 3)); break;
+            case 8 :  h = mixMultiple(h, data.getLong(start)); break;
+            case 9 :  h = mixMultiple(h, data.getLong(start), data.get(start + 8)); break;
+            case 10:  h = mixMultiple(h, data.getLong(start), data.getShort(start + 8)); break;
+            case 11:  h = mixMultiple(h, data.getLong(start), data.getInt(start + 7)); break;
+            case 12:  h = mixMultiple(h, data.getLong(start), data.getInt(start + 8)); break;
+            case 13:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 5)); break;
+            case 14:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 6)); break;
+            case 15:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 7)); break;
+            case 16:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8)); break;
+            case 17:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.get(start + 16)); break;
+            case 18:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getShort(start + 16)); break;
+            case 19:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getInt(start + 15)); break;
+            case 20:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getInt(start + 16)); break;
+            case 21:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 13)); break;
+            case 22:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 14)); break;
+            case 23:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 15)); break;
+            case 24:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16)); break;
+            case 25:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.get(start + 24)); break;
+            case 26:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getShort(start + 24)); break;
+            case 27:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getInt(start + 23)); break;
+            case 28:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getInt(start + 24)); break;
+            case 29:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 21)); break;
+            case 30:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 22)); break;
+            case 31:  h = mixMultiple(h, data.getLong(start), data.getLong(start + 8), data.getLong(start + 16), data.getLong(start + 23)); break;
         }
         return (int) mix(h);
     }

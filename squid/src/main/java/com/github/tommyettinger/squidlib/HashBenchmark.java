@@ -1567,6 +1567,17 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doCharBufferOldAdze32   5000  avgt    5  639.644 ±  4.971  ns/op
  * HashBenchmark.doCharBufferYolk32      5000  avgt    5  689.638 ± 72.942  ns/op
  * </pre>
+ * Good news! Adze changes that bring it closer to the old one but use absolute positions seem better!
+ * <pre>
+ * Benchmark                        (len)  Mode  Cnt    Score    Error  Units
+ * HashBenchmark.doBufferAdze32         5  avgt    5    5.887 ±  0.118  ns/op
+ * HashBenchmark.doBufferAdze32      5000  avgt    5  439.360 ± 52.535  ns/op
+ * HashBenchmark.doBufferAx32           5  avgt    5    6.017 ±  0.047  ns/op
+ * HashBenchmark.doBufferAx32        5000  avgt    5  531.144 ± 68.536  ns/op
+ * HashBenchmark.doBufferOldAdze32      5  avgt    5    5.896 ±  0.098  ns/op
+ * HashBenchmark.doBufferOldAdze32   5000  avgt    5  525.161 ±  6.057  ns/op
+ * </pre>
+ *
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
