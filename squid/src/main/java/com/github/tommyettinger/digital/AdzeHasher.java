@@ -45,7 +45,7 @@ import static com.github.tommyettinger.digital.BitConversion.floatToRawIntBits;
  * "adze7d" is reliably faster. Both perform very well on large keys, and are slightly faster than Ax, the
  * algorithm used by {@link Hasher#hashBulk(ByteBuffer)}.
  * <br>
- * This provides an object-based API and a static API, where a Hasher object is
+ * This provides an object-based API and a static API, where an AdzeHasher object is
  * instantiated with a seed, and the static methods take a seed as their first argument.
  * Any hash that this returns is always 0 when given null to hash. Arrays with
  * identical elements of identical types will hash identically. Arrays with identical
@@ -57,10 +57,10 @@ import static com.github.tommyettinger.digital.BitConversion.floatToRawIntBits;
  * Android applications when using ints because it treats ints mostly like doubles,
  * sometimes, due to it using JavaScript. If we use mainly longs, though, GWT emulates
  * the longs with a more complex technique behind-the-scenes, that behaves the same on
- * the web as it does on desktop or on a phone. Since Hasher is supposed to be stable
+ * the web as it does on desktop or on a phone. Since AdzeHasher is supposed to be stable
  * cross-platform, this is the way we need to go, despite it being slightly slower.
  * <br>
- * There are also 428 predefined instances of Hasher that you can either
+ * There are also 428 predefined instances of AdzeHasher that you can either
  * select from the array {@link #predefined} or select by hand, such as {@link #omega}.
  * The predefined instances are named after the 24 Greek letters, then the same letters
  * with a trailing underscore, then
@@ -82,30 +82,31 @@ public class AdzeHasher {
     public final long seed;
 
     /**
-     * Creates a new Hasher seeded, arbitrarily, with the constant 0xC4CEB9FE1A85EC53L, or -4265267296055464877L .
+     * Creates a new AdzeHasher seeded, arbitrarily, with the constant 0xC4CEB9FE1A85EC53L, or -4265267296055464877L .
      */
     public AdzeHasher() {
         this(0xC4CEB9FE1A85EC53L);
     }
 
     /**
-     * Initializes this Hasher with the given seed, verbatim; it is recommended to use {@link Hasher#randomize3(long)}
-     * on the seed if you don't know if it is adequately-random. If the seed is the same for two different Hasher
+     * Initializes this AdzeHasher with the given seed, running it through {@link #forward(long)} before storing it in
+     * the {@link #seed} field. It is recommended to use {@link Hasher#randomize3(long)} on the parameter if you don't
+     * know if it is adequately-random. If the seed is the same for two different AdzeHasher
      * instances, and they are given the same inputs, they will produce the same results. If the seed is even slightly
      * different, the results of the two Hashers given the same input should be significantly different.
      *
-     * @param seed a long that will be used to change the output of hash() and hash64() methods on the new Hasher
+     * @param seed a long that will be used to change the output of hash() and hash64() methods on the new AdzeHasher
      */
     public AdzeHasher(long seed) {
-        this.seed = seed;
+        this.seed = forward(seed);
     }
 
     /**
-     * Constructs a Hasher by hashing {@code seed} with {@link #hash64(long, CharSequence)}, and then running the result
+     * Constructs an AdzeHasher by hashing {@code seed} with {@link #hash64(long, CharSequence)}, and then running the result
      * through {@link Hasher#randomize3(long)}. This is the same as calling the constructor {@link #AdzeHasher(long)} and
      * passing it {@code Hasher.randomize3(AdzeHasher.hash64(1L, seed))} .
      *
-     * @param seed a CharSequence, such as a String, that will be used to seed the Hasher.
+     * @param seed a CharSequence, such as a String, that will be used to seed the AdzeHasher.
      */
     public AdzeHasher(final CharSequence seed) {
         this(Hasher.randomize3(hash64(1L, seed)));
@@ -425,7 +426,6 @@ public class AdzeHasher {
 
     };
 
-
     // hashing section, member functions
 
     /**
@@ -447,7 +447,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -489,7 +489,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -531,7 +531,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -573,7 +573,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -615,7 +615,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -657,7 +657,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -707,7 +707,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -757,7 +757,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -799,7 +799,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -841,7 +841,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -883,7 +883,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -925,7 +925,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -967,7 +967,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1009,7 +1009,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1051,7 +1051,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1093,7 +1093,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1135,7 +1135,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length())
             return 0;
         int len = Math.min(length, data.length() - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1177,7 +1177,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length())
             return 0;
         int len = Math.min(length, data.length() - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1223,7 +1223,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length())
             return 0;
         int len = Math.min(length, data.length() - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1269,7 +1269,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length())
             return 0;
         int len = Math.min(length, data.length() - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1311,7 +1311,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1353,7 +1353,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1400,7 +1400,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.limit())
             return 0;
         int len = Math.min(length, data.limit() - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         while(len >= 112){
             len -= 112;
             h *= C;
@@ -1480,7 +1480,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.limit())
             return 0;
         int len = Math.min(length, data.limit() - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         while(len >= 112){
             len -= 112;
             h *= C;
@@ -1561,7 +1561,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1613,7 +1613,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1665,7 +1665,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -1717,7 +1717,7 @@ public class AdzeHasher {
         if (data == null || start < 0 || length < 0 || start >= data.length)
             return 0;
         int len = Math.min(length, data.length - start);
-        long h = len ^ forward(seed);
+        long h = len ^ seed;
         int i = start;
         while(len >= 14){
             len -= 14;
@@ -3217,32 +3217,32 @@ public class AdzeHasher {
     }
 
     /**
-     * Produces a String that holds the entire seed of this Hasher. A Hasher is immutable, so to load the serialized
-     * state you must create a new Hasher with {@link #deserializeFromString(CharSequence)}.
-     * @return a String holding the seed of this Hasher, to be loaded by {@link #deserializeFromString(CharSequence)}
+     * Produces a String that holds the entire seed of this AdzeHasher. An AdzeHasher is immutable, so to load the
+     * serialized state you must create a new AdzeHasher with {@link #deserializeFromString(CharSequence)}.
+     * @return a String holding the seed of this AdzeHasher, to be loaded by {@link #deserializeFromString(CharSequence)}
      */
     public String serializeToString() {
         return appendSerialized(new StringBuilder(11)).toString();
     }
     /**
-     * Appends the textual form of this Hasher to the given StringBuilder, StringBuffer, CharBuffer, or similar.
+     * Appends the textual form of this AdzeHasher to the given StringBuilder, StringBuffer, CharBuffer, or similar.
      * You can recover this state from such a textual form by calling {@link #deserializeFromString(CharSequence)} to
-     * create a new Hasher.
+     * create a new AdzeHasher.
      * @param sb an Appendable CharSequence that will be modified
      * @return {@code sb}, for chaining
      * @param <T> any type that is both a CharSequence and an Appendable, such as StringBuilder, StringBuffer, or CharBuffer
      */
     public <T extends CharSequence & Appendable> T appendSerialized(T sb) {
-        Base.SIMPLE64.appendUnsigned(sb, seed);
+        Base.SIMPLE64.appendUnsigned(sb, reverse(seed));
         return sb;
     }
 
     /**
-     * Given a String or other CharSequence produced by {@link #serializeToString()}, this creates a new Hasher with the
+     * Given a String or other CharSequence produced by {@link #serializeToString()}, this creates a new AdzeHasher with the
      * seed stored in the start of that CharSequence.
      *
      * @param data a String or other CharSequence produced by {@link #serializeToString()}
-     * @return a new Hasher with a seed loaded from the given String or other CharSequence
+     * @return a new AdzeHasher with a seed loaded from the given String or other CharSequence
      */
     public static AdzeHasher deserializeFromString(CharSequence data) {
         return deserializeFromString(data, 0);
@@ -3250,10 +3250,10 @@ public class AdzeHasher {
     /**
      * Given a String or other CharSequence produced by {@link #serializeToString()} or
      * {@link #appendSerialized(CharSequence)} and an offset to indicate where to
-     * read 11 chars from that CharSequence, this creates a new Hasher with the seed stored in that CharSequence.
+     * read 11 chars from that CharSequence, this creates a new AdzeHasher with the seed stored in that CharSequence.
      * @param data a String or other CharSequence produced by {@link #serializeToString()}
      * @param offset where to start reading the 11 chars of a serialized state from data
-     * @return a new Hasher with a seed loaded from the given String or other CharSequence
+     * @return a new AdzeHasher with a seed loaded from the given String or other CharSequence
      */
     public static AdzeHasher deserializeFromString(CharSequence data, int offset) {
         if(data == null || offset < 0 || data.length() - offset < 11) return AdzeHasher.hydrogen;
@@ -3261,12 +3261,12 @@ public class AdzeHasher {
     }
 
     /**
-     * This shouldn't ever be necessary, because a Hasher is entirely immutable, but if for some reason you need a
-     * duplicate of an existing Hasher, this exists. Normally you can just reference an existing Hasher, though!
-     * @return a new Hasher with the same seed as this one
+     * This shouldn't ever be necessary, because an AdzeHasher is entirely immutable, but if for some reason you need a
+     * duplicate of an existing AdzeHasher, this exists. Normally you can just reference an existing AdzeHasher, though!
+     * @return a new AdzeHasher with the same seed as this one
      */
     public AdzeHasher copy() {
-        return new AdzeHasher(seed);
+        return new AdzeHasher(reverse(seed));
     }
 
     @Override
