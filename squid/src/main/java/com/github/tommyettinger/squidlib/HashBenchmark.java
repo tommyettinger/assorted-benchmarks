@@ -2774,97 +2774,97 @@ public class HashBenchmark {
     @Benchmark
     public long doAdze64(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk64(state.words[state.idx = state.idx + 1 & 4095]);
+        return AdzeHasher.mu.hash64(state.words[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public int doAdze32(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk(state.words[state.idx = state.idx + 1 & 4095]);
+        return AdzeHasher.mu.hash(state.words[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public long doCharAdze64(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk64(state.chars[state.idx = state.idx + 1 & 4095]);
+        return AdzeHasher.mu.hash64(state.chars[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public int doCharAdze32(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk(state.chars[state.idx = state.idx + 1 & 4095]);
+        return AdzeHasher.mu.hash(state.chars[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public long doIntAdze64(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk64(state.ints[state.idx = state.idx + 1 & 4095]);
+        return AdzeHasher.mu.hash64(state.ints[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public int doIntAdze32(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk(state.ints[state.idx = state.idx + 1 & 4095]);
+        return AdzeHasher.mu.hash(state.ints[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public long doLongAdze64(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk64(state.longs[state.idx = state.idx + 1 & 4095]);
+        return AdzeHasher.mu.hash64(state.longs[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public int doLongAdze32(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk(state.longs[state.idx = state.idx + 1 & 4095]);
+        return AdzeHasher.mu.hash(state.longs[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public long doDoubleAdze64(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk64(state.doubles[state.idx = state.idx + 1 & 4095]);
+        return AdzeHasher.mu.hash64(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public int doDoubleAdze32(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk(state.doubles[state.idx = state.idx + 1 & 4095]);
+        return AdzeHasher.mu.hash(state.doubles[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public long doByteAdze64(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk64(state.bytes[state.idx = state.idx + 1 & 4095]);
+        return AdzeHasher.mu.hash64(state.bytes[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public int doByteAdze32(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk(state.bytes[state.idx = state.idx + 1 & 4095]);
+        return AdzeHasher.mu.hash(state.bytes[state.idx = state.idx + 1 & 4095]);
     }
 
     @Benchmark
     public long doBufferAdze64(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk64(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+        return AdzeHasher.mu.hash64(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public int doBufferAdze32(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+        return AdzeHasher.mu.hash(state.buffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public long doCharBufferAdze64(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+        return AdzeHasher.mu.hash64(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
     @Benchmark
     public int doCharBufferAdze32(BenchmarkState state)
     {
-        return AdzeHasher.mu.hashBulk(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
+        return AdzeHasher.mu.hash(state.cbuffers[state.idx = state.idx + 1 & 4095].rewind(), 0, state.len);
     }
 
 
