@@ -1601,6 +1601,84 @@ import java.util.concurrent.TimeUnit;
  * HashBenchmark.doCharBufferYolk32         5  avgt   10    5.738 ±  0.082  ns/op
  * HashBenchmark.doCharBufferYolk32      5000  avgt   10  491.265 ± 27.507  ns/op
  * </pre>
+ * Testing pretty much all the current 32-bit hashes.
+ * It looks like Adze gains quite a bit of performance from using absolute positions in a ByteBuffer; the array hashes
+ * all already use absolute positions, so there isn't much gain there, if any.
+ * <pre>
+ * Benchmark                            (len)  Mode  Cnt      Score     Error  Units
+ * HashBenchmark.doAFive32                  5  avgt   10      8.518 ±   0.298  ns/op
+ * HashBenchmark.doAFive32               5000  avgt   10   3753.164 ±  37.450  ns/op
+ * HashBenchmark.doAdze32                   5  avgt   10      8.366 ±   0.063  ns/op
+ * HashBenchmark.doAdze32                5000  avgt   10   3462.923 ±  60.644  ns/op
+ * HashBenchmark.doAx32                     5  avgt   10      9.376 ±   0.130  ns/op
+ * HashBenchmark.doAx32                  5000  avgt   10   3530.159 ±  38.096  ns/op
+ * HashBenchmark.doBufferAFive32            5  avgt   10      5.783 ±   0.452  ns/op
+ * HashBenchmark.doBufferAFive32         5000  avgt   10    761.549 ±   5.086  ns/op
+ * HashBenchmark.doBufferAdze32             5  avgt   10      5.245 ±   0.288  ns/op
+ * HashBenchmark.doBufferAdze32          5000  avgt   10    451.835 ±  12.932  ns/op
+ * HashBenchmark.doBufferAx32               5  avgt   10      5.754 ±   0.038  ns/op
+ * HashBenchmark.doBufferAx32            5000  avgt   10    529.907 ±  17.488  ns/op
+ * HashBenchmark.doBufferOldAdze32          5  avgt   10      5.889 ±   0.089  ns/op
+ * HashBenchmark.doBufferOldAdze32       5000  avgt   10    529.354 ±  15.090  ns/op
+ * HashBenchmark.doBufferWrapYolk32         5  avgt   10      6.182 ±   0.051  ns/op
+ * HashBenchmark.doBufferWrapYolk32      5000  avgt   10    704.900 ±   6.616  ns/op
+ * HashBenchmark.doBufferYolk32             5  avgt   10      5.592 ±   0.470  ns/op
+ * HashBenchmark.doBufferYolk32          5000  avgt   10    521.295 ±  17.960  ns/op
+ * HashBenchmark.doByteAFive32              5  avgt   10      6.414 ±   0.029  ns/op
+ * HashBenchmark.doByteAFive32           5000  avgt   10   2532.962 ±  42.439  ns/op
+ * HashBenchmark.doByteAdze32               5  avgt   10      7.761 ±   0.133  ns/op
+ * HashBenchmark.doByteAdze32            5000  avgt   10   1705.387 ±  17.662  ns/op
+ * HashBenchmark.doByteAx32                 5  avgt   10      6.094 ±   0.430  ns/op
+ * HashBenchmark.doByteAx32              5000  avgt   10   1725.572 ±  21.268  ns/op
+ * HashBenchmark.doByteYolk32               5  avgt   10      5.266 ±   0.177  ns/op
+ * HashBenchmark.doByteYolk32            5000  avgt   10   1784.193 ±  35.200  ns/op
+ * HashBenchmark.doCharAFive32              5  avgt   10      6.517 ±   0.046  ns/op
+ * HashBenchmark.doCharAFive32           5000  avgt   10   2677.482 ±  78.780  ns/op
+ * HashBenchmark.doCharAdze32               5  avgt   10      7.541 ±   0.353  ns/op
+ * HashBenchmark.doCharAdze32            5000  avgt   10   1969.048 ±   7.128  ns/op
+ * HashBenchmark.doCharAx32                 5  avgt   10      6.323 ±   0.302  ns/op
+ * HashBenchmark.doCharAx32              5000  avgt   10   1942.978 ±  24.972  ns/op
+ * HashBenchmark.doCharBufferAFive32        5  avgt   10      5.802 ±   0.405  ns/op
+ * HashBenchmark.doCharBufferAFive32     5000  avgt   10    717.134 ±  15.253  ns/op
+ * HashBenchmark.doCharBufferAdze32         5  avgt   10      5.453 ±   0.063  ns/op
+ * HashBenchmark.doCharBufferAdze32      5000  avgt   10    423.426 ±  26.609  ns/op
+ * HashBenchmark.doCharBufferAx32           5  avgt   10      5.706 ±   0.266  ns/op
+ * HashBenchmark.doCharBufferAx32        5000  avgt   10    521.188 ±   2.943  ns/op
+ * HashBenchmark.doCharBufferOldAdze32      5  avgt   10      5.582 ±   0.448  ns/op
+ * HashBenchmark.doCharBufferOldAdze32   5000  avgt   10    503.260 ±   7.268  ns/op
+ * HashBenchmark.doCharBufferYolk32         5  avgt   10      5.724 ±   0.120  ns/op
+ * HashBenchmark.doCharBufferYolk32      5000  avgt   10    491.687 ±  16.832  ns/op
+ * HashBenchmark.doCharYolk32               5  avgt   10      5.398 ±   0.068  ns/op
+ * HashBenchmark.doCharYolk32            5000  avgt   10   1961.154 ±  88.196  ns/op
+ * HashBenchmark.doDoubleAFive32            5  avgt   10      7.475 ±   0.399  ns/op
+ * HashBenchmark.doDoubleAFive32         5000  avgt   10   4704.768 ±  46.231  ns/op
+ * HashBenchmark.doDoubleAdze32             5  avgt   10      7.456 ±   0.420  ns/op
+ * HashBenchmark.doDoubleAdze32          5000  avgt   10   3353.193 ± 189.528  ns/op
+ * HashBenchmark.doDoubleAx32               5  avgt   10      6.654 ±   0.037  ns/op
+ * HashBenchmark.doDoubleAx32            5000  avgt   10   3252.645 ± 303.952  ns/op
+ * HashBenchmark.doDoubleYolk32             5  avgt   10      8.871 ±   0.107  ns/op
+ * HashBenchmark.doDoubleYolk32          5000  avgt   10   5072.194 ± 477.880  ns/op
+ * HashBenchmark.doIntAFive32               5  avgt   10      6.237 ±   0.317  ns/op
+ * HashBenchmark.doIntAFive32            5000  avgt   10   3031.739 ±  22.364  ns/op
+ * HashBenchmark.doIntAdze32                5  avgt   10      7.475 ±   0.581  ns/op
+ * HashBenchmark.doIntAdze32             5000  avgt   10   2389.360 ± 120.809  ns/op
+ * HashBenchmark.doIntAx32                  5  avgt   10      6.139 ±   0.525  ns/op
+ * HashBenchmark.doIntAx32               5000  avgt   10   2308.563 ± 200.891  ns/op
+ * HashBenchmark.doIntYolk32                5  avgt   10      5.501 ±   0.041  ns/op
+ * HashBenchmark.doIntYolk32             5000  avgt   10   2388.242 ±  80.741  ns/op
+ * HashBenchmark.doLongAFive32              5  avgt   10     10.440 ±   0.664  ns/op
+ * HashBenchmark.doLongAFive32           5000  avgt   10   6153.319 ±  24.998  ns/op
+ * HashBenchmark.doLongAdze32               5  avgt   10      7.272 ±   0.367  ns/op
+ * HashBenchmark.doLongAdze32            5000  avgt   10   3241.281 ± 255.482  ns/op
+ * HashBenchmark.doLongAx32                 5  avgt   10      6.676 ±   0.149  ns/op
+ * HashBenchmark.doLongAx32              5000  avgt   10   3322.730 ± 202.499  ns/op
+ * HashBenchmark.doLongYolk32               5  avgt   10      7.152 ±   0.148  ns/op
+ * HashBenchmark.doLongYolk32            5000  avgt   10   3822.556 ± 123.343  ns/op
+ * HashBenchmark.doStringsYolk32            5  avgt   10     89.519 ±   1.270  ns/op
+ * HashBenchmark.doStringsYolk32         5000  avgt   10  81746.039 ± 867.012  ns/op
+ * HashBenchmark.doYolk32                   5  avgt   10      5.969 ±   0.173  ns/op
+ * HashBenchmark.doYolk32                5000  avgt   10   3359.499 ±  16.099  ns/op
+ * </pre>
  */
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
