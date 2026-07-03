@@ -1,0 +1,13 @@
+Benchmark                                                      (impl)  (seed)  (size)  (workload)    Mode     Cnt        Score    Error  Units
+MutableJDKGetPutString.wordcount                         JDK_O2O_HASH      -1      10   WORDCOUNT  sample  906705       82.295 ±  4.855  ns/op
+MutableJDKGetPutString.wordcount                         JDK_O2O_HASH      -1     100   WORDCOUNT  sample  556307      893.730 ± 25.694  ns/op
+MutableJDKGetPutString.wordcount                         JDK_O2O_HASH      -1    1000   WORDCOUNT  sample  493167     6625.837 ± 62.183  ns/op
+MutableJDKGetPutString.wordcount                        JDKGDXDS_HASH      -1      10   WORDCOUNT  sample  825873       91.307 ±  7.289  ns/op
+MutableJDKGetPutString.wordcount                        JDKGDXDS_HASH      -1     100   WORDCOUNT  sample  732167     1120.630 ± 14.685  ns/op
+MutableJDKGetPutString.wordcount                        JDKGDXDS_HASH      -1    1000   WORDCOUNT  sample  424860    14983.302 ± 71.455  ns/op
+MutableJDKGetPutString.wordcount                  JDKGDXDSSTRING_HASH      -1      10   WORDCOUNT  sample  710963      102.890 ± 10.906  ns/op
+MutableJDKGetPutString.wordcount                  JDKGDXDSSTRING_HASH      -1     100   WORDCOUNT  sample  759174     1091.400 ± 15.941  ns/op
+MutableJDKGetPutString.wordcount                  JDKGDXDSSTRING_HASH      -1    1000   WORDCOUNT  sample  530535    11950.767 ± 50.627  ns/op
+MutableJDKGetPutString.wordcount               STRINGSPECIALIZED_HASH      -1      10   WORDCOUNT  sample  713606       99.420 ±  7.419  ns/op
+MutableJDKGetPutString.wordcount               STRINGSPECIALIZED_HASH      -1     100   WORDCOUNT  sample  754904     1102.980 ± 21.138  ns/op
+MutableJDKGetPutString.wordcount               STRINGSPECIALIZED_HASH      -1    1000   WORDCOUNT  sample  529744    11925.927 ± 39.899  ns/op

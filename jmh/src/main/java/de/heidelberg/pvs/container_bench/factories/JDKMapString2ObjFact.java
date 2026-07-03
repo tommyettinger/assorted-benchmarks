@@ -49,6 +49,8 @@ public enum JDKMapString2ObjFact {
 	JDKGDXDSSTRING_HASH(() -> new StringObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSSTRING_INDEXED(() -> new StringObjectOrderedMap<>(16, LoadFactor.LOAD_FACTOR)),
 
+	STRINGSPECIALIZED_HASH(() -> new StringObjectMap<>(16, LoadFactor.LOAD_FACTOR)),
+
 	JDKGDXDSFIB_HASH(() -> new ObjectMapFib<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSFIB2_HASH(() -> new ObjectMapFib2<>(16, LoadFactor.LOAD_FACTOR)),
 	JDKGDXDSFIBIN_HASH(() -> new ObjectMapFibIn<>(16, LoadFactor.LOAD_FACTOR)),
