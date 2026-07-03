@@ -181,9 +181,16 @@ public class StringSpecializedObjectMap<V> implements Map<String, V>, Iterable<M
 	 * @return an index between 0 and {@link #mask} (both inclusive)
 	 */
 	protected int place(Object item) {
-		return BitConversion.imul(item.hashCode() ^ 0xC143F257, 0xFAB9E45B) >>> shift;
-		// This can be used if you know hashCode() has few collisions normally, and won't be maliciously manipulated.
-//		return item.hashCode() & mask;
+		String data = (String) item;
+		final int len = data.length();
+		int result = 0x9E3779B9 ^ len, a = 0x632BE5AB, b = 0x75AE2165;
+		for (int i = 1; i < len; i += 2) {
+			result = result + (a ^= 0x85157AF5 * data.charAt(i - 1)) ^ (b ^= 0xF1357AEB * data.charAt(i));
+		}
+		if((len & 1) == 1)
+			result ^= data.charAt(len - 1) * 0x2E62A9C5;
+		return (result * (a | 1) ^ (result >>> 11 | result << 21) * (b | 1)) & mask;
+
 	}
 
 	/**
