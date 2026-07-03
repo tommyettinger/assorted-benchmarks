@@ -392,7 +392,7 @@ public class StringSpecializedObjectMap<V> implements Map<String, V>, Iterable<M
 	 */
 	@Override
 	public V get(Object key) {
-		if (key == null) return defaultValue;
+		if (!(key instanceof String)) return defaultValue;
 		String[] keyTable = this.keyTable;
 		for (int i = place(key); ; i = i + 1 & mask) {
 			String other = keyTable[i];
@@ -407,7 +407,7 @@ public class StringSpecializedObjectMap<V> implements Map<String, V>, Iterable<M
 	 * Returns the value for the specified key, or the given default value if the key is not in the map.
 	 */
 	public V getOrDefault(Object key, V defaultValue) {
-		if (key == null) return defaultValue;
+		if (!(key instanceof String)) return defaultValue;
 		String[] keyTable = this.keyTable;
 		for (int i = place(key); ; i = i + 1 & mask) {
 			String other = keyTable[i];
@@ -420,7 +420,7 @@ public class StringSpecializedObjectMap<V> implements Map<String, V>, Iterable<M
 
 	@Override
 	public V remove(Object key) {
-		if (key == null) return defaultValue;
+		if (!(key instanceof String)) return defaultValue;
 		int pos = locateKey(key);
 		if (pos < 0) return defaultValue;
 		String rem;
@@ -567,7 +567,7 @@ public class StringSpecializedObjectMap<V> implements Map<String, V>, Iterable<M
 
 	@Override
 	public boolean containsKey(Object key) {
-		if (key == null) return false;
+		if (!(key instanceof String)) return false;
 		String[] keyTable = this.keyTable;
 		for (int i = place(key); ; i = i + 1 & mask) {
 			String other = keyTable[i];
@@ -611,30 +611,11 @@ public class StringSpecializedObjectMap<V> implements Map<String, V>, Iterable<M
 	 * @return a key that maps to value, if present, or null if value cannot be found
 	 */
 	public String findKey(Object value) {
-		return findKey(value, false);
-	}
-
-	/**
-	 * Returns the key for the specified value, or null if it is not in the map. Note this traverses the entire map and compares
-	 * every value, which may be an expensive operation.
-	 *
-	 * @param value    the value to search for
-	 * @param identity If true, uses == to compare the specified value with values in the map. If false, uses
-	 *                 {@link #equals(Object)}.
-	 * @return a key that maps to value, if present, or null if value cannot be found
-	 */
-	public String findKey(Object value, boolean identity) {
 		V[] valueTable = this.valueTable;
 		if (value == null) {
 			String[] keyTable = this.keyTable;
 			for (int i = valueTable.length - 1; i >= 0; i--) {
 				if (keyTable[i] != null && valueTable[i] == null) {
-					return keyTable[i];
-				}
-			}
-		} else if (identity) {
-			for (int i = valueTable.length - 1; i >= 0; i--) {
-				if (valueTable[i] == value) {
 					return keyTable[i];
 				}
 			}
@@ -670,7 +651,7 @@ public class StringSpecializedObjectMap<V> implements Map<String, V>, Iterable<M
 		String[] oldKeyTable = keyTable;
 		V[] oldValueTable = valueTable;
 
-		keyTable = (String[]) new Object[newSize];
+		keyTable = new String[newSize];
 		valueTable = (V[]) new Object[newSize];
 
 		if (size > 0) {
