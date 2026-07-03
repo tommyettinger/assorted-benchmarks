@@ -75,14 +75,6 @@ public class StringObjectMap<V> extends ObjectObjectMap<String, V> {
 
     /**
      * Returns an index &gt;= 0 and &lt;= {@link #mask} for the specified {@code item}.
-     * <p>
-     * The default behavior uses Fibonacci hashing; it simply gets the {@link Object#hashCode()}
-     * of {@code item}, multiplies it by a specific long constant related to the golden ratio,
-     * and makes an unsigned right shift by {@link #shift} before casting to int and returning.
-     * This can be overridden to hash {@code item} differently, though all implementors must
-     * ensure this returns results in the range of 0 to {@link #mask}, inclusive. If nothing
-     * else is changed, then unsigned-right-shifting an int or long by {@link #shift} will also
-     * restrict results to the correct range.
      *
      * @param item a non-null Object; its hashCode() method should be used by most implementations.
      */

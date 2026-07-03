@@ -2740,7 +2740,7 @@ public class AdzeHasher {
      * past the limit.
      * <br>
      * This is likely to significantly outperform {@link #hash64(byte[])} on all but
-     * the smallest sequences of bytes (under 20 bytes).
+     * the smallest sequences of bytes (under 5 bytes).
      * @param seed any long seed
      * @param data an input ByteBuffer
      * @return the 64-bit hash of data
@@ -2755,7 +2755,7 @@ public class AdzeHasher {
      * past the limit.
      * <br>
      * This is likely to significantly outperform {@link #hash64(byte[], int, int)}
-     * on all but the smallest sequences of bytes (under 20 bytes).
+     * on all but the smallest sequences of bytes (under 5 bytes).
      * @param seed any long seed
      * @param data an input ByteBuffer
      * @param start the starting index, measured in bytes
@@ -2822,7 +2822,7 @@ public class AdzeHasher {
      * past the limit.
      * <br>
      * This is likely to significantly outperform {@link #hash(byte[])} on all but
-     * the smallest sequences of bytes (under 20 bytes).
+     * the smallest sequences of bytes (under 5 bytes).
      * @param seed any long seed
      * @param data an input ByteBuffer
      * @return the 32-bit hash of data
@@ -2837,7 +2837,7 @@ public class AdzeHasher {
      * past the limit.
      * <br>
      * This is likely to significantly outperform {@link #hash(byte[], int, int)}
-     * on all but the smallest sequences of bytes (under 20 bytes).
+     * on all but the smallest sequences of bytes (under 5 bytes).
      * @param seed any long seed
      * @param data an input ByteBuffer
      * @param start the starting index, measured in bytes
