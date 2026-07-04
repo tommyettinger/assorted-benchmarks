@@ -1,14 +1,8 @@
 package de.heidelberg.pvs.container_bench.benchmarks.intsingleoperations.maps;
 
 import com.badlogic.gdx.utils.IntIntMap;
-import de.heidelberg.pvs.container_bench.factories.FastutilMapInt2IntFact;
 import de.heidelberg.pvs.container_bench.factories.GDXMapInt2IntFact;
-import it.unimi.dsi.fastutil.ints.Int2IntMap;
-import it.unimi.dsi.fastutil.ints.IntIterator;
-import it.unimi.dsi.fastutil.ints.IntSet;
 import org.openjdk.jmh.annotations.Param;
-
-import java.util.Set;
 
 public class GDXMapInt2IntBench extends AbstractMapInt2IntBench {
 

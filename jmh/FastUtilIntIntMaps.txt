@@ -1,0 +1,28 @@
+All maps are int key, int value, with 10000 uniformly distributed keys.
+
+                 (impl)        (workload)     Cnt          Score Units
+      FASTUTIL_I2I_HASH          POPULATE  145366     171989.766 ns/op
+      FASTUTIL_I2I_HASH       ITERATE_KEY  378158      33186.241 ns/op
+      FASTUTIL_I2I_HASH  ITERATE_KEYVALUE  455641      54906.098 ns/op
+      FASTUTIL_I2I_HASH              COPY  227015     110155.547 ns/op
+      FASTUTIL_I2I_HASH          CONTAINS  529103        120.247 ns/op
+FASTUTIL_I2I_LINKEDHASH          POPULATE  117194     213487.665 ns/op
+FASTUTIL_I2I_LINKEDHASH       ITERATE_KEY  417901      30116.072 ns/op
+FASTUTIL_I2I_LINKEDHASH  ITERATE_KEYVALUE  372779      33930.259 ns/op
+FASTUTIL_I2I_LINKEDHASH              COPY  283112      88225.337 ns/op
+FASTUTIL_I2I_LINKEDHASH          CONTAINS  523052        114.734 ns/op
+       FASTUTIL_I2I_AVL          POPULATE   22689    1102609.116 ns/op
+       FASTUTIL_I2I_AVL       ITERATE_KEY  293153      42947.684 ns/op
+       FASTUTIL_I2I_AVL  ITERATE_KEYVALUE  300599      41767.903 ns/op
+       FASTUTIL_I2I_AVL              COPY   36492     685298.867 ns/op
+       FASTUTIL_I2I_AVL          CONTAINS  623143        180.778 ns/op
+        FASTUTIL_I2I_RB          POPULATE   24027    1040743.489 ns/op
+        FASTUTIL_I2I_RB       ITERATE_KEY  282886      44473.687 ns/op
+        FASTUTIL_I2I_RB  ITERATE_KEYVALUE  426224      52844.723 ns/op
+        FASTUTIL_I2I_RB              COPY   32974     758678.227 ns/op
+        FASTUTIL_I2I_RB          CONTAINS  596822        203.422 ns/op
+     FASTUTIL_I2I_ARRAY          POPULATE    1214   20642976.264 ns/op
+     FASTUTIL_I2I_ARRAY       ITERATE_KEY  523885        845.372 ns/op
+     FASTUTIL_I2I_ARRAY  ITERATE_KEYVALUE  563383      22409.150 ns/op
+     FASTUTIL_I2I_ARRAY              COPY     931   26963030.892 ns/op
+     FASTUTIL_I2I_ARRAY          CONTAINS  601992        769.250 ns/op
