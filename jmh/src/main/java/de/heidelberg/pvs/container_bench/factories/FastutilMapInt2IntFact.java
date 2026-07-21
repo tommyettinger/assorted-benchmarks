@@ -9,7 +9,7 @@ public enum FastutilMapInt2IntFact {
 	FASTUTIL_I2I_LINKEDHASH(it.unimi.dsi.fastutil.ints.Int2IntLinkedOpenHashMap::new), //
 	FASTUTIL_I2I_AVL(it.unimi.dsi.fastutil.ints.Int2IntAVLTreeMap::new), //
 	FASTUTIL_I2I_RB(it.unimi.dsi.fastutil.ints.Int2IntRBTreeMap::new), //
-	FASTUTIL_I2I_ARRAY(it.unimi.dsi.fastutil.ints.Int2IntArrayMap::new, 1000000), //
+//	FASTUTIL_I2I_ARRAY(it.unimi.dsi.fastutil.ints.Int2IntArrayMap::new, 1000000), // This is so much slower it throws off results.
 	;
 
 	public final Supplier<Int2IntMap> maker;

@@ -51,5 +51,6 @@ java -Xms8G -Xmx8G -jar benchmarks.jar "(Fastutil|GDX|JDK|JDKGDXDS)MapLong2ObjBe
 
 java -jar benchmarks.jar "(JDKGDXDS|RobinHood)MapInt2IntBench" -p size=200000 -wi 5 -i 5 -f 1 -w 5 -r 5
 java -jar benchmarks.jar ".*MapInt2IntBench" -p size=200000 -wi 5 -i 5 -f 1 -w 5 -r 5
+java -jar benchmarks.jar "(GDX|JDKGDXDS)MapInt2IntBench" -p size=200000 -wi 5 -i 5 -f 1 -w 5 -r 5
 
 java -jar benchmarks.jar "MutableJDKGetPutString" -p impl=JDK_O2O_HASH,JDKGDXDS_HASH,JDKGDXDSSTRING_HASH,STRINGSPECIALIZED_HASH -p size=10,100,1000 -wi 5 -i 5 -f 1 -w 5 -r 5
