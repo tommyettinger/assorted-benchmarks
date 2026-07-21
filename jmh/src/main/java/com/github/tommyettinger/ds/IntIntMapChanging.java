@@ -2,34 +2,33 @@ package com.github.tommyettinger.ds;
 
 import com.github.tommyettinger.digital.BitConversion;
 
-public class IntIntMapUnchanging extends IntIntMap{
-    public IntIntMapUnchanging() {
+public class IntIntMapChanging extends IntIntMap{
+    public IntIntMapChanging() {
         super();
     }
 
-    public IntIntMapUnchanging(int initialCapacity) {
+    public IntIntMapChanging(int initialCapacity) {
         super(initialCapacity);
     }
 
-    public IntIntMapUnchanging(int initialCapacity, float loadFactor) {
+    public IntIntMapChanging(int initialCapacity, float loadFactor) {
         super(initialCapacity, loadFactor);
     }
 
-    public IntIntMapUnchanging(IntIntMap map) {
+    public IntIntMapChanging(IntIntMap map) {
         super(map);
     }
 
-    public IntIntMapUnchanging(int[] keys, int[] values) {
+    public IntIntMapChanging(int[] keys, int[] values) {
         super(keys, values);
     }
 
-    public IntIntMapUnchanging(PrimitiveCollection.OfInt keys, PrimitiveCollection.OfInt values) {
+    public IntIntMapChanging(PrimitiveCollection.OfInt keys, PrimitiveCollection.OfInt values) {
         super(keys, values);
     }
 
     @Override
     protected int place(int item) {
-        // Constants are faster here than using a variable, and this is called very often.
         // The choice of constants is... tricky.
         // 0xFAB9E45B was picked after a (non-exhaustive, but thorough) search of possible multipliers.
         // 0xC143F257 is somewhat arbitrary; it is a prime number (when unsigned), but it was chosen along with
@@ -43,6 +42,6 @@ public class IntIntMapUnchanging extends IntIntMap{
         // multiplier is still an issue; it just results in item with an additive offset. If we added a number after
         // multiplying, that would also offset the result somewhat, and wouldn't change what outputs are before or after
         // other nearby outputs. Addition and multiplication are related, but XOR and multiplication aren't (as much).
-        return BitConversion.imul(item ^ 0xC143F257, 0xFAB9E45B) >>> shift;
+        return BitConversion.imul(item ^ mask, 0xFAB9E45B) >>> shift;
     }
 }
