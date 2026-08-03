@@ -95,7 +95,7 @@ dependencies {
     implementation('com.github.tommyettinger:juniper:0.10.5') {
         exclude group: 'com.github.tommyettinger', module: 'digital'
     }
-    implementation('com.github.tommyettinger:jdkgdxds:2.1.5') {
+    implementation('com.github.tommyettinger:jdkgdxds:360f67a828') {
         exclude group: 'com.github.tommyettinger', module: 'digital'
     }
 

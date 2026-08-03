@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 public enum JDKGDXDSMapInt2IntFact {
 	JDKGDXDS_I2I_HASH(() -> new IntIntMap(16, LoadFactor.LOAD_FACTOR)), //
-	JDKGDXDS_I2I_CHANGING(() -> new IntIntMapChanging(16, LoadFactor.LOAD_FACTOR)), //
+//	JDKGDXDS_I2I_CHANGING(() -> new IntIntMapChanging(16, LoadFactor.LOAD_FACTOR)), //
 	JDKGDXDS_I2I_ORDERED(() -> new IntIntOrderedMap(16, LoadFactor.LOAD_FACTOR)), //
 	;
 
