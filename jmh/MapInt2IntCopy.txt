@@ -1,0 +1,17 @@
+Benchmark                                                  (impl)       (payloadType)  (seed)  (size)  (workload)    Mode     Cnt         Score        Error  Units
+FastCollectMapInt2IntBench.bench                      FC_I2I_HASH     INTEGER_UNIFORM  467505  200000        COPY  sample  314717     79319.388 ±    266.363  ns/op
+FastCollectMapInt2IntBench.bench                      FC_I2I_HASH  INTEGER_DICTIONARY  467505  200000        COPY  sample  385963     64688.923 ±    217.613  ns/op
+FastutilMapInt2IntBench.bench                   FASTUTIL_I2I_HASH     INTEGER_UNIFORM  467505  200000        COPY  sample    9479   2635913.196 ±   7798.000  ns/op
+FastutilMapInt2IntBench.bench                   FASTUTIL_I2I_HASH  INTEGER_DICTIONARY  467505  200000        COPY  sample   14889   1678163.304 ±   4027.726  ns/op
+FastutilMapInt2IntBench.bench             FASTUTIL_I2I_LINKEDHASH     INTEGER_UNIFORM  467505  200000        COPY  sample    7857   3180263.270 ±  27281.101  ns/op
+FastutilMapInt2IntBench.bench             FASTUTIL_I2I_LINKEDHASH  INTEGER_DICTIONARY  467505  200000        COPY  sample   11555   2162114.276 ±   8734.547  ns/op
+FastutilMapInt2IntBench.bench                    FASTUTIL_I2I_AVL     INTEGER_UNIFORM  467505  200000        COPY  sample    2007  12459570.766 ±  60454.499  ns/op
+FastutilMapInt2IntBench.bench                    FASTUTIL_I2I_AVL  INTEGER_DICTIONARY  467505  200000        COPY  sample    2991   8361189.039 ±  23020.172  ns/op
+FastutilMapInt2IntBench.bench                     FASTUTIL_I2I_RB     INTEGER_UNIFORM  467505  200000        COPY  sample    1331  18796177.791 ± 115707.071  ns/op
+FastutilMapInt2IntBench.bench                     FASTUTIL_I2I_RB  INTEGER_DICTIONARY  467505  200000        COPY  sample    1952  12813135.738 ±  68985.258  ns/op
+GDXMapInt2IntBench.bench                             GDX_I2I_HASH     INTEGER_UNIFORM  467505  200000        COPY  sample   13835   1806305.506 ±   4471.273  ns/op
+GDXMapInt2IntBench.bench                             GDX_I2I_HASH  INTEGER_DICTIONARY  467505  200000        COPY  sample   18305   1364906.914 ±   3215.782  ns/op
+JDKGDXDSMapInt2IntBench.bench                   JDKGDXDS_I2I_HASH     INTEGER_UNIFORM  467505  200000        COPY  sample  384139     64996.266 ±    215.932  ns/op
+JDKGDXDSMapInt2IntBench.bench                   JDKGDXDS_I2I_HASH  INTEGER_DICTIONARY  467505  200000        COPY  sample  390704     63912.677 ±    214.366  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_ORDERED     INTEGER_UNIFORM  467505  200000        COPY  sample  372122     67090.984 ±    216.312  ns/op
+JDKGDXDSMapInt2IntBench.bench                JDKGDXDS_I2I_ORDERED  INTEGER_DICTIONARY  467505  200000        COPY  sample  389352     64129.172 ±    216.977  ns/op
